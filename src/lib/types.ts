@@ -22,8 +22,16 @@ export interface SancaoNaoPrivativa {
  * não preenchido. Daí o estado próprio.
  */
 export interface PenaPorRemissao {
-  /** Dispositivo de onde a moldura vem (ex.: "CP, arts. 297 a 302"). */
+  /** Dispositivo de onde a moldura vem, em prosa (ex.: "CP, arts. 297 a 302"). */
   dispositivo_fonte: string;
+  /** `lei` dos registros de origem, para casar com o catálogo. */
+  lei_fonte: string;
+  /**
+   * `artigo` dos registros de origem, casados por PREFIXO — "Art. 297" alcança
+   * o caput, o §3º e o §4º, cada um com sua moldura. É o que permite listar os
+   * dispositivos com nome e pena, em vez de só citá-los na prosa.
+   */
+  artigos_fonte: string[];
   /** O que se faz com a moldura importada. */
   operador: 'nenhum' | 'aumento' | 'diminuicao';
   /** Fração aplicada pelo operador (ex.: "1/2"); `null` quando não há operador. */

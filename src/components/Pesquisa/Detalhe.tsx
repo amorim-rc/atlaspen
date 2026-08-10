@@ -92,6 +92,23 @@ export default function Detalhe({
       .sort((a, b) => a.artigo.localeCompare(b.artigo, 'pt-BR', {numeric: true}));
   }, [crime.id, crime.artigo, crime.lei, todos]);
 
+  // Os registros de onde a moldura vem, quando o tipo não comina a própria.
+  // Casam por PREFIXO do artigo: "Art. 297" alcança o caput, o §3º e o §4º,
+  // cada um com sua pena — que é justamente o motivo de o catálogo não publicar
+  // um número único aqui.
+  const fontesRemissao = useMemo(() => {
+    const rem = crime.pena_por_remissao;
+    if (!rem) return [];
+    return todos
+      .filter(
+        (x) =>
+          x.id !== crime.id &&
+          x.lei === rem.lei_fonte &&
+          rem.artigos_fonte.some((a) => x.artigo.startsWith(a)),
+      )
+      .sort((a, b) => a.artigo.localeCompare(b.artigo, 'pt-BR', {numeric: true}));
+  }, [crime.id, crime.pena_por_remissao, todos]);
+
   useEffect(() => {
     setCen(cenarioFromCrime(crime));
   }, [crime.id]);
@@ -143,7 +160,15 @@ export default function Detalhe({
         <div>
           <h3 className={styles.detalheTitulo}>{crime.crime}</h3>
           <div className={styles.detalheSub}>
-            {crime.artigo} · {crime.lei} · <strong>pena: {crime.pena_faixa_rotulo}</strong>
+            {crime.artigo} · {crime.lei} ·{' '}
+            {/* Sem moldura, o rótulo já é a frase inteira ("definida por
+                remissão a outro dispositivo"): prefixar "pena:" duplicaria a
+                palavra. Com moldura, o prefixo é o que dá sentido ao número. */}
+            <strong>
+              {crime.tem_pena_privativa
+                ? `pena: ${crime.pena_faixa_rotulo}`
+                : crime.pena_faixa_rotulo}
+            </strong>
           </div>
         </div>
         <div className={styles.detalheTags}>
@@ -218,9 +243,34 @@ export default function Detalhe({
             )}
             .
           </p>
+          {/* O simulador parte da moldura do registro. Aqui não há moldura: com
+              0 a 0, TODO benefício que depende de patamar de pena passaria a
+              caber — menor potencial ofensivo, transação, prescrição em três
+              anos. É o mesmo resultado radicalmente favorável e errado que o
+              projeto evita nos dispositivos que já não vigoram. Por isso o
+              cálculo não é oferecido aqui, e sim no dispositivo-fonte. */}
+          <p className={styles.simDica}>
+            <strong>O cálculo de benefícios não é feito por este registro.</strong> Ele
+            depende de qual dispositivo-fonte incide no caso concreto, e cada um tem
+            moldura própria. Abra abaixo o dispositivo aplicável e simule por ele —
+            partir daqui, de uma moldura ausente, faria caber todo benefício que depende
+            de patamar de pena.
+          </p>
+          {fontesRemissao.length > 0 && (
+            <div className={styles.correlatosLista}>
+              {fontesRemissao.map((x) => (
+                <button key={x.id} className={styles.correlatoItem} onClick={() => onSelect(x.id)}>
+                  <span className={styles.correlatoArtigo}>{x.artigo}</span>
+                  <span className={styles.correlatoCrime}>{x.crime}</span>
+                  <span className={styles.correlatoPena}>{x.pena_faixa_rotulo}</span>
+                </button>
+              ))}
+            </div>
+          )}
         </div>
       )}
 
+      {!crime.pena_por_remissao && (
       <div className={styles.simulador}>
         <div className={styles.simColuna}>
           <h4 className={styles.simTitulo}>Pena cominada — simulação legislativa</h4>
@@ -297,15 +347,18 @@ export default function Detalhe({
           </div>
         </div>
       </div>
+      )}
 
-      <Dosimetria
-        crime={crime}
-        penaMin={cen.penaMin}
-        penaMax={cen.penaMax}
-        sel={sel}
-        setSel={setSel}
-        onPenaDefinitiva={setPenaDosimetria}
-      />
+      {!crime.pena_por_remissao && (
+        <Dosimetria
+          crime={crime}
+          penaMin={cen.penaMin}
+          penaMax={cen.penaMax}
+          sel={sel}
+          setSel={setSel}
+          onPenaDefinitiva={setPenaDosimetria}
+        />
+      )}
 
       {crime.tem_pena_privativa && (
         <div className={styles.concursosGrid}>
@@ -319,17 +372,21 @@ export default function Detalhe({
         </div>
       )}
 
-      <h4 className={styles.benefSecTitulo}>Benefícios penais — recálculo dinâmico</h4>
-      {grupos.map((g) => (
-        <div key={g} className={styles.benefGrupo}>
-          <div className={styles.benefGrupoTitulo}>{CATEGORIA_LABEL[g]}</div>
-          <div className={styles.benefGrid}>
-            {beneficios.filter((b) => b.categoria === g).map((b) => (
-              <BeneficioCard key={b.id} b={b} />
-            ))}
-          </div>
-        </div>
-      ))}
+      {!crime.pena_por_remissao && (
+        <>
+          <h4 className={styles.benefSecTitulo}>Benefícios penais — recálculo dinâmico</h4>
+          {grupos.map((g) => (
+            <div key={g} className={styles.benefGrupo}>
+              <div className={styles.benefGrupoTitulo}>{CATEGORIA_LABEL[g]}</div>
+              <div className={styles.benefGrid}>
+                {beneficios.filter((b) => b.categoria === g).map((b) => (
+                  <BeneficioCard key={b.id} b={b} />
+                ))}
+              </div>
+            </div>
+          ))}
+        </>
+      )}
 
       {correlatos.length > 0 && (
         <div className={styles.correlatos}>

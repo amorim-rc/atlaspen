@@ -361,6 +361,23 @@ def validar_pena_por_remissao(crimes: list) -> list:
         if rem.get("operador") != "nenhum" and not rem.get("fracao"):
             problemas.append(
                 f"id {c['id']}: operador {rem.get('operador')!r} exige `fracao`")
+        # `dispositivo_fonte` é prosa e não dá para navegar. `lei_fonte` +
+        # `artigos_fonte` são o que a tela usa para listar os dispositivos que
+        # carregam a moldura — sem eles o usuário fica sem para onde ir, já que
+        # o simulador não é oferecido nestes registros.
+        alvos = [x for x in crimes
+                 if x.get("lei") == rem.get("lei_fonte")
+                 and any((x.get("artigo") or "").startswith(a)
+                         for a in rem.get("artigos_fonte") or [])]
+        if not rem.get("lei_fonte") or not rem.get("artigos_fonte"):
+            problemas.append(
+                f"id {c['id']}: `pena_por_remissao` sem `lei_fonte`/`artigos_fonte` "
+                "— declare os dispositivos de origem, senão a tela não tem para "
+                "onde mandar quem consulta")
+        elif not alvos:
+            problemas.append(
+                f"id {c['id']}: `artigos_fonte` {rem['artigos_fonte']} não casa "
+                f"nenhum registro de {rem['lei_fonte']!r} — remissão para o vazio")
         if c.get("pena_min") or c.get("pena_max"):
             problemas.append(
                 f"id {c['id']}: declara `pena_por_remissao` E moldura própria "
@@ -630,9 +647,12 @@ def main():
         c.setdefault("sancoes_nao_privativas", [])
         c.setdefault("pena_por_remissao", None)
         if not c["tem_pena_privativa"]:
+            # Sem moldura não há número a prefixar com "pena:", e o rótulo passa
+            # a ser a frase inteira do cabeçalho — por isso ele se basta e não
+            # repete a palavra "pena".
             c["pena_faixa_rotulo"] = (
-                "pena do dispositivo remetido"
-                if c["pena_por_remissao"] else "sem pena privativa")
+                "pena definida por remissão a outro dispositivo"
+                if c["pena_por_remissao"] else "sem pena privativa de liberdade")
 
         # Resultado morte — derivado do nome do tipo, sobreponível por revisão.
         morte = bool(RESULTADO_MORTE.search(c.get("crime") or ""))
