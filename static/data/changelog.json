@@ -1,5 +1,57 @@
 [
   {
+    "id": "2026-08-10-violencia-contra-superior-e-militar-de-servico",
+    "date": "2026-08-10",
+    "title": "Três causas de aumento do CPM que não estavam em lugar nenhum",
+    "summary": "Os arts. 157 e 158 do Código Penal Militar aumentam a pena quando a violência é praticada com arma, e o art. 157 aumenta de novo quando o crime ocorre em serviço. Nenhum dos três constava — nem como tipo penal, nem como modificador —, e por isso não apareciam para quem simulava a dosimetria desses crimes.",
+    "body": [
+      "A lacuna tinha uma causa reconhecível: são parágrafos que não cominam moldura própria, e o catálogo de tipos penais só aceita quem comina. Ficavam no vão entre os dois arquivos — fora de crimes.json por não serem tipo, fora de modificadores.json por ninguém os ter movido para lá.",
+      "Entram agora como causas de aumento de terceira fase: violência praticada com arma, mais um terço, nos arts. 157, §2º e 158, §1º; crime ocorrido em serviço, mais um sexto, no art. 157, §5º. Os três alcançam todas as molduras do respectivo artigo, inclusive a do resultado morte — os parágrafos não restringem a hipótese.",
+      "O que continua fora, e de propósito: o §3º do art. 157 e o §2º do art. 158, que mandam aplicar, além da pena da violência, a do crime contra a pessoa. Isso é cúmulo material, não alteração de moldura, e quem o modela é a tela de concurso de crimes."
+    ],
+    "tipo": "correcao",
+    "areas": [
+      "Dosimetria",
+      "Tipos penais"
+    ],
+    "version": "v2.0.1"
+  },
+  {
+    "id": "2026-08-10-simulador-sem-moldura",
+    "date": "2026-08-10",
+    "title": "O simulador deixa de calcular benefício onde não há moldura",
+    "summary": "Os quatro tipos que importam a pena de outro dispositivo entraram na v2.0.0 com moldura ausente — o que é correto. Mas o simulador continuava aberto sobre ela, e uma moldura de zero a zero faz caber todo benefício que depende de patamar de pena. Agora esses registros explicam onde a pena está, em vez de calcular a partir do que não têm.",
+    "body": [
+      "O art. 304 do CP e o art. 315 do CPM punem o uso de documento falso com \"a pena cominada à falsificação\"; os arts. 2º e 3º da Lei 2.889/56 aplicam frações das penas do art. 1º. Nenhum dos quatro comina moldura própria, e a v2.0.0 passou a dizer isso com o campo pena_por_remissao, em vez de publicar a moldura de um dos dispositivos-fonte como se fosse a do tipo.",
+      "Faltava a consequência na tela. As barras do simulador partem da moldura do registro, e com mínimo e máximo em zero o resultado era o pior possível: menor potencial ofensivo, transação penal, prescrição em três anos — tudo cabível, tudo errado. É o mesmo modo de falhar que o projeto já evita nos dispositivos que deixaram de vigorar, e que só não apareceu antes porque o campo é novo.",
+      "Nesses quatro registros o simulador, a dosimetria e os cartões de benefício não são mais oferecidos. No lugar deles, o registro diz de qual dispositivo a pena vem e manda simular por ele, que tem moldura própria. A busca por benefício já os deixava de fora da contagem — a tela agora concorda com ela.",
+      "Mandar simular em outro lugar só serve se houver como chegar lá. Por isso o campo passou a declarar os dispositivos de origem, e não apenas citá-los em prosa: o art. 304 do CP abre a lista dos treze registros dos arts. 297 a 302, cada um com nome e moldura, em um clique. O cabeçalho também deixou de repetir a palavra — era \"pena: pena do dispositivo remetido\", e agora é \"pena definida por remissão a outro dispositivo\"."
+    ],
+    "tipo": "correcao",
+    "areas": [
+      "Interface",
+      "Benefícios"
+    ],
+    "version": "v2.0.1"
+  },
+  {
+    "id": "2026-08-10-conferidor-eca",
+    "date": "2026-08-10",
+    "title": "Lei 15.487/2026 agrava seis crimes do ECA, e o catálogo acompanha",
+    "summary": "A rodada semanal do conferidor achou seis molduras do Estatuto da Criança e do Adolescente divergindo do texto compilado. Não era erro de cadastro: a Lei 15.487/2026 reescreveu o capítulo dos crimes contra a dignidade sexual de criança e adolescente e elevou as penas. É a primeira vez que o robô encontra lei nova, e não engano antigo.",
+    "body": [
+      "As seis molduras, todas conferidas dispositivo a dispositivo contra o compilado do Planalto: o art. 240 (produzir ou registrar) e o art. 241 (vender ou expor à venda) passam de 4 a 8 para 4 a 10 anos de reclusão; o art. 241-A (oferecer, transmitir ou divulgar) salta de 3 a 6 para 4 a 10 anos; o art. 241-B (adquirir, possuir ou armazenar), de 1 a 4 para 3 a 6 anos; e os arts. 241-C (simular a participação) e 241-D (aliciar ou constranger), de 1 a 3 para 3 a 5 anos.",
+      "O efeito não para na moldura. O art. 241-B sai da faixa em que cabia a suspensão condicional do processo, e o art. 241-A passa a ter pena mínima de 4 anos, o que fecha a porta da substituição por restritivas de direitos. Quem simular esses tipos na ferramenta vai ver os benefícios mudarem de resposta.",
+      "Fica declarado o que esta rodada NÃO fez: a mesma lei trocou a redação dos caputs — onde se lia \"cena de sexo explícito ou pornográfica\" agora se lê \"conteúdo de violência sexual contra criança ou adolescente\" —, e o conferidor não altera o nome do tipo, só a pena. Os nomes serão revistos contra o texto novo antes de a próxima versão fechar. Enquanto isso, a moldura publicada é a vigente, e o nome é o antigo."
+    ],
+    "tipo": "correcao",
+    "areas": [
+      "Tipos penais",
+      "Benefícios"
+    ],
+    "version": "v2.0.2"
+  },
+  {
     "id": "2026-08-06-reinicio-da-numeracao",
     "date": "2026-08-06",
     "title": "A numeração dos tipos penais recomeça em 1, e os links antigos mudam",
