@@ -8,6 +8,21 @@ A rodada automática acontece **toda segunda-feira, 05:00 de Brasília**
 semanal* ▸ **Run workflow**. Ela produz, no máximo, **três coisas**: um commit, uma issue
 e um pull request.
 
+São **quatro robôs**, e desde 10/08/2026 cada um é um job com nome próprio — o log diz
+qual falhou sem que você precise abrir o passo. Três correm em paralelo; só o auditor
+espera, porque lê as páginas que o vigia baixou.
+
+| Job | O que vigia | Falha dele derruba a rodada? |
+|---|---|---|
+| **vigia** | A moldura de cada tipo contra o texto compilado do Planalto | Sim — é o único de que os outros dependem |
+| **sentinela** | O DOU da semana, atrás de lei penal nova e autônoma | Não: o in.gov.br fora do ar não pode calar o relatório do catálogo |
+| **auditor** | Hediondez, ação penal, causas de aumento e nome do tipo | Não |
+| **arquivista** | Saúde da prosa: documento vencido ou cuja dependência mudou | Não |
+| **triagem** | Junta os quatro e abre a issue | — |
+
+A issue **só nasce se pelo menos um dos quatro tiver o que dizer**. Silêncio dos quatro
+significa catálogo em dia, e nesse caso a rodada deixa apenas o commit do carimbo.
+
 ## 1. Um commit que chega sozinho — nada a fazer
 
 `chore(catalogo): carimbo da conferência semanal`

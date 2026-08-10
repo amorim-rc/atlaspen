@@ -40,7 +40,7 @@ Para viabilizar filtros combinados e o cálculo de benefícios, alguns campos s�
 
 | Campo | Descrição | Como é derivado |
 |-------|-----------|-----------------|
-| `pena_privativa` | Reclusão, Detenção, Prisão simples ou Nenhuma | mapeado de `tipo_pena` |
+| `pena_privativa` | Reclusão, Detenção, Prisão simples ou Nenhuma | mapeado de `tipo_pena` — `Multa`, `Morte` e `Outras penas` viram `Nenhuma`, porque não são pena de prisão |
 | `tem_multa` | se há pena de multa (cumulativa, alternativa ou isolada) | regex sobre `obs` |
 | `multa_regime` | `cumulativa` / `alternativa` / `isolada` / `nenhuma` | conectores no texto |
 | `infracao_menor_potencial` | pena máxima ≤ 2 anos | `pena_max ≤ 24` |
