@@ -22,7 +22,7 @@
     {
       "arquivo": "CONTRIBUTING.md",
       "sobre": "As convenções C1 a C8 do catálogo e o fluxo de release. É o documento que outra pessoa segue ao editar dado.",
-      "conferido_em": "2026-08-06",
+      "conferido_em": "2026-08-10",
       "depende_de": [
         "scripts/transform_data.py",
         "scripts/validar-changelog.mjs",
@@ -33,7 +33,7 @@
     {
       "arquivo": "CLAUDE.md",
       "sobre": "Instruções para agentes de IA: fluxo de release, convenções que quebram em silêncio, verificação obrigatória.",
-      "conferido_em": "2026-08-04",
+      "conferido_em": "2026-08-10",
       "depende_de": [
         "CONTRIBUTING.md",
         "scripts/transform_data.py",
