@@ -2412,9 +2412,9 @@
   {
     "id": 151,
     "lei": "CP",
-    "artigo": "Art. 197",
-    "crime": "Atentado contra a liberdade de trabalho",
-    "pena_min": 3,
+    "artigo": "Art. 197, I",
+    "crime": "Atentado contra a liberdade de trabalho — constranger a exercer ou não exercer profissão, ou a trabalhar ou não trabalhar",
+    "pena_min": 1,
     "pena_max": 12,
     "tipo_pena": "Detenção",
     "acao": "Pública Incondicionada",
@@ -2423,7 +2423,7 @@
     "tentativa": "Sim",
     "violencia": "Sim",
     "grave_ameaca": "Sim",
-    "obs": "3 meses a 1 ano detenção + multa. Constranger alguém mediante violência ou grave ameaça a exercer ou não exercer arte/ofício/profissão/indústria"
+    "obs": "1 mês a 1 ano de detenção e multa, ALÉM da pena correspondente à violência. Constranger alguém, mediante violência ou grave ameaça, a exercer ou não exercer arte, ofício, profissão ou indústria, ou a trabalhar ou não trabalhar durante certo período ou em determinados dias. O registro publicava 3 meses a 1 ano, que é a moldura do inciso II."
   },
   {
     "id": 152,
@@ -19972,8 +19972,8 @@
   {
     "id": 1243,
     "lei": "CPM (DL 1.001/69)",
-    "artigo": "Art. 368, caput",
-    "crime": "Motim, revolta ou conspiração",
+    "artigo": "Art. 368, caput (co-autores)",
+    "crime": "Motim, revolta ou conspiração em tempo de guerra — co-autores",
     "pena_min": 120,
     "pena_max": 360,
     "tipo_pena": "Reclusão",
@@ -19983,13 +19983,13 @@
     "tentativa": "Sim",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "10 a 30 anos reclusão. no grau mínimo. Praticar qualquer dos crimes definidos nos arts. 149 e seu parágrafo único, e 152. 15-30 anos reclusão"
+    "obs": "Reclusão de 10 a 30 anos aos CO-AUTORES. Praticar qualquer dos crimes definidos nos arts. 149 e seu parágrafo único, e 152, em tempo de guerra. Aos cabeças o caput comina morte no grau máximo, com registro próprio."
   },
   {
     "id": 1244,
     "lei": "CPM (DL 1.001/69)",
-    "artigo": "Art. 368, par. único",
-    "crime": "Motim, revolta ou conspiração — Se o fato é praticado em presença do inimigo",
+    "artigo": "Art. 368, par. único (cabeças)",
+    "crime": "Motim, revolta ou conspiração em presença do inimigo — cabeças",
     "pena_min": 240,
     "pena_max": 360,
     "tipo_pena": "Morte",
@@ -24178,5 +24178,37 @@
     "violencia": "Não",
     "grave_ameaca": "Não",
     "obs": "Registro criado em 06/08/2026 pela regra do registro por moldura-base."
+  },
+  {
+    "id": 1506,
+    "lei": "CP",
+    "artigo": "Art. 197, II",
+    "crime": "Atentado contra a liberdade de trabalho — constranger a abrir ou fechar estabelecimento, ou a participar de paralisação",
+    "pena_min": 3,
+    "pena_max": 12,
+    "tipo_pena": "Detenção",
+    "acao": "Pública Incondicionada",
+    "hediondo": "Não",
+    "elemento": "Doloso",
+    "tentativa": "Sim",
+    "violencia": "Sim",
+    "grave_ameaca": "Sim",
+    "obs": "3 meses a 1 ano de detenção e multa, ALÉM da pena correspondente à violência. Constranger alguém, mediante violência ou grave ameaça, a abrir ou fechar o seu estabelecimento de trabalho, ou a participar de parede ou paralisação de atividade econômica. Registro criado em 10/08/2026: o art. 197 comina pena distinta por inciso, e o catálogo publicava uma só."
+  },
+  {
+    "id": 1507,
+    "lei": "CPM (DL 1.001/69)",
+    "artigo": "Art. 368, caput (cabeças)",
+    "crime": "Motim, revolta ou conspiração em tempo de guerra — cabeças",
+    "pena_min": 180,
+    "pena_max": 360,
+    "tipo_pena": "Morte",
+    "acao": "Pública Incondicionada",
+    "hediondo": "Não",
+    "elemento": "Doloso",
+    "tentativa": "Sim",
+    "violencia": "Não",
+    "grave_ameaca": "Não",
+    "obs": "Pena de morte no grau máximo (fuzilamento, art. 56 do CPM, tempo de guerra); reclusão de 15 anos no grau mínimo, aos CABEÇAS. A moldura em meses aplica o art. 81, §2º: cominada a morte como grau máximo, ela corresponde, para efeito de graduação, à reclusão por 30 anos. Registro criado em 10/08/2026: o caput comina duas penas, e o catálogo publicava só a dos co-autores."
   }
 ]

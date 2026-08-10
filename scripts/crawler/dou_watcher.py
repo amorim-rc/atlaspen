@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Filtro semanal do Diário Oficial, Seção 1 — sem IA (F7).
 
-O conferidor releu os 62 diplomas de `data/fontes.json` e é cego para uma coisa
+O conferidor releu os 64 diplomas de `data/fontes.json` e é cego para uma coisa
 só: **lei penal nova e autônoma**, que ainda não está em página nenhuma que ele
 vigie. Este módulo cobre exatamente esse ponto cego, e nada além dele.
 
@@ -291,7 +291,7 @@ def propor_fonte(candidata: dict, integral: str, ja_monitorados: set[str]) -> di
     # Lei que CITA diploma monitorado está alterando algo que já vigiamos: o
     # crime novo vai aparecer na página daquele diploma, e criar fonte para ela
     # duplicaria a vigilância. O que interessa aqui é a lei que não se apoia em
-    # nenhuma das 63 páginas — a penal nova e autônoma.
+    # nenhuma das 64 páginas — a penal nova e autônoma.
     if candidata.get("diplomas_citados"):
         return None
     m = _NUMERO_LEI.search(candidata["titulo"])

@@ -37,7 +37,7 @@ do JSON ganham informação sem perder nenhuma.
 
 O catálogo foi montado por acréscimo, e a defasagem só aparecia por acaso. A v2.0.0
 troca isso por um **conferidor semanal**: toda segunda-feira o sistema baixa os textos
-compilados dos ~60 diplomas no `planalto.gov.br`, estrutura cada dispositivo, lê as
+compilados dos 64 diplomas no `planalto.gov.br`, estrutura cada dispositivo, lê as
 molduras e confronta com o catálogo — abrindo uma **issue** com o que divergir.
 
 É determinístico de ponta a ponta: sem IA, sem inferência: onde não há certeza, há
@@ -45,7 +45,7 @@ relatório para decisão humana. Acuidade jurídica continua sendo o valor centr
 
 ### O que já está pronto
 
-- [x] Registro de fontes (`data/fontes.json`): 63 diplomas, 70 rótulos, nenhum órfão
+- [x] Registro de fontes (`data/fontes.json`): 64 diplomas, 69 rótulos, nenhum órfão
 - [x] Coletor com detecção de codificação e **sentinela de frescor** por diploma
 - [x] Parser estrutural do texto compilado (dispositivo, pena, situação, anotação)
 - [x] Extrator de moldura compartilhado com o catálogo, para que os dois lados leiam
@@ -103,7 +103,36 @@ informação de que foi revogado, em vez de um erro.
 
 ---
 
+## v2.0.1 e v2.0.2 — o que a revisão deixou para trás
+
+Duas rodadas de correção depois de a v2.0.0 fechar, e as três valem como registro
+de método:
+
+- **O simulador não calcula benefício onde não há moldura.** Os quatro tipos com
+  `pena_por_remissao` entraram sem moldura — correto —, mas o simulador continuava
+  aberto sobre ela, e zero a zero faz caber todo benefício que depende de patamar de
+  pena. Agora esses registros listam os dispositivos de origem, navegáveis.
+- **Lei 15.487/2026**: o conferidor achou seis molduras do ECA divergindo do
+  compilado, e não era erro de cadastro — era lei nova agravando os crimes sexuais
+  contra criança e adolescente. Primeira vez que o robô encontra legislação nova.
+- **O conferidor deixou de inventar divergência** onde o catálogo já declara que a
+  moldura é de outro artigo (`pena_por_remissao` e dispositivos "c/c"). Catorze
+  registros de tempo de guerra do CPM haviam saído da conferência em silêncio; a
+  trava de cobertura os pegou, e `nao_localizado` voltou a zero. A rodada semanal
+  passou a ser quatro robôs nomeados — vigia, sentinela, auditor e arquivista.
+
+Com isso o catálogo tem **1.507 tipos** e **zero divergências** contra o compilado.
+
+---
+
 ## v2.1.0 — Catálogo de benefícios versionado em dados
+
+:::note[Frente de trabalho atual]
+É o que vem agora. A v2.0.x fechou a conferência do lado dos **tipos penais**; os
+**benefícios** continuam em código, e por isso são o único lado do sistema que
+ninguém vigia. Enquanto a Lei 15.402/2026 mexe nos patamares de progressão e a
+jurisprudência se move, a defasagem de um benefício não tem quem a acuse.
+:::
 
 Concluir o caminho aberto pela v1.1.0: tirar os benefícios do código e colocá-los em
 **JSON versionado**, como já ocorre com `crimes.json`. Enquanto isso não existe, o

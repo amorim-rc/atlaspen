@@ -5,7 +5,8 @@ Os dois defeitos travados aqui produziram, cada um, dezenas de achados falsos na
 primeira rodada — e falso positivo é o que mata um alerta semanal: em duas ou
 três semanas ninguém mais lê o relatório.
 """
-from conferir import chave, dispensado, moldura_catalogo
+from conferir import (chave, dispensado, moldura_catalogo,
+                      moldura_e_de_outro_dispositivo)
 
 
 class TestChave:
@@ -48,6 +49,37 @@ class TestChave:
     def test_sem_artigo(self):
         assert chave("") is None
         assert chave("Parágrafo único") is None
+
+    def test_c_c_corta_no_primeiro_artigo(self):
+        """"Art. 391 c/c art. 190, §1º" é o art. 391, não o §1º de ninguém.
+
+        O tipo de tempo de guerra do CPM tem moldura própria, derivada do artigo
+        de tempo de paz por um fator. Sem o corte, `_PAR` achava o "§1º" da
+        segunda metade e montava `Art. 391|§ 1º` — chave inexistente, e catorze
+        registros saíam da conferência como "não localizado".
+        """
+        assert chave("Art. 391 c/c art. 190, §1º") == "Art. 391|caput"
+        assert chave("Art. 405 c/c art. 242, §2º") == "Art. 405|caput"
+        assert chave("Art. 404 c/c art. 240, §6º-A") == "Art. 404|caput"
+
+
+class TestMolduraDeclaradaDeOutroDispositivo:
+    """O catálogo já disse que a pena não é deste artigo — não há o que conferir."""
+
+    def test_pena_por_remissao(self):
+        linha = {"artigo": "Art. 304",
+                 "pena_por_remissao": {"dispositivo_fonte": "CP, arts. 297 a 302"}}
+        assert moldura_e_de_outro_dispositivo(linha) == "pena_importada"
+
+    def test_c_c_e_derivada(self):
+        assert moldura_e_de_outro_dispositivo(
+            {"artigo": "Art. 405 c/c art. 242, §2º"}) == "pena_derivada"
+
+    def test_registro_comum_nao_declara_nada(self):
+        assert moldura_e_de_outro_dispositivo(
+            {"artigo": "Art. 121, caput", "pena_por_remissao": None}) is None
+        # "c/c" só conta como palavra: não pode casar dentro de outra.
+        assert moldura_e_de_outro_dispositivo({"artigo": "Art. 33, c/caput"}) is None
 
 
 class TestExcecoes:

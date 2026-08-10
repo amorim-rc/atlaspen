@@ -37,8 +37,21 @@ concurrency:
   group: conferidor
   cancel-in-progress: false
 
+# A rodada semanal são QUATRO robôs, não um. Antes eram passos de um job só, e o
+# log dizia apenas "conferidor falhou" — era preciso abrir a execução para saber
+# qual deles. Agora cada um é um job com nome próprio, e três correm em paralelo:
+# só o auditor depende dos snapshots que o vigia baixa.
+#
+#   vigia       — relê a moldura de cada tipo contra o compilado do Planalto
+#   sentinela   — varre o DOU atrás de lei penal nova e autônoma
+#   auditor     — hediondez, ação penal e nome do tipo (o que a pena não alcança)
+#   arquivista  — saúde da prosa: documento vencido ou que fala de algo que mudou
+#   triagem     — junta os quatro num relatório só e abre a issue da semana
 jobs:
-  conferir:
+  # ── vigia ────────────────────────────────────────────────────────────────
+  # O único que baixa páginas, e por isso o único de que os outros dependem.
+  vigia:
+    name: Vigia — moldura contra o compilado
     runs-on: ubuntu-latest
     outputs:
       codigo: ${{ steps.conferir.outputs.codigo }}
@@ -67,40 +80,6 @@ jobs:
           echo "codigo=$codigo" >> "$GITHUB_OUTPUT"
           if [ "$codigo" -ne 0 ] && [ "$codigo" -ne 3 ]; then exit "$codigo"; fi
 
-      # O ponto cego do conferidor é a lei penal NOVA e autônoma: diploma que
-      # ainda não está em fontes.json e, portanto, em página nenhuma que ele
-      # releia. O watcher do DOU cobre só isso. Falha aqui não derruba a rodada:
-      # o in.gov.br fora do ar não pode calar o relatório do catálogo.
-      - name: Olhar o DOU da semana
-        id: dou
-        continue-on-error: true
-        run: |
-          set +e
-          python3 scripts/crawler/dou_watcher.py --dias 8 > /dev/null
-          echo "codigo=$?" >> "$GITHUB_OUTPUT"
-
-      # Hediondez, ação penal, causas de aumento e nome do tipo: os campos que
-      # decidem benefício e que a conferência de PENAS não alcança.
-      - name: Auditar os campos de classificação
-        id: auditoria
-        continue-on-error: true
-        run: |
-          set +e
-          python3 scripts/crawler/auditar.py > /dev/null
-          echo "codigo=$?" >> "$GITHUB_OUTPUT"
-
-      # A prosa envelhece como o dado, e sem aviso: a convenção C7 do
-      # CONTRIBUTING ficou meses mandando o contrário do que o transformador
-      # faz. Aqui o documento vence por prazo OU porque algo de que ele fala
-      # mudou depois da última conferência.
-      - name: Verificar a saúde da documentação
-        id: docs
-        continue-on-error: true
-        run: |
-          set +e
-          python3 scripts/verificar_documentacao.py --saida crawler/relatorios/documentacao.md > /dev/null
-          echo "codigo=$?" >> "$GITHUB_OUTPUT"
-
       - name: Guardar relatório e snapshots
         if: always()
         uses: actions/upload-artifact@v5
@@ -111,14 +90,147 @@ jobs:
             crawler/snapshots/
           retention-days: 30
 
-      # A issue é o canal: chega sozinha, tem histórico e permite discutir cada
-      # achado em linha. Uma issue por rodada, para que a semana seja unidade de
-      # trabalho e o fechamento signifique "triado".
+  # ── sentinela ────────────────────────────────────────────────────────────
+  # O ponto cego do vigia é a lei penal NOVA e autônoma: diploma que ainda não
+  # está em fontes.json e, portanto, em página nenhuma que ele releia. Este job
+  # cobre só isso, e não depende de snapshot — ele lê o DOU, não o Planalto.
+  # Falha aqui não derruba a rodada: o in.gov.br fora do ar não pode calar o
+  # relatório do catálogo.
+  sentinela:
+    name: Sentinela — lei penal nova no DOU
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    outputs:
+      codigo: ${{ steps.dou.outputs.codigo }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - name: Olhar o DOU da semana
+        id: dou
+        run: |
+          set +e
+          python3 scripts/crawler/dou_watcher.py --dias 8 > /dev/null
+          echo "codigo=$?" >> "$GITHUB_OUTPUT"
+      - name: Guardar o relatório do DOU
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: sentinela-${{ github.run_number }}
+          path: crawler/relatorios/
+          if-no-files-found: ignore
+          retention-days: 30
+
+  # ── auditor ──────────────────────────────────────────────────────────────
+  # Hediondez, ação penal, causas de aumento e nome do tipo: os campos que
+  # decidem benefício e que a conferência de PENAS não alcança. Lê os snapshots
+  # que o vigia baixou — daí o `needs`.
+  auditor:
+    name: Auditor — hediondez, ação penal e nomes
+    needs: vigia
+    if: always() && needs.vigia.result == 'success'
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    permissions:
+      contents: read
+      actions: read          # baixar o artifact com os snapshots desta rodada
+    outputs:
+      codigo: ${{ steps.auditoria.outputs.codigo }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - name: Recuperar os snapshots da rodada
+        uses: actions/download-artifact@v5
+        with:
+          name: conferidor-${{ github.run_number }}
+          path: crawler/
+      - name: Auditar os campos de classificação
+        id: auditoria
+        run: |
+          set +e
+          python3 scripts/crawler/auditar.py > /dev/null
+          echo "codigo=$?" >> "$GITHUB_OUTPUT"
+      - name: Guardar o relatório da auditoria
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: auditor-${{ github.run_number }}
+          path: crawler/relatorios/auditoria-*.md
+          if-no-files-found: ignore
+          retention-days: 30
+
+  # ── arquivista ───────────────────────────────────────────────────────────
+  # A prosa envelhece como o dado, e sem aviso: a convenção C7 do CONTRIBUTING
+  # ficou meses mandando o contrário do que o transformador faz. Aqui o
+  # documento vence por prazo OU porque algo de que ele fala mudou depois da
+  # última conferência. Não depende de nada — só do repositório.
+  arquivista:
+    name: Arquivista — saúde da documentação
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    outputs:
+      codigo: ${{ steps.docs.outputs.codigo }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - name: Verificar a saúde da documentação
+        id: docs
+        run: |
+          set +e
+          python3 scripts/verificar_documentacao.py --saida crawler/relatorios/documentacao.md > /dev/null
+          echo "codigo=$?" >> "$GITHUB_OUTPUT"
+      - name: Guardar o relatório da documentação
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: arquivista-${{ github.run_number }}
+          path: crawler/relatorios/documentacao.md
+          if-no-files-found: ignore
+          retention-days: 30
+
+  # ── triagem ──────────────────────────────────────────────────────────────
+  # A issue é o canal: chega sozinha, tem histórico e permite discutir cada
+  # achado em linha. Uma issue por rodada, para que a semana seja unidade de
+  # trabalho e o fechamento signifique "triado". Junta o que os quatro
+  # produziram — e por isso roda mesmo se algum deles falhar.
+  triagem:
+    name: Triagem — a issue da semana
+    needs: [vigia, sentinela, auditor, arquivista]
+    if: always()
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+      actions: read          # baixar os artifacts dos quatro robôs
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Recuperar os relatórios dos quatro
+        uses: actions/download-artifact@v5
+        with:
+          pattern: '*-${{ github.run_number }}'
+          merge-multiple: true
+          path: recolhido/
+
+      # Os artifacts têm raízes diferentes (o do vigia guarda `relatorios/` e
+      # `snapshots/`; os outros guardam os arquivos soltos). Um `find` põe todos
+      # no mesmo lugar sem depender de qual veio de onde.
+      - name: Juntar os relatórios num lugar só
+        run: |
+          mkdir -p crawler/relatorios
+          find recolhido -name '*.md' -exec cp -f {} crawler/relatorios/ \; || true
+          ls -la crawler/relatorios/ || true
+
       - name: Abrir issue com os achados
         if: >-
-          steps.conferir.outputs.codigo == '3' || steps.dou.outputs.codigo == '3'
-          || steps.auditoria.outputs.codigo == '3'
-          || steps.docs.outputs.codigo == '3'
+          needs.vigia.outputs.codigo == '3' || needs.sentinela.outputs.codigo == '3'
+          || needs.auditor.outputs.codigo == '3'
+          || needs.arquivista.outputs.codigo == '3'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -156,7 +268,10 @@ jobs:
             --title "Conferidor: achados de $HOJE" --label conferidor --body-file corpo.md
 
       - name: Registrar que não houve achado
-        if: steps.conferir.outputs.codigo == '0' && steps.dou.outputs.codigo != '3'
+        if: >-
+          needs.vigia.outputs.codigo == '0' && needs.sentinela.outputs.codigo != '3'
+          && needs.auditor.outputs.codigo != '3'
+          && needs.arquivista.outputs.codigo != '3'
         run: echo "Catálogo em dia com o texto compilado e nada penal no DOU."
 
   # ── Carimbo da conferência e PR das correções mecânicas ───────────────────
@@ -167,9 +282,9 @@ jobs:
   # atualizada, e "conferido hoje, tudo certo" é justamente o caso que mais
   # importa registrar.
   propor:
-    needs: conferir
+    needs: vigia
     if: >-
-      needs.conferir.result == 'success'
+      needs.vigia.result == 'success'
       && (github.event_name != 'workflow_dispatch' || inputs.abrir_pr)
     runs-on: ubuntu-latest
     # O Environment é a trava SERVER-SIDE dos secrets do app: com a política de

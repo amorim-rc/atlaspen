@@ -10,14 +10,16 @@
       "ilegivel": "A LEI ESCREVEU A PENA E O PARSER NÃO LEU — lacuna a fechar",
       "nao_localizado": "o dispositivo do registro não foi achado no compilado"
     },
-    "gerado_em": "2026-08-04"
+    "gerado_em": "2026-08-10",
+    "recalibrado_em": "2026-08-10",
+    "por_que_subiu": "Recalibrado DE PROPOSITO, e nao por comodidade. A revisao da base (v2.0.0) criou 96 registros e o desdobramento por moldura-base fez a maioria deles ser derivada de outro artigo — dai pena_derivada de 85 para 152. pena_importada e sancao_nao_privativa sobem pelo campo pena_por_remissao, que passou a declarar o tipo cuja moldura vem de outro dispositivo. ilegivel sobe de 2 para 3 e continua sendo LACUNA A FECHAR, nao numero aceito: sao o par. unico do art. 68 da Lei 9.605, o art. 49 do DL 6.259 e o §2º do art. 5º da Lei 13.260, cuja pena a lei escreve e o parser nao le. nao_localizado permanece em ZERO: os 14 registros de tempo de guerra do CPM que haviam saido da conferencia voltaram quando o chave() passou a cortar no c/c."
   },
   "limites": {
-    "ilegivel": 2,
+    "ilegivel": 3,
     "nao_localizado": 0,
-    "pena_derivada": 85,
-    "pena_importada": 64,
-    "sancao_nao_privativa": 30,
-    "sem_preceito_proprio": 11
+    "pena_derivada": 152,
+    "pena_importada": 68,
+    "sancao_nao_privativa": 31,
+    "sem_preceito_proprio": 10
   }
 }

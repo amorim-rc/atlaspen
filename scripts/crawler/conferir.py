@@ -75,7 +75,15 @@ def chave(artigo: str) -> str | None:
     O catálogo desce ao inciso quando a conduta muda; a pena, porém, é do caput
     ou do parágrafo. Reduzir os dois lados à mesma granularidade é o que faz o
     casamento funcionar sem inventar divergência.
+
+    O "c/c" é cortado antes de tudo. "Art. 391 c/c art. 190, §1º" é um tipo de
+    tempo de guerra cuja moldura DERIVA do art. 190 por um fator do art. 391 —
+    não é o §1º de nenhum dos dois. Sem o corte, `_PAR` encontrava o "§1º" da
+    segunda metade e montava `Art. 391|§ 1º`, chave que não existe em lugar
+    nenhum: catorze registros saíam da conferência como "não localizado", que é
+    o silêncio que a trava de cobertura existe para pegar.
     """
+    artigo = re.split(r"\bc/c\b", artigo or "", maxsplit=1)[0]
     ma = _ART.search(artigo or "")
     if not ma:
         return None
@@ -433,8 +441,33 @@ MOTIVOS = {
 }
 
 
+def moldura_e_de_outro_dispositivo(linha: dict) -> str | None:
+    """O próprio catálogo já declara que a moldura não é deste artigo?
+
+    Dois casos, e nos dois conferir contra a letra do dispositivo produziria
+    divergência onde não há:
+
+    - `pena_por_remissao`: o tipo não comina moldura e importa a de outro
+      (art. 304 do CP, "a pena cominada à falsificação");
+    - `artigo` com **c/c**: tipo de tempo de guerra do CPM, cuja moldura é a de
+      outro artigo multiplicada por um fator (arts. 391, 404 e 405).
+
+    A regra é ler a declaração do catálogo em vez de adivinhar pelo texto da
+    lei. Quem declara de onde a pena vem está dizendo, com todas as letras, que
+    o artigo dele não a comina — e o conferidor não tem o que comparar.
+    """
+    if linha.get("pena_por_remissao"):
+        return "pena_importada"
+    if re.search(r"\bc/c\b", linha.get("artigo") or ""):
+        return "pena_derivada"
+    return None
+
+
 def _por_referencia(disp, linha: dict) -> str:
     """Por que este registro não foi conferido. Nunca "não sei"."""
+    declarado = moldura_e_de_outro_dispositivo(linha)
+    if declarado:
+        return declarado
     if not linha.get("tem_pena_privativa", True):
         return "sancao_nao_privativa"
     texto = f"{disp.pena_texto or ''} {disp.texto or ''}"
@@ -485,6 +518,19 @@ def cobertura(fontes: list[dict], indice: dict[str, dict[str, list[dict]]],
         da_lei = {d.chave: d for d in parsear(arquivos[-1].read_text(encoding="utf-8"))}
 
         for k, linhas in do_catalogo.items():
+            # Antes de procurar o dispositivo: quem DECLARA que a moldura é de
+            # outro artigo não é "não localizado" nem divergente — é um silêncio
+            # que o catálogo já explicou. Sem esta passagem, os tipos de tempo de
+            # guerra do CPM ("Art. 405 c/c art. 242, §2º") somavam ao número que
+            # mede o alcance real da conferência, como se fossem rótulo errado.
+            declaradas = [x for x in linhas if moldura_e_de_outro_dispositivo(x)]
+            for x in declaradas:
+                resultado["sem_moldura_na_lei"].append(
+                    (fonte["id"], k, x["id"], moldura_e_de_outro_dispositivo(x)))
+            linhas = [x for x in linhas if not moldura_e_de_outro_dispositivo(x)]
+            if not linhas:
+                continue
+
             disp = da_lei.get(k)
             if disp is None:
                 resultado["nao_localizado"] += [(fonte["id"], k, x["id"]) for x in linhas]
