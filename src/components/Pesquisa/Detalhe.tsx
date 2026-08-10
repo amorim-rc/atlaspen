@@ -92,6 +92,23 @@ export default function Detalhe({
       .sort((a, b) => a.artigo.localeCompare(b.artigo, 'pt-BR', {numeric: true}));
   }, [crime.id, crime.artigo, crime.lei, todos]);
 
+  // Os registros de onde a moldura vem, quando o tipo não comina a própria.
+  // Casam por PREFIXO do artigo: "Art. 297" alcança o caput, o §3º e o §4º,
+  // cada um com sua pena — que é justamente o motivo de o catálogo não publicar
+  // um número único aqui.
+  const fontesRemissao = useMemo(() => {
+    const rem = crime.pena_por_remissao;
+    if (!rem) return [];
+    return todos
+      .filter(
+        (x) =>
+          x.id !== crime.id &&
+          x.lei === rem.lei_fonte &&
+          rem.artigos_fonte.some((a) => x.artigo.startsWith(a)),
+      )
+      .sort((a, b) => a.artigo.localeCompare(b.artigo, 'pt-BR', {numeric: true}));
+  }, [crime.id, crime.pena_por_remissao, todos]);
+
   useEffect(() => {
     setCen(cenarioFromCrime(crime));
   }, [crime.id]);
@@ -143,7 +160,15 @@ export default function Detalhe({
         <div>
           <h3 className={styles.detalheTitulo}>{crime.crime}</h3>
           <div className={styles.detalheSub}>
-            {crime.artigo} · {crime.lei} · <strong>pena: {crime.pena_faixa_rotulo}</strong>
+            {crime.artigo} · {crime.lei} ·{' '}
+            {/* Sem moldura, o rótulo já é a frase inteira ("definida por
+                remissão a outro dispositivo"): prefixar "pena:" duplicaria a
+                palavra. Com moldura, o prefixo é o que dá sentido ao número. */}
+            <strong>
+              {crime.tem_pena_privativa
+                ? `pena: ${crime.pena_faixa_rotulo}`
+                : crime.pena_faixa_rotulo}
+            </strong>
           </div>
         </div>
         <div className={styles.detalheTags}>
@@ -227,11 +252,21 @@ export default function Detalhe({
           <p className={styles.simDica}>
             <strong>O cálculo de benefícios não é feito por este registro.</strong> Ele
             depende de qual dispositivo-fonte incide no caso concreto, e cada um tem
-            moldura própria. Abra o dispositivo aplicável em{' '}
-            {crime.pena_por_remissao.dispositivo_fonte} e simule por ele — partir daqui,
-            de uma moldura ausente, faria caber todo benefício que depende de patamar de
-            pena.
+            moldura própria. Abra abaixo o dispositivo aplicável e simule por ele —
+            partir daqui, de uma moldura ausente, faria caber todo benefício que depende
+            de patamar de pena.
           </p>
+          {fontesRemissao.length > 0 && (
+            <div className={styles.correlatosLista}>
+              {fontesRemissao.map((x) => (
+                <button key={x.id} className={styles.correlatoItem} onClick={() => onSelect(x.id)}>
+                  <span className={styles.correlatoArtigo}>{x.artigo}</span>
+                  <span className={styles.correlatoCrime}>{x.crime}</span>
+                  <span className={styles.correlatoPena}>{x.pena_faixa_rotulo}</span>
+                </button>
+              ))}
+            </div>
+          )}
         </div>
       )}
 
