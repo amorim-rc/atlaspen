@@ -12,10 +12,10 @@
       "fonte": "cp",
       "chave": "Art. 158|§ 3º",
       "ids": [
-        827,
-        828
+        817,
+        818
       ],
-      "motivo": "O § 3º comina a pena da restrição da liberdade (6 a 12 anos) e, para lesão grave ou morte, REMETE ao art. 159, §§ 2º e 3º. O catálogo expande a remissão em linhas próprias (16-24 e 24-30), porque o leitor precisa da moldura resolvida. O differ compara as três com a moldura do caput do § e acusa divergência — é artefato da remissão, não erro. A linha da moldura própria (id 116) segue conferida normalmente.",
+      "motivo": "O § 3º comina a pena da restrição da liberdade (6 a 12 anos) e, para lesão grave ou morte, REMETE ao art. 159, §§ 2º e 3º. O catálogo expande a remissão em linhas próprias (16-24 e 24-30), porque o leitor precisa da moldura resolvida. O differ compara as três com a moldura do caput do § e acusa divergência — é artefato da remissão, não erro. A linha da moldura própria (id 116) segue conferida normalmente. Ids remapeados em 10/08/2026 pelo reinicio da numeracao da v2.0.0 (eram 827, 828).",
       "data": "2026-07-30"
     },
     {
@@ -29,6 +29,15 @@
       "chave": "Art. 351|caput",
       "motivo": "Também equiparação: fotografia, filme e disco fonográfico contam como documento para os arts. 348 a 350. Não descreve conduta punível própria (id 1658, retirado na v1.4.0).",
       "data": "2026-07-31"
+    },
+    {
+      "fonte": "cpm",
+      "chave": "Art. 400|caput",
+      "ids": [
+        1456
+      ],
+      "motivo": "O caput do art. 400 NAO comina pena: ele descreve a conduta (\"praticar crime de homicidio em presenca do inimigo\") e cada inciso traz a sua moldura — o I remete ao caput do art. 205 (12 a 30 anos), o II e minorante (8 a 25 anos) e o III comina morte. O parser le a primeira \"Pena\" depois do caput, que e a do inciso I, e o differ compara os tres incisos com ela. O registro do inciso I (id 1280) segue conferido normalmente contra essa moldura; o do inciso III (id 1281) tem moldura de morte e nao colide. So o inciso II precisa da dispensa. Nao e defasagem: e a granularidade do parser, que para no paragrafo.",
+      "data": "2026-08-10"
     }
   ]
 }
