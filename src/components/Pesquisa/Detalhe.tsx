@@ -218,9 +218,24 @@ export default function Detalhe({
             )}
             .
           </p>
+          {/* O simulador parte da moldura do registro. Aqui não há moldura: com
+              0 a 0, TODO benefício que depende de patamar de pena passaria a
+              caber — menor potencial ofensivo, transação, prescrição em três
+              anos. É o mesmo resultado radicalmente favorável e errado que o
+              projeto evita nos dispositivos que já não vigoram. Por isso o
+              cálculo não é oferecido aqui, e sim no dispositivo-fonte. */}
+          <p className={styles.simDica}>
+            <strong>O cálculo de benefícios não é feito por este registro.</strong> Ele
+            depende de qual dispositivo-fonte incide no caso concreto, e cada um tem
+            moldura própria. Abra o dispositivo aplicável em{' '}
+            {crime.pena_por_remissao.dispositivo_fonte} e simule por ele — partir daqui,
+            de uma moldura ausente, faria caber todo benefício que depende de patamar de
+            pena.
+          </p>
         </div>
       )}
 
+      {!crime.pena_por_remissao && (
       <div className={styles.simulador}>
         <div className={styles.simColuna}>
           <h4 className={styles.simTitulo}>Pena cominada — simulação legislativa</h4>
@@ -297,15 +312,18 @@ export default function Detalhe({
           </div>
         </div>
       </div>
+      )}
 
-      <Dosimetria
-        crime={crime}
-        penaMin={cen.penaMin}
-        penaMax={cen.penaMax}
-        sel={sel}
-        setSel={setSel}
-        onPenaDefinitiva={setPenaDosimetria}
-      />
+      {!crime.pena_por_remissao && (
+        <Dosimetria
+          crime={crime}
+          penaMin={cen.penaMin}
+          penaMax={cen.penaMax}
+          sel={sel}
+          setSel={setSel}
+          onPenaDefinitiva={setPenaDosimetria}
+        />
+      )}
 
       {crime.tem_pena_privativa && (
         <div className={styles.concursosGrid}>
@@ -319,17 +337,21 @@ export default function Detalhe({
         </div>
       )}
 
-      <h4 className={styles.benefSecTitulo}>Benefícios penais — recálculo dinâmico</h4>
-      {grupos.map((g) => (
-        <div key={g} className={styles.benefGrupo}>
-          <div className={styles.benefGrupoTitulo}>{CATEGORIA_LABEL[g]}</div>
-          <div className={styles.benefGrid}>
-            {beneficios.filter((b) => b.categoria === g).map((b) => (
-              <BeneficioCard key={b.id} b={b} />
-            ))}
-          </div>
-        </div>
-      ))}
+      {!crime.pena_por_remissao && (
+        <>
+          <h4 className={styles.benefSecTitulo}>Benefícios penais — recálculo dinâmico</h4>
+          {grupos.map((g) => (
+            <div key={g} className={styles.benefGrupo}>
+              <div className={styles.benefGrupoTitulo}>{CATEGORIA_LABEL[g]}</div>
+              <div className={styles.benefGrid}>
+                {beneficios.filter((b) => b.categoria === g).map((b) => (
+                  <BeneficioCard key={b.id} b={b} />
+                ))}
+              </div>
+            </div>
+          ))}
+        </>
+      )}
 
       {correlatos.length > 0 && (
         <div className={styles.correlatos}>
