@@ -102,6 +102,32 @@ def chave(artigo: str) -> str | None:
     return f"{base}|{marcador}"
 
 
+def chaves_do_registro(artigo: str) -> list[str]:
+    """TODOS os dispositivos que compõem este registro, para o auditor de nomes.
+
+    `chave()` devolve um só — o que a conferência de PENAS precisa, porque a
+    moldura tem um dono. O NOME não: num registro "c/c", ele pode legitimamente
+    descrever qualquer um dos dois lados, e qual deles depende do diploma.
+
+    Nos tipos de tempo de guerra do CPM a ordem é *moldura c/c conduta*: "Art.
+    405 c/c art. 242, §3º" tem a pena no art. 405 e o latrocínio no art. 242. Na
+    Lei 7.643/87 é o contrário — "Art. 1º c/c Art. 2º" descreve a pesca de
+    cetáceo no art. 1º e vai buscar a pena no art. 2º.
+
+    Escolher um lado, portanto, acerta um diploma e erra o outro: foi o que
+    aconteceu ao tentar. A regra que se sustenta é não escolher — o nome
+    conversa com o registro se conversar com QUALQUER um dos dispositivos que o
+    compõem.
+    """
+    partes = [p for p in re.split(r"\bc/c\b", artigo or "") if p.strip()]
+    vistas: list[str] = []
+    for parte in partes:
+        k = chave(parte)
+        if k and k not in vistas:
+            vistas.append(k)
+    return vistas
+
+
 def carregar_excecoes() -> list[dict]:
     if not EXCECOES.exists():
         return []

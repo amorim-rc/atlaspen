@@ -41,7 +41,7 @@ RAIZ = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(RAIZ / "scripts"))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from conferir import SNAPSHOTS, chave  # noqa: E402
+from conferir import SNAPSHOTS, chave, chaves_do_registro  # noqa: E402
 from parsear import parsear  # noqa: E402
 from pena_parser import ler_penas  # noqa: E402
 from tempo import hoje  # noqa: E402
@@ -210,8 +210,14 @@ def auditar_hediondez(catalogo: list[dict]) -> list[dict]:
     # decidir. Sem isto elas viveriam só no arquivo, e a rodada semanal deixaria
     # de lembrar que existem: silêncio de novo confundido com "está tudo certo".
     for pend in tabela.get("pendentes", []):
+        # A pendência que já declara "ação: nenhuma" é limite conhecido, não
+        # coisa a fazer: grave 0, e a rodada não abre issue por causa dela. Ela
+        # continua IMPRESSA no relatório — o objetivo nunca foi escondê-la, foi
+        # parar de chamar o mantenedor para ler o que ele mesmo já decidiu.
+        declarada = (pend.get("acao") or "").strip().lower().startswith("nenhuma")
         achados.append({
-            "campo": "hediondez", "tipo": "PENDENCIA-DECLARADA", "gravidade": 1,
+            "campo": "hediondez", "tipo": "PENDENCIA-DECLARADA",
+            "gravidade": 0 if declarada else 1,
             "detalhe": f"{pend['fundamento']} — {pend['descricao']} "
                        f"(ação prevista: {pend['acao']})",
         })
@@ -501,20 +507,34 @@ def auditar_nomes(catalogo: list[dict], indice_fontes: dict) -> list[dict]:
     cache: dict[str, dict] = {}
     for registro in catalogo:
         fid = indice_fontes.get(registro["lei"])
-        k = chave(registro["artigo"])
-        if not fid or not k:
+        chaves = chaves_do_registro(registro["artigo"])
+        if not fid or not chaves:
             continue
         if fid not in cache:
             cache[fid] = dispositivos_de(fid)
-        d = cache[fid].get(k)
-        if d is None or d.citacao:
+        # Só o CAPUT: o parágrafo qualificado começa pela hipótese ("Se
+        # resulta:") e não repete a conduta, então não há o que comparar —
+        # comparar produzia cento e vinte acusações inúteis. Num registro
+        # "c/c" a exigência vale para os DOIS lados: se um deles é parágrafo,
+        # a conduta pode estar ali, e auditar só o outro compararia o nome com
+        # o dispositivo errado — foi assim que "Latrocínio (tempo de guerra)"
+        # era acusado contra a epígrafe do art. 405, "Roubo ou extorsão".
+        if not all(k.endswith("|caput") for k in chaves):
             continue
-        # Só o CAPUT: o parágrafo qualificado começa pela hipótese ("Se resulta:")
-        # e não repete a conduta, então não há o que comparar — comparar produzia
-        # cento e vinte acusações inúteis. E texto curto não sustenta comparação.
-        if not k.endswith("|caput") or len((d.texto or "")) < 60:
+        # Um registro "c/c" tem dois dispositivos, e o nome pode descrever
+        # qualquer um deles. Só é suspeito quem não conversa com NENHUM.
+        candidatos = []
+        for k in chaves:
+            d = cache[fid].get(k)
+            if d is None or d.citacao or len((d.texto or "")) < 60:
+                continue
+            candidatos.append(d)
+        if not candidatos:
             continue
-        alvo = _radicais(f"{d.epigrafe or ''} {d.texto or ''}")
+        d = candidatos[0]
+        alvo = set()
+        for c in candidatos:
+            alvo |= _radicais(f"{c.epigrafe or ''} {c.texto or ''}")
         nome = _radicais(registro["crime"])
         if not nome or not alvo:
             continue
@@ -556,28 +576,34 @@ def auditar_nomes_trocados(catalogo: list[dict], indice_fontes: dict) -> list[di
     cache: dict[str, dict] = {}
     for registro in catalogo:
         fid = indice_fontes.get(registro["lei"])
-        k = chave(registro["artigo"])
-        if not fid or not k:
+        chaves = chaves_do_registro(registro["artigo"])
+        if not fid or not chaves:
             continue
         if fid not in cache:
             cache[fid] = dispositivos_de(fid)
         disp = cache[fid]
+        k = chaves[0]
         proprio = disp.get(k)
         if proprio is None or proprio.citacao:
             continue
         # Só o CAPUT, pelo mesmo motivo de `auditar_nomes`: o parágrafo começa
         # pela hipótese ("Se resulta:") e não repete a conduta, então o nome do
         # registro nunca conversa com ele — e qualquer caput do diploma pareceria
-        # melhor. Comparar parágrafos produzia quarenta acusações inúteis.
-        if not k.endswith("|caput") or len(proprio.texto or "") < 60:
+        # melhor. Comparar parágrafos produzia quarenta acusações inúteis. No
+        # "c/c", a exigência vale para os dois lados.
+        if not all(c.endswith("|caput") for c in chaves) or len(proprio.texto or "") < 60:
             continue
         nome = _radicais(registro["crime"])
         if len(nome) < 3:
             continue                       # nome enxuto casa com qualquer coisa
-        meu = len(nome & _radicais(f"{proprio.epigrafe or ''} {proprio.texto or ''}"))
+        # O registro "c/c" se compara com os DOIS dispositivos que o compõem, e
+        # vale o melhor: o nome pode descrever a conduta de um ou do outro.
+        meu = max(
+            len(nome & _radicais(f"{d.epigrafe or ''} {d.texto or ''}"))
+            for d in (disp.get(c) for c in chaves) if d is not None)
         melhor, melhor_chave, melhor_texto = meu, None, ""
         for chave_outra, d in disp.items():
-            if chave_outra == k or d.citacao or d.situacao != "vigente":
+            if chave_outra in chaves or d.citacao or d.situacao != "vigente":
                 continue
             if not chave_outra.endswith("|caput") or len(d.texto or "") < 60:
                 continue
@@ -664,9 +690,24 @@ def montar_relatorio(achados: list[dict]) -> str:
     for a in achados:
         por_campo.setdefault(a["campo"], []).append(a)
 
-    L.append(f"**{len(achados)} achado(s)**: "
-             + ", ".join(f"{len(v)} em {TITULOS[k].split(' (')[0].lower()}"
-                         for k, v in sorted(por_campo.items())))
+    # "Achado" é o que pede ação. O resto é limite declarado, e chamar os dois
+    # pelo mesmo nome fazia o cabeçalho anunciar trabalho onde não há.
+    pedem = [a for a in achados if a.get("gravidade", 0) > 0]
+    limites = len(achados) - len(pedem)
+    if pedem:
+        por_campo_pedem: dict[str, int] = {}
+        for a in pedem:
+            por_campo_pedem[a["campo"]] = por_campo_pedem.get(a["campo"], 0) + 1
+        L.append(f"**{len(pedem)} achado(s) a rever**: "
+                 + ", ".join(f"{v} em {TITULOS[k].split(' (')[0].lower()}"
+                             for k, v in sorted(por_campo_pedem.items()))
+                 + (f" — mais {limites} limite(s) declarado(s), abaixo." if limites else ""))
+    else:
+        L.append(f"**Nada a rever.** Os {limites} item(ns) abaixo são limites "
+                 "declarados — registro fora do alcance da auditoria, hediondez que "
+                 "depende do caso, achado já julgado e pendência com ação prevista "
+                 "\"nenhuma\". Ficam impressos porque um limite que ninguém vê é "
+                 "indistinguível de um achado que nunca apareceu.")
     L.append("")
     for campo, itens in sorted(por_campo.items()):
         L += [f"### {TITULOS[campo]} — {len(itens)}", "",
@@ -741,7 +782,14 @@ def main() -> int:
         Path(args.json).write_text(json.dumps(achados, ensure_ascii=False, indent=2) + "\n",
                                    encoding="utf-8")
     print(relatorio)
-    return 3 if achados else 0
+    # Só o que PEDE AÇÃO decide o código de saída. Gravidade 0 é limite
+    # declarado — registro que sai fora do alcance, hediondez que depende do
+    # caso, achado já julgado, pendência com ação "nenhuma". Eles são impressos
+    # de propósito (um limite que ninguém vê é indistinguível de um achado que
+    # nunca apareceu), mas não podem abrir a issue da semana: uma issue que
+    # chega toda segunda sem nada a fazer ensina a não abrir a issue — e é
+    # justamente ela o único lugar onde o achado real apareceria.
+    return 3 if any(a.get("gravidade", 0) > 0 for a in achados) else 0
 
 
 if __name__ == "__main__":
