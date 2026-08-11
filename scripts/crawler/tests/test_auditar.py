@@ -274,3 +274,41 @@ class TestPenaImportadaPorRemissao:
         indice = self._diploma(monkeypatch, "Pena - detenção, de um a três anos.")
         assert not auditar.auditar_pena_por_remissao([self._linha(12, 36)], indice)
 
+
+
+class TestAchadoContraLimiteDeclarado:
+    """Nem tudo que o relatório imprime é coisa a fazer.
+
+    A auditoria imprime, de propósito, o que ela NÃO garante: registro fora do
+    alcance, hediondez que depende do caso, achado já julgado, pendência com
+    ação prevista "nenhuma". Isso é gravidade 0. Enquanto o código de saída
+    contava esses itens, a rodada semanal abria issue toda segunda sem nada a
+    rever — e uma issue que nunca tem trabalho ensina a não abrir a issue, que é
+    o único lugar onde o achado real apareceria.
+    """
+
+    LIMITE = {"campo": "hediondez", "tipo": "FORA-DE-ALCANCE", "gravidade": 0,
+              "detalhe": "386 registros fora desta auditoria"}
+    ACHADO = {"campo": "hediondez", "tipo": "HEDIONDEZ-DIVERGENTE", "gravidade": 2,
+              "id": 1, "lei": "CP", "artigo": "Art. 121", "detalhe": "catálogo diz Não"}
+
+    def _pede_acao(self, achados):
+        return any(a.get("gravidade", 0) > 0 for a in achados)
+
+    def test_so_limite_nao_pede_acao(self):
+        assert not self._pede_acao([self.LIMITE, dict(self.LIMITE, tipo="JA-JULGADO")])
+
+    def test_um_achado_no_meio_dos_limites_pede_acao(self):
+        assert self._pede_acao([self.LIMITE, self.ACHADO])
+
+    def test_cabecalho_nao_chama_limite_de_achado(self):
+        texto = auditar.montar_relatorio([self.LIMITE])
+        assert "Nada a rever" in texto
+        assert "limites declarados" in texto
+        # E continua imprimindo o item: esconder seria o defeito oposto.
+        assert "FORA-DE-ALCANCE" in texto
+
+    def test_cabecalho_conta_so_o_que_pede_acao(self):
+        texto = auditar.montar_relatorio([self.LIMITE, self.ACHADO])
+        assert "**1 achado(s) a rever**" in texto
+        assert "mais 1 limite(s) declarado(s)" in texto

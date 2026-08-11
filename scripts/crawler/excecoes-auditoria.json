@@ -113,6 +113,15 @@
       ],
       "motivo": "Dois casos da mesma causa — o rótulo do registro não é resolvível pelo parser. Nos incisos III a V do art. 100 do Estatuto da Pessoa Idosa, as condutas são deliberadamente próximas às dos arts. 97 e 101 (deixar de prestar assistência, descumprir ordem judicial): a diferença está no sujeito e no contexto, não no vocabulário, e a semelhança de palavras não indica troca. Nos arts. 391 c/c 191 do CPM a chave é composta ('c/c'), o parser não a encontra no compilado e casa com um artigo qualquer. As molduras dos cinco foram conferidas na revisão de 06/08/2026, independentemente do nome.",
       "data": "2026-08-06"
+    },
+    {
+      "tipo": "NOME-SUSPEITO",
+      "ids": [
+        868,
+        869
+      ],
+      "motivo": "Lei 14.597/23 (Lei Geral do Esporte), arts. 198 e 199. Os dois registros estao CERTOS, conferidos contra o compilado em 10/08/2026: o art. 198 pune \"solicitar ou aceitar vantagem... para alterar ou falsear o resultado de competicao esportiva\" (corrupcao passiva desportiva) e o art. 199 pune \"dar ou prometer vantagem\" com o mesmo fim (corrupcao ativa). A heuristica falha por construcao: o nomen juris e doutrinario e nao compartilha vocabulario com a descricao da conduta — o mesmo aconteceria com \"peculato\" contra \"apropriar-se de dinheiro\". Some-se que a Lei Geral do Esporte nao da epigrafe por artigo, so titulo de secao, e o comparador acaba lendo \"Dos Crimes contra a Incerteza do Resultado Esportivo\". Nao ha o que corrigir no dado.",
+      "data": "2026-08-10"
     }
   ]
 }

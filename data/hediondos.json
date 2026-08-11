@@ -11,16 +11,66 @@
     "ultima_alteracao_conhecida": "Lei 15.358/2026 (inciso VIII do parágrafo único — com o §3º do art. 2º vetado, ver `pendentes`) e Lei 15.384/2026 (inciso I-C)",
     "como_atualizar": "Quando o conferidor acusar mudança de impressão, reler os dois dispositivos no compilado, ajustar as regras abaixo e regravar `impressao_do_texto` com o valor que o relatório informar.",
     "criterio_de_identidade": "Identidade exige correspondência de CONDUTA e BEM JURÍDICO com a hipótese específica arrolada no art. 1º — não basta o nomen juris. Três razões: (a) a hediondez é consequência gravosa, e impô-la por leitura extensiva prejudica o réu; (b) o rol é taxativo e identifica crimes por dispositivo e, muitas vezes, por hipótese DENTRO do dispositivo — o roubo não é hediondo, são hediondas apenas as formas do art. 157, §2º, V, §2º-A, I, §2º-B e §3º; se bastasse o nome, todo roubo militar seria hediondo, invertendo a lógica do rol que o inciso VI manda espelhar; (c) o inciso VI é o único do rol que não remete a dispositivo, e por isso deve ser lido do modo mais estrito possível: ele não cria hipóteses, projeta as existentes. CONSEQUÊNCIA PRÁTICA: a comparação é hipótese a hipótese, não artigo a artigo — um artigo do CPM pode ter parágrafos com identidade e parágrafos sem. Matéria SEM jurisprudência consolidada do STF ou do STJ: o inciso é de 2023. É classificação argumentativa, não fato assentado.",
-    "impressao_por_que_mudou": "A impressão passou de f383fa3226b2b752 para 2730ff4423de579f na v1.8.0 SEM que o rol mudasse. A causa é o parser: o reconhecedor de artigo passou a consumir o marcador ordinal escrito como 'o' minúsculo ('Art. 1o'), que antes sobrava no início do texto — o caput do art. 1º era lido como 'o São considerados hediondos…'. O conteúdo dos dois dispositivos vigiados foi reconferido contra o compilado e é o mesmo. Registrado aqui porque uma mudança de impressão sem mudança de lei é exatamente o que este campo existe para NÃO deixar passar em silêncio: quem vir o valor novo precisa saber que ele foi reconferido, e por quê."
+    "impressao_por_que_mudou": "A impressão passou de f383fa3226b2b752 para 2730ff4423de579f na v1.8.0 SEM que o rol mudasse. A causa é o parser: o reconhecedor de artigo passou a consumir o marcador ordinal escrito como 'o' minúsculo ('Art. 1o'), que antes sobrava no início do texto — o caput do art. 1º era lido como 'o São considerados hediondos…'. O conteúdo dos dois dispositivos vigiados foi reconferido contra o compilado e é o mesmo. Registrado aqui porque uma mudança de impressão sem mudança de lei é exatamente o que este campo existe para NÃO deixar passar em silêncio: quem vir o valor novo precisa saber que ele foi reconferido, e por quê.",
+    "ultima_releitura": {
+      "em": "2026-08-10",
+      "impressao_anterior": "2730ff4423de579f",
+      "o_que_mudou": "A Lei 15.487/2026 deu NOVA REDACAO ao inciso VII do paragrafo unico do art. 1o. Antes (Lei 14.811/2024) o inciso alcancava duas hipoteses do ECA — o §1o do art. 240 e o art. 241-B. Agora alcanca quatorze: o caput e os §§ 1o e 2o do art. 240; o caput e o paragrafo unico do art. 241; o caput e os §§ 1o e 3o do art. 241-A; o CAPUT do art. 241-B (os §§ 1o e 2o NAO entraram); o caput e os §§ 1o e 2o do art. 241-D; e o caput e o §1o do art. 244-A. O art. 241-C ficou de fora por inteiro. Cinco registros passaram de nao hediondo a hediondo (ids 455, 456, 457, 460 e 464) e o art. 241-C ganhou nota dizendo por que NAO e — sem ela, a proxima varredura o corrigiria por simetria com os vizinhos."
+    }
   },
-  "impressao_do_texto": "2730ff4423de579f",
+  "impressao_do_texto": "b275e2f206eade89",
   "regras": [
+    {
+      "fundamento": "CF, art. 5º, XLIII (equiparado)",
+      "lei": "Lei 13\\.260",
+      "artigo": "^Art\\. ",
+      "nota": "terrorismo"
+    },
+    {
+      "fundamento": "CF, art. 5º, XLIII (equiparado)",
+      "lei": "Lei 9\\.455",
+      "artigo": "^Art\\. 1º?(,\\s*(caput|[IVX]+))?$|^Art\\. 1º?, §[13]",
+      "nota": "tortura (caput, §1º e §3º). A OMISSÃO do §2º tem pena própria de detenção e equiparação controvertida — condicional"
+    },
+    {
+      "fundamento": "CF, art. 5º, XLIII (equiparado)",
+      "lei": "Lei 9\\.455",
+      "artigo": "^Art\\. 1º?, §2º",
+      "condicional": true,
+      "nota": "omissão perante a tortura: pena própria de detenção, e a doutrina diverge sobre estender a equiparação"
+    },
+    {
+      "fundamento": "CF, art. 5º, XLIII (equiparado)",
+      "lei": "Lei 11\\.343",
+      "artigo": "^Art\\. 33(, caput)?$|^Art\\. 33, §1º",
+      "nota": "tráfico: caput e §1º (e seus incisos). O §2º (induzimento ao uso) e o §3º (uso compartilhado) não são tráfico; o §4º é exceção jurisprudencial"
+    },
+    {
+      "fundamento": "CF, art. 5º, XLIII (equiparado)",
+      "lei": "Lei 11\\.343",
+      "artigo": "^Art\\. 34",
+      "condicional": true,
+      "nota": "maquinário: o STJ tem decisões nos dois sentidos sobre a equiparação — é escolha do projeto, não leitura de texto"
+    },
+    {
+      "fundamento": "CF, art. 5º, XLIII (equiparado)",
+      "lei": "Lei 11\\.343",
+      "artigo": "^Art\\. 36",
+      "nota": "financiamento do tráfico"
+    },
+    {
+      "fundamento": "CF, art. 5º, XLIII (equiparado)",
+      "lei": "Lei 11\\.343",
+      "artigo": "^Art\\. 37",
+      "condicional": true,
+      "nota": "informante/colaborador: a equiparação é reconhecida por parte da jurisprudência e negada por outra — decisão do projeto, não leitura de texto"
+    },
     {
       "fundamento": "Lei 8.072, art. 1º, I",
       "lei": "^CP$",
-      "artigo": "^Art\\. 121, §2º-D",
+      "artigo": "^Art\\. 121, caput",
       "condicional": true,
-      "nota": "o rol remete ao §2º; o §2º-D é parágrafo próprio, criado depois. Alcance a definir"
+      "nota": "só quando praticado em atividade típica de grupo de extermínio — circunstância do caso, não do tipo"
     },
     {
       "fundamento": "Lei 8.072, art. 1º, I",
@@ -31,9 +81,9 @@
     {
       "fundamento": "Lei 8.072, art. 1º, I",
       "lei": "^CP$",
-      "artigo": "^Art\\. 121, caput",
+      "artigo": "^Art\\. 121, §2º-D",
       "condicional": true,
-      "nota": "só quando praticado em atividade típica de grupo de extermínio — circunstância do caso, não do tipo"
+      "nota": "o rol remete ao §2º; o §2º-D é parágrafo próprio, criado depois. Alcance a definir"
     },
     {
       "fundamento": "Lei 8.072, art. 1º, I-A",
@@ -73,14 +123,33 @@
       "artigo": "^Art\\. 157, §3º"
     },
     {
+      "fundamento": "Lei 8.072, art. 1º, II, c (por identidade)",
+      "lei": "^CP$",
+      "artigo": "^Art\\. 157, §5º",
+      "condicional": true,
+      "nota": "latrocínio praticado por organização ultraviolenta: parágrafo criado depois do rol, que cita o §3º"
+    },
+    {
       "fundamento": "Lei 8.072, art. 1º, III",
       "lei": "^CP$",
       "artigo": "^Art\\. 158, §3º"
     },
     {
+      "fundamento": "Lei 8.072, art. 1º, III (por remissão)",
+      "lei": "^CP$",
+      "artigo": "^Art\\. 158, §2º",
+      "condicional": true,
+      "nota": "o §2º manda aplicar as penas do art. 157, §3º, que é hediondo; o rol, porém, cita o §3º do 158"
+    },
+    {
       "fundamento": "Lei 8.072, art. 1º, IV",
       "lei": "^CP$",
       "artigo": "^Art\\. 159"
+    },
+    {
+      "fundamento": "Lei 8.072, art. 1º, IX",
+      "lei": "^CP$",
+      "artigo": "^Art\\. 155, §4º-A"
     },
     {
       "fundamento": "Lei 8.072, art. 1º, V",
@@ -107,11 +176,6 @@
       "fundamento": "Lei 8.072, art. 1º, VIII",
       "lei": "^CP$",
       "artigo": "^Art\\. 218-B"
-    },
-    {
-      "fundamento": "Lei 8.072, art. 1º, IX",
-      "lei": "^CP$",
-      "artigo": "^Art\\. 155, §4º-A"
     },
     {
       "fundamento": "Lei 8.072, art. 1º, X",
@@ -160,85 +224,11 @@
       "nota": "só quando a organização é direcionada à prática de crime hediondo ou equiparado — circunstância do caso"
     },
     {
-      "fundamento": "Lei 8.072, art. 1º, § único, VII",
-      "lei": "^ECA$",
-      "artigo": "^Art\\. 240, §1º"
-    },
-    {
-      "fundamento": "Lei 8.072, art. 1º, § único, VII",
-      "lei": "^ECA$",
-      "artigo": "^Art\\. 241-B"
-    },
-    {
-      "fundamento": "Lei 8.072, art. 1º, § único, VIII",
-      "lei": "Lei 15\\.358",
-      "artigo": "^Art\\. 2º, caput",
-      "nota": "domínio social estruturado. O inciso declara hediondos 'o caput e os §§ 1º e 3º do art. 2º': o §1º é causa de aumento sobre este caput e o §3º foi VETADO — ver `pendentes`"
-    },
-    {
-      "fundamento": "Lei 8.072, art. 1º, § único, VIII",
-      "lei": "Lei 15\\.358",
-      "artigo": "^Art\\. 3º",
-      "nota": "favorecimento ao domínio social estruturado"
-    },
-    {
-      "fundamento": "CF, art. 5º, XLIII (equiparado)",
-      "lei": "Lei 9\\.455",
-      "artigo": "^Art\\. 1º?(,\\s*(caput|[IVX]+))?$|^Art\\. 1º?, §[13]",
-      "nota": "tortura (caput, §1º e §3º). A OMISSÃO do §2º tem pena própria de detenção e equiparação controvertida — condicional"
-    },
-    {
-      "fundamento": "CF, art. 5º, XLIII (equiparado)",
-      "lei": "Lei 13\\.260",
-      "artigo": "^Art\\. ",
-      "nota": "terrorismo"
-    },
-    {
-      "fundamento": "CF, art. 5º, XLIII (equiparado)",
-      "lei": "Lei 11\\.343",
-      "artigo": "^Art\\. 33(, caput)?$|^Art\\. 33, §1º",
-      "nota": "tráfico: caput e §1º (e seus incisos). O §2º (induzimento ao uso) e o §3º (uso compartilhado) não são tráfico; o §4º é exceção jurisprudencial"
-    },
-    {
-      "fundamento": "CF, art. 5º, XLIII (equiparado)",
-      "lei": "Lei 11\\.343",
-      "artigo": "^Art\\. 36",
-      "nota": "financiamento do tráfico"
-    },
-    {
-      "fundamento": "CF, art. 5º, XLIII (equiparado)",
-      "lei": "Lei 11\\.343",
-      "artigo": "^Art\\. 37",
+      "fundamento": "Lei 8.072, art. 1º, § único, VI (identidade com o CPM)",
+      "lei": "^CPM",
+      "artigo": "^Art\\. 205, §2º",
       "condicional": true,
-      "nota": "informante/colaborador: a equiparação é reconhecida por parte da jurisprudência e negada por outra — decisão do projeto, não leitura de texto"
-    },
-    {
-      "fundamento": "CF, art. 5º, XLIII (equiparado)",
-      "lei": "Lei 11\\.343",
-      "artigo": "^Art\\. 34",
-      "condicional": true,
-      "nota": "maquinário: o STJ tem decisões nos dois sentidos sobre a equiparação — é escolha do projeto, não leitura de texto"
-    },
-    {
-      "fundamento": "CF, art. 5º, XLIII (equiparado)",
-      "lei": "Lei 9\\.455",
-      "artigo": "^Art\\. 1º?, §2º",
-      "condicional": true,
-      "nota": "omissão perante a tortura: pena própria de detenção, e a doutrina diverge sobre estender a equiparação"
-    },
-    {
-      "fundamento": "Lei 8.072, art. 1º, III (por remissão)",
-      "lei": "^CP$",
-      "artigo": "^Art\\. 158, §2º",
-      "condicional": true,
-      "nota": "o §2º manda aplicar as penas do art. 157, §3º, que é hediondo; o rol, porém, cita o §3º do 158"
-    },
-    {
-      "fundamento": "Lei 8.072, art. 1º, II, c (por identidade)",
-      "lei": "^CP$",
-      "artigo": "^Art\\. 157, §5º",
-      "condicional": true,
-      "nota": "latrocínio praticado por organização ultraviolenta: parágrafo criado depois do rol, que cita o §3º"
+      "nota": "homicídio qualificado militar. Os incisos I a V e VII têm correspondente direto no art. 121, §2º do CP; o inciso VI (prevalecendo-se o agente da situação de serviço) NÃO tem — é hipótese própria do CPM, e nela não há o que projetar. Como o catálogo tem um registro só para o §2º inteiro, a identidade depende do inciso do caso"
     },
     {
       "fundamento": "Lei 8.072, art. 1º, § único, VI (identidade com o CPM)",
@@ -253,11 +243,100 @@
       "nota": "extorsão mediante sequestro — o inciso IV do art. 1º abrange o art. 159 do CP em todas as formas, de modo que a figura simples do CPM tem correspondente na figura simples arrolada. A pena militar (6 a 15 anos) é menor que a do art. 159 (8 a 15): assimetria da mesma natureza da que fundamentou a ADI 7555, sem ação julgada"
     },
     {
-      "fundamento": "Lei 8.072, art. 1º, § único, VI (identidade com o CPM)",
-      "lei": "^CPM",
-      "artigo": "^Art\\. 205, §2º",
-      "condicional": true,
-      "nota": "homicídio qualificado militar. Os incisos I a V e VII têm correspondente direto no art. 121, §2º do CP; o inciso VI (prevalecendo-se o agente da situação de serviço) NÃO tem — é hipótese própria do CPM, e nela não há o que projetar. Como o catálogo tem um registro só para o §2º inteiro, a identidade depende do inciso do caso"
+      "fundamento": "Lei 8.072, art. 1º, § único, VII",
+      "lei": "^ECA$",
+      "artigo": "^Art\\. 240$",
+      "nota": "redação dada pela Lei 15.487/2026 — caput"
+    },
+    {
+      "fundamento": "Lei 8.072, art. 1º, § único, VII",
+      "lei": "^ECA$",
+      "artigo": "^Art\\. 240, §1º",
+      "nota": "redação dada pela Lei 15.487/2026 — § 1º (incisos I e II)"
+    },
+    {
+      "fundamento": "Lei 8.072, art. 1º, § único, VII",
+      "lei": "^ECA$",
+      "artigo": "^Art\\. 240, §2º",
+      "nota": "redação dada pela Lei 15.487/2026 — § 2º"
+    },
+    {
+      "fundamento": "Lei 8.072, art. 1º, § único, VII",
+      "lei": "^ECA$",
+      "artigo": "^Art\\. 241$",
+      "nota": "redação dada pela Lei 15.487/2026 — caput"
+    },
+    {
+      "fundamento": "Lei 8.072, art. 1º, § único, VII",
+      "lei": "^ECA$",
+      "artigo": "^Art\\. 241, par",
+      "nota": "redação dada pela Lei 15.487/2026 — parágrafo único"
+    },
+    {
+      "fundamento": "Lei 8.072, art. 1º, § único, VII",
+      "lei": "^ECA$",
+      "artigo": "^Art\\. 241-A$",
+      "nota": "redação dada pela Lei 15.487/2026 — caput"
+    },
+    {
+      "fundamento": "Lei 8.072, art. 1º, § único, VII",
+      "lei": "^ECA$",
+      "artigo": "^Art\\. 241-A, §1º",
+      "nota": "redação dada pela Lei 15.487/2026 — § 1º"
+    },
+    {
+      "fundamento": "Lei 8.072, art. 1º, § único, VII",
+      "lei": "^ECA$",
+      "artigo": "^Art\\. 241-A, §3º",
+      "nota": "redação dada pela Lei 15.487/2026 — § 3º"
+    },
+    {
+      "fundamento": "Lei 8.072, art. 1º, § único, VII",
+      "lei": "^ECA$",
+      "artigo": "^Art\\. 241-B$",
+      "nota": "redação dada pela Lei 15.487/2026 — caput — os §§ 1º e 2º NÃO entraram"
+    },
+    {
+      "fundamento": "Lei 8.072, art. 1º, § único, VII",
+      "lei": "^ECA$",
+      "artigo": "^Art\\. 241-D$",
+      "nota": "redação dada pela Lei 15.487/2026 — caput"
+    },
+    {
+      "fundamento": "Lei 8.072, art. 1º, § único, VII",
+      "lei": "^ECA$",
+      "artigo": "^Art\\. 241-D, §1º",
+      "nota": "redação dada pela Lei 15.487/2026 — § 1º"
+    },
+    {
+      "fundamento": "Lei 8.072, art. 1º, § único, VII",
+      "lei": "^ECA$",
+      "artigo": "^Art\\. 241-D, §2º",
+      "nota": "redação dada pela Lei 15.487/2026 — § 2º"
+    },
+    {
+      "fundamento": "Lei 8.072, art. 1º, § único, VII",
+      "lei": "^ECA$",
+      "artigo": "^Art\\. 244-A$",
+      "nota": "redação dada pela Lei 15.487/2026 — caput"
+    },
+    {
+      "fundamento": "Lei 8.072, art. 1º, § único, VII",
+      "lei": "^ECA$",
+      "artigo": "^Art\\. 244-A, §1º",
+      "nota": "redação dada pela Lei 15.487/2026 — § 1º"
+    },
+    {
+      "fundamento": "Lei 8.072, art. 1º, § único, VIII",
+      "lei": "Lei 15\\.358",
+      "artigo": "^Art\\. 2º, caput",
+      "nota": "domínio social estruturado. O inciso declara hediondos 'o caput e os §§ 1º e 3º do art. 2º': o §1º é causa de aumento sobre este caput e o §3º foi VETADO — ver `pendentes`"
+    },
+    {
+      "fundamento": "Lei 8.072, art. 1º, § único, VIII",
+      "lei": "Lei 15\\.358",
+      "artigo": "^Art\\. 3º",
+      "nota": "favorecimento ao domínio social estruturado"
     }
   ],
   "excecoes": [
