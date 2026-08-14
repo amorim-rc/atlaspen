@@ -1,14 +1,16 @@
 ---
-title: Os quatro robôs
+title: Os robôs
 description: Como o SISPENAS descobre que a lei mudou — o que cada robô vigia, com que critério, e o que nenhum deles alcança.
 ---
 
-# Os quatro robôs
+# Os robôs
 
 Um catálogo de direito penal envelhece sozinho. A lei muda toda semana, e a
 defasagem não avisa: um registro errado tem a mesma aparência de um registro
-certo. A resposta do projeto a isso são **quatro rotinas automáticas** que rodam
-toda segunda-feira, às 5h de Brasília, cada uma vigiando uma coisa diferente.
+certo. A resposta do projeto a isso são **rotinas automáticas** que rodam toda
+segunda-feira, às 5h de Brasília, cada uma vigiando uma coisa diferente. Hoje são
+cinco, e cada uma tem nome próprio — o log diz qual falhou sem que ninguém precise
+abrir a execução.
 
 Esta página existe para que você possa **discordar dos critérios**. Todos eles
 são escolhas, várias são discutíveis, e quase todas já mudaram pelo menos uma vez
@@ -31,10 +33,12 @@ alteração automática do dado.
 | **Sentinela** | Nasceu lei penal que ainda não vigiamos? | A Seção 1 do Diário Oficial da União |
 | **Auditor** | Os campos que a pena não alcança estão certos? | Hediondez, ação penal, causas de aumento e nomes |
 | **Arquivista** | A prosa ainda descreve o sistema? | A documentação, contra os arquivos de que ela fala |
+| **Recenseador** | Existe lei penal que ninguém leu? | Todas as leis do ano, uma a uma (mensal) |
 
-Os três últimos correm em paralelo; só o Auditor espera, porque lê as páginas que
-o Vigia baixou. Se algum tiver o que dizer, nasce **uma issue por rodada**. Se
-todos se calarem, a rodada deixa só o carimbo de que a conferência aconteceu.
+Sentinela, Auditor e Arquivista correm em paralelo com o Vigia; só o Auditor espera,
+porque lê as páginas que o Vigia baixou. O Recenseador roda uma vez por mês, na
+primeira semana. Se algum tiver o que dizer, nasce **uma issue por rodada**. Se todos
+se calarem, a rodada deixa só o carimbo de que a conferência aconteceu.
 
 ---
 
@@ -146,24 +150,37 @@ tipificar", "para agravar a pena", "para tornar hediondo", "acrescenta o art.".
 O descartado sair nomeado é deliberado: três segundos de leitura, e a decisão do
 filtro fica auditável. Um corte que apaga o que cortou não pode ser conferido.
 
-### A conferência mensal — a defesa contra o silêncio
+---
 
-O sistema sabe quantos alarmes falsos gera. Do inverso não sabia nada: **uma lei
-penal que o filtro não pegasse não deixaria rastro em lugar nenhum.**
+## Recenseador — a lei que ninguém leu
 
-Uma vez por mês, **todas as leis do ano são baixadas uma a uma** e testadas contra
-o mesmo critério do Sentinela. As que cominam pena e não estão entre os diplomas
-vigiados viram lista de leitura — curta, porque vem com a ementa de cada uma.
+O Vigia é completo sobre o que conhece. O Sentinela cobre o que nasce. Fica ainda
+uma terceira pergunta, e é a mais desconfortável: **e o que já existia e nunca foi
+lido?**
+
+O sistema sabe quantos alarmes falsos gera — o descartado do Sentinela sai nomeado
+toda semana. Do inverso não sabia nada. Uma lei penal publicada que o filtro semanal
+não pegasse não deixaria rastro em lugar nenhum, e esse é o erro que custa meses de
+catálogo desatualizado justamente porque **não faz barulho**.
+
+Uma vez por mês, o Recenseador **baixa todas as leis do ano, uma a uma**, e testa
+cada uma contra o mesmo critério do Sentinela — o preceito secundário. As que cominam
+pena e não estão entre os diplomas vigiados viram lista de leitura, curta, com a
+ementa de cada uma ao lado.
 
 Não há índice a consultar: o portal de legislação do Planalto está atrás de proteção
-anti-bot e nenhum quadro por ano responde. Mas a página de cada lei responde, e a
-numeração é sequencial e nacional — então a enumeração é por sondagem, do primeiro ao
-último número do ano. Custa alguns minutos, uma vez por mês.
+anti-bot, e nenhum quadro por ano responde. Mas a página de cada lei responde, e a
+numeração das leis é sequencial e nacional — então a enumeração é feita por sondagem,
+do primeiro ao último número do ano, com o corte de ano vindo do cabeçalho que a
+própria lei declara. Custa alguns minutos, uma vez por mês.
 
-A varredura não conclui nada: cominar pena não é criar tipo penal novo, e a lei pode
-estar apenas alterando diploma que já acompanhamos. Ela aponta o que ninguém leu. E se
-não conseguir ler as leis, **não afirma nada** — reportar "nenhuma ficou de fora" sem
-ter lido a fonte seria produzir exatamente o silêncio que ela existe para quebrar.
+:::note[Ele aponta, não conclui]
+Cominar pena **não é** criar tipo penal novo: a lei pode estar apenas alterando um
+diploma que já acompanhamos, ou repetindo preceito. O Recenseador diz que a lei
+existe e que ninguém a leu — quem decide se ela entra é gente. E, se não conseguir
+ler as leis, **não afirma nada**: reportar "nenhuma ficou de fora" sem ter lido a
+fonte seria produzir exatamente o silêncio que ele existe para quebrar.
+:::
 
 ---
 
@@ -234,7 +251,7 @@ fazia, e o prazo do documento nem havia corrido.
 
 ---
 
-## O que nenhum dos quatro alcança
+## O que nenhum deles alcança
 
 Declarar o limite vale mais que fingir cobertura.
 
@@ -246,6 +263,13 @@ de vulnerável praticado por militar para o art. 217-A do Código Penal. Três
 registros afetados, **nenhum ato no DOU**. O Sentinela jamais veria. É a lacuna
 mais séria que resta, e vai exigir robô próprio — para o **STF**, o **STJ** e o
 **STM**, que é quem julga os 393 registros militares do catálogo. Está no roadmap.
+
+**O tipo penal antigo que nunca foi cadastrado, e o que morreu sem aviso.** O
+Recenseador varre o ano corrente; a legislação penal brasileira tem quase dois
+séculos. Existe tipo em lei esparsa antiga que o catálogo nunca viu, e existe tipo
+que foi revogado sem que ninguém percebesse — e este segundo é pior, porque um crime
+revogado que continua publicado afirma que a conduta é punível quando ela não é. O
+**Curador** é o robô previsto para isso, e está no roadmap junto com os tribunais.
 
 **Revogação tácita.** Lei posterior que regula inteiramente a matéria revoga a
 anterior sem dizê-lo (LINDB, art. 2º, §1º), e não há sinal textual para isso. A
