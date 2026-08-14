@@ -151,12 +151,19 @@ filtro fica auditável. Um corte que apaga o que cortou não pode ser conferido.
 O sistema sabe quantos alarmes falsos gera. Do inverso não sabia nada: **uma lei
 penal que o filtro não pegasse não deixaria rastro em lugar nenhum.**
 
-Uma vez por mês, a lista de leis sancionadas do ano é confrontada com o que o
-Sentinela examinou, e o que sobra é a lista de leis que ninguém olhou. Ela não
-classifica — não diz se a lei é penal, diz que existe e que o filtro não a
-examinou. E se a lista não puder ser lida, não afirma nada: reportar "nenhuma
-ficou de fora" sem ter lido a fonte seria produzir exatamente o silêncio que ela
-existe para quebrar.
+Uma vez por mês, **todas as leis do ano são baixadas uma a uma** e testadas contra
+o mesmo critério do Sentinela. As que cominam pena e não estão entre os diplomas
+vigiados viram lista de leitura — curta, porque vem com a ementa de cada uma.
+
+Não há índice a consultar: o portal de legislação do Planalto está atrás de proteção
+anti-bot e nenhum quadro por ano responde. Mas a página de cada lei responde, e a
+numeração é sequencial e nacional — então a enumeração é por sondagem, do primeiro ao
+último número do ano. Custa alguns minutos, uma vez por mês.
+
+A varredura não conclui nada: cominar pena não é criar tipo penal novo, e a lei pode
+estar apenas alterando diploma que já acompanhamos. Ela aponta o que ninguém leu. E se
+não conseguir ler as leis, **não afirma nada** — reportar "nenhuma ficou de fora" sem
+ter lido a fonte seria produzir exatamente o silêncio que ela existe para quebrar.
 
 ---
 
@@ -237,7 +244,8 @@ o catálogo com a mesma força de uma lei revogadora: a ADI 7555 tornou
 inconstitucional o §3º do art. 232 do Código Penal Militar e deslocou o estupro
 de vulnerável praticado por militar para o art. 217-A do Código Penal. Três
 registros afetados, **nenhum ato no DOU**. O Sentinela jamais veria. É a lacuna
-mais séria que resta, e está no roadmap.
+mais séria que resta, e vai exigir robô próprio — para o **STF**, o **STJ** e o
+**STM**, que é quem julga os 393 registros militares do catálogo. Está no roadmap.
 
 **Revogação tácita.** Lei posterior que regula inteiramente a matéria revoga a
 anterior sem dizê-lo (LINDB, art. 2º, §1º), e não há sinal textual para isso. A

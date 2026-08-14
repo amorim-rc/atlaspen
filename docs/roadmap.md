@@ -125,6 +125,38 @@ Com isso o catálogo tem **1.507 tipos** e **zero divergências** contra o compi
 
 ---
 
+## v2.4.0 — O robô dos tribunais
+
+A lacuna que a v2.0.6 declarou e não fechou. **Decisão de tribunal superior muda o
+catálogo com a mesma força de uma lei revogadora, e não passa pelo Diário Oficial,
+Seção 1** — é publicada no Diário da Justiça. A ADI 7555 declarou inconstitucional o
+§ 3º do art. 232 do CPM e deslocou o estupro de vulnerável praticado por militar para o
+art. 217-A do CP: três registros afetados, nenhum ato no DOU. O Sentinela jamais veria.
+
+Exige robô próprio, e são **três tribunais**, não um:
+
+- **STF** — controle concentrado (ADI, ADPF, ADC) com objeto penal, e a modulação de
+  efeitos, que é o que define a data de corte do registro;
+- **STJ** — súmula e recurso repetitivo em matéria penal, que fixam a interpretação
+  que o catálogo publica nos campos condicionais;
+- **STM** — a jurisdição militar, que o catálogo cobre com 393 registros do CPM e hoje
+  não vigia de lado nenhum.
+
+- [ ] Fonte de acompanhamento por tribunal, com o mesmo desenho das demais: sentinela
+      de página fresca e digital do texto
+- [ ] Reconhecer o dispositivo afetado no acórdão e casá-lo com o registro
+- [ ] Ler a MODULAÇÃO: *ex tunc*, *ex nunc* ou data fixada — é ela que decide o
+      `vigencia_ate`, e a regra geral não serve (a ADI 7555 modulou a não recepção)
+- [ ] Nunca alterar dado: o achado vira issue, como nos outros quatro
+
+:::note[Por que não é urgente, e ainda assim é o próximo passo estrutural]
+O volume é pequeno — decisão penal com efeito erga omnes é rara —, e por isso a
+revisão manual dá conta enquanto não houver robô. Mas o modo de falhar é o pior que
+existe aqui: silencioso, e sobre registro que continua parecendo certo.
+:::
+
+---
+
 ## v2.1.0 — Catálogo de benefícios versionado em dados
 
 :::note[Frente de trabalho atual]
