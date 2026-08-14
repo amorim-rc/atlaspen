@@ -7,11 +7,14 @@ vigie. Este módulo cobre exatamente esse ponto cego, e nada além dele.
 
 Como funciona, em três passos:
 
-1. **Só atos normativos.** A Seção 1 publica ~330 atos por dia, e mais de 90%
-   são portaria e despacho, que não criam crime (legalidade estrita: só lei em
-   sentido formal). Restam ~5 por semana — poucos o bastante para baixar o
-   texto INTEGRAL de cada um, em vez de filtrar pelo resumo truncado que a
-   listagem traz.
+1. **Só lei ordinária e lei complementar.** A Seção 1 publica ~330 atos por dia,
+   e mais de 90% são portaria e despacho. Pelo princípio da RESERVA LEGAL (CF,
+   art. 5º, XXXIX; CP, art. 1º), só essas duas espécies criam tipo penal — nem
+   medida provisória (vedada pelo art. 62, §1º, I, "b"), nem lei delegada, nem
+   decreto-lei (espécie extinta em 1988), nem emenda constitucional (que manda
+   criminalizar, não criminaliza). Restam pouquíssimos por semana — poucos o
+   bastante para baixar o texto INTEGRAL de cada um, em vez de filtrar pelo
+   resumo truncado que a listagem traz.
 2. **Triagem em três níveis, pelo PRECEITO SECUNDÁRIO** — a fórmula "Pena -",
    "reclusão, de", "detenção, de". Um ato que fale de pena sem cominar nenhuma
    não cria nem altera crime. Ver `classificar`.
@@ -70,11 +73,26 @@ PAUSA = 1.2                      # s entre requisições: ~15 por rodada
 # Seção 1 e sua edição EXTRA — é na extra que sai a lei sancionada às pressas.
 SECOES = ("do1", "do1e")
 
-# Espécies que podem criar ou revogar crime. Decreto e portaria não podem
-# (art. 5º, XXXIX, da Constituição), e é o que faz o volume desabar.
-ESPECIES = re.compile(
-    r"^(Lei|Lei\s+Complementar|Lei\s+Delegada|Medida\s+Provis[óo]ria|"
-    r"Decreto-Lei|Emenda\s+Constitucional)$", re.IGNORECASE)
+# Espécies que podem criar ou revogar tipo penal. São DUAS, pelo princípio da
+# reserva legal (CF, art. 5º, XXXIX; CP, art. 1º): lei ordinária e lei
+# complementar. É esse corte que faz o volume desabar — mais de 90% da Seção 1 é
+# portaria e despacho.
+#
+# O que SAIU desta lista em 14/08/2026, e por quê:
+#
+# - **Medida provisória.** A CF, art. 62, §1º, I, "b", veda MP sobre direito
+#   penal. Ela ficava aqui por um argumento de desenho — "o watcher registra o
+#   que foi publicado, não julga constitucionalidade" —, e o argumento não se
+#   sustenta contra a reserva legal: MP não gera tipo penal, ponto. Vigiar por
+#   ela era vigiar o que não pode existir, e as três MPs da primeira rodada real
+#   entraram e foram descartadas uma a uma.
+# - **Lei delegada.** A delegação não alcança direitos individuais (CF, art. 68,
+#   §1º, II), e matéria penal é deles.
+# - **Decreto-lei.** A espécie não existe desde 1988: os que há são anteriores, e
+#   nenhum novo será publicado. Vigiar por ela é esperar o que não vem.
+# - **Emenda constitucional.** Não cria tipo penal — os arts. 5º, XLI a XLIII,
+#   são mandados de criminalização, dirigidos ao legislador ordinário.
+ESPECIES = re.compile(r"^(Lei|Lei\s+Complementar)$", re.IGNORECASE)
 
 # O vocabulário de treze termos SAIU em 11/08/2026, e a razão é aritmética. Ele
 # existia para decidir quais dos ~16 atos normativos de uma quinzena mereciam a
@@ -410,12 +428,11 @@ def montar_relatorio(candidatas: list[dict], inicio: date, fim: date) -> str:
         return "\n".join(L) + "\n"
 
     if not ler:
-        L += [f"**Nada a ler.** {len(descartados)} ato(s) tocaram em matéria penal de "
-              "algum modo e nenhum trouxe preceito secundário — a lista está no fim, "
-              "para conferência.", ""]
+        L += [f"**Nada a ler.** {len(descartados)} ato(s) normativo(s) na janela, "
+              "e nenhum comina pena — a lista está no fim, para conferência.", ""]
     else:
-        L += [f"**{len(ler)}** ato(s) a olhar, de {len(candidatas)} que tocaram em "
-              "matéria penal. O corte é o **preceito secundário**: um ato que fale de "
+        L += [f"**{len(ler)}** ato(s) a olhar, de {len(candidatas)} ato(s) "
+              "normativo(s) na janela. O corte é o **preceito secundário**: um ato que fale de "
               "pena sem cominar nenhuma não cria nem altera crime.", ""]
 
     for nivel in ("novo", "monitorado"):
@@ -452,8 +469,9 @@ def montar_relatorio(candidatas: list[dict], inicio: date, fim: date) -> str:
     # Uma linha por ato custa três segundos de leitura e mantém o corte auditável.
     if descartados:
         L += [f"### Descartados — {len(descartados)}", "",
-              "Tocaram em matéria penal e não trouxeram preceito secundário. "
-              "Ficam aqui nomeados, não escondidos:", ""]
+              "Atos normativos que não cominam pena. Todo ato das espécies "
+              "aceitas é baixado por inteiro e classificado — não há filtro "
+              "antes da leitura. Ficam aqui nomeados, não escondidos:", ""]
         for c in descartados:
             cit = f" (cita {', '.join(c['diplomas_citados'])})" if c["diplomas_citados"] else ""
             L.append(f"- [{c['titulo']}]({c['url']}) — {c['porque']}{cit}")

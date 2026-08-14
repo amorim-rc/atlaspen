@@ -201,3 +201,36 @@ class TestRelatorio:
         texto = montar_relatorio(achadas, date(2026, 5, 15), date(2026, 5, 22))
         assert "Descartados" in texto
         assert "Sentinelas a conferir" in texto
+
+
+class TestReservaLegal:
+    """Só lei ordinária e lei complementar criam tipo penal (CF, art. 5º, XXXIX).
+
+    O corte por espécie não é economia de requisição — é direito. Vigiar medida
+    provisória era vigiar o que a Constituição proíbe que exista (art. 62, §1º,
+    I, "b"), e as três MPs da primeira rodada real entraram só para serem
+    descartadas uma a uma.
+    """
+
+    def _passa(self, especie):
+        from dou_watcher import ESPECIES
+        return bool(ESPECIES.match(especie))
+
+    def test_as_duas_que_criam_crime(self):
+        assert self._passa("Lei")
+        assert self._passa("Lei Complementar")
+
+    def test_medida_provisoria_nao_entra(self):
+        assert not self._passa("Medida Provisória")
+
+    def test_as_demais_especies_tambem_nao(self):
+        # Lei delegada: a delegação não alcança direitos individuais (art. 68,
+        # §1º, II). Decreto-lei: espécie extinta em 1988. Emenda: manda
+        # criminalizar, não criminaliza.
+        assert not self._passa("Lei Delegada")
+        assert not self._passa("Decreto-Lei")
+        assert not self._passa("Emenda Constitucional")
+
+    def test_portaria_e_decreto_seguem_de_fora(self):
+        assert not self._passa("Portaria")
+        assert not self._passa("Decreto")
