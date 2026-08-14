@@ -1,18 +1,27 @@
 // Utilidades de formatação de pena (valores em MESES).
 
+/**
+ * Anos, meses e DIAS — nessa ordem, e sem arredondar.
+ *
+ * A versão anterior fazia `Math.round(meses)`, e com isso a pena de 5 meses e
+ * 13 dias aparecia como "5 meses": os treze dias sumiam da tela depois de terem
+ * sido calculados com cuidado. Pena penal se conta em dia (art. 11 do CP), e o
+ * dia é a unidade que decide prescrição, progressão e detração.
+ */
 export function formatPena(meses: number | null | undefined): string {
   if (meses === null || meses === undefined || Number.isNaN(meses)) return '—';
   if (meses <= 0) return '—';
-  if (meses < 1) {
-    const dias = Math.round(meses * 30);
-    return `${dias} ${dias === 1 ? 'dia' : 'dias'}`;
-  }
-  const m = Math.round(meses);
-  const anos = Math.floor(m / 12);
-  const rem = m % 12;
-  if (anos === 0) return `${rem} ${rem === 1 ? 'mês' : 'meses'}`;
-  if (rem === 0) return `${anos} ${anos === 1 ? 'ano' : 'anos'}`;
-  return `${anos} ${anos === 1 ? 'ano' : 'anos'} e ${rem} ${rem === 1 ? 'mês' : 'meses'}`;
+  const totalDias = Math.trunc(meses * 30 + 1e-9);
+  const anos = Math.floor(totalDias / 360);
+  const m = Math.floor((totalDias % 360) / 30);
+  const d = totalDias % 30;
+  const partes: string[] = [];
+  if (anos) partes.push(`${anos} ${anos === 1 ? 'ano' : 'anos'}`);
+  if (m) partes.push(`${m} ${m === 1 ? 'mês' : 'meses'}`);
+  if (d) partes.push(`${d} ${d === 1 ? 'dia' : 'dias'}`);
+  if (!partes.length) return '—';
+  if (partes.length === 1) return partes[0];
+  return `${partes.slice(0, -1).join(', ')} e ${partes[partes.length - 1]}`;
 }
 
 export function formatPenaCurta(meses: number | null | undefined): string {

@@ -83,3 +83,52 @@ class TestRevogacaoTotal:
     @pytest.mark.parametrize("ultimo, esperado", [(2023, False), (1998, True), (None, True)])
     def test_envelhecimento(self, ultimo, esperado):
         assert revogacao.envelhecido(ultimo, 2026) is esperado
+
+
+class TestSilencioEPrazosNovos:
+    """O que a revisão de 11/08/2026 acrescentou."""
+
+    def test_silencio_da_lei_sao_45_dias(self):
+        """LINDB, art. 1º. Tratar silêncio como vigência imediata errava em 45
+        dias — e errava para o lado de publicar como vigente o que não é."""
+        v = analisar(
+            "LEI No 15.001, DE 10 DE JANEIRO DE 2026. Art. 2o Fica criado o crime.")
+        assert v.inicio == date(2026, 2, 24)
+        assert "45 dias" in v.clausula
+        assert not v.incerta
+
+    def test_vacatio_conta_o_dia_da_publicacao(self):
+        """LC 95/98, art. 8º, §1º: dia 1 é o da publicação, e a vigência começa
+        no dia subsequente ao fim do prazo — o que dá publicação + dias."""
+        v = analisar(
+            "LEI No 15.190, DE 8 DE AGOSTO DE 2025. Esta Lei entra em vigor após "
+            "decorridos 180 (cento e oitenta) dias de sua publicação oficial.")
+        assert v.inicio == date(2026, 2, 4)
+
+    def test_prazo_em_meses_conta_pelo_calendario(self):
+        v = analisar(
+            "LEI No 15.002, DE 15 DE MAIO DE 2026. Esta Lei entra em vigor após "
+            "decorridos 6 (seis) meses de sua publicação.")
+        assert v.inicio == date(2026, 11, 15)
+
+    def test_prazo_em_meses_nao_estoura_o_fim_do_mes(self):
+        v = analisar(
+            "LEI No 15.010, DE 31 DE JANEIRO DE 2026. Esta Lei entra em vigor após "
+            "decorridos 1 (um) meses de sua publicação.")
+        assert v.inicio == date(2026, 2, 28)
+
+    def test_exercicio_financeiro_seguinte(self):
+        v = analisar(
+            "LEI No 15.003, DE 20 DE JUNHO DE 2026. Esta Lei entra em vigor no "
+            "primeiro dia do exercício financeiro seguinte.")
+        assert v.inicio == date(2027, 1, 1)
+
+    def test_vigencia_escalonada_nao_inventa_uma_data(self):
+        """Duas datas no mesmo diploma: declarar a incerteza é o certo."""
+        v = analisar(
+            "LEI No 15.004, DE 1o DE JULHO DE 2026. Art. 5o Esta Lei entra em vigor: "
+            "I - na data de sua publicação, quanto ao art. 1o; II - após decorridos "
+            "180 (cento e oitenta) dias, quanto ao art. 2o.")
+        assert v.inicio is None
+        assert v.incerta
+        assert "escalonada" in v.clausula

@@ -93,10 +93,52 @@ Um registro = um tipo penal. **Não** entram no catálogo:
 - excludentes de ilicitude (art. 128, I e II, CP);
 - causas de extinção da punibilidade em si (art. 121, §5º — o perdão judicial é
   atributo do tipo, campo `perdao_judicial_previsto`, não um tipo);
-- regras de ação penal (art. 171, §5º, CP — isso é o campo `acao`).
+- regras de ação penal (art. 171, §5º, CP — isso é o campo `acao`);
+- **regras de punibilidade** ("é punível a calúnia contra os mortos", art. 138, §2º;
+  "a receptação é punível ainda que desconhecido o autor do crime de que proveio a
+  coisa", art. 180, §4º) — não cominam pena;
+- **extinção ou redução da punibilidade pela reparação do dano** (art. 312, §3º) — a
+  primeira metade é causa extintiva; só a segunda produz moldura, e é ela que vira
+  registro;
+- **efeitos da condenação** — perda do cargo, inabilitação (art. 92 do CP; DL 201/67,
+  art. 1º, §2º). Não é pena, é consequência;
+- **regras de presunção** (art. 236 do CPM) — definem elementar, não cominam nada;
+- **regras de conversão ou de execução da pena** (art. 9º, parágrafo único, da LCP:
+  conversão da multa em prisão simples). Parece moldura e não é — opera na execução,
+  não na cominação;
+- **definições legais e normas interpretativas** (arts. 22 a 27 do CPM: quem é militar,
+  o que é navio);
+- **regras de cúmulo** ("aplica-se, além da pena da violência, a do crime contra a
+  pessoa" — CPM, arts. 157, §3º e 158, §2º). É concurso material, e quem o modela é a
+  tela de concurso, não um registro;
+- **cabeça de artigo ou de parágrafo que não comina pena** (art. 400 do CPM; art. 408,
+  parágrafo único) — a moldura é do inciso ou da alínea, e o registro é do inciso.
 
 21 registros assim foram removidos na v1.1.0: com pena zero, satisfaziam qualquer teto e
 eram contados como "cabíveis" em transação penal, ANPP e sursis, inflando as estatísticas.
+
+#### O teste que decide: comina moldura, ou deriva de uma?
+
+O critério antigo perguntava se o dispositivo descrevia **conduta autônoma** — verbo
+nuclear e objeto, prática isolada possível, concurso de crimes com os vizinhos. Ele
+errava, porque testava autonomia de conduta quando o que o catálogo indexa é **moldura
+de pena**: a lesão corporal seguida de morte não pode ser praticada isoladamente e não
+gera concurso com a lesão — e, no entanto, tem moldura própria de 4 a 12 anos e
+obviamente precisa de registro. A terceira pergunta ainda era circular: "gera concurso"
+é consequência de serem dois tipos, não critério para saber se são.
+
+São dois passos, nesta ordem:
+
+1. **Moldura.** O dispositivo comina ou determina moldura própria — mínimo, máximo e
+   espécie? Se sim, **é registro**. Isso cobre de uma vez o caput, a forma qualificada
+   pelo resultado, a privilegiada, a culposa e o inciso com pena autônoma.
+2. **Derivação.** Se não comina, mas remete a outra moldura ou opera fração sobre ela:
+   é registro **derivado**, e vale a regra de **um registro por moldura-base**. Base
+   única, um registro; se alcança caput e parágrafos, um por parágrafo alcançado.
+
+Não cominando nem determinando moldura alguma, **não é registro** — é modificador, ou
+cai numa das exclusões acima. O teste foi aplicado aos 96 registros criados na v2.0.0 e
+não produziu caso ambíguo.
 
 > Causas de aumento/diminuição voltarão como **entidade própria** na dosimetria por fases
 > (roadmap, v3.0.0) — não como tipos penais.

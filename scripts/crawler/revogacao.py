@@ -28,7 +28,11 @@ TOPO_CHARS = 3000
 _BANNER = re.compile(
     r"(Revogad[oa]s?\s+(?:tacitamente\s+)?pel[ao]\s+"
     r"(?:Lei|Lei Complementar|Decreto-Lei|Medida Provis[óo]ria)[^)\n]{0,60})", re.I)
-_VIGENCIA_ENCERRADA = re.compile(r"(Vig[êe]ncia\s+encerrada|Revogada\s+em)", re.I)
+_VIGENCIA_ENCERRADA = re.compile(
+    r"(Vig[êe]ncia\s+encerrada|Revogada\s+em|"
+    # A MP que caducou: o Planalto anota no topo, e o efeito sobre o catálogo é
+    # o mesmo de uma revogação — o dispositivo deixa de reger o fato novo.
+    r"perdeu\s+a\s+efic[áa]cia|Prazo\s+de\s+vig[êe]ncia\s+encerrado)", re.I)
 
 
 @dataclass

@@ -13,8 +13,8 @@ ao crime de tortura). Três itens, cada um travando uma decisão do filtro:
 import json
 from pathlib import Path
 
-from dou_watcher import (classificar, montar_relatorio, padrao_dos_diplomas, triar,
-                         vocabulario_penal)
+from dou_watcher import (classificar, comina_pena, marcas_penais,
+                         montar_relatorio, padrao_dos_diplomas, triar)
 
 FIXTURES = Path(__file__).resolve().parent.parent / "fixtures"
 FONTES = Path(__file__).resolve().parents[3] / "data" / "fontes.json"
@@ -53,13 +53,35 @@ class TestPadraoDosDiplomas:
         assert numeros["9455"] == "tortura-9455"
 
 
-class TestVocabulario:
-    def test_termos_penais(self):
-        assert "reclusão" in vocabulario_penal("Pena - reclusão, de 2 a 5 anos")
-        assert "revoga" in vocabulario_penal("Revogam-se os arts. 1º a 3º")
+class TestCominaPena:
+    """O discriminador. Não filtra mais nada antes dele — ele decide sozinho."""
 
-    def test_texto_sem_nada_penal(self):
-        assert vocabulario_penal("Institui o Dia Nacional do Cooperativismo") == []
+    def test_formula_canonica(self):
+        assert comina_pena("Pena - reclusão, de 2 a 5 anos")
+        assert comina_pena("detenção, de 3 (três) meses a 1 (um) ano")
+
+    def test_pena_por_remissao(self):
+        """Nove registros do catálogo têm essa forma, e nenhum traz "Pena -"."""
+        assert comina_pena("Quem faz uso de documento falso incorre na pena "
+                           "cominada à falsificação")
+        assert comina_pena("Incorre nas mesmas penas quem…")
+        assert comina_pena("aplica-se metade da pena cominada no art. 1º")
+        assert comina_pena("punido no dobro da pena cominada para o tempo de paz")
+
+    def test_pena_fora_da_formula(self):
+        """Art. 28 da Lei 11.343/06: há pena, há tipo, e não há "Pena -"."""
+        assert comina_pena("será submetido às seguintes penas: I - advertência "
+                           "sobre os efeitos das drogas")
+
+    def test_lei_que_so_fala_de_pena_nao_passa(self):
+        assert not comina_pena("Institui o Dia Nacional do Cooperativismo")
+        assert not comina_pena("Dispõe sobre o cumprimento de pena em "
+                               "estabelecimento prisional federal")
+
+    def test_marcas_dizem_por_que_o_ato_foi_aberto(self):
+        assert "preceito secundário" in marcas_penais("Pena - reclusão, de 2 a 5 anos")
+        assert "pena por remissão" in marcas_penais("Incorre nas mesmas penas")
+        assert marcas_penais("Institui o Dia Nacional do Cooperativismo") == []
 
 
 class TestTriagem:
@@ -83,10 +105,18 @@ class TestTriagem:
         assert not any("DESPACHO" in c["titulo"].upper() for c in achadas)
 
     def test_nao_inventa_candidata(self):
-        """A Lei 15.409 (cadastro de condenados) não cita diploma monitorado nem
-        traz vocabulário penal na ementa — sem o texto integral, fica de fora."""
+        """A Lei 15.409 (cadastro de condenados) não comina pena nem cita
+        diploma monitorado — sem o texto integral, é DESCARTADA.
+
+        Desde 11/08/2026 ela não some da lista: `triar` devolve todo ato
+        normativo, e o corte é do classificador. O descartado sai nomeado, em
+        uma linha, para que a decisão do filtro seja auditável — sumir era o que
+        tornava impossível saber se o corte estava certo.
+        """
         achadas = self._triar()
-        assert not any("15.409" in c["titulo"] for c in achadas)
+        dela = [c for c in achadas if "15.409" in c["titulo"]]
+        assert dela, "o ato normativo tem de aparecer, ainda que descartado"
+        assert all(c["nivel"] == "descartado" for c in dela)
 
     def test_texto_integral_amplia_o_alcance(self):
         """O que a ementa esconde, o texto integral revela — por isso o watcher
@@ -123,7 +153,7 @@ class TestNiveis:
             "e do adolescente à saúde mental. … passa a vigorar acrescida",
             "dispõe sobre saúde mental", ["eca"])
         assert nivel == "descartado"
-        assert "sem preceito penal" in porque
+        assert "sem cominar pena" in porque
 
     def test_palavra_solta_sem_diploma_e_descartado(self):
         """"revoga" e "crime" aparecem em lei de fundo garantidor e de fundo

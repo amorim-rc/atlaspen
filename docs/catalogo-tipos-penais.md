@@ -61,7 +61,7 @@ Gerados por `scripts/transform_data.py`. **Todos são heurísticos** e sujeitos 
 |---|---|
 | `pena_privativa` | Mapeado de `tipo_pena`. |
 | `tem_multa`, `multa_regime` | Regex sobre `obs` (`e multa` → cumulativa; `ou multa` → alternativa). |
-| `pena_min_meses`, `pena_max_meses` | Cópia de `pena_min`/`pena_max`, que são a autoridade. O mês vale 30 dias (art. 11, CP). |
+| `pena_min_meses`, `pena_max_meses` | Cópia de `pena_min`/`pena_max`, que são a autoridade. O mês vale 30 dias, e a unidade real da pena é o **dia**: o art. 11 do CP manda **desprezar** as frações de dia — desprezar, não arredondar, porque arredondar para cima agravaria a pena sem lei. Na dosimetria o desprezo incide sobre o efeito, antes de somar. |
 | `pena_*_rotulo`, `pena_faixa_rotulo` | Exibição na unidade natural. |
 | `infracao_menor_potencial` | `pena_max_meses <= 24` **e** pena > 0. |
 | `tem_pena_privativa` | O tipo comina prisão? Se não, declara `sancoes_nao_privativas` ou `pena_por_remissao`. |

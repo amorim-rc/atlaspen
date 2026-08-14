@@ -102,17 +102,35 @@ jobs:
     continue-on-error: true
     outputs:
       codigo: ${{ steps.dou.outputs.codigo }}
+      leis_do_ano: ${{ steps.leis_do_ano.outputs.codigo }}
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v7
         with:
           python-version: '3.12'
+      # Data de Brasília: o runner roda em UTC, e às 21h do dia 31 já é dia 1º.
+      - name: Dia do mês em Brasília
+        id: dia
+        run: echo "dia=$(TZ=America/Sao_Paulo date +%-d)" >> "$GITHUB_OUTPUT"
+
       - name: Olhar o DOU da semana
         id: dou
         run: |
           set +e
           python3 scripts/crawler/dou_watcher.py --dias 8 > /dev/null
           echo "codigo=$?" >> "$GITHUB_OUTPUT"
+      # A defesa contra o falso NEGATIVO: o que o filtro NÃO pegou não deixa
+      # rastro em lugar nenhum. Uma vez por mês, a lista de leis sancionadas do
+      # ano — que é a fonte, não um comentário sobre ela — é confrontada com o
+      # que o watcher examinou. O que sobra é a lista de leis que ninguém olhou.
+      - name: Conferir contra a lista de leis do ano
+        id: leis_do_ano
+        if: fromJSON(steps.dia.outputs.dia) <= 7
+        run: |
+          set +e
+          python3 scripts/crawler/leis_do_ano.py > /dev/null
+          echo "codigo=$?" >> "$GITHUB_OUTPUT"
+
       - name: Guardar o relatório do DOU
         if: always()
         uses: actions/upload-artifact@v5
@@ -231,6 +249,7 @@ jobs:
           needs.vigia.outputs.codigo == '3' || needs.sentinela.outputs.codigo == '3'
           || needs.auditor.outputs.codigo == '3'
           || needs.arquivista.outputs.codigo == '3'
+          || needs.sentinela.outputs.leis_do_ano == '3'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |

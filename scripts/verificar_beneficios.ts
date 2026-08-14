@@ -492,13 +492,20 @@ console.log('\n6. Dosimetria por fases (art. 68, CP)');
   ok(tentado.penaDefinitiva < 72,
     `3ª fase: tentativa (−1/3) rompe o piso da moldura → ${tentado.penaDefinitiva} < 72`);
 
-  // Encadeamento completo do exemplo da planilha: 114 → 133 → −1/3 = 88.7.
+  // Encadeamento completo: 114 → 133 → −1/3. A diminuição bruta é de 44,333…
+  // meses, isto é, 1.330 dias exatos; a pena definitiva fica em 2.662 dias, ou
+  // 88 meses e 22 dias. Antes desta versão o motor arredondava a definitiva
+  // para 88,7 meses — um número que não é dia inteiro nenhum, e que a tela
+  // ainda exibia como "89 meses". Ver `desprezarFracaoDeDia`, art. 11 do CP.
   const completo = calcularDosimetria(homicidio, [
     {id: 'jud-culpabilidade'}, {id: 'jud-antecedentes'},
     {id: 'agravante-reincidencia'}, {id: 'tentativa'},
   ]);
-  ok(completo.penaDefinitiva === 88.7,
-    `três fases encadeadas: 114 → 133 → 88.7 (obtido ${completo.penaDefinitiva})`);
+  const emDias = Math.round(completo.penaDefinitiva * 30);
+  ok(emDias === 2662,
+    `três fases encadeadas: 114 → 133 → 88 meses e 22 dias (obtido ${emDias} dias)`);
+  ok(Number.isInteger(Math.round(completo.penaDefinitiva * 30 * 1e6) / 1e6),
+    'a pena definitiva cai em dia inteiro — art. 11 do CP');
 
   // Concurso material soma; formal exasperado é limitado pela soma (art. 70, par. único).
   const material = calcularConcurso([72, 48], 'material');
