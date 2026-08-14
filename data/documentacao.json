@@ -133,8 +133,8 @@
       ]
     },
     {
-      "arquivo": "docs/os-quatro-robos.md",
-      "sobre": "Como as quatro rotinas automaticas funcionam, com que criterio cada uma corta, e o que nenhuma delas alcanca. Pagina publica, para receber discordancia sobre os criterios.",
+      "arquivo": "docs/os-robos.md",
+      "sobre": "Como cada robo funciona, com que criterio corta, e o que nenhum deles alcanca. Vigia, Sentinela, Recenseador, Auditor e Arquivista. Pagina publica, para receber discordancia sobre os criterios.",
       "conferido_em": "2026-08-14",
       "depende_de": [
         "scripts/crawler/conferir.py",

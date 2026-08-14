@@ -10,7 +10,7 @@ const sidebars: SidebarsConfig = {
     'completude',
     'catalogo-tipos-penais',
     'beneficios-penais',
-    'os-quatro-robos',
+    'os-robos',
     'dados-abertos',
   ],
 };

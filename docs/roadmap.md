@@ -125,7 +125,7 @@ Com isso o catálogo tem **1.507 tipos** e **zero divergências** contra o compi
 
 ---
 
-## v2.4.0 — O robô dos tribunais
+## v2.4.0 — Os robôs especializados: tribunais e acervo
 
 A lacuna que a v2.0.6 declarou e não fechou. **Decisão de tribunal superior muda o
 catálogo com a mesma força de uma lei revogadora, e não passa pelo Diário Oficial,
@@ -153,6 +153,41 @@ Exige robô próprio, e são **três tribunais**, não um:
 O volume é pequeno — decisão penal com efeito erga omnes é rara —, e por isso a
 revisão manual dá conta enquanto não houver robô. Mas o modo de falhar é o pior que
 existe aqui: silencioso, e sobre registro que continua parecendo certo.
+:::
+
+### O Curador — o robô do acervo histórico
+
+O **Recenseador** varre o ano corrente. A legislação penal brasileira tem quase dois
+séculos, e nunca foi varrida por inteiro. O Curador faz isso, e depois cuida do que a
+varredura revelar.
+
+Ele nasce fazendo **uma varredura completa, do primeiro diploma ao último**, com duas
+perguntas em cada lei:
+
+1. **Há tipo penal ou moldura que o catálogo perdeu?** Lei esparsa antiga que nunca
+   entrou em `data/fontes.json` e comina pena até hoje.
+2. **Há tipo penal ou moldura REVOGADA que o catálogo ainda publica?** Este é o mais
+   grave dos dois: um crime revogado que continua no ar afirma que a conduta é
+   punível quando ela não é — e afirma isso a quem consulta para se defender.
+
+Feita a varredura, a pergunta 1 está respondida e não se repete. **O trabalho mensal
+dele passa a ser a pergunta 2**, e só ela: vigiar a morte dos tipos que já estão no
+catálogo.
+
+- [ ] Varredura completa, uma vez, com relatório por diploma
+- [ ] Rotina mensal de revogação sobre os diplomas do catálogo
+- [ ] Migração para o acervo: o registro revogado SAI da busca de tipos vigentes e
+      ENTRA no acervo, com a data de corte e o que passou a reger a conduta — nunca
+      apagado, porque continua regendo o fato anterior
+- [ ] A rota antiga (`?tipo=N`) passa a apontar para o acervo, e não a erro
+
+:::note[Por que um robô só para isso]
+É divisão de trabalho, não multiplicação de robôs. Hoje o Vigia acumula duas coisas
+de natureza diferente: conferir a pena do tipo vivo e perceber que um tipo morreu. A
+segunda tem fonte própria (a marca `(Revogado)` no articulado, o banner no topo, a
+lei revogadora nova), destino próprio (o acervo histórico) e cadência própria
+(mensal, não semanal). Separar deixa cada um com um critério só — que é o que fez o
+Auditor e o Arquivista funcionarem.
 :::
 
 ---

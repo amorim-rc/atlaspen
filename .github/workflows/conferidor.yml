@@ -37,16 +37,20 @@ concurrency:
   group: conferidor
   cancel-in-progress: false
 
-# A rodada semanal são QUATRO robôs, não um. Antes eram passos de um job só, e o
+# A rodada semanal são VÁRIOS robôs, não um. Antes eram passos de um job só, e o
 # log dizia apenas "conferidor falhou" — era preciso abrir a execução para saber
 # qual deles. Agora cada um é um job com nome próprio, e três correm em paralelo:
 # só o auditor depende dos snapshots que o vigia baixa.
 #
-#   vigia       — relê a moldura de cada tipo contra o compilado do Planalto
-#   sentinela   — varre o DOU atrás de lei penal nova e autônoma
-#   auditor     — hediondez, ação penal e nome do tipo (o que a pena não alcança)
-#   arquivista  — saúde da prosa: documento vencido ou que fala de algo que mudou
-#   triagem     — junta os quatro num relatório só e abre a issue da semana
+#   vigia        — relê a moldura de cada tipo contra o compilado do Planalto
+#   sentinela    — varre o DOU atrás de lei penal nova e autônoma
+#   recenseador  — mensal, dentro do job da sentinela: baixa TODAS as leis do ano,
+#                  uma a uma, atrás da lei penal que ninguém leu
+#   auditor      — hediondez, ação penal e nome do tipo (o que a pena não alcança)
+#   arquivista   — saúde da prosa: documento vencido ou que fala de algo que mudou
+#   triagem      — junta os relatórios e abre a issue da semana
+#
+# Documentado para quem lê o site em docs/os-robos.md.
 jobs:
   # ── vigia ────────────────────────────────────────────────────────────────
   # O único que baixa páginas, e por isso o único de que os outros dependem.
@@ -123,7 +127,7 @@ jobs:
       # rastro em lugar nenhum. Uma vez por mês, a lista de leis sancionadas do
       # ano — que é a fonte, não um comentário sobre ela — é confrontada com o
       # que o watcher examinou. O que sobra é a lista de leis que ninguém olhou.
-      - name: Conferir contra a lista de leis do ano
+      - name: Recenseador — todas as leis do ano, uma a uma
         id: leis_do_ano
         if: fromJSON(steps.dia.outputs.dia) <= 7
         run: |
@@ -224,7 +228,7 @@ jobs:
     permissions:
       contents: read
       issues: write
-      actions: read          # baixar os artifacts dos quatro robôs
+      actions: read          # baixar os artifacts dos robôs
     steps:
       - uses: actions/checkout@v7
 
