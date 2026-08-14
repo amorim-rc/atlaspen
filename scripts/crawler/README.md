@@ -25,7 +25,8 @@ segura, o achado vira pergunta na issue em vez de virar dado.
 | `criar.py` | Linha nova. **Não roda no automático** — ver "o que o robô não faz". |
 | `propor.py` | Escolhe o diploma da rodada, aplica, escreve a entrada de changelog, sobe a versão e monta o corpo do PR. |
 | `auditar.py` | Audita os campos que a conferência de penas não alcança: hediondez (contra `data/hediondos.json`), ação penal, causas de aumento ausentes e nomes — inclusive o nome que descreve MELHOR outro artigo do mesmo diploma, ponto cego da conferência de molduras. |
-| `dou_watcher.py` | Filtro semanal da Seção 1 do DOU, para achar lei penal **nova e autônoma**. Tria em três níveis pelo preceito secundário; o descartado sai nomeado, não some. |
+| `dou_watcher.py` | Filtro semanal da Seção 1 do DOU, para achar lei penal **nova e autônoma**. Baixa o texto INTEGRAL de todo ato das espécies aceitas — não há mais pré-filtro por vocabulário — e tria em três níveis pelo preceito secundário, que inclui a pena por remissão ("nas mesmas penas", "metade da pena"). O descartado sai nomeado, não some, e o integral fica no JSON da rodada para permitir retriagem quando o critério mudar. |
+| `leis_do_ano.py` | A defesa contra o falso NEGATIVO. Uma vez por mês, confronta a lista de leis sancionadas do ano (no Planalto, que é a FONTE) com o que o watcher examinou. O que sobra é a lista de leis que ninguém olhou. Não classifica: só aponta. Se a lista não puder ser lida, não afirma nada — reportar zero sem ter lido seria o silêncio que ele existe para quebrar. |
 | `excecoes.json` | O que já foi julgado e decidido na conferência de PENAS. Sem isso o relatório repetiria para sempre os mesmos achados. |
 | `excecoes-auditoria.json` | O mesmo, para a auditoria de classificação. Arquivo próprio porque as chaves são outras: ora o id do registro, ora o dispositivo do compilado. |
 | `cobertura-limites.json` | Quantos registros o conferidor aceita **não** garantir, por motivo. Crescer é regressão e vira achado; encolher vira convite a apertar. É a trava contra a falha que mais dói aqui — a silenciosa: registro que sai da conferência não aparece como divergente, aparece como nada. |
@@ -41,6 +42,7 @@ python scripts/crawler/conferir.py --carimbar     # + trilha em data/conferencia
 python scripts/crawler/conferir.py --atualizar-limites   # regrava a trava de cobertura
 python scripts/crawler/propor.py                  # o PR que sairia (não escreve)
 python scripts/crawler/dou_watcher.py --dias 8
+python scripts/crawler/leis_do_ano.py             # o que o watcher nao viu
 python -m pytest scripts/crawler/tests            # sem rede, contra fixtures
 ```
 

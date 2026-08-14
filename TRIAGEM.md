@@ -20,6 +20,12 @@ espera, porque lê as páginas que o vigia baixou.
 | **arquivista** | Saúde da prosa: documento vencido ou cuja dependência mudou | Não |
 | **triagem** | Junta os quatro e abre a issue | — |
 
+Na **primeira semana de cada mês**, a sentinela roda também a conferência contra a
+lista de leis sancionadas do ano. É a defesa contra o falso negativo: ela não diz se
+a lei é penal, diz que existe e que o filtro não a examinou. Leitura curta — basta a
+ementa —, e o que criar, agravar ou revogar tipo penal vira entrada em
+`data/fontes.json`.
+
 A issue **só nasce se pelo menos um dos quatro tiver o que dizer**. Silêncio dos quatro
 significa catálogo em dia, e nesse caso a rodada deixa apenas o commit do carimbo.
 

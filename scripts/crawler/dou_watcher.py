@@ -76,11 +76,16 @@ ESPECIES = re.compile(
     r"^(Lei|Lei\s+Complementar|Lei\s+Delegada|Medida\s+Provis[óo]ria|"
     r"Decreto-Lei|Emenda\s+Constitucional)$", re.IGNORECASE)
 
-VOCABULARIO = [
-    "reclusão", "detenção", "prisão simples", "pena de", "pena –", "pena -",
-    "pena:", "revoga", "passa a vigorar acrescido", "passa a vigorar acrescida",
-    "código penal", "crime", "contravenção", "tipifica",
-]
+# O vocabulário de treze termos SAIU em 11/08/2026, e a razão é aritmética. Ele
+# existia para decidir quais dos ~16 atos normativos de uma quinzena mereciam a
+# requisição de 1,2 s que traz o texto integral. Abrir os dezesseis custa vinte
+# segundos — e cada termo da lista era uma chance de falso negativo, que é o
+# risco que este módulo declara inaceitável: uma ementa que diga "altera o
+# Decreto-Lei nº 2.848 para dispor sobre a conduta de X" não tem nenhum dos
+# treze, e o ato nem chegava a ser aberto.
+#
+# Agora todo ato das espécies aceitas é baixado por inteiro, e quem decide é o
+# preceito secundário (`_TIPIFICA`), que foi medido e funciona.
 
 _PARAMS = re.compile(r'<script[^>]*id="params"[^>]*>(.*?)</script>', re.S)
 _TEXTO_DOU = re.compile(r'<div[^>]*class="[^"]*texto-dou[^"]*"[^>]*>(.*?)</div>\s*</div>',
@@ -171,20 +176,53 @@ def padrao_dos_diplomas(fontes: list[dict]) -> tuple[re.Pattern, dict[str, str]]
     return padrao, numeros
 
 
-def vocabulario_penal(texto: str) -> list[str]:
-    baixo = texto.lower()
-    return [t for t in VOCABULARIO if t in baixo]
+def marcas_penais(texto: str) -> list[str]:
+    """As marcas que o ato traz, para o relatório dizer POR QUE o abriu.
+
+    Não filtra mais nada — filtrar era o defeito. Serve só para que a linha do
+    relatório mostre o que o classificador viu.
+    """
+    achadas = []
+    for rotulo, padrao in (("preceito secundário", _TIPIFICA),
+                           ("pena por remissão", _PENA_POR_REMISSAO),
+                           ("ementa criminalizadora", _EMENTA_CRIMINALIZA),
+                           ("revogação de dispositivo", _REVOGA_DISPOSITIVO)):
+        if padrao.search(texto):
+            achadas.append(rotulo)
+    return achadas
 
 
 # A ementa que ANUNCIA o crime, para o caso de o texto integral não abrir. É a
 # rede de segurança do nível 1: sem o corpo do ato, não há "Pena -" a encontrar.
+# A lista original reconhecia só a lei penal AUTÔNOMA ("institui o crime de").
+# Mas a esmagadora maioria da legislação penal brasileira é ALTERADORA, e a
+# ementa alteradora tem forma própria, padronizada pela LC 95/98: identifica o
+# diploma e enuncia a finalidade com "para".
 _EMENTA_CRIMINALIZA = re.compile(
-    r"tipifica|criminaliza|institui o crime|torna crime|define o crime|"
-    r"disp[õo]e sobre o crime", re.IGNORECASE)
+    r"tipifica|criminaliza|institui o crime|institui o tipo penal|torna crime|"
+    r"define o crime|disp[õo]e sobre o crime|"
+    r"para tipificar|para criminalizar|para prever o crime|para punir|"
+    r"para agravar a pena|para aumentar a pena|para majorar a pena|"
+    r"para tornar hediondo|torna hediondo|"
+    r"para incluir o crime|para incluir no rol|"
+    r"acrescenta o art|acrescenta dispositivo|pune com",
+    re.IGNORECASE)
 # Revogação de dispositivo — "Revogam-se os arts. 12 e 13". Sozinha não diz nada;
 # junto da citação de diploma monitorado, diz que um tipo pode ter saído.
 _REVOGA_DISPOSITIVO = re.compile(
-    r"revoga(?:m)?-se\s+(?:o|os|a|as)?\s*(?:art|inciso|par[áa]grafo|al[íi]nea)",
+    # "Revogam-se os arts. 12 e 13" — e também sem o complemento, porque a
+    # cláusula às vezes vem sozinha na linha.
+    r"revoga(?:m)?-se\b|"
+    # A forma que a LC 95/98 recomenda, e a mais comum na prática.
+    r"fica(?:m)?\s+revogad[oa]s?\b|"
+    # A marca INLINE do compilado: é assim que o Planalto sinaliza dispositivo
+    # revogado dentro do articulado, e foi ela que permitiu identificar os arts.
+    # 51, 60, 64, 65 e 78 do CPM como revogados pela Lei 14.688/2023.
+    r"\(\s*revogad[oa]s?\b|"
+    # Medida provisória não convertida.
+    r"perde\s+a\s+efic[áa]cia|fica\s+sem\s+efeito|"
+    # Revogação anunciada na própria ementa.
+    r"revoga\s+a\s+Lei\s+n",
     re.IGNORECASE)
 
 
@@ -215,16 +253,21 @@ def classificar(texto: str, ementa: str, citados: list[str]) -> tuple[str, str]:
       sentinela daquela fonte talvez precise mudar.
     - **descartado**: o resto. Citação sem preceito penal, ou palavra solta.
     """
-    forte = bool(_TIPIFICA.search(texto)) or bool(_EMENTA_CRIMINALIZA.search(ementa))
+    # A ementa que CITA diploma monitorado é gatilho por si, mas só quando o
+    # texto integral não abriu: aí não há "Pena -" a encontrar, e o ato tem de
+    # ser olhado por gente, seja qual for o verbo.
+    cega = not (texto or "").strip()
+    forte = (comina_pena(texto) or bool(_EMENTA_CRIMINALIZA.search(ementa))
+             or (cega and bool(citados)))
     if forte and not citados:
-        return "novo", "traz preceito secundário e não se apoia em diploma monitorado"
+        return "novo", "comina pena e não se apoia em diploma monitorado"
     if forte and citados:
-        return "monitorado", "traz preceito secundário e altera diploma monitorado"
+        return "monitorado", "comina pena e altera diploma monitorado"
     if citados and _REVOGA_DISPOSITIVO.search(texto):
         return "monitorado", "revoga dispositivo de diploma monitorado"
     if citados:
-        return "descartado", "cita diploma monitorado sem preceito penal"
-    return "descartado", "vocabulário penal isolado, sem preceito secundário"
+        return "descartado", "cita diploma monitorado sem cominar pena"
+    return "descartado", "não comina pena nem cita diploma monitorado"
 
 
 def triar(itens: list[dict], padrao: re.Pattern, numeros: dict[str, str],
@@ -247,9 +290,11 @@ def triar(itens: list[dict], padrao: re.Pattern, numeros: dict[str, str],
         citados = sorted({numeros[m.group(1).replace(".", "").lstrip("0")]
                           for m in padrao.finditer(texto)
                           if m.group(1).replace(".", "").lstrip("0") in numeros})
-        termos = vocabulario_penal(texto)
-        if not citados and not termos:
-            continue
+        # SEM pré-filtro: todo ato das espécies aceitas é classificado. O corte
+        # é do classificador, e o descartado sai nomeado no relatório — três
+        # segundos de leitura, e a decisão fica auditável. Filtrar antes era
+        # trocar vinte segundos de requisição por uma classe de falso negativo.
+        termos = marcas_penais(texto)
         nivel, porque = classificar(texto, resumo, citados)
         candidatas.append({
             "nivel": nivel,
@@ -262,6 +307,12 @@ def triar(itens: list[dict], padrao: re.Pattern, numeros: dict[str, str],
             "termos": termos[:8],
             "integral": bool(integral),
             "ementa": (item.get("content") or "")[:300],
+            # O texto integral fica no JSON da rodada. Sem ele, mudar o filtro
+            # não permite RETRIAR o que já passou: o achado antigo só guardava a
+            # ementa, e responder "este ato teria entrado pelo critério novo?"
+            # virava ato de fé. Com ele, cada mudança de filtro é um teste
+            # retroativo contra as rodadas guardadas.
+            "texto_integral": integral,
         })
         candidatas[-1]["fonte_proposta"] = propor_fonte(
             candidatas[-1], integral, set(numeros))
@@ -274,6 +325,30 @@ def triar(itens: list[dict], padrao: re.Pattern, numeros: dict[str, str],
 _TIPIFICA = re.compile(
     r"Pena\s*[-–—:]|reclus[ãa]o,\s*de|deten[çc][ãa]o,\s*de|pris[ãa]o simples,\s*de",
     re.IGNORECASE)
+
+# O tipo cuja pena vem de OUTRO dispositivo não traz "Pena –" nenhum, e o
+# catálogo tem pelo menos nove assim: art. 304 do CP e art. 315 do CPM ("a pena
+# cominada à falsificação"), arts. 353 e 354 do Código Eleitoral, arts. 2º e 3º
+# da Lei 2.889/56 ("metade da cominada aos crimes ali previstos"), art. 391 do
+# CPM ("com aumento da metade") e arts. 404 e 405 ("no dobro da pena cominada
+# para o tempo de paz"). Sem estes padrões, uma lei nova redigida assim seria
+# invisível para os dois robôs.
+#
+# E há a pena cominada FORA da fórmula: o art. 28 da Lei 11.343/06 escreve "será
+# submetido às seguintes penas: I – advertência…", e o art. 8º da Lei 7.437/85
+# comina perda do cargo sem a palavra "Pena".
+_PENA_POR_REMISSAO = re.compile(
+    r"pena\s+cominada|nas\s+penas\s+do\s+art|nas\s+mesmas\s+penas|"
+    r"incorre\s+nas\s+penas|punid[oa]\s+com\s+as\s+penas|"
+    r"com\s+a\s+pena\s+do\s+art|metade\s+da(?:s)?\s+pena|"
+    r"no\s+dobro\s+da\s+pena|"
+    r"[àa]s\s+seguintes\s+penas|submetid[oa]\s+[àa]s\s+penas",
+    re.IGNORECASE)
+
+
+def comina_pena(texto: str) -> bool:
+    """O ato comina pena — pela fórmula canônica OU por remissão a outra."""
+    return bool(_TIPIFICA.search(texto) or _PENA_POR_REMISSAO.search(texto))
 _NUMERO_LEI = re.compile(r"LEI\s+(?:COMPLEMENTAR\s+)?N[ºo°.\s]*\s*([\d.]+)", re.IGNORECASE)
 _ANO = re.compile(r"DE\s+\d{1,2}\s+DE\s+\w+\s+DE\s+(\d{4})", re.IGNORECASE)
 

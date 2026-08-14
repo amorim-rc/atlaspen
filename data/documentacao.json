@@ -11,7 +11,7 @@
     {
       "arquivo": "README.md",
       "sobre": "Porta de entrada: o que é o projeto, tamanho do catálogo, como rodar, e a comparação com a proposta original de 2008.",
-      "conferido_em": "2026-08-10",
+      "conferido_em": "2026-08-11",
       "depende_de": [
         "data/crimes.json",
         "data/fontes.json",
@@ -33,7 +33,7 @@
     {
       "arquivo": "CLAUDE.md",
       "sobre": "Instruções para agentes de IA: fluxo de release, convenções que quebram em silêncio, verificação obrigatória.",
-      "conferido_em": "2026-08-10",
+      "conferido_em": "2026-08-11",
       "depende_de": [
         "CONTRIBUTING.md",
         "scripts/transform_data.py",
@@ -75,7 +75,7 @@
     {
       "arquivo": "docs/dados-abertos.md",
       "sobre": "Contrato dos dados publicados, campo a campo, e como cada registro é coletado e revisado.",
-      "conferido_em": "2026-08-06",
+      "conferido_em": "2026-08-11",
       "depende_de": [
         "scripts/transform_data.py",
         "src/lib/types.ts",
@@ -96,7 +96,7 @@
     {
       "arquivo": "docs/roadmap.md",
       "sobre": "O que vem em cada versão e por que a versão é MAIOR, MENOR ou correção.",
-      "conferido_em": "2026-08-10",
+      "conferido_em": "2026-08-11",
       "depende_de": [
         "package.json"
       ]

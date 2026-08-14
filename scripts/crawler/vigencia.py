@@ -42,6 +42,54 @@ _DATA_CERTA = re.compile(
     re.I)
 
 
+_VACATIO_MESES = re.compile(
+    r"entra em vigor ap[óo]s decorridos?\s+(\d+)\s*(?:\([^)]*\))?\s*meses", re.I)
+_EXERCICIO_SEGUINTE = re.compile(
+    r"entra em vigor (?:no|em) (?:o\s+)?primeiro dia do exerc[íi]cio "
+    r"(?:financeiro\s+)?seguinte", re.I)
+# "Esta Lei entra em vigor: I - na data de sua publicação…; II - após
+# decorridos 180 dias…" — duas datas no mesmo diploma.
+_ESCALONADA = re.compile(
+    r"entra em vigor\s*:\s*(?:\n|\s)*[IVX]+\s*[-–—]", re.I)
+
+
+def _fim_da_vacatio(publicacao, dias: int):
+    """A data em que a lei passa a valer, contada como a LC 95/98 manda.
+
+    Art. 8º, §1º: a contagem **inclui a data da publicação e o último dia do
+    prazo**, e a lei entra em vigor **no dia subsequente** à consumação
+    integral. O dia da publicação é o dia 1, não o dia 0.
+
+    Some-se a conta e o resultado é `publicação + dias`, que é o que estava
+    escrito aqui desde sempre: se o dia 1 é o da publicação, o último dia do
+    prazo é `publicação + (dias − 1)`, e o dia subsequente é `publicação +
+    dias`. Lei publicada em 08/08/2025 com 180 dias de vacância vigora em
+    04/02/2026 — confere.
+
+    A função existe para que a regra fique ESCRITA junto da conta. Uma revisão
+    externa apontou aqui um erro de um dia; não havia, e a checagem custou o
+    tempo de refazer a soma. Sem o fundamento ao lado, ela vai ser refeita toda
+    vez que alguém olhar.
+    """
+    if publicacao is None:
+        return None
+    return publicacao + timedelta(days=dias)
+
+
+def _fim_da_vacatio_em_meses(publicacao, meses: int):
+    """Mesma regra, com o prazo contado pelo calendário, não em múltiplos de 30."""
+    if publicacao is None:
+        return None
+    ano = publicacao.year + (publicacao.month - 1 + meses) // 12
+    mes = (publicacao.month - 1 + meses) % 12 + 1
+    dia = publicacao.day
+    while True:
+        try:
+            return date(ano, mes, dia)
+        except ValueError:      # 31 de janeiro + 1 mês
+            dia -= 1
+
+
 @dataclass
 class Vigencia:
     publicacao: date | None
@@ -74,8 +122,27 @@ def analisar(texto: str) -> Vigencia:
     if m:
         bruto = m.group(1)
         dias = int(bruto) if bruto.isdigit() else _EXTENSO_DIAS[bruto.lower()]
-        inicio = publicacao + timedelta(days=dias) if publicacao else None
+        inicio = _fim_da_vacatio(publicacao, dias)
         return Vigencia(publicacao, inicio, m.group(0), incerta=publicacao is None)
+
+    m = _VACATIO_MESES.search(texto)
+    if m:
+        # Meses não são 30 dias: "após decorridos 6 meses" conta pelo calendário.
+        inicio = _fim_da_vacatio_em_meses(publicacao, int(m.group(1)))
+        return Vigencia(publicacao, inicio, m.group(0), incerta=publicacao is None)
+
+    if _EXERCICIO_SEGUINTE.search(texto):
+        inicio = date(publicacao.year + 1, 1, 1) if publicacao else None
+        return Vigencia(publicacao, inicio, _EXERCICIO_SEGUINTE.search(texto).group(0),
+                        incerta=publicacao is None)
+
+    # Vigência escalonada por artigo: "Esta Lei entra em vigor: I – na data de
+    # sua publicação, quanto a…; II – após decorridos 180 dias, quanto a…". Não
+    # há UMA data, e fingir que há seria pior que declarar a incerteza.
+    if _ESCALONADA.search(texto):
+        return Vigencia(publicacao, None,
+                        "vigência escalonada por dispositivo — ler a cláusula",
+                        incerta=True)
 
     # "produzirá efeitos a partir de 1º de janeiro de 2026" — a lei entra em
     # vigor na publicação, mas os dispositivos só valem na data indicada.
@@ -97,8 +164,14 @@ def analisar(texto: str) -> Vigencia:
         return Vigencia(publicacao, publicacao, _IMEDIATA.search(texto).group(0),
                         incerta=publicacao is None)
 
-    return Vigencia(publicacao, None, "cláusula de vigência não localizada",
-                    incerta=True)
+    # O SILÊNCIO tem regra, e ela não é "vale já": a lei que nada diz entra em
+    # vigor 45 dias depois de publicada (LINDB, art. 1º). Tratar silêncio como
+    # vigência imediata errava em 45 dias, e errava para o lado de publicar como
+    # vigente o que ainda não é — o oposto do que o projeto promete.
+    if publicacao:
+        return Vigencia(publicacao, _fim_da_vacatio(publicacao, 45),
+                        "sem cláusula de vigência — LINDB, art. 1º: 45 dias")
+    return Vigencia(None, None, "cláusula de vigência não localizada", incerta=True)
 
 
 def url_da_lei(norma: str, ano: int) -> str | None:
