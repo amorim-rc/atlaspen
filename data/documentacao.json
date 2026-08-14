@@ -131,6 +131,20 @@
       "depende_de": [
         "scripts/crawler/baixar.py"
       ]
+    },
+    {
+      "arquivo": "docs/os-quatro-robos.md",
+      "sobre": "Como as quatro rotinas automaticas funcionam, com que criterio cada uma corta, e o que nenhuma delas alcanca. Pagina publica, para receber discordancia sobre os criterios.",
+      "conferido_em": "2026-08-14",
+      "depende_de": [
+        "scripts/crawler/conferir.py",
+        "scripts/crawler/dou_watcher.py",
+        "scripts/crawler/auditar.py",
+        "scripts/verificar_documentacao.py",
+        "scripts/crawler/leis_do_ano.py",
+        "scripts/crawler/cobertura-limites.json",
+        ".github/workflows/conferidor.yml"
+      ]
     }
   ]
 }
