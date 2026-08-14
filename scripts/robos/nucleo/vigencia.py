@@ -192,7 +192,7 @@ def url_da_lei(norma: str, ano: int) -> str | None:
 
 
 def main() -> int:
-    """CLI: `python scripts/crawler/vigencia.py "Lei nº 15.190" 2025`.
+    """CLI: `python scripts/robos/nucleo/vigencia.py "Lei nº 15.190" 2025`.
 
     Útil na triagem — antes de corrigir o catálogo por causa de uma lei nova,
     confirmar que ela já vale. O download fica aqui, e não nas funções puras,

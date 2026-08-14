@@ -41,12 +41,12 @@ jobs:
         run: git diff --exit-code --stat static/data/crimes.json
 
       # Parser do conferidor: roda só contra as fixtures congeladas em
-      # scripts/crawler/fixtures — sem rede, portanto sem depender do Planalto
+      # scripts/robos/fixtures — sem rede, portanto sem depender do Planalto
       # estar no ar. O download ao vivo é exclusividade do workflow semanal.
       - name: Testar o parser do conferidor
         run: |
           python3 -m pip install --quiet pytest
-          python3 -m pytest scripts/crawler/tests -q
+          python3 -m pytest scripts/robos/tests -q
 
       # Entrada do changelog não pode anunciar versão que nunca foi publicada:
       # o bump por substituição de texto já falhou em silêncio três vezes, e o

@@ -56,7 +56,7 @@ Correções manuais podem ser registradas em `CORRECOES`, no próprio script.
 
 A documentação (Metodologia, Catálogo de tipos penais, Benefícios penais, Completude,
 Acervo histórico, Dados abertos, Roadmap) fica em `docs/` e é publicada dentro do próprio
-site. O pipeline de conferência tem documentação própria em `scripts/crawler/README.md`.
+site. O pipeline de conferência tem documentação própria em `scripts/robos/README.md`.
 
 ## Origem e proposta original × implementação atual
 

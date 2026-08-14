@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "descricao": "Quantos registros o conferidor aceita NÃO garantir, por motivo. Crescer é regressão e vira achado da rodada; encolher é convite a baixar o número. Regrave com `python scripts/crawler/conferir.py --atualizar-limites` e commite junto da mudança que justificou.",
+    "descricao": "Quantos registros o conferidor aceita NÃO garantir, por motivo. Crescer é regressão e vira achado da rodada; encolher é convite a baixar o número. Regrave com `python scripts/robos/vigia/conferir.py --atualizar-limites` e commite junto da mudança que justificou.",
     "por_que": "O erro que originou esta trava foi um SILÊNCIO: três incisos do art. 151 do CP publicaram por anos seis vezes a pena que a lei comina, e nenhuma rodada disse nada, porque um dispositivo cuja pena está em outro dispositivo nunca tem pena escrita. Contar o silêncio é o que o torna visível.",
     "motivos": {
       "sancao_nao_privativa": "o registro não tem pena privativa (multa ou outra sanção)",

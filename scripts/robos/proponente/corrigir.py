@@ -23,11 +23,14 @@ import re
 import sys
 from pathlib import Path
 
-RAIZ = Path(__file__).resolve().parent.parent.parent
+RAIZ = Path(__file__).resolve().parents[3]
+# `scripts/robos` para os pacotes dos robôs e do núcleo; `scripts` para o
+# `pena_parser`, que é compartilhado com o construtor do catálogo e por isso
+# não mora aqui.
 sys.path.insert(0, str(RAIZ / "scripts"))
-sys.path.insert(0, str(Path(__file__).resolve().parent))
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from conferir import carregar_excecoes, conferir_fonte, indexar_catalogo  # noqa: E402
+from vigia.conferir import carregar_excecoes, conferir_fonte, indexar_catalogo  # noqa: E402
 from transform_data import _faixa_de_meses  # noqa: E402
 
 FONTE = RAIZ / "data" / "crimes.json"

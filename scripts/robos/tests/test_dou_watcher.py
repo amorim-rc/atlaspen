@@ -13,7 +13,7 @@ ao crime de tortura). Três itens, cada um travando uma decisão do filtro:
 import json
 from pathlib import Path
 
-from dou_watcher import (classificar, comina_pena, marcas_penais,
+from sentinela.dou_watcher import (classificar, comina_pena, marcas_penais,
                          montar_relatorio, padrao_dos_diplomas, triar)
 
 FIXTURES = Path(__file__).resolve().parent.parent / "fixtures"
@@ -213,7 +213,7 @@ class TestReservaLegal:
     """
 
     def _passa(self, especie):
-        from dou_watcher import ESPECIES
+        from sentinela.dou_watcher import ESPECIES
         return bool(ESPECIES.match(especie))
 
     def test_as_duas_que_criam_crime(self):

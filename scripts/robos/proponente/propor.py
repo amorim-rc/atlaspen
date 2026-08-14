@@ -29,8 +29,8 @@ Quatro decisões, todas para que o PR seja revisável por gente:
   que a motivou.
 
 Uso:
-    python scripts/crawler/propor.py                 # o que sairia (não escreve)
-    python scripts/crawler/propor.py --aplicar --saida crawler/proposta
+    python scripts/robos/propor/propor.py                 # o que sairia (não escreve)
+    python scripts/robos/propor/propor.py --aplicar --saida crawler/proposta
 
 Saídas: 0 = proposta pronta; 1 = nada mecânico nesta rodada; 2 = erro.
 """
@@ -44,14 +44,17 @@ import sys
 from datetime import date
 from pathlib import Path
 
-RAIZ = Path(__file__).resolve().parent.parent.parent
+RAIZ = Path(__file__).resolve().parents[3]
+# `scripts/robos` para os pacotes dos robôs e do núcleo; `scripts` para o
+# `pena_parser`, que é compartilhado com o construtor do catálogo e por isso
+# não mora aqui.
 sys.path.insert(0, str(RAIZ / "scripts"))
-sys.path.insert(0, str(Path(__file__).resolve().parent))
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-import corrigir  # noqa: E402
-import criar  # noqa: E402
-from conferir import SNAPSHOTS  # noqa: E402
-from tempo import hoje  # noqa: E402
+from proponente import corrigir  # noqa: E402
+from proponente import criar  # noqa: E402
+from nucleo.dispositivo import SNAPSHOTS  # noqa: E402
+from nucleo.tempo import hoje  # noqa: E402
 from transform_data import _faixa_de_meses, proximo_id  # noqa: E402
 
 FONTES = RAIZ / "data" / "fontes.json"
@@ -311,10 +314,10 @@ def corpo_pr(escolha: dict, versao: str) -> str:
 
     L += [
         "---", "",
-        "Gerado por `scripts/crawler/propor.py` a partir do texto compilado baixado "
+        "Gerado por `scripts/robos/propor/propor.py` a partir do texto compilado baixado "
         "nesta execução. Reproduzível localmente:", "",
-        "```", f"python scripts/crawler/baixar.py --fonte {f['id']}",
-        f"python scripts/crawler/propor.py --fonte {f['id']}", "```", "",
+        "```", f"python scripts/robos/nucleo/baixar.py --fonte {f['id']}",
+        f"python scripts/robos/propor/propor.py --fonte {f['id']}", "```", "",
     ]
     return "\n".join(L) + "\n"
 

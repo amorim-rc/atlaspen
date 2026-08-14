@@ -55,8 +55,8 @@ ignoradas:
 ```
 python scripts/transform_data.py --estrito --max-contradicoes=0
 python scripts/validar_modificadores.py
-python scripts/verificar_documentacao.py
-python -m pytest scripts/crawler/tests
+python scripts/robos/arquivista/verificar_documentacao.py
+python -m pytest scripts/robos/tests
 node scripts/validar-changelog.mjs
 npm run typecheck && npm run verificar && npm run build
 ```
@@ -65,12 +65,12 @@ A CI trava em `--max-contradicoes=0` e exige o derivado sincronizado com a fonte
 PDFs de leis com `pdftotext -layout -enc UTF-8` (o poppler não renderiza página aqui).
 
 Mexeu no conferidor ou nos dados que ele lê? Rode também
-`python scripts/crawler/auditar.py` e `python scripts/crawler/conferir.py`, que não
+`python scripts/robos/auditor/auditar.py` e `python scripts/robos/vigia/conferir.py`, que não
 falham o build mas dizem o que ficou aberto.
 
 ## O que NÃO entra no catálogo, e onde entra
 
-- **`scripts/crawler/excecoes-auditoria.json`** — o achado da auditoria que já foi julgado
+- **`scripts/robos/auditor/excecoes-auditoria.json`** — o achado da auditoria que já foi julgado
   e não precisa voltar. Casa por tipo de achado MAIS um alvo, nunca por tipo sozinho, e
   declara motivo e data. Divergência real nunca vira exceção: vira correção no dado.
 - **A questão jurídica em aberto não vira dado.** Havia um `REVISAO-PENDENTE.md` na raiz

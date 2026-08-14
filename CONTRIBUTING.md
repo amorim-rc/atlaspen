@@ -12,7 +12,7 @@
 ## Como o catálogo é atualizado
 
 A carga inicial veio de uma planilha; a manutenção, hoje, é o **conferidor** — um pipeline
-determinístico, sem IA, descrito em [`scripts/crawler/README.md`](scripts/crawler/README.md).
+determinístico, sem IA, descrito em [`scripts/robos/README.md`](scripts/robos/README.md).
 
 1. **Toda segunda-feira, 05:00 de Brasília**, o workflow `conferidor.yml` baixa o texto
    compilado dos diplomas de `data/fontes.json`, compara pena a pena com o catálogo e olha
@@ -190,7 +190,7 @@ O `id` é a **URL pública** de cada tipo (`/pesquisa/tipos?tipo=N`) e o site es
   fim da revisão que fechou a conferência da base. Reiniciar quebra todo link externo e
   obriga a versão a ser MAIOR; quem o fizer precisa remapear na mesma passada **tudo** o
   que é indexado por id — `data/conferencia.json`, as tabelas `CORRECOES_*` do
-  `transform_data.py`, os `ids` de `scripts/crawler/excecoes-auditoria.json` e os links
+  `transform_data.py`, os `ids` de `scripts/robos/auditor/excecoes-auditoria.json` e os links
   `?tipo=N` das notas já publicadas. Não é decisão de quem edita o catálogo.
 
 ### C4. Um registro por dispositivo

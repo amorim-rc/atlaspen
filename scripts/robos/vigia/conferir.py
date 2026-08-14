@@ -22,8 +22,8 @@ Decisões que a revisão manual impôs:
   relatório repetiria para sempre os mesmos achados já resolvidos.
 
 Uso:
-    python scripts/crawler/conferir.py                 # relatório de tudo
-    python scripts/crawler/conferir.py --fonte lcp     # só um diploma
+    python scripts/robos/vigia/conferir.py                 # relatório de tudo
+    python scripts/robos/vigia/conferir.py --fonte lcp     # só um diploma
 
 Saídas: 0 = nada a rever; 2 = erro de execução; 3 = há achados.
 """
@@ -37,12 +37,16 @@ import sys
 from datetime import date
 from pathlib import Path
 
-RAIZ = Path(__file__).resolve().parent.parent.parent
+RAIZ = Path(__file__).resolve().parents[3]
+# `scripts/robos` para os pacotes dos robôs e do núcleo; `scripts` para o
+# `pena_parser`, que é compartilhado com o construtor do catálogo.
 sys.path.insert(0, str(RAIZ / "scripts"))
-sys.path.insert(0, str(Path(__file__).resolve().parent))
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from parsear import parsear  # noqa: E402
-from tempo import hoje  # noqa: E402
+from nucleo.dispositivo import (SNAPSHOTS, chave,  # noqa: E402,F401
+                                chaves_do_registro)
+from nucleo.parsear import parsear  # noqa: E402
+from nucleo.tempo import hoje  # noqa: E402
 from pena_parser import ler_pena, ler_penas  # noqa: E402
 
 SNAPSHOTS = RAIZ / "crawler" / "snapshots"
@@ -56,76 +60,6 @@ TRILHA = RAIZ / "data" / "conferencia.json"
 # Tolerância na comparação de molduras: 1 dia. Abaixo disso é arredondamento da
 # conversão para meses (o CP conta o mês como 30 dias), não divergência real.
 TOLERANCIA_MESES = 1 / 30 + 1e-6
-
-
-# ── Normalização de dispositivo ─────────────────────────────────────────────
-# O sufixo de letra vem COLADO ao número e pode repetir-se, com ou sem o
-# marcador ordinal no meio: o catálogo escreve "Art. 121-A", "Art. 2º-A" e
-# "Art. 359-M-B". A forma com ordinal era a que faltava, e por ela o art. 2º-A
-# da Lei 7.716 (injúria racial) e o art. 7º-B da Lei 8.906 (prerrogativa de
-# advogado) caíam na chave do artigo-base e ficavam sem conferência. Espelha o
-# `_ARTIGO` de parsear.py — os dois lados têm de reduzir à MESMA chave.
-_ART = re.compile(r"Art\.?\s*(\d+)\s*(?-i:[ºo°])?((?:[-–—](?-i:[A-Z]))*)", re.I)
-_PAR = re.compile(r"§\s*(\d+)\s*[ºo°]?\s*(?:[-–—]\s*([A-Z]))?", re.I)
-
-
-def chave(artigo: str) -> str | None:
-    """"Art. 121, §2º, I" -> "Art. 121|§ 2º"  (o inciso herda a pena do §).
-
-    O catálogo desce ao inciso quando a conduta muda; a pena, porém, é do caput
-    ou do parágrafo. Reduzir os dois lados à mesma granularidade é o que faz o
-    casamento funcionar sem inventar divergência.
-
-    O "c/c" é cortado antes de tudo. "Art. 391 c/c art. 190, §1º" é um tipo de
-    tempo de guerra cuja moldura DERIVA do art. 190 por um fator do art. 391 —
-    não é o §1º de nenhum dos dois. Sem o corte, `_PAR` encontrava o "§1º" da
-    segunda metade e montava `Art. 391|§ 1º`, chave que não existe em lugar
-    nenhum: catorze registros saíam da conferência como "não localizado", que é
-    o silêncio que a trava de cobertura existe para pegar.
-    """
-    artigo = re.split(r"\bc/c\b", artigo or "", maxsplit=1)[0]
-    ma = _ART.search(artigo or "")
-    if not ma:
-        return None
-    sufixo = re.sub(r"[–—]", "-", ma.group(2)).strip("-").upper()
-    base = f"Art. {ma.group(1)}" + (f"-{sufixo}" if sufixo else "")
-    mp = _PAR.search(artigo)
-    if mp:
-        marcador = f"§ {mp.group(1)}º" + (f"-{mp.group(2)}" if mp.group(2) else "")
-    elif re.search(r"(?:par[áa]grafo|par\.|§)\s*[úu]nico", artigo, re.I):
-        # O catálogo abrevia ("par. único"); a lei escreve por extenso. Sem
-        # aceitar as duas formas, as linhas do parágrafo único caem no caput e
-        # o differ acusa divergência contra a moldura errada.
-        marcador = "parágrafo único"
-    else:
-        marcador = "caput"
-    return f"{base}|{marcador}"
-
-
-def chaves_do_registro(artigo: str) -> list[str]:
-    """TODOS os dispositivos que compõem este registro, para o auditor de nomes.
-
-    `chave()` devolve um só — o que a conferência de PENAS precisa, porque a
-    moldura tem um dono. O NOME não: num registro "c/c", ele pode legitimamente
-    descrever qualquer um dos dois lados, e qual deles depende do diploma.
-
-    Nos tipos de tempo de guerra do CPM a ordem é *moldura c/c conduta*: "Art.
-    405 c/c art. 242, §3º" tem a pena no art. 405 e o latrocínio no art. 242. Na
-    Lei 7.643/87 é o contrário — "Art. 1º c/c Art. 2º" descreve a pesca de
-    cetáceo no art. 1º e vai buscar a pena no art. 2º.
-
-    Escolher um lado, portanto, acerta um diploma e erra o outro: foi o que
-    aconteceu ao tentar. A regra que se sustenta é não escolher — o nome
-    conversa com o registro se conversar com QUALQUER um dos dispositivos que o
-    compõem.
-    """
-    partes = [p for p in re.split(r"\bc/c\b", artigo or "") if p.strip()]
-    vistas: list[str] = []
-    for parte in partes:
-        k = chave(parte)
-        if k and k not in vistas:
-            vistas.append(k)
-    return vistas
 
 
 def carregar_excecoes() -> list[dict]:
@@ -244,7 +178,7 @@ def conferir_fonte(fonte: dict, do_catalogo: dict[str, list[dict]],
     arquivos = sorted(pasta.glob("*.html")) if pasta.exists() else []
     if not arquivos:
         return [{"tipo": "SEM-SNAPSHOT", "gravidade": 0, "fonte": fonte["id"],
-                 "detalhe": "rode scripts/crawler/baixar.py antes"}]
+                 "detalhe": "rode scripts/robos/nucleo/baixar.py antes"}]
 
     achados: list[dict] = []
     dispositivos = parsear(arquivos[-1].read_text(encoding="utf-8"))
@@ -620,7 +554,7 @@ def carimbar(res: dict, destino: Path) -> int:
         "_meta": {
             "descricao": "Trilha de auditoria por registro: quando cada tipo penal foi "
                          "confrontado com o texto compilado, com que resultado e contra "
-                         "qual página. Gerado por scripts/crawler/conferir.py --carimbar.",
+                         "qual página. Gerado por scripts/robos/vigia/conferir.py --carimbar.",
             "resultados": {
                 "conferido": "a moldura publicada bate com a que a lei comina",
                 "divergente": "não bate — virou achado da rodada",
@@ -690,7 +624,7 @@ def gravar_limites(contas: dict[str, int]) -> None:
             "descricao": "Quantos registros o conferidor aceita NÃO garantir, por "
                          "motivo. Crescer é regressão e vira achado da rodada; "
                          "encolher é convite a baixar o número. Regrave com "
-                         "`python scripts/crawler/conferir.py --atualizar-limites` e "
+                         "`python scripts/robos/vigia/conferir.py --atualizar-limites` e "
                          "commite junto da mudança que justificou.",
             "por_que": "O erro que originou esta trava foi um SILÊNCIO: três incisos "
                        "do art. 151 do CP publicaram por anos seis vezes a pena que a "
@@ -727,7 +661,7 @@ def montar_cobertura(res: dict, total_catalogo: int) -> str:
     ]
     if n["dispensado"]:
         L.append(f"- {n['dispensado']} dispensados por exceção já julgada "
-                 "(`scripts/crawler/excecoes.json`).")
+                 "(`scripts/robos/vigia/excecoes.json`).")
     if n["sem_snapshot"]:
         L.append(f"- {n['sem_snapshot']} sem página baixada nesta rodada;")
     if fora:

@@ -16,7 +16,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: regen-data
+  group: escreve-na-main
   cancel-in-progress: false
 
 jobs:

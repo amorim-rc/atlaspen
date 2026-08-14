@@ -22,10 +22,10 @@ sondagem, do primeiro ao último número do ano. Custa alguns minutos por mês, 
 roda uma vez por mês.
 
 Uso:
-    python scripts/crawler/leis_do_ano.py                 # ano corrente
-    python scripts/crawler/leis_do_ano.py --ano 2025
-    python scripts/crawler/leis_do_ano.py --de 15400 --ate 15500
-    python scripts/crawler/leis_do_ano.py --orcamento 200 # teto de requisições
+    python scripts/robos/recenseador/leis_do_ano.py                 # ano corrente
+    python scripts/robos/recenseador/leis_do_ano.py --ano 2025
+    python scripts/robos/recenseador/leis_do_ano.py --de 15400 --ate 15500
+    python scripts/robos/recenseador/leis_do_ano.py --orcamento 200 # teto de requisições
 
 Saídas: 0 = nenhuma lei penal fora da vigilância; 2 = erro; 3 = há o que ler.
 """
@@ -41,10 +41,14 @@ import urllib.error
 import urllib.request
 from pathlib import Path
 
-RAIZ = Path(__file__).resolve().parent.parent.parent
-sys.path.insert(0, str(Path(__file__).resolve().parent))
-from dou_watcher import comina_pena  # noqa: E402
-from tempo import hoje  # noqa: E402
+RAIZ = Path(__file__).resolve().parents[3]
+# `scripts/robos` para os pacotes dos robôs e do núcleo; `scripts` para o
+# `pena_parser`, que é compartilhado com o construtor do catálogo e por isso
+# não mora aqui.
+sys.path.insert(0, str(RAIZ / "scripts"))
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from nucleo.preceito import comina_pena  # noqa: E402
+from nucleo.tempo import hoje  # noqa: E402
 
 FONTES = RAIZ / "data" / "fontes.json"
 RELATORIOS = RAIZ / "crawler" / "relatorios"

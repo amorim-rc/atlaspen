@@ -238,7 +238,7 @@ def validar_tipos_penais(crimes: list) -> list:
 # contradição venha com o link de onde resolvê-la.
 #
 # O registro vive em `data/fontes.json` — mesma fonte que o conferidor usa para
-# baixar os textos (scripts/crawler/baixar.py). Antes o mapa era duplicado aqui,
+# baixar os textos (scripts/robos/nucleo/baixar.py). Antes o mapa era duplicado aqui,
 # por expressão regular, e envelheceu: quatro diplomas apontavam para URLs
 # "…compilado.htm" que hoje respondem 404. Uma fonte só, casada por rótulo
 # exato, elimina a duplicação e mantém os links verificados pelo download.
@@ -685,7 +685,7 @@ def main():
         # hoje: o arquivo derivado é commitado e conferido pela CI, e um campo
         # que muda sozinho num dia qualquer quebraria o build sem ninguém ter
         # tocado em nada. Vacatio legis é outro problema, do conferidor
-        # (scripts/crawler/vigencia.py), e não se modela aqui.
+        # (scripts/robos/nucleo/vigencia.py), e não se modela aqui.
         c["vigente"] = not c.get("vigencia_ate")
 
         # Trilha de auditoria: quando este registro foi confrontado com a lei,

@@ -2742,7 +2742,7 @@
           "Art. 302, caput"
         ]
       },
-      "obs": "Aumento de 1/3 à metade se o agente não possui Permissão para Dirigir ou CNH; pratica o crime em faixa de pedestres ou na calçada; deixa de prestar socorro à vítima; ou conduz veículo de transporte de passageiros no exercício da profissão. Os oito dispositivos do CTB que a auditoria também apontava são de infração ADMINISTRATIVA, não penal — ver scripts/crawler/excecoes-auditoria.json.",
+      "obs": "Aumento de 1/3 à metade se o agente não possui Permissão para Dirigir ou CNH; pratica o crime em faixa de pedestres ou na calçada; deixa de prestar socorro à vítima; ou conduz veículo de transporte de passageiros no exercício da profissão. Os oito dispositivos do CTB que a auditoria também apontava são de infração ADMINISTRATIVA, não penal — ver scripts/robos/auditor/excecoes-auditoria.json.",
       "ignora_embutida": true
     },
     {
