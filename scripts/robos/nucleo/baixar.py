@@ -17,9 +17,9 @@ faltar, o download é rejeitado em vez de alimentar o conferidor com texto velho
 ou truncado.
 
 Uso:
-    python scripts/crawler/baixar.py --todas
-    python scripts/crawler/baixar.py --fonte cp --fonte cpm
-    python scripts/crawler/baixar.py --listar
+    python scripts/robos/nucleo/baixar.py --todas
+    python scripts/robos/nucleo/baixar.py --fonte cp --fonte cpm
+    python scripts/robos/nucleo/baixar.py --listar
 
 Saídas: 0 = tudo certo; 2 = alguma fonte falhou (rede, HTTP ou sentinela).
 """
@@ -36,12 +36,16 @@ import urllib.error
 import urllib.request
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
-from tempo import hoje  # noqa: E402
+from nucleo.tempo import hoje  # noqa: E402
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
 
-RAIZ = Path(__file__).resolve().parent.parent.parent
+RAIZ = Path(__file__).resolve().parents[3]
+# `scripts/robos` para os pacotes dos robôs e do núcleo; `scripts` para o
+# `pena_parser`, que é compartilhado com o construtor do catálogo e por isso
+# não mora aqui.
+sys.path.insert(0, str(RAIZ / "scripts"))
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 FONTES = RAIZ / "data" / "fontes.json"
 SNAPSHOTS = RAIZ / "crawler" / "snapshots"
 

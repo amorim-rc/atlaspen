@@ -5,7 +5,7 @@ Sem rede: a caminhada recebe um `buscar` falso, que devolve as páginas de um
 Planalto imaginário. É o que permite testar o corte de ano e o de orçamento, que
 são justamente as duas coisas que uma varredura real esconderia.
 """
-import leis_do_ano as lda
+from recenseador import leis_do_ano as lda
 
 
 def pagina(numero, ano, corpo=""):

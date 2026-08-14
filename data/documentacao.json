@@ -38,7 +38,7 @@
         "CONTRIBUTING.md",
         "scripts/transform_data.py",
         ".github/workflows/ci.yml",
-        "scripts/crawler/excecoes-auditoria.json"
+        "scripts/robos/auditor/excecoes-auditoria.json"
       ]
     },
     {
@@ -47,10 +47,10 @@
       "conferido_em": "2026-08-04",
       "depende_de": [
         ".github/workflows/conferidor.yml",
-        "scripts/crawler/propor.py",
-        "scripts/crawler/auditar.py",
-        "scripts/crawler/excecoes-auditoria.json",
-        "scripts/crawler/dou_watcher.py"
+        "scripts/robos/proponente/propor.py",
+        "scripts/robos/auditor/auditar.py",
+        "scripts/robos/auditor/excecoes-auditoria.json",
+        "scripts/robos/sentinela/dou_watcher.py"
       ]
     },
     {
@@ -79,8 +79,8 @@
       "depende_de": [
         "scripts/transform_data.py",
         "src/lib/types.ts",
-        "scripts/crawler/conferir.py",
-        "scripts/crawler/dou_watcher.py"
+        "scripts/robos/vigia/conferir.py",
+        "scripts/robos/sentinela/dou_watcher.py"
       ]
     },
     {
@@ -102,17 +102,17 @@
       ]
     },
     {
-      "arquivo": "scripts/crawler/README.md",
+      "arquivo": "scripts/robos/README.md",
       "sobre": "O pipeline de conferência: módulos, o que o robô faz e não faz, e as armadilhas com teste.",
       "conferido_em": "2026-08-04",
       "depende_de": [
-        "scripts/crawler/conferir.py",
-        "scripts/crawler/propor.py",
-        "scripts/crawler/auditar.py",
-        "scripts/crawler/parsear.py",
+        "scripts/robos/vigia/conferir.py",
+        "scripts/robos/proponente/propor.py",
+        "scripts/robos/auditor/auditar.py",
+        "scripts/robos/nucleo/parsear.py",
         "scripts/pena_parser.py",
-        "scripts/crawler/excecoes-auditoria.json",
-        "scripts/crawler/dou_watcher.py"
+        "scripts/robos/auditor/excecoes-auditoria.json",
+        "scripts/robos/sentinela/dou_watcher.py"
       ]
     },
     {
@@ -129,7 +129,7 @@
       "sobre": "Registro do spike que abriu o conferidor: por que o fetcher é como é.",
       "conferido_em": "2026-08-04",
       "depende_de": [
-        "scripts/crawler/baixar.py"
+        "scripts/robos/nucleo/baixar.py"
       ]
     },
     {
@@ -137,12 +137,12 @@
       "sobre": "Como cada robo funciona, com que criterio corta, e o que nenhum deles alcanca. Vigia, Sentinela, Recenseador, Auditor e Arquivista. Pagina publica, para receber discordancia sobre os criterios.",
       "conferido_em": "2026-08-14",
       "depende_de": [
-        "scripts/crawler/conferir.py",
-        "scripts/crawler/dou_watcher.py",
-        "scripts/crawler/auditar.py",
-        "scripts/verificar_documentacao.py",
-        "scripts/crawler/leis_do_ano.py",
-        "scripts/crawler/cobertura-limites.json",
+        "scripts/robos/vigia/conferir.py",
+        "scripts/robos/sentinela/dou_watcher.py",
+        "scripts/robos/auditor/auditar.py",
+        "scripts/robos/arquivista/verificar_documentacao.py",
+        "scripts/robos/recenseador/leis_do_ano.py",
+        "scripts/robos/vigia/cobertura-limites.json",
         ".github/workflows/conferidor.yml"
       ]
     }

@@ -14,7 +14,7 @@ import pytest
 
 RAIZ = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(RAIZ / "scripts"))
-import auditar  # noqa: E402
+from auditor import auditar  # noqa: E402
 
 
 def registro(**campos):

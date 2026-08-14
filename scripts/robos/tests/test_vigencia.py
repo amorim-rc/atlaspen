@@ -11,8 +11,8 @@ from pathlib import Path
 
 import pytest
 
-import revogacao
-from vigencia import Vigencia, analisar, ler_publicacao, url_da_lei
+from nucleo import revogacao
+from nucleo.vigencia import Vigencia, analisar, ler_publicacao, url_da_lei
 
 FIXTURES = Path(__file__).resolve().parent.parent / "fixtures"
 

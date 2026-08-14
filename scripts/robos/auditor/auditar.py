@@ -20,9 +20,9 @@ campos que decidem benefício e que ninguém vigiava:
 proposta de mudança saem em PR, para revisão — nunca aplicados direto.
 
 Uso:
-    python scripts/crawler/auditar.py                # relatório de tudo
-    python scripts/crawler/auditar.py --so hediondez
-    python scripts/crawler/auditar.py --json crawler/relatorios/auditoria.json
+    python scripts/robos/auditor/auditar.py                # relatório de tudo
+    python scripts/robos/auditor/auditar.py --so hediondez
+    python scripts/robos/auditor/auditar.py --json crawler/relatorios/auditoria.json
 
 Saídas: 0 = nada a rever; 2 = erro; 3 = há achados.
 """
@@ -37,14 +37,17 @@ import sys
 import unicodedata
 from pathlib import Path
 
-RAIZ = Path(__file__).resolve().parent.parent.parent
+RAIZ = Path(__file__).resolve().parents[3]
+# `scripts/robos` para os pacotes dos robôs e do núcleo; `scripts` para o
+# `pena_parser`, que é compartilhado com o construtor do catálogo e por isso
+# não mora aqui.
 sys.path.insert(0, str(RAIZ / "scripts"))
-sys.path.insert(0, str(Path(__file__).resolve().parent))
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from conferir import SNAPSHOTS, chave, chaves_do_registro  # noqa: E402
-from parsear import parsear  # noqa: E402
+from nucleo.dispositivo import SNAPSHOTS, chave, chaves_do_registro  # noqa: E402
+from nucleo.parsear import parsear  # noqa: E402
 from pena_parser import ler_penas  # noqa: E402
-from tempo import hoje  # noqa: E402
+from nucleo.tempo import hoje  # noqa: E402
 
 CATALOGO = RAIZ / "static" / "data" / "crimes.json"
 FONTES = RAIZ / "data" / "fontes.json"
@@ -676,7 +679,7 @@ LIMITES = {
     "excecoes": "Não são achados: é a contagem do que saiu do relatório por decisão já "
                 "tomada. Fica visível de propósito — uma dispensa que ninguém vê é "
                 "indistinguível de um achado que nunca apareceu. O motivo e a data de "
-                "cada uma estão em `scripts/crawler/excecoes-auditoria.json`.",
+                "cada uma estão em `scripts/robos/auditor/excecoes-auditoria.json`.",
 }
 
 
@@ -758,7 +761,7 @@ def rodar(so: str | None = None) -> list[dict]:
             "campo": "excecoes", "tipo": "JA-JULGADO", "gravidade": 0,
             "detalhe": f"{len(dispensados)} achado(s) omitido(s) por decisão já tomada "
                        f"({', '.join(f'{n} {t}' for t, n in sorted(por_tipo.items()))}) "
-                       "— ver scripts/crawler/excecoes-auditoria.json, que guarda o motivo "
+                       "— ver scripts/robos/auditor/excecoes-auditoria.json, que guarda o motivo "
                        "e a data de cada uma",
         })
     return achados

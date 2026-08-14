@@ -34,7 +34,7 @@ permissions:
   issues: write
 
 concurrency:
-  group: conferidor
+  group: escreve-na-main
   cancel-in-progress: false
 
 # A rodada semanal são VÁRIOS robôs, não um. Antes eram passos de um job só, e o
@@ -71,14 +71,14 @@ jobs:
       # servida de cache velho, em vez de deixar o differ comparar com lixo.
       - name: Baixar os textos compilados
         id: baixar
-        run: python3 scripts/crawler/baixar.py --todas
+        run: python3 scripts/robos/nucleo/baixar.py --todas
 
       - name: Conferir o catálogo
         id: conferir
         # exit 3 = há achados; é resultado, não falha.
         run: |
           set +e
-          python3 scripts/crawler/conferir.py
+          python3 scripts/robos/vigia/conferir.py
           codigo=$?
           set -e
           echo "codigo=$codigo" >> "$GITHUB_OUTPUT"
@@ -121,7 +121,7 @@ jobs:
         id: dou
         run: |
           set +e
-          python3 scripts/crawler/dou_watcher.py --dias 8 > /dev/null
+          python3 scripts/robos/sentinela/dou_watcher.py --dias 8 > /dev/null
           echo "codigo=$?" >> "$GITHUB_OUTPUT"
       # A defesa contra o falso NEGATIVO: o que o filtro NÃO pegou não deixa
       # rastro em lugar nenhum. Uma vez por mês, a lista de leis sancionadas do
@@ -132,7 +132,7 @@ jobs:
         if: fromJSON(steps.dia.outputs.dia) <= 7
         run: |
           set +e
-          python3 scripts/crawler/leis_do_ano.py > /dev/null
+          python3 scripts/robos/recenseador/leis_do_ano.py > /dev/null
           echo "codigo=$?" >> "$GITHUB_OUTPUT"
 
       - name: Guardar o relatório do DOU
@@ -173,7 +173,7 @@ jobs:
         id: auditoria
         run: |
           set +e
-          python3 scripts/crawler/auditar.py > /dev/null
+          python3 scripts/robos/auditor/auditar.py > /dev/null
           echo "codigo=$?" >> "$GITHUB_OUTPUT"
       - name: Guardar o relatório da auditoria
         if: always()
@@ -204,7 +204,7 @@ jobs:
         id: docs
         run: |
           set +e
-          python3 scripts/verificar_documentacao.py --saida crawler/relatorios/documentacao.md > /dev/null
+          python3 scripts/robos/arquivista/verificar_documentacao.py --saida crawler/relatorios/documentacao.md > /dev/null
           echo "codigo=$?" >> "$GITHUB_OUTPUT"
       - name: Guardar o relatório da documentação
         if: always()
@@ -267,7 +267,7 @@ jobs:
             echo
             echo "- Relatório completo e páginas baixadas: **artifact \`conferidor-${{ github.run_number }}\`** desta execução."
             echo "- Cada achado é uma **pergunta**, não uma conclusão: confira o dispositivo no compilado antes de alterar o catálogo."
-            echo "- Decisão de modelagem já tomada vai para \`scripts/crawler/excecoes.json\`, com motivo e data; defasagem real vira patch."
+            echo "- Decisão de modelagem já tomada vai para \`scripts/robos/vigia/excecoes.json\`, com motivo e data; defasagem real vira patch."
             echo "- As correções mecânicas desta rodada podem já estar em PR aberto pelo próprio robô."
             echo
             echo "---"
@@ -383,7 +383,7 @@ jobs:
         env:
           SLUG: ${{ steps.app.outputs.app-slug }}
         run: |
-          python3 scripts/crawler/conferir.py --carimbar > /dev/null || true
+          python3 scripts/robos/vigia/conferir.py --carimbar > /dev/null || true
           python3 scripts/transform_data.py --estrito --max-contradicoes=0
           if [ -n "$(git status --porcelain data/conferencia.json static/data/crimes.json)" ]; then
             git config user.name "${SLUG:-sispenas-automacao}[bot]"
@@ -400,7 +400,7 @@ jobs:
         if: steps.app.outputs.token != '' && steps.aberto.outputs.quantidade == '0'
         run: |
           set +e
-          python3 scripts/crawler/propor.py --aplicar --saida crawler/proposta \
+          python3 scripts/robos/proponente/propor.py --aplicar --saida crawler/proposta \
             ${{ (github.event_name == 'workflow_dispatch' && inputs.incluir_linhas_novas) && '--com-novas' || '' }}
           codigo=$?
           set -e
@@ -409,7 +409,7 @@ jobs:
           # vão em PR, com o fundamento ao lado, em vez de virar linha na issue.
           if [ "$codigo" -eq 1 ]; then
             set +e
-            python3 scripts/crawler/propor.py --auditoria --aplicar --saida crawler/proposta
+            python3 scripts/robos/proponente/propor.py --auditoria --aplicar --saida crawler/proposta
             codigo=$?
             set -e
           fi

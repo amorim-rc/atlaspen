@@ -11,7 +11,7 @@ from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(RAIZ / "scripts"))
-import verificar_documentacao as vd  # noqa: E402
+from arquivista import verificar_documentacao as vd  # noqa: E402
 
 HOJE = date(2026, 8, 2)
 

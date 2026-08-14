@@ -19,6 +19,14 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  # Quem ESCREVE na main compartilha o grupo. Três workflows fazem `git push`
+  # nela — o carimbo da conferência, a regeneração do derivado e a criação da
+  # tag de release — e um push não-fast-forward entre eles é questão de tempo.
+  # Serializa só quem precisa: deploy e CI seguem em paralelo.
+  group: escreve-na-main
+  cancel-in-progress: false
+
 jobs:
   release:
     runs-on: ubuntu-latest

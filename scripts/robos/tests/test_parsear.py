@@ -7,7 +7,7 @@ não é cobrir linhas, é impedir que essas armadilhas voltem em silêncio.
 """
 import pytest
 
-from parsear import ler_anotacao, parsear, como_dicionarios
+from nucleo.parsear import ler_anotacao, parsear, como_dicionarios
 
 
 def por_marcador(dispositivos, artigo):

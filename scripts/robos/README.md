@@ -36,14 +36,14 @@ segura, o achado vira pergunta na issue em vez de virar dado.
 ## Rodar à mão
 
 ```bash
-python scripts/crawler/baixar.py --todas          # ou --fonte cp
-python scripts/crawler/conferir.py                # relatório de tudo
-python scripts/crawler/conferir.py --carimbar     # + trilha em data/conferencia.json
-python scripts/crawler/conferir.py --atualizar-limites   # regrava a trava de cobertura
-python scripts/crawler/propor.py                  # o PR que sairia (não escreve)
-python scripts/crawler/dou_watcher.py --dias 8
-python scripts/crawler/leis_do_ano.py             # o que o watcher nao viu
-python -m pytest scripts/crawler/tests            # sem rede, contra fixtures
+python scripts/robos/nucleo/baixar.py --todas          # ou --fonte cp
+python scripts/robos/vigia/conferir.py                # relatório de tudo
+python scripts/robos/vigia/conferir.py --carimbar     # + trilha em data/conferencia.json
+python scripts/robos/vigia/conferir.py --atualizar-limites   # regrava a trava de cobertura
+python scripts/robos/proponente/propor.py                  # o PR que sairia (não escreve)
+python scripts/robos/sentinela/dou_watcher.py --dias 8
+python scripts/robos/recenseador/leis_do_ano.py             # o que o watcher nao viu
+python -m pytest scripts/robos/tests            # sem rede, contra fixtures
 ```
 
 O workflow também roda sob demanda: aba **Actions** → "Conferidor semanal" →

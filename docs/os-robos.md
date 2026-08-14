@@ -251,6 +251,40 @@ fazia, e o prazo do documento nem havia corrido.
 
 ---
 
+## Onde cada um mora no código
+
+Cada robô é um sistema próprio, em diretório próprio com o nome dele. O que fica no
+**núcleo** é o que dois ou mais precisam aplicar de forma **idêntica** — e essa é a
+única razão para algo morar lá.
+
+```
+scripts/robos/
+  nucleo/        tempo · baixar · parsear · dispositivo · preceito · vigencia · revogacao
+  vigia/         conferir · cobertura-limites · excecoes
+  sentinela/     dou_watcher
+  recenseador/   leis_do_ano
+  auditor/       auditar · excecoes-auditoria
+  arquivista/    verificar_documentacao
+  proponente/    propor · corrigir · criar        (não é robô: é quem abre o PR)
+```
+
+Duas peças do núcleo merecem explicação, porque a tentação de duplicá-las é grande e
+o custo de ceder já foi pago:
+
+- **`dispositivo`** guarda a normalização que transforma "Art. 121, §2º, I" no
+  identificador com que os robôs se entendem. O Vigia confere a moldura contra o
+  dispositivo que o registro diz ser, e o Auditor pergunta se o nome conversa com esse
+  mesmo dispositivo. Se cada um tiver a sua cópia, os dois divergem em silêncio — e o
+  registro passa a existir para um e não para o outro. Foi assim que nasceram artigos
+  inexistentes como `Art. 13-O`.
+- **`preceito`** guarda o critério que separa lei que cria crime de lei que fala de
+  pena. O Sentinela aplica-o ao Diário Oficial da semana; o Recenseador, a todas as
+  leis do ano. Comparar os dois resultados só faz sentido se o critério for um só:
+  com duas cópias, uma divergência não distinguiria "a lei mudou" de "os filtros
+  discordam".
+
+---
+
 ## O que nenhum deles alcança
 
 Declarar o limite vale mais que fingir cobertura.

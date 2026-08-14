@@ -23,8 +23,8 @@ Editar o documento conta como conferi-lo: a data efetiva é a maior entre o
 escrituração manual quando alguém relê e **não** encontra o que corrigir.
 
 Uso:
-    python scripts/verificar_documentacao.py            # relatório
-    python scripts/verificar_documentacao.py --md       # em markdown, p/ a issue
+    python scripts/robos/arquivista/verificar_documentacao.py            # relatório
+    python scripts/robos/arquivista/verificar_documentacao.py --md       # em markdown, p/ a issue
 
 Saídas: 0 = tudo em dia; 2 = erro; 3 = há documento vencido.
 """
@@ -38,7 +38,12 @@ import sys
 from datetime import date, datetime
 from pathlib import Path
 
-RAIZ = Path(__file__).resolve().parent.parent
+RAIZ = Path(__file__).resolve().parents[3]
+# `scripts/robos` para os pacotes dos robôs e do núcleo; `scripts` para o
+# `pena_parser`, que é compartilhado com o construtor do catálogo e por isso
+# não mora aqui.
+sys.path.insert(0, str(RAIZ / "scripts"))
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 REGISTRO = RAIZ / "data" / "documentacao.json"
 
 

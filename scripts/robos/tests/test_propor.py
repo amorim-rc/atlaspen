@@ -13,7 +13,7 @@ from pathlib import Path
 import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))  # scripts/
-import propor  # noqa: E402
+from proponente import propor  # noqa: E402
 
 
 @pytest.fixture
