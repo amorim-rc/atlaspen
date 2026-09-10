@@ -75,6 +75,26 @@ não conclusões:
 - sursis e livramento condicional do CPM (arts. 84 e 89);
 - colaboração em outras leis (Lei 9.807/99, arts. 13 e 14; Lei 11.343/06, art. 41).
 
+**Decidido em 10/09/2026: os pré-requisitos.**
+
+- **Glossário da frente 2 aprovado.** O arquivo será `data/atributos.json`.
+- **Chave de dispositivo também nos atributos**, no formato da `chave_dispositivo`
+  (`lep|art. 112, caput`), servindo ao mesmo `historico-legislativo.json` da frente 5. É
+  preciso conferir se a LEP, a Lei 9.099/95 e o CPP estão em `data/fontes.json`, que foi
+  montado a partir dos diplomas com tipo penal; se não estiverem, entram.
+- **Última alteração legislativa em cada atributo**, como nos tipos: data e lei que o
+  editou, com link para o item no Planalto. É derivada do histórico, não digitada.
+- **Sem data do fato na simulação em abstrato.** O sistema simula, em abstrato, os
+  atributos compatíveis com as penas cominadas, pela lei vigente. No máximo o caso
+  concreto registra a data do fato, como já faz a marcação "fato anterior a 08/05/2026".
+  A vigência de cada parâmetro é histórico, não entrada da simulação.
+- **Tudo vai para dados, menos a função de avaliação.** Predicados declarativos ficam
+  para depois.
+- **Rede de segurança antes de migrar:** um teste que congela o resultado atual dos 22
+  atributos sobre os 1.507 tipos. A migração só entra se nada mudar.
+- **Em aberto:** o escopo do inventário (causas de extinção da punibilidade, regimes
+  próprios do CPM). Decide-se depois de descoberto o como.
+
 **Herdado do roadmap (v2.1.0).** Serializar `BeneficioDef` para um JSON de fonte, CI de
 validação (frações em [0,1], fundamento citado), permalink de simulação (uma URL que
 carrega os parâmetros editados).
@@ -109,8 +129,16 @@ sucessão de leis (progressão). Depois de validado o modelo, a migração.
   então os dados abertos não quebram. As URLs quebram: `/pesquisa/beneficios?beneficio=x`
   precisa de redirecionamento. É preciso conferir se o redirecionamento preserva a query.
 
-**Primeiro passo.** Fechar um glossário curto (atributo penal, parâmetro, campo do
-tipo) antes de tocar em texto ou código.
+**Decidido em 10/09/2026: o glossário.**
+
+- **atributo penal** é o instituto (o que hoje o site chama de benefício);
+- **parâmetro** é o patamar, a fração ou a vedação editável de um atributo (o que hoje a
+  tela chama de "atributos do benefício");
+- **campo** é o campo do registro de tipo penal (o que hoje o `CONTRIBUTING.md` chama de
+  "atributo do tipo").
+
+**Primeiro passo.** Aplicar o glossário ao texto e ao código antes de nascer o arquivo de
+dados da frente 1.
 
 **Afeta** 1: convém trocar o nome antes de criar o arquivo de dados, para não nascer
 `beneficios.json` e ser renomeado depois.
@@ -240,7 +268,9 @@ Lei 14.994/2024.
 
 **O que já se sabe da fonte.** O texto compilado anota cada dispositivo com "Redação
 dada pela Lei nº…" ou "Incluído pela Lei nº…", e o parser do Vigia já extrai essa
-anotação. A **última** alteração, portanto, é mecanizável. A cadeia inteira depende das
+anotação. Essas anotações são links: o `href` traz a URL da lei alteradora e a âncora do
+artigo (`crawler/DECISOES-F0.md`, §3), que é o link para o item no Planalto. A **última**
+alteração, portanto, é mecanizável. A cadeia inteira depende das
 redações anteriores que o compilado mantém riscadas: é parcialmente mecanizável e exige
 conferência. O que for anterior ao compilado é trabalho manual.
 
