@@ -1,41 +1,66 @@
 # CODEOWNERS do SISPENAS
-# Quando um PR altera um caminho abaixo, o dono correspondente entra como revisor.
-# A ÚLTIMA regra que casa um arquivo prevalece.
-# Hoje tudo é de @amorim-rc; troque pelos handles/times reais quando houver acesso.
+#
+# Quando um PR altera um caminho abaixo, o dono correspondente é chamado para revisar, e
+# o ruleset da `main` exige a aprovação dele. Vale a ÚLTIMA regra que casa o arquivo: por
+# isso as regras vão do geral para o específico.
+#
+# Hoje tudo é de @amorim-rc. Quando o repositório for para a organização, troque cada
+# linha pelo time indicado no comentário (ex.: @<org>/juridico). Code Owner precisa ter
+# permissão de escrita no repositório; sem ela, a regra é ignorada.
+#
+# O GitHub não deixa ninguém aprovar o próprio PR. Os PRs do mantenedor entram por bypass
+# de admin (decisão de 10/09/2026).
 
-# Fallback: owner geral de tudo que não casar com regra mais específica
-*                          @amorim-rc
+# Tudo o que não casar com regra abaixo                     (futuro: @<org>/manutencao)
+*                               @amorim-rc
 
-# Dados e catálogo penal — revisão JURÍDICA        (futuro: @org/juridico)
-/data/                     @amorim-rc
-/static/data/              @amorim-rc
+# Markdown em qualquer lugar                                (futuro: @<org>/conteudo)
+# Fica no alto para que as pastas abaixo prevaleçam: o README dos robôs é da
+# engenharia, não do conteúdo.
+*.md                            @amorim-rc
 
-# Pipeline de transformação dos dados (Python)     (futuro: @org/dados)
-/scripts/                  @amorim-rc
+# Dados e catálogo penal — revisão JURÍDICA                 (futuro: @<org>/juridico)
+/data/                          @amorim-rc
+/static/data/                   @amorim-rc
 
-# Motor de benefícios — lógica de cálculo (sensível) (futuro: @org/juridico + @org/engenharia)
-/src/lib/beneficios.ts     @amorim-rc
-/src/lib/                  @amorim-rc
+# Regras em código. O geral antes; benefícios e dosimetria  (futuro: @<org>/engenharia)
+# são regra jurídica e prevalecem sobre ele.                (futuro: @<org>/juridico + @<org>/engenharia)
+/src/lib/                       @amorim-rc
+/src/lib/beneficios/            @amorim-rc
+/src/lib/dosimetria/            @amorim-rc
 
-# Front-end (interface, páginas, estilos, tema)     (futuro: @org/engenharia)
-/src/components/           @amorim-rc
-/src/pages/                @amorim-rc
-/src/css/                  @amorim-rc
-/src/theme/                @amorim-rc
+# Robôs, transformação dos dados e scripts                  (futuro: @<org>/engenharia)
+/scripts/                       @amorim-rc
+/crawler/                       @amorim-rc
 
-# Documentação do site                              (futuro: @org/conteudo)
-/docs/                     @amorim-rc
-*.md                       @amorim-rc
+# Interface                                                 (futuro: @<org>/engenharia)
+/src/components/                @amorim-rc
+/src/pages/                     @amorim-rc
+/src/css/                       @amorim-rc
+/static/img/                    @amorim-rc
 
-# Configuração de build do Docusaurus               (futuro: @org/engenharia)
-/docusaurus.config.ts      @amorim-rc
-/sidebars.ts               @amorim-rc
-/package.json              @amorim-rc
-/tsconfig.json             @amorim-rc
+# Notas de atualizações                                     (futuro: @<org>/conteudo)
+/src/data/changelog/            @amorim-rc
 
-# Infra, CI/CD e automações                          (futuro: @org/engenharia)
-/.github/                  @amorim-rc
+# Documentação do site                                      (futuro: @<org>/conteudo)
+/docs/                          @amorim-rc
+/static/artigos/                @amorim-rc
 
-# Licença e citação acadêmica                        (mantido no owner geral)
-/LICENSE                   @amorim-rc
-/CITATION.cff              @amorim-rc
+# Regras do projeto e instruções para agentes               (mantido no mantenedor)
+/AGENTS.md                      @amorim-rc
+/CLAUDE.md                      @amorim-rc
+/CONTRIBUTING.md                @amorim-rc
+
+# Build e dependências                                      (futuro: @<org>/engenharia)
+/docusaurus.config.ts           @amorim-rc
+/sidebars.ts                    @amorim-rc
+/tsconfig.json                  @amorim-rc
+/package.json                   @amorim-rc
+/package-lock.json              @amorim-rc
+
+# Infra, CI/CD e automações, inclusive este arquivo         (mantido no mantenedor)
+/.github/                       @amorim-rc
+
+# Licença e citação acadêmica                               (mantido no mantenedor)
+/LICENSE                        @amorim-rc
+/CITATION.cff                   @amorim-rc
