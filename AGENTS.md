@@ -8,7 +8,13 @@ Este arquivo é lido pelo Codex e demais agentes pelo nome; o Claude Code o lê 
 `CLAUDE.md`, que só o importa. Regra nova entra **aqui**. Os próximos passos possíveis do
 projeto estão em `backlog.md`.
 
-## Fluxo de release — OBRIGATÓRIO em toda atuação
+## Fluxo de release — suspenso até a v1.0.0
+
+> **Decisão de 10/09/2026:** até o lançamento oficial (v1.0.0), **não crie entrada de
+> changelog nem suba a versão**. As Notas de atualizações de hoje serão expurgadas e as
+> Releases do GitHub, enxugadas. Depois da v1.0.0, o feed publica **exclusivamente**
+> alterações de tipos penais e de atributos penais. O fluxo abaixo é o que volta a valer
+> a partir daí, com os ajustes do roteiro da frente 10 do `backlog.md`.
 
 O projeto publica **duas coisas** a cada versão: a Release no GitHub (para colaboradores) e
 o feed de Notas de atualizações no site (para quem acompanha). Ambas saem das **mesmas

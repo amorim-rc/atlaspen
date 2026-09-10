@@ -78,10 +78,9 @@ não conclusões:
 **Decidido em 10/09/2026: os pré-requisitos.**
 
 - **Glossário da frente 2 aprovado.** O arquivo será `data/atributos.json`.
-- **Chave de dispositivo também nos atributos**, no formato da `chave_dispositivo`
-  (`lep|art. 112, caput`), servindo ao mesmo `historico-legislativo.json` da frente 5. É
-  preciso conferir se a LEP, a Lei 9.099/95 e o CPP estão em `data/fontes.json`, que foi
-  montado a partir dos diplomas com tipo penal; se não estiverem, entram.
+- **Chave de dispositivo também nos atributos**, numa chave canônica (`lep|art. 112, i`),
+  servindo ao mesmo `historico-legislativo.json` da frente 5. Conferido em 10/09/2026: a
+  LEP, o CPP, a Lei 9.099/95 e a CF não estão em `data/fontes.json`, e entram.
 - **Última alteração legislativa em cada atributo**, como nos tipos: data e lei que o
   editou, com link para o item no Planalto. É derivada do histórico, não digitada.
 - **Sem data do fato na simulação em abstrato.** O sistema simula, em abstrato, os
@@ -99,9 +98,26 @@ não conclusões:
 validação (frações em [0,1], fundamento citado), permalink de simulação (uma URL que
 carrega os parâmetros editados).
 
-**Primeiro passo.** Um documento curto com o esquema proposto e três institutos-piloto
-serializados: um de natureza abstrata (transação), um concreta (substituição) e um com
-sucessão de leis (progressão). Depois de validado o modelo, a migração.
+**Requisitos da migração (10/09/2026).**
+
+- **Um PR só.** O PR que cria a base troca, nele mesmo, todos os usos: o contador da
+  página inicial, a busca por tipo penal, a busca por atributo e a verificação do motor.
+  O catálogo em código sai no mesmo PR, e não há período com duas fontes.
+- **O acervo histórico registra a história dos atributos**, não só a dos tipos: quando
+  cada um nasceu, mudou de parâmetro ou deixou de valer.
+
+**Estudo do modelo:** [`estudos/modelo-atributos.md`](estudos/modelo-atributos.md), com
+os achados, o esquema, os três pilotos (transação, substituição e progressão) e o plano do
+PR da migração. Falta validá-lo. Dois achados foram corrigidos em 10/09/2026, antes da
+migração:
+
+- **Erro de cálculo:** a progressão do condenado por constituição de milícia privada
+  (art. 288-A do CP) saía com 25% ou 30%, e o art. 112, VI, "c", da LEP manda 75%.
+- **Citação errada:** três parâmetros da progressão citavam o inciso na numeração de
+  2019, e não na da Lei 15.402/2026.
+
+Também em 10/09/2026 saiu da busca por atributo a opção "fato anterior a 08/05/2026":
+a varredura simula em abstrato, pela lei vigente.
 
 **Depende de** 2 (nome do arquivo e dos campos) e de 4 e 5 (o mesmo modelo de histórico).
 
@@ -247,8 +263,7 @@ A contagem de alterações da frente 4 e a data da última são **derivadas** pe
 `transform_data.py` e publicadas no derivado; ninguém as digita. Segue a convenção de
 sempre: fonte em `data/`, derivado em `static/data/`.
 
-**Decidido em 10/09/2026: a chave é o dispositivo**, que o catálogo já tem pronto em
-`chave_dispositivo` (`cp|art. 121, caput`). O pedido original falava em id; o
+**Decidido em 10/09/2026: a chave é o dispositivo.** O pedido original falava em id; o
 dispositivo ficou por três razões:
 
 - **o histórico é do texto da lei, não do catálogo.** Ele existe antes do registro e já
@@ -259,9 +274,12 @@ dispositivo ficou por três razões:
 - **os atributos penais também têm dispositivo de origem** (a progressão, o art. 112 da
   LEP), e o mesmo arquivo serve aos dois.
 
-Nesse desenho, o campo que aponta para o histórico já existe no registro: é a
-`chave_dispositivo`. Cada id continua achando seu histórico sem ambiguidade. O caso a
-tratar à parte é o do conteúdo que muda de lugar, como um inciso que vira artigo próprio.
+A `chave_dispositivo` atual não serve como está: ela usa o rótulo do catálogo, e o CP
+aparece sob quatro rótulos. A chave canônica é `<id do diploma em data/fontes.json>|
+<dispositivo>` (`cp|art. 121, caput`, `lep|art. 112, vi, c`); ver
+`estudos/modelo-atributos.md`, seção 4.1. Com ela, cada id acha seu histórico sem
+ambiguidade. O caso a tratar à parte é o do conteúdo que muda de lugar, como um inciso
+que vira artigo próprio.
 Ele pede um evento de **transferência** que ligue as duas chaves. Exemplo a conferir no
 compilado: o feminicídio, que saiu do art. 121, §2º, VI, para o art. 121-A com a
 Lei 14.994/2024.
@@ -371,13 +389,18 @@ tempo começa pelas alterações do Código Penal de 1940 até hoje.
 alterações, reaproveitando os protocolos da pesquisa do Pensando o Direito *Atividade
 legislativa e obstáculos à inovação em matéria penal no Brasil*.
 
-**Duas coisas distintas, com a mesma base:**
+**Três coisas distintas, com a mesma base:**
 
 - **o acervo de tipos**: o que foi crime, e deixou de ser ou mudou (herdado do roadmap);
+- **a história dos atributos penais**: quando cada um nasceu, mudou de parâmetro ou
+  deixou de valer (o ANPP nasce em 2019; o inciso VI-A do art. 112 da LEP nasce em 2024 e
+  é revogado em 2026). O atributo que deixa de valer não se apaga: passa ao acervo, como
+  o tipo revogado;
 - **o panorama das alterações**: a lei penal como série temporal, que é o objeto do
   paper.
 
-As duas se alimentam do registro de alterações da frente 5.
+As três se alimentam do registro de alterações da frente 5, e a linha do tempo mostra
+tipos e atributos lado a lado.
 
 **Perguntas a decidir.**
 
@@ -452,8 +475,9 @@ ids (frente 4) vão mudar, o momento de mudar é antes da v1.0.0, numa virada s�
 
 **Roteiro da B.**
 
-1. Tirar `version` das 80 notas e pôr no feed uma linha dizendo que as versões citadas
-   nos textos antigos eram a numeração do protótipo.
+1. **Expurgar as Notas de atualizações** que o site mostra hoje (decisão de 10/09/2026).
+   Depois da v1.0.0, o feed publica exclusivamente alterações de tipos penais e de
+   atributos penais.
 2. Parar o `release.yml` enquanto a versão for `0.x`, por condição no próprio workflow.
 3. Fazer o Proponente parar de subir a versão.
 4. Ajustar o `validar-changelog.mjs`: até a 1.0.0, nota com versão é erro, e a regra de
@@ -465,8 +489,9 @@ ids (frente 4) vão mudar, o momento de mudar é antes da v1.0.0, numa virada s�
 7. **No GitHub, ação sua:** apagar as 42 Releases e tags, ou renomeá-las para
    `prototipo-vX.Y.Z`. O ruleset de tags `v*` só deixa passar o admin e o app.
 
-**Até a execução:** as notas novas entram sem número e nenhuma Release é publicada. Não
-mergear PR do Proponente sem tirar dele a subida de versão, senão sai uma v2.0.7.
+**Até a execução:** nenhuma entrada de changelog é criada (decisão de 10/09/2026), e
+nenhuma Release é publicada. Não mergear PR do Proponente sem tirar dele a subida de
+versão, senão sai uma v2.0.7.
 
 ---
 

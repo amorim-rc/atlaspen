@@ -330,6 +330,33 @@ console.log('\n3. Casos-âncora de direito penal');
       );
     }
 
+    // Inciso VI, "c" — constituição de milícia privada: 75%, ao primário e ao
+    // reincidente. Não é hedionda e o catálogo a registra com violência: sem o
+    // ramo próprio, caía nos incisos I ou II e saía com 25% ou 30%.
+    const milicia = achar(/^CP$/i, /^Art\. 288-A/);
+    if (milicia) {
+      const r = avaliar(progressaoDef, milicia, {});
+      ok(/75%/.test(r.resumo), `milícia privada, primário: progressão a 75% — inciso VI, "c" (obtido "${r.resumo}")`);
+      const rein = avaliar(progressaoDef, milicia, {primario: false, reincidenteEspecifico: true});
+      ok(
+        /75%/.test(rein.resumo),
+        `milícia privada, reincidente: 75% — a alínea "c" não distingue (obtido "${rein.resumo}")`,
+      );
+      ok(
+        avaliar(livramentoDef, milicia, {}).status !== 'incabivel',
+        'milícia privada: a alínea "c" não veda o livramento condicional',
+      );
+    }
+    // A armadilha do nome: o homicídio com aumento do art. 121, §6º, fala em
+    // milícia privada e não é o crime de constituição de milícia.
+    const homicidioMilicia = achar(/^CP$/i, /^Art\. 121, §6º/);
+    if (homicidioMilicia) {
+      ok(
+        !cenarioFromCrime(homicidioMilicia).miliciaPrivada,
+        'art. 121, §6º: o nome fala em milícia, mas o tipo não é o do art. 288-A',
+      );
+    }
+
     // Inciso VIII — reincidente em hediondo com resultado morte: 85%, vedado.
     if (latrocinioTipo) {
       const ajuste = {primario: false, reincidenteEspecifico: true};

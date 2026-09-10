@@ -51,6 +51,11 @@ Exemplo presente: Art. 227 do CP (a multa só incide na hipótese do §3º).
 
 ## Fluxo de release
 
+> **Suspenso até a v1.0.0 (decisão de 10/09/2026).** Até o lançamento oficial, não se
+> criam entradas de changelog nem se sobe a versão. Depois dele, as Notas de atualizações
+> passam a publicar exclusivamente alterações de tipos penais e de atributos penais. O
+> fluxo abaixo volta a valer a partir daí, com os ajustes da frente 10 do `backlog.md`.
+
 Cada versão publica **duas coisas a partir do mesmo arquivo**: a Release no GitHub (para
 colaboradores) e a release note no site em `/release-notes` (para quem acompanha). O fluxo
 garante que as duas sempre saem juntas:

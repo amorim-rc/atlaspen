@@ -121,8 +121,9 @@ benéfica apura-se **por situação concreta**, não em bloco.
 | Reincidente, com violência | 30% (inciso IV de 2019) | 30% (inciso II) |
 | Título XII, primário | 25% ou 30% conforme violência | 1/6 pelo *caput* |
 
-Marque **"fato anterior a 08/05/2026"** na simulação para calcular pela tabela do Pacote
-Anticrime.
+Marque **"fato anterior a 08/05/2026"** na simulação da página do tipo penal para calcular
+pela tabela do Pacote Anticrime. A busca por benefício não tem essa opção: ela varre o
+catálogo em abstrato, pela lei vigente.
 
 :::note[A base de cálculo do *caput* não é a dos incisos]
 O *caput* conta **1/6 da pena no regime anterior**; os incisos contam percentual **da

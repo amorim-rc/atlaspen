@@ -33,6 +33,11 @@ export function cenarioFromCrime(c: Crime): Cenario {
     // a conduta foi violenta — o art. 359-L (abolição violenta) e o art. 359-M
     // (golpe de Estado) são violentos por definição típica e ainda assim entram.
     tituloXII: ehTituloXII(c.lei ?? '', c.artigo ?? ''),
+    // Também pelo dispositivo, e não pelo nome: o homicídio com aumento do
+    // art. 121, §6º, fala em "milícia privada" no nome e não é o crime de
+    // constituição de milícia. A mesma detecção de CP do Título XII (CPM fora).
+    miliciaPrivada:
+      /^CP(?![A-Z])/.test(c.lei ?? '') && /^Art\.?\s*288\s*-\s*A\b/i.test(c.artigo ?? ''),
     // Parte-se da lei vigente. Quem simula fato anterior marca na simulação.
     fatoAnteriorA15402: false,
     violencia: c.violencia === 'Sim',

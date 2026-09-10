@@ -160,6 +160,12 @@ export interface Cenario {
    */
   tituloXII: boolean;
   /**
+   * O crime é o de constituição de milícia privada (art. 288-A do CP). Atributo
+   * do TIPO, lido pelo dispositivo: o art. 112, VI, "c" da LEP manda 75% da pena,
+   * ao primário e ao reincidente, na redação da Lei 15.358/2026.
+   */
+  miliciaPrivada: boolean;
+  /**
    * O fato é ANTERIOR a 08/05/2026, data em que a Lei 15.402/2026 entrou em
    * vigor. Circunstância do CASO, e das mais consequentes: para o primário
    * condenado por crime sem violência a lei nova é mais GRAVOSA (16% viraram

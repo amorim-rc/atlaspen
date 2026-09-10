@@ -36,8 +36,8 @@ CONTRIBUTING.md traz as convenções C1 a C8 do catálogo.
 - [ ] Editei só a **fonte** (`data/*.json`). O derivado em `static/data/` foi regenerado
       pelo `transform_data.py`, nunca à mão.
 - [ ] Nenhum `id` foi reatribuído, renumerado ou reaproveitado.
-- [ ] Mudança substantiva ganhou entrada em `src/data/changelog/entries/<ano>/<id>.ts`
-      (passo a passo em `src/data/changelog/create-changelog-entry.md`).
+- [ ] Não criei entrada de changelog nem subi a versão: os dois estão suspensos até a
+      v1.0.0 (ver `AGENTS.md`).
 - [ ] Se mudei algo de que um documento fala, reli o documento. O Arquivista acusa o que
       venceu: `python scripts/robos/arquivista/verificar_documentacao.py`.
 - [ ] A verificação passa:
