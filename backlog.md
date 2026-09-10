@@ -394,6 +394,9 @@ com domínio, será a **v1.0.0**.
   senão o lançamento não tem número livre.
 - O `release.yml` publica uma Release sempre que a `main` recebe uma versão do
   `package.json` que ainda não tem Release.
+- **O Proponente sobe a versão sozinho.** O `propor.py` incrementa o patch a cada PR de
+  correção que abre. Mergear o próximo PR dele cunha uma v2.0.7. Se a numeração sair
+  (opção B), ele também precisa parar de subir.
 
 **As duas opções levantadas.**
 

@@ -44,7 +44,7 @@
     {
       "arquivo": "TRIAGEM.md",
       "sobre": "A segunda-feira do mantenedor: o que a rodada automática produz, o que cada coisa exige e o que espera decisão.",
-      "conferido_em": "2026-08-04",
+      "conferido_em": "2026-09-10",
       "depende_de": [
         ".github/workflows/conferidor.yml",
         "scripts/robos/proponente/propor.py",
@@ -102,7 +102,7 @@
     {
       "arquivo": "scripts/robos/README.md",
       "sobre": "O pipeline de conferência: módulos, o que o robô faz e não faz, e as armadilhas com teste.",
-      "conferido_em": "2026-08-04",
+      "conferido_em": "2026-09-10",
       "depende_de": [
         "scripts/robos/vigia/conferir.py",
         "scripts/robos/proponente/propor.py",
