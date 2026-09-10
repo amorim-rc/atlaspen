@@ -100,6 +100,16 @@
       "depende_de": []
     },
     {
+      "arquivo": "estudos/modelo-atributos.md",
+      "sobre": "Estudo do modelo de dados dos atributos penais (frente 1): achados conferidos no compilado, esquema de atributos.json e do histórico legislativo, os três pilotos e o plano do PR da migração.",
+      "conferido_em": "2026-09-10",
+      "depende_de": [
+        "src/lib/beneficios",
+        "data/fontes.json",
+        "scripts/robos/nucleo/parsear.py"
+      ]
+    },
+    {
       "arquivo": "scripts/robos/README.md",
       "sobre": "O pipeline de conferência: módulos, o que o robô faz e não faz, e as armadilhas com teste.",
       "conferido_em": "2026-09-10",
