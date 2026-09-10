@@ -63,7 +63,7 @@ garante que as duas sempre saem juntas:
    (Correções de dado, novos tipos/benefícios, fixes e ajustes de interface contam;
    refactor interno trivial não precisa.)
 
-2. **Versione segundo o [roadmap](docs/roadmap.md#como-este-roadmap-usa-o-versionamento-semântico):**
+2. **Versione segundo a [regra de versionamento](docs/dados-abertos.md#estabilidade-e-versionamento):**
    correção → `1.1.Z`; funcionalidade nova compatível → `1.Y.0`; quebra de contrato → `X.0.0`.
 
 3. **O PR que fecha a versão sobe `version` em `package.json` e `CITATION.cff`.** Ao mergear
@@ -141,7 +141,7 @@ cai numa das exclusões acima. O teste foi aplicado aos 96 registros criados na 
 não produziu caso ambíguo.
 
 > Causas de aumento/diminuição voltarão como **entidade própria** na dosimetria por fases
-> (roadmap, v3.0.0) — não como tipos penais.
+> (ver [`backlog.md`](backlog.md)) — não como tipos penais.
 
 ### C2. Todo tipo declara uma sanção ⛔ imposta
 

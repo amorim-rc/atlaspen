@@ -22,7 +22,8 @@ regra embutida no código. O registro reúne:
 
 Essa separação é o que permite a **Busca por benefício**: alterar um patamar recalcula o
 catálogo inteiro de tipos penais sem tocar no código. É também o passo preparatório para
-mover o catálogo de benefícios para JSON versionado (roadmap, v1.2.0).
+mover o catálogo de benefícios para dados versionados — a frente 1 do
+[backlog](https://github.com/amorim-rc/sispenas/blob/main/backlog.md).
 
 ### Natureza do benefício
 

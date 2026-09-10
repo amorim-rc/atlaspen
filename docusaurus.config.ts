@@ -64,8 +64,14 @@ const config: Config = {
         // Até a v1.2.0 as notas eram posts de blog em /release-notes/vX-Y-Z. A
         // v1.2.1 troca por um feed único; estes redirecionamentos preservam os
         // links já publicados de cada versão, apontando para o feed.
+        //
+        // Até a v2.0.6 havia uma página Roadmap. Os próximos passos passaram ao
+        // backlog.md, no repositório; a única parte que era contrato público — a
+        // regra de versionamento — mudou-se para Dados abertos, e é para lá que os
+        // links já publicados (inclusive nas notas antigas) passam a levar.
         redirects: [
           {from: '/docs/sobre', to: '/'},
+          {from: '/docs/roadmap', to: '/docs/dados-abertos'},
           ...[
             'v1-0-0', 'v1-1-0', 'v1-1-1', 'v1-1-2', 'v1-1-3', 'v1-1-4',
             'v1-1-5', 'v1-1-6', 'v1-1-7', 'v1-1-8', 'v1-1-9', 'v1-2-0',
@@ -113,7 +119,6 @@ const config: Config = {
             {to: '/docs/dados-abertos', label: 'Dados abertos'},
           ],
         },
-        {to: '/docs/roadmap', label: 'Roadmap', position: 'left'},
         {to: '/release-notes', label: 'Notas de atualizações', position: 'left'},
         {
           href: 'https://github.com/amorim-rc/sispenas',
@@ -138,7 +143,7 @@ const config: Config = {
           title: 'Projeto',
           items: [
             {label: 'Sobre o SISPENAS', to: '/'},
-            {label: 'Roadmap', to: '/docs/roadmap'},
+            {label: 'Notas de atualizações', to: '/release-notes'},
             {label: 'Dados abertos', to: '/docs/dados-abertos'},
           ],
         },

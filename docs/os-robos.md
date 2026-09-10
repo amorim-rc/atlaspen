@@ -296,14 +296,17 @@ inconstitucional o §3º do art. 232 do Código Penal Militar e deslocou o estup
 de vulnerável praticado por militar para o art. 217-A do Código Penal. Três
 registros afetados, **nenhum ato no DOU**. O Sentinela jamais veria. É a lacuna
 mais séria que resta, e vai exigir robô próprio — para o **STF**, o **STJ** e o
-**STM**, que é quem julga os 393 registros militares do catálogo. Está no roadmap.
+**STM**, que é quem julga os 393 registros militares do catálogo. Está no
+[backlog](https://github.com/amorim-rc/sispenas/blob/main/backlog.md).
 
 **O tipo penal antigo que nunca foi cadastrado, e o que morreu sem aviso.** O
 Recenseador varre o ano corrente; a legislação penal brasileira tem quase dois
 séculos. Existe tipo em lei esparsa antiga que o catálogo nunca viu, e existe tipo
 que foi revogado sem que ninguém percebesse — e este segundo é pior, porque um crime
 revogado que continua publicado afirma que a conduta é punível quando ela não é. O
-**Curador** é o robô previsto para isso, e está no roadmap junto com os tribunais.
+**Curador** é o robô previsto para isso, e está no
+[backlog](https://github.com/amorim-rc/sispenas/blob/main/backlog.md), junto com os
+tribunais.
 
 **Revogação tácita.** Lei posterior que regula inteiramente a matéria revoga a
 anterior sem dizê-lo (LINDB, art. 2º, §1º), e não há sinal textual para isso. A
