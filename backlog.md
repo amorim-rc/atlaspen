@@ -108,12 +108,16 @@ carrega os parâmetros editados).
 
 **Estudo do modelo:** [`estudos/modelo-atributos.md`](estudos/modelo-atributos.md), com
 os achados, o esquema, os três pilotos (transação, substituição e progressão) e o plano do
-PR da migração. Falta validá-lo. Dois achados pedem ação antes da migração:
+PR da migração. Falta validá-lo. Dois achados foram corrigidos em 10/09/2026, antes da
+migração:
 
 - **Erro de cálculo:** a progressão do condenado por constituição de milícia privada
-  (art. 288-A do CP) sai com 25% ou 30%, e o art. 112, VI, "c", da LEP manda 75%.
-- **Citação errada:** três parâmetros da progressão citam o inciso na numeração de 2019,
-  e não na da Lei 15.402/2026.
+  (art. 288-A do CP) saía com 25% ou 30%, e o art. 112, VI, "c", da LEP manda 75%.
+- **Citação errada:** três parâmetros da progressão citavam o inciso na numeração de
+  2019, e não na da Lei 15.402/2026.
+
+Também em 10/09/2026 saiu da busca por atributo a opção "fato anterior a 08/05/2026":
+a varredura simula em abstrato, pela lei vigente.
 
 **Depende de** 2 (nome do arquivo e dos campos) e de 4 e 5 (o mesmo modelo de histórico).
 
@@ -471,8 +475,9 @@ ids (frente 4) vão mudar, o momento de mudar é antes da v1.0.0, numa virada s�
 
 **Roteiro da B.**
 
-1. Tirar `version` das 80 notas e pôr no feed uma linha dizendo que as versões citadas
-   nos textos antigos eram a numeração do protótipo.
+1. **Expurgar as Notas de atualizações** que o site mostra hoje (decisão de 10/09/2026).
+   Depois da v1.0.0, o feed publica exclusivamente alterações de tipos penais e de
+   atributos penais.
 2. Parar o `release.yml` enquanto a versão for `0.x`, por condição no próprio workflow.
 3. Fazer o Proponente parar de subir a versão.
 4. Ajustar o `validar-changelog.mjs`: até a 1.0.0, nota com versão é erro, e a regra de
@@ -484,8 +489,9 @@ ids (frente 4) vão mudar, o momento de mudar é antes da v1.0.0, numa virada s�
 7. **No GitHub, ação sua:** apagar as 42 Releases e tags, ou renomeá-las para
    `prototipo-vX.Y.Z`. O ruleset de tags `v*` só deixa passar o admin e o app.
 
-**Até a execução:** as notas novas entram sem número e nenhuma Release é publicada. Não
-mergear PR do Proponente sem tirar dele a subida de versão, senão sai uma v2.0.7.
+**Até a execução:** nenhuma entrada de changelog é criada (decisão de 10/09/2026), e
+nenhuma Release é publicada. Não mergear PR do Proponente sem tirar dele a subida de
+versão, senão sai uma v2.0.7.
 
 ---
 

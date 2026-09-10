@@ -53,15 +53,17 @@ export function vedacaoLivramentoArt112(c: Cenario): string | null {
 export const progressao: BeneficioDef = {
   id: 'progressao',
   nome: 'Progressão de regime',
-  fundamento: 'Art. 112, LEP (redação da Lei 13.964/2019)',
+  fundamento: 'Art. 112, LEP (redação da Lei 15.402/2026)',
   categoria: 'execucao',
   natureza: 'concreto',
   descricao:
     'Transferência para regime menos rigoroso após o cumprimento de percentual da pena, ' +
     'somado ao requisito subjetivo de boa conduta carcerária. O Pacote Anticrime ' +
-    'substituiu as antigas frações (1/6, 2/5, 3/5) por oito percentuais escalonados.',
+    'substituiu as antigas frações (1/6, 2/5, 3/5) por oito percentuais escalonados. A Lei ' +
+    '15.402/2026 devolveu ao caput a regra geral de 1/6 da pena no regime anterior, e os ' +
+    'incisos passaram a ser as exceções a ela.',
   requisitos: [
-    'Cumprimento do percentual da pena correspondente ao inciso aplicável (art. 112, I a VIII).',
+    'Cumprimento de 1/6 da pena no regime anterior (art. 112, caput) ou do percentual do inciso aplicável (art. 112, I a VIII).',
     'Boa conduta carcerária, comprovada pelo diretor do estabelecimento (art. 112, §1º).',
     'Nos crimes contra a administração pública: reparação do dano ou devolução do produto do ilícito (art. 33, §4º, CP).',
   ],
@@ -112,8 +114,11 @@ export const progressao: BeneficioDef = {
       min: 0,
       max: 1,
       passo: 0.01,
-      ajuda: 'Inciso II: 20% da pena para o reincidente em crime sem violência à pessoa ou grave ameaça.',
-      fundamento: 'Art. 112, II, LEP',
+      ajuda:
+        'Inciso III na redação da Lei 15.402/2026 (inciso II na de 2019): 20% da pena para o ' +
+        'reincidente em crime diverso dos referidos nos incisos I e II — na redação de 2019, o ' +
+        'reincidente em crime sem violência à pessoa ou grave ameaça.',
+      fundamento: 'Art. 112, III, LEP (redação da Lei 15.402/2026)',
     },
     {
       id: 'fracaoPrimarioViolencia',
@@ -123,8 +128,11 @@ export const progressao: BeneficioDef = {
       min: 0,
       max: 1,
       passo: 0.01,
-      ajuda: 'Inciso III: 25% da pena para o primário em crime cometido com violência à pessoa ou grave ameaça.',
-      fundamento: 'Art. 112, III, LEP',
+      ajuda:
+        'Inciso I na redação da Lei 15.402/2026 (inciso III na de 2019): 25% da pena para o ' +
+        'primário condenado por crime cometido com violência ou grave ameaça. A redação nova ' +
+        'ressalva os crimes do Título XII da Parte Especial do CP.',
+      fundamento: 'Art. 112, I, LEP (redação da Lei 15.402/2026)',
     },
     {
       id: 'fracaoReincidenteViolencia',
@@ -134,8 +142,11 @@ export const progressao: BeneficioDef = {
       min: 0,
       max: 1,
       passo: 0.01,
-      ajuda: 'Inciso IV: 30% da pena para o reincidente em crime cometido com violência à pessoa ou grave ameaça.',
-      fundamento: 'Art. 112, IV, LEP',
+      ajuda:
+        'Inciso II na redação da Lei 15.402/2026 (inciso IV na de 2019): 30% da pena para o ' +
+        'reincidente condenado por crime cometido com violência ou grave ameaça, ressalvados os ' +
+        'crimes do Título XII da Parte Especial do CP.',
+      fundamento: 'Art. 112, II, LEP (redação da Lei 15.402/2026)',
     },
     {
       id: 'fracaoPrimarioHediondo',
@@ -174,6 +185,20 @@ export const progressao: BeneficioDef = {
         '"ultraviolenta" e a vedação do livramento — antes a alínea alcançava a organização ' +
         'criminosa comum e não vedava o benefício.',
       fundamento: 'Art. 112, VI, "b", LEP (redação da Lei 15.358/2026)',
+    },
+    {
+      id: 'fracaoMiliciaPrivada',
+      rotulo: 'Constituição de milícia privada',
+      tipo: 'fracao',
+      padrao: 0.75,
+      min: 0,
+      max: 1,
+      passo: 0.01,
+      ajuda:
+        'Inciso VI, "c": 75% da pena para o condenado pela prática do crime de constituição ' +
+        'de milícia privada (art. 288-A do CP). A alínea não distingue primário de ' +
+        'reincidente. Era 50% até a Lei 15.358/2026, que elevou o inciso VI.',
+      fundamento: 'Art. 112, VI, "c", LEP (inciso VI na redação da Lei 15.358/2026)',
     },
     {
       id: 'fracaoFeminicidioPrimario',
@@ -240,6 +265,16 @@ export const progressao: BeneficioDef = {
     } else if (c.hediondo) {
       fracao = num(p, 'fracaoPrimarioHediondo');
       inciso = 'V — primário, hediondo/equiparado';
+    } else if (c.miliciaPrivada) {
+      // Alínea "c" do inciso VI. A constituição de milícia privada (art. 288-A do
+      // CP) não é hedionda, e o catálogo a registra com violência e grave ameaça:
+      // sem este ramo ela caía no inciso I ou II e saía com 25% ou 30%, quando a
+      // lei manda 75% ao primário e ao reincidente. Fica antes do ramo da redação
+      // de 2019 porque a alínea já existia nela (com 50%); o caso concreto só
+      // distingue a Lei 15.402, e a fração aqui é a da Lei 15.358 — a mesma
+      // limitação dos hediondos (estudos/modelo-atributos.md, achado C).
+      fracao = num(p, 'fracaoMiliciaPrivada');
+      inciso = 'VI, "c" — constituição de milícia privada';
     } else if (c.fatoAnteriorA15402) {
       // Tabela do Pacote Anticrime, para fato até 07/05/2026. Ela não é "a
       // antiga": continua sendo a lei do caso, porque a Lei 15.402/2026 é mais
@@ -296,7 +331,7 @@ export const progressao: BeneficioDef = {
           'calculado acima; nas seguintes, a base é o remanescente.',
       );
     }
-    if (!c.fatoAnteriorA15402 && !c.hediondo) {
+    if (!c.fatoAnteriorA15402 && !c.hediondo && !c.miliciaPrivada) {
       detalhes.push(
         'Redação da Lei 15.402/2026, em vigor desde 08/05/2026. Para fato anterior, ' +
           'marque a circunstância correspondente: para o primário em crime sem ' +

@@ -58,6 +58,9 @@ revogação.
 É o caso que o modelo precisa resolver: **um parâmetro, duas redações, dois números de
 inciso.**
 
+**Corrigido em 10/09/2026:** os três parâmetros e o fundamento do atributo passaram a
+citar a redação vigente, com o inciso de 2019 entre parênteses na ajuda.
+
 ### B. A milícia privada não tem ramo no cálculo da progressão
 
 O art. 112, VI, "c", da LEP alcança o "condenado pela prática do crime de constituição
@@ -71,6 +74,13 @@ para o primário (inciso I) e **30%** para o reincidente (inciso II). A lei diz 
 dois casos, porque a alínea "c" não distingue primário de reincidente.
 
 **É erro de cálculo publicado.** A correção vem antes do congelamento (seção 6).
+A documentação, curiosamente, estava certa: a tabela de `docs/beneficios-penais.md` já
+dizia 75% para a alínea "c". Errado estava só o motor.
+
+**Corrigido em 10/09/2026:** o parâmetro `fracaoMiliciaPrivada` (75%) e o campo
+`miliciaPrivada` no cenário. O campo é lido do registro pelo dispositivo (CP,
+art. 288-A), e não pelo nome, porque o nome do homicídio com aumento do art. 121, §6º,
+também fala em milícia privada. A verificação ganhou um caso-âncora.
 
 ### C. O caso concreto só conhece uma lei no tempo
 
@@ -219,9 +229,8 @@ em nenhum número.
   `fatoAnteriorA15402`. O achado C mostra que uma marcação por lei não escala, e a
   proposta é trocá-la por uma data que escolhe, em cada parâmetro, a redação vigente
   naquele dia. **Isso muda resultado** e por isso fica fora do PR da migração (seção 6).
-- **Pergunta:** a busca por atributo oferece hoje "fato anterior a 08/05/2026" como
-  alavanca global da varredura. Pela decisão 4, a simulação em abstrato não precisa de
-  data do fato. A alavanca fica ou sai?
+- **Decidido em 10/09/2026:** a alavanca "fato anterior a 08/05/2026" saiu da busca por
+  atributo. A marcação continua só no caso concreto, na página do tipo penal.
 
 ### 4.5 `data/historico-legislativo.json`
 
@@ -488,8 +497,8 @@ Só o cabeçalho e três dos onze parâmetros. Os demais seguem o mesmo molde.
   O número continua 25%.
 - **`fracaoPrimarioHediondo`** guarda os 40% de 2019 como história. Hoje eles só existem
   num texto de ajuda. Pela decisão 4, a simulação em abstrato continua usando 70%.
-- **`fracaoMiliciaPrivada` não existe hoje** (achado B). Ela não entra pela migração, e sim
-  pela correção prévia da seção 6, com o ramo no avaliador e o campo no cenário.
+- **`fracaoMiliciaPrivada`** entrou no código em 10/09/2026, com a correção do achado B.
+  A migração só a serializa.
 - O `fundamento` do cabeçalho deixa de dizer "redação da Lei 13.964/2019". O caput vigente
   é da Lei 15.402/2026, e a redação de cada parâmetro já diz de onde vem.
 
@@ -503,8 +512,9 @@ Só o cabeçalho e três dos onze parâmetros. Os demais seguem o mesmo molde.
    `data/atributos.json`, em `src/lib/atributos`, com `?atributo=`. Renomear e migrar no
    mesmo PR misturaria uma mudança mecânica com uma semântica e turvaria a prova de
    equivalência.
-2. **Correção do achado B (milícia privada)**, com nota no changelog. O teste de
-   equivalência congela o resultado de hoje, e congelar um erro conhecido é certificá-lo.
+2. **Correção do achado B (milícia privada).** O teste de equivalência congela o
+   resultado de hoje, e congelar um erro conhecido é certificá-lo. Feita em 10/09/2026,
+   junto com o achado A.
 
 **O PR da migração, em commits que se leem em ordem:**
 
@@ -527,8 +537,8 @@ Só o cabeçalho e três dos onze parâmetros. Os demais seguem o mesmo molde.
    dar zero diferença. Com ele verde, `src/lib/beneficios/catalogo/` é apagado.
 7. **O texto.** `docs/beneficios-penais.md` (ou o nome que a frente 2 der),
    `docs/metodologia.md`, `docs/dados-abertos.md` (novo arquivo público
-   `static/data/atributos.json`, e o novo formato da `chave_dispositivo`), o registro do
-   Arquivista e a nota do changelog.
+   `static/data/atributos.json`, e o novo formato da `chave_dispositivo`) e o registro do
+   Arquivista. Sem nota de changelog: até a v1.0.0 não se criam entradas (frente 10).
 
 **Depois, em PRs próprios, porque mudam resultado:** a data do fato no caso concreto
 (achado C) e o que o inventário acrescentar.
