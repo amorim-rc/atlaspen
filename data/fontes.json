@@ -4,7 +4,7 @@
     "regras": [
       "rotulos: TODOS os valores do campo `lei` de data/crimes.json que apontam para este diploma — inclusive rótulos pela lei criadora (ex.: 'Lei 14.811/24' são artigos do CP). Todo rótulo distinto do catálogo deve constar de exatamente um diploma.",
       "sentinela: string que DEVE existir na página baixada. Nos diplomas com reforma recente conferida, é a emenda mais nova incorporada (prova de frescor); nos demais, uma string distintiva do texto (prova de conteúdo/não truncamento). Atualizar a cada reforma incorporada ao catálogo.",
-      "Fetch: HTTP simples com User-Agent de navegador (sem UA o Planalto recusa). O acervo mistura codificações — windows-1252 sem meta charset e, em alguns casos, UTF-16 LE com BOM; a detecção fica em scripts/crawler/baixar.py. Ver crawler/DECISOES-F0.md."
+      "Fetch: HTTP simples com User-Agent de navegador (sem UA o Planalto recusa). O acervo mistura codificações — windows-1252 sem meta charset e, em alguns casos, UTF-16 LE com BOM; a detecção fica em scripts/robos/nucleo/baixar.py. Ver crawler/DECISOES-F0.md."
     ]
   },
   "fontes": [
@@ -529,7 +529,7 @@
       "referencia": true,
       "url": "https://www.planalto.gov.br/ccivil_03/leis/l8072.htm",
       "sentinela": "15.358",
-      "obs": "Não tem tipo penal próprio: é o rol dos crimes hediondos (art. 1º), contra o qual o campo `hediondo` do catálogo é auditado. Ver data/hediondos.json e scripts/crawler/auditar.py."
+      "obs": "Não tem tipo penal próprio: é o rol dos crimes hediondos (art. 1º), contra o qual o campo `hediondo` do catálogo é auditado. Ver data/hediondos.json e scripts/robos/auditor/auditar.py."
     }
   ]
 }
