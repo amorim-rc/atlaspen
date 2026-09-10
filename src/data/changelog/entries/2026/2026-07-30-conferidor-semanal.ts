@@ -14,12 +14,6 @@ const entrada: ChangelogEntry = {
   tipo: 'melhoria',
   areas: ['Documentação'],
   version: 'v1.2.15',
-  links: [
-    {
-      label: 'Ver o Roadmap',
-      href: 'https://amorim-rc.github.io/sispenas/docs/roadmap',
-    },
-  ],
 };
 
 export default entrada;

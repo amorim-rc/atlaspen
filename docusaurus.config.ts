@@ -113,7 +113,6 @@ const config: Config = {
             {to: '/docs/dados-abertos', label: 'Dados abertos'},
           ],
         },
-        {to: '/docs/roadmap', label: 'Roadmap', position: 'left'},
         {to: '/release-notes', label: 'Notas de atualizações', position: 'left'},
         {
           href: 'https://github.com/amorim-rc/sispenas',
@@ -138,7 +137,7 @@ const config: Config = {
           title: 'Projeto',
           items: [
             {label: 'Sobre o SISPENAS', to: '/'},
-            {label: 'Roadmap', to: '/docs/roadmap'},
+            {label: 'Notas de atualizações', to: '/release-notes'},
             {label: 'Dados abertos', to: '/docs/dados-abertos'},
           ],
         },

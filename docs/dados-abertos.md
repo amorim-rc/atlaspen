@@ -214,9 +214,35 @@ mesmo derivado, e a CI falha se o derivado commitado divergir da fonte.
 
 ## Estabilidade e versionamento
 
-Os dados abertos são **API pública** para efeito de versionamento semântico: acrescentar
-campo é MENOR, remover ou ressignificar campo é MAIOR. Ver
-[Roadmap](/docs/roadmap#como-este-roadmap-usa-o-versionamento-semântico).
+O SISPENAS segue o [Semantic Versioning 2.0.0](https://semver.org/lang/pt-BR/) —
+`MAIOR.MENOR.CORREÇÃO` — com uma leitura explícita do que cada posição significa
+**neste projeto**. Sem essa convenção, "v2.1" e "v3.0" viram apenas rótulos de ordem.
+
+Dois públicos dependem de estabilidade, e são eles que definem a **API pública** para
+efeito de versionamento:
+
+1. quem consome os **dados abertos** (`static/data/crimes.json`) e os cita em pesquisa;
+2. quem referencia **URLs** (`/pesquisa/tipos?tipo=N`) em artigos e pareceres.
+
+| Posição | Incrementa quando | Exemplos |
+|---|---|---|
+| **MAIOR** (`X.0.0`) | **Salto na natureza do produto**: reestruturação funcional, arquitetural ou procedimental — o sistema passa a fazer algo de outra ordem, não apenas mais do mesmo. Ou quebra do contrato dos dados abertos ou das URLs. | Deixar de ser um catálogo mantido à mão e passar a ser conferido sozinho contra a fonte oficial; reiniciar a numeração dos `id`. |
+| **MENOR** (`X.Y.0`) | O que já existe, com **acréscimos, alterações e remoções** de registros e telas — a natureza do produto permanece. | Acrescentar campo ao JSON, nova tela, novo benefício; incluir ou remover tipos penais. |
+| **CORREÇÃO** (`X.Y.Z`) | Correção sem funcionalidade nova: erro de dosimetria, dado errado no catálogo, defeito de interface. | Corrigir a pena de um artigo; ajustar contraste. |
+
+Nos dados abertos, isso quer dizer: acrescentar campo é MENOR; remover ou ressignificar
+campo é MAIOR.
+
+:::note[Correção de dado é `CORREÇÃO`, não `MENOR`]
+Resolver uma das contradições do catálogo muda o resultado de uma consulta — mas
+corrige um erro, não acrescenta capacidade. Vai em `X.Y.Z`. Já **acrescentar um campo**
+que não existia (`resultado_morte`) é `MENOR`, ainda que motivado por um erro:
+consumidores do JSON ganham informação sem perder nenhuma.
+:::
+
+Os próximos passos possíveis do projeto estão no
+[backlog](https://github.com/amorim-rc/sispenas/blob/main/backlog.md), que não amarra
+número de versão: a versão é escolhida quando a mudança fica pronta, por esta regra.
 
 ## Como citar
 

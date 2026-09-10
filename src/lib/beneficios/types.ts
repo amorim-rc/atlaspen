@@ -7,7 +7,7 @@
 //   1. editar qualquer atributo do benefício em tempo de execução (tela "Busca por
 //      benefício") e observar o efeito sobre o catálogo de tipos penais;
 //   2. no futuro, mover o catálogo para JSON e atualizá-lo como `data/crimes.json`,
-//      sem tocar no código do motor (ver docs/roadmap.md, v1.2.0).
+//      sem tocar no código do motor (ver backlog.md, frente 1).
 //
 // AVISO: implementação para fins de PESQUISA. Simplifica controvérsias doutrinárias
 // e jurisprudenciais. Não substitui análise jurídica.

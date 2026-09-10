@@ -50,8 +50,8 @@ arquivos.
 
 5. **`areas`** (uma ou mais): `Tipos penais`, `Benefícios`, `Dosimetria`,
    `Acervo histórico`, `Interface`, `Documentação`. Grafia exata, com acento.
-   Use `Documentação` para mudanças nas páginas de Documentação, no Roadmap e na
-   página inicial; `Interface` para a ferramenta de busca em si.
+   Use `Documentação` para mudanças nas páginas de Documentação e na página
+   inicial; `Interface` para a ferramenta de busca em si.
 
 6. **`version`** é a versão que a mudança fecha (ex.: `v1.2.1`). Opcional só para
    algo fora de uma release.

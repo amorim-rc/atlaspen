@@ -250,7 +250,7 @@ function Sobre() {
             {' · '}
             <Link to="/docs/dados-abertos">Dados abertos</Link>
             {' · '}
-            <Link to="/docs/roadmap">Roadmap</Link>
+            <Link to="/release-notes">Notas de atualizações</Link>
           </p>
         </div>
       </div>

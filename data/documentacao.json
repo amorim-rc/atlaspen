@@ -31,8 +31,8 @@
       ]
     },
     {
-      "arquivo": "CLAUDE.md",
-      "sobre": "Instruções para agentes de IA: fluxo de release, convenções que quebram em silêncio, verificação obrigatória.",
+      "arquivo": "AGENTS.md",
+      "sobre": "Instruções para agentes de IA (Codex, Claude Code — este via CLAUDE.md, que só o importa): fluxo de release, convenções que quebram em silêncio, verificação obrigatória.",
       "conferido_em": "2026-08-14",
       "depende_de": [
         "CONTRIBUTING.md",
@@ -44,7 +44,7 @@
     {
       "arquivo": "TRIAGEM.md",
       "sobre": "A segunda-feira do mantenedor: o que a rodada automática produz, o que cada coisa exige e o que espera decisão.",
-      "conferido_em": "2026-08-04",
+      "conferido_em": "2026-09-10",
       "depende_de": [
         ".github/workflows/conferidor.yml",
         "scripts/robos/proponente/propor.py",
@@ -94,17 +94,15 @@
       ]
     },
     {
-      "arquivo": "docs/roadmap.md",
-      "sobre": "O que vem em cada versão e por que a versão é MAIOR, MENOR ou correção.",
-      "conferido_em": "2026-08-14",
-      "depende_de": [
-        "package.json"
-      ]
+      "arquivo": "backlog.md",
+      "sobre": "Próximos passos possíveis: cada frente em aberto, o que já se sabe dela e o que falta decidir. Substituiu o roadmap em 10/09/2026.",
+      "conferido_em": "2026-09-10",
+      "depende_de": []
     },
     {
       "arquivo": "scripts/robos/README.md",
       "sobre": "O pipeline de conferência: módulos, o que o robô faz e não faz, e as armadilhas com teste.",
-      "conferido_em": "2026-08-04",
+      "conferido_em": "2026-09-10",
       "depende_de": [
         "scripts/robos/vigia/conferir.py",
         "scripts/robos/proponente/propor.py",
