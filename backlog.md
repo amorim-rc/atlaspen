@@ -1,12 +1,13 @@
 # Backlog
 
 O que o projeto pode fazer a seguir. É a referência de próximos passos e substituiu o
-roadmap na v2.0.7.
+roadmap em 10/09/2026.
 
 Diferente do roadmap, o backlog **não amarra número de versão**. Uma frente aqui é uma
 pergunta em aberto, não uma promessa com data. A versão é escolhida quando a mudança
 fica pronta, segundo a regra de
-[Estabilidade e versionamento](docs/dados-abertos.md#estabilidade-e-versionamento).
+[Estabilidade e versionamento](docs/dados-abertos.md#estabilidade-e-versionamento). Essa
+regra está em revisão: ver a frente 10.
 
 Cada frente diz o que se quer, **o que já se sabe** (achados tirados do código e dos
 dados, não de memória), o que falta decidir e qual é o primeiro passo. A ordem das
@@ -126,14 +127,37 @@ tipo) antes de tocar em texto ou código.
   (`/sispenas/`), no `package.json`, no `CITATION.cff`, no logo, no favicon, no social
   card, no rodapé, na página inicial e em toda a documentação.
 - **A troca do `baseUrl` muda todas as URLs**, inclusive `?tipo=N`, que é contrato
-  público citado em pareceres. Pelo que se sabe hoje, o GitHub Pages não redireciona
-  sozinho o endereço antigo de um repositório renomeado. É preciso verificar isso e
-  planejar o redirecionamento, ou a mudança é MAIOR.
+  público citado em pareceres. O endereço `github.io` do Pages **não** redireciona quando
+  o repositório é renomeado ou transferido. Sem um redirecionamento planejado, a mudança
+  quebra os links.
 - O nome atual homenageia a pesquisa de origem (Machado & Machado, 2008). O novo nome
   deve manter essa linhagem explícita na seção Origem e na citação.
-- O roadmap já previa um domínio próprio. Se o endereço vai mudar de qualquer forma,
-  nome e domínio devem mudar **no mesmo movimento**, com uma só camada de
-  redirecionamento.
+- Se o endereço vai mudar de qualquer forma, nome e domínio devem mudar **no mesmo
+  movimento**, com uma só camada de redirecionamento. É o que a frente 10 chama de
+  virada da v1.0.0.
+
+**Passo a passo já levantado (30/07/2026).** A ordem é obrigatória: **domínio antes de
+qualquer mudança de dono ou de nome**, porque com o domínio configurado a URL canônica
+sobrevive à troca.
+
+1. Registrar o domínio (ex.: Registro.br).
+2. DNS: no apex, registros `A` para `185.199.108.153`, `185.199.109.153`,
+   `185.199.110.153` e `185.199.111.153` (opcionalmente `AAAA` para `2606:50c0:8000::153`
+   a `:8003::153`); em `www`, `CNAME` para `amorim-rc.github.io`.
+3. GitHub: Settings ▸ Pages ▸ Custom domain, aguardar a checagem de DNS e marcar
+   Enforce HTTPS.
+4. Verificar o domínio na conta (Settings da conta ▸ Pages ▸ Verified domains), o que
+   impede apropriação por terceiros.
+5. No repositório: `url` e `baseUrl: '/'` no `docusaurus.config.ts`; as URLs absolutas
+   (changelog, README, CITATION) passam ao domínio.
+6. Testar: `https://amorim-rc.github.io/sispenas/pesquisa/tipos?tipo=1` deve responder
+   301 para o domínio.
+
+Depois, se houver: transferir o repositório para uma organização (issues, PRs, Actions,
+secrets e estrelas migram, e as URLs `github.com` redirecionam), re-verificar o domínio
+na organização, atualizar `organizationName`, README, `CITATION.cff` e o remote local, e
+criar um repositório-toco com o nome antigo cujo `index.html` e `404.html` redirecionam
+preservando caminho e query. Assim, os links `github.io` já citados continuam vivos.
 
 **Perguntas.** O nome. Se o rebranding troca a paleta (`src/css/custom.css`) e a marca.
 Se o repositório muda de dono (organização).
@@ -168,25 +192,51 @@ legislativa.
 
 ---
 
-## 5. Data, número e link da lei de cada alteração
+## 5. Histórico legislativo de cada registro
 
-**Objetivo.** Para cada moldura de pena e cada atributo penal, registrar a data da
-atualização e o número e o link da lei que a alterou. Se forem muitas, todas.
+**Objetivo.** Em corolário da frente 4, registrar a data de atualização de cada moldura
+de pena e de cada atributo penal, e o número e o link da lei que a alterou. Se forem
+muitas alterações, guardam-se todas.
 
-> O texto original desta frente foi interrompido: *"Nesse particular, podemos pensar em
-> uma base de dados, sincronizada por id, informa…"*. **A completar.**
+A forma pensada é uma base de dados própria, sincronizada com o catálogo. O id 1
+(art. 121 do CP) ganha um campo que informa a sua chave no arquivo
+`historico-legislativo.json`. Ali constam todas as atualizações que o tipo já sofreu,
+cada uma com a data e a lei que a fez.
 
-**Forma proposta, para discussão.** Um registro de alterações separado do catálogo,
-chaveado por id e append-only. Cada evento tem:
+**Esquema proposto, para discussão.** `data/historico-legislativo.json` é a fonte,
+append-only: um objeto por chave, com a lista de eventos em ordem cronológica. Cada
+evento tem:
 
 - data de publicação e data de **vigência**, que são coisas distintas (vacatio legis);
 - lei alteradora (número e ano) e o link para ela no `planalto.gov.br`;
 - dispositivo alterador;
 - campo afetado (moldura, espécie de pena, hediondez, ação penal…), com o valor antes e
   depois;
+- natureza do evento: alteração legislativa ou correção de dado (ver frente 4);
 - origem da informação.
 
-Segue a convenção de sempre: arquivo-fonte em `data/`, derivado em `static/data/`.
+A contagem de alterações da frente 4 e a data da última são **derivadas** pelo
+`transform_data.py` e publicadas no derivado; ninguém as digita. Segue a convenção de
+sempre: fonte em `data/`, derivado em `static/data/`.
+
+**A decidir: a chave é o id ou o dispositivo?** O pedido fala em id. Há um argumento
+para chavear pelo dispositivo, que o catálogo já tem pronto em `chave_dispositivo`
+(`cp|art. 121, caput`):
+
+- **o histórico é do texto da lei, não do catálogo.** Ele existe antes do registro e já
+  teria atravessado os dois reinícios da numeração dos ids. Chaveado por dispositivo,
+  um terceiro reinício (ver frente 10) não o toca;
+- **uma lei alteradora atinge vários dispositivos de uma vez**, e o evento fica gravado
+  em cada dispositivo sem depender de quais ids o catálogo tem naquele momento;
+- **os atributos penais também têm dispositivo de origem** (a progressão, o art. 112 da
+  LEP), e o mesmo arquivo serve aos dois.
+
+Nesse desenho, o campo que aponta para o histórico já existe no registro: é a
+`chave_dispositivo`. Cada id continua achando seu histórico sem ambiguidade. O caso a
+tratar à parte é o do conteúdo que muda de lugar, como um inciso que vira artigo próprio.
+Ele pede um evento de **transferência** que ligue as duas chaves. Exemplo a conferir no
+compilado: o feminicídio, que saiu do art. 121, §2º, VI, para o art. 121-A com a
+Lei 14.994/2024.
 
 **O que já se sabe da fonte.** O texto compilado anota cada dispositivo com "Redação
 dada pela Lei nº…" ou "Incluído pela Lei nº…", e o parser do Vigia já extrai essa
@@ -328,7 +378,103 @@ As duas se alimentam do registro de alterações da frente 5.
 
 ---
 
-## Herdado do roadmap, fora das nove frentes
+## 10. Versionamento até o lançamento oficial
+
+**Objetivo.** Voltar à versão 0. O site no GitHub Pages é acompanhamento do
+desenvolvimento, para você e a equipe; ainda não houve lançamento. O lançamento oficial,
+com domínio, será a **v1.0.0**.
+
+**O que já se sabe.**
+
+- Há **42 tags** publicadas, de v1.0.0 a v2.0.6, cada uma com sua Release no GitHub.
+- **80 das 101 notas** do feed carregam versão.
+- As versões aparecem em cerca de **230 lugares no texto**: uns 120 no código e na
+  documentação ("a v2.0.0 reiniciou a numeração") e uns 110 dentro das próprias notas.
+- **A tag `v1.0.0` já existe.** Qualquer caminho exige tirar as tags atuais do lugar,
+  senão o lançamento não tem número livre.
+- O `release.yml` publica uma Release sempre que a `main` recebe uma versão do
+  `package.json` que ainda não tem Release.
+
+**As duas opções levantadas.**
+
+- **A. Renumerar em `v0.0.X`.** Cada release antiga vira v0.0.1 a v0.0.42, em ordem, com
+  uma tabela de equivalência aplicada por script às tags, às notas e ao texto. Preserva a
+  sequência e o filtro por versão do feed. Custo: recriar 42 tags e Releases no GitHub e
+  reescrever as ~230 menções. E os números nunca existiram na época: uma nota datada de
+  julho passaria a anunciar uma versão cunhada em setembro.
+- **B. Retirar a numeração até o lançamento.** As notas ficam, datadas e sem versão (o
+  campo já é opcional). As tags e Releases saem do GitHub ou vão para um prefixo de
+  arquivo (`prototipo-v2.0.6`), o que libera a `v1.0.0`. O `release.yml` fica parado até a
+  1.0.0 e o `package.json` passa a `0.x`. O texto das notas antigas continua citando as
+  versões da época, com uma linha no feed explicando que eram a numeração do protótipo.
+
+**Recomendação: B.** É aplicar ao próprio projeto o que ele já exige do dado: não
+registrar o que não aconteceu. Custa menos, e a v1.0.0 nasce como o primeiro número de
+verdade. Apagar as notas antigas também seria possível, mas elas são o registro do
+aprendizado e custam nada para ficar.
+
+**Oportunidade que só existe antes da 1.0.0.** Até o lançamento, `?tipo=N` e as URLs
+ainda não são contrato com o público. Se o nome (frente 3), o domínio e a numeração dos
+ids (frente 4) vão mudar, o momento de mudar é antes da v1.0.0, numa virada só.
+
+**Enquanto não se decide:** as notas novas entram sem número e nenhuma Release é
+publicada. A regra de versionamento em Dados abertos e o fluxo de release do `AGENTS.md`
+mudam conforme a escolha.
+
+---
+
+## 11. Repositório pronto para trabalho em grupo
+
+**Objetivo.** Preparar o repositório para mais de uma pessoa: workflows, proteção de
+branch, templates, acessos.
+
+**O que já existe**, segundo a decisão de 30/07/2026. O estado real no GitHub precisa ser
+conferido: desta máquina não dá para ler as configurações, porque o `gh` não está
+instalado e o conector do GitHub não está autorizado.
+
+- **Ruleset da `main`:** PR obrigatório, aprovação de Code Owner, CI verde, sem
+  force-push nem deleção. Bypass para admin do repositório e para o app de automação.
+- **Ruleset de tags `v*`**, com o mesmo bypass: a tag é criada pelo workflow, nunca por
+  push manual.
+- **App de automação** do projeto, com a chave num Environment (`automacao`) restrito à
+  `main`. O GitHub recusa entregar o secret a jobs de outras branches do lado do
+  servidor, e essa é a trava que importa.
+- `CODEOWNERS`, template de PR e dois templates de issue.
+
+**Os cinco workflows.**
+
+| Workflow | Quando roda | Escreve na `main`? |
+|---|---|---|
+| `ci` | PR e push na `main` | não |
+| `deploy` | push na `main` (Pages) | não |
+| `regen-data` | push na `main` | sim: regenera o derivado |
+| `release` | push na `main` | sim: tag e Release |
+| `conferidor` | segunda-feira, 8h UTC | sim: carimbo da conferência, issues e PR do Proponente |
+
+Três deles escrevem direto na `main` pelo app: é por isso que o bypass do app existe, e
+ele não pode sair.
+
+**O que falta ou envelheceu.**
+
+- **Com um só Code Owner, o fluxo solo depende do bypass de admin.** O GitHub não deixa
+  ninguém aprovar o próprio PR. Quando o colaborador abrir PR, quem aprova é você. Quando
+  você abrir, ou ele revisa (e para isso precisa ser Code Owner do caminho), ou você usa
+  o bypass. É preciso decidir a regra.
+- **O template de PR está defasado.** Cita `src/lib/beneficios.ts` (hoje é diretório) e
+  "planilha → `data/crimes.json`". Não pede a entrada de changelog nem a verificação
+  completa (`--estrito --max-contradicoes=0`, pytest, `validar-changelog`).
+- O `CODEOWNERS` cita `/src/lib/beneficios.ts` e `/src/theme/`, que não existem.
+- O modelo de issue aponta a documentação para `/docs/sobre`, que só redireciona para a
+  página inicial.
+- **Acesso do colaborador:** write direto ou fork; quem enxerga os secrets; com que
+  credencial o Codex roda.
+- **Convenção de branch e de commit para duas pessoas e dois agentes.** Hoje ela está no
+  `AGENTS.md`, só para agentes; o `CONTRIBUTING.md` trata do catálogo.
+- **Conferir no GitHub** se as configurações batem com o decidido em 30/07.
+
+---
+
+## Herdado do roadmap, fora das frentes acima
 
 O que o roadmap ainda tinha em aberto quando saiu (v2.0.6) e não cabe em nenhuma frente
 acima. Fica aqui para não se perder.
@@ -359,6 +505,9 @@ depreciação. As séries temporais do endurecimento penal foram para a frente 9
 ## Sequência sugerida
 
 É sugestão, não decisão.
+
+**Antes de tudo: 11, e a decisão de 10.** O colaborador chega em breve, e cada nota nova
+já depende de como se numera. Nenhuma das duas é trabalho longo.
 
 1. **Nomes primeiro: 2, e se possível 3.** Tudo o que vier depois nasce com o nome
    certo: arquivo, campo, URL. O rebranding pode demorar mais, mas a decisão sobre

@@ -140,8 +140,8 @@ Não cominando nem determinando moldura alguma, **não é registro** — é modi
 cai numa das exclusões acima. O teste foi aplicado aos 96 registros criados na v2.0.0 e
 não produziu caso ambíguo.
 
-> Causas de aumento/diminuição voltarão como **entidade própria** na dosimetria por fases
-> (ver [`backlog.md`](backlog.md)) — não como tipos penais.
+> Causas de aumento/diminuição abstratas são **entidade própria** da dosimetria por fases,
+> em `data/modificadores.json` (3ª fase, art. 68 do CP) — não tipos penais.
 
 ### C2. Todo tipo declara uma sanção ⛔ imposta
 

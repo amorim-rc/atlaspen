@@ -71,7 +71,7 @@ def versao_atual() -> str:
 
 
 def proxima_versao(atual: str) -> str:
-    """Correção de dado é patch (roadmap: `1.1.Z`)."""
+    """Correção de dado é patch (docs/dados-abertos.md, Estabilidade e versionamento)."""
     maior, menor, patch = (int(x) for x in atual.split("."))
     return f"{maior}.{menor}.{patch + 1}"
 

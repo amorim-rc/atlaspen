@@ -109,8 +109,8 @@ majorado (art. 157, §2º) — são tipos do catálogo e aparecem normalmente na
 não entra é a causa de aumento **abstrata**, que só diz "aumenta-se de 1/3" sobre a pena
 de *outro* crime, sem patamar próprio (ex.: art. 141, aumento nos crimes contra a honra):
 como registro de pena zero, ela distorceria as estatísticas de alcance. Essas majorantes
-abstratas serão modeladas como **entidade própria** na 3ª fase da dosimetria (art. 68, CP),
-prevista para a v3.0.0.
+abstratas são modeladas como **entidade própria**, em `data/modificadores.json`, e
+aplicadas na 3ª fase da dosimetria (art. 68, CP).
 :::
 
 ### `resultado_morte` — por que só o nome do tipo

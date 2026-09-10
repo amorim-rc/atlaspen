@@ -78,7 +78,7 @@ benefícios, permitindo simular alterações legislativas) e a **atualiza**. Com
 |---|---|---|
 | **Arquitetura** | Software com servidor: Apache + **PHP + PostgreSQL**, com CRUD, controle de acesso e fluxo de aprovação (papéis administrador/alimentador/usuário); código entregue ao Ministério da Justiça | Site **estático** (Docusaurus 3 + React + TS) sobre **JSON**, publicável no GitHub Pages, sem servidor/banco; sem CRUD nem papéis |
 | **Unidade "tipo"** | Conduta + circunstâncias com cominação própria; um artigo é desmembrado em várias unidades; inclui **"tipos mistos"** (margens de majorantes/minorantes pré-calculadas em abstrato) | Mesmo conceito de tipo por artigo/parágrafo, exposto via **"tipos correlatos"**; **não** gera sistematicamente os "tipos mistos" calculados (lacuna) |
-| **Tamanho do catálogo** | **1.529** tipos (CP + 37 leis especiais) | **1.507** tipos (64 diplomas; roadmap visa ~1.688) |
+| **Tamanho do catálogo** | **1.529** tipos (CP + 37 leis especiais) | **1.507** tipos (64 diplomas; meta de ~1.688) |
 | **Pena (armazenamento)** | Cadastrada **em dias** (1 mês = 30 dias, 1 ano = 360 dias); exibida em anos/meses | Canônica **em meses**; exibida na **unidade natural** (dias/meses/anos), com conversão automática |
 | **Multa** | Critério com conectores **"E" / "E/OU" / "OU"** (cumulativa/alternativa/isolada) | Dimensão independente: `tem_multa` + `multa_regime` (`cumulativa`/`alternativa`/`isolada`/`nenhuma`), espelhando os conectores |
 | **Critérios "em abstrato"** | 9: pena mín., pena máx., tipo de prisão, multa, violência, grave ameaça, hediondo, elemento subjetivo, vedação específica | Mesmos critérios como filtros; acrescenta ação penal e menor potencial ofensivo |

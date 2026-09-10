@@ -15,12 +15,6 @@ const entrada: ChangelogEntry = {
   tipo: 'novidade',
   areas: ['Documentação', 'Tipos penais'],
   version: 'v1.4.0',
-  links: [
-    {
-      label: 'Ver o Roadmap',
-      href: 'https://amorim-rc.github.io/sispenas/docs/roadmap',
-    },
-  ],
 };
 
 export default entrada;
