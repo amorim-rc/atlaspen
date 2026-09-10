@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "descricao": "Trilha de auditoria por registro: quando cada tipo penal foi confrontado com o texto compilado, com que resultado e contra qual página. Gerado por scripts/crawler/conferir.py --carimbar.",
+    "descricao": "Trilha de auditoria por registro: quando cada tipo penal foi confrontado com o texto compilado, com que resultado e contra qual página. Gerado por scripts/robos/vigia/conferir.py --carimbar.",
     "resultados": {
       "conferido": "a moldura publicada bate com a que a lei comina",
       "divergente": "não bate — virou achado da rodada",

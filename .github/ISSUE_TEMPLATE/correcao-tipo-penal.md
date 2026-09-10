@@ -11,7 +11,7 @@ labels: ["dados", "correção"]
 - **Artigo:**
 - **Lei/diploma:**
 - **ID no catálogo (se souber):**
-- **Link direto (`?tipo=<id>`):** https://amorim-rc.github.io/sispenas/?tipo=
+- **Link direto (`?tipo=<id>`):** https://amorim-rc.github.io/sispenas/pesquisa/tipos?tipo=
 
 ## O que está errado
 
@@ -24,4 +24,9 @@ hediondez, elemento subjetivo, violência/grave ameaça, ação penal, etc. -->
 
 ## Fundamentação
 
-<!-- Base legal, jurisprudencial ou doutrinária que sustenta a correção. -->
+<!-- Base legal, jurisprudencial ou doutrinária que sustenta a correção. Para pena e
+classificação, cite o dispositivo e o link do TEXTO COMPILADO no planalto.gov.br: é contra
+ele que o catálogo é conferido. -->
+
+- **Dispositivo:**
+- **Link do texto compilado:**

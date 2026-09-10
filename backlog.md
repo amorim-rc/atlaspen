@@ -75,6 +75,26 @@ não conclusões:
 - sursis e livramento condicional do CPM (arts. 84 e 89);
 - colaboração em outras leis (Lei 9.807/99, arts. 13 e 14; Lei 11.343/06, art. 41).
 
+**Decidido em 10/09/2026: os pré-requisitos.**
+
+- **Glossário da frente 2 aprovado.** O arquivo será `data/atributos.json`.
+- **Chave de dispositivo também nos atributos**, no formato da `chave_dispositivo`
+  (`lep|art. 112, caput`), servindo ao mesmo `historico-legislativo.json` da frente 5. É
+  preciso conferir se a LEP, a Lei 9.099/95 e o CPP estão em `data/fontes.json`, que foi
+  montado a partir dos diplomas com tipo penal; se não estiverem, entram.
+- **Última alteração legislativa em cada atributo**, como nos tipos: data e lei que o
+  editou, com link para o item no Planalto. É derivada do histórico, não digitada.
+- **Sem data do fato na simulação em abstrato.** O sistema simula, em abstrato, os
+  atributos compatíveis com as penas cominadas, pela lei vigente. No máximo o caso
+  concreto registra a data do fato, como já faz a marcação "fato anterior a 08/05/2026".
+  A vigência de cada parâmetro é histórico, não entrada da simulação.
+- **Tudo vai para dados, menos a função de avaliação.** Predicados declarativos ficam
+  para depois.
+- **Rede de segurança antes de migrar:** um teste que congela o resultado atual dos 22
+  atributos sobre os 1.507 tipos. A migração só entra se nada mudar.
+- **Em aberto:** o escopo do inventário (causas de extinção da punibilidade, regimes
+  próprios do CPM). Decide-se depois de descoberto o como.
+
 **Herdado do roadmap (v2.1.0).** Serializar `BeneficioDef` para um JSON de fonte, CI de
 validação (frações em [0,1], fundamento citado), permalink de simulação (uma URL que
 carrega os parâmetros editados).
@@ -109,8 +129,16 @@ sucessão de leis (progressão). Depois de validado o modelo, a migração.
   então os dados abertos não quebram. As URLs quebram: `/pesquisa/beneficios?beneficio=x`
   precisa de redirecionamento. É preciso conferir se o redirecionamento preserva a query.
 
-**Primeiro passo.** Fechar um glossário curto (atributo penal, parâmetro, campo do
-tipo) antes de tocar em texto ou código.
+**Decidido em 10/09/2026: o glossário.**
+
+- **atributo penal** é o instituto (o que hoje o site chama de benefício);
+- **parâmetro** é o patamar, a fração ou a vedação editável de um atributo (o que hoje a
+  tela chama de "atributos do benefício");
+- **campo** é o campo do registro de tipo penal (o que hoje o `CONTRIBUTING.md` chama de
+  "atributo do tipo").
+
+**Primeiro passo.** Aplicar o glossário ao texto e ao código antes de nascer o arquivo de
+dados da frente 1.
 
 **Afeta** 1: convém trocar o nome antes de criar o arquivo de dados, para não nascer
 `beneficios.json` e ser renomeado depois.
@@ -219,9 +247,9 @@ A contagem de alterações da frente 4 e a data da última são **derivadas** pe
 `transform_data.py` e publicadas no derivado; ninguém as digita. Segue a convenção de
 sempre: fonte em `data/`, derivado em `static/data/`.
 
-**A decidir: a chave é o id ou o dispositivo?** O pedido fala em id. Há um argumento
-para chavear pelo dispositivo, que o catálogo já tem pronto em `chave_dispositivo`
-(`cp|art. 121, caput`):
+**Decidido em 10/09/2026: a chave é o dispositivo**, que o catálogo já tem pronto em
+`chave_dispositivo` (`cp|art. 121, caput`). O pedido original falava em id; o
+dispositivo ficou por três razões:
 
 - **o histórico é do texto da lei, não do catálogo.** Ele existe antes do registro e já
   teria atravessado os dois reinícios da numeração dos ids. Chaveado por dispositivo,
@@ -240,7 +268,9 @@ Lei 14.994/2024.
 
 **O que já se sabe da fonte.** O texto compilado anota cada dispositivo com "Redação
 dada pela Lei nº…" ou "Incluído pela Lei nº…", e o parser do Vigia já extrai essa
-anotação. A **última** alteração, portanto, é mecanizável. A cadeia inteira depende das
+anotação. Essas anotações são links: o `href` traz a URL da lei alteradora e a âncora do
+artigo (`crawler/DECISOES-F0.md`, §3), que é o link para o item no Planalto. A **última**
+alteração, portanto, é mecanizável. A cadeia inteira depende das
 redações anteriores que o compilado mantém riscadas: é parcialmente mecanizável e exige
 conferência. O que for anterior ao compilado é trabalho manual.
 
@@ -411,7 +441,7 @@ com domínio, será a **v1.0.0**.
   1.0.0 e o `package.json` passa a `0.x`. O texto das notas antigas continua citando as
   versões da época, com uma linha no feed explicando que eram a numeração do protótipo.
 
-**Recomendação: B.** É aplicar ao próprio projeto o que ele já exige do dado: não
+**Decidido em 10/09/2026: opção B.** É aplicar ao próprio projeto o que ele já exige do dado: não
 registrar o que não aconteceu. Custa menos, e a v1.0.0 nasce como o primeiro número de
 verdade. Apagar as notas antigas também seria possível, mas elas são o registro do
 aprendizado e custam nada para ficar.
@@ -420,9 +450,23 @@ aprendizado e custam nada para ficar.
 ainda não são contrato com o público. Se o nome (frente 3), o domínio e a numeração dos
 ids (frente 4) vão mudar, o momento de mudar é antes da v1.0.0, numa virada só.
 
-**Enquanto não se decide:** as notas novas entram sem número e nenhuma Release é
-publicada. A regra de versionamento em Dados abertos e o fluxo de release do `AGENTS.md`
-mudam conforme a escolha.
+**Roteiro da B.**
+
+1. Tirar `version` das 80 notas e pôr no feed uma linha dizendo que as versões citadas
+   nos textos antigos eram a numeração do protótipo.
+2. Parar o `release.yml` enquanto a versão for `0.x`, por condição no próprio workflow.
+3. Fazer o Proponente parar de subir a versão.
+4. Ajustar o `validar-changelog.mjs`: até a 1.0.0, nota com versão é erro, e a regra de
+   que a versão atual precisa ter nota fica suspensa.
+5. `package.json` em `0.0.0`, e o `CITATION.cff` citando a data em vez da versão.
+6. Reescrever a regra onde ela mora: `AGENTS.md`, `CONTRIBUTING.md`,
+   `create-changelog-entry.md`, a seção Estabilidade e versionamento de Dados abertos e a
+   skill do catálogo.
+7. **No GitHub, ação sua:** apagar as 42 Releases e tags, ou renomeá-las para
+   `prototipo-vX.Y.Z`. O ruleset de tags `v*` só deixa passar o admin e o app.
+
+**Até a execução:** as notas novas entram sem número e nenhuma Release é publicada. Não
+mergear PR do Proponente sem tirar dele a subida de versão, senão sai uma v2.0.7.
 
 ---
 
@@ -431,9 +475,11 @@ mudam conforme a escolha.
 **Objetivo.** Preparar o repositório para mais de uma pessoa: workflows, proteção de
 branch, templates, acessos.
 
-**O que já existe**, segundo a decisão de 30/07/2026. O estado real no GitHub precisa ser
-conferido: desta máquina não dá para ler as configurações, porque o `gh` não está
-instalado e o conector do GitHub não está autorizado.
+**O que já existe**, segundo a decisão de 30/07/2026. O push do merge de 10/09/2026
+confirmou uma parte: o ruleset da `main` está ativo, exige o check da CI e deixa o admin
+passar por bypass. O resto precisa ser conferido no GitHub: desta máquina não dá para ler
+as configurações, porque o `gh` não está instalado e o conector do GitHub não está
+autorizado.
 
 - **Ruleset da `main`:** PR obrigatório, aprovação de Code Owner, CI verde, sem
   force-push nem deleção. Bypass para admin do repositório e para o app de automação.
@@ -457,23 +503,33 @@ instalado e o conector do GitHub não está autorizado.
 Três deles escrevem direto na `main` pelo app: é por isso que o bypass do app existe, e
 ele não pode sair.
 
-**O que falta ou envelheceu.**
+**Decidido e feito em 10/09/2026.**
 
-- **Com um só Code Owner, o fluxo solo depende do bypass de admin.** O GitHub não deixa
-  ninguém aprovar o próprio PR. Quando o colaborador abrir PR, quem aprova é você. Quando
-  você abrir, ou ele revisa (e para isso precisa ser Code Owner do caminho), ou você usa
-  o bypass. É preciso decidir a regra.
-- **O template de PR está defasado.** Cita `src/lib/beneficios.ts` (hoje é diretório) e
-  "planilha → `data/crimes.json`". Não pede a entrada de changelog nem a verificação
-  completa (`--estrito --max-contradicoes=0`, pytest, `validar-changelog`).
-- O `CODEOWNERS` cita `/src/lib/beneficios.ts` e `/src/theme/`, que não existem.
-- O modelo de issue aponta a documentação para `/docs/sobre`, que só redireciona para a
-  página inicial.
-- **Acesso do colaborador:** write direto ou fork; quem enxerga os secrets; com que
-  credencial o Codex roda.
-- **Convenção de branch e de commit para duas pessoas e dois agentes.** Hoje ela está no
+- **Os PRs do mantenedor entram por bypass de admin.** O GitHub não deixa ninguém aprovar
+  o próprio PR, e o único Code Owner hoje é o mantenedor: ele aprova os PRs dos outros, e
+  os dele passam pelo bypass.
+- **Template de PR reescrito:** fonte legal (dispositivo e link do compilado), verificação
+  completa, entrada de changelog, Arquivista e uso de agente de IA.
+- **CODEOWNERS com os caminhos atuais**, do geral para o específico (vale a última regra
+  que casa), com o time futuro de cada linha anotado.
+- O modelo de issue passa a apontar a documentação para `/docs/metodologia`.
+
+**Plano: transferir o repositório para uma organização**, com três pessoas de início: o
+mantenedor e mais duas, que ainda vão criar conta no GitHub. Pontos da transferência, a
+conferir quando chegar a hora:
+
+- **O endereço `amorim-rc.github.io/sispenas` deixa de responder.** Antes do lançamento
+  isso não quebra contrato público (frente 10), mas quebra os links já passados à equipe.
+  O repositório-toco da frente 3 resolve; ou a transferência espera o domínio.
+- **O app de automação é instalado por conta.** Depois da transferência, ele precisa ser
+  instalado na organização; se for app privado, o próprio app tem de ser transferido para
+  ela. Sem isso, `regen-data`, `release` e o carimbo do conferidor param de empurrar.
+- **Times e CODEOWNERS:** criar os times (o arquivo sugere jurídico, engenharia e
+  conteúdo), dar a eles permissão de escrita e trocar `@amorim-rc` linha a linha.
+- **Com que credencial o Codex roda**, e quem enxerga os secrets.
+- **Convenção de branch e de commit para três pessoas e dois agentes.** Hoje ela está no
   `AGENTS.md`, só para agentes; o `CONTRIBUTING.md` trata do catálogo.
-- **Conferir no GitHub** se as configurações batem com o decidido em 30/07.
+- **Conferir no GitHub** se o resto das configurações bate com o decidido em 30/07.
 
 ---
 
