@@ -18,7 +18,7 @@
   --t-estrutural-fg: #b91c1c; --t-estrutural-bg: rgba(185, 28, 28, 0.09);
 
   --a-tipos-fg: #6d28d9;   --a-tipos-bg: rgba(109, 40, 217, 0.09);
-  --a-benef-fg: #047857;   --a-benef-bg: rgba(4, 120, 87, 0.10);
+  --a-atrib-fg: #047857;   --a-atrib-bg: rgba(4, 120, 87, 0.10);
   --a-dosi-fg: #0369a1;    --a-dosi-bg: rgba(3, 105, 161, 0.10);
   --a-acervo-fg: #be123c;  --a-acervo-bg: rgba(190, 18, 60, 0.09);
   --a-interface-fg: #a21caf; --a-interface-bg: rgba(162, 28, 175, 0.09);
@@ -50,7 +50,7 @@
   --t-estrutural-fg: #f87171; --t-estrutural-bg: rgba(248, 113, 113, 0.13);
 
   --a-tipos-fg: #a78bfa;   --a-tipos-bg: rgba(167, 139, 250, 0.14);
-  --a-benef-fg: #34d399;   --a-benef-bg: rgba(52, 211, 153, 0.13);
+  --a-atrib-fg: #34d399;   --a-atrib-bg: rgba(52, 211, 153, 0.13);
   --a-dosi-fg: #38bdf8;    --a-dosi-bg: rgba(56, 189, 248, 0.13);
   --a-acervo-fg: #fb7185;  --a-acervo-bg: rgba(251, 113, 133, 0.13);
   --a-interface-fg: #e879f9; --a-interface-bg: rgba(232, 121, 249, 0.13);
@@ -168,7 +168,7 @@
 .tagTipo[data-tipo='correcao']   { color: var(--t-correcao-fg);   background: var(--t-correcao-bg); }
 .tagTipo[data-tipo='estrutural'] { color: var(--t-estrutural-fg); background: var(--t-estrutural-bg); }
 .tagArea[data-slug='tipos-penais'] { color: var(--a-tipos-fg);     background: var(--a-tipos-bg); }
-.tagArea[data-slug='beneficios']   { color: var(--a-benef-fg);     background: var(--a-benef-bg); }
+.tagArea[data-slug='atributos']   { color: var(--a-atrib-fg);     background: var(--a-atrib-bg); }
 .tagArea[data-slug='dosimetria']   { color: var(--a-dosi-fg);      background: var(--a-dosi-bg); }
 .tagArea[data-slug='acervo']       { color: var(--a-acervo-fg);    background: var(--a-acervo-bg); }
 .tagArea[data-slug='interface']    { color: var(--a-interface-fg); background: var(--a-interface-bg); }

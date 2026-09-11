@@ -14,7 +14,7 @@ const entrada: ChangelogEntry = {
     'O que depende de julgamento não vira mais linha perdida num relatório: vira proposta de alteração, com o fundamento ao lado, para ser aceita ou recusada uma a uma.',
   ],
   tipo: 'novidade',
-  areas: ['Tipos penais', 'Benefícios'],
+  areas: ['Tipos penais', 'Atributos'],
   version: 'v1.6.0',
   links: [
     {

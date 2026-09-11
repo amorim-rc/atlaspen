@@ -13,7 +13,7 @@ const entrada: ChangelogEntry = {
     'O erro foi apontado pela revisão jurídica e confirmado contra o texto oficial. O corte agora é na letra I, e o sufixo duplo dos arts. 359-M-A e 359-M-B continua sendo lido pela primeira letra.',
   ],
   tipo: 'correcao',
-  areas: ['Benefícios', 'Dosimetria'],
+  areas: ['Atributos', 'Dosimetria'],
   version: 'v1.9.1',
 };
 

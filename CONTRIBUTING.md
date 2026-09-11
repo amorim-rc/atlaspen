@@ -9,6 +9,22 @@
   `infracao_menor_potencial`, `pena_min_meses`, `pena_max_meses`, rótulos de exibição)
   são produzidos pelo transformador a partir de `data/crimes.json`.
 
+## Glossário
+
+Quatro termos têm sentido fixo no projeto (decisão de 10/09/2026):
+
+- **Tipo penal** — a unidade do catálogo: o dispositivo que comina moldura de pena própria
+  (ver C1).
+- **Atributo penal** — o instituto que a lei liga ao tipo e à pena: transação, ANPP,
+  substituição, progressão, prescrição… O site os chamava de "benefícios penais".
+- **Parâmetro** — o patamar, a fração ou a vedação editável de um atributo: o teto de 2
+  anos da transação, os 25% da progressão.
+- **Campo** — o campo do registro de tipo penal: `hediondo`, `acao`,
+  `perdao_judicial_previsto`.
+
+"Benefício" continua só onde é a palavra da própria lei ou de súmula ("beneficiado", a
+Súmula 715 do STF). Trocá-la aí seria adulterar a citação.
+
 ## Como o catálogo é atualizado
 
 A carga inicial veio de uma planilha; a manutenção, hoje, é o **conferidor** — um pipeline

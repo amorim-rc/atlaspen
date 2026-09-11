@@ -146,7 +146,7 @@
     "tipo": "correcao",
     "areas": [
       "Tipos penais",
-      "Benefícios"
+      "Atributos"
     ],
     "version": "v2.0.5"
   },
@@ -215,7 +215,7 @@
     "tipo": "correcao",
     "areas": [
       "Interface",
-      "Benefícios"
+      "Atributos"
     ],
     "version": "v2.0.1"
   },
@@ -281,7 +281,7 @@
     "tipo": "correcao",
     "areas": [
       "Tipos penais",
-      "Benefícios"
+      "Atributos"
     ],
     "version": "v2.0.2"
   },
@@ -318,7 +318,7 @@
     "areas": [
       "Tipos penais",
       "Dosimetria",
-      "Benefícios"
+      "Atributos"
     ],
     "version": "v2.0.0"
   },
@@ -336,7 +336,7 @@
     "tipo": "correcao",
     "areas": [
       "Tipos penais",
-      "Benefícios"
+      "Atributos"
     ],
     "version": "v2.0.0",
     "links": [
@@ -360,7 +360,7 @@
     "tipo": "estrutural",
     "areas": [
       "Tipos penais",
-      "Benefícios",
+      "Atributos",
       "Interface"
     ],
     "version": "v2.0.0",
@@ -385,7 +385,7 @@
     "tipo": "novidade",
     "areas": [
       "Tipos penais",
-      "Benefícios"
+      "Atributos"
     ],
     "version": "v2.0.0",
     "links": [
@@ -433,7 +433,7 @@
     "tipo": "correcao",
     "areas": [
       "Tipos penais",
-      "Benefícios"
+      "Atributos"
     ],
     "version": "v2.0.0",
     "links": [
@@ -495,7 +495,7 @@
     "tipo": "correcao",
     "areas": [
       "Tipos penais",
-      "Benefícios"
+      "Atributos"
     ],
     "version": "v2.0.0",
     "links": [
@@ -518,7 +518,7 @@
     ],
     "tipo": "correcao",
     "areas": [
-      "Benefícios",
+      "Atributos",
       "Dosimetria"
     ],
     "version": "v1.9.1"
@@ -557,7 +557,7 @@
     "tipo": "correcao",
     "areas": [
       "Tipos penais",
-      "Benefícios"
+      "Atributos"
     ],
     "version": "v1.9.2"
   },
@@ -611,7 +611,7 @@
     "tipo": "correcao",
     "areas": [
       "Tipos penais",
-      "Benefícios"
+      "Atributos"
     ],
     "version": "v1.9.3"
   },
@@ -782,7 +782,7 @@
     ],
     "tipo": "correcao",
     "areas": [
-      "Benefícios"
+      "Atributos"
     ],
     "version": "v1.8.0",
     "links": [
@@ -899,7 +899,7 @@
     ],
     "tipo": "correcao",
     "areas": [
-      "Benefícios",
+      "Atributos",
       "Dosimetria"
     ],
     "version": "v1.9.0",
@@ -946,7 +946,7 @@
     ],
     "tipo": "correcao",
     "areas": [
-      "Benefícios"
+      "Atributos"
     ],
     "version": "v1.7.1",
     "links": [
@@ -970,7 +970,7 @@
     "tipo": "correcao",
     "areas": [
       "Tipos penais",
-      "Benefícios",
+      "Atributos",
       "Interface"
     ],
     "version": "v1.7.0",
@@ -1019,7 +1019,7 @@
     "tipo": "novidade",
     "areas": [
       "Tipos penais",
-      "Benefícios"
+      "Atributos"
     ],
     "version": "v1.6.0",
     "links": [
@@ -1807,7 +1807,7 @@
     "tipo": "novidade",
     "areas": [
       "Dosimetria",
-      "Benefícios"
+      "Atributos"
     ],
     "version": "v1.2.0",
     "links": [
@@ -1827,7 +1827,7 @@
     ],
     "tipo": "melhoria",
     "areas": [
-      "Benefícios"
+      "Atributos"
     ],
     "version": "v1.2.0",
     "links": [
@@ -2014,7 +2014,7 @@
     ],
     "tipo": "novidade",
     "areas": [
-      "Benefícios"
+      "Atributos"
     ],
     "version": "v1.1.0",
     "links": [

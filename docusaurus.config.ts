@@ -66,11 +66,6 @@ const config: Config = {
         // links já publicados de cada versão, apontando para o feed.
         redirects: [
           {from: '/docs/sobre', to: '/'},
-          // A frente 2 do backlog trocou "benefício" por "atributo" (10/09/2026).
-          // O plugin repassa a query quando o destino não tem uma: o link antigo
-          // `?beneficio=x` chega a /pesquisa/atributos, que ainda o lê.
-          {from: '/pesquisa/beneficios', to: '/pesquisa/atributos'},
-          {from: '/docs/beneficios-penais', to: '/docs/atributos-penais'},
           ...[
             'v1-0-0', 'v1-1-0', 'v1-1-1', 'v1-1-2', 'v1-1-3', 'v1-1-4',
             'v1-1-5', 'v1-1-6', 'v1-1-7', 'v1-1-8', 'v1-1-9', 'v1-2-0',

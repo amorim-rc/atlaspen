@@ -13,7 +13,7 @@ const entrada: ChangelogEntry = {
     'O conferidor semanal já contava 138 registros com pena definida por referência. Os quatro que a revisão leu são os que tinham moldura publicada sem sustentação no próprio artigo; os demais continuam com a moldura que a lei lhes dá diretamente.',
   ],
   tipo: 'estrutural',
-  areas: ['Tipos penais', 'Benefícios', 'Interface'],
+  areas: ['Tipos penais', 'Atributos', 'Interface'],
   version: 'v2.0.0',
   links: [
     {

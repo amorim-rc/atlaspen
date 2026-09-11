@@ -13,7 +13,7 @@ const entrada: ChangelogEntry = {
     'Dezesseis observações que contradiziam a moldura corrigida foram reescritas. O texto ao lado do registro dizia "1 a 3 anos" onde a pena publicada passou a ser de um ano e quatro meses a cinco anos e quatro meses, e num caso descrevia um aumento — de um terço na faixa de pedestres — que o artigo simplesmente não tem.',
   ],
   tipo: 'correcao',
-  areas: ['Tipos penais', 'Benefícios'],
+  areas: ['Tipos penais', 'Atributos'],
   version: 'v2.0.0',
   links: [
     {

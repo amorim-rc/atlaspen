@@ -10,7 +10,7 @@ const entrada: ChangelogEntry = {
   ],
   "tipo": "novidade",
   "areas": [
-    "Benefícios"
+    "Atributos"
   ],
   "version": "v1.1.0",
   "links": [

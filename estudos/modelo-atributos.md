@@ -4,8 +4,8 @@
 > está implementado. Os achados da seção 2 foram conferidos nesta data no texto compilado
 > do Planalto (LEP e Lei 9.099/95) e no catálogo derivado.
 
-Os termos seguem o glossário da frente 2. **Atributo penal** é o instituto (transação,
-progressão…), que o site hoje chama de benefício. **Parâmetro** é o patamar, a fração ou
+Os termos seguem o glossário do `CONTRIBUTING.md`. **Atributo penal** é o instituto
+(transação, progressão…), que o site chamava de benefício. **Parâmetro** é o patamar, a fração ou
 a vedação editável de um atributo. **Campo** é o campo do registro de tipo penal.
 
 ---
@@ -140,7 +140,7 @@ torna mecânico o "link para o item no Planalto".
 
 Decididos em 10/09/2026:
 
-1. **Glossário** da frente 2: atributo penal, parâmetro, campo.
+1. **Glossário** (`CONTRIBUTING.md`): atributo penal, parâmetro, campo.
 2. **Chave de dispositivo** para tipos e atributos, servindo a um só
    `historico-legislativo.json`.
 3. **Última alteração legislativa em cada atributo**, como nos tipos: data e lei que o
@@ -508,7 +508,7 @@ Só o cabeçalho e três dos onze parâmetros. Os demais seguem o mesmo molde.
 
 **Antes, e fora dele:**
 
-1. **Frente 2, o glossário no texto e no código.** Assim a base já nasce como
+1. **O glossário no texto e no código.** Feito em 10/09/2026. Assim a base já nasce como
    `data/atributos.json`, em `src/lib/atributos`, com `?atributo=`. Renomear e migrar no
    mesmo PR misturaria uma mudança mecânica com uma semântica e turvaria a prova de
    equivalência.

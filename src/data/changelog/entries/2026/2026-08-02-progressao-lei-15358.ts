@@ -13,7 +13,7 @@ const entrada: ChangelogEntry = {
     'Os quatro percentuais agora citam a redação vigente e registram, no texto de ajuda, qual era o valor anterior — quem estudar execução penal de fato anterior a março de 2026 precisa saber que a tabela mudou, e que a lei mais benéfica retroage.',
   ],
   tipo: 'correcao',
-  areas: ['Benefícios'],
+  areas: ['Atributos'],
   version: 'v1.7.1',
   links: [
     {

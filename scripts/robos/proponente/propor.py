@@ -494,7 +494,7 @@ const entrada: ChangelogEntry = {{
 {chr(10).join('    ' + json.dumps(p, ensure_ascii=False) + ',' for p in corpo)}
   ],
   tipo: 'correcao',
-  areas: ['Tipos penais', 'Benefícios'],
+  areas: ['Tipos penais', 'Atributos'],
   version: 'v{versao}',
 }};
 

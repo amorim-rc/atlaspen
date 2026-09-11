@@ -12,7 +12,7 @@ const entrada: ChangelogEntry = {
     'Fica declarado o que esta rodada NÃO fez: a mesma lei trocou a redação dos caputs — onde se lia "cena de sexo explícito ou pornográfica" agora se lê "conteúdo de violência sexual contra criança ou adolescente" —, e o conferidor não altera o nome do tipo, só a pena. Os nomes serão revistos contra o texto novo antes de a próxima versão fechar. Enquanto isso, a moldura publicada é a vigente, e o nome é o antigo.',
   ],
   tipo: 'correcao',
-  areas: ['Tipos penais', 'Benefícios'],
+  areas: ['Tipos penais', 'Atributos'],
   version: 'v2.0.2',
 };
 

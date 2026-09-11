@@ -30,7 +30,7 @@ const TIPO_ROTULO: Record<ChangelogTipo, string> = {
 };
 const AREAS: ChangelogArea[] = [
   'Tipos penais',
-  'Benefícios',
+  'Atributos',
   'Dosimetria',
   'Acervo histórico',
   'Interface',
@@ -38,7 +38,7 @@ const AREAS: ChangelogArea[] = [
 ];
 const AREA_SLUG: Record<ChangelogArea, string> = {
   'Tipos penais': 'tipos-penais',
-  'Benefícios': 'beneficios',
+  'Atributos': 'atributos',
   Dosimetria: 'dosimetria',
   'Acervo histórico': 'acervo',
   Interface: 'interface',

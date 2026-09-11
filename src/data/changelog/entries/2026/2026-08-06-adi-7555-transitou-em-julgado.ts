@@ -13,7 +13,7 @@ const entrada: ChangelogEntry = {
     'Na mesma ação o Supremo declarou a não recepção dos incisos I a III do art. 236 do Código Penal Militar, que são regra de presunção de violência, não tipo penal, e por isso não têm registro no catálogo.',
   ],
   tipo: 'correcao',
-  areas: ['Tipos penais', 'Benefícios'],
+  areas: ['Tipos penais', 'Atributos'],
   version: 'v2.0.0',
   links: [
     {

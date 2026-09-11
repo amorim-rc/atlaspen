@@ -13,7 +13,7 @@ const entrada: ChangelogEntry = {
     'Os outros onze crimes de trânsito conferem com a lei.',
   ],
   tipo: 'correcao',
-  areas: ['Tipos penais', 'Benefícios'],
+  areas: ['Tipos penais', 'Atributos'],
   version: 'v1.9.3',
 };
 

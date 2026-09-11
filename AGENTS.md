@@ -56,6 +56,10 @@ ignoradas:
   usado. Reiniciar exige remapear TUDO que é indexado por id: `data/conferencia.json`,
   as tabelas `CORRECOES_*` do `transform_data.py`, os `ids` das exceções da auditoria e
   os links `?tipo=N` das notas já publicadas.
+- **Glossário.** *Atributo penal* é o instituto (transação, progressão, prescrição…);
+  *parâmetro*, o patamar, a fração ou a vedação editável de um atributo; *campo*, o
+  campo do registro de tipo penal. "Benefício" só onde é a palavra da lei ou de
+  súmula. Ver o `CONTRIBUTING.md`.
 - `resultado_morte` deriva do **nome** do tipo, nunca do `obs`.
 - Editar `.md` com Python/`sed` no Windows introduz **CRLF** (quebra os admonitions
   `:::note[...]`); use `write_bytes` ou confira o EOL.

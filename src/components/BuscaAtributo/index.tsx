@@ -18,16 +18,12 @@ function BuscaAtributoInner() {
   const [q, setQ] = useState('');
   const [selectedId, setSelectedId] = useState<string | null>(() => {
     if (typeof window === 'undefined') return null;
-    // `?atributo=` desde a frente 2; `?beneficio=` é o dos links antigos, que o
-    // redirecionamento de /pesquisa/beneficios preserva.
-    const q = new URLSearchParams(window.location.search);
-    return q.get('atributo') ?? q.get('beneficio');
+    return new URLSearchParams(window.location.search).get('atributo');
   });
 
   const selectAtributo = useCallback((id: string | null) => {
     setSelectedId(id);
     const url = new URL(window.location.href);
-    url.searchParams.delete('beneficio');
     if (id === null) url.searchParams.delete('atributo');
     else url.searchParams.set('atributo', id);
     window.history.pushState({atributo: id}, '', url.toString());
@@ -35,10 +31,7 @@ function BuscaAtributoInner() {
   }, []);
 
   useEffect(() => {
-    const sync = () => {
-      const q = new URLSearchParams(window.location.search);
-      setSelectedId(q.get('atributo') ?? q.get('beneficio'));
-    };
+    const sync = () => setSelectedId(new URLSearchParams(window.location.search).get('atributo'));
     window.addEventListener('popstate', sync);
     return () => window.removeEventListener('popstate', sync);
   }, []);

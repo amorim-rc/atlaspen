@@ -14,7 +14,7 @@ const entrada: ChangelogEntry = {
     'A ação penal dos dois incisos intermediários também foi corrigida para condicionada à representação, que é a regra do artigo; a incondicionalidade é exceção nominada no parágrafo quarto para duas hipóteses, e essas não são nenhuma delas.',
   ],
   tipo: 'correcao',
-  areas: ['Tipos penais', 'Benefícios'],
+  areas: ['Tipos penais', 'Atributos'],
   version: 'v1.9.2',
 };
 
