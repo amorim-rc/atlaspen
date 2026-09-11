@@ -43,7 +43,8 @@ atual.
 
 ## 1. Repositório pronto para trabalho em grupo
 
-**Situação: em andamento.** O que já está feito vai riscado.
+**Situação: em andamento, sem data definida para o que falta.** O que já está feito
+vai riscado.
 
 - ~~Ruleset da `main` ativo: PR obrigatório, aprovação de Code Owner, CI verde, sem
   force-push nem deleção, bypass para o admin e para o app de automação (a parte da CI e
@@ -90,11 +91,10 @@ ele não pode sair.
 
 ---
 
-## 2. Versionamento até o lançamento oficial
+## 2. ~~Versionamento até o lançamento oficial~~ — concluída
 
-**Objetivo.** Voltar à versão 0. O site no GitHub Pages serve para acompanhar o
-desenvolvimento, e ainda não houve lançamento. O lançamento oficial, com domínio, será a
-**v1.0.0**.
+**Concluída em 11/09/2026.** O projeto está em `0.0.0` e nada é publicado até a
+**v1.0.0**, o lançamento oficial, com domínio. A regra está no `AGENTS.md`.
 
 **Decidido em 10/09/2026.** Retirar a numeração até o lançamento, porque os números
 antigos nunca existiram como lançamento (renumerá-los em `v0.0.X` foi descartado).
@@ -114,9 +114,7 @@ Releases do GitHub são enxugadas.
    vez da versão~~
 6. ~~Reescrever a regra no `AGENTS.md`, no `CONTRIBUTING.md`, no guia de entradas, na
    seção Estabilidade e versionamento de Dados abertos e na skill do catálogo~~
-7. **No GitHub, ação do mantenedor:** apagar as 42 Releases e tags, de v1.0.0 a v2.0.6, ou
-   renomeá-las para `prototipo-vX.Y.Z`. A tag `v1.0.0` já existe e precisa sair do lugar
-   antes do lançamento. O ruleset de tags `v*` só deixa passar o admin e o app.
+7. ~~Apagar as 42 Releases e tags antigas, de v1.0.0 a v2.0.6 (feito pelo mantenedor)~~
 
 **Oportunidade que só existe antes da 1.0.0.** Até o lançamento, `?tipo=N` e as URLs
 ainda não são contrato com o público. Se o nome (frente 3), o domínio e a numeração dos
@@ -154,8 +152,8 @@ lançamento sai com domínio próprio, e nome e domínio devem mudar juntos.
 5. No repositório: `url` e `baseUrl` no `docusaurus.config.ts` (ou no que o substituir na
    reconstrução do site), e as URLs absolutas (README, CITATION).
 
-**Perguntas.** O nome. Se o rebranding troca a paleta e a marca, o que combina com a
-reconstrução do site.
+**Próximo passo, do mantenedor:** um plano completo de revamp, com nome provisório. Ele
+decide o nome, a marca e o que combina com a reconstrução do site.
 
 ---
 
@@ -189,9 +187,18 @@ legislativa ou correção de dado) e a origem da informação. A data da última
 **derivada** pelo `transform_data.py`; ninguém a digita. Detalhes em
 `estudos/modelo-atributos.md`, seções 4.1 e 4.5.
 
-**Primeiro passo.** O parser do Vigia já lê as anotações do compilado, mas guarda só o
-texto do link e descarta o `href`, que traz a URL da lei alteradora e a âncora do artigo.
-Guardar os dois é a mudança que torna tudo o mais mecânico.
+**Plano, em PRs pequenos (11/09/2026).**
+
+1. ~~O parser do Vigia guarda o `href` das anotações, que traz a URL da lei alteradora e
+   a âncora do artigo~~ (feito em 11/09/2026).
+2. A chave canônica de dispositivo, no lugar da `chave_dispositivo` atual. É a chave
+   estrangeira que cada registro de tipo penal leva para o histórico (ver a frente 9).
+3. A LEP, o CPP, a Lei 9.099/95 e a CF entram em `data/fontes.json`, como referência,
+   com URL e sentinela conferidas.
+4. O Vigia registra, para cada tipo que confere, a anotação da redação vigente e o link
+   dela; o `transform_data.py` deriva a última alteração no catálogo.
+
+O evento `revogado` do mesmo esquema é o molde da base de tipos revogados da frente 12.
 
 ---
 
@@ -268,7 +275,8 @@ publicado é pior que dado ausente.
   CP), o silêncio da lei faz a ação pública incondicionada. Não se sabe quais dos 1.446
   são regra geral e quais são previsão expressa.
 
-**Proposta de método, para decisão.**
+**Proposta de método, ponto de partida para o estudo com o grupo**, de onde sai o
+método (decisão de 11/09/2026).
 
 - Vocabulário fechado e imposto pela CI: pública incondicionada; pública condicionada à
   representação; pública condicionada à requisição; privada; privada personalíssima
@@ -280,9 +288,9 @@ publicado é pior que dado ausente.
   art. 225 do CP e a Lei 13.964/2019 incluiu o §5º do art. 171. Nesta fase basta a
   redação vigente; a sucessão é da frente 11.
 
-**Primeiro passo.** Fechar o vocabulário e o campo de fundamento, escrever a convenção no
-`CONTRIBUTING.md`, e revisar primeiro os 61 registros que não são incondicionados; em
-seguida, uma amostra dos incondicionados.
+**Primeiro passo.** O estudo com o grupo fecha o vocabulário e o campo de fundamento.
+Depois, escrever a convenção no `CONTRIBUTING.md` e revisar primeiro os 61 registros que
+não são incondicionados; em seguida, uma amostra dos incondicionados.
 
 ---
 
@@ -290,7 +298,8 @@ seguida, uma amostra dos incondicionados.
 
 **Objetivo.** Extrair uma amostra qualitativa dos registros para validar os achados.
 
-**Perguntas a decidir.**
+**Perguntas para o estudo com o grupo**, de onde sai o desenho da amostra (decisão de
+11/09/2026):
 
 - **Estratificação:** por diploma, espécie de pena, origem do registro (criado à mão ×
   `derivado_auto`) e campos condicionais (`hediondo_condicao`, `acao_condicao`,
@@ -336,7 +345,9 @@ Cada frente desta fase pede plano próprio e, em geral, pessoas interessadas no 
 sofreu desde a criação. A decisão e o esquema podem vir primeiro; a contagem em si sai da
 cadeia completa da frente 11.
 
-**Posição inicial, para decisão: não versionar o id.**
+**Decidido em 11/09/2026: não versionar o id.** A contagem sai do histórico legislativo,
+e cada registro de tipo penal leva uma chave estrangeira para ele: a chave canônica de
+dispositivo (frente 4).
 
 - O `id` é a URL pública (`?tipo=N`) e é append-only. Pôr versão nele (`123.4`) faria
   cada alteração legislativa trocar a URL citada.
@@ -379,13 +390,13 @@ conclusões. A faixa diz o esforço de cada um.
 | 17 | Prescrição completa | CP, arts. 110 a 117 | complexo | Retroativa, superveniente e executória, causas suspensivas e interruptivas, e sucessão de leis (a Lei 12.234/2010 vedou a retroativa com termo anterior à denúncia). Hoje só a punitiva em abstrato é modelada |
 | 18 | Regime próprio do CPM | CPM, arts. 84 e 89; Lei 9.099/95, art. 90-A | complexo | Sursis e livramento militares, e a Lei 9.099 afastada da Justiça Militar. São 394 registros |
 | 19 | Sucessão de leis no caso concreto | CF, art. 5º, XL | complexo | A data do fato escolhendo a redação de cada parâmetro (estudo, achado C) |
-| 20 | Cabimento da prisão preventiva pelo patamar de pena | CPP, art. 313, I | escopo a decidir | Crime doloso com pena máxima acima de 4 anos. Agrava a situação do acusado: entra no catálogo de atributos? |
-| 21 | Competência do Tribunal do Júri | CF, art. 5º, XXXVIII | escopo a decidir | Crimes dolosos contra a vida. Idem |
-| 22 | Menor potencial ofensivo | Lei 9.099/95, art. 61 | escopo a decidir | Já é campo do catálogo (`infracao_menor_potencial`), com a regra em revisão: 29 infrações só com multa estão fora da marcação |
+| 20 | Cabimento da prisão preventiva pelo patamar de pena | CPP, art. 313, I | fácil | Crime doloso com pena máxima acima de 4 anos. Agrava a situação do acusado, e entra |
+| 21 | Competência do Tribunal do Júri | CF, art. 5º, XXXVIII | fácil | Crimes dolosos contra a vida: lista curada. Também agrava, e também entra |
+| 22 | Menor potencial ofensivo | Lei 9.099/95, art. 61 | moderado | Já é campo do catálogo (`infracao_menor_potencial`), com a regra em revisão: 29 infrações só com multa estão fora da marcação |
 
-**A decidir antes de começar:** se os de escopo a decidir entram. Com o nome "atributo",
-a pergunta aparece: o catálogo inclui o que agrava a situação do acusado, ou só o que a
-favorece?
+**Decidido em 11/09/2026:** entram também os atributos que agravam a situação do acusado,
+como a preventiva e a competência do Júri. O catálogo de atributos registra o que a lei
+liga ao tipo e à pena, favorável ou não.
 
 ---
 
@@ -416,6 +427,15 @@ alterações do Código Penal de 1940 até hoje.
 É também a base de um **segundo paper**, sobre a flutuação e as características das
 alterações, reaproveitando os protocolos da pesquisa do Pensando o Direito *Atividade
 legislativa e obstáculos à inovação em matéria penal no Brasil*.
+
+**Decidido em 11/09/2026: o primeiro passo é registrar como base de dados os tipos penais
+revogados já mapeados.** Cada registro traz, obrigatoriamente, a data da revogação, o
+instrumento que a promoveu (lei revogadora, decisão em controle de constitucionalidade,
+não recepção) e o link para a referência no Planalto. Hoje esses casos vivem como texto:
+nas listas `ACERVO_CASOS` e `RETIRADOS` do `scripts/gerar_completude.py` e nos diplomas
+revogados de `data/diplomas.json`. O evento `revogado` do histórico legislativo (frente 4)
+é o molde. A visualização e os métodos de busca de outros tipos revogados ficam para o
+planejamento desta frente.
 
 **Três coisas distintas, com a mesma base:**
 

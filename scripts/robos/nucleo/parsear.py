@@ -29,11 +29,17 @@ import html as _html
 import re
 import unicodedata
 from dataclasses import dataclass, field
+from urllib.parse import urljoin
 
 # ── Fatiamento em parágrafos ────────────────────────────────────────────────
 _TAG = re.compile(r"(?is)<[^>]+>")
 _QUEBRA = re.compile(r"(?i)<p\b[^>]*>|<br\s*/?>|</p\s*>")
-_LINK = re.compile(r"(?is)<a\b[^>]*>(.*?)</a>")
+_LINK = re.compile(r"(?is)<a\b([^>]*)>(.*?)</a>")
+# O href de uma anotação é o link para o item na lei alteradora
+# ("../_ato2023-2026/2026/lei/l15402.htm#art1"). Vem relativo à página do
+# diploma, e por isso é guardado cru e resolvido por quem conhece a URL da
+# fonte (ver `url_absoluta`).
+_HREF = re.compile(r"""(?is)\bhref\s*=\s*["']([^"']+)["']""")
 
 
 def _texto(bruto: str) -> str:
@@ -54,6 +60,8 @@ def _texto(bruto: str) -> str:
 class Paragrafo:
     texto: str
     anotacoes: list[str] = field(default_factory=list)
+    # O href de cada anotação, na mesma ordem de `anotacoes` (None sem href).
+    links: list[str | None] = field(default_factory=list)
 
 
 def paragrafos(documento: str) -> list[Paragrafo]:
@@ -65,7 +73,12 @@ def paragrafos(documento: str) -> list[Paragrafo]:
         texto = _texto(pedaco)
         if not texto:
             continue
-        saida.append(Paragrafo(texto, [_texto(m) for m in _LINK.findall(pedaco)]))
+        achados = _LINK.findall(pedaco)
+        saida.append(Paragrafo(
+            texto,
+            [_texto(interno) for _, interno in achados],
+            [(mh.group(1).strip() if (mh := _HREF.search(atributos)) else None)
+             for atributos, _ in achados]))
     return saida
 
 
@@ -103,10 +116,28 @@ class Anotacao:
     norma: str | None
     ano: int | None
     texto: str
+    # O link da anotação, cru como está no compilado (ver `url_absoluta`).
+    href: str | None = None
 
 
-def ler_anotacao(texto: str) -> Anotacao | None:
-    """Extrai a primeira anotação legislativa de um texto, se houver."""
+def url_absoluta(base: str, href: str | None) -> str | None:
+    """O href de uma anotação resolvido contra a URL da página do diploma.
+
+    É o "link para o item no Planalto": a lei alteradora com a âncora do artigo
+    que fez a alteração.
+    """
+    if not href:
+        return None
+    return urljoin(base, href.replace("\\", "/"))
+
+
+def ler_anotacao(texto: str,
+                 links: list[tuple[str, str | None]] | None = None) -> Anotacao | None:
+    """Extrai a primeira anotação legislativa de um texto, se houver.
+
+    `links` são os pares (texto, href) das anotações do parágrafo. Quando dados,
+    a anotação encontrada leva o href do link que a contém.
+    """
     m = _ACAO.search(texto)
     if not m:
         return None
@@ -119,7 +150,15 @@ def ler_anotacao(texto: str) -> Anotacao | None:
     mn = _NORMA.search(escopo)
     ma = _ANO.search(escopo)
     norma = f"{mn.group(1)} nº {mn.group(2)}" if mn else None
-    return Anotacao(acao, norma, int(ma.group(1)) if ma else None, escopo)
+    href = None
+    if links:
+        alvo = escopo.strip()
+        for texto_link, h in links:
+            texto_link = (texto_link or "").strip()
+            if h and texto_link and (texto_link in alvo or alvo in texto_link):
+                href = h
+                break
+    return Anotacao(acao, norma, int(ma.group(1)) if ma else None, escopo, href)
 
 
 # ── Classificação dos parágrafos ────────────────────────────────────────────
@@ -424,7 +463,8 @@ def parsear(documento: str) -> list[Dispositivo]:
 
     for ordem, p in enumerate(paragrafos(documento)):
         texto = p.texto
-        anotacao = ler_anotacao(" ".join(p.anotacoes) or texto)
+        anotacao = ler_anotacao(" ".join(p.anotacoes) or texto,
+                                list(zip(p.anotacoes, p.links)))
         # "Vigência"/"Produção de efeitos" marcam alteração ainda não aplicável.
         pendente = any(
             (a := ler_anotacao(x)) and a.acao in ("vigencia", "producao_efeitos")
