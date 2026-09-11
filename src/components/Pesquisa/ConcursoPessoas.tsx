@@ -64,7 +64,7 @@ export default function ConcursoPessoas({
 
   return (
     <div className={styles.concurso}>
-      <h4 className={styles.benefSecTitulo}>Concurso de pessoas — art. 29</h4>
+      <h4 className={styles.atribSecTitulo}>Concurso de pessoas — art. 29</h4>
       <p className={styles.simDica}>
         Quando mais de um agente concorre para o mesmo fato, todos respondem pelo mesmo
         tipo — mas não pela mesma pena. Escolha o papel deste agente.

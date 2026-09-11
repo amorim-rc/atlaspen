@@ -6,7 +6,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
   title: 'SISPENAS',
-  tagline: 'Sistema de Pesquisa de Tipos Penais e Benefícios — Brasil',
+  tagline: 'Sistema de Pesquisa de Tipos e Atributos Penais — Brasil',
   favicon: 'img/favicon.svg',
 
   future: {
@@ -97,7 +97,7 @@ const config: Config = {
           position: 'left',
           items: [
             {to: '/pesquisa/tipos', label: 'Busca por tipo penal'},
-            {to: '/pesquisa/beneficios', label: 'Busca por benefício'},
+            {to: '/pesquisa/atributos', label: 'Busca por atributo'},
             {to: '/docs/acervo-historico', label: 'Acervo histórico'},
           ],
         },
@@ -109,7 +109,7 @@ const config: Config = {
             {to: '/docs/metodologia', label: 'Metodologia'},
             {to: '/docs/completude', label: 'Completude do catálogo'},
             {to: '/docs/catalogo-tipos-penais', label: 'Catálogo de tipos penais'},
-            {to: '/docs/beneficios-penais', label: 'Benefícios penais'},
+            {to: '/docs/atributos-penais', label: 'Atributos penais'},
             {to: '/docs/dados-abertos', label: 'Dados abertos'},
           ],
         },
@@ -128,9 +128,9 @@ const config: Config = {
           title: 'Ferramenta',
           items: [
             {label: 'Busca por tipo penal', to: '/pesquisa/tipos'},
-            {label: 'Busca por benefício', to: '/pesquisa/beneficios'},
+            {label: 'Busca por atributo', to: '/pesquisa/atributos'},
             {label: 'Metodologia', to: '/docs/metodologia'},
-            {label: 'Benefícios penais', to: '/docs/beneficios-penais'},
+            {label: 'Atributos penais', to: '/docs/atributos-penais'},
           ],
         },
         {

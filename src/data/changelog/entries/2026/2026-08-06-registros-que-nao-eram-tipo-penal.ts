@@ -13,7 +13,7 @@ const entrada: ChangelogEntry = {
     'Dois registros do art. 127 do Código Penal eram duplicata um do outro — o aborto qualificado pelo resultado aparecia duas vezes, sob rótulos diferentes do mesmo dispositivo. Sobrou um de cada hipótese, com a moldura conferida: a lesão grave sobre a base do art. 125 e a do art. 126 passaram a ter registros separados, porque são bases diferentes.',
   ],
   tipo: 'correcao',
-  areas: ['Tipos penais', 'Dosimetria', 'Benefícios'],
+  areas: ['Tipos penais', 'Dosimetria', 'Atributos'],
   version: 'v2.0.0',
 };
 

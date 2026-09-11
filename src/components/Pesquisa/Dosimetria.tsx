@@ -3,7 +3,7 @@
 // Os modificadores são apresentados em BLOCOS SEPARADOS POR FASE — a separação
 // não é estética: cada fase incide sobre uma base diferente e tem limites
 // próprios (a 2ª fase é presa à moldura pela Súmula 231; a 3ª pode rompê-la).
-// A pena definitiva apurada alimenta a pena concreta dos benefícios.
+// A pena definitiva apurada alimenta a pena concreta dos atributos.
 
 import React, {useEffect, useMemo, useState} from 'react';
 
@@ -105,12 +105,12 @@ export default function Dosimetria({
 
   return (
     <div className={styles.dosimetria}>
-      <h4 className={styles.benefSecTitulo}>
+      <h4 className={styles.atribSecTitulo}>
         Dosimetria por fases — art. 68 do CP
       </h4>
       <p className={styles.simDica}>
         Marque as circunstâncias do caso. Cada fase é calculada sobre a base produzida
-        pela anterior; a pena definitiva apurada passa a alimentar os benefícios abaixo.
+        pela anterior; a pena definitiva apurada passa a alimentar os atributos abaixo.
       </p>
 
       <div className={styles.fasesGrid}>

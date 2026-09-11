@@ -13,7 +13,7 @@ const entrada: ChangelogEntry = {
     'Foi corrigida junto a espécie de pena dos crimes de guerra que cominam morte no grau máximo: são trinta e seis dispositivos, e trinta e três já constam com a espécie certa. A moldura em meses continua sendo a graduação do art. 81, §2º, que faz a pena de morte corresponder, para esse efeito, à reclusão por trinta anos.',
   ],
   tipo: 'correcao',
-  areas: ['Tipos penais', 'Benefícios'],
+  areas: ['Tipos penais', 'Atributos'],
   version: 'v2.0.0',
   links: [
     {

@@ -1,8 +1,8 @@
-// Benefícios de EXECUÇÃO penal — dependem da pena concreta e do tempo cumprido.
+// Atributos de EXECUÇÃO penal — dependem da pena concreta e do tempo cumprido.
 // LEP (Lei 7.210/84), Código Penal e Lei 8.072/90.
 
 import type {Cenario} from '../../types';
-import type {BeneficioDef} from '../types';
+import type {AtributoDef} from '../types';
 import {num, bool} from '../types';
 import {formatPena, formatFracao} from '../../format';
 
@@ -50,7 +50,7 @@ export function vedacaoLivramentoArt112(c: Cenario): string | null {
   return null;
 }
 
-export const progressao: BeneficioDef = {
+export const progressao: AtributoDef = {
   id: 'progressao',
   nome: 'Progressão de regime',
   fundamento: 'Art. 112, LEP (redação da Lei 15.402/2026)',
@@ -183,7 +183,7 @@ export const progressao: BeneficioDef = {
         'organização criminosa ULTRAVIOLENTA estruturada para a prática de crime hediondo ou ' +
         'equiparado, vedado o livramento condicional. A Lei 15.358/2026 acrescentou ' +
         '"ultraviolenta" e a vedação do livramento — antes a alínea alcançava a organização ' +
-        'criminosa comum e não vedava o benefício.',
+        'criminosa comum e não vedava o livramento.',
       fundamento: 'Art. 112, VI, "b", LEP (redação da Lei 15.358/2026)',
     },
     {
@@ -357,7 +357,7 @@ export const progressao: BeneficioDef = {
   },
 };
 
-export const livramento: BeneficioDef = {
+export const livramento: AtributoDef = {
   id: 'livramento',
   nome: 'Livramento condicional',
   fundamento: 'Art. 83, CP',
@@ -385,7 +385,7 @@ export const livramento: BeneficioDef = {
   parametros: [
     {
       id: 'penaMinimaMeses',
-      rotulo: 'Pena mínima para acesso ao benefício',
+      rotulo: 'Pena mínima para acesso ao livramento',
       tipo: 'meses',
       padrao: 2 * ANO,
       min: 0,
@@ -504,7 +504,7 @@ export const livramento: BeneficioDef = {
   },
 };
 
-export const prescricao: BeneficioDef = {
+export const prescricao: AtributoDef = {
   id: 'prescricao',
   nome: 'Prescrição da pretensão punitiva',
   fundamento: 'Art. 109, CP',
@@ -628,7 +628,7 @@ export const prescricao: BeneficioDef = {
   },
 };
 
-export const saidaTemporaria: BeneficioDef = {
+export const saidaTemporaria: AtributoDef = {
   id: 'saida-temporaria',
   nome: 'Saída temporária',
   fundamento: 'Art. 122, LEP',
@@ -699,7 +699,7 @@ export const saidaTemporaria: BeneficioDef = {
   },
 };
 
-export const detracao: BeneficioDef = {
+export const detracao: AtributoDef = {
   id: 'detracao',
   nome: 'Detração penal',
   fundamento: 'Art. 42, CP',
@@ -740,7 +740,7 @@ export const detracao: BeneficioDef = {
   }),
 };
 
-export const remicao: BeneficioDef = {
+export const remicao: AtributoDef = {
   id: 'remicao',
   nome: 'Remição de pena',
   fundamento: 'Art. 126, LEP',
@@ -804,7 +804,7 @@ export const remicao: BeneficioDef = {
   }),
 };
 
-export const prisaoDomiciliar: BeneficioDef = {
+export const prisaoDomiciliar: AtributoDef = {
   id: 'prisao-domiciliar',
   nome: 'Prisão domiciliar',
   fundamento: 'Art. 117, LEP; art. 318, CPP',
@@ -861,7 +861,7 @@ export const prisaoDomiciliar: BeneficioDef = {
   },
 };
 
-export const monitoracaoEletronica: BeneficioDef = {
+export const monitoracaoEletronica: AtributoDef = {
   id: 'monitoracao-eletronica',
   nome: 'Monitoração eletrônica',
   fundamento: 'Art. 146-B, LEP; art. 319, IX, CPP',
@@ -917,7 +917,7 @@ export const monitoracaoEletronica: BeneficioDef = {
   },
 };
 
-export const indulto: BeneficioDef = {
+export const indulto: AtributoDef = {
   id: 'indulto',
   nome: 'Indulto coletivo',
   fundamento: 'Art. 84, XII, CF; art. 107, II, CP',
@@ -978,7 +978,7 @@ export const indulto: BeneficioDef = {
   },
 };
 
-export const comutacao: BeneficioDef = {
+export const comutacao: AtributoDef = {
   id: 'comutacao',
   nome: 'Comutação de penas',
   fundamento: 'Art. 84, XII, CF; art. 192, LEP',
@@ -1034,7 +1034,7 @@ export const comutacao: BeneficioDef = {
   },
 };
 
-export const graca: BeneficioDef = {
+export const graca: AtributoDef = {
   id: 'graca',
   nome: 'Graça (indulto individual)',
   fundamento: 'Art. 84, XII, CF; art. 188, LEP',
@@ -1079,7 +1079,7 @@ export const graca: BeneficioDef = {
   },
 };
 
-export const unificacao: BeneficioDef = {
+export const unificacao: AtributoDef = {
   id: 'unificacao',
   nome: 'Unificação de penas (limite de cumprimento)',
   fundamento: 'Art. 75, CP',
@@ -1088,7 +1088,7 @@ export const unificacao: BeneficioDef = {
   descricao:
     'O tempo de cumprimento das penas privativas de liberdade não pode ser superior a ' +
     '40 anos (limite elevado de 30 para 40 pela Lei 13.964/2019). A unificação incide ' +
-    'apenas sobre o tempo de cumprimento; os benefícios são calculados sobre a pena ' +
+    'apenas sobre o tempo de cumprimento; a progressão e o livramento são calculados sobre a pena ' +
     'total aplicada (Súmula 715, STF).',
   requisitos: [
     'Condenação a penas privativas de liberdade cuja soma ultrapasse o limite legal.',
@@ -1114,7 +1114,7 @@ export const unificacao: BeneficioDef = {
     },
     {
       id: 'aplicaSumula715',
-      rotulo: 'Benefícios calculados sobre a pena total (Súmula 715)',
+      rotulo: 'Progressão e livramento calculados sobre a pena total (Súmula 715)',
       tipo: 'booleano',
       padrao: true,
       ajuda:
@@ -1138,7 +1138,7 @@ export const unificacao: BeneficioDef = {
           : 'A unificação só incide quando a soma das penas supera o teto legal.',
         bool(p, 'aplicaSumula715')
           ? 'Súmula 715, STF: os demais benefícios (progressão, livramento) são calculados sobre a pena TOTAL aplicada, não sobre a unificada.'
-          : 'Simulação: benefícios calculados sobre a pena UNIFICADA (contrária à Súmula 715, STF).',
+          : 'Simulação: progressão e livramento calculados sobre a pena UNIFICADA (contrária à Súmula 715, STF).',
         'Sobrevindo nova condenação, procede-se a nova unificação (art. 75, §2º).',
       ],
       limiar: {
@@ -1151,7 +1151,7 @@ export const unificacao: BeneficioDef = {
   },
 };
 
-export const EXECUCAO: BeneficioDef[] = [
+export const EXECUCAO: AtributoDef[] = [
   progressao,
   livramento,
   prescricao,

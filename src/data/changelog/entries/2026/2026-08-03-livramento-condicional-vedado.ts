@@ -14,7 +14,7 @@ const entrada: ChangelogEntry = {
     'Uma pendência ficou registrada e não foi aplicada. Ao conferir o art. 112 no texto oficial, apareceu a Lei 15.402, de maio de 2026, que reescreveu o caput e os três primeiros incisos do artigo, mudança posterior à de março e que o sistema ainda não reflete. Modelá-la exige decidir o que fazer com a duplicação que a própria lei deixou entre dois incisos, e isso é leitura jurídica, não transcrição.',
   ],
   tipo: 'correcao',
-  areas: ['Benefícios'],
+  areas: ['Atributos'],
   version: 'v1.8.0',
   links: [
     {

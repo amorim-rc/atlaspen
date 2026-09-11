@@ -2,7 +2,7 @@
 """Audita os campos que o conferidor de penas não alcança.
 
 O conferidor responde "a pena publicada é a que a lei comina?". Sobram quatro
-campos que decidem benefício e que ninguém vigiava:
+campos que decidem atributos e que ninguém vigiava:
 
 - **hediondez** — rol fechado (Lei 8.072, art. 1º); a auditoria é comparação
   contra a tabela curada em `data/hediondos.json`, mais um alarme quando o texto

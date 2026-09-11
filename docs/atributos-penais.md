@@ -1,17 +1,17 @@
 ---
-id: beneficios-penais
-title: Benefícios penais
+id: atributos-penais
+title: Atributos penais
 sidebar_position: 3
 ---
 
-# Benefícios penais modelados
+# Atributos penais modelados
 
-O SISPENAS modela os **22 benefícios** abaixo. Todos os valores de pena são tratados em
+O SISPENAS modela os **22 atributos** abaixo. Todos os valores de pena são tratados em
 **meses**. A implementação é para fins de pesquisa e simplifica controvérsias.
 
 ## Como o catálogo é modelado
 
-Desde a v1.1.0, cada benefício é um **registro declarativo** (`BeneficioDef`), e não uma
+Desde a v1.1.0, cada atributo é um **registro declarativo** (`AtributoDef`), e não uma
 regra embutida no código. O registro reúne:
 
 - **metadados** — nome, fundamento legal, categoria e *natureza*;
@@ -20,32 +20,32 @@ regra embutida no código. O registro reúne:
   extraído da legislação vigente e o dispositivo de origem;
 - uma **função pura de avaliação**, que lê os parâmetros em vez de constantes.
 
-Essa separação é o que permite a **Busca por benefício**: alterar um patamar recalcula o
+Essa separação é o que permite a **Busca por atributo**: alterar um patamar recalcula o
 catálogo inteiro de tipos penais sem tocar no código. É também o passo preparatório para
-mover o catálogo de benefícios para dados versionados — a frente 1 do
+mover o catálogo de atributos para dados versionados — a frente 1 do
 [backlog](https://github.com/amorim-rc/sispenas/blob/main/backlog.md).
 
-### Natureza do benefício
+### Natureza do atributo
 
-A *natureza* indica de qual pena o benefício depende — e determina se a busca reversa é
+A *natureza* indica de qual pena o atributo depende — e determina se a busca reversa é
 exata ou presumida:
 
-| Natureza | Significado | Busca por benefício |
+| Natureza | Significado | Busca por atributo |
 |----------|-------------|---------------------|
 | **Pena em abstrato** | Depende da pena cominada no tipo | Avaliação **exata** |
 | **Pena concreta** | Depende da pena fixada na sentença | Exige **pena concreta presumida** |
 | **Independe da pena** | Não há patamar (detração, remição) | Alcança todo o catálogo |
 
 :::note[Pressuposto metodológico da busca reversa]
-A pena concreta **não é atributo do tipo penal**. Para varrer o catálogo, o sistema presume
+A pena concreta **não é campo do tipo penal**. Para varrer o catálogo, o sistema presume
 uma pena concreta — por padrão, a **pena mínima cominada** (hipótese do réu condenado no
 mínimo legal, a mais favorável e a de uso corrente na pesquisa empírica). A base pode ser
 trocada por pena máxima ou por um valor fixo aplicado a todos os tipos.
 :::
 
-## Benefícios processuais (pena em abstrato)
+## Atributos processuais (pena em abstrato)
 
-| Benefício | Fundamento | Critério objetivo |
+| Atributo | Fundamento | Critério objetivo |
 |-----------|-----------|-------------------|
 | **Transação penal** | Art. 76, Lei 9.099/95 | Pena máxima ≤ 2 anos (menor potencial ofensivo) |
 | **Suspensão condicional do processo** | Art. 89, Lei 9.099/95 | Pena mínima ≤ 1 ano |
@@ -54,7 +54,7 @@ trocada por pena máxima ou por um valor fixo aplicado a todos os tipos.
 
 ## Aplicação da pena
 
-| Benefício | Fundamento | Critério objetivo |
+| Atributo | Fundamento | Critério objetivo |
 |-----------|-----------|-------------------|
 | **Substituição por PRD** | Art. 44, CP | Pena ≤ 4 anos, sem violência/grave ameaça (doloso); culposo sempre |
 | **Sursis da pena** | Art. 77, CP | Pena ≤ 2 anos (comum); ≤ 4 anos (etário/humanitário) |
@@ -65,7 +65,7 @@ trocada por pena máxima ou por um valor fixo aplicado a todos os tipos.
 
 ## Execução penal
 
-| Benefício | Fundamento | Critério |
+| Atributo | Fundamento | Critério |
 |-----------|-----------|----------|
 | **Progressão de regime** | Art. 112, LEP | Frações de 16% a 85% conforme reincidência/hediondez/resultado morte |
 | **Livramento condicional** | Art. 83, CP | 1/3 (primário), 1/2 (reincidente), 2/3 (hediondo); vedado ao reincidente específico em hediondo e nas quatro hipóteses do art. 112 da LEP |
@@ -122,7 +122,7 @@ benéfica apura-se **por situação concreta**, não em bloco.
 | Título XII, primário | 25% ou 30% conforme violência | 1/6 pelo *caput* |
 
 Marque **"fato anterior a 08/05/2026"** na simulação da página do tipo penal para calcular
-pela tabela do Pacote Anticrime. A busca por benefício não tem essa opção: ela varre o
+pela tabela do Pacote Anticrime. A busca por atributo não tem essa opção: ela varre o
 catálogo em abstrato, pela lei vigente.
 
 :::note[A base de cálculo do *caput* não é a dos incisos]

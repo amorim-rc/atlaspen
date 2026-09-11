@@ -1,13 +1,13 @@
-// Benefícios de APLICAÇÃO da pena — dependem, em regra, da pena CONCRETA
+// Atributos de APLICAÇÃO da pena — dependem, em regra, da pena CONCRETA
 // fixada na sentença. Código Penal.
 
-import type {BeneficioDef} from '../types';
+import type {AtributoDef} from '../types';
 import {num, bool} from '../types';
 import {formatPena, formatFracao} from '../../format';
 
 const ANO = 12;
 
-export const substituicaoPRD: BeneficioDef = {
+export const substituicaoPRD: AtributoDef = {
   id: 'substituicao',
   nome: 'Substituição por penas restritivas de direitos',
   fundamento: 'Art. 44, CP',
@@ -104,7 +104,7 @@ export const substituicaoPRD: BeneficioDef = {
   },
 };
 
-export const sursisPena: BeneficioDef = {
+export const sursisPena: AtributoDef = {
   id: 'sursis-pena',
   nome: 'Suspensão condicional da pena (sursis)',
   fundamento: 'Art. 77, CP',
@@ -184,7 +184,7 @@ export const sursisPena: BeneficioDef = {
   },
 };
 
-export const regimeInicial: BeneficioDef = {
+export const regimeInicial: AtributoDef = {
   id: 'regime',
   nome: 'Regime inicial de cumprimento',
   fundamento: 'Art. 33, §2º e §3º, CP',
@@ -265,7 +265,7 @@ export const regimeInicial: BeneficioDef = {
   },
 };
 
-export const perdaoJudicial: BeneficioDef = {
+export const perdaoJudicial: AtributoDef = {
   id: 'perdao-judicial',
   nome: 'Perdão judicial',
   fundamento: 'Art. 107, IX, CP',
@@ -317,7 +317,7 @@ export const perdaoJudicial: BeneficioDef = {
   },
 };
 
-export const arrependimentoPosterior: BeneficioDef = {
+export const arrependimentoPosterior: AtributoDef = {
   id: 'arrependimento-posterior',
   nome: 'Arrependimento posterior',
   fundamento: 'Art. 16, CP',
@@ -373,7 +373,7 @@ export const arrependimentoPosterior: BeneficioDef = {
       rotulo: 'Exigir reparação do dano ou restituição da coisa',
       tipo: 'booleano',
       padrao: true,
-      ajuda: 'Sem reparação até o recebimento da denúncia, o benefício não incide.',
+      ajuda: 'Sem reparação até o recebimento da denúncia, a redução não incide.',
       fundamento: 'Art. 16, CP',
     },
   ],
@@ -409,7 +409,7 @@ export const arrependimentoPosterior: BeneficioDef = {
   },
 };
 
-export const arrependimentoEficaz: BeneficioDef = {
+export const arrependimentoEficaz: AtributoDef = {
   id: 'arrependimento-eficaz',
   nome: 'Desistência voluntária e arrependimento eficaz',
   fundamento: 'Art. 15, CP',
@@ -458,7 +458,7 @@ export const arrependimentoEficaz: BeneficioDef = {
   },
 };
 
-export const APLICACAO: BeneficioDef[] = [
+export const APLICACAO: AtributoDef[] = [
   substituicaoPRD,
   sursisPena,
   regimeInicial,

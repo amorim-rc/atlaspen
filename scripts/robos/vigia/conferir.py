@@ -163,7 +163,7 @@ def moldura_catalogo(linha: dict) -> tuple[float, float]:
     `pena_min`/`pena_max` são os campos CRUS da fonte e podem estar
     desatualizados — `derivar_pena` não os reescreve, ele acrescenta
     `pena_*_meses` a partir do `obs`. São estes que a aplicação usa para
-    calcular benefícios, e portanto os únicos que valem comparar. (Ler os campos
+    calcular atributos, e portanto os únicos que valem comparar. (Ler os campos
     crus produzia divergência falsa em todo registro cujo `obs` já estivesse
     certo e o número, não — caso de metade das contravenções da LCP.)
     """

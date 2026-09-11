@@ -30,7 +30,7 @@ const TIPO_ROTULO: Record<ChangelogTipo, string> = {
 };
 const AREAS: ChangelogArea[] = [
   'Tipos penais',
-  'Benefícios',
+  'Atributos',
   'Dosimetria',
   'Acervo histórico',
   'Interface',
@@ -38,7 +38,7 @@ const AREAS: ChangelogArea[] = [
 ];
 const AREA_SLUG: Record<ChangelogArea, string> = {
   'Tipos penais': 'tipos-penais',
-  'Benefícios': 'beneficios',
+  'Atributos': 'atributos',
   Dosimetria: 'dosimetria',
   'Acervo histórico': 'acervo',
   Interface: 'interface',
@@ -103,13 +103,13 @@ export default function NotasDeAtualizacoes() {
   return (
     <Layout
       title="Notas de atualizações"
-      description="O que muda no catálogo, nos benefícios e na ferramenta do SISPENAS — cada alteração datada e resumida.">
+      description="O que muda no catálogo, nos atributos e na ferramenta do SISPENAS — cada alteração datada e resumida.">
       <div className={styles.pagina}>
         <div className={styles.wrap}>
           <header className={styles.cabecalho}>
             <h1 className={styles.h1}>Notas de atualizações</h1>
             <p className={styles.lede}>
-              O que muda no catálogo, nos benefícios e na ferramenta — cada alteração
+              O que muda no catálogo, nos atributos e na ferramenta — cada alteração
               datada, resumida em um parágrafo e aberta em detalhe quando você quiser.
             </p>
           </header>

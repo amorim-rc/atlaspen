@@ -1,13 +1,13 @@
-// Benefícios processuais — dependem, em regra, da pena em ABSTRATO.
+// Atributos processuais — dependem, em regra, da pena em ABSTRATO.
 // Lei 9.099/95, CPP e Lei 12.850/13.
 
-import type {BeneficioDef} from '../types';
+import type {AtributoDef} from '../types';
 import {num, bool} from '../types';
 import {formatPena, formatFracao} from '../../format';
 
 const ANO = 12;
 
-export const transacaoPenal: BeneficioDef = {
+export const transacaoPenal: AtributoDef = {
   id: 'transacao',
   nome: 'Transação penal',
   fundamento: 'Art. 76, Lei 9.099/95',
@@ -78,7 +78,7 @@ export const transacaoPenal: BeneficioDef = {
   },
 };
 
-export const suspensaoProcesso: BeneficioDef = {
+export const suspensaoProcesso: AtributoDef = {
   id: 'sursis-processual',
   nome: 'Suspensão condicional do processo',
   fundamento: 'Art. 89, Lei 9.099/95',
@@ -168,7 +168,7 @@ export const suspensaoProcesso: BeneficioDef = {
   },
 };
 
-export const anpp: BeneficioDef = {
+export const anpp: AtributoDef = {
   id: 'anpp',
   nome: 'Acordo de não persecução penal (ANPP)',
   fundamento: 'Art. 28-A, CPP',
@@ -219,7 +219,7 @@ export const anpp: BeneficioDef = {
       rotulo: 'Exigir confissão formal e circunstanciada',
       tipo: 'booleano',
       padrao: true,
-      ajuda: 'Requisito do caput. Sem confissão, o benefício fica condicional (requisitos objetivos atendidos).',
+      ajuda: 'Requisito do caput. Sem confissão, o acordo fica condicional (requisitos objetivos atendidos).',
       fundamento: 'Art. 28-A, caput, CPP',
     },
     {
@@ -273,7 +273,7 @@ export const anpp: BeneficioDef = {
   },
 };
 
-export const colaboracaoPremiada: BeneficioDef = {
+export const colaboracaoPremiada: AtributoDef = {
   id: 'colaboracao-premiada',
   nome: 'Colaboração premiada',
   fundamento: 'Art. 4º, Lei 12.850/13',
@@ -342,4 +342,4 @@ export const colaboracaoPremiada: BeneficioDef = {
   },
 };
 
-export const PROCESSUAIS: BeneficioDef[] = [transacaoPenal, suspensaoProcesso, anpp, colaboracaoPremiada];
+export const PROCESSUAIS: AtributoDef[] = [transacaoPenal, suspensaoProcesso, anpp, colaboracaoPremiada];

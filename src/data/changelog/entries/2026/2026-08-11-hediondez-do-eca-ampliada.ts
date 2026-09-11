@@ -14,7 +14,7 @@ const entrada: ChangelogEntry = {
     'Nada disso foi encontrado por leitura humana: o alarme veio do robô que guarda uma digital do texto do rol e a compara a cada rodada. Ele não disse o que mudou — disse que mudou, e mandou reler antes de confiar em qualquer outro achado da semana.',
   ],
   tipo: 'correcao',
-  areas: ['Tipos penais', 'Benefícios'],
+  areas: ['Tipos penais', 'Atributos'],
   version: 'v2.0.5',
 };
 

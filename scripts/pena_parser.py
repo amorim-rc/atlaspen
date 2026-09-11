@@ -134,7 +134,7 @@ _SO_MULTA = re.compile(r"^\s*penas?\s*[-–—:]?\s*multa\b", re.IGNORECASE)
 # do CE publicaram por meses pena privativa de liberdade — o 313 com reclusão de
 # 2 a 6 anos, o 303 com detenção de 6 meses a 2 anos e o 306 com 1 a 6 meses —
 # para artigos que não cominam prisão nenhuma. O erro inverte a classe inteira
-# de benefícios do registro, e era invisível justamente por ser silêncio.
+# de atributos do registro, e era invisível justamente por ser silêncio.
 _SO_PECUNIARIA = re.compile(
     r"^\s*penas?\s*[-–—:]?\s*(?:o\s+)?pagamento\s+de\b.{0,80}?\bmulta\b",
     re.IGNORECASE | re.DOTALL)

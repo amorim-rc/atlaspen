@@ -711,7 +711,7 @@ EXCLUIDOS = [
                "DL 201/1967, art. 1º, entra por ser crime comum julgado pelo "
                "Judiciário."},
     {"norma": "Lei nº 8.072/1990, Lei nº 9.099/1995, LEP (7.210/1984), CPP",
-     "motivo": "Alteram benefícios e processo sem tipificar — componentes da "
+     "motivo": "Alteram atributos penais e processo sem tipificar — componentes da "
                "Fase 4 do roadmap."},
     {"norma": "Lei nº 8.429/1992 (improbidade)",
      "motivo": "Sanções cíveis, não penais."},

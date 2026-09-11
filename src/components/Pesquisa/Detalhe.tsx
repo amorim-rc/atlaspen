@@ -1,6 +1,6 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import type {Crime, Cenario} from '@site/src/lib/types';
-import {calcularBeneficios, CATEGORIA_LABEL, type Categoria, type BeneficioResultado} from '@site/src/lib/beneficios';
+import {calcularAtributos, CATEGORIA_LABEL, type Categoria, type AtributoResultado} from '@site/src/lib/atributos';
 import {cenarioFromCrime} from '@site/src/lib/cenario';
 import type {SelecaoModificador} from '@site/src/lib/dosimetria/types';
 import {formatPena} from '@site/src/lib/format';
@@ -40,17 +40,17 @@ function Ajuda({texto}: {texto: string}) {
   );
 }
 
-function BeneficioCard({b}: {b: BeneficioResultado}) {
+function AtributoCard({b}: {b: AtributoResultado}) {
   return (
-    <div className={`${styles.benefCard} ${styles['status_' + b.status]}`}>
-      <div className={styles.benefHead}>
-        <span className={styles.benefNome}>{b.nome}</span>
-        <span className={`${styles.benefBadge} ${styles['badge_' + b.status]}`}>{STATUS_LABEL[b.status]}</span>
+    <div className={`${styles.atribCard} ${styles['status_' + b.status]}`}>
+      <div className={styles.atribHead}>
+        <span className={styles.atribNome}>{b.nome}</span>
+        <span className={`${styles.atribBadge} ${styles['badge_' + b.status]}`}>{STATUS_LABEL[b.status]}</span>
       </div>
-      <div className={styles.benefFund}>{b.fundamento}</div>
-      <div className={styles.benefResumo}>{b.resumo}</div>
+      <div className={styles.atribFund}>{b.fundamento}</div>
+      <div className={styles.atribResumo}>{b.resumo}</div>
       {b.limiar && (
-        <div className={styles.benefLimiar}>
+        <div className={styles.atribLimiar}>
           <span>{b.limiar.descricao}</span>
           <span className={b.limiar.folgaMeses >= 0 ? styles.folgaOk : styles.folgaNo}>
             {b.limiar.folgaMeses >= 0
@@ -59,7 +59,7 @@ function BeneficioCard({b}: {b: BeneficioResultado}) {
           </span>
         </div>
       )}
-      <ul className={styles.benefDet}>
+      <ul className={styles.atribDet}>
         {b.detalhes.map((d, i) => (
           <li key={i}>{d}</li>
         ))}
@@ -146,7 +146,7 @@ export default function Detalhe({
     setCen((p) => ({...p, penaConcreta: penaConcurso ?? penaIsolada}));
   }, [penaIsolada, penaConcurso]);
 
-  const beneficios = useMemo(() => calcularBeneficios(cen), [cen]);
+  const atributos = useMemo(() => calcularAtributos(cen), [cen]);
   const grupos: Categoria[] = ['processual', 'aplicacao', 'execucao'];
 
   const set = <K extends keyof Cenario>(k: K, v: Cenario[K]) => setCen((p) => ({...p, [k]: v}));
@@ -212,7 +212,7 @@ export default function Detalhe({
         <div className={styles.sancoes}>
           <h4 className={styles.sancoesTitulo}>
             Sanções cominadas
-            <Ajuda texto="Este tipo penal não comina pena privativa de liberdade. Por isso os benefícios que dependem de patamar de pena (transação, ANPP, substituição, progressão) não lhe são aplicáveis, e ele fica fora das estatísticas de alcance da Busca por benefício." />
+            <Ajuda texto="Este tipo penal não comina pena privativa de liberdade. Por isso os atributos que dependem de patamar de pena (transação, ANPP, substituição, progressão) não lhe são aplicáveis, e ele fica fora das estatísticas de alcance da Busca por atributo." />
           </h4>
           <ul className={styles.sancoesLista}>
             {crime.sancoes_nao_privativas.map((s) => (
@@ -231,7 +231,7 @@ export default function Detalhe({
         <div className={styles.sancoes}>
           <h4 className={styles.sancoesTitulo}>
             Pena por remissão
-            <Ajuda texto="Este tipo não comina moldura própria: aplica a pena de outro dispositivo. Como a moldura depende de qual dispositivo-fonte incide no caso, o catálogo não publica um número — e o tipo fica fora das estatísticas de alcance da Busca por benefício." />
+            <Ajuda texto="Este tipo não comina moldura própria: aplica a pena de outro dispositivo. Como a moldura depende de qual dispositivo-fonte incide no caso, o catálogo não publica um número — e o tipo fica fora das estatísticas de alcance da Busca por atributo." />
           </h4>
           <p>
             Aplica a pena cominada em <strong>{crime.pena_por_remissao.dispositivo_fonte}</strong>
@@ -244,16 +244,16 @@ export default function Detalhe({
             .
           </p>
           {/* O simulador parte da moldura do registro. Aqui não há moldura: com
-              0 a 0, TODO benefício que depende de patamar de pena passaria a
+              0 a 0, TODO atributo que depende de patamar de pena passaria a
               caber — menor potencial ofensivo, transação, prescrição em três
               anos. É o mesmo resultado radicalmente favorável e errado que o
               projeto evita nos dispositivos que já não vigoram. Por isso o
               cálculo não é oferecido aqui, e sim no dispositivo-fonte. */}
           <p className={styles.simDica}>
-            <strong>O cálculo de benefícios não é feito por este registro.</strong> Ele
+            <strong>O cálculo de atributos não é feito por este registro.</strong> Ele
             depende de qual dispositivo-fonte incide no caso concreto, e cada um tem
             moldura própria. Abra abaixo o dispositivo aplicável e simule por ele —
-            partir daqui, de uma moldura ausente, faria caber todo benefício que depende
+            partir daqui, de uma moldura ausente, faria caber todo atributo que depende
             de patamar de pena.
           </p>
           {fontesRemissao.length > 0 && (
@@ -276,12 +276,12 @@ export default function Detalhe({
           <h4 className={styles.simTitulo}>Pena cominada — simulação legislativa</h4>
           <p className={styles.simDica}>
             Estas barras partem dos valores <strong>originais do tipo penal</strong>. Ajuste-as
-            para estudar o impacto de uma alteração de pena sobre os benefícios.
+            para estudar o impacto de uma alteração de pena sobre os atributos.
           </p>
           <label className={styles.sliderRow}>
             <span>
               Pena mínima: <strong>{meses(cen.penaMin, 'sem mínimo cominado')}</strong>
-              <Ajuda texto="Limite MÍNIMO de pena previsto na lei (pena em abstrato). Reduzi-lo até 0 permite testar a tese da ausência de pena mínima e ver quais benefícios processuais passam a caber (ex.: suspensão condicional do processo, ANPP)." />
+              <Ajuda texto="Limite MÍNIMO de pena previsto na lei (pena em abstrato). Reduzi-lo até 0 permite testar a tese da ausência de pena mínima e ver quais atributos processuais passam a caber (ex.: suspensão condicional do processo, ANPP)." />
             </span>
             <input type="range" min={0} max={480} step={1} value={cen.penaMin}
               onChange={(e) => set('penaMin', Math.min(+e.target.value, cen.penaMax))} />
@@ -297,7 +297,7 @@ export default function Detalhe({
           <label className={styles.sliderRow}>
             <span>
               Pena concreta aplicada: <strong>{meses(cen.penaConcreta)}</strong>
-              <Ajuda texto="Pena efetivamente fixada na sentença para um caso concreto (não é da lei, é da condenação). É a base dos benefícios de aplicação e execução: substituição por restritivas, sursis, regime inicial, progressão e livramento." />
+              <Ajuda texto="Pena efetivamente fixada na sentença para um caso concreto (não é da lei, é da condenação). É a base dos atributos de aplicação e execução: substituição por restritivas, sursis, regime inicial, progressão e livramento." />
               {penaConcurso !== null ? (
                 <em className={styles.penaOrigem}>vinda do concurso de crimes</em>
               ) : penaDosimetria !== null ? (
@@ -317,7 +317,7 @@ export default function Detalhe({
         <div className={styles.simColuna}>
           <h4 className={styles.simTitulo}>
             Circunstâncias do réu/caso
-            <Ajuda texto="Marque as condições do caso concreto. Elas alteram as frações e vedações dos benefícios (ex.: reincidência muda a fração de progressão; violência/grave ameaça impede a substituição por restritivas)." />
+            <Ajuda texto="Marque as condições do caso concreto. Elas alteram as frações e vedações dos atributos (ex.: reincidência muda a fração de progressão; violência/grave ameaça impede a substituição por restritivas)." />
           </h4>
           <div className={styles.checkGrid}>
             <label><input type="checkbox" checked={cen.primario} onChange={(e) => set('primario', e.target.checked)} /> Primário</label>
@@ -374,13 +374,13 @@ export default function Detalhe({
 
       {!crime.pena_por_remissao && (
         <>
-          <h4 className={styles.benefSecTitulo}>Benefícios penais — recálculo dinâmico</h4>
+          <h4 className={styles.atribSecTitulo}>Atributos penais — recálculo dinâmico</h4>
           {grupos.map((g) => (
-            <div key={g} className={styles.benefGrupo}>
-              <div className={styles.benefGrupoTitulo}>{CATEGORIA_LABEL[g]}</div>
-              <div className={styles.benefGrid}>
-                {beneficios.filter((b) => b.categoria === g).map((b) => (
-                  <BeneficioCard key={b.id} b={b} />
+            <div key={g} className={styles.atribGrupo}>
+              <div className={styles.atribGrupoTitulo}>{CATEGORIA_LABEL[g]}</div>
+              <div className={styles.atribGrid}>
+                {atributos.filter((b) => b.categoria === g).map((b) => (
+                  <AtributoCard key={b.id} b={b} />
                 ))}
               </div>
             </div>
@@ -390,7 +390,7 @@ export default function Detalhe({
 
       {correlatos.length > 0 && (
         <div className={styles.correlatos}>
-          <h4 className={styles.benefSecTitulo}>
+          <h4 className={styles.atribSecTitulo}>
             Tipos correlatos
             <Ajuda texto="Outros dispositivos do mesmo artigo-base na mesma lei (parágrafos, incisos, formas qualificadas/privilegiadas). Clique para carregar o cálculo do dispositivo." />
           </h4>

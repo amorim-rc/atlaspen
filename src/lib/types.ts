@@ -96,10 +96,10 @@ export interface Crime {
   pena_faixa_rotulo: string;
   /** True se a unidade veio do parser do texto (senão, fallback em meses). */
 
-  // ── Qualidade e integração com o motor de benefícios ──
+  // ── Qualidade e integração com o motor de atributos ──
   /**
    * O tipo comina pena privativa de liberdade? Só quem tem entra nas
-   * estatísticas de alcance dos benefícios, que se medem por patamar de pena.
+   * estatísticas de alcance dos atributos, que se medem por patamar de pena.
    * A exceção é o art. 28 da Lei 11.343/06, cujas sanções são não privativas.
    */
   tem_pena_privativa: boolean;
@@ -126,20 +126,20 @@ export interface Crime {
   duplicata_ids: number[];
 }
 
-/** Parâmetros do caso concreto usados no cálculo dinâmico de benefícios. */
+/** Parâmetros do caso concreto usados no cálculo dinâmico de atributos. */
 export interface Cenario {
   /** Pena mínima em meses (permite simular alteração legislativa). */
   penaMin: number;
   /** Pena máxima em meses (permite simular alteração legislativa). */
   penaMax: number;
-  /** Pena concreta aplicada em meses (para benefícios de execução). */
+  /** Pena concreta aplicada em meses (para atributos de execução). */
   penaConcreta: number;
   primario: boolean;
   reincidenteEspecifico: boolean;
   hediondo: boolean;
   resultadoMorte: boolean;
   /**
-   * O tipo é feminicídio (art. 121-A do CP). Atributo do TIPO, lido do catálogo
+   * O tipo é feminicídio (art. 121-A do CP). Campo do TIPO, lido do catálogo
    * como `resultadoMorte`: o art. 112, VI, "d" da LEP (alínea incluída pela Lei
    * 15.358/2026) exige 75% da pena e VEDA o livramento condicional ao primário
    * condenado por feminicídio.
@@ -154,13 +154,13 @@ export interface Cenario {
   comandoOrgcrimUltraviolenta: boolean;
   /**
    * O crime é do Título XII da Parte Especial do CP — arts. 359-A a 359-T,
-   * contra o Estado Democrático de Direito. Atributo do TIPO, topográfico: os
+   * contra o Estado Democrático de Direito. Campo do TIPO, topográfico: os
    * incisos I e II do art. 112 da LEP, na redação da Lei 15.402/2026, ressalvam
    * esses crimes, e a ressalva não olha se houve violência.
    */
   tituloXII: boolean;
   /**
-   * O crime é o de constituição de milícia privada (art. 288-A do CP). Atributo
+   * O crime é o de constituição de milícia privada (art. 288-A do CP). Campo
    * do TIPO, lido pelo dispositivo: o art. 112, VI, "c" da LEP manda 75% da pena,
    * ao primário e ao reincidente, na redação da Lei 15.358/2026.
    */

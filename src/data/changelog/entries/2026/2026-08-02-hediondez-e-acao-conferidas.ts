@@ -13,7 +13,7 @@ const entrada: ChangelogEntry = {
     'A mudança de fundo, porém, é outra. Em trinta registros a lei condiciona a classificação a uma circunstância do caso concreto: o homicídio simples só é hediondo quando praticado em atividade típica de grupo de extermínio; a alteração de limites só é de ação privada quando a propriedade é particular e não há violência. Até agora o catálogo escolhia uma resposta e a apresentava como se fosse do tipo. Agora ele guarda a condição, em texto, e a mostra: o tipo aparece com a etiqueta "hediondo se…", que revela a hipótese, e a caixa de marcação da simulação vem destacada, para que quem conhece o caso decida. É a diferença entre afirmar e informar.',
   ],
   tipo: 'correcao',
-  areas: ['Tipos penais', 'Benefícios', 'Interface'],
+  areas: ['Tipos penais', 'Atributos', 'Interface'],
   version: 'v1.7.0',
   links: [
     {

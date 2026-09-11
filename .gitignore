@@ -6,7 +6,7 @@
 /.docusaurus
 /.cache-loader
 
-# Saída da verificação do motor de benefícios (npm run verificar)
+# Saída da verificação do motor de atributos (npm run verificar)
 /.verificar-build
 
 # Configuração local de ferramentas

@@ -13,7 +13,7 @@ const entrada: ChangelogEntry = {
     'Os demais fecham lacunas apontadas pela própria revisão: o roubo e a extorsão qualificados do Código Penal Militar, o latrocínio militar, a hipótese do §2º do art. 5º da Lei Antiterrorismo e o inciso VI do §2º do art. 205 do CPM — a única qualificadora do homicídio militar sem correspondente no Código Penal, que por isso não é hedionda e precisava sair do registro que cobria as outras seis.',
   ],
   tipo: 'novidade',
-  areas: ['Tipos penais', 'Benefícios'],
+  areas: ['Tipos penais', 'Atributos'],
   version: 'v2.0.0',
   links: [
     {

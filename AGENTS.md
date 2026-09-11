@@ -1,6 +1,6 @@
 # Instruções para agentes de IA — SISPENAS
 
-Ferramenta aberta de pesquisa de tipos penais e benefícios. **Acuidade jurídica é o valor
+Ferramenta aberta de pesquisa de tipos penais e atributos penais. **Acuidade jurídica é o valor
 central**: um dado errado publicado é pior que um dado ausente. Nada entra no catálogo sem
 conferência contra o **texto compilado** oficial do `planalto.gov.br`.
 
@@ -25,7 +25,7 @@ entradas**. Por isso:
    com `tipo`, `areas` e `version`. O passo a passo (inclusive para uma IA gerar o arquivo)
    está em `src/data/changelog/create-changelog-entry.md`. Não há mais `release-notes/*.md`
    nem lista central: adicionar nota = criar arquivo. Correções de dado, novos
-   tipos/benefícios, fixes e ajustes de interface contam; mudança interna trivial não precisa.
+   tipos/atributos, fixes e ajustes de interface contam; mudança interna trivial não precisa.
 
 2. **Versione segundo `docs/dados-abertos.md`, seção Estabilidade e versionamento**
    (semver com significado explícito; o backlog não amarra versão): correção de
@@ -56,6 +56,10 @@ ignoradas:
   usado. Reiniciar exige remapear TUDO que é indexado por id: `data/conferencia.json`,
   as tabelas `CORRECOES_*` do `transform_data.py`, os `ids` das exceções da auditoria e
   os links `?tipo=N` das notas já publicadas.
+- **Glossário.** *Atributo penal* é o instituto (transação, progressão, prescrição…);
+  *parâmetro*, o patamar, a fração ou a vedação editável de um atributo; *campo*, o
+  campo do registro de tipo penal. "Benefício" só onde é a palavra da lei ou de
+  súmula. Ver o `CONTRIBUTING.md`.
 - `resultado_morte` deriva do **nome** do tipo, nunca do `obs`.
 - Editar `.md` com Python/`sed` no Windows introduz **CRLF** (quebra os admonitions
   `:::note[...]`); use `write_bytes` ou confira o EOL.

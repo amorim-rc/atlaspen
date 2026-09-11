@@ -1,6 +1,6 @@
 ---
 name: Correção de tipo penal
-about: Relatar imprecisão em um tipo penal do catálogo (pena, multa, benefícios, classificação)
+about: Relatar imprecisão em um tipo penal do catálogo (pena, multa, atributos, classificação)
 title: "[correção] "
 labels: ["dados", "correção"]
 ---

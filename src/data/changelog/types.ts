@@ -21,7 +21,7 @@ export type ChangelogTipo =
 /** A parte do sistema afetada. */
 export type ChangelogArea =
   | 'Tipos penais'
-  | 'Benefícios'
+  | 'Atributos'
   | 'Dosimetria'
   | 'Acervo histórico'
   | 'Interface'

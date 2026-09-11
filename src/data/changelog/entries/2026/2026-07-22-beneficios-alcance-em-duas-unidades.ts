@@ -10,7 +10,7 @@ const entrada: ChangelogEntry = {
   ],
   "tipo": "melhoria",
   "areas": [
-    "Benefícios"
+    "Atributos"
   ],
   "version": "v1.2.0",
   "links": [

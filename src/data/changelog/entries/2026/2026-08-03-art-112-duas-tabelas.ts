@@ -15,7 +15,7 @@ const entrada: ChangelogEntry = {
     'Implementar isso revelou um defeito antigo no cálculo da dosimetria: a tabela de títulos do Código Penal encerrava o título dos crimes contra a administração pública no art. 359, e os crimes contra o Estado Democrático de Direito, que são artigos 359 com sufixo de letra, caíam ali dentro. Todos recebiam o aumento dos crimes funcionais, que não os alcança. Corrigido.',
   ],
   tipo: 'correcao',
-  areas: ['Benefícios', 'Dosimetria'],
+  areas: ['Atributos', 'Dosimetria'],
   version: 'v1.9.0',
   links: [
     {

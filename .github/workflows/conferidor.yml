@@ -146,7 +146,7 @@ jobs:
 
   # ── auditor ──────────────────────────────────────────────────────────────
   # Hediondez, ação penal, causas de aumento e nome do tipo: os campos que
-  # decidem benefício e que a conferência de PENAS não alcança. Lê os snapshots
+  # decidem atributos e que a conferência de PENAS não alcança. Lê os snapshots
   # que o vigia baixou — daí o `needs`.
   auditor:
     name: Auditor — hediondez, ação penal e nomes

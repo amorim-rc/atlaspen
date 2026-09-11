@@ -1,7 +1,7 @@
 # SISPENAS
 
-**Sistema de Pesquisa de Tipos Penais e Benefícios** — ferramenta aberta de pesquisa de
-políticas públicas para estudar o **impacto dos benefícios penais** sobre os tipos penais
+**Sistema de Pesquisa de Tipos e Atributos Penais** — ferramenta aberta de pesquisa de
+políticas públicas para estudar o **impacto dos atributos penais** sobre os tipos penais
 brasileiros.
 
 Construído em **Docusaurus 3 + React + TypeScript**. Catálogo de **1.507 tipos penais**
@@ -15,11 +15,11 @@ de 64 diplomas, conferido toda semana contra o texto compilado do `planalto.gov.
   ofensivo.
   - A multa é uma **dimensão independente**: filtrar por "Reclusão" inclui os tipos com
     reclusão **+ multa**; combine com "Multa" para restringir.
-- Seleção de um tipo penal com **cálculo dinâmico dos benefícios penais** (ANPP, transação,
+- Seleção de um tipo penal com **cálculo dinâmico dos atributos penais** (ANPP, transação,
   suspensão do processo, substituição por PRD, sursis, regime inicial, progressão,
   livramento, prescrição, saída temporária, detração, remição, indulto).
 - **Simulação de alteração legislativa**: ajuste a pena e veja, em tempo real, quais
-  benefícios se tornam cabíveis ou incabíveis.
+  atributos se tornam cabíveis ou incabíveis.
 
 ## Instalação
 
@@ -54,7 +54,7 @@ Correções manuais podem ser registradas em `CORRECOES`, no próprio script.
 
 ## Documentação
 
-A documentação (Metodologia, Catálogo de tipos penais, Benefícios penais, Completude,
+A documentação (Metodologia, Catálogo de tipos penais, Atributos penais, Completude,
 Acervo histórico, Dados abertos) fica em `docs/` e é publicada dentro do próprio
 site. O pipeline de conferência tem documentação própria em `scripts/robos/README.md`.
 Os próximos passos possíveis estão em [`backlog.md`](backlog.md).
@@ -82,8 +82,8 @@ benefícios, permitindo simular alterações legislativas) e a **atualiza**. Com
 | **Pena (armazenamento)** | Cadastrada **em dias** (1 mês = 30 dias, 1 ano = 360 dias); exibida em anos/meses | Canônica **em meses**; exibida na **unidade natural** (dias/meses/anos), com conversão automática |
 | **Multa** | Critério com conectores **"E" / "E/OU" / "OU"** (cumulativa/alternativa/isolada) | Dimensão independente: `tem_multa` + `multa_regime` (`cumulativa`/`alternativa`/`isolada`/`nenhuma`), espelhando os conectores |
 | **Critérios "em abstrato"** | 9: pena mín., pena máx., tipo de prisão, multa, violência, grave ameaça, hediondo, elemento subjetivo, vedação específica | Mesmos critérios como filtros; acrescenta ação penal e menor potencial ofensivo |
-| **Benefícios** | Composição civil, transação, suspensão do processo, substituição por PRD/multa, sursis (2-4 e 4-6 anos), limite de cumprimento (30 anos), livramento (1/3, 1/2, 2/3), regime inicial | Conjunto **atualizado à lei vigente**: **ANPP** (Lei 13.964/2019), transação, suspensão do processo, substituição por PRD, sursis, regime inicial, **progressão**, livramento, **prescrição**, **saída temporária**, **detração**, **remição**, **indulto** |
-| **Consultas cruzadas** | Dois sentidos: tipo → benefícios **e** benefício → tipos atingidos | Sentido **tipo → benefícios** implementado com recálculo dinâmico; benefício → tipos é aproximado pelos filtros (ainda não é tela dedicada) |
+| **Benefícios (hoje, atributos penais)** | Composição civil, transação, suspensão do processo, substituição por PRD/multa, sursis (2-4 e 4-6 anos), limite de cumprimento (30 anos), livramento (1/3, 1/2, 2/3), regime inicial | Conjunto **atualizado à lei vigente**: **ANPP** (Lei 13.964/2019), transação, suspensão do processo, substituição por PRD, sursis, regime inicial, **progressão**, livramento, **prescrição**, **saída temporária**, **detração**, **remição**, **indulto** |
+| **Consultas cruzadas** | Dois sentidos: tipo → benefícios **e** benefício → tipos atingidos | Os dois sentidos, com recálculo dinâmico: **tipo → atributos** (Busca por tipo penal) e **atributo → tipos atingidos** (Busca por atributo) |
 | **Simulação** | Entidades "simuladas" **persistidas** e marcadas no banco, para projetos de lei | Simulação **efêmera** na tela (sliders de pena mín./máx./concreta + circunstâncias); nada é persistido |
 | **Atualização dos dados** | Cadastro manual por "alimentadores", com aprovação | Carga inicial via planilha; manutenção por **conferência semanal determinística** contra o texto compilado, que abre issue e PR — sem IA. Criar, remover e reclassificar continua humano |
 | **Critérios concretos** | Ex.: reincidência exibida como "critério não-generalizável" (descritivo) | Circunstâncias concretas (primariedade, reincidência, confissão, etc.) entram na simulação e alteram os resultados |
@@ -98,10 +98,10 @@ benefícios, permitindo simular alterações legislativas) e a **atualiza**. Com
 - **Pena em meses + exibição natural:** o original armazenava tudo em dias por limitação
   técnica; aqui a conversão dias/meses/anos é automática e a exibição usa a unidade natural
   ("15 dias", "1 a 4 anos"), evitando leituras confusas.
-- **Conjunto de benefícios atualizado:** o artigo é de 2008 e antecede a **ANPP** e outras
+- **Conjunto de atributos atualizado:** o artigo é de 2008 e antecede a **ANPP** e outras
   mudanças (ex.: limite de cumprimento hoje é de 40 anos). O motor foi reescrito para a
-  legislação atual; alguns institutos do original (composição civil, limite de cumprimento)
-  ainda não têm card próprio e podem ser reincorporados.
+  legislação atual. Um instituto do original, a composição civil dos danos, ainda não tem
+  card próprio: está no inventário da frente 1 do [backlog](backlog.md).
 - **Simulação efêmera:** para uso exploratório imediato, a simulação acontece na tela sem
   necessidade de gravar "tipos simulados", como fazia o sistema original voltado ao
   Ministério da Justiça.
@@ -109,8 +109,7 @@ benefícios, permitindo simular alterações legislativas) e a **atualiza**. Com
 ### Lacunas conhecidas em relação ao original
 
 - Cobertura do catálogo (1.507 vs 1.529) e geração de "tipos mistos" (majorantes/minorantes).
-- Tela dedicada de **benefício → tipos atingidos** (as tabelas de alcance do artigo).
-- Institutos ainda sem card: composição civil dos danos e limite de cumprimento de pena.
+- Instituto ainda sem card: a composição civil dos danos.
 
 ## Aviso
 

@@ -48,7 +48,7 @@ arquivos.
    - `correcao` — correção de dado ou de norma (`1.1.Z`);
    - `estrutural` — quebra de contrato dos dados abertos ou das URLs (`X.0.0`).
 
-5. **`areas`** (uma ou mais): `Tipos penais`, `Benefícios`, `Dosimetria`,
+5. **`areas`** (uma ou mais): `Tipos penais`, `Atributos`, `Dosimetria`,
    `Acervo histórico`, `Interface`, `Documentação`. Grafia exata, com acento.
    Use `Documentação` para mudanças nas páginas de Documentação e na página
    inicial; `Interface` para a ferramenta de busca em si.

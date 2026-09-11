@@ -13,7 +13,7 @@ const entrada: ChangelogEntry = {
     'Mandar simular em outro lugar só serve se houver como chegar lá. Por isso o campo passou a declarar os dispositivos de origem, e não apenas citá-los em prosa: o art. 304 do CP abre a lista dos treze registros dos arts. 297 a 302, cada um com nome e moldura, em um clique. O cabeçalho também deixou de repetir a palavra — era "pena: pena do dispositivo remetido", e agora é "pena definida por remissão a outro dispositivo".',
   ],
   tipo: 'correcao',
-  areas: ['Interface', 'Benefícios'],
+  areas: ['Interface', 'Atributos'],
   version: 'v2.0.1',
 };
 

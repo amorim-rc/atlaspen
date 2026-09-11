@@ -12,7 +12,7 @@ CONTRIBUTING.md traz as convenções C1 a C8 do catálogo.
 - [ ] Catálogo de tipos penais (`data/crimes.json`)
 - [ ] Modificadores da dosimetria (`data/modificadores.json`)
 - [ ] Outros dados (`data/*.json`)
-- [ ] Benefícios penais (`src/lib/beneficios/`)
+- [ ] Atributos penais (`src/lib/atributos/`)
 - [ ] Dosimetria e demais regras (`src/lib/`)
 - [ ] Robôs e scripts (`scripts/`, `crawler/`)
 - [ ] Interface (`src/components/`, `src/pages/`, `src/css/`)
