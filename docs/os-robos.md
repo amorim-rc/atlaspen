@@ -29,7 +29,7 @@ alteração automática do dado.
 
 | Robô | Pergunta que responde | Onde procura |
 |---|---|---|
-| **Vigia** | A pena publicada é a que a lei comina hoje? | O texto compilado dos 64 diplomas do catálogo |
+| **Vigia** | A pena publicada é a que a lei comina hoje? | O texto compilado de cada diploma de `data/fontes.json` |
 | **Sentinela** | Nasceu lei penal que ainda não vigiamos? | A Seção 1 do Diário Oficial da União |
 | **Auditor** | Os campos que a pena não alcança estão certos? | Hediondez, ação penal, causas de aumento e nomes |
 | **Arquivista** | A prosa ainda descreve o sistema? | A documentação, contra os arquivos de que ela fala |
@@ -44,8 +44,10 @@ se calarem, a rodada deixa só o carimbo de que a conferência aconteceu.
 
 ## Vigia — a moldura contra o compilado
 
-Baixa a página compilada de cada um dos 64 diplomas, estrutura dispositivo por
-dispositivo, lê as molduras de pena e compara com o que o catálogo publica.
+Baixa a página compilada de cada diploma de `data/fontes.json`, estrutura dispositivo por
+dispositivo, lê as molduras de pena e compara com o que o catálogo publica. Os diplomas
+de referência — a Lei dos Crimes Hediondos, a LEP, o CPP, a Lei 9.099/95 e a CF — não
+têm tipo penal no catálogo: são baixados porque fundamentam a hediondez e os atributos.
 
 **O que ele acusa:** moldura ou espécie de pena divergente; dispositivo que a lei
 comina e o catálogo não tem; registro cujo dispositivo não foi localizado.

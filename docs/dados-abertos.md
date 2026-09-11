@@ -124,7 +124,9 @@ história da norma emenda por emenda.
 
 Toda segunda-feira, de madrugada, o repositório repete sozinho o mesmo procedimento:
 
-1. **Baixar.** Busca a página compilada dos 64 diplomas que têm tipo penal no catálogo.
+1. **Baixar.** Busca a página compilada de cada diploma de `data/fontes.json`: os que
+   têm tipo penal no catálogo e os de referência, que fundamentam a hediondez e os
+   atributos penais (a Lei dos Crimes Hediondos, a LEP, o CPP, a Lei 9.099/95 e a CF).
    Cada diploma tem uma **sentinela**: um trecho que comprovadamente existe na versão
    atual da página (em geral a emenda mais recente já incorporada). Se a sentinela não
    aparecer, a rodada falha em vez de continuar — é a proteção contra comparar o catálogo

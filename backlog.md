@@ -193,8 +193,8 @@ legislativa ou correção de dado) e a origem da informação. A data da última
    a âncora do artigo~~ (feito em 11/09/2026).
 2. A chave canônica de dispositivo, no lugar da `chave_dispositivo` atual. É a chave
    estrangeira que cada registro de tipo penal leva para o histórico (ver a frente 9).
-3. A LEP, o CPP, a Lei 9.099/95 e a CF entram em `data/fontes.json`, como referência,
-   com URL e sentinela conferidas.
+3. ~~A LEP, o CPP, a Lei 9.099/95 e a CF entram em `data/fontes.json`, como referência,
+   com URL e sentinela conferidas~~ (feito em 11/09/2026).
 4. O Vigia registra, para cada tipo que confere, a anotação da redação vigente e o link
    dela; o `transform_data.py` deriva a última alteração no catálogo.
 

@@ -66,7 +66,7 @@ jobs:
         with:
           python-version: '3.12'
 
-      # ~60 páginas com 1,2 s de intervalo: alguns minutos, carga desprezível
+      # ~70 páginas com 1,2 s de intervalo: alguns minutos, carga desprezível
       # para o Planalto. A sentinela de cada fonte reprova página truncada ou
       # servida de cache velho, em vez de deixar o differ comparar com lixo.
       - name: Baixar os textos compilados

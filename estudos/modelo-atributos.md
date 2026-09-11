@@ -192,6 +192,9 @@ diferentes.
 
 ### 4.2 Diplomas novos em `data/fontes.json`
 
+**Feito em 11/09/2026:** LEP (sentinela `15.410`), Lei 9.099/95 (`14.245`), CPP
+(`15.487`, página compilada) e CF (EC 139/2026, página compilada), como referência.
+
 Entram, sem rótulos de catálogo, como o `hediondos-8072`: `lep` (Lei 7.210/84), `cpp`
 (DL 3.689/41), `juizados-9099` (Lei 9.099/95) e `cf` (Constituição de 1988). Cada um com
 sua URL do compilado e sua sentinela de frescor. O Vigia passa a baixá-los toda semana.

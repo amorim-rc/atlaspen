@@ -135,7 +135,7 @@
     {
       "arquivo": "crawler/DECISOES-F0.md",
       "sobre": "Registro do spike que abriu o conferidor: por que o fetcher é como é.",
-      "conferido_em": "2026-08-04",
+      "conferido_em": "2026-09-11",
       "depende_de": [
         "scripts/robos/nucleo/baixar.py"
       ]

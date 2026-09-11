@@ -530,6 +530,38 @@
       "url": "https://www.planalto.gov.br/ccivil_03/leis/l8072.htm",
       "sentinela": "15.358",
       "obs": "Não tem tipo penal próprio: é o rol dos crimes hediondos (art. 1º), contra o qual o campo `hediondo` do catálogo é auditado. Ver data/hediondos.json e scripts/robos/auditor/auditar.py."
+    },
+    {
+      "id": "lep",
+      "rotulos": [],
+      "referencia": true,
+      "url": "https://www.planalto.gov.br/ccivil_03/leis/l7210.htm",
+      "sentinela": "15.410",
+      "obs": "Não tem tipo penal próprio: fundamenta os atributos de execução (progressão, livramento, saída temporária, remição…). Referência para o histórico legislativo dos atributos (frente 4 do backlog)."
+    },
+    {
+      "id": "juizados-9099",
+      "rotulos": [],
+      "referencia": true,
+      "url": "https://www.planalto.gov.br/ccivil_03/leis/l9099.htm",
+      "sentinela": "14.245",
+      "obs": "Não tem tipo penal próprio: fundamenta a transação penal (art. 76), a suspensão condicional do processo (art. 89) e o menor potencial ofensivo (art. 61). Referência para o histórico legislativo dos atributos (frente 4 do backlog)."
+    },
+    {
+      "id": "cpp",
+      "rotulos": [],
+      "referencia": true,
+      "url": "https://www.planalto.gov.br/ccivil_03/decreto-lei/del3689compilado.htm",
+      "sentinela": "15.487",
+      "obs": "Não tem tipo penal próprio: fundamenta o ANPP (art. 28-A) e outros atributos processuais. Referência para o histórico legislativo dos atributos (frente 4 do backlog)."
+    },
+    {
+      "id": "cf",
+      "rotulos": [],
+      "referencia": true,
+      "url": "https://www.planalto.gov.br/ccivil_03/constituicao/constituicaocompilado.htm",
+      "sentinela": "139, de 2026",
+      "obs": "Não tem tipo penal próprio: fundamenta vedações e institutos constitucionais (art. 5º, XLIII: graça e anistia; art. 84, XII: indulto e comutação). Referência para o histórico legislativo dos atributos (frente 4 do backlog). A sentinela é o trecho da anotação da EC 139/2026."
     }
   ]
 }
