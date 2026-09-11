@@ -29,7 +29,7 @@
   <!-- Texto -->
   <g fill="#fff" font-family="Georgia, 'Times New Roman', serif">
     <text x="470" y="285" font-size="104" font-weight="700" letter-spacing="6">SISPENAS</text>
-    <text x="474" y="345" font-size="34" fill="#d6e1ff" font-family="Arial, sans-serif">Sistema de Pesquisa de Tipos Penais e Benefícios</text>
-    <text x="474" y="405" font-size="26" fill="#a0bcff" font-family="Arial, sans-serif">Dosimetria e benefícios penais no direito brasileiro · dados abertos</text>
+    <text x="474" y="345" font-size="34" fill="#d6e1ff" font-family="Arial, sans-serif">Sistema de Pesquisa de Tipos e Atributos Penais</text>
+    <text x="474" y="405" font-size="26" fill="#a0bcff" font-family="Arial, sans-serif">Dosimetria e atributos penais no direito brasileiro · dados abertos</text>
   </g>
 </svg>

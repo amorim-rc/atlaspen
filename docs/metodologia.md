@@ -35,7 +35,7 @@ usada.
 
 ### Campos derivados automaticamente
 
-Para viabilizar filtros combinados e o cálculo de benefícios, alguns campos são
+Para viabilizar filtros combinados e o cálculo de atributos, alguns campos são
 **derivados por heurística** a partir do texto legal e das observações:
 
 | Campo | Descrição | Como é derivado |
@@ -59,13 +59,13 @@ Todos os campos derivados carregam a marca `derivado_auto: true` e serão revisa
 individualmente. Correções manuais podem ser registradas em `CORRECOES` no
 `scripts/transform_data.py` e regeneradas com `python3 scripts/transform_data.py`.
 
-## Cálculo dos benefícios
+## Cálculo dos atributos
 
-Os benefícios são calculados por **funções puras** sobre um *cenário* (pena em abstrato,
+Os atributos são calculados por **funções puras** sobre um *cenário* (pena em abstrato,
 pena concreta e características do réu/caso). O cálculo é **recalculado em tempo real** à
 medida que o usuário altera qualquer parâmetro — inclusive a própria pena cominada, o que
 permite **simular alterações legislativas**.
 
 Os patamares legais adotados (limiares de 1, 2 e 4 anos; frações de progressão do
 Art. 112 LEP; tabela de prescrição do Art. 109 CP; etc.) estão documentados em
-[Benefícios penais](./beneficios-penais.md).
+[Atributos penais](./atributos-penais.md).

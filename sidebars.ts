@@ -8,7 +8,7 @@ const sidebars: SidebarsConfig = {
     'metodologia',
     'completude',
     'catalogo-tipos-penais',
-    'beneficios-penais',
+    'atributos-penais',
     'os-robos',
     'dados-abertos',
   ],

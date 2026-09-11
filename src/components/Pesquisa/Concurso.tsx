@@ -5,7 +5,7 @@
 // sobre penas que já passaram pela dosimetria.
 //
 // A modalidade é de escolha ÚNICA e desmarcável: escolhida, a pena cumulada
-// substitui a pena concreta que alimenta os benefícios — porque é ela, e não a
+// substitui a pena concreta que alimenta os atributos — porque é ela, e não a
 // pena do tipo isolado, que define o que o réu tem direito a pleitear.
 
 import React, {useEffect, useMemo, useState} from 'react';
@@ -69,7 +69,7 @@ export default function Concurso({
   }, [busca, todos, crime.id, outros]);
 
   // Presume-se cada crime adicionado condenado no mínimo — a mesma convenção
-  // da busca por benefício, e a hipótese mais favorável ao réu.
+  // da busca por atributo, e a hipótese mais favorável ao réu.
   const penas = [penaAtual, ...outros.map((o) => o.pena_min_meses || o.pena_max_meses)];
 
   const modalidades: Linha[] = useMemo(() => {
@@ -93,7 +93,7 @@ export default function Concurso({
     ? Math.min(...modalidades.map((m) => m.total))
     : 0;
 
-  // Sem crimes acrescentados não há concurso: a escolha cai e os benefícios
+  // Sem crimes acrescentados não há concurso: a escolha cai e os atributos
   // voltam à pena do tipo isolado.
   useEffect(() => {
     if (modalidades.length === 0 && escolhida !== null) setEscolhida(null);
@@ -109,10 +109,10 @@ export default function Concurso({
 
   return (
     <div className={styles.concurso}>
-      <h4 className={styles.benefSecTitulo}>Concurso de crimes — arts. 69 a 71</h4>
+      <h4 className={styles.atribSecTitulo}>Concurso de crimes — arts. 69 a 71</h4>
       <p className={styles.simDica}>
         Acrescente outros crimes e escolha a modalidade. A pena cumulada da modalidade
-        marcada passa a alimentar os benefícios. Os crimes acrescentados são presumidos
+        marcada passa a alimentar os atributos. Os crimes acrescentados são presumidos
         no mínimo cominado; a pena deste tipo vem da dosimetria acima.
       </p>
 

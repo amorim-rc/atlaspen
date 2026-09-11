@@ -3,7 +3,7 @@
 Enriquece o catálogo de tipos penais (crimes.json).
 
 Deriva campos estruturados a partir do texto legal para permitir filtros
-combinados por modalidade de pena e cálculo de benefícios penais:
+combinados por modalidade de pena e cálculo de atributos penais:
 
   - pena_privativa : Reclusão | Detenção | Prisão simples | Nenhuma
   - tem_multa      : bool  (multa cumulada OU alternativa OU isolada)
@@ -120,7 +120,7 @@ CORRECOES_MORTE = {
 # ── Perdão judicial (art. 107, IX, CP) ──────────────────────────────────────
 # NÃO existe perdão judicial genérico: só incide onde a lei o prevê
 # expressamente, e não se estende por analogia (daí a lista ser curada, e não
-# inferida do elemento culposo). O benefício é atribuído ao CRIME que o admite,
+# inferida do elemento culposo). O perdão é atribuído ao CRIME que o admite,
 # não apenas ao parágrafo que o institui: o perdão do art. 121, §5º alcança o
 # homicídio culposo do §3º.
 #
@@ -197,7 +197,7 @@ def validar_tipos_penais(crimes: list) -> list:
 
     Um registro sem pena privativa E sem sanções próprias (ex.: uma nota de
     referência) não é um tipo penal: com pena zero ele satisfaria qualquer teto e
-    contaminaria as estatísticas de alcance dos benefícios.
+    contaminaria as estatísticas de alcance dos atributos.
 
     A exceção legítima é o tipo penal cujas sanções não são privativas de
     liberdade — art. 28 da Lei 11.343/06 —, que declara `sancoes_nao_privativas`.
@@ -642,7 +642,7 @@ def main():
 
         # Todo registro é tipo penal (garantido por validar_tipos_penais). O que
         # varia é ter ou não pena PRIVATIVA: só quem tem entra nas estatísticas de
-        # alcance dos benefícios, que se medem por patamar de pena.
+        # alcance dos atributos, que se medem por patamar de pena.
         c["tem_pena_privativa"] = bool(pmax or c["pena_min_meses"])
         c.setdefault("sancoes_nao_privativas", [])
         c.setdefault("pena_por_remissao", None)

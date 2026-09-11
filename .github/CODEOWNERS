@@ -23,10 +23,10 @@
 /data/                          @amorim-rc
 /static/data/                   @amorim-rc
 
-# Regras em código. O geral antes; benefícios e dosimetria  (futuro: @<org>/engenharia)
+# Regras em código. O geral antes; atributos e dosimetria   (futuro: @<org>/engenharia)
 # são regra jurídica e prevalecem sobre ele.                (futuro: @<org>/juridico + @<org>/engenharia)
 /src/lib/                       @amorim-rc
-/src/lib/beneficios/            @amorim-rc
+/src/lib/atributos/             @amorim-rc
 /src/lib/dosimetria/            @amorim-rc
 
 # Robôs, transformação dos dados e scripts                  (futuro: @<org>/engenharia)

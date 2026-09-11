@@ -6,11 +6,11 @@ import {
   NATUREZA_LABEL,
   foiEditado,
   valoresPadrao,
-  type BeneficioDef,
+  type AtributoDef,
   type ParametroDef,
   type Parametros,
   type Status,
-} from '@site/src/lib/beneficios';
+} from '@site/src/lib/atributos';
 import {
   BASE_AJUDA,
   BASE_LABEL,
@@ -21,7 +21,7 @@ import {
   crimesComPenaPrivativa,
   type BasePenaConcreta,
   type CenarioReverso,
-} from '@site/src/lib/beneficios/reverso';
+} from '@site/src/lib/atributos/reverso';
 import {formatPena, formatFracao} from '@site/src/lib/format';
 import styles from './styles.module.css';
 
@@ -107,8 +107,8 @@ function ControleParametro({
   );
 }
 
-export default function DetalheBeneficio({def, crimes: todos}: {def: BeneficioDef; crimes: Crime[]}) {
-  // Benefícios se medem por patamar de pena: um tipo sem pena privativa cominada
+export default function DetalheAtributo({def, crimes: todos}: {def: AtributoDef; crimes: Crime[]}) {
+  // Atributos se medem por patamar de pena: um tipo sem pena privativa cominada
   // satisfaria qualquer teto e apareceria como cabível em tudo.
   const crimes = useMemo(() => crimesComPenaPrivativa(todos), [todos]);
   const excluidos = todos.length - crimes.length;
@@ -120,10 +120,10 @@ export default function DetalheBeneficio({def, crimes: todos}: {def: BeneficioDe
   const [page, setPage] = useState(1);
   const urlTipos = useBaseUrl('/pesquisa/tipos');
 
-  // Trocar de benefício sem desmontar o componente: recarrega os padrões.
+  // Trocar de atributo sem desmontar o componente: recarrega os padrões.
   //
   // O filtro inicial acompanha a primeira faixa não vazia. Fixá-lo em "cabível"
-  // abriria a tela com a tabela vazia nos benefícios que dependem de requisito
+  // abriria a tela com a tabela vazia nos atributos que dependem de requisito
   // subjetivo — o ANPP, sem confissão marcada, não tem nenhum tipo cabível, só
   // condicionais.
   useEffect(() => {
@@ -149,10 +149,10 @@ export default function DetalheBeneficio({def, crimes: todos}: {def: BeneficioDe
   // dispositivo (as formas de um mesmo crime contam uma vez só).
   const duasUnidades = useMemo(() => contarDuasUnidades(linhas), [linhas]);
 
-  // Comparação com o estado legal vigente: quantos tipos o benefício alcança hoje?
+  // Comparação com o estado legal vigente: quantos tipos o atributo alcança hoje?
   //
   // "Alcance" = tipos NÃO incabíveis. Medir só os `cabivel` daria um delta falso de
-  // zero nos benefícios que dependem de requisito subjetivo: sem confissão marcada,
+  // zero nos atributos que dependem de requisito subjetivo: sem confissão marcada,
   // o ANPP nunca passa de `condicional`, e elevar seu teto de 4 para 8 anos — que
   // move 759 → 807 tipos — apareceria como "não mudou".
   const contagemPadrao = useMemo(
@@ -231,11 +231,11 @@ export default function DetalheBeneficio({def, crimes: todos}: {def: BeneficioDe
         </div>
       </div>
 
-      {/* ── Atributos editáveis do benefício ── */}
+      {/* ── Parâmetros editáveis do atributo ── */}
       <div className={styles.secao}>
         <h3 className={styles.secaoTitulo}>
-          Atributos do benefício
-          <Ajuda texto="Os valores partem da legislação vigente. Alterá-los simula uma reforma legal do próprio benefício — a lista de tipos penais afetados, abaixo, é recalculada imediatamente." />
+          Parâmetros do atributo
+          <Ajuda texto="Os valores partem da legislação vigente. Alterá-los simula uma reforma legal do próprio atributo — a lista de tipos penais afetados, abaixo, é recalculada imediatamente." />
           {editado && (
             <button className={styles.resetBtn} onClick={() => setParams(valoresPadrao(def))}>
               Restaurar valores legais
@@ -243,7 +243,7 @@ export default function DetalheBeneficio({def, crimes: todos}: {def: BeneficioDe
           )}
         </h3>
         <p className={styles.secaoDica}>
-          Cada atributo corresponde a um patamar, fração ou vedação extraída do dispositivo
+          Cada parâmetro corresponde a um patamar, fração ou vedação extraída do dispositivo
           indicado. Os valores iniciais são os da <strong>legislação vigente</strong>.
         </p>
         <div className={styles.paramGrid}>
@@ -263,26 +263,26 @@ export default function DetalheBeneficio({def, crimes: todos}: {def: BeneficioDe
       <div className={styles.secao}>
         <h3 className={styles.secaoTitulo}>
           Circunstâncias do réu aplicadas ao catálogo
-          <Ajuda texto="Ao contrário da busca por tipo penal, aqui as circunstâncias valem para TODOS os tipos ao mesmo tempo — é o que permite comparar o alcance do benefício sobre o catálogo inteiro." />
+          <Ajuda texto="Ao contrário da busca por tipo penal, aqui as circunstâncias valem para TODOS os tipos ao mesmo tempo — é o que permite comparar o alcance do atributo sobre o catálogo inteiro." />
         </h3>
 
         {def.natureza === 'concreto' && (
           <div className={styles.pressuposto}>
-            <strong>Pressuposto metodológico.</strong> Este benefício depende da pena fixada na
-            sentença, que não é atributo do tipo penal. Para varrer o catálogo, o sistema presume
+            <strong>Pressuposto metodológico.</strong> Este atributo depende da pena fixada na
+            sentença, que não é campo do tipo penal. Para varrer o catálogo, o sistema presume
             uma pena concreta — por padrão, a <strong>pena mínima cominada</strong> (réu condenado
             no mínimo legal). Troque a base abaixo para testar outras hipóteses.
           </div>
         )}
         {def.natureza === 'abstrato' && (
           <div className={styles.pressupostoOk}>
-            Este benefício depende apenas da <strong>pena cominada em abstrato</strong>: a
+            Este atributo depende apenas da <strong>pena cominada em abstrato</strong>: a
             avaliação de cada tipo penal é exata, sem presunção de pena concreta.
           </div>
         )}
         {def.natureza === 'incondicionado' && (
           <div className={styles.pressupostoOk}>
-            Este benefício <strong>não depende de patamar de pena</strong> e alcança, em
+            Este atributo <strong>não depende de patamar de pena</strong> e alcança, em
             princípio, todo o catálogo. Os atributos acima descrevem sua forma de cálculo.
           </div>
         )}
@@ -365,7 +365,7 @@ export default function DetalheBeneficio({def, crimes: todos}: {def: BeneficioDe
           </div>
           <p className={styles.secaoDica}>
             Hediondez, violência, grave ameaça, culpa, resultado morte e previsão de perdão
-            judicial <strong>não aparecem aqui</strong>: são atributos de cada tipo penal, lidos
+            judicial <strong>não aparecem aqui</strong>: são campos de cada tipo penal, lidos
             do catálogo dispositivo a dispositivo.
           </p>
         </div>
@@ -448,10 +448,10 @@ export default function DetalheBeneficio({def, crimes: todos}: {def: BeneficioDe
         {editado && (
           <div className={`${styles.delta} ${deltaAlcance === 0 ? styles.deltaNeutro : deltaAlcance > 0 ? styles.deltaMais : styles.deltaMenos}`}>
             {deltaAlcance === 0
-              ? `Com os atributos alterados, o alcance do benefício não mudou: segue em ${alcance} de ${crimes.length} tipos penais.`
+              ? `Com os parâmetros alterados, o alcance do atributo não mudou: segue em ${alcance} de ${crimes.length} tipos penais.`
               : deltaAlcance > 0
-                ? `Os atributos alterados AMPLIAM o alcance do benefício em ${deltaAlcance} ${deltaAlcance === 1 ? 'tipo penal' : 'tipos penais'} (de ${alcancePadrao} para ${alcance} de ${crimes.length}, contando cabíveis e condicionais).`
-                : `Os atributos alterados REDUZEM o alcance do benefício em ${-deltaAlcance} ${-deltaAlcance === 1 ? 'tipo penal' : 'tipos penais'} (de ${alcancePadrao} para ${alcance} de ${crimes.length}, contando cabíveis e condicionais).`}
+                ? `Os parâmetros alterados AMPLIAM o alcance do atributo em ${deltaAlcance} ${deltaAlcance === 1 ? 'tipo penal' : 'tipos penais'} (de ${alcancePadrao} para ${alcance} de ${crimes.length}, contando cabíveis e condicionais).`
+                : `Os parâmetros alterados REDUZEM o alcance do atributo em ${-deltaAlcance} ${-deltaAlcance === 1 ? 'tipo penal' : 'tipos penais'} (de ${alcancePadrao} para ${alcance} de ${crimes.length}, contando cabíveis e condicionais).`}
           </div>
         )}
 

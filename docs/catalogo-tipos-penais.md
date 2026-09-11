@@ -7,7 +7,7 @@ sidebar_position: 2
 # Catálogo de tipos penais
 
 O catálogo é a base factual do SISPENAS: é dele que saem as penas cominadas, a hediondez,
-a violência e as demais características que alimentam o cálculo dos benefícios. Esta
+a violência e as demais características que alimentam o cálculo dos atributos penais. Esta
 página descreve **como ele é estruturado, como é derivado e como sua qualidade é garantida
 nele**.
 
@@ -50,7 +50,7 @@ data/crimes.json  ──►  scripts/transform_data.py  ──►  static/data/c
 | `vigencia_nota` | **Obrigatória quando há `vigencia_ate`.** O que houve e qual dispositivo passa a reger a conduta. Um registro que sai do ar sem dizer por quê é pior que um registro errado: quem consulta um fato anterior não sabe se ainda pode se apoiar nele. |
 | `elemento` | `Doloso`, `Culposo`, `Preterdoloso`. |
 | `tentativa` | O tipo admite tentativa? |
-| `violencia` / `grave_ameaca` | Elementares que vedam vários benefícios. |
+| `violencia` / `grave_ameaca` | Elementares que vedam vários atributos. |
 | `obs` | Texto livre com a descrição legal. **Descritivo**: a pena publicada vem de `pena_min`/`pena_max`, não daqui. |
 
 ## Campos derivados
@@ -79,7 +79,7 @@ I` (causa de aumento), `CP, Art. 171, §5º` (regra de ação penal), `CP, Art. 
 de ilicitude). Eram 21 registros com pena zero.
 
 Com pena zero, eles **satisfaziam qualquer teto de pena** e eram contados como "cabíveis"
-em transação penal, ANPP e sursis — inflando o alcance desses benefícios. A transação
+em transação penal, ANPP e sursis — inflando o alcance desses atributos. A transação
 reportava 325 tipos cabíveis; o correto era 303.
 
 Foram removidos, e a regra passou a ser **imposta** pelo transformador: um registro que não
@@ -167,7 +167,7 @@ entrar**. O catálogo não pode regredir.
 - **Toda sanção declarada** (C2) e **`id` append-only** (C3): a URL pública nunca aponta
   para o crime errado.
 - **Zero contradições** (C4) e derivado sincronizado com a fonte.
-- **Casos-âncora de direito penal** (`npm run verificar`): cada benefício avaliado contra o
+- **Casos-âncora de direito penal** (`npm run verificar`): cada atributo avaliado contra o
   catálogo real, com os invariantes do motor.
 - **Conferência semanal contra o Planalto** (`conferidor.yml`): pena, espécie, existência e
   situação de cada dispositivo, com a cobertura publicada no relatório — ver

@@ -1,4 +1,4 @@
-/* Busca por benefício — fluxo inverso (benefício → tipos penais afetados). */
+/* Busca por atributo — fluxo inverso (atributo → tipos penais afetados). */
 
 .wrap {
   max-width: 1180px;
@@ -46,7 +46,7 @@
   white-space: nowrap;
 }
 
-/* ── Lista de benefícios ── */
+/* ── Lista de atributos ── */
 
 .grupo {
   margin-bottom: 2rem;
@@ -157,7 +157,7 @@
   background: var(--ifm-color-emphasis-200);
 }
 
-/* ── Detalhe do benefício ── */
+/* ── Detalhe do atributo ── */
 
 .detalhe {
   border: 1px solid var(--ifm-color-emphasis-200);

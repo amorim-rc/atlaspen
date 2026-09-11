@@ -1,5 +1,5 @@
 /**
- * Verificação do motor de benefícios contra o catálogo real de tipos penais.
+ * Verificação do motor de atributos contra o catálogo real de tipos penais.
  *
  * Não é um substituto da revisão jurídica: checa invariantes estruturais do
  * motor e um conjunto de casos-âncora cuja resposta legal é pacífica.
@@ -10,13 +10,13 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import type {Cenario, Crime} from '../src/lib/types';
-import {CATALOGO, avaliarBeneficio, valoresPadrao} from '../src/lib/beneficios';
+import {CATALOGO, avaliarAtributo, valoresPadrao} from '../src/lib/atributos';
 import {
   avaliarCatalogo,
   cenarioReversoPadrao,
   contar,
   crimesComPenaPrivativa,
-} from '../src/lib/beneficios/reverso';
+} from '../src/lib/atributos/reverso';
 import {cenarioFromCrime} from '../src/lib/cenario';
 import {calcularConcurso, calcularDosimetria} from '../src/lib/dosimetria';
 
@@ -49,11 +49,11 @@ function achar(lei: RegExp, artigo: RegExp, nome?: RegExp): Crime | undefined {
 
 console.log(
   `\nCatálogo: ${todos.length} tipos penais (${crimes.length} com pena privativa), ` +
-    `${CATALOGO.length} benefícios.\n`,
+    `${CATALOGO.length} atributos.\n`,
 );
 
 // ── 0. Integridade dos campos que o motor lê do catálogo ────────────────
-console.log('0. Integração catálogo → motor de benefícios');
+console.log('0. Integração catálogo → motor de atributos');
 {
   const campos: (keyof Crime)[] = [
     'tem_pena_privativa',
@@ -121,21 +121,21 @@ console.log('0. Integração catálogo → motor de benefícios');
 }
 
 // ── 1. Invariantes estruturais do registro ──────────────────────────────
-console.log('1. Integridade do registro de benefícios');
+console.log('1. Integridade do registro de atributos');
 {
   const ids = CATALOGO.map((b) => b.id);
-  ok(new Set(ids).size === ids.length, 'ids de benefício são únicos');
+  ok(new Set(ids).size === ids.length, 'ids de atributo são únicos');
   ok(
     CATALOGO.every((b) => b.requisitos.length > 0),
-    'todo benefício declara ao menos um requisito',
+    'todo atributo declara ao menos um requisito',
   );
   ok(
     CATALOGO.every((b) => b.fundamento.trim().length > 0),
-    'todo benefício cita fundamento legal',
+    'todo atributo cita fundamento legal',
   );
   ok(
     CATALOGO.every((b) => new Set(b.parametros.map((p) => p.id)).size === b.parametros.length),
-    'ids de parâmetro são únicos dentro de cada benefício',
+    'ids de parâmetro são únicos dentro de cada atributo',
   );
   ok(
     CATALOGO.every((b) =>
@@ -158,23 +158,23 @@ console.log('\n2. Robustez do motor sobre o catálogo real');
   for (const b of CATALOGO) {
     for (const c of crimes) {
       try {
-        const r = avaliarBeneficio(b, cenarioFromCrime(c), valoresPadrao(b));
+        const r = avaliarAtributo(b, cenarioFromCrime(c), valoresPadrao(b));
         if (!r.status || !r.resumo) erros += 1;
       } catch {
         erros += 1;
       }
     }
   }
-  ok(erros === 0, `${CATALOGO.length} benefícios × ${crimes.length} tipos avaliados sem erro`);
+  ok(erros === 0, `${CATALOGO.length} atributos × ${crimes.length} tipos avaliados sem erro`);
 }
 
 // ── 3. Casos-âncora: respostas juridicamente pacíficas ──────────────────
 console.log('\n3. Casos-âncora de direito penal');
 {
   const rev = cenarioReversoPadrao();
-  const status = (beneficioId: string, c: Crime) => {
-    const def = CATALOGO.find((b) => b.id === beneficioId)!;
-    return avaliarBeneficio(def, cenarioFromCrime(c), valoresPadrao(def)).status;
+  const status = (atributoId: string, c: Crime) => {
+    const def = CATALOGO.find((b) => b.id === atributoId)!;
+    return avaliarAtributo(def, cenarioFromCrime(c), valoresPadrao(def)).status;
   };
 
   // Homicídio simples (art. 121, CP): 6 a 20 anos, violento.
@@ -222,7 +222,7 @@ console.log('\n3. Casos-âncora de direito penal');
   }
 
   // Tipo penal SEM PENA MÍNIMA cominada (só teto): "detenção até 3 meses".
-  // Zero na mínima não é "sem pena" — o tipo é punível e os benefícios que
+  // Zero na mínima não é "sem pena" — o tipo é punível e os atributos que
   // dependem da mínima lhe são os mais favoráveis possíveis.
   const semMinima = crimes.filter((c) => c.pena_max_meses > 0 && c.pena_min_meses === 0);
   ok(semMinima.length > 0, `${semMinima.length} tipos sem pena mínima cominada (só teto) no catálogo`);
@@ -275,7 +275,7 @@ console.log('\n3. Casos-âncora de direito penal');
     const progressaoDef = CATALOGO.find((b) => b.id === 'progressao')!;
     const livramentoDef = CATALOGO.find((b) => b.id === 'livramento')!;
     const avaliar = (def: (typeof CATALOGO)[number], c: Crime, ajustes: Partial<Cenario>) =>
-      avaliarBeneficio(def, {...cenarioFromCrime(c), ...ajustes}, valoresPadrao(def));
+      avaliarAtributo(def, {...cenarioFromCrime(c), ...ajustes}, valoresPadrao(def));
 
     // Inciso V — hediondo primário, sem resultado morte: 70%, livramento aos 2/3.
     const trafico = achar(/11\.343/, /^Art\. 33, caput/);
@@ -448,14 +448,14 @@ console.log('\n4. Monotonicidade dos patamares (busca reversa)');
     ['substituicao', 'limiteConcretaMeses'],
   ];
   // "Alcance" = tipos NÃO incabíveis. Contar apenas `cabivel` tornaria o teste
-  // vazio para benefícios que dependem de requisito subjetivo (o ANPP, sem
+  // vazio para atributos que dependem de requisito subjetivo (o ANPP, sem
   // confissão, nunca passa de `condicional`).
   const alcance = (params: ReturnType<typeof valoresPadrao>, def: (typeof CATALOGO)[number]) => {
     const c = contar(avaliarCatalogo(def, params, crimes, rev));
     return c.cabivel + c.condicional;
   };
-  for (const [beneficioId, paramId] of casos) {
-    const def = CATALOGO.find((b) => b.id === beneficioId)!;
+  for (const [atributoId, paramId] of casos) {
+    const def = CATALOGO.find((b) => b.id === atributoId)!;
     const padrao = valoresPadrao(def);
     const base = alcance(padrao, def);
     const ampliado = alcance({...padrao, [paramId]: (padrao[paramId] as number) * 2}, def);
@@ -467,7 +467,7 @@ console.log('\n4. Monotonicidade dos patamares (busca reversa)');
   }
 }
 
-// ── 5. Alcance de cada benefício sob a legislação vigente ───────────────
+// ── 5. Alcance de cada atributo sob a legislação vigente ───────────────
 console.log('\n5. Alcance sob a legislação vigente (pena concreta = mínima cominada)');
 {
   const rev = cenarioReversoPadrao();

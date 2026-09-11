@@ -72,7 +72,7 @@ os dados saber o que pode mudar sem quebrar uma conta.
 | `id` | Endereço público do tipo (`/pesquisa/tipos?tipo=N`), citado em pareceres e trabalhos. **Nunca é reatribuído**: um id aposentado não volta a ser usado por outro crime. A numeração foi reiniciada duas vezes — v1.4.0 e v2.0.0 —, e é por isso que essas versões são MAIORES: quem tenha guardado um endereço anterior precisa refazê-lo. |
 | `lei`, `artigo` | Identificam o dispositivo. Juntos formam a `chave_dispositivo`, que detecta registro repetido, e ligam a linha ao texto oficial conferido toda semana pelo conferidor. |
 | `crime` | Nome exibido na busca. Também é dele — **e não do `obs`** — que se deduz o `resultado_morte`. |
-| `pena_min`, `pena_max` | **A moldura.** Alimentam toda a dosimetria e todos os benefícios com limiar de pena (transação penal, ANPP, sursis, regime inicial, prescrição). Desde a v1.2.17 são a autoridade; antes disso a moldura era extraída do texto do `obs`, e uma frase secundária podia mudar a pena publicada. |
+| `pena_min`, `pena_max` | **A moldura.** Alimentam toda a dosimetria e todos os atributos com limiar de pena (transação penal, ANPP, sursis, regime inicial, prescrição). Desde a v1.2.17 são a autoridade; antes disso a moldura era extraída do texto do `obs`, e uma frase secundária podia mudar a pena publicada. |
 | `tipo_pena` | Reclusão, detenção, prisão simples, multa, morte (só nos crimes militares de tempo de guerra), "Outras penas" ou nenhuma. Define o regime inicial e distingue o tipo sem pena privativa. |
 | `pena_por_remissao` | Opcional. O tipo **não comina moldura própria**: importa a de outro dispositivo, e este campo diz qual (`dispositivo_fonte`) e o que se faz com ela (`operador`: nenhum, aumento ou diminuicao; `fracao`). É o caso do art. 304 do CP — "a pena cominada à falsificação" — e do art. 315 do CPM. Quem o declara tem `pena_min` e `pena_max` zerados **de propósito**, e fica fora das estatísticas de alcance: a moldura depende de qual dispositivo-fonte incide no caso, e o catálogo não a inventa. |
 | `acao` | Espécie de ação penal. Condiciona os institutos que dependem de representação ou de queixa. |
@@ -227,7 +227,7 @@ efeito de versionamento:
 | Posição | Incrementa quando | Exemplos |
 |---|---|---|
 | **MAIOR** (`X.0.0`) | **Salto na natureza do produto**: reestruturação funcional, arquitetural ou procedimental — o sistema passa a fazer algo de outra ordem, não apenas mais do mesmo. Ou quebra do contrato dos dados abertos ou das URLs. | Deixar de ser um catálogo mantido à mão e passar a ser conferido sozinho contra a fonte oficial; reiniciar a numeração dos `id`. |
-| **MENOR** (`X.Y.0`) | O que já existe, com **acréscimos, alterações e remoções** de registros e telas — a natureza do produto permanece. | Acrescentar campo ao JSON, nova tela, novo benefício; incluir ou remover tipos penais. |
+| **MENOR** (`X.Y.0`) | O que já existe, com **acréscimos, alterações e remoções** de registros e telas — a natureza do produto permanece. | Acrescentar campo ao JSON, nova tela, novo atributo; incluir ou remover tipos penais. |
 | **CORREÇÃO** (`X.Y.Z`) | Correção sem funcionalidade nova: erro de dosimetria, dado errado no catálogo, defeito de interface. | Corrigir a pena de um artigo; ajustar contraste. |
 
 Nos dados abertos, isso quer dizer: acrescentar campo é MENOR; remover ou ressignificar
@@ -246,5 +246,5 @@ número de versão: a versão é escolhida quando a mudança fica pronta, por es
 
 ## Como citar
 
-> Equipe SISPENAS. *SISPENAS — Sistema de Pesquisa de Tipos Penais e Benefícios*.
+> Equipe SISPENAS. *SISPENAS — Sistema de Pesquisa de Tipos e Atributos Penais*.
 > Disponível em: https://github.com/amorim-rc/sispenas. Acesso em: [data].

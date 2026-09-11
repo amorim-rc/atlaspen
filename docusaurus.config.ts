@@ -6,7 +6,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
   title: 'SISPENAS',
-  tagline: 'Sistema de Pesquisa de Tipos Penais e Benefícios — Brasil',
+  tagline: 'Sistema de Pesquisa de Tipos e Atributos Penais — Brasil',
   favicon: 'img/favicon.svg',
 
   future: {
@@ -66,6 +66,11 @@ const config: Config = {
         // links já publicados de cada versão, apontando para o feed.
         redirects: [
           {from: '/docs/sobre', to: '/'},
+          // A frente 2 do backlog trocou "benefício" por "atributo" (10/09/2026).
+          // O plugin repassa a query quando o destino não tem uma: o link antigo
+          // `?beneficio=x` chega a /pesquisa/atributos, que ainda o lê.
+          {from: '/pesquisa/beneficios', to: '/pesquisa/atributos'},
+          {from: '/docs/beneficios-penais', to: '/docs/atributos-penais'},
           ...[
             'v1-0-0', 'v1-1-0', 'v1-1-1', 'v1-1-2', 'v1-1-3', 'v1-1-4',
             'v1-1-5', 'v1-1-6', 'v1-1-7', 'v1-1-8', 'v1-1-9', 'v1-2-0',
@@ -97,7 +102,7 @@ const config: Config = {
           position: 'left',
           items: [
             {to: '/pesquisa/tipos', label: 'Busca por tipo penal'},
-            {to: '/pesquisa/beneficios', label: 'Busca por benefício'},
+            {to: '/pesquisa/atributos', label: 'Busca por atributo'},
             {to: '/docs/acervo-historico', label: 'Acervo histórico'},
           ],
         },
@@ -109,7 +114,7 @@ const config: Config = {
             {to: '/docs/metodologia', label: 'Metodologia'},
             {to: '/docs/completude', label: 'Completude do catálogo'},
             {to: '/docs/catalogo-tipos-penais', label: 'Catálogo de tipos penais'},
-            {to: '/docs/beneficios-penais', label: 'Benefícios penais'},
+            {to: '/docs/atributos-penais', label: 'Atributos penais'},
             {to: '/docs/dados-abertos', label: 'Dados abertos'},
           ],
         },
@@ -128,9 +133,9 @@ const config: Config = {
           title: 'Ferramenta',
           items: [
             {label: 'Busca por tipo penal', to: '/pesquisa/tipos'},
-            {label: 'Busca por benefício', to: '/pesquisa/beneficios'},
+            {label: 'Busca por atributo', to: '/pesquisa/atributos'},
             {label: 'Metodologia', to: '/docs/metodologia'},
-            {label: 'Benefícios penais', to: '/docs/beneficios-penais'},
+            {label: 'Atributos penais', to: '/docs/atributos-penais'},
           ],
         },
         {

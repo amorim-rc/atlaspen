@@ -215,7 +215,7 @@ def corpo_auditoria(propostas: list[dict], versao: str, relatorio: str,
 
     L = [
         "## Auditoria dos campos de classificação", "",
-        f"{len(propostas)} mudança(s) propostas em campos que **decidem benefício** e que "
+        f"{len(propostas)} mudança(s) propostas em campos que **decidem atributos** e que "
         "a conferência de penas não alcançava. Fecha a versão **v" + versao + "**.", "",
         "> ⚠️ **Isto pede o seu juízo, não só uma conferida.** A máquina comparou o "
         "catálogo com o rol legal e com as fórmulas de ação penal do próprio diploma; "
@@ -473,7 +473,7 @@ def entrada_changelog_auditoria(propostas: list[dict], versao: str,
     corpo = [
         "A hediondez de um crime não é opinião: está no art. 1º da Lei 8.072/1990, que é "
         "uma lista fechada. A ação penal também tem regra — pública incondicionada, salvo "
-        "quando o próprio diploma diz o contrário. Os dois campos decidem benefício, e "
+        "quando o próprio diploma diz o contrário. Os dois campos decidem atributos, e "
         "nenhum dos dois era conferido contra a lei até agora.",
         "A conferência semanal passa a compará-los: o rol de hediondos, transcrito numa "
         "tabela que a máquina vigia contra alterações do texto legal, e as fórmulas de "

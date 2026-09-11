@@ -12,6 +12,6 @@
     "outDir": "../.verificar-build",
     "rootDir": ".."
   },
-  "include": ["verificar_beneficios.ts", "../src/lib/**/*.ts"],
+  "include": ["verificar_atributos.ts", "../src/lib/**/*.ts"],
   "exclude": ["../src/lib/useCrimes.ts"]
 }

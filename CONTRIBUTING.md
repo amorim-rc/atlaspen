@@ -39,7 +39,7 @@ determinístico, sem IA, descrito em [`scripts/robos/README.md`](scripts/robos/R
    - `transform_data.py --estrito` — convenções C1, C2, C3 e o teto de contradições (C4);
    - se o derivado commitado corresponde à fonte;
    - `npm run typecheck`;
-   - `npm run verificar` — invariantes do motor de benefícios e casos-âncora de direito
+   - `npm run verificar` — invariantes do motor de atributos e casos-âncora de direito
      penal contra o catálogo real;
    - `npm run build`.
 
@@ -65,7 +65,7 @@ garante que as duas sempre saem juntas:
    `tipo`, `areas` e `version`. O passo a passo está em
    [`src/data/changelog/create-changelog-entry.md`](src/data/changelog/create-changelog-entry.md).
    Não há mais `release-notes/*.md` nem lista central: adicionar nota = criar arquivo.
-   (Correções de dado, novos tipos/benefícios, fixes e ajustes de interface contam;
+   (Correções de dado, novos tipos/atributos, fixes e ajustes de interface contam;
    refactor interno trivial não precisa.)
 
 2. **Versione segundo a [regra de versionamento](docs/dados-abertos.md#estabilidade-e-versionamento):**
@@ -97,7 +97,7 @@ Um registro = um tipo penal. **Não** entram no catálogo:
 - causas de aumento e diminuição (art. 141, CP; art. 258, CP);
 - excludentes de ilicitude (art. 128, I e II, CP);
 - causas de extinção da punibilidade em si (art. 121, §5º — o perdão judicial é
-  atributo do tipo, campo `perdao_judicial_previsto`, não um tipo);
+  campo do tipo (`perdao_judicial_previsto`), não um tipo);
 - regras de ação penal (art. 171, §5º, CP — isso é o campo `acao`);
 - **regras de punibilidade** ("é punível a calúnia contra os mortos", art. 138, §2º;
   "a receptação é punível ainda que desconhecido o autor do crime de que proveio a
@@ -231,7 +231,7 @@ tráfico (art. 35).
 ### C7. A faixa de pena vem de `pena_min`/`pena_max` ⛔ imposta
 
 Os dois campos, **em meses**, são a autoridade: é deles que saem a moldura publicada e
-todo o cálculo de benefícios. O `obs` é descritivo — escreva nele a faixa na unidade
+todo o cálculo de atributos. O `obs` é descritivo — escreva nele a faixa na unidade
 natural ("15 dias a 6 meses", "1-5 anos") para quem lê, mas **ele não define pena**.
 
 Foi o contrário até a v1.2.16, e o preço apareceu: a moldura era extraída do texto do
@@ -245,7 +245,7 @@ Regras verificadas a cada build: `pena_min <= pena_max`, e inteiro escrito como 
 "detenção **até** 3 meses" (art. 32 da LCP; arts. 289, 290, 300, 301 e 309 do Código
 Eleitoral). Nesses casos `pena_min` é `0` e o rótulo sai como "até 3 meses". **Zero na
 mínima não é "sem pena"**: o tipo é punível, apenas não tem piso cominado — e, por isso,
-os benefícios que dependem da pena mínima (ANPP, suspensão condicional do processo)
+os atributos que dependem da pena mínima (ANPP, suspensão condicional do processo)
 são-lhe os mais favoráveis possíveis. Não preencha a mínima com um chute.
 
 Não confunda com o **tipo sem pena privativa** (C2), que não tem prisão alguma.
@@ -304,7 +304,7 @@ aparece corretamente e é calculado sem inverter mínimo/máximo.
 npm install
 npm run start       # dev server
 npm run typecheck
-npm run verificar   # motor de benefícios × catálogo real
+npm run verificar   # motor de atributos × catálogo real
 npm run build
 python3 scripts/transform_data.py   # regenera static/data/crimes.json + qualidade.json
 python3 scripts/transform_data.py --estrito --max-contradicoes=42   # como na CI

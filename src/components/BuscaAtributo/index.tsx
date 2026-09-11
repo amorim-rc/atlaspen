@@ -7,31 +7,38 @@ import {
   NATUREZA_LABEL,
   POR_ID,
   type Categoria,
-} from '@site/src/lib/beneficios';
-import DetalheBeneficio from './DetalheBeneficio';
+} from '@site/src/lib/atributos';
+import DetalheAtributo from './DetalheAtributo';
 import styles from './styles.module.css';
 
 const GRUPOS: Categoria[] = ['processual', 'aplicacao', 'execucao'];
 
-function BuscaBeneficioInner() {
+function BuscaAtributoInner() {
   const {crimes, loading, error} = useCrimes();
   const [q, setQ] = useState('');
   const [selectedId, setSelectedId] = useState<string | null>(() => {
     if (typeof window === 'undefined') return null;
-    return new URLSearchParams(window.location.search).get('beneficio');
+    // `?atributo=` desde a frente 2; `?beneficio=` é o dos links antigos, que o
+    // redirecionamento de /pesquisa/beneficios preserva.
+    const q = new URLSearchParams(window.location.search);
+    return q.get('atributo') ?? q.get('beneficio');
   });
 
-  const selectBeneficio = useCallback((id: string | null) => {
+  const selectAtributo = useCallback((id: string | null) => {
     setSelectedId(id);
     const url = new URL(window.location.href);
-    if (id === null) url.searchParams.delete('beneficio');
-    else url.searchParams.set('beneficio', id);
-    window.history.pushState({beneficio: id}, '', url.toString());
+    url.searchParams.delete('beneficio');
+    if (id === null) url.searchParams.delete('atributo');
+    else url.searchParams.set('atributo', id);
+    window.history.pushState({atributo: id}, '', url.toString());
     window.scrollTo({top: 0, behavior: 'auto'});
   }, []);
 
   useEffect(() => {
-    const sync = () => setSelectedId(new URLSearchParams(window.location.search).get('beneficio'));
+    const sync = () => {
+      const q = new URLSearchParams(window.location.search);
+      setSelectedId(q.get('atributo') ?? q.get('beneficio'));
+    };
     window.addEventListener('popstate', sync);
     return () => window.removeEventListener('popstate', sync);
   }, []);
@@ -56,10 +63,10 @@ function BuscaBeneficioInner() {
     if (error) return <div className={styles.error}>Erro ao carregar os dados: {error}</div>;
     return (
       <div className={styles.wrap}>
-        <button className={styles.voltarBtn} onClick={() => selectBeneficio(null)}>
-          ← Voltar aos benefícios
+        <button className={styles.voltarBtn} onClick={() => selectAtributo(null)}>
+          ← Voltar aos atributos
         </button>
-        <DetalheBeneficio def={selecionado} crimes={crimes} />
+        <DetalheAtributo def={selecionado} crimes={crimes} />
       </div>
     );
   }
@@ -70,12 +77,12 @@ function BuscaBeneficioInner() {
         <input
           className={styles.search}
           type="text"
-          placeholder="Buscar por benefício, fundamento legal ou requisito…"
+          placeholder="Buscar por atributo, fundamento legal ou requisito…"
           value={q}
           onChange={(e) => setQ(e.target.value)}
         />
         <span className={styles.count}>
-          {filtrados.length} de {CATALOGO.length} benefícios
+          {filtrados.length} de {CATALOGO.length} atributos
         </span>
       </div>
 
@@ -87,7 +94,7 @@ function BuscaBeneficioInner() {
             <div className={styles.grupoTitulo}>{CATEGORIA_LABEL[g]}</div>
             <div className={styles.cardGrid}>
               {doGrupo.map((b) => (
-                <button key={b.id} className={styles.card} onClick={() => selectBeneficio(b.id)}>
+                <button key={b.id} className={styles.card} onClick={() => selectAtributo(b.id)}>
                   <div className={styles.cardHead}>
                     <span className={styles.cardNome}>{b.nome}</span>
                     <span className={`${styles.natTag} ${styles['nat_' + b.natureza]}`}>
@@ -97,7 +104,7 @@ function BuscaBeneficioInner() {
                   <div className={styles.cardFund}>{b.fundamento}</div>
                   <p className={styles.cardDesc}>{b.descricao}</p>
                   <div className={styles.cardMeta}>
-                    {b.parametros.length} {b.parametros.length === 1 ? 'atributo editável' : 'atributos editáveis'}
+                    {b.parametros.length} {b.parametros.length === 1 ? 'parâmetro editável' : 'parâmetros editáveis'}
                   </div>
                 </button>
               ))}
@@ -107,21 +114,21 @@ function BuscaBeneficioInner() {
       })}
 
       {filtrados.length === 0 && (
-        <div className={styles.vazio}>Nenhum benefício encontrado para “{q}”.</div>
+        <div className={styles.vazio}>Nenhum atributo encontrado para “{q}”.</div>
       )}
 
       <div className={styles.placeholder}>
-        Selecione um benefício para examinar seus requisitos e vedações, editar seus patamares
+        Selecione um atributo para examinar seus requisitos e vedações, editar seus patamares
         legais e ver a lista dos tipos penais afetados.
       </div>
     </div>
   );
 }
 
-export default function BuscaBeneficio() {
+export default function BuscaAtributo() {
   return (
     <BrowserOnly fallback={<div className={styles.loading}>Carregando…</div>}>
-      {() => <BuscaBeneficioInner />}
+      {() => <BuscaAtributoInner />}
     </BrowserOnly>
   );
 }

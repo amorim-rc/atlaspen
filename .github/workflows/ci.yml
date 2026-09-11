@@ -57,9 +57,9 @@ jobs:
       - name: Typecheck
         run: npm run typecheck
 
-      # Invariantes do motor de benefícios + casos-âncora de direito penal,
+      # Invariantes do motor de atributos + casos-âncora de direito penal,
       # avaliados contra o catálogo real de tipos penais.
-      - name: Verificar motor de benefícios
+      - name: Verificar motor de atributos
         run: npm run verificar
 
       - name: Build

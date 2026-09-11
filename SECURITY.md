@@ -18,5 +18,5 @@ disponível. Faremos o possível para responder em até **7 dias úteis**.
 
 ## Correções de dados
 
-Imprecisões no catálogo de tipos penais (pena, benefícios, classificação) **não** são
+Imprecisões no catálogo de tipos penais (pena, atributos, classificação) **não** são
 tratadas como falhas de segurança — use uma [issue de correção de dados](.github/ISSUE_TEMPLATE/correcao-tipo-penal.md).

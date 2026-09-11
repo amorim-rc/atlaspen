@@ -158,7 +158,7 @@ function PesquisaInner() {
         <input
           className={styles.search}
           type="text"
-          placeholder="Buscar por crime, artigo, lei ou benefício…"
+          placeholder="Buscar por crime, artigo ou lei…"
           value={f.q}
           onChange={(e) => update({q: e.target.value})}
         />
@@ -261,7 +261,7 @@ function PesquisaInner() {
       )}
 
       <div className={styles.placeholder}>
-        Selecione um tipo penal na tabela para abrir a página do tipo com o cálculo dinâmico dos benefícios penais aplicáveis.
+        Selecione um tipo penal na tabela para abrir a página do tipo com o cálculo dinâmico dos atributos penais aplicáveis.
       </div>
     </div>
   );

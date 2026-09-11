@@ -5,12 +5,12 @@ import Heading from '@theme/Heading';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import BrowserOnly from '@docusaurus/BrowserOnly';
 
-import {CATALOGO} from '@site/src/lib/beneficios/catalogo';
+import {CATALOGO} from '@site/src/lib/atributos/catalogo';
 import Citacao from '@site/src/components/Citacao';
 import styles from './index.module.css';
 
-/** Total de benefícios avaliados — lido do catálogo em tempo de build. */
-const TOTAL_BENEFICIOS = CATALOGO.length;
+/** Total de atributos avaliados — lido do catálogo em tempo de build. */
+const TOTAL_ATRIBUTOS = CATALOGO.length;
 
 /**
  * Contadores dinâmicos do panorama do catálogo. Lê `qualidade.json` (gerado por
@@ -58,7 +58,7 @@ function Contadores(): ReactNode {
         </>
       ),
     },
-    {n: fmt(TOTAL_BENEFICIOS), label: <>benefícios penais</>},
+    {n: fmt(TOTAL_ATRIBUTOS), label: <>atributos penais</>},
   ];
 
   return (
@@ -96,10 +96,10 @@ function Hero() {
       <div className="container">
         <Heading as="h1" className={styles.heroTitle}>SISPENAS</Heading>
         <p className={styles.heroSub}>
-          Sistema de Pesquisa de Tipos Penais e Benefícios
+          Sistema de Pesquisa de Tipos e Atributos Penais
         </p>
         <p className={styles.heroNote}>
-          Ferramenta aberta para estudar o impacto dos benefícios penais sobre os tipos
+          Ferramenta aberta para estudar o impacto dos atributos penais sobre os tipos
           penais brasileiros — e o efeito de alterações de pena sobre o acesso a eles.
         </p>
       </div>
@@ -115,16 +115,16 @@ function Caminhos() {
           <Link className={styles.caminhoCard} to="/pesquisa/tipos">
             <h3>Busca por tipo penal</h3>
             <p>
-              Parte de um crime e mostra a dosimetria padrão e todos os benefícios penais
+              Parte de um crime e mostra a dosimetria padrão e todos os atributos penais
               cabíveis. Ajuste a pena cominada ou a pena concreta e veja, em tempo real,
-              quais benefícios entram ou saem.
+              quais atributos entram ou saem.
             </p>
           </Link>
-          <Link className={styles.caminhoCard} to="/pesquisa/beneficios">
-            <h3>Busca por benefício</h3>
+          <Link className={styles.caminhoCard} to="/pesquisa/atributos">
+            <h3>Busca por atributo</h3>
             <p>
-              Parte de um benefício, expõe seus requisitos, vedações e patamares legais — e
-              lista os tipos penais que ele alcança. Altere qualquer atributo do benefício e
+              Parte de um atributo penal, expõe seus requisitos, vedações e patamares legais — e
+              lista os tipos penais que ele alcança. Altere qualquer parâmetro do atributo e
               veja o catálogo inteiro se reorganizar.
             </p>
           </Link>
@@ -143,9 +143,9 @@ function Sobre() {
           <Heading as="h2" id="sobre-o-sispenas">Sobre o SISPENAS</Heading>
 
           <p>
-            O <strong>SISPENAS</strong> (Sistema de Pesquisa de Tipos Penais e Benefícios) é
+            O <strong>SISPENAS</strong> (Sistema de Pesquisa de Tipos e Atributos Penais) é
             uma ferramenta aberta de <strong>pesquisa de políticas públicas</strong> cujo
-            objetivo central é estudar o <strong>impacto dos benefícios penais</strong> sobre
+            objetivo central é estudar o <strong>impacto dos atributos penais</strong> sobre
             os tipos penais brasileiros.
           </p>
 
@@ -154,7 +154,7 @@ function Sobre() {
           <ul>
             <li>
               <strong>Pesquisar</strong> tipos penais por nome, artigo, diploma legislativo ou
-              benefício aplicável;
+              atributo penal aplicável;
             </li>
             <li>
               <strong>Filtrar</strong> por múltiplas dimensões — modalidade de pena (reclusão,
@@ -164,10 +164,10 @@ function Sobre() {
             </li>
             <li>
               <strong>Simular</strong> alterações de pena e observar, <strong>dinamicamente</strong>,
-              como cada benefício penal se torna cabível ou incabível;
+              como cada atributo penal se torna cabível ou incabível;
             </li>
             <li>
-              <strong>Inverter o percurso</strong>: partir de um benefício penal, editar seus
+              <strong>Inverter o percurso</strong>: partir de um atributo penal, editar seus
               patamares, frações e vedações, e observar quais tipos penais passam a ser
               alcançados.
             </li>
@@ -177,8 +177,8 @@ function Sobre() {
           <p>
             O SISPENAS é orientado à <strong>pesquisa acadêmica, legislativa e de políticas
             públicas</strong>. A pergunta que ele ajuda a responder é: <em>o que muda no acesso
-            a benefícios penais quando uma pena é alterada?</em> Ao tornar visível a relação
-            entre patamares de pena e os limiares legais dos benefícios (ANPP, transação penal,
+            a atributos penais quando uma pena é alterada?</em> Ao tornar visível a relação
+            entre patamares de pena e os limiares legais dos atributos penais (ANPP, transação penal,
             substituição, sursis, progressão, livramento, prescrição, etc.), a ferramenta apoia
             o desenho e a crítica de propostas legislativas.
           </p>
@@ -246,7 +246,7 @@ function Sobre() {
           <p className={styles.sobreLinks}>
             <Link to="/docs/metodologia">Metodologia</Link>
             {' · '}
-            <Link to="/docs/beneficios-penais">Benefícios penais</Link>
+            <Link to="/docs/atributos-penais">Atributos penais</Link>
             {' · '}
             <Link to="/docs/dados-abertos">Dados abertos</Link>
             {' · '}
@@ -262,7 +262,7 @@ export default function Home(): ReactNode {
   return (
     <Layout
       title="Sobre o SISPENAS"
-      description="SISPENAS — sistema de pesquisa de tipos penais brasileiros e estudo dinâmico do impacto dos benefícios penais para pesquisa de políticas públicas.">
+      description="SISPENAS — sistema de pesquisa de tipos penais brasileiros e estudo dinâmico do impacto dos atributos penais para pesquisa de políticas públicas.">
       <BrowserOnly>{() => <RedirecionaLinksAntigos />}</BrowserOnly>
       <Hero />
       <main>

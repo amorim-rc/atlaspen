@@ -12,10 +12,10 @@ a vedação editável de um atributo. **Campo** é o campo do registro de tipo p
 
 ## 1. De onde se parte
 
-- **22 atributos, todos em código**, em `src/lib/beneficios/catalogo/`: 4 processuais, 6
+- **22 atributos, todos em código**, em `src/lib/atributos/catalogo/`: 4 processuais, 6
   de aplicação da pena e 12 de execução. Ao todo são **71 parâmetros**; a progressão
   tem 11, a prescrição 7 e o livramento 6.
-- Cada atributo é um `BeneficioDef` (`src/lib/beneficios/types.ts`): `id`, `nome`,
+- Cada atributo é um `AtributoDef` (`src/lib/atributos/types.ts`): `id`, `nome`,
   `fundamento`, `categoria`, `natureza`, `descricao`, `requisitos`, `vedacoes`,
   `parametros` e a função `avaliar(cenario, parametros)`.
 - **O fundamento é texto livre**, por exemplo `Art. 112, VI, "b", LEP (redação da Lei
@@ -30,10 +30,10 @@ a vedação editável de um atributo. **Campo** é o campo do registro de tipo p
 | Onde | O que usa |
 |---|---|
 | `src/pages/index.tsx` | `CATALOGO.length`, no contador da página inicial |
-| `src/components/Pesquisa/Detalhe.tsx` | `calcularBeneficios`, na página do tipo penal |
-| `src/components/BuscaBeneficio/index.tsx` | `CATALOGO`, `POR_ID` e os rótulos, na lista da busca por atributo |
-| `src/components/BuscaBeneficio/DetalheBeneficio.tsx` | o motor e a busca reversa (`reverso.ts`), no detalhe da busca por atributo |
-| `scripts/verificar_beneficios.ts` | o motor, a busca reversa e os casos-âncora da CI |
+| `src/components/Pesquisa/Detalhe.tsx` | `calcularAtributos`, na página do tipo penal |
+| `src/components/BuscaAtributo/index.tsx` | `CATALOGO`, `POR_ID` e os rótulos, na lista da busca por atributo |
+| `src/components/BuscaAtributo/DetalheAtributo.tsx` | o motor e a busca reversa (`reverso.ts`), no detalhe da busca por atributo |
+| `scripts/verificar_atributos.ts` | o motor, a busca reversa e os casos-âncora da CI |
 
 ---
 
@@ -74,7 +74,7 @@ para o primário (inciso I) e **30%** para o reincidente (inciso II). A lei diz 
 dois casos, porque a alínea "c" não distingue primário de reincidente.
 
 **É erro de cálculo publicado.** A correção vem antes do congelamento (seção 6).
-A documentação, curiosamente, estava certa: a tabela de `docs/beneficios-penais.md` já
+A documentação, curiosamente, estava certa: a tabela de `docs/atributos-penais.md` já
 dizia 75% para a alínea "c". Errado estava só o motor.
 
 **Corrigido em 10/09/2026:** o parâmetro `fracaoMiliciaPrivada` (75%) e o campo
@@ -534,8 +534,8 @@ Só o cabeçalho e três dos onze parâmetros. Os demais seguem o mesmo molde.
 5. **A troca.** `src/lib/atributos` (carregador e avaliadores), e os cinco consumidores da
    seção 1 passam a ler a nova base.
 6. **A prova.** O teste de equivalência roda contra o congelamento do commit 1 e precisa
-   dar zero diferença. Com ele verde, `src/lib/beneficios/catalogo/` é apagado.
-7. **O texto.** `docs/beneficios-penais.md` (ou o nome que a frente 2 der),
+   dar zero diferença. Com ele verde, `src/lib/atributos/catalogo/` é apagado.
+7. **O texto.** `docs/atributos-penais.md`,
    `docs/metodologia.md`, `docs/dados-abertos.md` (novo arquivo público
    `static/data/atributos.json`, e o novo formato da `chave_dispositivo`) e o registro do
    Arquivista. Sem nota de changelog: até a v1.0.0 não se criam entradas (frente 10).
@@ -573,6 +573,6 @@ de um tipo muda, e com o alcance de um tipo quando o patamar de um atributo muda
   exigem abrir a lei alteradora: é um segundo passo mecânico, com o link já na mão.
 - **Súmulas.** São fonte sem histórico legislativo. O acompanhamento delas é o robô dos
   tribunais.
-- **`docs/beneficios-penais.md`.** Hoje as tabelas de patamares são escritas à mão.
+- **`docs/atributos-penais.md`.** Hoje as tabelas de patamares são escritas à mão.
   Geradas a partir de `static/data/atributos.json`, como a página de completude, elas
   deixariam de envelhecer em silêncio.

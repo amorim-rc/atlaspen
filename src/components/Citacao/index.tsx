@@ -21,7 +21,7 @@ function dataAcesso(): string {
 export default function Citacao({compacto = false}: {compacto?: boolean}): ReactNode {
   const [copiado, setCopiado] = useState(false);
   const texto =
-    `EQUIPE SISPENAS. SISPENAS: Sistema de Pesquisa de Tipos Penais e Benefícios. ` +
+    `EQUIPE SISPENAS. SISPENAS: Sistema de Pesquisa de Tipos e Atributos Penais. ` +
     `Disponível em: ${SITE}. Acesso em: ${dataAcesso()}.`;
 
   function copiar() {

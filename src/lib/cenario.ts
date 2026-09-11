@@ -7,8 +7,8 @@ import {ehTituloXII} from './dosimetria/aplicaveis';
  * Cenário inicial de um tipo penal: penas cominadas + características objetivas
  * lidas do catálogo, com o réu presumido primário e de bons antecedentes.
  *
- * Tudo o que é atributo do TIPO (hediondez, violência, culpa, resultado morte,
- * previsão de perdão judicial) vem do catálogo; o que é atributo do RÉU ou do
+ * Tudo o que é campo do TIPO (hediondez, violência, culpa, resultado morte,
+ * previsão de perdão judicial) vem do catálogo; o que é circunstância do RÉU ou do
  * caso concreto (primariedade, confissão, reparação) recebe um padrão neutro e
  * é ajustável na simulação.
  */
