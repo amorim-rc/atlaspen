@@ -134,6 +134,9 @@ O parser do Vigia (`scripts/robos/nucleo/parsear.py`, função `paragrafos`) gua
 **texto** de cada link e descarta o `href`. Guardar os dois é mudança pequena, e é ela que
 torna mecânico o "link para o item no Planalto".
 
+**Feito em 11/09/2026** (frente 4, passo 1): a anotação guarda o `href`, e
+`url_absoluta` o resolve contra a página do diploma.
+
 ---
 
 ## 3. Requisitos
