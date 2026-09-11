@@ -201,7 +201,7 @@ Ainda não confere patamar de atributo, mas o texto baixado é a matéria-prima 
 
 | Campo | O que é |
 |---|---|
-| `id` | Identificador estável. É a URL da busca por atributo, e é append-only como o dos tipos. |
+| `id` | **Número inteiro**, estável e append-only, como o dos tipos: o retirado vai para uma lista de aposentados e nunca volta. Os 22 atuais recebem 1 a 22 na ordem do catálogo (processuais, aplicação, execução). O nome é para gente; o número, para scripts e referências cruzadas (ajuste aprovado em 11/09/2026). |
 | `nome`, `categoria`, `natureza`, `descricao`, `requisitos`, `vedacoes` | Como hoje. `requisitos` e `vedacoes` continuam em prosa. |
 | `fundamento` | Texto de exibição. |
 | `dispositivos` | Chaves canônicas em que o atributo se funda. É por elas que o histórico se junta. |
@@ -237,48 +237,64 @@ em nenhum número.
 
 ### 4.5 `data/historico-legislativo.json`
 
-Um objeto por chave canônica, com os eventos em ordem cronológica. É append-only e
-compartilhado por tipos e atributos.
+Uma tabela de eventos: **uma linha por acontecimento** na vida de um dispositivo, em
+ordem cronológica. É append-only e compartilhada por tipos e atributos. (Ajuste aprovado
+em 11/09/2026: a primeira versão deste estudo agrupava os eventos sob a chave; a tabela
+plana é mais legível e é, literalmente, uma tabela de banco de dados.)
 
-| Campo do evento | O que é |
+| Campo | O que é |
 |---|---|
-| `acao` | `incluido`, `redacao`, `revogado`, `renumerado` ou `transferido` (o conteúdo que muda de lugar) |
-| `norma`, `ano` | A lei alteradora, como o parser do Vigia já lê |
+| `dispositivo` | A chave canônica (4.1). É a **chave estrangeira**: liga a linha ao tipo penal (`chave_dispositivo`) e ao atributo (`dispositivos` e `redacoes[].fonte`) |
+| `evento` | `criacao`, `alteracao`, `revogacao`, `renumeracao` ou `transferencia` (tabela abaixo) |
+| `norma`, `ano` | A lei, ou a decisão, que produziu o evento, como o parser do Vigia a lê |
+| `anotacao` | O texto da anotação no compilado, tal como está: "(Redação dada pela Lei nº 15.402, de 2026)" |
 | `url` | O link para o item na lei alteradora (achado F) |
-| `vigencia_url` | O link da cláusula de vigência, quando o compilado o dá |
 | `publicacao`, `vigencia` | Datas. O compilado dá só o ano; a data exata vem da própria lei alteradora |
-| `antes`, `depois` | O valor que mudou, quando é número (percentual, pena) |
+| `valor_antes`, `valor_depois` | O valor que mudou, quando é número (percentual, pena) |
 | `natureza` | `legislativa` ou `correcao` (frente 9: uma coisa é a lei mudar, outra é o catálogo errar) |
 | `origem` | `compilado` (extraído pelo robô) ou `manual` |
+
+| `evento` | O que aconteceu com o dispositivo | Depois dele |
+|---|---|---|
+| `criacao` | nasceu, no texto original da lei ou incluído por lei posterior ("Incluído pela…") | vigente |
+| `alteracao` | uma lei lhe deu texto novo ("Redação dada pela…") | vigente, com o texto novo |
+| `revogacao` | uma lei, ou uma decisão, o tirou de vigência ("Revogado pela…") | não vige; continua regendo o fato anterior |
+| `renumeracao`, `transferencia` | mudou de número ou de lugar | vigente, sob a chave nova |
+
+Se o dispositivo vige não se escreve em lugar nenhum: sai do último evento. Quantas vezes
+ele mudou é o número de linhas de natureza `legislativa` (frente 9); a última alteração é
+a linha mais recente (frente 4); um tipo revogado é uma linha `revogacao`, com lei e link
+(frente 12).
 
 Exemplo, com o que o compilado do art. 112, I, da LEP traz hoje:
 
 ```json
-{
-  "lep|art. 112, i": [
-    {
-      "acao": "incluido",
-      "norma": "Lei nº 13.964",
-      "ano": 2019,
-      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art4",
-      "vigencia_url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art20",
-      "depois": "16%",
-      "natureza": "legislativa",
-      "origem": "compilado"
-    },
-    {
-      "acao": "redacao",
-      "norma": "Lei nº 15.402",
-      "ano": 2026,
-      "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15402.htm#art1",
-      "vigencia": "2026-05-08",
-      "antes": "16%",
-      "depois": "25%",
-      "natureza": "legislativa",
-      "origem": "compilado"
-    }
-  ]
-}
+[
+  {
+    "dispositivo": "lep|art. 112, i",
+    "evento": "criacao",
+    "norma": "Lei nº 13.964",
+    "ano": 2019,
+    "anotacao": "(Incluído pela Lei nº 13.964, de 2019)",
+    "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art4",
+    "valor_depois": "16%",
+    "natureza": "legislativa",
+    "origem": "compilado"
+  },
+  {
+    "dispositivo": "lep|art. 112, i",
+    "evento": "alteracao",
+    "norma": "Lei nº 15.402",
+    "ano": 2026,
+    "anotacao": "(Redação dada pela Lei nº 15.402, de 2026)",
+    "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15402.htm#art1",
+    "vigencia": "2026-05-08",
+    "valor_antes": "16%",
+    "valor_depois": "25%",
+    "natureza": "legislativa",
+    "origem": "compilado"
+  }
+]
 ```
 
 O exemplo mostra o que torna o histórico indispensável: **o mesmo inciso I mudou de
@@ -291,6 +307,13 @@ histórico do dispositivo conta essa história direito.
   em cada parâmetro, `ultima_alteracao` (`norma`, `ano`, `url`, `vigencia`) e
   `alteracoes_legislativas`, a contagem. Sai do mesmo passo de transformação, e a CI exige
   o derivado sincronizado, como no catálogo.
+- **O alcance de cada atributo também é derivado** (ajuste aprovado em 11/09/2026): as
+  listas de ids dos tipos em que ele é `cabivel` e `condicional`, sob um cenário de
+  referência declarado ao lado (lei vigente, réu primário, pena concreta igual à mínima
+  cominada). Incabível é o resto. Nunca se digita, porque depende do cenário e muda a cada
+  pena corrigida; e, como as funções de avaliação estão em TypeScript, é um passo em
+  TypeScript que o calcula, com a CI exigindo o derivado sincronizado. É a mesma tabela
+  que o teste de equivalência congela.
 - **O site importa o derivado no build**, como a dosimetria já importa
   `data/modificadores.json`. Não há carregamento assíncrono de atributos.
 - **`qualidade.json` ganha `total_atributos`.** A página inicial lê o terceiro contador
@@ -312,7 +335,7 @@ cada um.
 
 ```json
 {
-  "id": "transacao",
+  "id": 1,
   "nome": "Transação penal",
   "fundamento": "Art. 76, Lei 9.099/95",
   "dispositivos": ["juizados-9099|art. 76"],
@@ -375,7 +398,7 @@ como história e não altera o padrão de 24 meses.
 
 ```json
 {
-  "id": "substituicao",
+  "id": 5,
   "nome": "Substituição por penas restritivas de direitos",
   "fundamento": "Art. 44, CP",
   "dispositivos": ["cp|art. 44"],
@@ -441,7 +464,7 @@ Só o cabeçalho e três dos onze parâmetros. Os demais seguem o mesmo molde.
 
 ```json
 {
-  "id": "progressao",
+  "id": 11,
   "nome": "Progressão de regime",
   "fundamento": "Art. 112, LEP",
   "dispositivos": ["lep|art. 112"],
@@ -521,19 +544,19 @@ Só o cabeçalho e três dos onze parâmetros. Os demais seguem o mesmo molde.
 
 **O PR da migração, em commits que se leem em ordem:**
 
-1. **O congelamento.** Com o código atual, um script registra, para cada atributo e cada
-   tipo com pena privativa, o status e um resumo curto (hash) de `resumo`, `detalhes` e
-   `limiar`. Faz isso em dois cenários: o da página do tipo (`cenarioFromCrime`) e o
+1. **O congelamento.** Com o código atual, `scripts/equivalencia_atributos.ts` registra,
+   para cada atributo, o status em cada tipo com pena privativa e uma impressão digital
+   (hash) de todos os `resumo`, `detalhes` e `limiar` devolvidos. Faz isso em dois cenários: o da página do tipo (`cenarioFromCrime`) e o
    padrão da busca por atributo (`cenarioReversoPadrao`). São 22 × 1.472 × 2 avaliações.
 2. **Fontes e parser.** Os quatro diplomas novos em `fontes.json` (4.2), e o parser passa
    a guardar o `href` das anotações (achado F).
 3. **As bases.** `data/atributos.json`, gerado **por script** a partir do código (a
-   serialização é mecânica, não se redigita texto jurídico), com `dispositivos` e
-   `redacoes` acrescentados. E `data/historico-legislativo.json` com os eventos dos
+   serialização é mecânica, não se redigita texto jurídico), com ids numéricos (1 a 22, na
+   ordem do catálogo), `dispositivos` e `redacoes`. E `data/historico-legislativo.json` com os eventos dos
    dispositivos dos atributos, extraídos do compilado. A chave canônica entra também nos
    tipos (4.1), mas o histórico deles é a frente 4, com a mesma máquina.
-4. **O derivado e a validação.** `static/data/atributos.json`, `total_atributos` no
-   `qualidade.json` e as checagens de 4.6 na CI.
+4. **O derivado e a validação.** `static/data/atributos.json`, com a última alteração e o
+   alcance, `total_atributos` no `qualidade.json` e as checagens de 4.6 na CI.
 5. **A troca.** `src/lib/atributos` (carregador e avaliadores), e os cinco consumidores da
    seção 1 passam a ler a nova base.
 6. **A prova.** O teste de equivalência roda contra o congelamento do commit 1 e precisa
