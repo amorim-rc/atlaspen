@@ -7,11 +7,19 @@
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
-    "types": ["node"],
+    "types": [
+      "node"
+    ],
     "strict": false,
     "outDir": "../.verificar-build",
     "rootDir": ".."
   },
-  "include": ["verificar_atributos.ts", "../src/lib/**/*.ts"],
-  "exclude": ["../src/lib/useCrimes.ts"]
+  "include": [
+    "verificar_atributos.ts",
+    "equivalencia_atributos.ts",
+    "../src/lib/**/*.ts"
+  ],
+  "exclude": [
+    "../src/lib/useCrimes.ts"
+  ]
 }
