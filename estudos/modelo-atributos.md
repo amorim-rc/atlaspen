@@ -1,7 +1,7 @@
 # Estudo: o modelo de dados dos atributos penais
 
-> Frente 1 do [backlog](../backlog.md). Proposta de 10/09/2026, para validação: nada aqui
-> está implementado. Os achados da seção 2 foram conferidos nesta data no texto compilado
+> Frente 5 do [backlog](../backlog.md). Proposta de 10/09/2026, validada em 11/09/2026.
+> Nada aqui está implementado ainda. Os achados da seção 2 foram conferidos nesta data no texto compilado
 > do Planalto (LEP e Lei 9.099/95) e no catálogo derivado.
 
 Os termos seguem o glossário do `CONTRIBUTING.md`. **Atributo penal** é o instituto
@@ -183,7 +183,7 @@ já usa esse mapa para casar registro e diploma.
 
 **Recomendação:** redefinir a própria `chave_dispositivo` nesse formato, em vez de criar
 um segundo campo parecido. Ela é campo derivado e público, e mudar seu significado seria
-quebra de contrato depois da 1.0. Antes dela, pela opção B da frente 10, não é. De
+quebra de contrato depois da 1.0. Antes dela, pela opção B da frente 2, não é. De
 quebra, a detecção de duplicatas passa a enxergar o mesmo dispositivo sob rótulos
 diferentes.
 
@@ -245,7 +245,7 @@ compartilhado por tipos e atributos.
 | `vigencia_url` | O link da cláusula de vigência, quando o compilado o dá |
 | `publicacao`, `vigencia` | Datas. O compilado dá só o ano; a data exata vem da própria lei alteradora |
 | `antes`, `depois` | O valor que mudou, quando é número (percentual, pena) |
-| `natureza` | `legislativa` ou `correcao` (frente 4: uma coisa é a lei mudar, outra é o catálogo errar) |
+| `natureza` | `legislativa` ou `correcao` (frente 9: uma coisa é a lei mudar, outra é o catálogo errar) |
 | `origem` | `compilado` (extraído pelo robô) ou `manual` |
 
 Exemplo, com o que o compilado do art. 112, I, da LEP traz hoje:
@@ -528,7 +528,7 @@ Só o cabeçalho e três dos onze parâmetros. Os demais seguem o mesmo molde.
    serialização é mecânica, não se redigita texto jurídico), com `dispositivos` e
    `redacoes` acrescentados. E `data/historico-legislativo.json` com os eventos dos
    dispositivos dos atributos, extraídos do compilado. A chave canônica entra também nos
-   tipos (4.1), mas o histórico deles é a frente 5, com a mesma máquina.
+   tipos (4.1), mas o histórico deles é a frente 4, com a mesma máquina.
 4. **O derivado e a validação.** `static/data/atributos.json`, `total_atributos` no
    `qualidade.json` e as checagens de 4.6 na CI.
 5. **A troca.** `src/lib/atributos` (carregador e avaliadores), e os cinco consumidores da
@@ -538,7 +538,7 @@ Só o cabeçalho e três dos onze parâmetros. Os demais seguem o mesmo molde.
 7. **O texto.** `docs/atributos-penais.md`,
    `docs/metodologia.md`, `docs/dados-abertos.md` (novo arquivo público
    `static/data/atributos.json`, e o novo formato da `chave_dispositivo`) e o registro do
-   Arquivista. Sem nota de changelog: até a v1.0.0 não se criam entradas (frente 10).
+   Arquivista. Sem nota de changelog: até a v1.0.0 não se criam entradas (frente 2).
 
 **Depois, em PRs próprios, porque mudam resultado:** a data do fato no caso concreto
 (achado C) e o que o inventário acrescentar.
