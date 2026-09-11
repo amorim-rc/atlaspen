@@ -1,5 +1,10 @@
 # Como criar uma entrada do changelog
 
+> **Até a v1.0.0 não se criam entradas** (decisão de 10/09/2026): o projeto está em
+> `0.0.0`, e a CI reprova qualquer entrada. Depois do lançamento, o feed publica
+> **exclusivamente** alterações que criem, modifiquem ou extingam tipos penais ou
+> atributos penais, e o resto deste guia volta a valer para elas.
+
 As Notas de atualizações (`/release-notes`) são um **feed de mudanças**: cada
 alteração é uma entrada própria. Não há lista central — **adicionar uma nota é
 criar um arquivo**. O feed no site e o corpo da Release no GitHub leem os mesmos

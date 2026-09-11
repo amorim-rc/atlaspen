@@ -101,7 +101,7 @@ benefícios, permitindo simular alterações legislativas) e a **atualiza**. Com
 - **Conjunto de atributos atualizado:** o artigo é de 2008 e antecede a **ANPP** e outras
   mudanças (ex.: limite de cumprimento hoje é de 40 anos). O motor foi reescrito para a
   legislação atual. Um instituto do original, a composição civil dos danos, ainda não tem
-  card próprio: está no inventário da frente 1 do [backlog](backlog.md).
+  card próprio: está na frente 10 do [backlog](backlog.md), com os atributos mapeados.
 - **Simulação efêmera:** para uso exploratório imediato, a simulação acontece na tela sem
   necessidade de gravar "tipos simulados", como fazia o sistema original voltado ao
   Ministério da Justiça.

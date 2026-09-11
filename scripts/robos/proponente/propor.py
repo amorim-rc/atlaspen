@@ -3,8 +3,9 @@
 
 `corrigir.py` e `criar.py` sabem propor mudanças de UM diploma; este módulo é o
 que falta entre eles e o workflow semanal — decide qual diploma vai na rodada,
-aplica as duas coisas na mesma árvore, escreve a entrada de changelog, sobe a
-versão e deixa pronto o corpo do PR com a evidência de cada mudança.
+aplica as duas coisas na mesma árvore e deixa pronto o corpo do PR com a
+evidência de cada mudança. Depois da v1.0.0, também escreve a entrada de
+changelog e sobe a versão.
 
 Quatro decisões, todas para que o PR seja revisável por gente:
 
@@ -20,10 +21,12 @@ Quatro decisões, todas para que o PR seja revisável por gente:
   espécie de pena, revogação anotada), mas quem cria linha continua sendo gente:
   `--com-novas` liga a proposta de linha nova, e o workflow só a usa quando
   alguém pedir explicitamente.
-- **O PR fecha uma versão.** Ele sobe `package.json` e `CITATION.cff` e escreve
-  a entrada de changelog: mergear publica a release, como em qualquer outro PR
-  do projeto. Entrada sem bump seria pior — anunciaria no feed uma versão já
-  publicada (é o que `scripts/validar-changelog.mjs` reprova).
+- **Até a v1.0.0, o PR não sobe versão nem escreve nota** (decisão de
+  10/09/2026): o projeto está em `0.x`, e o `validar-changelog.mjs` reprovaria
+  a entrada. A partir do lançamento, o PR volta a fechar uma versão: sobe
+  `package.json` e `CITATION.cff`, escreve a entrada de changelog, e mergear
+  publica a release. Entrada sem bump seria pior — anunciaria no feed uma
+  versão já publicada.
 - **Nada de silencioso.** O bump é conferido depois de escrito (substituição de
   texto já falhou em silêncio aqui) e cada mudança leva no corpo o trecho da lei
   que a motivou.
@@ -74,6 +77,15 @@ def proxima_versao(atual: str) -> str:
     """Correção de dado é patch (docs/dados-abertos.md, Estabilidade e versionamento)."""
     maior, menor, patch = (int(x) for x in atual.split("."))
     return f"{maior}.{menor}.{patch + 1}"
+
+
+def versao_da_rodada() -> str | None:
+    """A versão que o PR fecha, ou None até a v1.0.0 (decisão de 10/09/2026).
+
+    Em 0.x o projeto não sobe versão nem escreve nota: o PR só aplica a correção.
+    """
+    atual = versao_atual()
+    return None if atual.startswith("0.") else proxima_versao(atual)
 
 
 def _substituir_versao(caminho: Path, padrao: str, atual: str, nova: str) -> None:
@@ -206,7 +218,7 @@ def aplicar_fontes_propostas() -> list[dict]:
     return entram
 
 
-def corpo_auditoria(propostas: list[dict], versao: str, relatorio: str,
+def corpo_auditoria(propostas: list[dict], versao: str | None, relatorio: str,
                     fontes_novas: list[dict] | None = None) -> str:
     """Corpo do PR de auditoria: cada mudança com o fundamento que a sustenta."""
     por_campo: dict[str, list[dict]] = {}
@@ -216,7 +228,9 @@ def corpo_auditoria(propostas: list[dict], versao: str, relatorio: str,
     L = [
         "## Auditoria dos campos de classificação", "",
         f"{len(propostas)} mudança(s) propostas em campos que **decidem atributos** e que "
-        "a conferência de penas não alcançava. Fecha a versão **v" + versao + "**.", "",
+        "a conferência de penas não alcançava."
+        + (f" Fecha a versão **v{versao}**." if versao
+           else " Não sobe versão: até a v1.0.0 nada é publicado."), "",
         "> ⚠️ **Isto pede o seu juízo, não só uma conferida.** A máquina comparou o "
         "catálogo com o rol legal e com as fórmulas de ação penal do próprio diploma; "
         "onde a lei condiciona a classificação a circunstância do caso, ela não propôs "
@@ -254,7 +268,7 @@ def _rotulo(fonte: dict) -> str:
     return fonte["rotulos"][0]
 
 
-def corpo_pr(escolha: dict, versao: str) -> str:
+def corpo_pr(escolha: dict, versao: str | None) -> str:
     """Corpo do PR: uma seção por mudança, cada uma com o trecho da lei."""
     f = escolha["fonte"]
     correcoes, novas, humanos = escolha["correcoes"], escolha["novas"], escolha["humanos"]
@@ -263,7 +277,8 @@ def corpo_pr(escolha: dict, versao: str) -> str:
         f"Rodada automática do conferidor. Texto oficial conferido: <{f['url']}>", "",
         f"- **{len(correcoes)}** correção(ões) de moldura ou espécie de pena em linha existente;",
         f"- **{len(novas)}** linha(s) nova(s) proposta(s);",
-        f"- fecha a versão **v{versao}** (o merge publica a release).", "",
+        (f"- fecha a versão **v{versao}** (o merge publica a release)." if versao
+         else "- não sobe versão nem escreve nota: até a v1.0.0 nada é publicado."), "",
         "> Cada mudança é uma **proposta** conferida contra o texto compilado, não uma "
         "conclusão jurídica. O merge continua exigindo revisão humana.", "",
     ]
@@ -414,17 +429,20 @@ export default entrada;
 
 
 # ── Execução ────────────────────────────────────────────────────────────────
-def aplicar(escolha: dict, versao: str, dia: str, saida: Path) -> dict:
+def aplicar(escolha: dict, versao: str | None, dia: str, saida: Path) -> dict:
+    """Aplica a rodada. `versao` None (até a v1.0.0) = sem nota e sem subir versão."""
     if escolha["correcoes"]:
         corrigir.aplicar(escolha["correcoes"])
     if escolha["novas"]:
         criar.aplicar(escolha["novas"])
 
-    destino, ts = entrada_changelog(escolha, versao, dia)
-    destino.parent.mkdir(parents=True, exist_ok=True)
-    # CRLF como o resto do repositório (as demais entradas são CRLF).
-    destino.write_bytes(ts.replace("\n", "\r\n").encode("utf-8"))
-    subir_versao(versao)
+    destino = None
+    if versao:
+        destino, ts = entrada_changelog(escolha, versao, dia)
+        destino.parent.mkdir(parents=True, exist_ok=True)
+        # CRLF como o resto do repositório (as demais entradas são CRLF).
+        destino.write_bytes(ts.replace("\n", "\r\n").encode("utf-8"))
+        subir_versao(versao)
 
     fonte = escolha["fonte"]
     meta = {
@@ -433,12 +451,14 @@ def aplicar(escolha: dict, versao: str, dia: str, saida: Path) -> dict:
         "correcoes": len(escolha["correcoes"]),
         "novas": len(escolha["novas"]),
         "humanos": len(escolha["humanos"]),
-        "versao": versao,
+        # O workflow lê as duas chaves; vazias, e não ausentes, até a v1.0.0.
+        "versao": versao or "",
         "ramo": f"conferidor/{fonte['id']}-{dia}",
         "titulo": (f"fix(catalogo): {escolha['total']} ajuste(s) em "
                    f"{_rotulo(fonte)} conferidos com o texto compilado"),
-        "entrada": str(destino if RAIZ not in destino.parents
-                       else destino.relative_to(RAIZ)).replace("\\", "/"),
+        "entrada": "" if destino is None else str(
+            destino if RAIZ not in destino.parents
+            else destino.relative_to(RAIZ)).replace("\\", "/"),
     }
     saida.mkdir(parents=True, exist_ok=True)
     (saida / "corpo.md").write_text(corpo_pr(escolha, versao), encoding="utf-8", newline="\n")
@@ -521,18 +541,21 @@ def _rodada_de_auditoria(args) -> int:
     if not propostas:
         return 1
 
-    versao = proxima_versao(versao_atual())
+    versao = versao_da_rodada()
     if not args.aplicar:
-        print(f"(simulacao - nada foi escrito; fecharia a v{versao})")
+        fecho = f"fecharia a v{versao}" if versao else "sem versão até a v1.0.0"
+        print(f"(simulacao - nada foi escrito; {fecho})")
         return 0
 
     aplicar_auditoria(propostas)
     fontes_novas = aplicar_fontes_propostas()
     dia = hoje().isoformat()
-    destino, ts = entrada_changelog_auditoria(propostas, versao, dia)
-    destino.parent.mkdir(parents=True, exist_ok=True)
-    destino.write_bytes(ts.replace("\n", "\r\n").encode("utf-8"))
-    subir_versao(versao)
+    destino = None
+    if versao:
+        destino, ts = entrada_changelog_auditoria(propostas, versao, dia)
+        destino.parent.mkdir(parents=True, exist_ok=True)
+        destino.write_bytes(ts.replace("\n", "\r\n").encode("utf-8"))
+        subir_versao(versao)
 
     saida = Path(args.saida)
     saida.mkdir(parents=True, exist_ok=True)
@@ -543,14 +566,14 @@ def _rodada_de_auditoria(args) -> int:
     meta = {
         "fonte": "auditoria", "rotulo": "classificação",
         "correcoes": len(propostas), "novas": 0,
-        "humanos": len(achados) - len(propostas), "versao": versao,
+        "humanos": len(achados) - len(propostas), "versao": versao or "",
         "ramo": f"conferidor/auditoria-{dia}",
         "titulo": f"fix(catalogo): {len(propostas)} ajuste(s) de hediondez e ação penal",
-        "entrada": destino.name,
+        "entrada": destino.name if destino else "",
     }
     (saida / "meta.json").write_text(json.dumps(meta, ensure_ascii=False, indent=2) + "\n",
                                      encoding="utf-8", newline="\n")
-    print(f"aplicado; ramo {meta['ramo']}, versão v{versao}")
+    print(f"aplicado; ramo {meta['ramo']}, " + (f"versão v{versao}" if versao else "sem versão"))
     return 0
 
 
@@ -588,14 +611,16 @@ def main() -> int:
         print(f"  cria    id {linha['id']:5d} {linha['artigo']:24s} "
               f"{linha['pena_min']}–{linha['pena_max']} {linha['tipo_pena']}")
 
-    versao = proxima_versao(versao_atual())
+    versao = versao_da_rodada()
     if not args.aplicar:
-        print(f"(simulação — nada foi escrito; fecharia a v{versao})")
+        fecho = f"fecharia a v{versao}" if versao else "sem versão até a v1.0.0"
+        print(f"(simulação — nada foi escrito; {fecho})")
         return 0
 
     meta = aplicar(escolha, versao, hoje().isoformat(), Path(args.saida))
-    print(f"aplicado; ramo {meta['ramo']}, versão v{meta['versao']}, "
-          f"corpo em {args.saida}/corpo.md")
+    print(f"aplicado; ramo {meta['ramo']}, "
+          + (f"versão v{meta['versao']}, " if meta["versao"] else "sem versão, ")
+          + f"corpo em {args.saida}/corpo.md")
     return 0
 
 

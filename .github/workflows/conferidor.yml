@@ -441,7 +441,6 @@ jobs:
           GH_TOKEN: ${{ steps.app.outputs.token }}
           RAMO: ${{ steps.propor.outputs.ramo }}
           TITULO: ${{ steps.propor.outputs.titulo }}
-          VERSAO: ${{ steps.propor.outputs.versao }}
           FONTE: ${{ steps.propor.outputs.fonte }}
           CORRECOES: ${{ steps.propor.outputs.correcoes }}
           SLUG: ${{ steps.app.outputs.app-slug }}
@@ -453,8 +452,8 @@ jobs:
           git commit -F - <<EOF
           fix(catalogo): $CORRECOES correção(ões) em $FONTE conferidas com o compilado
 
-          Rodada automática do conferidor (v$VERSAO). Cada mudança cita o
-          dispositivo conferido no texto compilado do Planalto.
+          Rodada automática do conferidor. Cada mudança cita o dispositivo
+          conferido no texto compilado do Planalto.
           EOF
           git push --force-with-lease origin "$RAMO"
           gh pr create --repo "${{ github.repository }}" \

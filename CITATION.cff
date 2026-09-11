@@ -9,7 +9,8 @@ abstract: >-
 type: software
 authors:
   - name: "Equipe SISPENAS"
-version: "2.0.6"
+# Até a v1.0.0 não há versão publicada: cite pela data.
+date-released: "2026-09-11"
 license: MIT
 repository-code: "https://github.com/amorim-rc/sispenas"
 url: "https://amorim-rc.github.io/sispenas/"

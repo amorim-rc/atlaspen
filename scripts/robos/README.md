@@ -23,7 +23,7 @@ segura, o achado vira pergunta na issue em vez de virar dado.
 | `revogacao.py` | Revogação total de diploma (banner no topo da página). |
 | `corrigir.py` | Correção mecânica de linha existente: moldura e espécie de pena. |
 | `criar.py` | Linha nova. **Não roda no automático** — ver "o que o robô não faz". |
-| `propor.py` | Escolhe o diploma da rodada, aplica, escreve a entrada de changelog, sobe a versão e monta o corpo do PR. |
+| `propor.py` | Escolhe o diploma da rodada, aplica e monta o corpo do PR. Depois da v1.0.0, também escreve a entrada de changelog e sobe a versão; antes, não. |
 | `auditar.py` | Audita os campos que a conferência de penas não alcança: hediondez (contra `data/hediondos.json`), ação penal, causas de aumento ausentes e nomes — inclusive o nome que descreve MELHOR outro artigo do mesmo diploma, ponto cego da conferência de molduras. |
 | `dou_watcher.py` | Filtro semanal da Seção 1 do DOU, para achar lei penal **nova e autônoma**. Só lei ordinária e lei complementar, pela reserva legal — MP, lei delegada, decreto-lei e emenda não criam tipo penal. Baixa o texto INTEGRAL de cada uma — não há mais pré-filtro por vocabulário — e tria em três níveis pelo preceito secundário, que inclui a pena por remissão ("nas mesmas penas", "metade da pena"). O descartado sai nomeado, não some, e o integral fica no JSON da rodada para permitir retriagem quando o critério mudar. |
 | `leis_do_ano.py` | A defesa contra o falso NEGATIVO. Uma vez por mês, confronta a lista de leis sancionadas do ano (no Planalto, que é a FONTE) com o que o watcher examinou. O que sobra é a lista de leis que ninguém olhou. Não classifica: só aponta. Se a lista não puder ser lida, não afirma nada — reportar zero sem ter lido seria o silêncio que ele existe para quebrar. |
@@ -57,8 +57,8 @@ O workflow também roda sob demanda: aba **Actions** → "Conferidor semanal" �
 
 **Faz**, sozinho, em PR: corrigir moldura ou espécie de pena de linha que já
 existe, quando o compilado diz outra coisa. Um diploma por rodada, um PR aberto
-por vez, evidência por mudança, e o PR fecha uma versão (sobe `package.json` e
-`CITATION.cff`, e escreve a entrada do changelog).
+por vez, evidência por mudança. Até a v1.0.0 o PR não sobe versão nem escreve nota;
+depois, fecha uma versão (sobe `package.json` e `CITATION.cff`, e escreve a entrada).
 
 **Faz**, em PR que PEDE JUÍZO: as mudanças de hediondez e ação penal, com o fundamento ao lado, e a entrada de `data/fontes.json` para lei nova que pareça criar tipo penal. Só sai quando não há correção de pena pendente — uma coisa por rodada.
 

@@ -29,6 +29,20 @@ function comparar(a, b) {
 const atual = `v${JSON.parse(readFileSync('package.json', 'utf8')).version}`;
 const entradas = await lerEntradas();
 
+// Até a v1.0.0 não há notas nem Release (decisão de 10/09/2026): o projeto está em
+// 0.x, e qualquer entrada é engano — anunciaria no feed o que a regra manda não
+// anunciar. As duas regras abaixo voltam a valer a partir do lançamento.
+if (atual.startsWith('v0.')) {
+  if (entradas.length) {
+    console.error(`✗ ${entradas.length} entrada(s) de changelog antes da v1.0.0 — ` +
+      'até o lançamento não se criam notas (ver AGENTS.md):');
+    for (const e of entradas) console.error(`  ${e.id}`);
+    process.exit(1);
+  }
+  console.log(`✓ ${atual}: nenhuma entrada, como manda a regra até a v1.0.0`);
+  process.exit(0);
+}
+
 const futuras = entradas
   .filter((e) => e.version && comparar(e.version, atual) > 0)
   .map((e) => `${e.id} -> ${e.version}`);

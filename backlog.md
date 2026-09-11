@@ -3,14 +3,12 @@
 O que o projeto pode fazer a seguir. É a referência de próximos passos e substituiu o
 roadmap em 10/09/2026.
 
-O backlog **não amarra número de versão**. Uma frente aqui é uma pergunta em aberto, não
-uma promessa com data. A regra de versionamento está em revisão (frente 10).
-
-**Como ler.** As frentes estão em **ordem de exequibilidade**, dentro de duas fases. O
-número de cada frente não muda, porque é por ele que o resto do repositório as cita
-("frente 1", "frente 10"). As frentes 1 a 11 vêm da lista original; as de 12 a 17 foram
-separadas em 11/09/2026. A frente 2, o glossário, foi concluída em 10/09/2026 e saiu
-daqui: o glossário está no `CONTRIBUTING.md`.
+**Como ler.** As frentes estão numeradas de 1 a 16 **na ordem de exequibilidade**, em duas
+fases. A numeração foi refeita em 11/09/2026. Quem renumerar de novo atualiza as citações
+no resto do repositório (`git grep -n "frente [0-9]"`). Cada frente diz o que se quer,
+**o que já se sabe** (achados tirados do código e dos dados, não de memória), o que foi
+decidido e o que falta. O glossário, que foi uma frente, está concluído e mora no
+`CONTRIBUTING.md`.
 
 ---
 
@@ -28,22 +26,22 @@ e pessoas alocadas. O caso que fixou a regra é a prescrição completa. Ela aju
 atuação profissional, mas as regras não são simples e há modulação no tempo. Pensá-la e
 implementá-la é empreitada do porte de um mestrado. O recuo histórico segue o mesmo
 caminho. Os 22 atributos novos já mapeados, inclusive os fáceis, ficam juntos na
-frente 12.
+frente 10.
 
 O site será reconstruído, com nova arquitetura e novo framework. Até lá, **o que importa
 é a base de dados**: nenhuma frente investe em compatibilidade de endereços do site
 atual.
 
-| Fase | Frentes, em ordem |
+| Fase | Frentes |
 |---|---|
-| **1. Até o lançamento** | 11, 10, 3, 5, 1, 6, 7, 8 |
-| **2. Módulos** | 4, 12, 13, 9, 14, 15, 16, 17 |
+| **1. Até o lançamento** | 1 a 8 |
+| **2. Módulos** | 9 a 16 |
 
 ---
 
 # Fase 1: até o lançamento (v1.0.0)
 
-## 11. Repositório pronto para trabalho em grupo
+## 1. Repositório pronto para trabalho em grupo
 
 **Situação: em andamento.** O que já está feito vai riscado.
 
@@ -84,7 +82,7 @@ atual.
 | `ci` | PR e push na `main` | não |
 | `deploy` | push na `main` (Pages) | não |
 | `regen-data` | push na `main` | sim: regenera o derivado |
-| `release` | push na `main` | sim: tag e Release |
+| `release` | push na `main` | sim: tag e Release (parado enquanto a versão for `0.x`) |
 | `conferidor` | segunda-feira, 8h UTC | sim: carimbo da conferência, issues e PR do Proponente |
 
 Três deles escrevem direto na `main` pelo app: é por isso que o bypass do app existe, e
@@ -92,43 +90,33 @@ ele não pode sair.
 
 ---
 
-## 10. Versionamento até o lançamento oficial
+## 2. Versionamento até o lançamento oficial
 
 **Objetivo.** Voltar à versão 0. O site no GitHub Pages serve para acompanhar o
 desenvolvimento, e ainda não houve lançamento. O lançamento oficial, com domínio, será a
 **v1.0.0**.
 
-**O que já se sabe.**
-
-- Há **42 tags** publicadas, de v1.0.0 a v2.0.6, cada uma com sua Release no GitHub.
-  **A tag `v1.0.0` já existe**: sem tirar as tags do lugar, o lançamento não tem número
-  livre.
-- O `release.yml` publica uma Release sempre que a `main` recebe uma versão do
-  `package.json` que ainda não tem Release.
-- **O Proponente sobe a versão sozinho.** O `propor.py` incrementa o patch a cada PR de
-  correção que abre.
-
 **Decidido em 10/09/2026.** Retirar a numeração até o lançamento, porque os números
-antigos nunca existiram como lançamento (renumerá-los em `v0.0.X` foi descartado). As
-Notas de atualizações são expurgadas; depois da v1.0.0, o feed publica exclusivamente
-alterações de tipos penais e de atributos penais, e as Releases do GitHub são enxugadas.
+antigos nunca existiram como lançamento (renumerá-los em `v0.0.X` foi descartado).
+Expurgar as Notas de atualizações; depois da v1.0.0, o feed publica exclusivamente
+alterações que criem, modifiquem ou extingam tipos penais ou atributos penais, e as
+Releases do GitHub são enxugadas.
 
-**Roteiro.**
+**Roteiro.** O que está feito vai riscado.
 
-1. Expurgar as Notas de atualizações que o site mostra hoje.
-2. Parar o `release.yml` enquanto a versão for `0.x`, por condição no próprio workflow.
-3. Fazer o Proponente parar de subir a versão.
-4. Ajustar o `validar-changelog.mjs` à ausência de notas até a 1.0.0.
-5. `package.json` em `0.0.0`, e o `CITATION.cff` citando a data em vez da versão.
-6. Reescrever a regra onde ela mora: `AGENTS.md`, `CONTRIBUTING.md`,
-   `create-changelog-entry.md`, a seção Estabilidade e versionamento de Dados abertos e a
-   skill do catálogo. O `AGENTS.md`, o `CONTRIBUTING.md` e o template de PR já avisam da
-   suspensão.
-7. **No GitHub, ação do mantenedor:** apagar as 42 Releases e tags, ou renomeá-las para
-   `prototipo-vX.Y.Z`. O ruleset de tags `v*` só deixa passar o admin e o app.
-
-**Até a execução:** nenhuma entrada de changelog é criada e nenhuma Release é publicada.
-Não mergear PR do Proponente sem tirar dele a subida de versão, senão sai uma v2.0.7.
+1. ~~Expurgar as 101 Notas de atualizações e deixar na página só o aviso de que ela será
+   alimentada depois da v1.0.0~~
+2. ~~Parar o `release.yml` enquanto a versão for `0.x`~~
+3. ~~Fazer o Proponente parar de subir a versão e de escrever nota enquanto a versão for
+   `0.x`~~
+4. ~~Ajustar o `validar-changelog.mjs`: em `0.x`, qualquer entrada é erro~~
+5. ~~`package.json` e `package-lock.json` em `0.0.0`, e o `CITATION.cff` citando a data em
+   vez da versão~~
+6. ~~Reescrever a regra no `AGENTS.md`, no `CONTRIBUTING.md`, no guia de entradas, na
+   seção Estabilidade e versionamento de Dados abertos e na skill do catálogo~~
+7. **No GitHub, ação do mantenedor:** apagar as 42 Releases e tags, de v1.0.0 a v2.0.6, ou
+   renomeá-las para `prototipo-vX.Y.Z`. A tag `v1.0.0` já existe e precisa sair do lugar
+   antes do lançamento. O ruleset de tags `v*` só deixa passar o admin e o app.
 
 **Oportunidade que só existe antes da 1.0.0.** Até o lançamento, `?tipo=N` e as URLs
 ainda não são contrato com o público. Se o nome (frente 3), o domínio e a numeração dos
@@ -171,14 +159,14 @@ reconstrução do site.
 
 ---
 
-## 5. Histórico legislativo: a última alteração de cada registro
+## 4. Histórico legislativo: a última alteração de cada registro
 
 **Objetivo.** Registrar, para cada moldura de pena e cada atributo penal, a data da
 atualização e o número e o link da lei que a alterou.
 
 **Nesta fase, só a última alteração**: norma, ano e link para o item no Planalto, em cada
 tipo e em cada atributo. Ela é mecânica, porque o compilado já traz esse link em cada
-anotação ("Redação dada pela Lei nº…"). A cadeia completa é a frente 13.
+anotação ("Redação dada pela Lei nº…"). A cadeia completa é a frente 11.
 
 **Decidido em 10/09/2026: a chave é o dispositivo**, e não o id, por três razões:
 
@@ -207,10 +195,10 @@ Guardar os dois é a mudança que torna tudo o mais mecânico.
 
 ---
 
-## 1. Atributos penais versionados em dados
+## 5. Atributos penais versionados em dados
 
 **Objetivo.** Tirar do código os **22 atributos que existem** e versioná-los em dados,
-como já se faz com os tipos penais. Os atributos novos são a frente 12.
+como já se faz com os tipos penais. Os atributos novos são a frente 10.
 
 **O que já se sabe.**
 
@@ -225,17 +213,17 @@ como já se faz com os tipos penais. Os atributos novos são a frente 12.
     eletrônica, indulto coletivo, comutação, graça, unificação de penas.
 - **Nenhum robô os confere.** O Vigia lê molduras, não patamares de atributo.
 
-**Estudo do modelo:** [`estudos/modelo-atributos.md`](estudos/modelo-atributos.md), com
-os achados, o esquema, os três pilotos (transação, substituição e progressão) e o plano do
-PR da migração. Falta validá-lo. Dois achados já foram corrigidos em 10/09/2026: a
-progressão da milícia privada (art. 288-A do CP), que saía com 25% ou 30% quando o
-art. 112, VI, "c", da LEP manda 75%; e três parâmetros da progressão que citavam o inciso
-na numeração de 2019.
+**Estudo do modelo, validado em 11/09/2026:**
+[`estudos/modelo-atributos.md`](estudos/modelo-atributos.md), com os achados, o esquema,
+os três pilotos (transação, substituição e progressão) e o plano do PR da migração. Dois
+achados já foram corrigidos em 10/09/2026: a progressão da milícia privada (art. 288-A do
+CP), que saía com 25% ou 30% quando o art. 112, VI, "c", da LEP manda 75%; e três
+parâmetros da progressão que citavam o inciso na numeração de 2019.
 
 **Decidido em 10/09/2026.**
 
 - O arquivo será `data/atributos.json`, com os termos do glossário.
-- **Chave de dispositivo também nos atributos** (frente 5). A LEP, o CPP, a Lei 9.099/95
+- **Chave de dispositivo também nos atributos** (frente 4). A LEP, o CPP, a Lei 9.099/95
   e a CF não estão em `data/fontes.json`, e entram.
 - **Última alteração legislativa em cada atributo**, como nos tipos: data e lei que o
   editou, com link para o item no Planalto. É derivada do histórico, não digitada.
@@ -248,7 +236,7 @@ na numeração de 2019.
 - **Um PR só.** O PR que cria a base troca, nele mesmo, todos os usos: o contador da
   página inicial, a busca por tipo penal, a busca por atributo e a verificação do motor.
   O catálogo em código sai no mesmo PR.
-- **O acervo histórico registra também a história dos atributos** (frente 9).
+- **O acervo histórico registra também a história dos atributos** (frente 12).
 
 **Herdado do roadmap.** CI de validação (frações em [0, 1], fundamento citado) e
 permalink de simulação (uma URL que carrega os parâmetros editados).
@@ -280,7 +268,7 @@ publicado é pior que dado ausente.
   CP), o silêncio da lei faz a ação pública incondicionada. Não se sabe quais dos 1.446
   são regra geral e quais são previsão expressa.
 
-**Proposta de método, para discussão.**
+**Proposta de método, para decisão.**
 
 - Vocabulário fechado e imposto pela CI: pública incondicionada; pública condicionada à
   representação; pública condicionada à requisição; privada; privada personalíssima
@@ -290,7 +278,7 @@ publicado é pior que dado ausente.
   art. 171, §5º, art. 88 da Lei 9.099/95…) ou a marca "regra geral, art. 100".
 - **Temporalidade.** A espécie de ação muda por lei: a Lei 13.718/2018 alterou o
   art. 225 do CP e a Lei 13.964/2019 incluiu o §5º do art. 171. Nesta fase basta a
-  redação vigente; a sucessão é da frente 13.
+  redação vigente; a sucessão é da frente 11.
 
 **Primeiro passo.** Fechar o vocabulário e o campo de fundamento, escrever a convenção no
 `CONTRIBUTING.md`, e revisar primeiro os 61 registros que não são incondicionados; em
@@ -342,13 +330,13 @@ mudar. Por isso vem depois dela.
 
 Cada frente desta fase pede plano próprio e, em geral, pessoas interessadas no tema.
 
-## 4. Quantas vezes cada registro mudou
+## 9. Quantas vezes cada registro mudou
 
 **Objetivo.** Registrar, em cada tipo penal e em cada atributo, quantas atualizações ele
 sofreu desde a criação. A decisão e o esquema podem vir primeiro; a contagem em si sai da
-cadeia completa da frente 13.
+cadeia completa da frente 11.
 
-**Posição inicial, para discussão: não versionar o id.**
+**Posição inicial, para decisão: não versionar o id.**
 
 - O `id` é a URL pública (`?tipo=N`) e é append-only. Pôr versão nele (`123.4`) faria
   cada alteração legislativa trocar a URL citada.
@@ -359,12 +347,12 @@ cadeia completa da frente 13.
 
 **Distinção que não pode se perder.** "Atualização" são duas coisas: **alteração
 legislativa** (a lei mudou) e **correção de dado** (o catálogo errou e foi corrigido).
-Precisam ser contadas em separado. O paper da frente 9 mede só a primeira; a segunda é
+Precisam ser contadas em separado. O paper da frente 12 mede só a primeira; a segunda é
 indicador de qualidade do catálogo.
 
 ---
 
-## 12. Atributos penais mapeados e ainda não integrados
+## 10. Atributos penais mapeados e ainda não integrados
 
 **Objetivo.** Integrar ao catálogo os **22 atributos penais mapeados** que ainda não
 existem, todos nesta frente. São candidatos a conferir contra o texto compilado, não
@@ -401,11 +389,11 @@ favorece?
 
 ---
 
-## 13. A cadeia completa do histórico legislativo
+## 11. A cadeia completa do histórico legislativo
 
-**Objetivo.** Completar o que a frente 5 começa com a última alteração: **todas** as
+**Objetivo.** Completar o que a frente 4 começa com a última alteração: **todas** as
 alterações de cada tipo e de cada atributo, com data, lei e link. É a base da contagem
-(frente 4) e do acervo (frente 9).
+(frente 9) e do acervo (frente 12).
 
 **O que já se sabe.**
 
@@ -419,7 +407,7 @@ alterações de cada tipo e de cada atributo, com data, lei e link. É a base da
 
 ---
 
-## 9. Acervo histórico e panorama das alterações da lei penal
+## 12. Acervo histórico e panorama das alterações da lei penal
 
 **Objetivo.** Registrar o acervo histórico e exibi-lo. A meta é um panorama completo das
 atualizações das leis penais no Brasil desde o Império. O recuo no tempo começa pelas
@@ -439,7 +427,7 @@ legislativa e obstáculos à inovação em matéria penal no Brasil*.
 - **o panorama das alterações**: a lei penal como série temporal, que é o objeto do
   paper.
 
-As três se alimentam da cadeia de alterações da frente 13, e a linha do tempo mostra
+As três se alimentam da cadeia de alterações da frente 11, e a linha do tempo mostra
 tipos e atributos lado a lado.
 
 **Perguntas a decidir.**
@@ -471,7 +459,7 @@ tipos e atributos lado a lado.
 
 ---
 
-## 14. Robô dos tribunais
+## 13. Robô dos tribunais
 
 **Objetivo.** Vigiar as decisões de tribunal superior que mudam o catálogo. Elas têm a
 força de uma lei revogadora e não passam pelo Diário Oficial.
@@ -489,7 +477,7 @@ fundamentam atributos (a 536 e a 588 do STJ, a Vinculante 56, a 715 do STF).
 
 ---
 
-## 15. Usabilidade
+## 14. Usabilidade
 
 **Objetivo.** Os ganhos de uso que o roadmap previa:
 
@@ -504,7 +492,7 @@ A reconstrução do site pode absorver parte disso antes do lançamento.
 
 ---
 
-## 16. Processo penal e jurisprudência
+## 15. Processo penal e jurisprudência
 
 **Objetivo.** Estender a vigilância ao que rege, na prática, os atributos:
 
@@ -514,7 +502,7 @@ A reconstrução do site pode absorver parte disso antes do lançamento.
 
 ---
 
-## 17. Plataforma de pesquisa
+## 16. Plataforma de pesquisa
 
 **Objetivo.** Fazer da ferramenta de consulta uma plataforma de pesquisa:
 
