@@ -240,9 +240,12 @@ que não existia (`resultado_morte`) é `MENOR`, ainda que motivado por um erro:
 consumidores do JSON ganham informação sem perder nenhuma.
 :::
 
-Os próximos passos possíveis do projeto estão no
-[backlog](https://github.com/amorim-rc/sispenas/blob/main/backlog.md), que não amarra
-número de versão: a versão é escolhida quando a mudança fica pronta, por esta regra.
+**Até o lançamento oficial, o projeto está em `0.x`** (desde 11/09/2026). Pelo próprio
+semver, a versão 0 é desenvolvimento inicial: dados e URLs podem mudar sem aviso. As
+versões de 1.0.0 a 2.0.6 que aparecem no histórico do repositório foram a numeração do
+protótipo; a v1.0.0 será o lançamento oficial, com domínio próprio, e é a partir dela que
+esta regra vale. Os próximos passos estão no
+[backlog](https://github.com/amorim-rc/sispenas/blob/main/backlog.md).
 
 ## Como citar
 

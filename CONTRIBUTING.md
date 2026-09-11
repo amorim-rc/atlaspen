@@ -65,38 +65,28 @@ Ajustes que a heurística não acerta devem ir em `CORRECOES`, dentro de
 `scripts/transform_data.py` (chaveado por `id`), e **não** no JSON gerado.
 Exemplo presente: Art. 227 do CP (a multa só incide na hipótese do §3º).
 
-## Fluxo de release
+## Versão e notas
 
-> **Suspenso até a v1.0.0 (decisão de 10/09/2026).** Até o lançamento oficial, não se
-> criam entradas de changelog nem se sobe a versão. Depois dele, as Notas de atualizações
-> passam a publicar exclusivamente alterações de tipos penais e de atributos penais. O
-> fluxo abaixo volta a valer a partir daí, com os ajustes da frente 10 do `backlog.md`.
+> **Até a v1.0.0 nada é publicado** (decisão de 10/09/2026, executada em 11/09/2026). O
+> projeto está na versão `0.0.0`: não se sobe versão nem se criam entradas de changelog, e
+> a CI reprova entrada criada nesse período. A página Notas de atualizações só avisa que
+> será alimentada depois do lançamento.
 
-Cada versão publica **duas coisas a partir do mesmo arquivo**: a Release no GitHub (para
-colaboradores) e a release note no site em `/release-notes` (para quem acompanha). O fluxo
-garante que as duas sempre saem juntas:
+Depois da v1.0.0, cada versão publica **duas coisas a partir dos mesmos arquivos**: a
+Release no GitHub e a nota no site, em `/release-notes`. As notas registram
+**exclusivamente** alterações que criem, modifiquem ou extingam tipos penais ou atributos
+penais.
 
-1. **Toda mudança substantiva vira uma entrada do changelog** em
-   `src/data/changelog/entries/<ano>/<id>.ts` — um arquivo por mudança, texto puro, com
+1. **Cada alteração dessas vira uma entrada** em
+   `src/data/changelog/entries/<ano>/<id>.ts`, um arquivo por mudança, texto puro, com
    `tipo`, `areas` e `version`. O passo a passo está em
    [`src/data/changelog/create-changelog-entry.md`](src/data/changelog/create-changelog-entry.md).
-   Não há mais `release-notes/*.md` nem lista central: adicionar nota = criar arquivo.
-   (Correções de dado, novos tipos/atributos, fixes e ajustes de interface contam;
-   refactor interno trivial não precisa.)
-
-2. **Versione segundo a [regra de versionamento](docs/dados-abertos.md#estabilidade-e-versionamento):**
-   correção → `1.1.Z`; funcionalidade nova compatível → `1.Y.0`; quebra de contrato → `X.0.0`.
-
+2. **A versão segue a [regra de versionamento](docs/dados-abertos.md#estabilidade-e-versionamento):**
+   correção sobe o último número; funcionalidade nova compatível, o do meio; quebra de
+   contrato, o primeiro.
 3. **O PR que fecha a versão sobe `version` em `package.json` e `CITATION.cff`.** Ao mergear
-   na `main`, o workflow `.github/workflows/release.yml` detecta a versão nova, monta o corpo
-   concatenando as entradas daquela versão (`scripts/montar-nota-release.mjs`), **cria a tag
-   `vX.Y.Z` e publica a Release** — automaticamente. **Não faça `git push` de tag manual**;
-   a tag é criada pelo workflow.
-
-Resumo: *criou as entradas + subiu a versão + mergeou → release publicada, no GitHub e no
-site.* `scripts/validar-changelog.mjs` reprova, na CI, entrada que anuncie versão ainda não
-publicada. Para republicar uma Release malformada, apague-a e rode o workflow "Publicar
-Release" à mão (Actions → Run workflow).
+   na `main`, o `release.yml` monta o corpo com as entradas da versão, **cria a tag `vX.Y.Z`
+   e publica a Release**. **Não faça `git push` de tag manual.**
 
 ## Convenções do catálogo
 

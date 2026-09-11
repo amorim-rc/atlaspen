@@ -8,38 +8,24 @@ Este arquivo é lido pelo Codex e demais agentes pelo nome; o Claude Code o lê 
 `CLAUDE.md`, que só o importa. Regra nova entra **aqui**. Os próximos passos possíveis do
 projeto estão em `backlog.md`.
 
-## Fluxo de release — suspenso até a v1.0.0
+## Versão e notas: nada é publicado até a v1.0.0
 
-> **Decisão de 10/09/2026:** até o lançamento oficial (v1.0.0), **não crie entrada de
-> changelog nem suba a versão**. As Notas de atualizações de hoje serão expurgadas e as
-> Releases do GitHub, enxugadas. Depois da v1.0.0, o feed publica **exclusivamente**
-> alterações de tipos penais e de atributos penais. O fluxo abaixo é o que volta a valer
-> a partir daí, com os ajustes do roteiro da frente 10 do `backlog.md`.
+Decisão de 10/09/2026, executada em 11/09/2026:
 
-O projeto publica **duas coisas** a cada versão: a Release no GitHub (para colaboradores) e
-o feed de Notas de atualizações no site (para quem acompanha). Ambas saem das **mesmas
-entradas**. Por isso:
+- O projeto está na versão **`0.0.0`** e **não sobe versão** até o lançamento oficial.
+- **Não crie entrada de changelog.** O diretório `src/data/changelog/entries/` fica vazio,
+  e o `scripts/validar-changelog.mjs` reprova qualquer entrada enquanto a versão for `0.x`.
+- O `release.yml` não publica nada enquanto a versão for `0.x`, e o Proponente não sobe
+  versão nem escreve nota.
+- A página Notas de atualizações só avisa que será alimentada depois do lançamento.
 
-1. **Toda mudança substantiva vira uma entrada do changelog** em
-   `src/data/changelog/entries/<ano>/<id>.ts` — um arquivo por mudança, texto puro,
-   com `tipo`, `areas` e `version`. O passo a passo (inclusive para uma IA gerar o arquivo)
-   está em `src/data/changelog/create-changelog-entry.md`. Não há mais `release-notes/*.md`
-   nem lista central: adicionar nota = criar arquivo. Correções de dado, novos
-   tipos/atributos, fixes e ajustes de interface contam; mudança interna trivial não precisa.
-
-2. **Versione segundo `docs/dados-abertos.md`, seção Estabilidade e versionamento**
-   (semver com significado explícito; o backlog não amarra versão): correção de
-   dado ou bug → `1.1.Z`; funcionalidade nova compatível → `1.Y.0`; quebra de contrato dos
-   dados abertos ou das URLs → `X.0.0`. A entrada carrega essa versão no campo `version`.
-
-3. **Para publicar, o PR que FECHA a versão sobe `version` em `package.json` (e em
-   `CITATION.cff`).** Ao mergear na `main`, o workflow `.github/workflows/release.yml`
-   monta o corpo da Release concatenando as entradas daquela versão
-   (`scripts/montar-nota-release.mjs`), cria a tag `vX.Y.Z` e publica. **Não faça
-   `git push origin vX.Y.Z` manual** — é automático.
-
-Resumo: *criou as entradas + subiu a versão + mergeou → release publicada, no GitHub e no
-site.* O feed usa `require.context`; para regenerar o JSON de paridade, `npm run changelog:json`.
+**Depois da v1.0.0**, cada versão volta a publicar a Release no GitHub e a nota no site, a
+partir das mesmas entradas (`src/data/changelog/entries/<ano>/<id>.ts`, um arquivo por
+mudança; passo a passo em `src/data/changelog/create-changelog-entry.md`). O feed publica
+**exclusivamente** alterações que criem, modifiquem ou extingam tipos penais ou atributos
+penais. A versão segue a regra de `docs/dados-abertos.md` (Estabilidade e versionamento);
+o PR que fecha a versão sobe `package.json` e `CITATION.cff`, e o merge na `main` dispara o
+`release.yml`, que cria a tag. **Nunca faça `git push origin vX.Y.Z` manual.**
 
 ## Convenções do catálogo
 

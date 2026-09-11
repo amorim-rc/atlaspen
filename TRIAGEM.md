@@ -59,8 +59,8 @@ PR próprio.
 ## 3. Um pull request — é aqui que você decide
 
 Um por rodada, um aberto por vez, autor `sispenas-automacao[bot]`, rótulo `conferidor`.
-Ele **fecha uma versão**: sobe `package.json`, `CITATION.cff` e escreve a entrada de
-changelog. Mergear publica a release.
+Até a v1.0.0 ele **não sobe versão nem escreve nota**: só aplica a correção, e o merge
+não publica release. Depois do lançamento, volta a fechar uma versão.
 
 Dois tipos, nesta ordem de prioridade:
 

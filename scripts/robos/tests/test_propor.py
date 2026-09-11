@@ -126,3 +126,24 @@ def test_meta_do_pr_tem_ramo_e_titulo(escolha, monkeypatch, tmp_path):
     assert (tmp_path / "saida" / "corpo.md").exists()
     gravado = json.loads((tmp_path / "saida" / "meta.json").read_text(encoding="utf-8"))
     assert gravado["correcoes"] == 1 and gravado["novas"] == 1
+
+
+def test_antes_da_v1_nao_ha_versao_nem_nota(escolha, monkeypatch, tmp_path):
+    """Até a v1.0.0 o PR só aplica a correção: sem entrada de changelog e sem subir
+    versão, que o validar-changelog reprovaria (decisão de 10/09/2026). As chaves
+    do meta continuam existindo, vazias, porque o workflow as lê."""
+    monkeypatch.setattr(propor, "ENTRADAS", tmp_path / "entries")
+    monkeypatch.setattr(propor, "corrigir", type("X", (), {"aplicar": staticmethod(lambda p: None)}))
+    monkeypatch.setattr(propor, "criar", type("X", (), {"aplicar": staticmethod(lambda p: None)}))
+    subiu = []
+    monkeypatch.setattr(propor, "subir_versao", lambda v: subiu.append(v))
+    monkeypatch.setattr(propor, "versao_atual", lambda: "0.0.0")
+    assert propor.versao_da_rodada() is None
+    meta = propor.aplicar(escolha, propor.versao_da_rodada(), "2026-09-11", tmp_path / "saida")
+    assert meta["versao"] == "" and meta["entrada"] == ""
+    assert not subiu and not (tmp_path / "entries").exists()
+    corpo = (tmp_path / "saida" / "corpo.md").read_text(encoding="utf-8")
+    assert "fecha a versão" not in corpo and "até a v1.0.0" in corpo
+    # Depois do lançamento, o fecho de versão volta.
+    monkeypatch.setattr(propor, "versao_atual", lambda: "1.0.0")
+    assert propor.versao_da_rodada() == "1.0.1"

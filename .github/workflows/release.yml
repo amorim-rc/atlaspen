@@ -61,6 +61,13 @@ jobs:
           VERSION="$(node -p "require('./package.json').version")"
           TAG="v${VERSION}"
           echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          # Até a v1.0.0 nada é publicado (decisão de 10/09/2026): em 0.x não há
+          # Release nem tag, e o passo seguinte fica de fora.
+          if [ "${VERSION%%.*}" = "0" ]; then
+            echo "existe=1" >> "$GITHUB_OUTPUT"
+            echo "Versão $VERSION: até a v1.0.0 nada é publicado."
+            exit 0
+          fi
           if gh release view "$TAG" >/dev/null 2>&1; then
             echo "existe=1" >> "$GITHUB_OUTPUT"
             echo "Release $TAG já existe — nada a publicar."
