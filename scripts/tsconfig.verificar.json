@@ -17,7 +17,6 @@
   "include": [
     "verificar_atributos.ts",
     "equivalencia_atributos.ts",
-    "migracao_atributos.ts",
     "derivar_atributos.ts",
     "../src/lib/**/*.ts"
   ],

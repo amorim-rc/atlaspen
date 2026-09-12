@@ -18,7 +18,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import type {Crime} from '../src/lib/types';
-import {POR_ID, avaliarAtributo, valoresPadrao} from '../src/lib/atributos';
+import {POR_ID, avaliarAtributo} from '../src/lib/atributos';
 import {
   cenarioParaCrime,
   cenarioReversoPadrao,
@@ -96,15 +96,7 @@ function doParametro(p: any) {
 const atributos = fonte.atributos.map((a: any) => {
   const def = POR_ID[a.slug];
   if (!def) throw new Error(`atributo ${a.id} (${a.slug}) sem avaliador no motor`);
-  // O padrão vem da base. Enquanto o motor ainda guarda os seus (até o commit 6
-  // da migração), os dois têm de coincidir.
   const params = Object.fromEntries(a.parametros.map((p: any) => [p.id, p.padrao]));
-  const doCodigo = valoresPadrao(def);
-  for (const [k, v] of Object.entries(params)) {
-    if (doCodigo[k] !== v) {
-      throw new Error(`${a.slug}.${k}: padrão ${v} na base, ${doCodigo[k]} no código`);
-    }
-  }
   const cabivel: number[] = [];
   const condicional: number[] = [];
   for (const c of crimes) {
