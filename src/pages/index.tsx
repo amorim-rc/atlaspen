@@ -5,12 +5,8 @@ import Heading from '@theme/Heading';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import BrowserOnly from '@docusaurus/BrowserOnly';
 
-import {CATALOGO} from '@site/src/lib/atributos/catalogo';
 import Citacao from '@site/src/components/Citacao';
 import styles from './index.module.css';
-
-/** Total de atributos avaliados — lido do catálogo em tempo de build. */
-const TOTAL_ATRIBUTOS = CATALOGO.length;
 
 /**
  * Contadores dinâmicos do panorama do catálogo. Lê `qualidade.json` (gerado por
@@ -18,17 +14,22 @@ const TOTAL_ATRIBUTOS = CATALOGO.length;
  * recortes de granularidade: `condutas_base` agrupa as formas de um crime
  * (simples/qualificada/privilegiada) num só; `total_tipos_penais` conta cada
  * moldura penal própria — o "cenário de condenação" com pena distinta.
+ * `total_atributos` é contado da base dos atributos (data/atributos.json).
  */
 function Contadores(): ReactNode {
   const url = useBaseUrl('/data/qualidade.json');
-  const [dados, setDados] = useState<{condutas: number; tipos: number} | null>(null);
+  const [dados, setDados] = useState<{condutas: number; tipos: number; atributos: number} | null>(null);
 
   useEffect(() => {
     let vivo = true;
     fetch(url)
       .then((r) => r.json())
       .then((q) => {
-        if (vivo) setDados({condutas: q.condutas_base, tipos: q.total_tipos_penais});
+        if (vivo) setDados({
+            condutas: q.condutas_base,
+            tipos: q.total_tipos_penais,
+            atributos: q.total_atributos,
+          });
       })
       .catch(() => {});
     return () => {
@@ -58,7 +59,7 @@ function Contadores(): ReactNode {
         </>
       ),
     },
-    {n: fmt(TOTAL_ATRIBUTOS), label: <>atributos penais</>},
+    {n: dados ? fmt(dados.atributos) : '—', label: <>atributos penais</>},
   ];
 
   return (

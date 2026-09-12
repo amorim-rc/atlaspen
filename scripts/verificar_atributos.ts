@@ -11,6 +11,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import type {Cenario, Crime} from '../src/lib/types';
 import {CATALOGO, avaliarAtributo, valoresPadrao} from '../src/lib/atributos';
+import {AVALIADORES} from '../src/lib/atributos/avaliadores';
 import {
   avaliarCatalogo,
   cenarioReversoPadrao,
@@ -125,6 +126,37 @@ console.log('1. Integridade do registro de atributos');
 {
   const ids = CATALOGO.map((b) => b.id);
   ok(new Set(ids).size === ids.length, 'ids de atributo são únicos');
+  // O motor lê a base (data/atributos.json): todo atributo tem função de
+  // avaliação, toda função tem atributo, e nenhuma função lê parâmetro que a
+  // base não declare. A leitura é espiada em quatro variações do cenário, para
+  // passar pelos ramos da reincidência e da redação de 2019 da progressão.
+  const avaliadores = Object.keys(AVALIADORES);
+  ok(
+    avaliadores.length === ids.length && avaliadores.every((k) => ids.includes(k)),
+    'todo atributo da base tem função de avaliação, e toda função tem atributo',
+  );
+  const lidosFora = new Set<string>();
+  for (const b of CATALOGO) {
+    const declarados = new Set(b.parametros.map((p) => p.id));
+    const espiao = new Proxy(valoresPadrao(b), {
+      get(alvo, k) {
+        if (typeof k === 'string' && !declarados.has(k)) lidosFora.add(`${b.id}.${k}`);
+        return alvo[k as string];
+      },
+    });
+    for (const c of crimes) {
+      const base = cenarioFromCrime(c);
+      for (const extra of [{}, {reincidenteEspecifico: true}, {fatoAnteriorA15402: true},
+        {reincidenteEspecifico: true, fatoAnteriorA15402: true}]) {
+        b.avaliar({...base, ...extra}, espiao);
+      }
+    }
+  }
+  ok(
+    lidosFora.size === 0,
+    'nenhuma função de avaliação lê parâmetro ausente da base' +
+      (lidosFora.size ? `: ${[...lidosFora].join(', ')}` : ''),
+  );
   ok(
     CATALOGO.every((b) => b.requisitos.length > 0),
     'todo atributo declara ao menos um requisito',

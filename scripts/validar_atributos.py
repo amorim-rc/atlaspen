@@ -104,6 +104,9 @@ def validar() -> list[str]:
             redacoes = p.get("redacoes") or []
             if bool(redacoes) == bool(p.get("sem_fonte_legal")):
                 erros.append(f"{op}: precisa de redações OU de sem_fonte_legal (e só de um)")
+            # O carregador do site toma a ÚLTIMA redação como a vigente: a ordem
+            # tem de ser cronológica, pelo ano da norma no histórico.
+            anos: list[int] = []
             for i, r in enumerate(redacoes):
                 orr = f"{op}, redação {i + 1}"
                 f = r.get("fonte") or {}
@@ -119,8 +122,13 @@ def validar() -> list[str]:
                 norma = r.get("norma", "")
                 if chaves and norma is not None:
                     linhas = [l for k in chaves for l in _linhas_de(k, historico)]
-                    if not any(l.get("norma") == norma for l in linhas):
+                    casadas = [l for l in linhas if l.get("norma") == norma]
+                    if not casadas:
                         erros.append(f"{orr}: {norma!r} não consta do histórico de {chaves}")
+                    else:
+                        anos.append(casadas[0].get("ano") or 0)
+            if anos != sorted(anos):
+                erros.append(f"{op}: redações fora de ordem cronológica ({anos})")
 
     for i, l in enumerate(historico):
         ol = f"histórico, linha {i + 1} ({l.get('dispositivo')})"
