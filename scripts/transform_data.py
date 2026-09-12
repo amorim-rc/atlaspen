@@ -756,6 +756,9 @@ def main():
     relatorio = {
         "total_tipos_penais": len(crimes),
         "condutas_base": len({_base(c) for c in crimes}),
+        # O terceiro contador da página inicial (frente 5 do backlog).
+        "total_atributos": len(json.loads(
+            (ROOT / "data" / "atributos.json").read_text(encoding="utf-8"))["atributos"]),
         "com_pena_privativa": len(com_pena),
         "sem_pena_privativa": len(crimes) - len(com_pena),
         "dispositivos_distintos": len(por_chave),

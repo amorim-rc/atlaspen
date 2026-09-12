@@ -56,10 +56,11 @@ ignoradas:
 ```
 python scripts/transform_data.py --estrito --max-contradicoes=0
 python scripts/validar_modificadores.py
+python scripts/validar_atributos.py
 python scripts/robos/arquivista/verificar_documentacao.py
 python -m pytest scripts/robos/tests
 node scripts/validar-changelog.mjs
-npm run typecheck && npm run verificar && npm run build
+npm run atributos && npm run typecheck && npm run verificar && npm run build
 ```
 
 A CI trava em `--max-contradicoes=0` e exige o derivado sincronizado com a fonte. Extraia

@@ -40,6 +40,18 @@ jobs:
       - name: Conferir se static/data/crimes.json está atualizado
         run: git diff --exit-code --stat static/data/crimes.json
 
+      # A base dos atributos é editada à mão: vocabulário, frações, limites, diploma
+      # de cada chave e a norma de cada redação contra o histórico legislativo.
+      - name: Validar base dos atributos penais
+        run: python3 scripts/validar_atributos.py
+
+      # O derivado dos atributos (última alteração e alcance) é commitado como o do
+      # catálogo. O alcance depende das penas, por isso vem depois do transform.
+      - name: Conferir se static/data/atributos.json está atualizado
+        run: |
+          npm run atributos
+          git diff --exit-code --stat static/data/atributos.json
+
       # Parser do conferidor: roda só contra as fixtures congeladas em
       # scripts/robos/fixtures — sem rede, portanto sem depender do Planalto
       # estar no ar. O download ao vivo é exclusividade do workflow semanal.
