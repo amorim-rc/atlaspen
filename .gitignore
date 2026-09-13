@@ -5,11 +5,6 @@
 /dist
 /.astro
 
-# Artefatos de build do Docusaurus
-/build
-/.docusaurus
-/.cache-loader
-
 # Saída da verificação do motor de atributos (npm run verificar)
 /.verificar-build
 

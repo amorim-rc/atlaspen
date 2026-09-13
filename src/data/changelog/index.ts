@@ -1,20 +1,13 @@
 // Agrega todas as entradas de entries/**/*.ts, ordenadas da mais recente para a
 // mais antiga. NÃO há lista central: adicionar uma entrada = criar um arquivo.
 //
-// require.context é resolvido pelo bundler (Rspack/Webpack) em tempo de build.
-// O gerador de JSON para o CI (scripts/gerar-changelog-json.mjs) percorre os
-// mesmos arquivos por glob — os dois caminhos produzem o mesmo array.
+// import.meta.glob é resolvido pelo bundler (Vite) em tempo de build. O gerador
+// de JSON para o CI (scripts/gerar-changelog-json.mjs) percorre os mesmos
+// arquivos por glob — os dois caminhos produzem o mesmo array.
 
 import type {ChangelogEntry} from './types';
 
-type Contexto = {
-  keys(): string[];
-  (id: string): {default: ChangelogEntry};
-};
-
-const ctx = (
-  require as unknown as {context(d: string, r: boolean, re: RegExp): Contexto}
-).context('./entries', true, /\.ts$/);
+const modulos = import.meta.glob<{default: ChangelogEntry}>('./entries/**/*.ts', {eager: true});
 
 /** Mais recentes primeiro; empate de data resolve pelo id (desc), estável. */
 export function ordenar(entradas: ChangelogEntry[]): ChangelogEntry[] {
@@ -24,8 +17,6 @@ export function ordenar(entradas: ChangelogEntry[]): ChangelogEntry[] {
   });
 }
 
-const entries: ChangelogEntry[] = ordenar(
-  ctx.keys().map((k) => ctx(k).default),
-);
+const entries: ChangelogEntry[] = ordenar(Object.values(modulos).map((m) => m.default));
 
 export default entries;

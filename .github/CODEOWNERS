@@ -35,8 +35,9 @@
 
 # Interface                                                 (futuro: @<org>/engenharia)
 /src/components/                @amorim-rc
+/src/layouts/                   @amorim-rc
 /src/pages/                     @amorim-rc
-/src/css/                       @amorim-rc
+/src/styles/                    @amorim-rc
 /static/img/                    @amorim-rc
 
 # Notas de atualizações                                     (futuro: @<org>/conteudo)
@@ -52,8 +53,7 @@
 /CONTRIBUTING.md                @amorim-rc
 
 # Build e dependências                                      (futuro: @<org>/engenharia)
-/docusaurus.config.ts           @amorim-rc
-/sidebars.ts                    @amorim-rc
+/astro.config.mjs               @amorim-rc
 /tsconfig.json                  @amorim-rc
 /package.json                   @amorim-rc
 /package-lock.json              @amorim-rc
