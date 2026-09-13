@@ -76,3 +76,10 @@ jobs:
 
       - name: Build
         run: npm run build
+
+      # Toda rota antiga responde e leva ao destino certo, preservando a query
+      # (o script de cada stub é executado contra a tabela de redirecionamentos),
+      # e toda ficha nova existe com conteúdo. Uma URL citada que vira 404 em
+      # silêncio é o pior defeito possível num catálogo citável.
+      - name: Teste de fumaça das rotas
+        run: node scripts/verificar_rotas.mjs

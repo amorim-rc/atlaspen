@@ -1,0 +1,164 @@
+/*
+ * Prosa: o markdown dos docs e dos textos, em coluna de leitura.
+ * Aplicado a um contêiner com a classe .prosa.
+ */
+
+.prosa {
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  color: var(--cor-tinta);
+}
+
+.prosa > * + * {
+  margin-top: 1rem;
+}
+
+.prosa h1 {
+  font-size: var(--fs-titulo-1);
+  margin-bottom: 0.5rem;
+}
+
+.prosa h2 {
+  margin-top: 2.5rem;
+  padding-top: 0.5rem;
+  font-size: var(--fs-titulo-2);
+}
+
+.prosa h3 {
+  margin-top: 2rem;
+  font-size: var(--fs-titulo-3);
+}
+
+.prosa h4 {
+  margin-top: 1.5rem;
+  font-size: 1.0625rem;
+}
+
+.prosa h2 + *,
+.prosa h3 + *,
+.prosa h4 + * {
+  margin-top: 0.6rem;
+}
+
+.prosa :is(h2, h3, h4)[id] {
+  scroll-margin-top: 1.5rem;
+}
+
+.prosa ul,
+.prosa ol {
+  padding-left: 1.4rem;
+}
+
+.prosa li + li {
+  margin-top: 0.35rem;
+}
+
+.prosa strong {
+  font-weight: 600;
+}
+
+.prosa code {
+  font-family: var(--fonte-mono);
+  font-size: 0.86em;
+  padding: 0.08em 0.3em;
+  border-radius: 2px;
+  background: var(--cor-papel-alt);
+  overflow-wrap: anywhere;
+}
+
+.prosa pre {
+  overflow-x: auto;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+  background: var(--cor-superficie);
+  font-size: var(--fs-pequeno);
+  line-height: 1.55;
+}
+
+.prosa pre code {
+  padding: 0;
+  background: none;
+  font-size: inherit;
+  overflow-wrap: normal;
+}
+
+.prosa blockquote {
+  margin-inline: 0;
+  padding: 0.2rem 0 0.2rem 1rem;
+  border-left: 3px solid var(--cor-acento-suave);
+  color: var(--cor-tinta-corpo);
+}
+
+.prosa hr {
+  border: 0;
+  border-top: 1px solid var(--cor-borda-forte);
+  margin-block: 2rem;
+}
+
+/* Tabelas largas rolam dentro do próprio contêiner, nunca a página. */
+.prosa table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+  font-size: var(--fs-pequeno);
+  line-height: 1.5;
+}
+
+.prosa th,
+.prosa td {
+  padding: 0.45rem 0.7rem;
+  border-bottom: 1px solid var(--cor-borda);
+  text-align: left;
+  vertical-align: top;
+}
+
+.prosa th {
+  font-family: var(--fonte-mono);
+  font-size: var(--fs-rotulo);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--cor-tinta-fraca);
+  border-bottom-color: var(--cor-borda-forte);
+  white-space: nowrap;
+}
+
+.prosa td[align='right'],
+.prosa th[align='right'] {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Admonições: :::note[Título] */
+.prosa .nota {
+  padding: 0.8rem 1rem;
+  border: 1px solid var(--cor-borda);
+  border-left: 3px solid var(--cor-acento-suave);
+  border-radius: var(--raio);
+  background: var(--cor-realce);
+  font-size: 0.96875rem;
+}
+
+.prosa .nota > * + * {
+  margin-top: 0.5rem;
+}
+
+.prosa .nota-warning,
+.prosa .nota-caution,
+.prosa .nota-danger {
+  border-left-color: var(--cor-acento);
+}
+
+.prosa .nota-titulo {
+  font-family: var(--fonte-mono);
+  font-size: var(--fs-rotulo);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cor-tinta-fraca);
+}
+
+.prosa .nota-titulo code {
+  text-transform: none;
+}

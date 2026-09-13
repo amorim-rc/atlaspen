@@ -1,0 +1,17 @@
+---
+// Atributos penais — a lista (antes /pesquisa/atributos). A busca reversa entra
+// com o commit dos atributos.
+import Base from '../../layouts/Base.astro';
+import {CATALOGO} from '../../lib/atributos';
+import {caminho} from '../../site/url';
+---
+
+<Base titulo="Atributos penais" descricao="Os atributos penais: requisitos, vedações e patamares legais, e os tipos penais que cada um alcança." ativo="atributos">
+  <section class="pagina" style="padding-block: 2.5rem">
+    <p class="rotulo">Atributos</p>
+    <h1>Atributos penais</h1>
+    <ul>
+      {CATALOGO.map((a) => <li><a href={caminho(`/atributos/${a.id}`)}>{a.nome}</a></li>)}
+    </ul>
+  </section>
+</Base>

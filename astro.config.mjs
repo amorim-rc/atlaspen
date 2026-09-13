@@ -15,13 +15,26 @@
 import {defineConfig} from 'astro/config';
 import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
+import remarkDirective from 'remark-directive';
+import {remarkAdmonicoes} from './src/site/markdown/admonicoes.ts';
+import {remarkComentarios} from './src/site/markdown/comentarios.ts';
+import {remarkLinks} from './src/site/markdown/links.ts';
+
+const BASE = '/sispenas/';
 
 export default defineConfig({
   site: 'https://amorim-rc.github.io',
-  base: '/sispenas/',
+  base: BASE,
   publicDir: './static',
   outDir: './dist',
   trailingSlash: 'ignore',
   build: {format: 'directory'},
   integrations: [react(), sitemap()],
+  markdown: {
+    // Os docs/ continuam escritos para o GitHub e na sintaxe que o hook do
+    // projeto impõe; estes plugins os servem no site: admonições
+    // :::note[Título], o carimbo {/* ... */} do gerador fora do HTML, e os
+    // links internos levados às rotas novas pela tabela de redirecionamentos.
+    remarkPlugins: [remarkDirective, remarkAdmonicoes, remarkComentarios, [remarkLinks, {base: BASE}]],
+  },
 });

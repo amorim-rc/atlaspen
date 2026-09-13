@@ -5,6 +5,9 @@
 import Base from '../layouts/Base.astro';
 import {NOME} from '../site/config';
 import {caminho} from '../site/url';
+import {RAIZ_LEGADA} from '../site/redirecionamentos';
+
+const base = caminho('/');
 
 const secoes = [
   {nome: 'Tipos penais', rota: '/tipos', o_que: 'Todo tipo penal vigente, com a pena cominada e a simulação do que ela abre ou fecha.'},
@@ -15,6 +18,21 @@ const secoes = [
 ---
 
 <Base titulo={NOME} descricao="Catálogo aberto de tipos e atributos penais brasileiros: a pena cominada de cada tipo e o que cada patamar de pena abre ou fecha ao condenado.">
+  <Fragment slot="head">
+    {/* Até a v1.0.0 a pesquisa era servida na raiz, com o tipo em /?tipo=N. A raiz
+        é a página inicial e não pode virar stub: ela mesma leva esses links à
+        ficha, pela regra RAIZ_LEGADA de src/site/redirecionamentos.ts. */}
+    <script is:inline data-redirecionador define:vars={{regra: RAIZ_LEGADA, base}}>
+      var q = new URLSearchParams(location.search);
+      var valor = q.get(regra.parametro.nome);
+      if (valor) {
+        q.delete(regra.parametro.nome);
+        var resto = q.toString();
+        var rota = regra.parametro.para.replace('{valor}', encodeURIComponent(valor));
+        location.replace(base + rota.replace(/^\/+/, '') + (resto ? '?' + resto : '') + location.hash);
+      }
+    </script>
+  </Fragment>
   <section class="pagina abertura">
     <h1>AtlasPen — tipos e atributos penais</h1>
     <p>

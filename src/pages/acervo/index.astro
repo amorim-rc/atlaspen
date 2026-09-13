@@ -1,0 +1,17 @@
+---
+// Acervo histórico (antes /docs/acervo-historico). Até a lista e o registro
+// entrarem, serve o documento gerado por scripts/gerar_completude.py.
+import {getEntry, render} from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import '../../styles/prosa.css';
+
+const doc = await getEntry('docs', 'acervo-historico');
+if (!doc) throw new Error('docs/acervo-historico.md não encontrado');
+const {Content} = await render(doc);
+---
+
+<Base titulo="Acervo histórico" descricao="O que já foi crime no Brasil: tipos penais revogados, vetados e não recepcionados." ativo="acervo">
+  <article class="pagina" style="padding-block: 2.5rem">
+    <div class="prosa leitura"><Content /></div>
+  </article>
+</Base>

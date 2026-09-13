@@ -1,0 +1,21 @@
+---
+// Ficha do atributo — uma página estática por atributo (/atributos/{slug}). O
+// slug é o da base (data/atributos.json), estável: é âncora de citação.
+import Base from '../../layouts/Base.astro';
+import {CATALOGO, type AtributoDef} from '../../lib/atributos';
+
+export function getStaticPaths() {
+  return CATALOGO.map((def) => ({params: {slug: def.id}, props: {id: def.id}}));
+}
+
+const {id} = Astro.props as {id: string};
+const def = CATALOGO.find((a) => a.id === id) as AtributoDef;
+---
+
+<Base titulo={def.nome} descricao={def.descricao} ativo="atributos" tipoOg="article">
+  <article class="pagina" style="padding-block: 2.5rem">
+    <p class="mono">{def.fundamento}</p>
+    <h1>{def.nome}</h1>
+    <p>{def.descricao}</p>
+  </article>
+</Base>

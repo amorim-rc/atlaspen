@@ -1,0 +1,16 @@
+---
+// Tipos penais — a lista. Rota do catálogo (antes /pesquisa/tipos). A lista
+// filtrável entra com a busca por tipo penal.
+import Base from '../../layouts/Base.astro';
+import {todosOsTipos} from '../../site/catalogo-servidor';
+
+const total = todosOsTipos().length;
+---
+
+<Base titulo="Tipos penais" descricao="Todo tipo penal vigente no direito brasileiro, com a pena cominada e o que ela abre ou fecha ao condenado." ativo="tipos">
+  <section class="pagina" style="padding-block: 2.5rem">
+    <p class="rotulo">Catálogo</p>
+    <h1>Tipos penais</h1>
+    <p class="num">{total.toLocaleString('pt-BR')} tipos penais no catálogo.</p>
+  </section>
+</Base>

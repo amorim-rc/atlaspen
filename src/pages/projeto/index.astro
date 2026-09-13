@@ -1,0 +1,20 @@
+---
+// O projeto — índice dos documentos (antes /docs/*).
+import {getCollection} from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import {DOCUMENTOS_DO_PROJETO} from '../../site/redirecionamentos';
+import {caminho} from '../../site/url';
+
+const docs = (await getCollection('docs')).filter((d) => DOCUMENTOS_DO_PROJETO.includes(d.id));
+const ordenados = DOCUMENTOS_DO_PROJETO.map((id) => docs.find((d) => d.id === id)).filter(Boolean);
+---
+
+<Base titulo="O projeto" descricao="Metodologia, completude, dicionário de dados e os robôs de conferência do AtlasPen." ativo="projeto">
+  <section class="pagina" style="padding-block: 2.5rem">
+    <p class="rotulo">Projeto</p>
+    <h1>O projeto</h1>
+    <ul>
+      {ordenados.map((d) => <li><a href={caminho(`/projeto/${d!.id}`)}>{d!.data.title ?? d!.id}</a></li>)}
+    </ul>
+  </section>
+</Base>

@@ -1,0 +1,17 @@
+---
+// Um stub por rota pública antiga, gerado da tabela única de
+// src/site/redirecionamentos.ts.
+import RedirecionadorLegado from '../components/RedirecionadorLegado.astro';
+import {REDIRECIONAMENTOS, type Redirecionamento} from '../site/redirecionamentos';
+
+export function getStaticPaths() {
+  return REDIRECIONAMENTOS.map((regra) => ({
+    params: {legado: regra.de.replace(/^\/+/, '')},
+    props: {regra},
+  }));
+}
+
+const {regra} = Astro.props as {regra: Redirecionamento};
+---
+
+<RedirecionadorLegado regra={regra} />

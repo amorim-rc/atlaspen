@@ -1,0 +1,27 @@
+---
+// Ficha do tipo penal — uma página estática por registro, indexável e citável
+// (/tipos/{id}). O id é append-only e é a URL pública; nunca se reatribui.
+// A ficha completa, com as abas de pena, entra com a busca por tipo penal.
+import Base from '../../layouts/Base.astro';
+import {todosOsTipos} from '../../site/catalogo-servidor';
+import type {Crime} from '../../lib/types';
+
+export function getStaticPaths() {
+  return todosOsTipos().map((crime) => ({params: {id: String(crime.id)}, props: {crime}}));
+}
+
+const {crime} = Astro.props as {crime: Crime};
+---
+
+<Base
+  titulo={`${crime.crime} — ${crime.artigo}, ${crime.lei}`}
+  descricao={`${crime.artigo} (${crime.lei}). ${crime.pena_privativa === 'Nenhuma' ? '' : crime.pena_privativa + ', '}${crime.pena_faixa_rotulo}.`}
+  ativo="tipos"
+  tipoOg="article"
+>
+  <article class="pagina" style="padding-block: 2.5rem">
+    <p class="mono">{crime.lei} · {crime.artigo}</p>
+    <h1>{crime.crime}</h1>
+    <p>{crime.pena_privativa === 'Nenhuma' ? '' : `${crime.pena_privativa}, `}{crime.pena_faixa_rotulo}</p>
+  </article>
+</Base>
