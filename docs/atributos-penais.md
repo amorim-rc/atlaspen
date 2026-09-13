@@ -78,7 +78,7 @@ trocada por pena máxima ou por um valor fixo aplicado a todos os tipos.
 | **Progressão de regime** | Art. 112, LEP | Frações de 16% a 85% conforme reincidência/hediondez/resultado morte |
 | **Livramento condicional** | Art. 83, CP | 1/3 (primário), 1/2 (reincidente), 2/3 (hediondo); vedado ao reincidente específico em hediondo e nas quatro hipóteses do art. 112 da LEP |
 | **Prescrição** | Art. 109, CP | Tabela por pena (abstrata e concreta) |
-| **Saída temporária** | Art. 122, LEP | Regime semiaberto; 1/6 (primário) ou 1/4 (reincidente); vedada em hediondo com resultado morte, na redação de 2019 do art. 122, §2º (Lei 13.964/2019). A Lei 14.843/2024 ampliou a vedação a todo crime hediondo ou com violência ou grave ameaça, e o cálculo ainda não a incorpora |
+| **Saída temporária** | Art. 122, LEP | Regime semiaberto, só para estudo (art. 122, II); 1/6 (primário) ou 1/4 (reincidente); vedada a crime hediondo ou com violência ou grave ameaça contra pessoa (art. 122, §2º, Lei 14.843/2024) |
 | **Detração** | Art. 42, CP | Desconto de prisão provisória (qualitativo) |
 | **Remição** | Art. 126, LEP | Trabalho (1 dia/3) e estudo (1 dia/12h); +1/3 por conclusão de curso |
 | **Prisão domiciliar** | Art. 117, LEP; art. 318, CPP | Hipóteses humanitárias; HC 143.641/SP (gestantes e mães) |

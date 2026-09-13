@@ -596,7 +596,7 @@ Dois achados da execução, fora do alcance de uma migração que não pode muda
   com resultado morte) e a atribuía à Lei 14.843/2024, que a trocou pela vedação a todo
   crime hediondo ou cometido com violência ou grave ameaça e revogou as saídas para visita
   à família e para atividades de retorno ao convívio social. A base registra a redação de
-  2019 com a lei certa; a correção do cálculo é PR próprio.
+  2019 com a lei certa; a correção do cálculo é PR próprio. Corrigida em 13/09/2026, antes do merge: vedação a todo crime hediondo ou com violência ou grave ameaça, e só a saída para estudo.
 - **Capitular partida.** O HTML do Planalto imprime "A rt. 107" no CP (e em dois artigos
   sem tipo penal, no CPP e na Lei 4.729). O `parsear` do Vigia não reconhece o artigo e
   pendura os incisos dele no anterior. O extrator do histórico já corrige; o parser, não.

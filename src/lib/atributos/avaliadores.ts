@@ -515,19 +515,25 @@ export const AVALIADORES: Record<string, (c: Cenario, p: Parametros) => Avaliaca
     };
   },
   'saida-temporaria': (c, p) => {
-    const vedado = bool(p, 'vedadoHediondoMorte') && c.hediondo && c.resultadoMorte;
+    // Art. 122, §2º, da LEP, na redação da Lei 14.843/2024. Até ela, a vedação
+    // alcançava só o hediondo com resultado morte (redação da Lei 13.964/2019).
+    const porHediondo = bool(p, 'vedadoHediondo') && c.hediondo;
+    const porViolencia = bool(p, 'vedadoViolencia') && (c.violencia || c.graveAmeaca);
     const fracao = c.reincidenteEspecifico ? num(p, 'fracaoReincidente') : num(p, 'fracaoPrimario');
     const tempo = c.penaConcreta * fracao;
     return {
-      status: vedado ? 'incabivel' : 'condicional',
-      resumo: vedado
-        ? 'Vedada ao condenado por crime hediondo com resultado morte (Lei 14.843/2024).'
-        : `Regime semiaberto após ${formatFracao(fracao)} da pena (${formatPena(tempo)}).`,
+      status: porHediondo || porViolencia ? 'incabivel' : 'condicional',
+      resumo: porHediondo
+        ? 'Vedada ao condenado por crime hediondo (art. 122, §2º, LEP).'
+        : porViolencia
+          ? 'Vedada ao condenado por crime com violência ou grave ameaça contra pessoa (art. 122, §2º, LEP).'
+          : `Regime semiaberto, para estudo, após ${formatFracao(fracao)} da pena (${formatPena(tempo)}).`,
       detalhes: [
         'Exclusiva do regime semiaberto.',
+        'Só para frequência a curso supletivo profissionalizante ou de instrução do 2º grau ou superior (art. 122, II): a Lei 14.843/2024 revogou a visita à família e as atividades de retorno ao convívio social.',
         `Cumprimento mínimo: ${formatFracao(fracao)} da pena (${c.reincidenteEspecifico ? 'reincidente' : 'primário'}) → ${formatPena(tempo)}.`,
-        'Depende de comportamento adequado e compatibilidade com os objetivos da pena.',
-        'A Lei 14.843/2024 vedou a saída temporária ao condenado por crime hediondo com resultado morte.',
+        'Depende de comportamento adequado e compatibilidade com os objetivos da pena (art. 123, I e III).',
+        'Vedada ao condenado por crime hediondo ou com violência ou grave ameaça contra pessoa, que também não tem trabalho externo sem vigilância direta (art. 122, §2º, na redação da Lei 14.843/2024). Antes dela, a vedação alcançava só o hediondo com resultado morte.',
       ],
     };
   },

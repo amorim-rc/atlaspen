@@ -216,13 +216,11 @@ O evento `revogado` do mesmo esquema é o molde da base de tipos revogados da fr
   que o cálculo não mudou;
 - a CI valida a base (`scripts/validar_atributos.py`, que cobre o "CI de validação" herdado
   do roadmap) e exige o derivado sincronizado.
+- A saída temporária passou à redação da Lei 14.843/2024 (13/09/2026): vedada a crime
+  hediondo ou com violência ou grave ameaça contra pessoa, e só para estudo.
 
 **Ficou para depois**, em PRs próprios, porque muda resultado ou é de outra frente:
 
-- **Saída temporária.** O cálculo aplica a vedação de 2019 (hediondo com resultado
-  morte). A Lei 14.843/2024 a ampliou a todo crime hediondo ou com violência ou grave
-  ameaça, e revogou as saídas para visita à família e para atividades de retorno ao
-  convívio social.
 - **Oito unidades sem data** no compilado (CP, art. 33, §2º, "a" e "b"; art. 107, IX;
   art. 109, I a V). Quem as data é a cadeia completa do histórico (frente 11).
 - **Capitular partida** no parser do Vigia ("A rt. 107"), que pendura os incisos do art.

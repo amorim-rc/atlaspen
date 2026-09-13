@@ -1415,16 +1415,17 @@
       ],
       "categoria": "execucao",
       "natureza": "concreto",
-      "descricao": "Autorização para o condenado em regime semiaberto ausentar-se do estabelecimento sem vigilância direta, para visita à família, frequência a curso ou atividades de ressocialização. A Lei 14.843/2024 restringiu significativamente suas hipóteses.",
+      "descricao": "Autorização para o condenado em regime semiaberto ausentar-se do estabelecimento, sem vigilância direta, para frequência a curso supletivo profissionalizante ou de instrução do 2º grau ou superior. É a única hipótese desde a Lei 14.843/2024, que revogou a visita à família e a participação em atividades de retorno ao convívio social, e vedou a saída ao condenado por crime hediondo ou cometido com violência ou grave ameaça contra pessoa.",
       "requisitos": [
+        "Frequência a curso supletivo profissionalizante ou de instrução do 2º grau ou superior, na comarca do Juízo da Execução (art. 122, II).",
         "Cumprimento de 1/6 da pena, se primário, ou 1/4, se reincidente (art. 123, II).",
         "Comportamento adequado (art. 123, I).",
         "Compatibilidade do benefício com os objetivos da pena (art. 123, III).",
-        "Exclusividade do regime semiaberto."
+        "Regime semiaberto (art. 122, caput)."
       ],
       "vedacoes": [
-        "Condenado por crime hediondo com resultado morte (art. 122, §2º, com a redação da Lei 14.843/2024).",
-        "Saída para participação em atividades de ressocialização foi restringida pela Lei 14.843/2024."
+        "Condenado que cumpre pena por crime hediondo ou cometido com violência ou grave ameaça contra pessoa, que também não tem direito a trabalho externo sem vigilância direta (art. 122, §2º, na redação da Lei 14.843/2024).",
+        "Visita à família e participação em atividades de retorno ao convívio social: hipóteses revogadas pela Lei 14.843/2024 (art. 122, I e III)."
       ],
       "parametros": [
         {
@@ -1466,18 +1467,41 @@
           ]
         },
         {
-          "id": "vedadoHediondoMorte",
-          "rotulo": "Vedar em hediondo com resultado morte",
+          "id": "vedadoHediondo",
+          "rotulo": "Vedar ao condenado por crime hediondo",
           "tipo": "booleano",
           "padrao": true,
-          "ajuda": "Vedação introduzida pela Lei 14.843/2024 no art. 122, §2º, da LEP.",
+          "ajuda": "Art. 122, §2º, na redação da Lei 14.843/2024: sem saída temporária, e sem trabalho externo sem vigilância direta, para quem cumpre pena por crime hediondo. Até ela, a vedação alcançava só o hediondo com resultado morte (redação da Lei 13.964/2019).",
           "redacoes": [
             {
               "fonte": {
                 "dispositivo": "lep|art. 122, §2º"
               },
               "norma": "Lei nº 13.964",
-              "fundamento": "Art. 122, §2º, LEP (redação da Lei 13.964/2019)"
+              "fundamento": "Art. 122, §2º, LEP (redação da Lei 13.964/2019, só o hediondo com resultado morte)"
+            },
+            {
+              "fonte": {
+                "dispositivo": "lep|art. 122, §2º"
+              },
+              "norma": "Lei nº 14.843",
+              "fundamento": "Art. 122, §2º, LEP (redação da Lei 14.843/2024)"
+            }
+          ]
+        },
+        {
+          "id": "vedadoViolencia",
+          "rotulo": "Vedar em crime com violência ou grave ameaça contra pessoa",
+          "tipo": "booleano",
+          "padrao": true,
+          "ajuda": "Art. 122, §2º, na redação da Lei 14.843/2024: a mesma vedação alcança quem cumpre pena por crime cometido com violência ou grave ameaça contra pessoa. Desmarcar simula a regra anterior, que não vedava por violência.",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivo": "lep|art. 122, §2º"
+              },
+              "norma": "Lei nº 14.843",
+              "fundamento": "Art. 122, §2º, LEP (redação da Lei 14.843/2024)"
             }
           ]
         }
