@@ -1,0 +1,177 @@
+---
+// Rodapé global, o mesmo em todas as rotas (Atributo, bordas e chrome.dc.html, 8e).
+//
+// Tinta cheia, não papel: o rodapé fecha a página e separa o aparato do
+// conteúdo. Leva o que uma obra de referência precisa ter no pé — versão, data
+// da conferência, licença e a forma de citar.
+import Simbolo from '../marca/Simbolo.astro';
+import Assinatura from '../marca/Assinatura.astro';
+import {EQUIPE, NOME} from '../../site/config';
+import {RODAPE} from '../../site/navegacao';
+import {caminho} from '../../site/url';
+import {dataCurta} from '../../site/datas';
+
+interface Props {
+  versao: string;
+  conferidoEm: string | null;
+}
+
+const {versao, conferidoEm} = Astro.props;
+const ano = new Date().getFullYear();
+---
+
+<footer class="rodape">
+  <div class="pagina grade">
+    <div class="identidade">
+      <span class="marca">
+        <Simbolo variante="mono" tamanho={20} />
+        <Assinatura escuro tamanho="1.3125rem" />
+      </span>
+      <p class="descritor">Catálogo aberto de tipos e atributos penais, mantido por um grupo de pesquisa.</p>
+      <p class="meta">
+        v{versao}
+        {conferidoEm && <> · dados conferidos em {dataCurta(conferidoEm)}</>}
+      </p>
+    </div>
+    {
+      RODAPE.map((coluna) => (
+        <nav class="coluna nao-imprimir" aria-label={coluna.titulo}>
+          <h2 class="titulo-coluna">{coluna.titulo}</h2>
+          <ul>
+            {coluna.itens.map((item) => (
+              <li>
+                <a href={caminho(item.rota)}>{item.rotulo}</a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      ))
+    }
+  </div>
+  <div class="faixa">
+    <div class="pagina faixa-interna">
+      <span>{NOME} © {ano} — {EQUIPE} · MIT com atribuição · cite como {NOME}</span>
+      <span>os dados são públicos; a leitura jurídica é de quem cita · não é aconselhamento jurídico</span>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .rodape {
+    margin-top: 4rem;
+    background: var(--cor-tinta-cheia);
+    color: var(--cor-tinta-cheia-texto);
+  }
+
+  .grade {
+    display: grid;
+    grid-template-columns: minmax(13rem, 15rem) repeat(3, minmax(0, 1fr));
+    gap: 1.75rem;
+    padding-block: 2rem 1.5rem;
+  }
+
+  .identidade {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+
+  .marca {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    color: var(--cor-tinta-cheia-texto);
+  }
+
+  .descritor {
+    font-size: var(--fs-pequeno);
+    line-height: 1.6;
+    color: var(--cor-tinta-cheia-media);
+  }
+
+  .meta {
+    font-family: var(--fonte-mono);
+    font-size: var(--fs-rotulo);
+    color: var(--cor-tinta-cheia-fraca);
+  }
+
+  .titulo-coluna {
+    margin-bottom: 0.6rem;
+    font-family: var(--fonte-mono);
+    font-size: var(--fs-rotulo);
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--cor-tinta-cheia-fraca);
+  }
+
+  .coluna ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .coluna a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2rem;
+    font-size: var(--fs-pequeno);
+    color: #e4dfd4;
+    text-decoration: none;
+  }
+
+  .coluna a:hover {
+    color: var(--cor-tinta-cheia-acento);
+    text-decoration: underline;
+  }
+
+  .faixa {
+    border-top: 1px solid var(--cor-tinta-cheia-borda);
+  }
+
+  .faixa-interna {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.5rem 1.5rem;
+    padding-block: 0.9rem;
+    font-family: var(--fonte-mono);
+    font-size: var(--fs-rotulo);
+    color: var(--cor-tinta-cheia-fraca);
+  }
+
+  @media (max-width: 900px) {
+    .grade {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .identidade {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .grade {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  @media print {
+    .rodape {
+      margin-top: 2rem;
+      background: #fff;
+      color: #000;
+      border-top: 1px solid #000;
+    }
+    .descritor,
+    .meta,
+    .faixa-interna {
+      color: #000;
+    }
+    .marca {
+      color: #000;
+    }
+  }
+</style>

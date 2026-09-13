@@ -1,0 +1,293 @@
+---
+// Cabeçalho global. Em tela larga: símbolo, assinatura, os seis destinos e o
+// tema. Em tela estreita encolhe para símbolo, palavra e o botão da gaveta
+// (Atributo, bordas e chrome.dc.html, 8f) — nada de barra inferior.
+//
+// A gaveta é um <details>: abre e fecha sem JavaScript. Com JavaScript (Base.astro)
+// ganha Escape, fecha ao seguir um link e trava a rolagem do fundo.
+import Simbolo from '../marca/Simbolo.astro';
+import Assinatura from '../marca/Assinatura.astro';
+import {NAVEGACAO, type ChaveNav} from '../../site/navegacao';
+import {caminho} from '../../site/url';
+
+interface Props {
+  ativo?: ChaveNav;
+  versao: string;
+}
+
+const {ativo, versao} = Astro.props;
+---
+
+<header class="cabecalho nao-imprimir">
+  <div class="pagina barra">
+    <a class="marca" href={caminho('/')}>
+      <Simbolo tamanho={20} />
+      <Assinatura />
+      <span class="sr-only">— página inicial</span>
+    </a>
+
+    <nav class="nav-larga" aria-label="Principal">
+      <ul>
+        {
+          NAVEGACAO.map((i) => (
+            <li>
+              <a href={caminho(i.rota)} aria-current={i.chave === ativo ? 'page' : undefined}>
+                {i.rotulo}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <button type="button" class="tema" data-alternar-tema aria-label="Tema escuro" aria-pressed="false">
+      <svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true" focusable="false">
+        <circle cx="10" cy="10" r="7.25" fill="none" stroke="currentColor" stroke-width="1.5"></circle>
+        <path d="M10 2.75a7.25 7.25 0 0 1 0 14.5z" fill="currentColor"></path>
+      </svg>
+    </button>
+
+    <details class="gaveta" data-gaveta>
+      <summary>
+        <span class="sr-only">Navegação</span>
+        <svg class="icone" viewBox="0 0 20 20" width="20" height="20" aria-hidden="true" focusable="false">
+          <path d="M3 5.5h14M3 10h14M3 14.5h14" stroke="currentColor" stroke-width="1.6" fill="none"></path>
+        </svg>
+      </summary>
+      <div class="painel">
+        <div class="painel-topo">
+          <Assinatura escuro tamanho="1.125rem" />
+          <button type="button" class="fechar" data-fechar-gaveta aria-label="Fechar a navegação">×</button>
+        </div>
+        <nav aria-label="Principal, em tela estreita">
+          <ul>
+            {
+              NAVEGACAO.map((i) => (
+                <li>
+                  <a href={caminho(i.rota)} aria-current={i.chave === ativo ? 'page' : undefined}>
+                    <span class="rotulo-gaveta">{i.rotuloLongo}</span>
+                    <span class="rota-gaveta">{i.rota}</span>
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+        <div class="painel-pe">
+          <button type="button" class="tema-texto" data-alternar-tema aria-label="Tema escuro" aria-pressed="false">
+            Alternar tema claro e escuro
+          </button>
+          <span>v{versao} · MIT com atribuição</span>
+        </div>
+      </div>
+    </details>
+  </div>
+</header>
+
+<style>
+  .cabecalho {
+    background: var(--cor-papel-alt);
+    border-bottom: 1px solid var(--cor-borda);
+  }
+
+  .barra {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    min-height: 3.5rem;
+  }
+
+  .marca {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    min-height: var(--alvo-toque);
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .nav-larga {
+    margin-left: auto;
+  }
+
+  .nav-larga ul {
+    display: flex;
+    gap: 1.15rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .nav-larga a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--alvo-toque);
+    color: var(--cor-tinta-corpo);
+    font-size: 0.9375rem;
+    text-decoration: none;
+  }
+
+  .nav-larga a:hover {
+    color: var(--cor-acento);
+  }
+
+  .nav-larga a[aria-current='page'] {
+    color: var(--cor-acento);
+    font-weight: 500;
+  }
+
+  .tema {
+    display: inline-grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    padding: 0;
+    border: 1px solid var(--cor-borda-controle);
+    border-radius: var(--raio);
+    background: transparent;
+    color: var(--cor-tinta-corpo);
+    cursor: pointer;
+  }
+
+  .tema:hover {
+    color: var(--cor-acento);
+    border-color: var(--cor-acento);
+  }
+
+  /* ── gaveta ── */
+  .gaveta {
+    display: none;
+  }
+
+  .gaveta summary {
+    display: grid;
+    place-items: center;
+    width: var(--alvo-toque);
+    height: var(--alvo-toque);
+    margin-right: -0.5rem;
+    list-style: none;
+    color: var(--cor-tinta-corpo);
+    cursor: pointer;
+  }
+
+  .gaveta summary::-webkit-details-marker {
+    display: none;
+  }
+
+  /* Aberta, o sumário vira o véu: tocar fora do painel fecha a gaveta mesmo sem JS. */
+  .gaveta[open] summary {
+    position: fixed;
+    inset: 0;
+    width: auto;
+    height: auto;
+    margin: 0;
+    z-index: 40;
+    background: rgba(17, 16, 14, 0.45);
+  }
+
+  .gaveta[open] summary .icone {
+    display: none;
+  }
+
+  .painel {
+    position: fixed;
+    inset: 0 0 0 auto;
+    z-index: 50;
+    width: min(20rem, 88vw);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    background: var(--cor-tinta-cheia);
+    color: var(--cor-tinta-cheia-texto);
+    box-shadow: -8px 0 24px rgba(0, 0, 0, 0.25);
+  }
+
+  .painel-topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.35rem 0.4rem 0.35rem 1rem;
+    border-bottom: 1px solid var(--cor-tinta-cheia-borda);
+  }
+
+  .fechar {
+    width: var(--alvo-toque);
+    height: var(--alvo-toque);
+    border: 0;
+    background: transparent;
+    color: var(--cor-tinta-cheia-media);
+    font-family: var(--fonte-mono);
+    font-size: 1.35rem;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  .painel ul {
+    margin: 0;
+    padding: 0.4rem 0;
+    list-style: none;
+  }
+
+  .painel a {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-height: var(--alvo-toque);
+    padding: 0.7rem 1rem;
+    border-left: 3px solid transparent;
+    color: var(--cor-tinta-cheia-texto);
+    text-decoration: none;
+  }
+
+  .painel a[aria-current='page'] {
+    border-left-color: var(--cor-tinta-cheia-acento);
+  }
+
+  .rotulo-gaveta {
+    font-family: var(--fonte-serifa);
+    font-size: 1.1875rem;
+    line-height: 1.25;
+  }
+
+  .rota-gaveta {
+    font-family: var(--fonte-mono);
+    font-size: var(--fs-rotulo);
+    color: var(--cor-tinta-cheia-fraca);
+  }
+
+  .painel-pe {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    padding: 0.9rem 1rem 1.1rem;
+    border-top: 1px solid var(--cor-tinta-cheia-borda);
+    font-family: var(--fonte-mono);
+    font-size: var(--fs-rotulo);
+    color: var(--cor-tinta-cheia-fraca);
+  }
+
+  .tema-texto {
+    align-self: flex-start;
+    min-height: var(--alvo-toque);
+    padding: 0 0.8rem;
+    border: 1px solid var(--cor-tinta-cheia-borda);
+    border-radius: var(--raio);
+    background: transparent;
+    color: var(--cor-tinta-cheia-media);
+    font-family: var(--fonte-corpo);
+    font-size: var(--fs-pequeno);
+    cursor: pointer;
+  }
+
+  @media (max-width: 900px) {
+    .nav-larga,
+    .tema {
+      display: none;
+    }
+    .gaveta {
+      display: block;
+      margin-left: auto;
+    }
+  }
+</style>

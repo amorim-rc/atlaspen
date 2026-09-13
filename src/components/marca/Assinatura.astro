@@ -1,0 +1,46 @@
+---
+// Assinatura do AtlasPen — duas cores (design_handoff_atlaspen/10, 4a).
+//
+// Newsreader 500. "Atlas" em tinta, "Pen" em acento; sobre fundo escuro, "Pen"
+// em #d98d7e. Em preto e branco, "Pen" volta a tinta cheia — a palavra nunca se
+// parte, e por isso é uma palavra só no texto acessível.
+interface Props {
+  /** Tamanho da fonte, em rem ou px. */
+  tamanho?: string;
+  /** Sobre tinta cheia (rodapé, gaveta). */
+  escuro?: boolean;
+  class?: string;
+}
+
+const {tamanho = '1.1875rem', escuro = false, class: classe} = Astro.props;
+---
+
+<span class:list={['assinatura', {escuro}, classe]} style={`font-size: ${tamanho}`} aria-label="AtlasPen"
+  ><span aria-hidden="true">Atlas<span class="pen">Pen</span></span></span
+>
+
+<style>
+  .assinatura {
+    font-family: var(--fonte-serifa);
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: 0.005em;
+    color: var(--cor-tinta);
+    white-space: nowrap;
+  }
+  .pen {
+    color: var(--cor-acento);
+  }
+  .escuro {
+    color: var(--cor-tinta-cheia-texto);
+  }
+  .escuro .pen {
+    color: var(--cor-tinta-cheia-acento);
+  }
+  @media print {
+    .assinatura,
+    .pen {
+      color: #000;
+    }
+  }
+</style>

@@ -1,0 +1,146 @@
+---
+// Layout base de todas as páginas: metadados, tema, cabeçalho, rodapé.
+//
+// O tema claro/escuro era do Docusaurus e foi reimplementado aqui: atributo
+// `data-theme` no <html>, escolha guardada em localStorage, o tema do sistema
+// quando ninguém escolheu, e um script inline no <head> para que a página não
+// pisque no tema errado ao carregar.
+import '@fontsource/newsreader/latin-400.css';
+import '@fontsource/newsreader/latin-ext-400.css';
+import '@fontsource/newsreader/latin-400-italic.css';
+import '@fontsource/newsreader/latin-ext-400-italic.css';
+import '@fontsource/newsreader/latin-500.css';
+import '@fontsource/newsreader/latin-ext-500.css';
+import '@fontsource/newsreader/latin-600.css';
+import '@fontsource/newsreader/latin-ext-600.css';
+import '@fontsource/ibm-plex-mono/latin-400.css';
+import '@fontsource/ibm-plex-mono/latin-ext-400.css';
+import '@fontsource/ibm-plex-mono/latin-500.css';
+import '@fontsource/ibm-plex-mono/latin-ext-500.css';
+import '@fontsource/ibm-plex-mono/latin-600.css';
+import '@fontsource/ibm-plex-mono/latin-ext-600.css';
+import '../styles/tokens.css';
+import '../styles/global.css';
+
+import Cabecalho from '../components/chrome/Cabecalho.astro';
+import Rodape from '../components/chrome/Rodape.astro';
+import {NOME, NOME_EXTENSO} from '../site/config';
+import type {ChaveNav} from '../site/navegacao';
+import {caminho} from '../site/url';
+import {CONFERIDO_EM, VERSAO} from '../site/servidor';
+
+interface Props {
+  /** Título da página. Na página inicial, o próprio nome. */
+  titulo: string;
+  descricao: string;
+  /** Item da navegação a destacar. */
+  ativo?: ChaveNav;
+  /** Páginas que não devem ser indexadas (404, stubs de redirecionamento). */
+  semIndice?: boolean;
+  tipoOg?: 'website' | 'article';
+}
+
+const {titulo, descricao, ativo, semIndice = false, tipoOg = 'website'} = Astro.props;
+const tituloCompleto = titulo === NOME ? `${NOME} — ${NOME_EXTENSO}` : `${titulo} · ${NOME}`;
+const canonico = new URL(Astro.url.pathname, Astro.site);
+const imagemOg = new URL(caminho('/img/atlaspen-social-card.png'), Astro.site);
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{tituloCompleto}</title>
+    <meta name="description" content={descricao} />
+    {semIndice ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonico} />}
+
+    <meta property="og:site_name" content={NOME} />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:type" content={tipoOg} />
+    <meta property="og:title" content={tituloCompleto} />
+    <meta property="og:description" content={descricao} />
+    <meta property="og:url" content={canonico} />
+    <meta property="og:image" content={imagemOg} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={`${NOME} — ${NOME_EXTENSO}`} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="icon" type="image/svg+xml" href={caminho('/img/atlaspen-favicon.svg')} />
+    <link rel="apple-touch-icon" href={caminho('/img/apple-touch-icon.png')} />
+    <link rel="sitemap" href={caminho('/sitemap-index.xml')} />
+    <meta name="theme-color" content="#efeade" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#221f1b" media="(prefers-color-scheme: dark)" />
+
+    <script is:inline>
+      (function () {
+        try {
+          var t = localStorage.getItem('atlaspen-tema');
+          if (t === 'dark' || t === 'light') document.documentElement.setAttribute('data-theme', t);
+        } catch (e) {}
+      })();
+    </script>
+    <slot name="head" />
+  </head>
+  <body>
+    <a class="pular" href="#conteudo">Pular para o conteúdo</a>
+    <Cabecalho ativo={ativo} versao={VERSAO} />
+    <main id="conteudo" tabindex="-1">
+      <slot />
+    </main>
+    <Rodape versao={VERSAO} conferidoEm={CONFERIDO_EM} />
+
+    <script is:inline>
+      (function () {
+        var raiz = document.documentElement;
+        var escuroNoSistema = window.matchMedia('(prefers-color-scheme: dark)');
+        function efetivo() {
+          var t = raiz.getAttribute('data-theme');
+          return t || (escuroNoSistema.matches ? 'dark' : 'light');
+        }
+        function sincronizar() {
+          var escuro = efetivo() === 'dark';
+          document.querySelectorAll('[data-alternar-tema]').forEach(function (b) {
+            b.setAttribute('aria-pressed', escuro ? 'true' : 'false');
+            b.setAttribute('title', escuro ? 'Tema escuro — passar ao claro' : 'Tema claro — passar ao escuro');
+          });
+        }
+        document.addEventListener('click', function (ev) {
+          var b = ev.target.closest && ev.target.closest('[data-alternar-tema]');
+          if (!b) return;
+          var novo = efetivo() === 'dark' ? 'light' : 'dark';
+          raiz.setAttribute('data-theme', novo);
+          try {
+            localStorage.setItem('atlaspen-tema', novo);
+          } catch (e) {}
+          sincronizar();
+        });
+        escuroNoSistema.addEventListener('change', sincronizar);
+        sincronizar();
+
+        var gaveta = document.querySelector('[data-gaveta]');
+        if (gaveta) {
+          gaveta.addEventListener('toggle', function () {
+            raiz.classList.toggle('gaveta-aberta', gaveta.open);
+          });
+          gaveta.addEventListener('click', function (ev) {
+            if (ev.target.closest('a, [data-fechar-gaveta]')) gaveta.open = false;
+          });
+          document.addEventListener('keydown', function (ev) {
+            if (ev.key === 'Escape' && gaveta.open) {
+              gaveta.open = false;
+              gaveta.querySelector('summary').focus();
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>
+
+<style is:global>
+  html.gaveta-aberta {
+    overflow: hidden;
+  }
+</style>

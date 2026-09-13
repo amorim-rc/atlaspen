@@ -1,0 +1,141 @@
+/*
+ * Tokens da identidade AtlasPen — direção Publicação
+ * (design_handoff_rodada2/06-identidade-visual.md, mantida pelo pacote final).
+ *
+ * Papel quente, serifa nos títulos, um acento, e cor informativa só onde
+ * carrega informação. Os valores de status passam 4,5:1 sobre a superfície em
+ * que são usados: não troque um deles sem recalcular o contraste.
+ *
+ * Nada abaixo de --cor-tinta-fraca em texto. É o piso, não uma sugestão. Para
+ * afastar metadado do texto principal, use tamanho e família (IBM Plex Mono,
+ * versalete), nunca mais cinza.
+ *
+ * O oxblood (--cor-acento) é de links, aba ativa e ênfase estrutural. A barra da
+ * moldura legal é --cor-tinta, e o vermelho de status (--cor-incabivel) é outro,
+ * mais frio, e só aparece em status: a moldura legal não é um estado negativo.
+ */
+
+:root {
+  color-scheme: light;
+
+  /* superfícies */
+  --cor-papel: #faf7f0;
+  --cor-papel-alt: #efeade;
+  --cor-superficie: #ffffff;
+  --cor-realce: #f7f4ed;
+  --cor-trilho: #e4dece;
+  --cor-borda: #e0dacb;
+  --cor-borda-forte: #d6d1c5;
+  --cor-borda-controle: #c5bfae;
+
+  /* tinta */
+  --cor-tinta: #211f1b;
+  --cor-tinta-corpo: #45413a;
+  --cor-tinta-media: #5c574c;
+  --cor-tinta-fraca: #6a6455;
+
+  /* acento — estrutura e ênfase */
+  --cor-acento: #8c2f22;
+  --cor-acento-forte: #6d2419;
+  --cor-acento-suave: #b08a5a;
+  --cor-acento-veu: rgba(140, 47, 34, 0.12);
+
+  /* status dos atributos penais */
+  --cor-cabivel: #2f6b4a;
+  --cor-condicional: #8a5f18;
+  --cor-incabivel: #a32b1d;
+
+  /* simulação: valor diferente do legal */
+  --cor-simulacao: #6b4a12;
+  --cor-simulacao-fundo: #f3ece0;
+
+  /* rodapé e gaveta: tinta cheia, nos dois temas */
+  --cor-tinta-cheia: #211f1b;
+  --cor-tinta-cheia-texto: #f2efe9;
+  --cor-tinta-cheia-media: #c6c0b3;
+  --cor-tinta-cheia-fraca: #948d7e;
+  --cor-tinta-cheia-borda: #3a3630;
+  --cor-tinta-cheia-acento: #d98d7e;
+
+  /* tipografia */
+  --fonte-serifa: 'Newsreader', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
+  --fonte-mono: 'IBM Plex Mono', ui-monospace, 'Cascadia Mono', Consolas, monospace;
+  --fonte-corpo: system-ui, -apple-system, 'Segoe UI', Roboto, Ubuntu, Cantarell, 'Noto Sans',
+    sans-serif;
+
+  --fs-rotulo: 0.75rem; /* versalete mono, metadado de seção */
+  --fs-meta: 0.8125rem; /* mono corrido: artigo, data, norma */
+  --fs-pequeno: 0.875rem;
+  --fs-corpo: 1rem;
+  --fs-titulo-3: 1.25rem;
+  --fs-titulo-2: 1.625rem;
+  --fs-titulo-1: 2.25rem;
+
+  /* medidas */
+  --raio: 3px;
+  --raio-cartao: 4px;
+  --largura-pagina: 72rem;
+  --largura-leitura: 42rem;
+  --margem-pagina: clamp(1rem, 4vw, 2rem);
+  --alvo-toque: 44px;
+  --sombra-cartao: 0 1px 2px rgba(33, 31, 27, 0.06);
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --cor-papel: #1a1815;
+  --cor-papel-alt: #221f1b;
+  --cor-superficie: #221f1b;
+  --cor-realce: #26231e;
+  --cor-trilho: #332f28;
+  --cor-borda: #332f28;
+  --cor-borda-forte: #403a31;
+  --cor-borda-controle: #4d463b;
+  --cor-tinta: #f2efe9;
+  --cor-tinta-corpo: #d6d0c4;
+  --cor-tinta-media: #bdb6a6;
+  --cor-tinta-fraca: #9c9484;
+  --cor-acento: #d9765f;
+  --cor-acento-forte: #e8917d;
+  --cor-acento-suave: #c9a06a;
+  --cor-acento-veu: rgba(217, 118, 95, 0.16);
+  --cor-cabivel: #6fbf8e;
+  --cor-condicional: #d3a34a;
+  --cor-incabivel: #e3796a;
+  --cor-simulacao: #d9b36a;
+  --cor-simulacao-fundo: #2e2618;
+  --cor-tinta-cheia: #11100e;
+  --cor-tinta-cheia-borda: #2a2722;
+  --sombra-cartao: none;
+}
+
+/* Sem JS, ou antes de alguém escolher: o tema do sistema. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+    --cor-papel: #1a1815;
+    --cor-papel-alt: #221f1b;
+    --cor-superficie: #221f1b;
+    --cor-realce: #26231e;
+    --cor-trilho: #332f28;
+    --cor-borda: #332f28;
+    --cor-borda-forte: #403a31;
+    --cor-borda-controle: #4d463b;
+    --cor-tinta: #f2efe9;
+    --cor-tinta-corpo: #d6d0c4;
+    --cor-tinta-media: #bdb6a6;
+    --cor-tinta-fraca: #9c9484;
+    --cor-acento: #d9765f;
+    --cor-acento-forte: #e8917d;
+    --cor-acento-suave: #c9a06a;
+    --cor-acento-veu: rgba(217, 118, 95, 0.16);
+    --cor-cabivel: #6fbf8e;
+    --cor-condicional: #d3a34a;
+    --cor-incabivel: #e3796a;
+    --cor-simulacao: #d9b36a;
+    --cor-simulacao-fundo: #2e2618;
+    --cor-tinta-cheia: #11100e;
+    --cor-tinta-cheia-borda: #2a2722;
+    --sombra-cartao: none;
+  }
+}

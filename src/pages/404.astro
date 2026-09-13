@@ -1,0 +1,45 @@
+---
+// Página de endereço inexistente. O GitHub Pages a serve para qualquer caminho
+// que não exista no build.
+import Base from '../layouts/Base.astro';
+import {caminho} from '../site/url';
+---
+
+<Base titulo="Endereço não encontrado" descricao="Este endereço não existe no AtlasPen." semIndice>
+  <section class="pagina vazio">
+    <p class="rotulo">Endereço não encontrado</p>
+    <h1>Nada responde neste endereço</h1>
+    <p class="explica">
+      O endereço pode ter sido digitado com erro, ou pode ser de uma versão antiga do site. Os endereços
+      citados em trabalho publicado são preservados por redirecionamento; se você chegou aqui por um deles,
+      o link citado aponta para algo que o catálogo não tem.
+    </p>
+    <p class="saidas">
+      <a href={caminho('/tipos')}>Buscar um tipo penal</a>
+      <a href={caminho('/atributos')}>Ver os atributos penais</a>
+      <a href={caminho('/')}>Página inicial</a>
+    </p>
+  </section>
+</Base>
+
+<style>
+  .vazio {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    padding-block: 3.5rem 1rem;
+    max-width: 44rem;
+  }
+  .rotulo {
+    color: var(--cor-acento);
+  }
+  .explica {
+    color: var(--cor-tinta-corpo);
+    max-width: 60ch;
+  }
+  .saidas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+  }
+</style>

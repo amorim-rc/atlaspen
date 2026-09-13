@@ -1,0 +1,46 @@
+---
+// Símbolo do AtlasPen — prancha com cota (design_handoff_atlaspen/10).
+//
+// A moldura é a prancha do atlas; dentro dela, os dois limites e a medida entre
+// eles. O traço ENGROSSA conforme o símbolo diminui: 2.4 em 32px, 3.2 em 16px,
+// e abaixo de 16px o símbolo não se usa — os três traços se encostam.
+interface Props {
+  /** Lado em px. Mínimo 16. */
+  tamanho?: number;
+  /** `cor` desenha no acento; `mono` herda a cor do contexto (fundo escuro, impressão). */
+  variante?: 'cor' | 'mono';
+  class?: string;
+  /** Texto alternativo. Omitido, o símbolo é decorativo (ao lado da assinatura). */
+  titulo?: string;
+}
+
+const {tamanho = 20, variante = 'cor', class: classe, titulo} = Astro.props;
+const lado = Math.max(16, tamanho);
+const traco = Math.round((2.4 + ((32 - Math.min(32, lado)) / 16) * 0.8) * 100) / 100;
+---
+
+<svg
+  class:list={['simbolo', classe]}
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 32 32"
+  width={lado}
+  height={lado}
+  fill="none"
+  stroke={variante === 'cor' ? 'var(--cor-acento)' : 'currentColor'}
+  stroke-width={traco}
+  stroke-linecap="square"
+  role={titulo ? 'img' : undefined}
+  aria-label={titulo}
+  aria-hidden={titulo ? undefined : 'true'}
+  focusable="false"
+>
+  <rect x="4" y="4" width="24" height="24"></rect>
+  <path d="M10 11v10M22 11v10M10 16h12"></path>
+</svg>
+
+<style>
+  .simbolo {
+    flex: none;
+    display: block;
+  }
+</style>
