@@ -21,14 +21,15 @@
       "natureza": "abstrato",
       "descricao": "Proposta pelo Ministério Público de aplicação imediata de pena restritiva de direitos ou multa, antes do oferecimento da denúncia, nas infrações de menor potencial ofensivo. Não gera reincidência nem efeitos civis.",
       "requisitos": [
-        "Infração de menor potencial ofensivo (pena máxima não superior a 2 anos, cumulada ou não com multa).",
+        "Infração de menor potencial ofensivo: contravenção penal, qualquer que seja a pena, ou crime com pena máxima não superior a 2 anos, cumulada ou não com multa (art. 61).",
         "Não ter sido o autor condenado, por sentença definitiva, à pena privativa de liberdade.",
         "Não ter sido beneficiado por transação penal nos 5 anos anteriores.",
         "Antecedentes, conduta social e personalidade favoráveis."
       ],
       "vedacoes": [
         "Violência doméstica e familiar contra a mulher (Súmula 536, STJ; art. 41, Lei 11.340/06).",
-        "Concurso de crimes cuja soma das penas máximas ultrapasse o limite legal."
+        "Concurso de crimes cuja soma das penas máximas ultrapasse o limite legal.",
+        "Crimes militares: a Lei 9.099/95 não se aplica no âmbito da Justiça Militar (art. 90-A)."
       ],
       "parametros": [
         {
@@ -94,7 +95,7 @@
       ],
       "vedacoes": [
         "Violência doméstica e familiar contra a mulher (Súmula 536, STJ).",
-        "Crimes militares (Súmula 9, STM) e infrações do art. 90-A, Lei 9.099/95."
+        "Crimes militares: a Lei 9.099/95 não se aplica no âmbito da Justiça Militar (art. 90-A; Súmula 9, STM)."
       ],
       "parametros": [
         {

@@ -43,6 +43,7 @@ O catálogo completo é publicado como dado aberto em formato JSON:
   "pena_max_rotulo": "20 anos",
   "pena_faixa_rotulo": "6 a 20 anos",
   "infracao_menor_potencial": false,
+  "contravencao": false,
 
   "tem_pena_privativa": true,
   "sancoes_nao_privativas": [],
@@ -93,7 +94,8 @@ os dados saber o que pode mudar sem quebrar uma conta.
 | `pena_min_rotulo`, `pena_max_rotulo`, `pena_faixa_rotulo` | Exibição na unidade natural: "15 dias a 3 meses", "2 a 5 anos", "até 5 anos". |
 | `pena_privativa`, `tem_pena_privativa`, `sancoes_nao_privativas` | Separam o tipo com pena de prisão daquele cuja sanção é outra (art. 28 da Lei 11.343/06). |
 | `tem_multa`, `multa_regime` | Multa cumulativa, alternativa ou isolada, lida do `obs`. |
-| `infracao_menor_potencial` | Pena máxima até dois anos — porta de entrada da Lei 9.099/95. |
+| `infracao_menor_potencial` | Porta de entrada da Lei 9.099/95 (art. 61): a contravenção, qualquer que seja a pena, e o crime com pena máxima até dois anos ou só com multa. Nunca o crime militar (art. 90-A); sempre o porte para consumo do art. 28 da Lei 11.343/06 (art. 48, §1º). |
+| `contravencao` | Contravenção penal: pena de prisão simples (LICP, art. 1º), ou registro da LCP ou da Lei 7.437/85, que declaram contravenção tudo o que tipificam. |
 | `resultado_morte`, `resultado_morte_derivado` | Marcam o tipo com morte como resultado; o segundo avisa que veio de heurística sobre o **nome** do crime, sem revisão manual. |
 | `perdao_judicial_previsto` | Só é `true` nas hipóteses expressamente previstas em lei — não há perdão judicial genérico. |
 | `chave_dispositivo`, `duplicata`, `duplicata_divergente`, `duplicata_ids` | Detecção de registro repetido. `duplicata_divergente` marcaria o mesmo dispositivo com penas conflitantes; **hoje não há nenhum**. |

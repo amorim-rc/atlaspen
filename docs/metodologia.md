@@ -43,7 +43,7 @@ Para viabilizar filtros combinados e o cálculo de atributos, alguns campos são
 | `pena_privativa` | Reclusão, Detenção, Prisão simples ou Nenhuma | mapeado de `tipo_pena` — `Multa`, `Morte` e `Outras penas` viram `Nenhuma`, porque não são pena de prisão |
 | `tem_multa` | se há pena de multa (cumulativa, alternativa ou isolada) | regex sobre `obs` |
 | `multa_regime` | `cumulativa` / `alternativa` / `isolada` / `nenhuma` | conectores no texto |
-| `infracao_menor_potencial` | pena máxima ≤ 2 anos | `pena_max ≤ 24` e maior que zero |
+| `infracao_menor_potencial` | contravenção, ou crime com pena máxima ≤ 2 anos ou só com multa (art. 61 da Lei 9.099/95); nunca crime militar (art. 90-A) | `contravencao`, ou `pena_max ≤ 24`, ou multa isolada; fora o CPM; dentro o art. 28 da Lei 11.343/06 (art. 48, §1º) |
 | `vigente` | o dispositivo ainda vigora? | ausência de `vigencia_ate` |
 
 :::warning[Multa é uma dimensão independente]

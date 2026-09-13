@@ -61,10 +61,29 @@ export function vedacaoLivramentoArt112(c: Cenario): string | null {
   return null;
 }
 
+/**
+ * Lei 9.099/95, art. 90-A, incluído pela Lei 9.839/1999: "As disposições desta
+ * Lei não se aplicam no âmbito da Justiça Militar." Nem transação penal nem
+ * suspensão condicional do processo nos crimes do CPM.
+ */
+function foraDaJusticaMilitar(): Avaliacao {
+  return {
+    status: 'incabivel',
+    resumo: 'Crime militar: a Lei 9.099/95 não se aplica no âmbito da Justiça Militar (art. 90-A).',
+    detalhes: [
+      'Art. 90-A da Lei 9.099/95, incluído pela Lei 9.839/1999: "As disposições desta Lei não se aplicam no âmbito da Justiça Militar."',
+      'Nem a transação penal nem a suspensão condicional do processo alcançam os crimes do CPM.',
+    ],
+  };
+}
+
 export const AVALIADORES: Record<string, (c: Cenario, p: Parametros) => Avaliacao> = {
   transacao: (c, p) => {
     const limite = num(p, 'limiteMaxMeses');
-    const dentroPena = c.penaMax <= limite;
+    if (c.justicaMilitar) return foraDaJusticaMilitar();
+    // A contravenção é de menor potencial ofensivo pela espécie (art. 61): o teto
+    // de pena só mede os crimes.
+    const dentroPena = c.contravencao || c.penaMax <= limite;
     const ressalva = bool(p, 'vedadoViolencia') && (c.violencia || c.graveAmeaca);
     return {
       status: dentroPena ? (ressalva ? 'condicional' : 'cabivel') : 'incabivel',
@@ -72,22 +91,32 @@ export const AVALIADORES: Record<string, (c: Cenario, p: Parametros) => Avaliaca
         ? `Pena máxima acima de ${formatPena(limite)}.`
         : ressalva
           ? 'Dentro do teto, mas há violência/grave ameaça (ver Súmula 536, STJ).'
-          : `Pena máxima ≤ ${formatPena(limite)} → infração de menor potencial ofensivo.`,
+          : c.contravencao
+            ? 'Contravenção penal → infração de menor potencial ofensivo, qualquer que seja a pena.'
+            : `Pena máxima ≤ ${formatPena(limite)} → infração de menor potencial ofensivo.`,
       detalhes: [
         `Teto da infração de menor potencial ofensivo: ${formatPena(limite)}.`,
+        ...(c.contravencao
+          ? ['As contravenções penais são de menor potencial ofensivo pela espécie, qualquer que seja a pena (art. 61, Lei 9.099/95).']
+          : []),
         'Proposta pelo Ministério Público antes do oferecimento da denúncia.',
         'Vedada em casos de violência doméstica e familiar contra a mulher (Súmula 536, STJ).',
       ],
-      limiar: {
-        descricao: `Pena máxima ≤ ${formatPena(limite)}`,
-        referenciaMeses: c.penaMax,
-        limiarMeses: limite,
-        folgaMeses: limite - c.penaMax,
-      },
+      ...(c.contravencao
+        ? {}
+        : {
+            limiar: {
+              descricao: `Pena máxima ≤ ${formatPena(limite)}`,
+              referenciaMeses: c.penaMax,
+              limiarMeses: limite,
+              folgaMeses: limite - c.penaMax,
+            },
+          }),
     };
   },
   'sursis-processual': (c, p) => {
     const limite = num(p, 'limiteMinMeses');
+    if (c.justicaMilitar) return foraDaJusticaMilitar();
     const dentroPena = c.penaMin <= limite;
     const ressalva = bool(p, 'vedadoViolencia') && (c.violencia || c.graveAmeaca);
     return {

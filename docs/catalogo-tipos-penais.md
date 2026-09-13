@@ -64,7 +64,8 @@ Gerados por `scripts/transform_data.py`. **Todos são heurísticos** e sujeitos 
 | `tem_multa`, `multa_regime` | Regex sobre `obs` (`e multa` → cumulativa; `ou multa` → alternativa). |
 | `pena_min_meses`, `pena_max_meses` | Cópia de `pena_min`/`pena_max`, que são a autoridade. O mês vale 30 dias, e a unidade real da pena é o **dia**: o art. 11 do CP manda **desprezar** as frações de dia — desprezar, não arredondar, porque arredondar para cima agravaria a pena sem lei. Na dosimetria o desprezo incide sobre o efeito, antes de somar. |
 | `pena_*_rotulo`, `pena_faixa_rotulo` | Exibição na unidade natural. |
-| `infracao_menor_potencial` | `pena_max_meses <= 24` **e** pena > 0. |
+| `infracao_menor_potencial` | `contravencao`, **ou** `pena_max_meses <= 24`, **ou** multa isolada (art. 61 da Lei 9.099/95). Nunca no CPM (art. 90-A); sempre no art. 28 da Lei 11.343/06, que o art. 48, §1º, manda ao rito da Lei 9.099. |
+| `contravencao` | Pena de prisão simples (LICP, art. 1º), ou registro da LCP ou da Lei 7.437/85, que declaram contravenção tudo o que tipificam. |
 | `tem_pena_privativa` | O tipo comina prisão? Se não, declara `sancoes_nao_privativas` ou `pena_por_remissao`. |
 | `resultado_morte` | Regex sobre o **nome** do tipo (art. 112, VI e VIII, LEP). |
 | `perdao_judicial_previsto` | Lista curada de dispositivos (art. 107, IX, CP). |

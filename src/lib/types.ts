@@ -77,7 +77,17 @@ export interface Crime {
   pena_privativa: PenaPrivativa;
   tem_multa: boolean;
   multa_regime: MultaRegime;
+  /**
+   * Infração de menor potencial ofensivo (art. 61 da Lei 9.099/95): a contravenção,
+   * pela espécie; o crime com pena máxima até 2 anos ou só com multa. Fora a Justiça
+   * Militar (art. 90-A); dentro o art. 28 da Lei 11.343/06 (art. 48, par. 1º).
+   */
   infracao_menor_potencial: boolean;
+  /**
+   * Contravenção penal (LICP, art. 1º): a prisão simples a denuncia pela espécie, e a
+   * LCP e a Lei 7.437/85 declaram contravenção tudo o que tipificam.
+   */
+  contravencao: boolean;
   derivado_auto: boolean;
   /** Derivados de `hediondo_condicao`/`acao_condicao`: a classificação depende do caso. */
   hediondo_condicional: boolean;
@@ -187,4 +197,14 @@ export interface Cenario {
    * analogia (art. 107, IX, CP).
    */
   perdaoJudicialPrevisto: boolean;
+  /**
+   * Contravenção penal: de menor potencial ofensivo pela espécie, qualquer que seja
+   * a pena (art. 61 da Lei 9.099/95). Campo do TIPO.
+   */
+  contravencao: boolean;
+  /**
+   * Crime militar (CPM). A Lei 9.099/95 não se aplica no âmbito da Justiça Militar
+   * (art. 90-A): nem transação penal nem suspensão condicional do processo.
+   */
+  justicaMilitar: boolean;
 }

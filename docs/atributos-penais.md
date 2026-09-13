@@ -55,8 +55,8 @@ trocada por pena máxima ou por um valor fixo aplicado a todos os tipos.
 
 | Atributo | Fundamento | Critério objetivo |
 |-----------|-----------|-------------------|
-| **Transação penal** | Art. 76, Lei 9.099/95 | Pena máxima ≤ 2 anos (menor potencial ofensivo) |
-| **Suspensão condicional do processo** | Art. 89, Lei 9.099/95 | Pena mínima ≤ 1 ano |
+| **Transação penal** | Art. 76, Lei 9.099/95 | Pena máxima ≤ 2 anos, ou contravenção (menor potencial ofensivo); nunca no crime militar (art. 90-A) |
+| **Suspensão condicional do processo** | Art. 89, Lei 9.099/95 | Pena mínima ≤ 1 ano; nunca no crime militar (art. 90-A) |
 | **ANPP** | Art. 28-A, CPP | Pena mínima < 4 anos, sem violência/grave ameaça, confissão |
 | **Colaboração premiada** | Art. 4º, Lei 12.850/13 | Redução de até 2/3 ou perdão judicial; até 1/2 se posterior à sentença |
 
