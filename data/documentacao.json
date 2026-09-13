@@ -33,7 +33,7 @@
     {
       "arquivo": "AGENTS.md",
       "sobre": "Instruções para agentes de IA (Codex, Claude Code — este via CLAUDE.md, que só o importa): fluxo de release, convenções que quebram em silêncio, verificação obrigatória.",
-      "conferido_em": "2026-08-14",
+      "conferido_em": "2026-09-13",
       "depende_de": [
         "CONTRIBUTING.md",
         "scripts/transform_data.py",
