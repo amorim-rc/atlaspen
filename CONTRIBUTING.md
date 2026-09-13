@@ -313,5 +313,7 @@ npm run typecheck
 npm run verificar   # motor de atributos × catálogo real
 npm run build
 python3 scripts/transform_data.py   # regenera static/data/crimes.json + qualidade.json
-python3 scripts/transform_data.py --estrito --max-contradicoes=42   # como na CI
+python3 scripts/transform_data.py --estrito --max-contradicoes=0   # como na CI
+python3 scripts/validar_atributos.py   # base dos atributos e histórico legislativo
+npm run atributos   # regenera static/data/atributos.json (depois do transform)
 ```

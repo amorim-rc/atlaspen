@@ -52,6 +52,15 @@ python3 scripts/transform_data.py
 O script grava o catálogo enriquecido em `static/data/crimes.json` (consumido pelo site).
 Correções manuais podem ser registradas em `CORRECOES`, no próprio script.
 
+Os atributos penais ficam em `data/atributos.json`, e a história dos dispositivos em que
+eles se fundam, em `data/historico-legislativo.json`. O derivado público, com a última
+alteração legislativa e o alcance de cada atributo, é gerado depois do catálogo:
+
+```bash
+python3 scripts/validar_atributos.py
+npm run atributos    # grava static/data/atributos.json
+```
+
 ## Documentação
 
 A documentação (Metodologia, Catálogo de tipos penais, Atributos penais, Completude,

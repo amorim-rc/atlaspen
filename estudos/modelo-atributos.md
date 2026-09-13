@@ -569,6 +569,38 @@ Só o cabeçalho e três dos onze parâmetros. Os demais seguem o mesmo molde.
    `static/data/atributos.json`, e o novo formato da `chave_dispositivo`) e o registro do
    Arquivista. Sem nota de changelog: até a v1.0.0 não se criam entradas (frente 2).
 
+**Executado em 11 e 12/09/2026**, na branch `frente-5-atributos`, com a equivalência
+zerada. O que a execução mudou no desenho acima, e por quê:
+
+- **`slug`.** Cada atributo guarda também o identificador de texto de hoje, que é o das
+  URLs (`?atributo=transacao`). O número continua sendo a chave.
+- **Fonte com mais de um dispositivo, e decisão.** `fonte` aceita `dispositivos` (lista) e
+  `decisao`, além de `dispositivo` e `sumula`. As alíneas do art. 112, VI, da LEP citam o
+  inciso junto: o percentual mora no inciso, que a Lei 15.358 alterou, e a alínea "c"
+  nunca foi alterada. O piloto da progressão (seção 5) citava só a alínea.
+- **`norma: null`.** Oito unidades não têm anotação própria e estão sob chapéu anotado
+  (CP, art. 33, §2º, "a" e "b"; art. 107, IX; art. 109, I a V). O compilado não diz quem
+  lhes deu a redação, e a base não as data pelo chapéu: o caput do art. 109 é da Lei
+  12.234/2010, e os incisos, de 1984.
+- **`sem_fonte_legal`.** Três parâmetros são de simulação, sem dispositivo que os fixe (a
+  vedação por hediondez na monitoração e as frações dos decretos de indulto e de
+  comutação): dizem por quê, em vez de citar lei.
+- **O carregador lê a fonte, não o derivado.** O derivado é produzido pelo próprio motor, e
+  ler um do outro faria círculo. O derivado é arquivo público e servirá à interface nova.
+- **A chave canônica dos tipos penais (4.1) não entrou.** O PR cuidou dos atributos; a
+  `chave_dispositivo` dos tipos segue a de hoje e é o próximo passo da frente 4.
+
+Dois achados da execução, fora do alcance de uma migração que não pode mudar resultado:
+
+- **Saída temporária.** O motor aplica a vedação de 2019 do art. 122, §2º, da LEP (hediondo
+  com resultado morte) e a atribuía à Lei 14.843/2024, que a trocou pela vedação a todo
+  crime hediondo ou cometido com violência ou grave ameaça e revogou as saídas para visita
+  à família e para atividades de retorno ao convívio social. A base registra a redação de
+  2019 com a lei certa; a correção do cálculo é PR próprio.
+- **Capitular partida.** O HTML do Planalto imprime "A rt. 107" no CP (e em dois artigos
+  sem tipo penal, no CPP e na Lei 4.729). O `parsear` do Vigia não reconhece o artigo e
+  pendura os incisos dele no anterior. O extrator do histórico já corrige; o parser, não.
+
 **Depois, em PRs próprios, porque mudam resultado:** a data do fato no caso concreto
 (achado C) e o que o inventário acrescentar.
 

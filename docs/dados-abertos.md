@@ -9,6 +9,8 @@ sidebar_position: 4
 O catálogo completo é publicado como dado aberto em formato JSON:
 
 - **Arquivo:** [`/data/crimes.json`](pathname:///sispenas/data/crimes.json)
+- **Atributos penais:** [`/data/atributos.json`](pathname:///sispenas/data/atributos.json)
+  (ver [Atributos penais](#atributos-penais), abaixo)
 - **Licença:** MIT com atribuição — cite como **"Equipe SISPENAS"**.
 
 ## Esquema de cada registro
@@ -101,6 +103,35 @@ os dados saber o que pode mudar sem quebrar uma conta.
 | `fonte` | A página do texto compilado contra a qual este registro é conferido. |
 | `conferido_em` | Data da última conferência deste registro contra a lei (AAAA-MM-DD). |
 | `conferido_resultado` | `conferido` (a moldura bate), `sem_moldura_na_lei` (o dispositivo não traz moldura própria: pena por referência ou sanção não privativa), `divergente` (virou achado) ou `dispensado` (exceção já julgada). |
+
+## Atributos penais
+
+Os 22 atributos penais também são dado aberto:
+
+- [`/data/atributos.json`](pathname:///sispenas/data/atributos.json) é o **derivado**,
+  gerado por `scripts/derivar_atributos.ts`: a base dos atributos mais o que dela se calcula;
+- `data/atributos.json` e `data/historico-legislativo.json`, no repositório, são as
+  **fontes**.
+
+| Campo | Para que existe |
+|---|---|
+| `id` | Número estável e append-only, como o `id` dos tipos penais. |
+| `slug` | O identificador das URLs do site (`?atributo=transacao`). |
+| `nome`, `fundamento`, `categoria`, `natureza`, `descricao`, `requisitos`, `vedacoes` | O instituto, como a página [Atributos penais](./atributos-penais.md) o descreve. |
+| `dispositivos` | Os dispositivos em que o atributo se funda, em chave canônica (abaixo). |
+| `parametros` | Cada patamar, fração ou vedação, com o valor padrão (lei vigente) e as `redacoes`: a `fonte` (dispositivo, súmula ou decisão), a `norma` que deu a redação e o `fundamento` exibido. `valor` só aparece quando uma redação antiga dava outro número. `norma: null` quer dizer que o compilado não anota aquela unidade, e a base não a data. `sem_fonte_legal` marca o parâmetro de simulação, sem lei que o fixe. |
+| `ultima_alteracao`, `alteracoes_legislativas` | **Derivados**, no atributo e em cada parâmetro. O evento legislativo mais recente nos dispositivos citados (norma, ano, dispositivo e o link para o artigo da lei alteradora no Planalto) e quantos houve depois do texto original. `null` é "não se sabe". |
+| `alcance` | **Derivado.** Os `id` dos tipos penais com pena privativa em que o atributo é `cabivel` e `condicional`, com os parâmetros no padrão e sob o cenário de referência declarado no próprio arquivo (pena concreta igual à mínima cominada, réu primário). Incabível é o resto. |
+
+A **chave canônica** de um dispositivo é o `id` do diploma em `data/fontes.json`, uma
+barra vertical e o dispositivo em minúsculas: `lep|art. 112, vi, c` é a alínea "c" do
+inciso VI do art. 112 da LEP. Chave sem vírgula é o artigo inteiro.
+
+O **histórico legislativo** é uma tabela, com uma linha por acontecimento na vida de um
+dispositivo (`criacao`, `alteracao`, `revogacao`, `renumeracao`, `transferencia`): a
+norma, o ano, a anotação tal como está no compilado e o link. As linhas de origem
+`compilado` são extraídas por `scripts/robos/nucleo/historico.py`; as de origem `manual`
+são preservadas quando ele roda de novo.
 
 ## De onde vem cada registro, e como ele é revisado
 
@@ -204,15 +235,17 @@ Honestidade sobre o alcance, para quem for citar:
 ## Relatório de qualidade
 
 Cada regeneração emite [`/data/qualidade.json`](pathname:///sispenas/data/qualidade.json)
-com o estado do catálogo — contagens, lacunas conhecidas e a lista completa das
-contradições, com os `id` envolvidos. Use-o para saber o que é confiável antes de citar.
+com o estado do catálogo — contagens (inclusive `total_atributos`), lacunas conhecidas e
+a lista completa das contradições, com os `id` envolvidos. Use-o para saber o que é confiável antes de citar.
 
 ## Reprodutibilidade
 
 Os campos derivados são gerados por `scripts/transform_data.py` a partir de
 `data/crimes.json` (fonte), escrevendo o catálogo enriquecido em
 `static/data/crimes.json`. O processo é determinístico: a mesma fonte produz sempre o
-mesmo derivado, e a CI falha se o derivado commitado divergir da fonte.
+mesmo derivado, e a CI falha se o derivado commitado divergir da fonte. O derivado dos
+atributos sai depois, de `scripts/derivar_atributos.ts` (`npm run atributos`), com a mesma
+exigência.
 
 ## Estabilidade e versionamento
 

@@ -22,7 +22,8 @@ O catálogo existe em duas formas, e a distinção importa para quem for contrib
 
 Nunca edite `static/data/crimes.json`: ele é sobrescrito. O workflow
 `.github/workflows/regen-data.yml` observa `data/crimes.json`, roda a transformação e
-commita o resultado — não é preciso ter Python instalado para contribuir.
+commita o resultado — não é preciso ter Python instalado para contribuir. Ele regenera
+também o derivado dos atributos, cujo alcance depende das penas do catálogo.
 
 ```
 data/crimes.json  ──►  scripts/transform_data.py  ──►  static/data/crimes.json
@@ -135,7 +136,8 @@ primeira o admite.
 
 ## Garantias de qualidade
 
-A cada regeneração, o script emite `static/data/qualidade.json` com o estado do catálogo,
+A cada regeneração, o script emite `static/data/qualidade.json` com o estado do catálogo
+(e o total de atributos penais, contado de `data/atributos.json`),
 e a CI o valida antes de qualquer publicação.
 
 Os números vivos ficam em duas páginas geradas, para não envelhecerem aqui:

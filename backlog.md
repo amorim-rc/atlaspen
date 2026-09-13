@@ -202,51 +202,34 @@ O evento `revogado` do mesmo esquema é o molde da base de tipos revogados da fr
 
 ---
 
-## 5. Atributos penais versionados em dados
+## 5. ~~Atributos penais versionados em dados~~ — concluída
 
-**Objetivo.** Tirar do código os **22 atributos que existem** e versioná-los em dados,
-como já se faz com os tipos penais. Os atributos novos são a frente 10.
+**Concluída em 12/09/2026**, na branch `frente-5-atributos`. Os 22 atributos saíram do código:
 
-**O que já se sabe.**
+- `data/atributos.json` é a base: 72 parâmetros, id numérico, os dispositivos em chave
+  canônica e as redações de cada parâmetro, com cada norma conferida contra o compilado;
+- `data/historico-legislativo.json` guarda os eventos dos 74 dispositivos citados,
+  extraídos do compilado por `scripts/robos/nucleo/historico.py`;
+- `static/data/atributos.json` é o derivado, com a última alteração legislativa e o
+  alcance de cada atributo;
+- no código ficou só `src/lib/atributos/avaliadores.ts`, e o teste de equivalência provou
+  que o cálculo não mudou;
+- a CI valida a base (`scripts/validar_atributos.py`, que cobre o "CI de validação" herdado
+  do roadmap) e exige o derivado sincronizado.
 
-- Os 22 estão em `src/lib/atributos/catalogo/`, com 71 parâmetros ao todo:
-  - *processuais* (4): transação penal, suspensão condicional do processo, ANPP,
-    colaboração premiada;
-  - *aplicação da pena* (6): substituição por restritivas, sursis, regime inicial,
-    perdão judicial, arrependimento posterior, desistência voluntária e arrependimento
-    eficaz;
-  - *execução* (12): progressão, livramento condicional, prescrição da pretensão
-    punitiva, saída temporária, detração, remição, prisão domiciliar, monitoração
-    eletrônica, indulto coletivo, comutação, graça, unificação de penas.
-- **Nenhum robô os confere.** O Vigia lê molduras, não patamares de atributo.
+**Ficou para depois**, em PRs próprios, porque muda resultado ou é de outra frente:
 
-**Estudo do modelo, validado em 11/09/2026:**
-[`estudos/modelo-atributos.md`](estudos/modelo-atributos.md), com os achados, o esquema,
-os três pilotos (transação, substituição e progressão) e o plano do PR da migração. Dois
-achados já foram corrigidos em 10/09/2026: a progressão da milícia privada (art. 288-A do
-CP), que saía com 25% ou 30% quando o art. 112, VI, "c", da LEP manda 75%; e três
-parâmetros da progressão que citavam o inciso na numeração de 2019.
+- **Saída temporária.** O cálculo aplica a vedação de 2019 (hediondo com resultado
+  morte). A Lei 14.843/2024 a ampliou a todo crime hediondo ou com violência ou grave
+  ameaça, e revogou as saídas para visita à família e para atividades de retorno ao
+  convívio social.
+- **Oito unidades sem data** no compilado (CP, art. 33, §2º, "a" e "b"; art. 107, IX;
+  art. 109, I a V). Quem as data é a cadeia completa do histórico (frente 11).
+- **Capitular partida** no parser do Vigia ("A rt. 107"), que pendura os incisos do art.
+  107 do CP no art. 106 (frente 4).
+- A data do fato no caso concreto (achado C do estudo) e o permalink de simulação.
 
-**Decidido em 10/09/2026.**
-
-- O arquivo será `data/atributos.json`, com os termos do glossário.
-- **Chave de dispositivo também nos atributos** (frente 4). A LEP, o CPP, a Lei 9.099/95
-  e a CF não estão em `data/fontes.json`, e entram.
-- **Última alteração legislativa em cada atributo**, como nos tipos: data e lei que o
-  editou, com link para o item no Planalto. É derivada do histórico, não digitada.
-- **Sem data do fato na simulação em abstrato.** Ela usa a lei vigente. No máximo o caso
-  concreto registra a data do fato.
-- **Tudo vai para dados, menos a função de avaliação.** Predicados declarativos ficam
-  para depois.
-- **Rede de segurança:** um teste que congela o resultado atual dos 22 atributos sobre os
-  tipos. A migração só entra se nada mudar.
-- **Um PR só.** O PR que cria a base troca, nele mesmo, todos os usos: o contador da
-  página inicial, a busca por tipo penal, a busca por atributo e a verificação do motor.
-  O catálogo em código sai no mesmo PR.
-- **O acervo histórico registra também a história dos atributos** (frente 12).
-
-**Herdado do roadmap.** CI de validação (frações em [0, 1], fundamento citado) e
-permalink de simulação (uma URL que carrega os parâmetros editados).
+O que se decidiu, e como: [`estudos/modelo-atributos.md`](estudos/modelo-atributos.md).
 
 ---
 

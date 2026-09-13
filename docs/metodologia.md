@@ -68,4 +68,6 @@ permite **simular alterações legislativas**.
 
 Os patamares legais adotados (limiares de 1, 2 e 4 anos; frações de progressão do
 Art. 112 LEP; tabela de prescrição do Art. 109 CP; etc.) estão documentados em
-[Atributos penais](./atributos-penais.md).
+[Atributos penais](./atributos-penais.md). São dados, e não código: ficam em
+`data/atributos.json`, cada um com o dispositivo e a lei de cada redação, conferidos contra
+o texto compilado, e a história de cada dispositivo fica em `data/historico-legislativo.json`.
