@@ -1,0 +1,912 @@
+/*
+ * Ficha do tipo penal — abas, painéis e controles
+ * (Ficha do tipo penal.dc.html, 7a e 7b; design_handoff_reestruturacao/07).
+ *
+ * Os desenhos são miniaturas: os tamanhos aqui são os deles escalados ao corpo
+ * de 16px da identidade. Alvos de toque de 44px em tudo o que se toca no
+ * estreito, e nenhuma área de rolagem dentro de outra.
+ */
+
+.fichaInterativa {
+  background: var(--cor-papel);
+}
+
+.avisoReservado {
+  margin: 0;
+  padding: 0.8rem 1.25rem;
+  border-bottom: 1px solid var(--cor-borda);
+  background: var(--cor-simulacao-fundo);
+  font-size: var(--fs-pequeno);
+  color: var(--cor-tinta-corpo);
+}
+
+/* ── abas ── */
+.abas {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-inline: 1.25rem;
+  border-bottom: 1px solid var(--cor-borda-forte);
+  background: var(--cor-papel-alt);
+}
+
+.listaAbas {
+  display: flex;
+}
+
+.aba {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--alvo-toque);
+  padding: 0.7rem 1rem;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  color: var(--cor-tinta-media);
+  font-size: 0.9375rem;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.aba:hover {
+  color: var(--cor-tinta);
+}
+
+.abaAtiva {
+  border-bottom-color: var(--cor-acento);
+  background: var(--cor-papel);
+  color: var(--cor-tinta);
+  font-weight: 600;
+}
+
+.rotuloCurto {
+  display: none;
+}
+
+.resumoAba {
+  display: none;
+  align-self: center;
+  font-family: var(--fonte-mono);
+  font-size: var(--fs-meta);
+  color: var(--cor-tinta-media);
+  text-align: right;
+}
+
+/* ── painel ── */
+.painel {
+  background: var(--cor-papel);
+}
+
+/* O título do painel só aparece sem JS, quando as abas vêm empilhadas. */
+.tituloPainel {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+}
+
+:global(html:not([data-modo-ficha])) .tituloPainel {
+  position: static;
+  width: auto;
+  height: auto;
+  clip: auto;
+  padding: 1.5rem 1.25rem 0;
+  font-size: var(--fs-titulo-3);
+}
+
+.tituloSecao {
+  padding: 1.25rem 1.25rem 0;
+  font-size: var(--fs-titulo-3);
+}
+
+.intro {
+  padding: 1.1rem 1.25rem 0.9rem;
+  max-width: 48rem;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--cor-tinta-corpo);
+}
+
+.seloSimulacao {
+  padding: 0.1rem 0.45rem;
+  border-radius: 2px;
+  background: var(--cor-simulacao-fundo);
+  color: var(--cor-simulacao);
+  font-family: var(--fonte-mono);
+  font-size: var(--fs-rotulo);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.norma {
+  display: block;
+  font-family: var(--fonte-mono);
+  font-size: var(--fs-rotulo);
+  line-height: 1.45;
+  color: var(--cor-tinta-fraca);
+}
+
+/* ── lista de vereditos ── */
+.vereditos {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--cor-borda);
+}
+
+.linhaVeredito {
+  display: grid;
+  grid-template-columns: minmax(12rem, 18rem) 9.5rem minmax(0, 1fr);
+  gap: 0.6rem 1.1rem;
+  align-items: baseline;
+  padding: 0.85rem 1.25rem;
+  border-bottom: 1px solid var(--cor-borda);
+  background: var(--cor-superficie);
+}
+
+.nomeAtributo {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.linkAtributo {
+  font-family: var(--fonte-serifa);
+  font-size: 1.125rem;
+  line-height: 1.25;
+  color: var(--cor-tinta);
+  text-decoration: none;
+}
+
+.linkAtributo:hover {
+  color: var(--cor-acento);
+  text-decoration: underline;
+}
+
+.selo {
+  justify-self: start;
+  padding: 0.3rem 0.55rem;
+  border-radius: 2px;
+  font-family: var(--fonte-mono);
+  font-size: var(--fs-rotulo);
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.selo_cabe {
+  background: var(--cor-cabivel-fundo);
+  color: var(--cor-cabivel);
+}
+
+.selo_nao_cabe {
+  background: var(--cor-incabivel-fundo);
+  color: var(--cor-incabivel);
+}
+
+.selo_valor,
+.selo_depende {
+  background: var(--cor-condicional-fundo);
+  color: var(--cor-condicional);
+}
+
+.razao {
+  min-width: 0;
+  font-size: var(--fs-pequeno);
+  line-height: 1.6;
+  color: var(--cor-tinta-corpo);
+}
+
+.porque {
+  margin-top: 0.3rem;
+}
+
+.porque summary {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2rem;
+  font-family: var(--fonte-mono);
+  font-size: var(--fs-rotulo);
+  color: var(--cor-acento);
+  cursor: pointer;
+}
+
+.porque ul {
+  margin: 0.2rem 0 0;
+  padding-left: 1.1rem;
+  font-size: 0.8125rem;
+}
+
+.porque li + li {
+  margin-top: 0.25rem;
+}
+
+.verRestantes {
+  display: none;
+}
+
+.outraAba {
+  padding: 0.9rem 1.25rem;
+  border-top: 1px solid var(--cor-borda-forte);
+  background: var(--cor-papel-alt);
+  font-size: var(--fs-pequeno);
+  color: var(--cor-tinta-corpo);
+}
+
+/* ── simulador de moldura ── */
+.simular {
+  margin: 0 1.25rem 1rem;
+  border: 1px solid var(--cor-borda);
+  border-left: 3px solid var(--cor-acento);
+  border-radius: var(--raio);
+  background: var(--cor-realce);
+}
+
+.simular > summary,
+.grupoElementos > summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.8rem;
+  min-height: var(--alvo-toque);
+  padding: 0.5rem 0.9rem;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.notaGrupo {
+  font-family: var(--fonte-mono);
+  font-size: var(--fs-rotulo);
+  font-weight: 400;
+  color: var(--cor-tinta-fraca);
+}
+
+.simuladorCorpo {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  padding: 0.3rem 0.9rem 1rem;
+}
+
+.camposMoldura {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem 2.25rem;
+}
+
+.alerta {
+  font-size: var(--fs-pequeno);
+  color: var(--cor-incabivel);
+}
+
+.atalhos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: 0.55rem;
+  max-width: 24rem;
+}
+
+.ficha,
+.fichaRemovivel {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.25rem;
+  padding: 0 0.65rem;
+  border: 1px solid var(--cor-borda-forte);
+  border-radius: 2px;
+  background: var(--cor-superficie);
+  color: var(--cor-tinta-corpo);
+  font-family: var(--fonte-mono);
+  font-size: var(--fs-rotulo);
+  cursor: pointer;
+}
+
+.ficha:hover {
+  border-color: var(--cor-acento);
+  color: var(--cor-acento);
+}
+
+.fichasMarcadas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fichaRemovivel {
+  border-color: var(--cor-simulacao);
+  background: var(--cor-simulacao-fundo);
+  color: var(--cor-simulacao);
+  font-family: var(--fonte-corpo);
+  font-size: 0.8125rem;
+}
+
+.elementos {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.grupoElementos {
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+  background: var(--cor-superficie);
+}
+
+.contador {
+  font-family: var(--fonte-mono);
+  font-size: var(--fs-rotulo);
+  color: var(--cor-acento);
+}
+
+.grupoElementos .notaGrupo {
+  margin-left: auto;
+}
+
+.grupoElementos ul {
+  margin: 0;
+  padding: 0 0.9rem 0.5rem;
+  list-style: none;
+}
+
+.elemento {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.4rem 1rem;
+  border-top: 1px solid var(--cor-borda);
+}
+
+.elementoRotulo {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: var(--alvo-toque);
+  font-size: 0.9375rem;
+  line-height: 1.35;
+  cursor: pointer;
+}
+
+.elementoRotulo input,
+.circunstancia input {
+  flex: none;
+  width: 1.1rem;
+  height: 1.1rem;
+  accent-color: var(--cor-acento);
+}
+
+.fracao select {
+  min-height: 2.25rem;
+  padding: 0 0.5rem;
+  border: 1px solid var(--cor-borda-controle);
+  border-radius: var(--raio);
+  background: var(--cor-papel);
+  font-family: var(--fonte-mono);
+  font-size: var(--fs-meta);
+}
+
+.resultadoMoldura {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 0.9rem;
+}
+
+.faixaSimulada {
+  font-family: var(--fonte-serifa);
+  font-size: 1.375rem;
+  font-weight: 500;
+}
+
+.botaoSecundario {
+  align-self: flex-start;
+  min-height: 2.5rem;
+  padding: 0 0.9rem;
+  border: 1px solid var(--cor-borda-controle);
+  border-radius: var(--raio);
+  background: var(--cor-superficie);
+  font-size: var(--fs-pequeno);
+  cursor: pointer;
+}
+
+.botaoSecundario:hover {
+  border-color: var(--cor-acento);
+  color: var(--cor-acento);
+}
+
+/* ── campo composto de pena ── */
+.campoPena {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.campoPena legend {
+  margin-bottom: 0.45rem;
+  padding: 0;
+}
+
+.casas {
+  display: flex;
+  gap: 0.45rem;
+}
+
+.casa {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+
+.casaInput {
+  width: 4.5rem;
+  min-height: var(--alvo-toque);
+  padding: 0 0.6rem;
+  border: 1px solid var(--cor-borda-controle);
+  border-radius: var(--raio);
+  background: var(--cor-papel);
+  font-family: var(--fonte-mono);
+  font-size: 1.0625rem;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.casaZero {
+  color: var(--cor-tinta-fraca);
+}
+
+.campoAlterado .casaInput {
+  border-color: var(--cor-simulacao);
+}
+
+.casaUnidade {
+  font-family: var(--fonte-mono);
+  font-size: var(--fs-rotulo);
+  color: var(--cor-tinta-fraca);
+}
+
+.soma {
+  margin-top: 0.4rem;
+  font-family: var(--fonte-mono);
+  font-size: var(--fs-meta);
+  color: var(--cor-tinta-corpo);
+}
+
+/* ── régua ── */
+.regua {
+  padding-bottom: 0.2rem;
+}
+
+.reguaTrilho {
+  position: relative;
+  height: 1.7rem;
+  margin-bottom: 1.35rem;
+  border: 1px solid var(--cor-borda);
+  border-radius: 2px;
+  background: var(--cor-papel-alt);
+}
+
+.reguaLegal {
+  position: absolute;
+  top: 0.45rem;
+  height: 0.7rem;
+  min-width: 2px;
+  background: var(--cor-tinta);
+  border-radius: 1px;
+}
+
+.reguaSimulada {
+  position: absolute;
+  top: 0.15rem;
+  height: 1.3rem;
+  min-width: 2px;
+  border: 1.5px dashed var(--cor-acento-suave);
+  border-radius: 1px;
+}
+
+.reguaMarca {
+  position: absolute;
+  top: 100%;
+  margin-top: 3px;
+  transform: translateX(-50%);
+  font-family: var(--fonte-mono);
+  font-size: 0.6875rem;
+  color: var(--cor-tinta-fraca);
+}
+
+.reguaLegenda {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.1rem;
+  font-family: var(--fonte-mono);
+  font-size: var(--fs-rotulo);
+  color: var(--cor-tinta-fraca);
+}
+
+.legLegal,
+.legSimulada {
+  display: inline-block;
+  width: 1rem;
+  vertical-align: middle;
+  margin-right: 0.3rem;
+}
+
+.legLegal {
+  height: 0.4rem;
+  background: var(--cor-tinta);
+}
+
+.legSimulada {
+  height: 0.6rem;
+  border: 1.5px dashed var(--cor-acento-suave);
+}
+
+/* ── pena concreta ── */
+.entradaConcreta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 1.25rem 2rem;
+  padding: 1rem 1.25rem;
+  border-top: 1px solid var(--cor-borda);
+  border-bottom: 1px solid var(--cor-borda);
+  background: var(--cor-superficie);
+}
+
+.barraConcreta {
+  display: flex;
+  flex: 1 1 14rem;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding-bottom: 1.6rem;
+}
+
+.barraConcreta input {
+  width: 100%;
+  min-height: var(--alvo-toque);
+  accent-color: var(--cor-acento);
+}
+
+.barraLimites {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--fonte-mono);
+  font-size: var(--fs-rotulo);
+  color: var(--cor-tinta-fraca);
+}
+
+.emDias {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding-bottom: 1.75rem;
+}
+
+.perfil {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.1rem 2.5rem;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--cor-borda);
+  background: var(--cor-superficie);
+}
+
+.grupoPerfil {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.grupoPerfil legend {
+  margin-bottom: 0.45rem;
+  padding: 0;
+}
+
+.pilulas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.pilula {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.25rem;
+  padding: 0 0.8rem;
+  border: 1px solid var(--cor-borda-forte);
+  border-radius: 2px;
+  background: var(--cor-superficie);
+  color: var(--cor-tinta-corpo);
+  font-family: var(--fonte-mono);
+  font-size: var(--fs-meta);
+  cursor: pointer;
+}
+
+.pilula:focus-within {
+  outline: 2px solid var(--cor-acento);
+  outline-offset: 2px;
+}
+
+.pilulaAtiva {
+  border-color: var(--cor-tinta);
+  background: var(--cor-tinta);
+  color: var(--cor-papel);
+}
+
+.circunstancia {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  min-height: 2.25rem;
+  font-size: 0.9375rem;
+  line-height: 1.4;
+  cursor: pointer;
+}
+
+.circunstancia input {
+  margin-top: 0.2rem;
+}
+
+.incondicionados {
+  padding: 0.9rem 1.25rem;
+  border-top: 1px solid var(--cor-borda-forte);
+  background: var(--cor-papel-alt);
+}
+
+.incondicionados ul {
+  margin: 0.5rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.incondicionados li {
+  display: grid;
+  grid-template-columns: minmax(12rem, 18rem) minmax(0, 1fr);
+  gap: 0.35rem 1.1rem;
+  align-items: baseline;
+  padding: 0.4rem 0;
+}
+
+/* ── histórico ── */
+.cabecalhoHistorico {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  padding: 1rem 1.25rem 0;
+}
+
+.historicoVazio {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  max-width: 48rem;
+  padding: 0.8rem 1.25rem 1.3rem;
+  font-size: 0.9375rem;
+  color: var(--cor-tinta-corpo);
+}
+
+.linhaTempo {
+  margin: 0;
+  padding: 0.3rem 1.25rem 0.8rem;
+  list-style: none;
+}
+
+.eventoTempo {
+  display: grid;
+  grid-template-columns: 4.75rem 1rem minmax(0, 1fr);
+  gap: 0.8rem;
+  align-items: stretch;
+}
+
+.anoEvento {
+  padding-top: 3px;
+  font-family: var(--fonte-mono);
+  font-size: var(--fs-meta);
+  color: var(--cor-tinta-media);
+}
+
+.pontoEvento {
+  position: relative;
+}
+
+.pontoEvento::before {
+  content: '';
+  position: absolute;
+  top: 0.4rem;
+  left: 50%;
+  width: 0.6rem;
+  height: 0.6rem;
+  margin-left: -0.3rem;
+  border-radius: 50%;
+  background: var(--cor-acento);
+}
+
+.pontoEvento::after {
+  content: '';
+  position: absolute;
+  top: 1.2rem;
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+  background: var(--cor-borda-forte);
+}
+
+.eventoTempo:last-child .pontoEvento::after {
+  display: none;
+}
+
+.pontoOrigem::before {
+  background: var(--cor-origem);
+}
+
+.corpoEvento {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 0;
+  padding-bottom: 1.1rem;
+}
+
+.linhaTag {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.linhaTag .norma {
+  display: inline;
+}
+
+.tagEvento {
+  padding: 0.15rem 0.45rem;
+  border-radius: 2px;
+  background: var(--cor-simulacao-fundo);
+  color: var(--cor-simulacao);
+  font-family: var(--fonte-mono);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.tagOrigem {
+  background: var(--cor-origem-fundo);
+  color: var(--cor-origem);
+}
+
+.tituloEvento {
+  font-family: var(--fonte-serifa);
+  font-size: 1.125rem;
+  line-height: 1.3;
+}
+
+.efeitoEvento {
+  font-size: var(--fs-pequeno);
+  line-height: 1.55;
+  color: var(--cor-tinta-corpo);
+}
+
+.corteHistorico {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem 1rem;
+  padding: 0.9rem 1.25rem;
+  border-top: 1px solid var(--cor-borda);
+  background: var(--cor-papel-alt);
+  font-size: var(--fs-pequeno);
+  color: var(--cor-tinta-corpo);
+}
+
+/* ── tela média ── */
+@media (max-width: 860px) {
+  .linhaVeredito {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  .linhaVeredito .razao {
+    grid-column: 1 / -1;
+  }
+  .incondicionados li {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ── tela estreita (07-layout-movel.md) ── */
+@media (max-width: 640px) {
+  .abas {
+    padding-inline: 0.5rem;
+  }
+  .aba {
+    padding-inline: 0.7rem;
+  }
+  .rotuloLongo {
+    display: none;
+  }
+  .rotuloCurto {
+    display: inline;
+  }
+  /* A linha de resumo junto das abas: sem ela, quem rola até os atributos
+     perde de vista a que pena eles respondem. No estreito, uma linha própria
+     dentro da barra presa — a faixa simulada pode ser longa. */
+  .abas {
+    flex-wrap: wrap;
+    row-gap: 0;
+  }
+  .resumoAba {
+    display: block;
+    flex-basis: 100%;
+    padding: 0.1rem 0.5rem 0.45rem;
+    text-align: left;
+  }
+  .intro,
+  .outraAba,
+  .linhaVeredito,
+  .entradaConcreta,
+  .perfil,
+  .incondicionados,
+  .linhaTempo,
+  .corteHistorico,
+  .cabecalhoHistorico,
+  .historicoVazio {
+    padding-inline: 1rem;
+  }
+  .simular {
+    margin-inline: 1rem;
+  }
+  .vereditos:not(.vereditosAbertos) .alemDoQuarto {
+    display: none;
+  }
+  .verRestantes {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: var(--alvo-toque);
+    border: 0;
+    border-bottom: 1px solid var(--cor-borda);
+    background: var(--cor-superficie);
+    color: var(--cor-acento);
+    font-family: var(--fonte-mono);
+    font-size: var(--fs-meta);
+    cursor: pointer;
+  }
+  .ficha,
+  .fichaRemovivel,
+  .pilula,
+  .circunstancia,
+  .fracao select {
+    min-height: var(--alvo-toque);
+  }
+  .eventoTempo {
+    grid-template-columns: 3.75rem 1rem minmax(0, 1fr);
+  }
+}
+
+@media print {
+  .abas {
+    position: static;
+  }
+  .porque[open] summary,
+  .verRestantes {
+    display: none;
+  }
+}

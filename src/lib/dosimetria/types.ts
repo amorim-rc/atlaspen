@@ -51,6 +51,16 @@ export interface Modificador {
   obs?: string;
 }
 
+/**
+ * O que o motor lê de um modificador. As telas que rodam o motor no navegador
+ * recebem só isto: escopo, condição e observações servem para escolher os
+ * modificadores de um tipo (aplicaveis.ts), e isso se faz no build.
+ */
+export type ModificadorDoMotor = Pick<
+  Modificador,
+  'id' | 'nome' | 'dispositivo' | 'natureza' | 'fase' | 'fracao_min' | 'fracao_max'
+>;
+
 /** Um modificador escolhido pelo usuário, com a fração aplicada. */
 export interface SelecaoModificador {
   id: string;

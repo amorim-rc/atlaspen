@@ -44,10 +44,18 @@
   --cor-cabivel: #2f6b4a;
   --cor-condicional: #8a5f18;
   --cor-incabivel: #a32b1d;
+  /* fundo do selo de veredito; o texto do selo passa 4,5:1 sobre ele */
+  --cor-cabivel-fundo: #e6efe9;
+  --cor-condicional-fundo: #f3ece0;
+  --cor-incabivel-fundo: #f6e7e4;
 
   /* simulação: valor diferente do legal */
   --cor-simulacao: #6b4a12;
   --cor-simulacao-fundo: #f3ece0;
+
+  /* histórico: o texto original de um dispositivo (Ficha do tipo penal.dc.html, 7b) */
+  --cor-origem: #3c4a6b;
+  --cor-origem-fundo: #e8ebf2;
 
   /* rodapé e gaveta: tinta cheia, nos dois temas */
   --cor-tinta-cheia: #211f1b;
@@ -102,8 +110,13 @@
   --cor-cabivel: #6fbf8e;
   --cor-condicional: #d3a34a;
   --cor-incabivel: #e3796a;
+  --cor-cabivel-fundo: #1d2e25;
+  --cor-condicional-fundo: #2e2618;
+  --cor-incabivel-fundo: #3a211c;
   --cor-simulacao: #d9b36a;
   --cor-simulacao-fundo: #2e2618;
+  --cor-origem: #a9b8da;
+  --cor-origem-fundo: #232a3a;
   --cor-tinta-cheia: #11100e;
   --cor-tinta-cheia-borda: #2a2722;
   --sombra-cartao: none;
@@ -132,8 +145,13 @@
     --cor-cabivel: #6fbf8e;
     --cor-condicional: #d3a34a;
     --cor-incabivel: #e3796a;
+    --cor-cabivel-fundo: #1d2e25;
+    --cor-condicional-fundo: #2e2618;
+    --cor-incabivel-fundo: #3a211c;
     --cor-simulacao: #d9b36a;
     --cor-simulacao-fundo: #2e2618;
+    --cor-origem: #a9b8da;
+    --cor-origem-fundo: #232a3a;
     --cor-tinta-cheia: #11100e;
     --cor-tinta-cheia-borda: #2a2722;
     --sombra-cartao: none;

@@ -38,6 +38,16 @@ export interface PenaPorRemissao {
   fracao: string | null;
 }
 
+/** Uma linha do histórico legislativo resumida (scripts/derivar_atributos.ts). */
+export interface UltimaAlteracao {
+  norma: string | null;
+  ano: number | null;
+  evento: string;
+  dispositivo: string;
+  url: string | null;
+  vigencia?: string;
+}
+
 export interface Crime {
   id: number;
   lei: string;
@@ -129,6 +139,24 @@ export interface Crime {
   perdao_judicial_previsto: boolean;
   /** Identidade do dispositivo (lei + artigo), para detectar repetições. */
   chave_dispositivo: string;
+
+  // ── Trilha de auditoria (scripts/robos/vigia/conferir.py --carimbar) ──
+  /** Página do texto compilado contra a qual o registro foi conferido. */
+  fonte?: string;
+  /** Data (AAAA-MM-DD) da última conferência. Ausente: não conferido ainda. */
+  conferido_em?: string;
+  /** conferido | divergente | sem_moldura_na_lei | dispensado (data/conferencia.json). */
+  conferido_resultado?: string;
+
+  // ── Última alteração legislativa (frente 4 do backlog) ──
+  /**
+   * O evento mais recente do histórico legislativo do dispositivo, derivado —
+   * no mesmo formato do derivado dos atributos. Ausente enquanto o histórico dos
+   * tipos não for coletado; `null` é "não se sabe".
+   */
+  ultima_alteracao?: UltimaAlteracao | null;
+  /** Quantas alterações legislativas o dispositivo sofreu depois do texto original. */
+  alteracoes_legislativas?: number | null;
   /** O mesmo dispositivo aparece em mais de um registro. */
   duplicata: boolean;
   /** As cópias do dispositivo divergem em pena ou hediondez — contradição a revisar. */

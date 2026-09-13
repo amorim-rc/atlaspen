@@ -277,6 +277,7 @@ export const AVALIADORES: Record<string, (c: Cenario, p: Parametros) => Avaliaca
       status: 'cabivel',
       resumo: `Regime inicial: ${regime}.`,
       detalhes,
+      valor: regime.toLowerCase(),
     };
   },
   'perdao-judicial': (c, p) => {
@@ -456,10 +457,12 @@ export const AVALIADORES: Record<string, (c: Cenario, p: Parametros) => Avaliaca
           'caput, que é o resultado mais favorável; a questão é dos tribunais de execução.',
       );
     }
+    const percentual = `${(fracao * 100).toFixed(2).replace(/\.?0+$/, '')}%`;
     return {
       status: c.tituloXII && c.reincidenteEspecifico ? 'condicional' : 'cabivel',
-      resumo: `Fração de ${(fracao * 100).toFixed(2).replace(/\.?0+$/, '')}% → ${formatPena(tempo)} de cumprimento.`,
+      resumo: `Fração de ${percentual} → ${formatPena(tempo)} de cumprimento.`,
       detalhes,
+      valor: `${percentual} — ${formatPena(tempo)}`,
     };
   },
   livramento: (c, p) => {
@@ -507,6 +510,7 @@ export const AVALIADORES: Record<string, (c: Cenario, p: Parametros) => Avaliaca
     const tempo = c.penaConcreta * fracao;
     return {
       status: 'cabivel',
+      valor: `${formatFracao(fracao)} — ${formatPena(tempo)}`,
       resumo: `Fração de ${formatFracao(fracao)} → ${formatPena(tempo)} cumpridos.`,
       detalhes: [
         `Fração aplicável: ${base}.`,
@@ -531,6 +535,7 @@ export const AVALIADORES: Record<string, (c: Cenario, p: Parametros) => Avaliaca
     const concreta = c.penaConcreta > 0 ? prazo(c.penaConcreta) : null;
     return {
       status: 'cabivel',
+      valor: formatPena(abstrata),
       resumo: `Em abstrato (pena máx.): ${formatPena(abstrata)}.`,
       detalhes: [
         `Prescrição em abstrato, pela pena máxima de ${formatPena(c.penaMax)}: ${formatPena(abstrata)}.`,
@@ -673,6 +678,7 @@ export const AVALIADORES: Record<string, (c: Cenario, p: Parametros) => Avaliaca
     const excede = c.penaConcreta > limite;
     return {
       status: 'cabivel',
+      valor: excede ? `unificada em ${formatPena(limite)}` : 'sem unificação',
       resumo: excede
         ? `Pena de ${formatPena(c.penaConcreta)} unificada em ${formatPena(limite)} para cumprimento.`
         : `Pena abaixo do teto de ${formatPena(limite)} — sem unificação.`,

@@ -31,6 +31,7 @@ export function calcularDosimetria(
   crime: Moldura,
   selecoes: SelecaoModificador[],
   porId: Record<string, Modificador> = POR_ID,
+  opcoes: {penaBase?: number} = {},
 ): ResultadoDosimetria {
-  return calcularSobre(crime, selecoes, porId);
+  return calcularSobre(crime, selecoes, porId, opcoes);
 }

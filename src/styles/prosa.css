@@ -125,6 +125,12 @@
   white-space: nowrap;
 }
 
+/* Nome de campo não se parte no meio dentro da tabela: ela rola no contêiner. */
+.prosa table code {
+  overflow-wrap: normal;
+  white-space: nowrap;
+}
+
 .prosa td[align='right'],
 .prosa th[align='right'] {
   text-align: right;

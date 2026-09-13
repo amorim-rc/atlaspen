@@ -20,7 +20,7 @@
 
 import type {Crime} from '../types';
 import type {
-  Modificador,
+  ModificadorDoMotor,
   PassoCalculo,
   ResultadoConcurso,
   ResultadoDosimetria,
@@ -31,7 +31,7 @@ import type {
 export type Moldura = Pick<Crime, 'pena_min_meses' | 'pena_max_meses'>;
 
 /** Índice por id de uma lista de modificadores. */
-export function indexarModificadores(lista: readonly Modificador[]): Record<string, Modificador> {
+export function indexarModificadores<M extends ModificadorDoMotor>(lista: readonly M[]): Record<string, M> {
   return Object.fromEntries(lista.map((m) => [m.id, m]));
 }
 
@@ -62,7 +62,7 @@ const desprezarFracaoDeDia = (meses: number) => {
 };
 
 /** Fração efetiva de uma seleção: a escolhida, ou a mínima do modificador. */
-function fracaoDe(sel: SelecaoModificador, m: Modificador): number {
+function fracaoDe(sel: SelecaoModificador, m: ModificadorDoMotor): number {
   if (sel.fracao !== undefined) return sel.fracao;
   return m.fracao_min ?? 0;
 }
@@ -73,11 +73,17 @@ function fracaoDe(sel: SelecaoModificador, m: Modificador): number {
  * `selecoes` são os modificadores marcados pelo usuário; os de natureza
  * `concurso` são ignorados aqui (têm cálculo próprio em `calcularConcurso`).
  * Seleção cujo id não está em `porId` é ignorada.
+ *
+ * `opcoes.penaBase` parte a 1ª fase de outro ponto da moldura que não o mínimo
+ * (em meses; presa à moldura como sempre). Serve para deslocar o MÁXIMO da
+ * moldura com os mesmos limites de cada fase (moldura.ts). Sem ela, o cálculo
+ * é o de sempre.
  */
 export function calcularDosimetria(
   crime: Moldura,
   selecoes: SelecaoModificador[],
-  porId: Record<string, Modificador>,
+  porId: Record<string, ModificadorDoMotor>,
+  opcoes: {penaBase?: number} = {},
 ): ResultadoDosimetria {
   const minimo = crime.pena_min_meses;
   const maximo = crime.pena_max_meses;
@@ -86,11 +92,11 @@ export function calcularDosimetria(
 
   const ativos = selecoes
     .map((s) => ({sel: s, mod: porId[s.id]}))
-    .filter((x): x is {sel: SelecaoModificador; mod: Modificador} => Boolean(x.mod))
+    .filter((x): x is {sel: SelecaoModificador; mod: ModificadorDoMotor} => Boolean(x.mod))
     .filter((x) => x.mod.natureza !== 'concurso');
 
   // ── 1ª fase — pena-base (art. 59) ─────────────────────────────────────────
-  let penaBase = minimo;
+  let penaBase = opcoes.penaBase ?? minimo;
   for (const {sel, mod} of ativos.filter((x) => x.mod.fase === 1)) {
     const fracao = fracaoDe(sel, mod);
     // O desprezo do art. 11 incide sobre o EFEITO, antes de somar — é isso que

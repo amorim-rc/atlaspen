@@ -64,6 +64,13 @@ export interface Avaliacao {
   resumo: string;
   detalhes: string[];
   limiar?: Limiar;
+  /**
+   * O valor que o atributo calcula, quando ele não se resume a caber ou não:
+   * o prazo da prescrição, o regime inicial, a fração e o tempo da progressão.
+   * É o mesmo número que o `resumo` já escreve, dado à parte para que a ficha o
+   * mostre como veredito (design_handoff_atlaspen/09, "veredito em três estados").
+   */
+  valor?: string;
 }
 
 /** Registro completo de um atributo penal. */

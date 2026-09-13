@@ -12,6 +12,8 @@
 //     conferidor conferem. Mover a pasta seria mexer no pipeline de dados, que
 //     este revamp não toca. O endereço público continua /data/crimes.json.
 
+import {readFileSync} from 'node:fs';
+import {resolve} from 'node:path';
 import {defineConfig} from 'astro/config';
 import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
@@ -22,6 +24,38 @@ import {remarkLinks} from './src/site/markdown/links.ts';
 
 const BASE = '/sispenas/';
 
+/**
+ * As FONTES de data/*.json importadas pelo código viram módulo virtual.
+ *
+ * Em desenvolvimento o Vite serve um JSON importado na URL do próprio arquivo
+ * (/data/atributos.json), e essa URL é também a do DERIVADO homônimo que
+ * static/ publica. O Vite se recusa a transformar caminho que coincide com
+ * arquivo público, e a ilha que importa a base dos atributos morria com 404.
+ * Como módulo virtual, o dado sai por /@id/..., sem colisão possível. O código
+ * continua importando o caminho relativo de sempre — o tsc e o Node do
+ * `npm run verificar` não percebem nada.
+ */
+function fontesSemColisao() {
+  const PREFIXO = '\0atlaspen-fonte:';
+  const DADOS = resolve('data').replace(/\\/g, '/') + '/';
+  return {
+    name: 'atlaspen-fontes-sem-colisao',
+    enforce: /** @type {const} */ ('pre'),
+    async resolveId(fonte, importador) {
+      if (!importador || !fonte.endsWith('.json')) return null;
+      const r = await this.resolve(fonte, importador, {skipSelf: true});
+      const id = r?.id.replace(/\\/g, '/');
+      return id && id.startsWith(DADOS) ? PREFIXO + id : null;
+    },
+    // Devolve o JSON cru: o id ainda termina em .json, e o plugin de JSON do
+    // próprio Vite o converte em módulo, como faria com o arquivo.
+    load(id) {
+      if (!id.startsWith(PREFIXO)) return null;
+      return readFileSync(id.slice(PREFIXO.length), 'utf-8');
+    },
+  };
+}
+
 export default defineConfig({
   site: 'https://amorim-rc.github.io',
   base: BASE,
@@ -30,6 +64,9 @@ export default defineConfig({
   trailingSlash: 'ignore',
   build: {format: 'directory'},
   integrations: [react(), sitemap()],
+  vite: {
+    plugins: [fontesSemColisao()],
+  },
   markdown: {
     // Os docs/ continuam escritos para o GitHub e na sintaxe que o hook do
     // projeto impõe; estes plugins os servem no site: admonições

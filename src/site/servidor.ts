@@ -14,6 +14,11 @@ interface Carimbo {
   conferido_em?: string;
 }
 
+/** O que cada resultado da conferência quer dizer, nas palavras da própria trilha. */
+export const RESULTADOS_CONFERENCIA: Record<string, string> = (
+  conferencia as unknown as {_meta: {resultados: Record<string, string>}}
+)._meta.resultados;
+
 /**
  * A data da conferência mais recente contra o texto compilado, lida da trilha
  * de auditoria (data/conferencia.json). É a que o rodapé e a página inicial

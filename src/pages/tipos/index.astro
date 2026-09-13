@@ -1,16 +1,47 @@
 ---
-// Tipos penais — a lista. Rota do catálogo (antes /pesquisa/tipos). A lista
-// filtrável entra com a busca por tipo penal.
+// Tipos penais — a lista do catálogo (antes /pesquisa/tipos).
+//
+// A primeira página sai do build: indexável e legível sem JS, com cada linha
+// levando à ficha do tipo. A ilha baixa o índice enxuto (/tipos/indice.json)
+// e passa a filtrar, ordenar e paginar, com o estado na URL.
 import Base from '../../layouts/Base.astro';
+import ListaTipos from '../../components/tipos/ListaTipos';
+import {FILTROS_VAZIOS, POR_PAGINA, ordenar, paraLinha} from '../../components/tipos/filtros';
 import {todosOsTipos} from '../../site/catalogo-servidor';
 
-const total = todosOsTipos().length;
+const tipos = todosOsTipos();
+const linhas = ordenar(tipos.map(paraLinha), FILTROS_VAZIOS);
+const leis = [...new Set(tipos.map((t) => t.lei))].sort((a, b) => a.localeCompare(b, 'pt-BR', {numeric: true}));
+const acoes = [...new Set(tipos.map((t) => t.acao))].filter((a) => a && a !== '—').sort((a, b) => a.localeCompare(b, 'pt-BR'));
 ---
 
-<Base titulo="Tipos penais" descricao="Todo tipo penal vigente no direito brasileiro, com a pena cominada e o que ela abre ou fecha ao condenado." ativo="tipos">
-  <section class="pagina" style="padding-block: 2.5rem">
+<Base
+  titulo="Tipos penais"
+  descricao="Todo tipo penal do catálogo, com a pena cominada. Busque por crime, artigo ou lei; a ficha de cada tipo mostra o que a pena abre ou fecha ao condenado."
+  ativo="tipos"
+>
+  <header class="pagina cabecalho">
     <p class="rotulo">Catálogo</p>
     <h1>Tipos penais</h1>
-    <p class="num">{total.toLocaleString('pt-BR')} tipos penais no catálogo.</p>
-  </section>
+    <p class="intro">
+      Todo tipo penal do catálogo, com a pena cominada. Busque por crime, artigo ou lei; a ficha de cada tipo mostra o
+      que a pena cominada e a pena aplicada abrem ou fecham ao condenado.
+    </p>
+  </header>
+  <div class="pagina">
+    <ListaTipos client:load total={tipos.length} leis={leis} acoes={acoes} inicial={linhas.slice(0, POR_PAGINA)} />
+  </div>
 </Base>
+
+<style>
+  .cabecalho {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding-block: 2rem 1.2rem;
+  }
+  .intro {
+    max-width: 62ch;
+    color: var(--cor-tinta-corpo);
+  }
+</style>

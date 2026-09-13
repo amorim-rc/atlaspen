@@ -1,0 +1,492 @@
+/*
+ * A lista de tipos penais (/tipos). Tabela na tela larga; cartões no estreito
+ * (Atributo, bordas e chrome.dc.html, 8f). Estados de borda 8b e 8d.
+ */
+
+.lista {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.barraBusca {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem 1rem;
+}
+
+.busca {
+  flex: 1 1 18rem;
+  min-height: var(--alvo-toque);
+  padding: 0 0.8rem;
+  border: 1px solid var(--cor-borda-controle);
+  border-radius: var(--raio);
+  background: var(--cor-superficie);
+  font-size: 1rem;
+}
+
+.contagem {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--fonte-mono);
+  font-size: var(--fs-meta);
+  color: var(--cor-tinta-media);
+}
+
+/* Barra de progresso fina, sem girador: o catálogo carrega em fração de segundo. */
+.progresso {
+  display: block;
+  width: 3.5rem;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--cor-trilho);
+  overflow: hidden;
+}
+
+.progresso span {
+  display: block;
+  width: 40%;
+  height: 100%;
+  background: var(--cor-acento);
+}
+
+.filtros {
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+  background: var(--cor-superficie);
+}
+
+.filtros > summary {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: var(--alvo-toque);
+  padding: 0 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.nAtivos {
+  font-family: var(--fonte-mono);
+  font-size: var(--fs-rotulo);
+  font-weight: 400;
+  color: var(--cor-acento);
+}
+
+.corpoFiltros {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  padding: 0.2rem 0.9rem 0.9rem;
+}
+
+.selects {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+  gap: 0.6rem 0.9rem;
+}
+
+.selects label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  min-width: 0;
+}
+
+.selects select {
+  min-height: 2.5rem;
+  padding: 0 0.5rem;
+  border: 1px solid var(--cor-borda-controle);
+  border-radius: var(--raio);
+  background: var(--cor-papel);
+  font-size: var(--fs-pequeno);
+  max-width: 100%;
+}
+
+.linhaChips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.5rem;
+}
+
+.linhaChips > .rotulo,
+.linhaChips > :global(.rotulo) {
+  margin-right: 0.3rem;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.25rem;
+  padding: 0 0.75rem;
+  border: 1px solid var(--cor-borda-forte);
+  border-radius: 2px;
+  background: var(--cor-superficie);
+  color: var(--cor-tinta-corpo);
+  font-family: var(--fonte-mono);
+  font-size: var(--fs-meta);
+  cursor: pointer;
+}
+
+.chipAtivo {
+  border-color: var(--cor-tinta);
+  background: var(--cor-tinta);
+  color: var(--cor-papel);
+}
+
+.checkMpo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 2.25rem;
+  margin-left: 0.5rem;
+  font-size: var(--fs-pequeno);
+}
+
+.checkMpo input {
+  width: 1.05rem;
+  height: 1.05rem;
+  accent-color: var(--cor-acento);
+}
+
+.dica {
+  font-size: var(--fs-rotulo);
+  font-family: var(--fonte-mono);
+  color: var(--cor-tinta-fraca);
+}
+
+.limpar {
+  align-self: flex-start;
+  min-height: 2.25rem;
+  padding: 0 0.8rem;
+  border: 1px solid var(--cor-borda-controle);
+  border-radius: var(--raio);
+  background: var(--cor-papel);
+  font-size: var(--fs-pequeno);
+  cursor: pointer;
+}
+
+.erro {
+  padding: 0.8rem 1rem;
+  border-left: 3px solid var(--cor-incabivel);
+  background: var(--cor-incabivel-fundo);
+  font-size: var(--fs-pequeno);
+}
+
+/* ── tabela ── */
+.tabela {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--fs-pequeno);
+}
+
+.tabela thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  padding: 0;
+  border-bottom: 1px solid var(--cor-borda-forte);
+  background: var(--cor-papel);
+  text-align: left;
+}
+
+.tabela thead th button,
+.tabela thead th:last-child {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 2.6rem;
+  padding: 0 0.6rem;
+  border: 0;
+  background: none;
+  font-family: var(--fonte-mono);
+  font-size: var(--fs-rotulo);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--cor-tinta-fraca);
+  text-align: left;
+  cursor: pointer;
+}
+
+.tabela thead th:last-child {
+  display: table-cell;
+  vertical-align: middle;
+  cursor: default;
+}
+
+.tabela thead th[aria-sort='ascending'] button,
+.tabela thead th[aria-sort='descending'] button {
+  color: var(--cor-acento);
+}
+
+.tabela tbody td {
+  padding: 0.55rem 0.6rem;
+  border-bottom: 1px solid var(--cor-borda);
+  vertical-align: baseline;
+}
+
+.tabela tbody tr:hover {
+  background: var(--cor-superficie);
+}
+
+.celLei,
+.celArtigo,
+.celPena {
+  font-family: var(--fonte-mono);
+  font-size: var(--fs-meta);
+  color: var(--cor-tinta-media);
+  white-space: nowrap;
+}
+
+.celPena,
+.colPena {
+  font-variant-numeric: tabular-nums;
+}
+
+.celArtigo {
+  white-space: normal;
+  min-width: 8rem;
+}
+
+.celCrime {
+  min-width: 14rem;
+}
+
+.linkTipo {
+  font-family: var(--fonte-serifa);
+  font-size: 1.0625rem;
+  line-height: 1.3;
+  color: var(--cor-tinta);
+  text-decoration: none;
+}
+
+.linkTipo:hover {
+  color: var(--cor-acento);
+  text-decoration: underline;
+}
+
+.dispositivoMovel,
+.penaMovel {
+  display: none;
+}
+
+.foraVigencia {
+  margin-left: 0.5rem;
+  font-family: var(--fonte-mono);
+  font-size: var(--fs-rotulo);
+  color: var(--cor-acento);
+}
+
+.celModalidade {
+  white-space: nowrap;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 0.3rem;
+  padding: 0.05rem 0.4rem;
+  border: 1px solid var(--cor-borda-forte);
+  border-radius: 2px;
+  font-family: var(--fonte-mono);
+  font-size: 0.6875rem;
+  color: var(--cor-tinta-corpo);
+}
+
+.tagHediondo {
+  border-color: color-mix(in srgb, var(--cor-acento) 45%, transparent);
+  color: var(--cor-acento);
+}
+
+.paginacao {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  font-family: var(--fonte-mono);
+  font-size: var(--fs-meta);
+  color: var(--cor-tinta-media);
+}
+
+.paginacao button {
+  min-width: var(--alvo-toque);
+  min-height: var(--alvo-toque);
+  border: 1px solid var(--cor-borda-forte);
+  border-radius: var(--raio);
+  background: var(--cor-superficie);
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.paginacao button:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+/* ── esqueleto (8d) ── */
+.esqueleto {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  padding: 0.9rem 0.6rem;
+}
+
+.linhaEsqueleto {
+  display: grid;
+  grid-template-columns: 7rem minmax(0, 1fr) 4.5rem;
+  gap: 0.8rem;
+  align-items: center;
+}
+
+.linhaEsqueleto span {
+  display: block;
+  height: 0.7rem;
+  border-radius: 2px;
+  background: var(--cor-trilho);
+}
+
+.linhaEsqueleto span:last-child {
+  background: var(--cor-papel-alt);
+}
+
+/* ── busca vazia (8b) ── */
+.vazio {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  max-width: 40rem;
+  padding: 1.2rem 1.25rem 1.4rem;
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-cartao);
+  background: var(--cor-superficie);
+}
+
+.vazio h2 {
+  font-size: var(--fs-titulo-3);
+}
+
+.vazio p {
+  font-size: var(--fs-pequeno);
+  line-height: 1.7;
+  color: var(--cor-tinta-corpo);
+}
+
+.chipsAtivos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.chipAtivoFixo {
+  padding: 0.2rem 0.55rem;
+  border-radius: 2px;
+  background: var(--cor-tinta);
+  color: var(--cor-papel);
+  font-family: var(--fonte-mono);
+  font-size: var(--fs-rotulo);
+}
+
+.sugestoes {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.sugestoes ul {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sugestoes button {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  width: 100%;
+  min-height: var(--alvo-toque);
+  padding: 0.45rem 0.8rem;
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+  background: var(--cor-papel);
+  font-size: var(--fs-pequeno);
+  text-align: left;
+  cursor: pointer;
+}
+
+.sugestoes button:hover:not(:disabled) {
+  border-color: var(--cor-acento);
+}
+
+.sugestoes button:disabled {
+  cursor: default;
+  color: var(--cor-tinta-fraca);
+}
+
+.totalSugestao {
+  font-family: var(--fonte-mono);
+  font-size: var(--fs-meta);
+  color: var(--cor-acento);
+  white-space: nowrap;
+}
+
+.lacuna {
+  padding-top: 0.6rem;
+  border-top: 1px solid var(--cor-borda);
+}
+
+/* ── tela estreita: cartões (8f) ── */
+@media (max-width: 640px) {
+  .tabela thead {
+    display: none;
+  }
+  .tabela,
+  .tabela tbody {
+    display: block;
+  }
+  .tabela tbody tr {
+    position: relative;
+    display: block;
+    margin-bottom: 0.5rem;
+    padding: 0.65rem 0.8rem;
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--raio);
+    background: var(--cor-superficie);
+  }
+  .tabela tbody td {
+    display: none;
+    padding: 0;
+    border: 0;
+  }
+  .tabela tbody td.celCrime {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    min-width: 0;
+  }
+  .dispositivoMovel,
+  .penaMovel {
+    display: block;
+    font-family: var(--fonte-mono);
+    font-size: var(--fs-rotulo);
+    color: var(--cor-tinta-fraca);
+  }
+  .penaMovel {
+    color: var(--cor-tinta-corpo);
+  }
+  /* O cartão inteiro é o alvo de toque. */
+  .linkTipo::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+  .foraVigencia {
+    margin-left: 0;
+  }
+}
