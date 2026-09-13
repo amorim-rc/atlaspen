@@ -9,6 +9,8 @@ sidebar_position: 4
 O catálogo completo é publicado como dado aberto em formato JSON:
 
 - **Arquivo:** [`/data/crimes.json`](pathname:///sispenas/data/crimes.json)
+- **Atributos penais:** [`/data/atributos.json`](pathname:///sispenas/data/atributos.json)
+  (ver [Atributos penais](#atributos-penais), abaixo)
 - **Licença:** MIT com atribuição — cite como **"Equipe SISPENAS"**.
 
 ## Esquema de cada registro
@@ -41,6 +43,7 @@ O catálogo completo é publicado como dado aberto em formato JSON:
   "pena_max_rotulo": "20 anos",
   "pena_faixa_rotulo": "6 a 20 anos",
   "infracao_menor_potencial": false,
+  "contravencao": false,
 
   "tem_pena_privativa": true,
   "sancoes_nao_privativas": [],
@@ -91,7 +94,8 @@ os dados saber o que pode mudar sem quebrar uma conta.
 | `pena_min_rotulo`, `pena_max_rotulo`, `pena_faixa_rotulo` | Exibição na unidade natural: "15 dias a 3 meses", "2 a 5 anos", "até 5 anos". |
 | `pena_privativa`, `tem_pena_privativa`, `sancoes_nao_privativas` | Separam o tipo com pena de prisão daquele cuja sanção é outra (art. 28 da Lei 11.343/06). |
 | `tem_multa`, `multa_regime` | Multa cumulativa, alternativa ou isolada, lida do `obs`. |
-| `infracao_menor_potencial` | Pena máxima até dois anos — porta de entrada da Lei 9.099/95. |
+| `infracao_menor_potencial` | Porta de entrada da Lei 9.099/95 (art. 61): a contravenção, qualquer que seja a pena, e o crime com pena máxima até dois anos ou só com multa. Nunca o crime militar (art. 90-A); sempre o porte para consumo do art. 28 da Lei 11.343/06 (art. 48, §1º). |
+| `contravencao` | Contravenção penal: pena de prisão simples (LICP, art. 1º), ou registro da LCP ou da Lei 7.437/85, que declaram contravenção tudo o que tipificam. |
 | `resultado_morte`, `resultado_morte_derivado` | Marcam o tipo com morte como resultado; o segundo avisa que veio de heurística sobre o **nome** do crime, sem revisão manual. |
 | `perdao_judicial_previsto` | Só é `true` nas hipóteses expressamente previstas em lei — não há perdão judicial genérico. |
 | `chave_dispositivo`, `duplicata`, `duplicata_divergente`, `duplicata_ids` | Detecção de registro repetido. `duplicata_divergente` marcaria o mesmo dispositivo com penas conflitantes; **hoje não há nenhum**. |
@@ -101,6 +105,35 @@ os dados saber o que pode mudar sem quebrar uma conta.
 | `fonte` | A página do texto compilado contra a qual este registro é conferido. |
 | `conferido_em` | Data da última conferência deste registro contra a lei (AAAA-MM-DD). |
 | `conferido_resultado` | `conferido` (a moldura bate), `sem_moldura_na_lei` (o dispositivo não traz moldura própria: pena por referência ou sanção não privativa), `divergente` (virou achado) ou `dispensado` (exceção já julgada). |
+
+## Atributos penais
+
+Os 22 atributos penais também são dado aberto:
+
+- [`/data/atributos.json`](pathname:///sispenas/data/atributos.json) é o **derivado**,
+  gerado por `scripts/derivar_atributos.ts`: a base dos atributos mais o que dela se calcula;
+- `data/atributos.json` e `data/historico-legislativo.json`, no repositório, são as
+  **fontes**.
+
+| Campo | Para que existe |
+|---|---|
+| `id` | Número estável e append-only, como o `id` dos tipos penais. |
+| `slug` | O identificador das URLs do site (`?atributo=transacao`). |
+| `nome`, `fundamento`, `categoria`, `natureza`, `descricao`, `requisitos`, `vedacoes` | O instituto, como a página [Atributos penais](./atributos-penais.md) o descreve. |
+| `dispositivos` | Os dispositivos em que o atributo se funda, em chave canônica (abaixo). |
+| `parametros` | Cada patamar, fração ou vedação, com o valor padrão (lei vigente) e as `redacoes`: a `fonte` (dispositivo, súmula ou decisão), a `norma` que deu a redação e o `fundamento` exibido. `valor` só aparece quando uma redação antiga dava outro número. `norma: null` quer dizer que o compilado não anota aquela unidade, e a base não a data. `sem_fonte_legal` marca o parâmetro de simulação, sem lei que o fixe. |
+| `ultima_alteracao`, `alteracoes_legislativas` | **Derivados**, no atributo e em cada parâmetro. O evento legislativo mais recente nos dispositivos citados (norma, ano, dispositivo e o link para o artigo da lei alteradora no Planalto) e quantos houve depois do texto original. `null` é "não se sabe". |
+| `alcance` | **Derivado.** Os `id` dos tipos penais com pena privativa em que o atributo é `cabivel` e `condicional`, com os parâmetros no padrão e sob o cenário de referência declarado no próprio arquivo (pena concreta igual à mínima cominada, réu primário). Incabível é o resto. |
+
+A **chave canônica** de um dispositivo é o `id` do diploma em `data/fontes.json`, uma
+barra vertical e o dispositivo em minúsculas: `lep|art. 112, vi, c` é a alínea "c" do
+inciso VI do art. 112 da LEP. Chave sem vírgula é o artigo inteiro.
+
+O **histórico legislativo** é uma tabela, com uma linha por acontecimento na vida de um
+dispositivo (`criacao`, `alteracao`, `revogacao`, `renumeracao`, `transferencia`): a
+norma, o ano, a anotação tal como está no compilado e o link. As linhas de origem
+`compilado` são extraídas por `scripts/robos/nucleo/historico.py`; as de origem `manual`
+são preservadas quando ele roda de novo.
 
 ## De onde vem cada registro, e como ele é revisado
 
@@ -124,7 +157,9 @@ história da norma emenda por emenda.
 
 Toda segunda-feira, de madrugada, o repositório repete sozinho o mesmo procedimento:
 
-1. **Baixar.** Busca a página compilada dos 64 diplomas que têm tipo penal no catálogo.
+1. **Baixar.** Busca a página compilada de cada diploma de `data/fontes.json`: os que
+   têm tipo penal no catálogo e os de referência, que fundamentam a hediondez e os
+   atributos penais (a Lei dos Crimes Hediondos, a LEP, o CPP, a Lei 9.099/95 e a CF).
    Cada diploma tem uma **sentinela**: um trecho que comprovadamente existe na versão
    atual da página (em geral a emenda mais recente já incorporada). Se a sentinela não
    aparecer, a rodada falha em vez de continuar — é a proteção contra comparar o catálogo
@@ -202,15 +237,17 @@ Honestidade sobre o alcance, para quem for citar:
 ## Relatório de qualidade
 
 Cada regeneração emite [`/data/qualidade.json`](pathname:///sispenas/data/qualidade.json)
-com o estado do catálogo — contagens, lacunas conhecidas e a lista completa das
-contradições, com os `id` envolvidos. Use-o para saber o que é confiável antes de citar.
+com o estado do catálogo — contagens (inclusive `total_atributos`), lacunas conhecidas e
+a lista completa das contradições, com os `id` envolvidos. Use-o para saber o que é confiável antes de citar.
 
 ## Reprodutibilidade
 
 Os campos derivados são gerados por `scripts/transform_data.py` a partir de
 `data/crimes.json` (fonte), escrevendo o catálogo enriquecido em
 `static/data/crimes.json`. O processo é determinístico: a mesma fonte produz sempre o
-mesmo derivado, e a CI falha se o derivado commitado divergir da fonte.
+mesmo derivado, e a CI falha se o derivado commitado divergir da fonte. O derivado dos
+atributos sai depois, de `scripts/derivar_atributos.ts` (`npm run atributos`), com a mesma
+exigência.
 
 ## Estabilidade e versionamento
 

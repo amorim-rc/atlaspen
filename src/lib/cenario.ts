@@ -48,5 +48,8 @@ export function cenarioFromCrime(c: Crime): Cenario {
     culposo: c.elemento === 'Culposo',
     admiteTentativa: c.tentativa === 'Sim',
     perdaoJudicialPrevisto: c.perdao_judicial_previsto === true,
+    contravencao: c.contravencao === true,
+    // Pelo diploma, como o CPM é reconhecido no resto do motor.
+    justicaMilitar: /^CPM/.test(c.lei ?? ''),
   };
 }

@@ -11,6 +11,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import type {Cenario, Crime} from '../src/lib/types';
 import {CATALOGO, avaliarAtributo, valoresPadrao} from '../src/lib/atributos';
+import {AVALIADORES} from '../src/lib/atributos/avaliadores';
 import {
   avaliarCatalogo,
   cenarioReversoPadrao,
@@ -120,11 +121,84 @@ console.log('0. Integração catálogo → motor de atributos');
   );
 }
 
+// ── 0b. Menor potencial ofensivo (Lei 9.099/95, arts. 61 e 90-A) ─────────
+console.log('0b. Menor potencial ofensivo');
+{
+  const porId = new Map(todos.map((c) => [c.id, c]));
+  // Os 29 registros com multa isolada que a regra antiga (pena máxima maior que
+  // zero) deixava de fora; o art. 45 do DL 6.259/44, contravenção com prisão
+  // simples de até 4 anos; o art. 8º da Lei 7.437/85, contravenção com perda do
+  // cargo; e o art. 28 da Lei 11.343/06, que o art. 48, §1º, manda à Lei 9.099.
+  const dentro = [
+    769, 770, 774, 822, 823, 828, 829, 833, 834, 836, 837, 839, 841, 848, 851,
+    779, 781, 784, 923, 926, 935, 942, 949, 1414, 920, 921, 479, 895, 970,
+    570, 892, 314,
+  ];
+  const fora = dentro.filter((id) => porId.get(id)?.infracao_menor_potencial !== true);
+  ok(
+    fora.length === 0,
+    'contravenções, crimes só com multa e o art. 28 da Lei 11.343/06 são de menor potencial ofensivo' +
+      (fora.length ? ` (falham: ${fora.join(', ')})` : ''),
+  );
+  ok(
+    todos.filter((c) => c.contravencao).every((c) => c.infracao_menor_potencial),
+    'toda contravenção é de menor potencial ofensivo, qualquer que seja a pena',
+  );
+  const militares = todos.filter((c) => /^CPM/.test(c.lei));
+  ok(
+    militares.every((c) => !c.infracao_menor_potencial),
+    `nenhum dos ${militares.length} crimes militares é de menor potencial ofensivo (art. 90-A)`,
+  );
+  const transacao = CATALOGO.find((b) => b.id === 'transacao')!;
+  const suspensao = CATALOGO.find((b) => b.id === 'sursis-processual')!;
+  const status = (def: typeof transacao, c: Crime) =>
+    avaliarAtributo(def, cenarioFromCrime(c), valoresPadrao(def)).status;
+  ok(
+    militares.every((c) => status(transacao, c) === 'incabivel' && status(suspensao, c) === 'incabivel'),
+    'transação penal e suspensão do processo incabíveis nos crimes militares (art. 90-A)',
+  );
+  ok(
+    status(transacao, porId.get(570)!) !== 'incabivel',
+    'a transação alcança a contravenção com pena acima de 2 anos (art. 45 do DL 6.259/44)',
+  );
+}
+
 // ── 1. Invariantes estruturais do registro ──────────────────────────────
 console.log('1. Integridade do registro de atributos');
 {
   const ids = CATALOGO.map((b) => b.id);
   ok(new Set(ids).size === ids.length, 'ids de atributo são únicos');
+  // O motor lê a base (data/atributos.json): todo atributo tem função de
+  // avaliação, toda função tem atributo, e nenhuma função lê parâmetro que a
+  // base não declare. A leitura é espiada em quatro variações do cenário, para
+  // passar pelos ramos da reincidência e da redação de 2019 da progressão.
+  const avaliadores = Object.keys(AVALIADORES);
+  ok(
+    avaliadores.length === ids.length && avaliadores.every((k) => ids.includes(k)),
+    'todo atributo da base tem função de avaliação, e toda função tem atributo',
+  );
+  const lidosFora = new Set<string>();
+  for (const b of CATALOGO) {
+    const declarados = new Set(b.parametros.map((p) => p.id));
+    const espiao = new Proxy(valoresPadrao(b), {
+      get(alvo, k) {
+        if (typeof k === 'string' && !declarados.has(k)) lidosFora.add(`${b.id}.${k}`);
+        return alvo[k as string];
+      },
+    });
+    for (const c of crimes) {
+      const base = cenarioFromCrime(c);
+      for (const extra of [{}, {reincidenteEspecifico: true}, {fatoAnteriorA15402: true},
+        {reincidenteEspecifico: true, fatoAnteriorA15402: true}]) {
+        b.avaliar({...base, ...extra}, espiao);
+      }
+    }
+  }
+  ok(
+    lidosFora.size === 0,
+    'nenhuma função de avaliação lê parâmetro ausente da base' +
+      (lidosFora.size ? `: ${[...lidosFora].join(', ')}` : ''),
+  );
   ok(
     CATALOGO.every((b) => b.requisitos.length > 0),
     'todo atributo declara ao menos um requisito',

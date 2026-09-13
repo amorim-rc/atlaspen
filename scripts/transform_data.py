@@ -8,7 +8,9 @@ combinados por modalidade de pena e cálculo de atributos penais:
   - pena_privativa : Reclusão | Detenção | Prisão simples | Nenhuma
   - tem_multa      : bool  (multa cumulada OU alternativa OU isolada)
   - multa_regime   : cumulativa | alternativa | isolada | nenhuma
-  - infracao_menor_potencial : bool (pena máx <= 2 anos -> JECRIM)
+  - infracao_menor_potencial : bool (art. 61 da Lei 9.099: contravenção, pena máx.
+    <= 2 anos ou só multa; nunca o CPM, art. 90-A)
+  - contravencao : bool (prisão simples, ou registro da LCP ou da Lei 7.437/85)
   - tem_pena_privativa : bool (comina prisão? entra nas estatísticas de alcance?)
   - resultado_morte : bool (qualificado pelo resultado morte -> art. 112, VI/VIII, LEP)
   - perdao_judicial_previsto : bool (há previsão legal expressa de perdão judicial?)
@@ -249,6 +251,50 @@ def _carregar_fontes() -> dict:
 
 
 PLANALTO = _carregar_fontes()
+
+
+def _diplomas_por_rotulo() -> dict:
+    caminho = ROOT / "data" / "fontes.json"
+    dados = json.loads(caminho.read_text(encoding="utf-8"))
+    return {rotulo: f["id"] for f in dados["fontes"] for rotulo in f["rotulos"]}
+
+
+DIPLOMA = _diplomas_por_rotulo()
+# Diplomas que declaram contravenção tudo o que tipificam: a LCP, e a Lei
+# 7.437/85 ("Constitui contravenção [...] a prática de atos resultantes de
+# preconceito"), cujo art. 8º comina só a perda do cargo.
+DIPLOMAS_DE_CONTRAVENCOES = {"lcp", "preconceitos-7437"}
+_ART_28 = re.compile(r"^Art\.?\s*28\b")
+
+
+def menor_potencial(c: dict) -> tuple[bool, bool]:
+    """(contravenção, infração de menor potencial ofensivo) do registro.
+
+    Contravenção (LICP, art. 1º) é a infração a que a lei comina prisão simples
+    ou multa, isoladamente ou em conjunto. A prisão simples a denuncia pela
+    espécie — é o que põe o art. 45 do DL 6.259/44 (até 4 anos) entre elas —, e
+    a LCP e a Lei 7.437/85 declaram contravenção tudo o que tipificam.
+
+    Menor potencial ofensivo (Lei 9.099/95, art. 61): as contravenções, pela
+    espécie, e os crimes com pena máxima até 2 anos, cumulada ou não com multa —
+    e, a fortiori, os punidos só com multa. A regra antiga exigia pena máxima
+    maior que zero, e 29 registros com multa isolada ficavam de fora. Duas
+    exceções, decididas em 13/09/2026:
+
+    - a Justiça Militar, a que a Lei 9.099 não se aplica (art. 90-A);
+    - o porte para consumo pessoal (art. 28 da Lei 11.343/06), sem pena
+      privativa nem multa, que o art. 48, §1º, manda ao rito da Lei 9.099.
+    """
+    diploma = DIPLOMA.get(c.get("lei"))
+    contravencao = (c.get("pena_privativa") == "Prisão simples"
+                    or diploma in DIPLOMAS_DE_CONTRAVENCOES)
+    if diploma == "cpm":
+        return contravencao, False
+    if diploma == "drogas-11343" and _ART_28.match(c.get("artigo") or ""):
+        return contravencao, True
+    pmax = c["pena_max_meses"]
+    multa_isolada = not c["tem_pena_privativa"] and c["tem_multa"]
+    return contravencao, bool(contravencao or multa_isolada or (pmax and pmax <= 24))
 
 
 def url_planalto(lei: str) -> str:
@@ -638,12 +684,12 @@ def main():
 
         derivar_pena(c)
         pmax = c["pena_max_meses"]
-        c["infracao_menor_potencial"] = bool(pmax and pmax <= 24)
 
         # Todo registro é tipo penal (garantido por validar_tipos_penais). O que
         # varia é ter ou não pena PRIVATIVA: só quem tem entra nas estatísticas de
         # alcance dos atributos, que se medem por patamar de pena.
         c["tem_pena_privativa"] = bool(pmax or c["pena_min_meses"])
+        c["contravencao"], c["infracao_menor_potencial"] = menor_potencial(c)
         c.setdefault("sancoes_nao_privativas", [])
         c.setdefault("pena_por_remissao", None)
         if not c["tem_pena_privativa"]:
@@ -756,6 +802,9 @@ def main():
     relatorio = {
         "total_tipos_penais": len(crimes),
         "condutas_base": len({_base(c) for c in crimes}),
+        # O terceiro contador da página inicial (frente 5 do backlog).
+        "total_atributos": len(json.loads(
+            (ROOT / "data" / "atributos.json").read_text(encoding="utf-8"))["atributos"]),
         "com_pena_privativa": len(com_pena),
         "sem_pena_privativa": len(crimes) - len(com_pena),
         "dispositivos_distintos": len(por_chave),

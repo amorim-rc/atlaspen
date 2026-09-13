@@ -1,0 +1,1931 @@
+{
+  "_meta": {
+    "descricao": "Catálogo dos atributos penais: a fonte. O derivado, com a última alteração legislativa e o alcance de cada atributo, é static/data/atributos.json. Modelo em estudos/modelo-atributos.md, seção 4.3.",
+    "id": "Número inteiro, estável e append-only, como o dos tipos penais: atributo retirado vai para `aposentados`, e o número nunca volta.",
+    "slug": "O identificador de texto usado nas URLs do site (?atributo=…).",
+    "dispositivos": "Chaves canônicas (<id em data/fontes.json>|<dispositivo>) em que o atributo se funda. Chave sem vírgula é o artigo inteiro.",
+    "redacoes": "De onde vem cada parâmetro. A redação vigente é a de evento mais recente no histórico (data/historico-legislativo.json, mesmo dispositivo e mesma norma); é o fundamento dela que a tela mostra. `valor` só aparece quando a redação dava número diferente do padrão. `norma: null` é o compilado calando: a unidade não tem anotação própria e está sob um chapéu anotado, e a base não a data pelo chapéu.",
+    "sem_fonte_legal": "Parâmetro de simulação, sem dispositivo que o fixe; o texto diz por quê."
+  },
+  "aposentados": [],
+  "atributos": [
+    {
+      "id": 1,
+      "slug": "transacao",
+      "nome": "Transação penal",
+      "fundamento": "Art. 76, Lei 9.099/95",
+      "dispositivos": [
+        "juizados-9099|art. 76"
+      ],
+      "categoria": "processual",
+      "natureza": "abstrato",
+      "descricao": "Proposta pelo Ministério Público de aplicação imediata de pena restritiva de direitos ou multa, antes do oferecimento da denúncia, nas infrações de menor potencial ofensivo. Não gera reincidência nem efeitos civis.",
+      "requisitos": [
+        "Infração de menor potencial ofensivo: contravenção penal, qualquer que seja a pena, ou crime com pena máxima não superior a 2 anos, cumulada ou não com multa (art. 61).",
+        "Não ter sido o autor condenado, por sentença definitiva, à pena privativa de liberdade.",
+        "Não ter sido beneficiado por transação penal nos 5 anos anteriores.",
+        "Antecedentes, conduta social e personalidade favoráveis."
+      ],
+      "vedacoes": [
+        "Violência doméstica e familiar contra a mulher (Súmula 536, STJ; art. 41, Lei 11.340/06).",
+        "Concurso de crimes cuja soma das penas máximas ultrapasse o limite legal.",
+        "Crimes militares: a Lei 9.099/95 não se aplica no âmbito da Justiça Militar (art. 90-A)."
+      ],
+      "parametros": [
+        {
+          "id": "limiteMaxMeses",
+          "rotulo": "Teto da pena máxima cominada",
+          "tipo": "meses",
+          "padrao": 24,
+          "min": 0,
+          "max": 240,
+          "passo": 1,
+          "ajuda": "Limite da pena MÁXIMA em abstrato que define a infração de menor potencial ofensivo. Elevá-lo simula uma reforma que ampliasse o alcance dos Juizados Especiais Criminais.",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivo": "juizados-9099|art. 61"
+              },
+              "norma": "original",
+              "fundamento": "Art. 61, Lei 9.099/95 (redação original)",
+              "valor": 12
+            },
+            {
+              "fonte": {
+                "dispositivo": "juizados-9099|art. 61"
+              },
+              "norma": "Lei nº 11.313",
+              "fundamento": "Art. 61, Lei 9.099/95"
+            }
+          ]
+        },
+        {
+          "id": "vedadoViolencia",
+          "rotulo": "Vedar quando houver violência ou grave ameaça",
+          "tipo": "booleano",
+          "padrao": true,
+          "ajuda": "A Lei 9.099/95 não veda a transação por violência em geral, mas a Súmula 536 do STJ a afasta na violência doméstica. Desmarcar remove a ressalva e trata esses tipos como cabíveis.",
+          "redacoes": [
+            {
+              "fonte": {
+                "sumula": "STJ 536"
+              },
+              "norma": "original",
+              "fundamento": "Súmula 536, STJ"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "slug": "sursis-processual",
+      "nome": "Suspensão condicional do processo",
+      "fundamento": "Art. 89, Lei 9.099/95",
+      "dispositivos": [
+        "juizados-9099|art. 89"
+      ],
+      "categoria": "processual",
+      "natureza": "abstrato",
+      "descricao": "Suspensão do processo por 2 a 4 anos, mediante condições, nos crimes cuja pena mínima cominada não ultrapasse 1 ano. Cumprido o período de prova sem revogação, extingue-se a punibilidade.",
+      "requisitos": [
+        "Pena mínima cominada igual ou inferior a 1 ano.",
+        "Acusado não estar sendo processado ou não ter sido condenado por outro crime.",
+        "Presentes os demais requisitos do sursis da pena (art. 77, CP)."
+      ],
+      "vedacoes": [
+        "Violência doméstica e familiar contra a mulher (Súmula 536, STJ).",
+        "Crimes militares: a Lei 9.099/95 não se aplica no âmbito da Justiça Militar (art. 90-A; Súmula 9, STM)."
+      ],
+      "parametros": [
+        {
+          "id": "limiteMinMeses",
+          "rotulo": "Teto da pena mínima cominada",
+          "tipo": "meses",
+          "padrao": 12,
+          "min": 0,
+          "max": 120,
+          "passo": 1,
+          "ajuda": "Limite da pena MÍNIMA em abstrato. É o patamar mais sensível do sistema: pequenas variações da pena mínima incluem ou excluem faixas inteiras do catálogo.",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivo": "juizados-9099|art. 89, caput"
+              },
+              "norma": "original",
+              "fundamento": "Art. 89, caput, Lei 9.099/95"
+            }
+          ]
+        },
+        {
+          "id": "periodoProvaMinAnos",
+          "rotulo": "Período de prova — mínimo (anos)",
+          "tipo": "inteiro",
+          "padrao": 2,
+          "min": 1,
+          "max": 10,
+          "passo": 1,
+          "ajuda": "Prazo mínimo de suspensão do processo, durante o qual o acusado cumpre condições.",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivo": "juizados-9099|art. 89, caput"
+              },
+              "norma": "original",
+              "fundamento": "Art. 89, caput, Lei 9.099/95"
+            }
+          ]
+        },
+        {
+          "id": "periodoProvaMaxAnos",
+          "rotulo": "Período de prova — máximo (anos)",
+          "tipo": "inteiro",
+          "padrao": 4,
+          "min": 1,
+          "max": 10,
+          "passo": 1,
+          "ajuda": "Prazo máximo de suspensão do processo.",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivo": "juizados-9099|art. 89, caput"
+              },
+              "norma": "original",
+              "fundamento": "Art. 89, caput, Lei 9.099/95"
+            }
+          ]
+        },
+        {
+          "id": "vedadoViolencia",
+          "rotulo": "Vedar quando houver violência ou grave ameaça",
+          "tipo": "booleano",
+          "padrao": true,
+          "ajuda": "Ressalva da Súmula 536 do STJ (violência doméstica). Desmarcar trata esses tipos como cabíveis.",
+          "redacoes": [
+            {
+              "fonte": {
+                "sumula": "STJ 536"
+              },
+              "norma": "original",
+              "fundamento": "Súmula 536, STJ"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "slug": "anpp",
+      "nome": "Acordo de não persecução penal (ANPP)",
+      "fundamento": "Art. 28-A, CPP",
+      "dispositivos": [
+        "cpp|art. 28-a"
+      ],
+      "categoria": "processual",
+      "natureza": "abstrato",
+      "descricao": "Acordo entre Ministério Público e investigado que confessa formalmente a infração, mediante condições (reparação do dano, renúncia a bens, prestação de serviço, multa). Cumprido o acordo, o juiz declara extinta a punibilidade.",
+      "requisitos": [
+        "Pena mínima cominada inferior a 4 anos.",
+        "Infração cometida sem violência ou grave ameaça à pessoa.",
+        "Confissão formal e circunstanciada do investigado.",
+        "Não ser o caso de arquivamento; acordo necessário e suficiente para reprovação."
+      ],
+      "vedacoes": [
+        "Cabimento de transação penal (art. 28-A, §2º, I).",
+        "Investigado reincidente ou com conduta criminal habitual, reiterada ou profissional (§2º, II).",
+        "ANPP, transação ou suspensão do processo nos 5 anos anteriores (§2º, III).",
+        "Crimes de violência doméstica e familiar contra a mulher ou por razões da condição de sexo feminino (§2º, IV)."
+      ],
+      "parametros": [
+        {
+          "id": "limiteMinMeses",
+          "rotulo": "Teto da pena mínima cominada",
+          "tipo": "meses",
+          "padrao": 48,
+          "min": 0,
+          "max": 240,
+          "passo": 1,
+          "ajuda": "Pena MÍNIMA em abstrato deve ser INFERIOR a este valor. É o parâmetro central das propostas de ampliação da justiça penal negocial.",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivo": "cpp|art. 28-a, caput"
+              },
+              "norma": "Lei nº 13.964",
+              "fundamento": "Art. 28-A, caput, CPP"
+            }
+          ]
+        },
+        {
+          "id": "exigeSemViolencia",
+          "rotulo": "Exigir ausência de violência ou grave ameaça",
+          "tipo": "booleano",
+          "padrao": true,
+          "ajuda": "Requisito do caput do art. 28-A. Desmarcar simula uma reforma que admitisse o ANPP em crimes violentos — mostra a expansão de alcance sobre o catálogo.",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivo": "cpp|art. 28-a, caput"
+              },
+              "norma": "Lei nº 13.964",
+              "fundamento": "Art. 28-A, caput, CPP"
+            }
+          ]
+        },
+        {
+          "id": "exigeConfissao",
+          "rotulo": "Exigir confissão formal e circunstanciada",
+          "tipo": "booleano",
+          "padrao": true,
+          "ajuda": "Requisito do caput. Sem confissão, o acordo fica condicional (requisitos objetivos atendidos).",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivo": "cpp|art. 28-a, caput"
+              },
+              "norma": "Lei nº 13.964",
+              "fundamento": "Art. 28-A, caput, CPP"
+            }
+          ]
+        },
+        {
+          "id": "vedadoReincidente",
+          "rotulo": "Vedar ao reincidente",
+          "tipo": "booleano",
+          "padrao": true,
+          "ajuda": "Vedação do art. 28-A, §2º, II (reincidência ou habitualidade criminosa).",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivo": "cpp|art. 28-a, §2º, ii"
+              },
+              "norma": "Lei nº 13.964",
+              "fundamento": "Art. 28-A, §2º, II, CPP"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "slug": "colaboracao-premiada",
+      "nome": "Colaboração premiada",
+      "fundamento": "Art. 4º, Lei 12.850/13",
+      "dispositivos": [
+        "orgcrim-12850|art. 4"
+      ],
+      "categoria": "processual",
+      "natureza": "abstrato",
+      "descricao": "Negócio jurídico processual pelo qual o colaborador que efetiva e voluntariamente auxilia na investigação obtém perdão judicial, redução de até 2/3 da pena privativa de liberdade ou substituição por restritiva de direitos.",
+      "requisitos": [
+        "Colaboração efetiva e voluntária com a investigação e com o processo criminal.",
+        "Resultado: identificação de coautores, revelação da estrutura da organização, prevenção de infrações, recuperação de ativos ou localização da vítima com integridade preservada.",
+        "Circunstâncias objetivas e subjetivas favoráveis (art. 4º, §1º).",
+        "Homologação judicial do acordo (art. 4º, §7º)."
+      ],
+      "vedacoes": [
+        "Ausência de voluntariedade — colaboração obtida mediante coação é nula.",
+        "O líder da organização e quem ofereceu a proposta primeiro têm tratamento diferenciado para o perdão judicial (art. 4º, §4º)."
+      ],
+      "parametros": [
+        {
+          "id": "fracaoReducaoMax",
+          "rotulo": "Redução máxima da pena",
+          "tipo": "fracao",
+          "padrao": 0.6666666666666666,
+          "min": 0,
+          "max": 1,
+          "passo": 0.041666666666666664,
+          "ajuda": "Teto da causa de diminuição para o colaborador (art. 4º, caput).",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivo": "orgcrim-12850|art. 4, caput"
+              },
+              "norma": "original",
+              "fundamento": "Art. 4º, caput, Lei 12.850/13"
+            }
+          ]
+        },
+        {
+          "id": "fracaoReducaoPosSentenca",
+          "rotulo": "Redução máxima se posterior à sentença",
+          "tipo": "fracao",
+          "padrao": 0.5,
+          "min": 0,
+          "max": 1,
+          "passo": 0.041666666666666664,
+          "ajuda": "Colaboração posterior à sentença admite redução de até 1/2 ou progressão ainda que ausentes os requisitos objetivos.",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivo": "orgcrim-12850|art. 4, §5º"
+              },
+              "norma": "original",
+              "fundamento": "Art. 4º, §5º, Lei 12.850/13"
+            }
+          ]
+        },
+        {
+          "id": "admitePerdaoJudicial",
+          "rotulo": "Admitir perdão judicial ao colaborador",
+          "tipo": "booleano",
+          "padrao": true,
+          "ajuda": "O juiz pode conceder perdão judicial ao colaborador, ainda que não previsto na proposta inicial.",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivos": [
+                  "orgcrim-12850|art. 4, caput",
+                  "orgcrim-12850|art. 4, §2º"
+                ]
+              },
+              "norma": "original",
+              "fundamento": "Art. 4º, caput e §2º, Lei 12.850/13"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "slug": "substituicao",
+      "nome": "Substituição por penas restritivas de direitos",
+      "fundamento": "Art. 44, CP",
+      "dispositivos": [
+        "cp|art. 44"
+      ],
+      "categoria": "aplicacao",
+      "natureza": "concreto",
+      "descricao": "Troca da pena privativa de liberdade por restritivas de direitos (prestação de serviços, interdição temporária, limitação de fim de semana, prestação pecuniária ou perda de bens). É o principal instrumento de desencarceramento na fase de aplicação.",
+      "requisitos": [
+        "Pena privativa não superior a 4 anos e crime cometido sem violência ou grave ameaça — ou crime culposo, qualquer que seja a pena.",
+        "Réu não reincidente em crime doloso.",
+        "Culpabilidade, antecedentes, conduta social e personalidade indicarem suficiência da substituição."
+      ],
+      "vedacoes": [
+        "Reincidência específica em crime doloso (art. 44, §3º, parte final).",
+        "Crime doloso cometido com violência ou grave ameaça à pessoa (art. 44, I)."
+      ],
+      "parametros": [
+        {
+          "id": "limiteConcretaMeses",
+          "rotulo": "Teto da pena concreta",
+          "tipo": "meses",
+          "padrao": 48,
+          "min": 0,
+          "max": 240,
+          "passo": 1,
+          "ajuda": "Pena aplicada na sentença não pode superar este valor (crimes dolosos). Elevá-lo é a medida de desencarceramento de maior impacto agregado sobre o catálogo.",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivo": "cp|art. 44, i"
+              },
+              "norma": "Lei nº 9.714",
+              "fundamento": "Art. 44, I, CP"
+            }
+          ]
+        },
+        {
+          "id": "exigeSemViolencia",
+          "rotulo": "Exigir ausência de violência ou grave ameaça (crime doloso)",
+          "tipo": "booleano",
+          "padrao": true,
+          "ajuda": "Requisito do art. 44, I. Não se aplica aos crimes culposos.",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivo": "cp|art. 44, i"
+              },
+              "norma": "Lei nº 9.714",
+              "fundamento": "Art. 44, I, CP"
+            }
+          ]
+        },
+        {
+          "id": "culposoSemTeto",
+          "rotulo": "Crime culposo cabível qualquer que seja a pena",
+          "tipo": "booleano",
+          "padrao": true,
+          "ajuda": "Parte final do art. 44, I: nos crimes culposos a substituição independe do quantum da pena aplicada e da existência de violência.",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivo": "cp|art. 44, i"
+              },
+              "norma": "Lei nº 9.714",
+              "fundamento": "Art. 44, I, parte final, CP"
+            }
+          ]
+        },
+        {
+          "id": "vedadoReincidenteEspecifico",
+          "rotulo": "Vedar ao reincidente específico",
+          "tipo": "booleano",
+          "padrao": true,
+          "ajuda": "Art. 44, §3º: o reincidente NÃO específico pode ser beneficiado se a medida for socialmente recomendável; a vedação é absoluta apenas na reincidência específica.",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivo": "cp|art. 44, §3º"
+              },
+              "norma": "Lei nº 9.714",
+              "fundamento": "Art. 44, §3º, CP"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "slug": "sursis-pena",
+      "nome": "Suspensão condicional da pena (sursis)",
+      "fundamento": "Art. 77, CP",
+      "dispositivos": [
+        "cp|art. 77"
+      ],
+      "categoria": "aplicacao",
+      "natureza": "concreto",
+      "descricao": "Suspensão da execução da pena privativa de liberdade por 2 a 4 anos, mediante condições. É subsidiário: só incide quando incabível a substituição por restritivas de direitos (art. 77, III).",
+      "requisitos": [
+        "Pena privativa de liberdade não superior a 2 anos (sursis comum).",
+        "Réu não reincidente em crime doloso.",
+        "Circunstâncias do art. 59 autorizarem a concessão.",
+        "Não ser indicada ou cabível a substituição por restritivas de direitos."
+      ],
+      "vedacoes": [
+        "Reincidência em crime doloso — salvo se a condenação anterior for exclusivamente de multa (art. 77, §1º)."
+      ],
+      "parametros": [
+        {
+          "id": "limiteComumMeses",
+          "rotulo": "Teto do sursis comum",
+          "tipo": "meses",
+          "padrao": 24,
+          "min": 0,
+          "max": 120,
+          "passo": 1,
+          "ajuda": "Pena concreta máxima para o sursis comum.",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivo": "cp|art. 77, caput"
+              },
+              "norma": "Lei nº 7.209",
+              "fundamento": "Art. 77, caput, CP"
+            }
+          ]
+        },
+        {
+          "id": "limiteEtarioMeses",
+          "rotulo": "Teto do sursis etário/humanitário",
+          "tipo": "meses",
+          "padrao": 48,
+          "min": 0,
+          "max": 120,
+          "passo": 1,
+          "ajuda": "Pena concreta máxima para condenado maior de 70 anos ou por razões de saúde.",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivo": "cp|art. 77, §2º"
+              },
+              "norma": "Lei nº 9.714",
+              "fundamento": "Art. 77, §2º, CP"
+            }
+          ]
+        },
+        {
+          "id": "vedadoReincidente",
+          "rotulo": "Vedar ao reincidente em crime doloso",
+          "tipo": "booleano",
+          "padrao": true,
+          "ajuda": "Art. 77, I. A condenação anterior a pena de multa não impede o sursis (§1º).",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivos": [
+                  "cp|art. 77, i",
+                  "cp|art. 77, §1º"
+                ]
+              },
+              "norma": "Lei nº 7.209",
+              "fundamento": "Art. 77, I e §1º, CP"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "slug": "regime",
+      "nome": "Regime inicial de cumprimento",
+      "fundamento": "Art. 33, §2º e §3º, CP",
+      "dispositivos": [
+        "cp|art. 33, §2º",
+        "cp|art. 33, §3º"
+      ],
+      "categoria": "aplicacao",
+      "natureza": "concreto",
+      "descricao": "Fixação do regime em que a pena começa a ser cumprida (fechado, semiaberto ou aberto), conforme o quantum da pena, a reincidência e as circunstâncias judiciais.",
+      "requisitos": [
+        "Pena superior a 8 anos: regime inicial fechado.",
+        "Pena superior a 4 e até 8 anos: semiaberto, se o condenado não for reincidente.",
+        "Pena até 4 anos: aberto, se o condenado não for reincidente."
+      ],
+      "vedacoes": [
+        "Súmula 718, STF: a opinião do julgador sobre a gravidade em abstrato não justifica regime mais severo.",
+        "Súmula 719, STF: a imposição de regime mais severo que o previsto exige motivação idônea.",
+        "Súmula 440, STJ: fixada a pena-base no mínimo, é vedado o regime mais gravoso pela gravidade abstrata."
+      ],
+      "parametros": [
+        {
+          "id": "limiteFechadoMeses",
+          "rotulo": "Piso do regime fechado",
+          "tipo": "meses",
+          "padrao": 96,
+          "min": 0,
+          "max": 480,
+          "passo": 1,
+          "ajuda": "Pena concreta ACIMA deste valor impõe regime inicial fechado.",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivo": "cp|art. 33, §2º, a"
+              },
+              "norma": null,
+              "fundamento": "Art. 33, §2º, \"a\", CP"
+            }
+          ]
+        },
+        {
+          "id": "limiteSemiabertoMeses",
+          "rotulo": "Piso do regime semiaberto",
+          "tipo": "meses",
+          "padrao": 48,
+          "min": 0,
+          "max": 480,
+          "passo": 1,
+          "ajuda": "Pena concreta ACIMA deste valor (e até o piso do fechado) impõe semiaberto ao não reincidente.",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivo": "cp|art. 33, §2º, b"
+              },
+              "norma": null,
+              "fundamento": "Art. 33, §2º, \"b\", CP"
+            }
+          ]
+        },
+        {
+          "id": "hediondoFechado",
+          "rotulo": "Hediondo tende ao regime fechado",
+          "tipo": "booleano",
+          "padrao": true,
+          "ajuda": "O STF (HC 111.840) declarou inconstitucional a obrigatoriedade automática do regime inicial fechado nos hediondos; na prática, porém, ele é a regra, com fundamentação. Desmarcar aplica somente os patamares gerais do art. 33.",
+          "redacoes": [
+            {
+              "fonte": {
+                "decisao": "STF HC 111.840/ES"
+              },
+              "norma": "original",
+              "fundamento": "HC 111.840/ES, STF"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "slug": "perdao-judicial",
+      "nome": "Perdão judicial",
+      "fundamento": "Art. 107, IX, CP",
+      "dispositivos": [
+        "cp|art. 107, ix"
+      ],
+      "categoria": "aplicacao",
+      "natureza": "abstrato",
+      "descricao": "Causa de extinção da punibilidade em que o juiz, nas hipóteses EXPRESSAMENTE previstas em lei, deixa de aplicar a pena. A sentença que o concede não é condenatória e não gera reincidência nem efeitos civis (Súmula 18, STJ).",
+      "requisitos": [
+        "Previsão legal expressa para o tipo penal (não há perdão judicial genérico).",
+        "Presença da circunstância eleita pela lei — em regra, consequências da infração que atinjam o próprio agente de forma tão grave que a sanção se torne desnecessária."
+      ],
+      "vedacoes": [
+        "Tipos penais sem previsão expressa: o perdão judicial não pode ser estendido por analogia."
+      ],
+      "parametros": [
+        {
+          "id": "exigePrevisaoExpressa",
+          "rotulo": "Exigir previsão legal expressa para o tipo",
+          "tipo": "booleano",
+          "padrao": true,
+          "ajuda": "O perdão judicial não é genérico e não se estende por analogia: só incide onde a lei o prevê. O catálogo marca esses dispositivos um a um (campo `perdao_judicial_previsto`). Desmarcar simula uma reforma que o generalizasse aos crimes culposos.",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivo": "cp|art. 107, ix"
+              },
+              "norma": null,
+              "fundamento": "Art. 107, IX, CP"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "slug": "arrependimento-posterior",
+      "nome": "Arrependimento posterior",
+      "fundamento": "Art. 16, CP",
+      "dispositivos": [
+        "cp|art. 16"
+      ],
+      "categoria": "aplicacao",
+      "natureza": "abstrato",
+      "descricao": "Causa obrigatória de diminuição de pena (1/3 a 2/3) quando, nos crimes cometidos sem violência ou grave ameaça, o agente repara o dano ou restitui a coisa por ato voluntário, até o recebimento da denúncia ou da queixa.",
+      "requisitos": [
+        "Crime cometido sem violência ou grave ameaça à pessoa.",
+        "Reparação do dano ou restituição da coisa — integral, em regra.",
+        "Ato voluntário do agente (não se exige espontaneidade).",
+        "Até o recebimento da denúncia ou da queixa."
+      ],
+      "vedacoes": [
+        "Crimes cometidos com violência ou grave ameaça à pessoa.",
+        "Reparação posterior ao recebimento da denúncia: incide apenas como atenuante (art. 65, III, \"b\")."
+      ],
+      "parametros": [
+        {
+          "id": "fracaoMin",
+          "rotulo": "Redução mínima",
+          "tipo": "fracao",
+          "padrao": 0.3333333333333333,
+          "min": 0,
+          "max": 1,
+          "passo": 0.041666666666666664,
+          "ajuda": "Piso da causa de diminuição. A fração aproxima-se do máximo quanto mais célere e completa a reparação.",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivo": "cp|art. 16"
+              },
+              "norma": "Lei nº 7.209",
+              "fundamento": "Art. 16, CP"
+            }
+          ]
+        },
+        {
+          "id": "fracaoMax",
+          "rotulo": "Redução máxima",
+          "tipo": "fracao",
+          "padrao": 0.6666666666666666,
+          "min": 0,
+          "max": 1,
+          "passo": 0.041666666666666664,
+          "ajuda": "Teto da causa de diminuição.",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivo": "cp|art. 16"
+              },
+              "norma": "Lei nº 7.209",
+              "fundamento": "Art. 16, CP"
+            }
+          ]
+        },
+        {
+          "id": "exigeSemViolencia",
+          "rotulo": "Exigir ausência de violência ou grave ameaça",
+          "tipo": "booleano",
+          "padrao": true,
+          "ajuda": "Requisito expresso do art. 16. Desmarcar simula uma reforma que o estendesse aos crimes violentos.",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivo": "cp|art. 16"
+              },
+              "norma": "Lei nº 7.209",
+              "fundamento": "Art. 16, CP"
+            }
+          ]
+        },
+        {
+          "id": "exigeReparacao",
+          "rotulo": "Exigir reparação do dano ou restituição da coisa",
+          "tipo": "booleano",
+          "padrao": true,
+          "ajuda": "Sem reparação até o recebimento da denúncia, a redução não incide.",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivo": "cp|art. 16"
+              },
+              "norma": "Lei nº 7.209",
+              "fundamento": "Art. 16, CP"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "slug": "arrependimento-eficaz",
+      "nome": "Desistência voluntária e arrependimento eficaz",
+      "fundamento": "Art. 15, CP",
+      "dispositivos": [
+        "cp|art. 15"
+      ],
+      "categoria": "aplicacao",
+      "natureza": "abstrato",
+      "descricao": "O agente que voluntariamente desiste de prosseguir na execução, ou impede que o resultado se produza, só responde pelos atos já praticados. Não é causa de diminuição: é exclusão da tipicidade da tentativa (a chamada \"ponte de ouro\").",
+      "requisitos": [
+        "Iter criminis já iniciado — o tipo deve admitir tentativa.",
+        "Desistência voluntária (antes de esgotar os atos executórios) ou arrependimento eficaz (após esgotá-los).",
+        "No arrependimento eficaz, a conduta do agente deve efetivamente IMPEDIR o resultado."
+      ],
+      "vedacoes": [
+        "Crimes que não admitem tentativa (unissubsistentes, culposos, omissivos próprios, habituais, preterdolosos).",
+        "Resultado consumado apesar do esforço do agente: incide apenas a atenuante do art. 65, III, \"b\"."
+      ],
+      "parametros": [
+        {
+          "id": "exigeTentativaAdmitida",
+          "rotulo": "Exigir que o tipo admita tentativa",
+          "tipo": "booleano",
+          "padrao": true,
+          "ajuda": "Pressuposto lógico: sem iter criminis fracionável não há execução da qual desistir. Usa o campo \"tentativa\" do catálogo de tipos penais.",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivos": [
+                  "cp|art. 14, ii",
+                  "cp|art. 15"
+                ]
+              },
+              "norma": "Lei nº 7.209",
+              "fundamento": "Art. 14, II c/c art. 15, CP"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "slug": "progressao",
+      "nome": "Progressão de regime",
+      "fundamento": "Art. 112, LEP (redação da Lei 15.402/2026)",
+      "dispositivos": [
+        "lep|art. 112"
+      ],
+      "categoria": "execucao",
+      "natureza": "concreto",
+      "descricao": "Transferência para regime menos rigoroso após o cumprimento de percentual da pena, somado ao requisito subjetivo de boa conduta carcerária. O Pacote Anticrime substituiu as antigas frações (1/6, 2/5, 3/5) por oito percentuais escalonados. A Lei 15.402/2026 devolveu ao caput a regra geral de 1/6 da pena no regime anterior, e os incisos passaram a ser as exceções a ela.",
+      "requisitos": [
+        "Cumprimento de 1/6 da pena no regime anterior (art. 112, caput) ou do percentual do inciso aplicável (art. 112, I a VIII).",
+        "Boa conduta carcerária, comprovada pelo diretor do estabelecimento (art. 112, §1º).",
+        "Nos crimes contra a administração pública: reparação do dano ou devolução do produto do ilícito (art. 33, §4º, CP)."
+      ],
+      "vedacoes": [
+        "Súmula Vinculante 26, STF: veda a progressão automática; exige exame criminológico quando fundamentado.",
+        "Súmula 491, STJ: é inadmissível a progressão per saltum.",
+        "Falta grave interrompe o prazo, reiniciando a contagem (Súmula 534, STJ)."
+      ],
+      "parametros": [
+        {
+          "id": "fracaoPrimarioSemViolencia",
+          "rotulo": "Primário, sem violência/grave ameaça",
+          "tipo": "fracao",
+          "padrao": 0.16,
+          "min": 0,
+          "max": 1,
+          "passo": 0.01,
+          "ajuda": "Redação de 2019, aplicável a FATO ANTERIOR a 08/05/2026: 16% da pena para o primário em crime sem violência à pessoa ou grave ameaça. A Lei 15.402/2026 substituiu o inciso, e a hipótese passou a cair no caput — 1/6, que é 16,67%. Para este grupo a lei nova é mais GRAVOSA e, por isso, não retroage.",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivo": "lep|art. 112, i"
+              },
+              "norma": "Lei nº 13.964",
+              "fundamento": "Art. 112, I, LEP (redação da Lei 13.964/2019)"
+            }
+          ]
+        },
+        {
+          "id": "fracaoCaputRegimeAnterior",
+          "rotulo": "Regra geral do caput (Lei 15.402/2026)",
+          "tipo": "fracao",
+          "padrao": 0.16666666666666666,
+          "min": 0,
+          "max": 1,
+          "passo": 0.020833333333333332,
+          "ajuda": "O caput voltou a fixar patamar próprio — \"ao menos 1/6 da pena no regime anterior\" —, e os incisos passaram a ser exceções a ele, não a lista exaustiva de hipóteses. Alcança o primário em crime sem violência e os crimes do Título XII, que os incisos I e II ressalvam. ATENÇÃO À BASE: o caput manda contar sobre a pena NO REGIME ANTERIOR, e os incisos, sobre a pena total. Na primeira progressão as duas coincidem; nas seguintes, não — e este cálculo é o da primeira.",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivo": "lep|art. 112, caput"
+              },
+              "norma": "Lei nº 15.402",
+              "fundamento": "Art. 112, caput, LEP (redação da Lei 15.402/2026)"
+            }
+          ]
+        },
+        {
+          "id": "fracaoReincidenteSemViolencia",
+          "rotulo": "Reincidente, sem violência/grave ameaça",
+          "tipo": "fracao",
+          "padrao": 0.2,
+          "min": 0,
+          "max": 1,
+          "passo": 0.01,
+          "ajuda": "Inciso III na redação da Lei 15.402/2026 (inciso II na de 2019): 20% da pena para o reincidente em crime diverso dos referidos nos incisos I e II — na redação de 2019, o reincidente em crime sem violência à pessoa ou grave ameaça.",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivo": "lep|art. 112, ii"
+              },
+              "norma": "Lei nº 13.964",
+              "fundamento": "Art. 112, II, LEP (redação da Lei 13.964/2019)"
+            },
+            {
+              "fonte": {
+                "dispositivo": "lep|art. 112, iii"
+              },
+              "norma": "Lei nº 15.402",
+              "fundamento": "Art. 112, III, LEP (redação da Lei 15.402/2026)"
+            }
+          ]
+        },
+        {
+          "id": "fracaoPrimarioViolencia",
+          "rotulo": "Primário, com violência/grave ameaça",
+          "tipo": "fracao",
+          "padrao": 0.25,
+          "min": 0,
+          "max": 1,
+          "passo": 0.01,
+          "ajuda": "Inciso I na redação da Lei 15.402/2026 (inciso III na de 2019): 25% da pena para o primário condenado por crime cometido com violência ou grave ameaça. A redação nova ressalva os crimes do Título XII da Parte Especial do CP.",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivo": "lep|art. 112, iii"
+              },
+              "norma": "Lei nº 13.964",
+              "fundamento": "Art. 112, III, LEP (redação da Lei 13.964/2019)"
+            },
+            {
+              "fonte": {
+                "dispositivo": "lep|art. 112, i"
+              },
+              "norma": "Lei nº 15.402",
+              "fundamento": "Art. 112, I, LEP (redação da Lei 15.402/2026)"
+            }
+          ]
+        },
+        {
+          "id": "fracaoReincidenteViolencia",
+          "rotulo": "Reincidente, com violência/grave ameaça",
+          "tipo": "fracao",
+          "padrao": 0.3,
+          "min": 0,
+          "max": 1,
+          "passo": 0.01,
+          "ajuda": "Inciso II na redação da Lei 15.402/2026 (inciso IV na de 2019): 30% da pena para o reincidente condenado por crime cometido com violência ou grave ameaça, ressalvados os crimes do Título XII da Parte Especial do CP.",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivo": "lep|art. 112, iv"
+              },
+              "norma": "Lei nº 13.964",
+              "fundamento": "Art. 112, IV, LEP (redação da Lei 13.964/2019)"
+            },
+            {
+              "fonte": {
+                "dispositivo": "lep|art. 112, ii"
+              },
+              "norma": "Lei nº 15.402",
+              "fundamento": "Art. 112, II, LEP (redação da Lei 15.402/2026)"
+            }
+          ]
+        },
+        {
+          "id": "fracaoPrimarioHediondo",
+          "rotulo": "Primário, hediondo/equiparado",
+          "tipo": "fracao",
+          "padrao": 0.7,
+          "min": 0,
+          "max": 1,
+          "passo": 0.01,
+          "ajuda": "Inciso V: 70% da pena para o primário condenado por crime hediondo ou equiparado. Era 40% até a Lei 15.358/2026.",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivo": "lep|art. 112, v"
+              },
+              "norma": "Lei nº 13.964",
+              "fundamento": "Art. 112, V, LEP (redação da Lei 13.964/2019)",
+              "valor": 0.4
+            },
+            {
+              "fonte": {
+                "dispositivo": "lep|art. 112, v"
+              },
+              "norma": "Lei nº 15.358",
+              "fundamento": "Art. 112, V, LEP (redação da Lei 15.358/2026)"
+            }
+          ]
+        },
+        {
+          "id": "fracaoPrimarioHediondoMorte",
+          "rotulo": "Primário, hediondo com resultado morte",
+          "tipo": "fracao",
+          "padrao": 0.75,
+          "min": 0,
+          "max": 1,
+          "passo": 0.01,
+          "ajuda": "Inciso VI: 75% da pena, vedado o livramento condicional. Era 50% até a Lei 15.358/2026, que também acrescentou a alínea \"d\" (feminicídio, se primário).",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivos": [
+                  "lep|art. 112, vi",
+                  "lep|art. 112, vi, a"
+                ]
+              },
+              "norma": "Lei nº 13.964",
+              "fundamento": "Art. 112, VI, \"a\", LEP (redação da Lei 13.964/2019)",
+              "valor": 0.5
+            },
+            {
+              "fonte": {
+                "dispositivos": [
+                  "lep|art. 112, vi",
+                  "lep|art. 112, vi, a"
+                ]
+              },
+              "norma": "Lei nº 15.358",
+              "fundamento": "Art. 112, VI, \"a\", LEP (redação da Lei 15.358/2026)"
+            }
+          ]
+        },
+        {
+          "id": "fracaoComandoOrgcrim",
+          "rotulo": "Comando de organização criminosa ultraviolenta",
+          "tipo": "fracao",
+          "padrao": 0.75,
+          "min": 0,
+          "max": 1,
+          "passo": 0.01,
+          "ajuda": "Inciso VI, \"b\": 75% da pena para quem exerceu comando, individual ou coletivo, de organização criminosa ULTRAVIOLENTA estruturada para a prática de crime hediondo ou equiparado, vedado o livramento condicional. A Lei 15.358/2026 acrescentou \"ultraviolenta\" e a vedação do livramento — antes a alínea alcançava a organização criminosa comum e não vedava o livramento.",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivos": [
+                  "lep|art. 112, vi",
+                  "lep|art. 112, vi, b"
+                ]
+              },
+              "norma": "Lei nº 13.964",
+              "fundamento": "Art. 112, VI, \"b\", LEP (redação da Lei 13.964/2019)",
+              "valor": 0.5
+            },
+            {
+              "fonte": {
+                "dispositivos": [
+                  "lep|art. 112, vi",
+                  "lep|art. 112, vi, b"
+                ]
+              },
+              "norma": "Lei nº 15.358",
+              "fundamento": "Art. 112, VI, \"b\", LEP (redação da Lei 15.358/2026)"
+            }
+          ]
+        },
+        {
+          "id": "fracaoMiliciaPrivada",
+          "rotulo": "Constituição de milícia privada",
+          "tipo": "fracao",
+          "padrao": 0.75,
+          "min": 0,
+          "max": 1,
+          "passo": 0.01,
+          "ajuda": "Inciso VI, \"c\": 75% da pena para o condenado pela prática do crime de constituição de milícia privada (art. 288-A do CP). A alínea não distingue primário de reincidente. Era 50% até a Lei 15.358/2026, que elevou o inciso VI.",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivos": [
+                  "lep|art. 112, vi",
+                  "lep|art. 112, vi, c"
+                ]
+              },
+              "norma": "Lei nº 13.964",
+              "fundamento": "Art. 112, VI, \"c\", LEP (redação da Lei 13.964/2019)",
+              "valor": 0.5
+            },
+            {
+              "fonte": {
+                "dispositivos": [
+                  "lep|art. 112, vi",
+                  "lep|art. 112, vi, c"
+                ]
+              },
+              "norma": "Lei nº 15.358",
+              "fundamento": "Art. 112, VI, \"c\", LEP (inciso VI na redação da Lei 15.358/2026)"
+            }
+          ]
+        },
+        {
+          "id": "fracaoFeminicidioPrimario",
+          "rotulo": "Primário, feminicídio",
+          "tipo": "fracao",
+          "padrao": 0.75,
+          "min": 0,
+          "max": 1,
+          "passo": 0.01,
+          "ajuda": "Inciso VI, \"d\": 75% da pena para o primário condenado por feminicídio, vedado o livramento condicional. A alínea substitui o inciso VI-A (55%, Lei 14.994/2024), revogado pela Lei 15.358/2026.",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivos": [
+                  "lep|art. 112, vi",
+                  "lep|art. 112, vi, d"
+                ]
+              },
+              "norma": "Lei nº 15.358",
+              "fundamento": "Art. 112, VI, \"d\", LEP (incluída pela Lei 15.358/2026)"
+            }
+          ]
+        },
+        {
+          "id": "fracaoReincidenteHediondo",
+          "rotulo": "Reincidente, hediondo/equiparado",
+          "tipo": "fracao",
+          "padrao": 0.8,
+          "min": 0,
+          "max": 1,
+          "passo": 0.01,
+          "ajuda": "Inciso VII: 80% da pena para o reincidente na prática de crime hediondo ou equiparado. Era 60% até a Lei 15.358/2026.",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivo": "lep|art. 112, vii"
+              },
+              "norma": "Lei nº 13.964",
+              "fundamento": "Art. 112, VII, LEP (redação da Lei 13.964/2019)",
+              "valor": 0.6
+            },
+            {
+              "fonte": {
+                "dispositivo": "lep|art. 112, vii"
+              },
+              "norma": "Lei nº 15.358",
+              "fundamento": "Art. 112, VII, LEP (redação da Lei 15.358/2026)"
+            }
+          ]
+        },
+        {
+          "id": "fracaoReincidenteHediondoMorte",
+          "rotulo": "Reincidente, hediondo com resultado morte",
+          "tipo": "fracao",
+          "padrao": 0.85,
+          "min": 0,
+          "max": 1,
+          "passo": 0.01,
+          "ajuda": "Inciso VIII: 85% da pena, vedado o livramento condicional. Era 70% até a Lei 15.358/2026.",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivo": "lep|art. 112, viii"
+              },
+              "norma": "Lei nº 13.964",
+              "fundamento": "Art. 112, VIII, LEP (redação da Lei 13.964/2019)",
+              "valor": 0.7
+            },
+            {
+              "fonte": {
+                "dispositivo": "lep|art. 112, viii"
+              },
+              "norma": "Lei nº 15.358",
+              "fundamento": "Art. 112, VIII, LEP (redação da Lei 15.358/2026)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "slug": "livramento",
+      "nome": "Livramento condicional",
+      "fundamento": "Art. 83, CP",
+      "dispositivos": [
+        "cp|art. 83"
+      ],
+      "categoria": "execucao",
+      "natureza": "concreto",
+      "descricao": "Antecipação da liberdade, sob condições e período de prova, após o cumprimento de fração da pena. Pressupõe pena privativa igual ou superior a 2 anos, somadas as penas correspondentes a infrações diversas.",
+      "requisitos": [
+        "Pena privativa de liberdade igual ou superior a 2 anos.",
+        "Cumprimento da fração legal conforme primariedade, reincidência e hediondez.",
+        "Bom comportamento durante a execução e bom desempenho no trabalho atribuído.",
+        "Aptidão para prover a própria subsistência mediante trabalho honesto.",
+        "Reparação do dano, salvo efetiva impossibilidade de fazê-lo."
+      ],
+      "vedacoes": [
+        "Reincidência específica em crime hediondo ou equiparado (art. 83, V, CP).",
+        "Condenado por hediondo com resultado morte, primário ou reincidente (art. 112, VI, \"a\" e VIII, LEP).",
+        "Comando de organização criminosa ultraviolenta estruturada para crime hediondo ou equiparado (art. 112, VI, \"b\", LEP, na redação da Lei 15.358/2026).",
+        "Primário condenado por feminicídio (art. 112, VI, \"d\", LEP, incluída pela Lei 15.358/2026).",
+        "Crimes de domínio social estruturado e de favorecimento (art. 2º, §4º, III, e art. 3º, parágrafo único, da Lei 15.358/2026).",
+        "Súmula 441, STJ: a falta grave não interrompe o prazo para obtenção do livramento condicional."
+      ],
+      "parametros": [
+        {
+          "id": "penaMinimaMeses",
+          "rotulo": "Pena mínima para acesso ao livramento",
+          "tipo": "meses",
+          "padrao": 24,
+          "min": 0,
+          "max": 120,
+          "passo": 1,
+          "ajuda": "Pressuposto objetivo: penas abaixo deste patamar não admitem livramento condicional.",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivo": "cp|art. 83, caput"
+              },
+              "norma": "Lei nº 7.209",
+              "fundamento": "Art. 83, caput, CP"
+            }
+          ]
+        },
+        {
+          "id": "fracaoPrimario",
+          "rotulo": "Primário, bons antecedentes",
+          "tipo": "fracao",
+          "padrao": 0.3333333333333333,
+          "min": 0,
+          "max": 1,
+          "passo": 0.041666666666666664,
+          "ajuda": "Art. 83, I: mais de 1/3 da pena, se não reincidente em crime doloso e com bons antecedentes.",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivo": "cp|art. 83, i"
+              },
+              "norma": "Lei nº 7.209",
+              "fundamento": "Art. 83, I, CP"
+            }
+          ]
+        },
+        {
+          "id": "fracaoReincidente",
+          "rotulo": "Reincidente em crime doloso",
+          "tipo": "fracao",
+          "padrao": 0.5,
+          "min": 0,
+          "max": 1,
+          "passo": 0.041666666666666664,
+          "ajuda": "Art. 83, II: mais de 1/2 da pena, se reincidente em crime doloso.",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivo": "cp|art. 83, ii"
+              },
+              "norma": "Lei nº 7.209",
+              "fundamento": "Art. 83, II, CP"
+            }
+          ]
+        },
+        {
+          "id": "fracaoHediondo",
+          "rotulo": "Hediondo/equiparado",
+          "tipo": "fracao",
+          "padrao": 0.6666666666666666,
+          "min": 0,
+          "max": 1,
+          "passo": 0.041666666666666664,
+          "ajuda": "Art. 83, V: mais de 2/3 da pena nos crimes hediondos, prática de tortura, tráfico e terrorismo.",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivo": "cp|art. 83, v"
+              },
+              "norma": "Lei nº 13.344",
+              "fundamento": "Art. 83, V, CP"
+            }
+          ]
+        },
+        {
+          "id": "vedadoReincidenteHediondo",
+          "rotulo": "Vedar ao reincidente específico em hediondo",
+          "tipo": "booleano",
+          "padrao": true,
+          "ajuda": "Art. 83, V, parte final: vedação absoluta ao reincidente específico em crimes hediondos ou equiparados.",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivo": "cp|art. 83, v"
+              },
+              "norma": "Lei nº 13.344",
+              "fundamento": "Art. 83, V, CP"
+            }
+          ]
+        },
+        {
+          "id": "vedadoArt112",
+          "rotulo": "Vedar nas hipóteses do art. 112 da LEP",
+          "tipo": "booleano",
+          "padrao": true,
+          "ajuda": "Quatro incisos da LEP dizem, na própria letra, \"vedado o livramento condicional\": VI, \"a\" (hediondo com resultado morte, primário), VI, \"b\" (comando de organização criminosa ultraviolenta), VI, \"d\" (feminicídio, se primário) e VIII (reincidente em hediondo com resultado morte). Desmarcar simula a tese de que a vedação, por estar em dispositivo de progressão, não alcançaria o livramento do art. 83 do CP.",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivos": [
+                  "lep|art. 112, vi",
+                  "lep|art. 112, vi, a",
+                  "lep|art. 112, vi, b",
+                  "lep|art. 112, vi, d",
+                  "lep|art. 112, viii"
+                ]
+              },
+              "norma": "Lei nº 15.358",
+              "fundamento": "Art. 112, VI, \"a\", \"b\" e \"d\", e VIII, LEP"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "slug": "prescricao",
+      "nome": "Prescrição da pretensão punitiva",
+      "fundamento": "Art. 109, CP",
+      "dispositivos": [
+        "cp|art. 109"
+      ],
+      "categoria": "execucao",
+      "natureza": "abstrato",
+      "descricao": "Perda do direito de punir pelo decurso do tempo. Antes do trânsito em julgado, regula-se pelo máximo da pena cominada; depois, pela pena concreta aplicada (art. 110).",
+      "requisitos": [
+        "Decurso do prazo do art. 109, contado conforme o art. 111 (termos iniciais).",
+        "Ausência de causas interruptivas (art. 117) ou suspensivas (art. 116) no período."
+      ],
+      "vedacoes": [
+        "Imprescritibilidade constitucional: racismo (art. 5º, XLII, CF) e ação de grupos armados contra a ordem constitucional (art. 5º, XLIV, CF).",
+        "Art. 110, §1º: a prescrição retroativa não pode ter por termo inicial data anterior à denúncia."
+      ],
+      "parametros": [
+        {
+          "id": "prazoMaisDe12Anos",
+          "rotulo": "Pena máx. > 12 anos → prazo",
+          "tipo": "meses",
+          "padrao": 240,
+          "min": 0,
+          "max": 480,
+          "passo": 12,
+          "ajuda": "Art. 109, I: prescreve em 20 anos, se o máximo da pena é superior a 12.",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivo": "cp|art. 109, i"
+              },
+              "norma": null,
+              "fundamento": "Art. 109, I, CP"
+            }
+          ]
+        },
+        {
+          "id": "prazoMaisDe8Anos",
+          "rotulo": "Pena máx. > 8 e ≤ 12 anos → prazo",
+          "tipo": "meses",
+          "padrao": 192,
+          "min": 0,
+          "max": 480,
+          "passo": 12,
+          "ajuda": "Art. 109, II: prescreve em 16 anos, se o máximo da pena é superior a 8 e não excede 12.",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivo": "cp|art. 109, ii"
+              },
+              "norma": null,
+              "fundamento": "Art. 109, II, CP"
+            }
+          ]
+        },
+        {
+          "id": "prazoMaisDe4Anos",
+          "rotulo": "Pena máx. > 4 e ≤ 8 anos → prazo",
+          "tipo": "meses",
+          "padrao": 144,
+          "min": 0,
+          "max": 480,
+          "passo": 12,
+          "ajuda": "Art. 109, III: prescreve em 12 anos, se o máximo da pena é superior a 4 e não excede 8.",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivo": "cp|art. 109, iii"
+              },
+              "norma": null,
+              "fundamento": "Art. 109, III, CP"
+            }
+          ]
+        },
+        {
+          "id": "prazoMaisDe2Anos",
+          "rotulo": "Pena máx. > 2 e ≤ 4 anos → prazo",
+          "tipo": "meses",
+          "padrao": 96,
+          "min": 0,
+          "max": 480,
+          "passo": 12,
+          "ajuda": "Art. 109, IV: prescreve em 8 anos, se o máximo da pena é superior a 2 e não excede 4.",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivo": "cp|art. 109, iv"
+              },
+              "norma": null,
+              "fundamento": "Art. 109, IV, CP"
+            }
+          ]
+        },
+        {
+          "id": "prazoMaisDe1Ano",
+          "rotulo": "Pena máx. ≥ 1 e ≤ 2 anos → prazo",
+          "tipo": "meses",
+          "padrao": 48,
+          "min": 0,
+          "max": 480,
+          "passo": 12,
+          "ajuda": "Art. 109, V: prescreve em 4 anos, se o máximo da pena é igual a 1 ano ou, sendo superior, não excede a 2.",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivo": "cp|art. 109, v"
+              },
+              "norma": null,
+              "fundamento": "Art. 109, V, CP"
+            }
+          ]
+        },
+        {
+          "id": "prazoAteUmAno",
+          "rotulo": "Pena máx. < 1 ano → prazo",
+          "tipo": "meses",
+          "padrao": 36,
+          "min": 0,
+          "max": 480,
+          "passo": 12,
+          "ajuda": "Art. 109, VI: prescreve em 3 anos, se o máximo da pena é inferior a 1 ano (redação da Lei 12.234/2010).",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivo": "cp|art. 109, vi"
+              },
+              "norma": "Lei nº 12.234",
+              "fundamento": "Art. 109, VI, CP"
+            }
+          ]
+        },
+        {
+          "id": "reducaoEtaria",
+          "rotulo": "Reduzir pela metade (menor de 21 / maior de 70)",
+          "tipo": "booleano",
+          "padrao": false,
+          "ajuda": "Art. 115: prazos reduzidos de metade quando o agente era, ao tempo do crime, menor de 21 anos, ou maior de 70 na data da sentença.",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivo": "cp|art. 115"
+              },
+              "norma": "Lei nº 15.160",
+              "fundamento": "Art. 115, CP"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "slug": "saida-temporaria",
+      "nome": "Saída temporária",
+      "fundamento": "Art. 122, LEP",
+      "dispositivos": [
+        "lep|art. 122"
+      ],
+      "categoria": "execucao",
+      "natureza": "concreto",
+      "descricao": "Autorização para o condenado em regime semiaberto ausentar-se do estabelecimento, sem vigilância direta, para frequência a curso supletivo profissionalizante ou de instrução do 2º grau ou superior. É a única hipótese desde a Lei 14.843/2024, que revogou a visita à família e a participação em atividades de retorno ao convívio social, e vedou a saída ao condenado por crime hediondo ou cometido com violência ou grave ameaça contra pessoa.",
+      "requisitos": [
+        "Frequência a curso supletivo profissionalizante ou de instrução do 2º grau ou superior, na comarca do Juízo da Execução (art. 122, II).",
+        "Cumprimento de 1/6 da pena, se primário, ou 1/4, se reincidente (art. 123, II).",
+        "Comportamento adequado (art. 123, I).",
+        "Compatibilidade do benefício com os objetivos da pena (art. 123, III).",
+        "Regime semiaberto (art. 122, caput)."
+      ],
+      "vedacoes": [
+        "Condenado que cumpre pena por crime hediondo ou cometido com violência ou grave ameaça contra pessoa, que também não tem direito a trabalho externo sem vigilância direta (art. 122, §2º, na redação da Lei 14.843/2024).",
+        "Visita à família e participação em atividades de retorno ao convívio social: hipóteses revogadas pela Lei 14.843/2024 (art. 122, I e III)."
+      ],
+      "parametros": [
+        {
+          "id": "fracaoPrimario",
+          "rotulo": "Fração — primário",
+          "tipo": "fracao",
+          "padrao": 0.16666666666666666,
+          "min": 0,
+          "max": 1,
+          "passo": 0.041666666666666664,
+          "ajuda": "Art. 123, II: cumprimento mínimo de 1/6 da pena para o condenado primário.",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivo": "lep|art. 123, ii"
+              },
+              "norma": "original",
+              "fundamento": "Art. 123, II, LEP"
+            }
+          ]
+        },
+        {
+          "id": "fracaoReincidente",
+          "rotulo": "Fração — reincidente",
+          "tipo": "fracao",
+          "padrao": 0.25,
+          "min": 0,
+          "max": 1,
+          "passo": 0.041666666666666664,
+          "ajuda": "Art. 123, II: cumprimento mínimo de 1/4 da pena para o condenado reincidente.",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivo": "lep|art. 123, ii"
+              },
+              "norma": "original",
+              "fundamento": "Art. 123, II, LEP"
+            }
+          ]
+        },
+        {
+          "id": "vedadoHediondo",
+          "rotulo": "Vedar ao condenado por crime hediondo",
+          "tipo": "booleano",
+          "padrao": true,
+          "ajuda": "Art. 122, §2º, na redação da Lei 14.843/2024: sem saída temporária, e sem trabalho externo sem vigilância direta, para quem cumpre pena por crime hediondo. Até ela, a vedação alcançava só o hediondo com resultado morte (redação da Lei 13.964/2019).",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivo": "lep|art. 122, §2º"
+              },
+              "norma": "Lei nº 13.964",
+              "fundamento": "Art. 122, §2º, LEP (redação da Lei 13.964/2019, só o hediondo com resultado morte)"
+            },
+            {
+              "fonte": {
+                "dispositivo": "lep|art. 122, §2º"
+              },
+              "norma": "Lei nº 14.843",
+              "fundamento": "Art. 122, §2º, LEP (redação da Lei 14.843/2024)"
+            }
+          ]
+        },
+        {
+          "id": "vedadoViolencia",
+          "rotulo": "Vedar em crime com violência ou grave ameaça contra pessoa",
+          "tipo": "booleano",
+          "padrao": true,
+          "ajuda": "Art. 122, §2º, na redação da Lei 14.843/2024: a mesma vedação alcança quem cumpre pena por crime cometido com violência ou grave ameaça contra pessoa. Desmarcar simula a regra anterior, que não vedava por violência.",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivo": "lep|art. 122, §2º"
+              },
+              "norma": "Lei nº 14.843",
+              "fundamento": "Art. 122, §2º, LEP (redação da Lei 14.843/2024)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "slug": "detracao",
+      "nome": "Detração penal",
+      "fundamento": "Art. 42, CP",
+      "dispositivos": [
+        "cp|art. 42"
+      ],
+      "categoria": "execucao",
+      "natureza": "incondicionado",
+      "descricao": "Cômputo, na pena privativa de liberdade e na medida de segurança, do tempo de prisão provisória, de prisão administrativa e de internação em hospital de custódia. É direito subjetivo do condenado, aplicável a qualquer tipo penal.",
+      "requisitos": [
+        "Existência de prisão provisória, administrativa ou internação anterior.",
+        "Correlação entre a prisão provisória e o processo em que se executa a pena (ou processos conexos)."
+      ],
+      "vedacoes": [
+        "Não se admite detração em processo cujo fato seja POSTERIOR à prisão provisória (evita a \"conta corrente\" de crédito penal)."
+      ],
+      "parametros": [
+        {
+          "id": "aplicaMedidaSeguranca",
+          "rotulo": "Aplicar também à medida de segurança",
+          "tipo": "booleano",
+          "padrao": true,
+          "ajuda": "O art. 42 estende expressamente a detração ao tempo de internação em hospital de custódia e tratamento psiquiátrico.",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivo": "cp|art. 42"
+              },
+              "norma": "Lei nº 7.209",
+              "fundamento": "Art. 42, CP"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "slug": "remicao",
+      "nome": "Remição de pena",
+      "fundamento": "Art. 126, LEP",
+      "dispositivos": [
+        "lep|art. 126"
+      ],
+      "categoria": "execucao",
+      "natureza": "incondicionado",
+      "descricao": "Desconto de dias de pena pelo trabalho ou pelo estudo durante a execução. O tempo remido é computado como pena cumprida para todos os efeitos (art. 128).",
+      "requisitos": [
+        "Cumprimento de pena em regime fechado ou semiaberto (trabalho) ou em qualquer regime (estudo).",
+        "Frequência e jornada comprovadas pela administração penitenciária."
+      ],
+      "vedacoes": [
+        "Falta grave: o juiz PODE revogar até 1/3 do tempo remido (art. 127, LEP; Súmula Vinculante 9, STF).",
+        "Trabalho: não se admite remição no regime aberto (apenas pelo estudo)."
+      ],
+      "parametros": [
+        {
+          "id": "diasTrabalhadosPorDiaRemido",
+          "rotulo": "Dias trabalhados por 1 dia remido",
+          "tipo": "inteiro",
+          "padrao": 3,
+          "min": 1,
+          "max": 10,
+          "passo": 1,
+          "ajuda": "Art. 126, §1º, II: 1 dia de pena a cada 3 dias de trabalho (jornada de 6 a 8 horas).",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivo": "lep|art. 126, §1º, ii"
+              },
+              "norma": "Lei nº 12.433",
+              "fundamento": "Art. 126, §1º, II, LEP"
+            }
+          ]
+        },
+        {
+          "id": "horasEstudoPorDiaRemido",
+          "rotulo": "Horas de estudo por 1 dia remido",
+          "tipo": "inteiro",
+          "padrao": 12,
+          "min": 1,
+          "max": 48,
+          "passo": 1,
+          "ajuda": "Art. 126, §1º, I: 1 dia de pena a cada 12 horas de frequência escolar, divididas em no mínimo 3 dias.",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivo": "lep|art. 126, §1º, i"
+              },
+              "norma": "Lei nº 12.433",
+              "fundamento": "Art. 126, §1º, I, LEP"
+            }
+          ]
+        },
+        {
+          "id": "acrescimoConclusaoCurso",
+          "rotulo": "Acréscimo por conclusão de curso",
+          "tipo": "fracao",
+          "padrao": 0.3333333333333333,
+          "min": 0,
+          "max": 1,
+          "passo": 0.041666666666666664,
+          "ajuda": "Art. 126, §5º: o tempo remido será acrescido de 1/3 com a conclusão do ensino fundamental, médio ou superior.",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivo": "lep|art. 126, §5º"
+              },
+              "norma": "Lei nº 12.433",
+              "fundamento": "Art. 126, §5º, LEP"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "slug": "prisao-domiciliar",
+      "nome": "Prisão domiciliar",
+      "fundamento": "Art. 117, LEP; art. 318, CPP",
+      "dispositivos": [
+        "lep|art. 117",
+        "cpp|art. 318"
+      ],
+      "categoria": "execucao",
+      "natureza": "concreto",
+      "descricao": "Recolhimento em residência particular. Na execução (art. 117, LEP), é restrita ao regime aberto em hipóteses humanitárias; no processo (art. 318, CPP), substitui a prisão preventiva. O STF (HC 143.641) a estendeu coletivamente a gestantes e mães de crianças até 12 anos.",
+      "requisitos": [
+        "Execução (art. 117, LEP): regime aberto e uma das hipóteses — maior de 70 anos, acometido de doença grave, com filho menor ou deficiente, ou gestante.",
+        "Processo (art. 318, CPP): substituição da preventiva para gestante, mãe/pai de criança até 12 anos, maior de 80 anos, doença grave ou imprescindível aos cuidados de menor de 6 anos."
+      ],
+      "vedacoes": [
+        "HC 143.641/SP, STF: não se estende a crimes cometidos com violência ou grave ameaça, contra os próprios descendentes, ou em situações excepcionalíssimas devidamente fundamentadas."
+      ],
+      "parametros": [
+        {
+          "id": "somenteRegimeAberto",
+          "rotulo": "Restringir ao regime aberto (execução)",
+          "tipo": "booleano",
+          "padrao": true,
+          "ajuda": "Art. 117 da LEP admite a domiciliar apenas no regime aberto. Desmarcar simula a jurisprudência que a defere por falta de vaga em regime adequado (Súmula Vinculante 56).",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivo": "lep|art. 117",
+                "sumula": "STF SV 56"
+              },
+              "norma": "original",
+              "fundamento": "Art. 117, LEP; Súmula Vinculante 56, STF"
+            }
+          ]
+        },
+        {
+          "id": "vedadoViolencia",
+          "rotulo": "Vedar em crime com violência ou grave ameaça",
+          "tipo": "booleano",
+          "padrao": true,
+          "ajuda": "Ressalva do HC 143.641/SP para a domiciliar de gestantes e mães.",
+          "redacoes": [
+            {
+              "fonte": {
+                "decisao": "STF HC 143.641/SP"
+              },
+              "norma": "original",
+              "fundamento": "HC 143.641/SP, STF"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "slug": "monitoracao-eletronica",
+      "nome": "Monitoração eletrônica",
+      "fundamento": "Art. 146-B, LEP; art. 319, IX, CPP",
+      "dispositivos": [
+        "lep|art. 146-b",
+        "cpp|art. 319, ix"
+      ],
+      "categoria": "execucao",
+      "natureza": "concreto",
+      "descricao": "Fiscalização por meio eletrônico. Na execução, acompanha a saída temporária no regime semiaberto e a prisão domiciliar; no processo, é medida cautelar diversa da prisão.",
+      "requisitos": [
+        "Execução (art. 146-B, LEP): autorização de saída temporária no regime semiaberto ou prisão domiciliar.",
+        "Processo (art. 319, IX, CPP): medida cautelar diversa da prisão, isolada ou cumulada.",
+        "Consentimento e cuidados com o equipamento (art. 146-C, LEP)."
+      ],
+      "vedacoes": [
+        "A violação dos deveres do art. 146-C pode acarretar regressão de regime, revogação da saída ou da domiciliar."
+      ],
+      "parametros": [
+        {
+          "id": "admiteComoCautelar",
+          "rotulo": "Admitir como cautelar diversa da prisão",
+          "tipo": "booleano",
+          "padrao": true,
+          "ajuda": "Art. 319, IX, do CPP: monitoração como alternativa à preventiva, aplicável a qualquer tipo penal.",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivo": "cpp|art. 319, ix"
+              },
+              "norma": "Lei nº 12.403",
+              "fundamento": "Art. 319, IX, CPP"
+            }
+          ]
+        },
+        {
+          "id": "vedadoHediondo",
+          "rotulo": "Vedar em crime hediondo",
+          "tipo": "booleano",
+          "padrao": false,
+          "ajuda": "Não há vedação legal por hediondez. O parâmetro existe para simular propostas legislativas que a introduzam.",
+          "sem_fonte_legal": "Não há vedação legal de monitoração por hediondez: o parâmetro existe para simular propostas legislativas que a introduzam."
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "slug": "indulto",
+      "nome": "Indulto coletivo",
+      "fundamento": "Art. 84, XII, CF; art. 107, II, CP",
+      "dispositivos": [
+        "cf|art. 84, xii",
+        "cp|art. 107, ii"
+      ],
+      "categoria": "execucao",
+      "natureza": "concreto",
+      "descricao": "Ato de clemência do Presidente da República que extingue a punibilidade de um grupo indeterminado de condenados, por decreto anual. O STF (ADI 5.874) reconheceu ampla discricionariedade do chefe do Executivo na sua concessão.",
+      "requisitos": [
+        "Decreto presidencial vigente que contemple a hipótese.",
+        "Cumprimento da fração de pena exigida pelo decreto do ano.",
+        "Requisitos subjetivos definidos no decreto (comportamento, ausência de falta grave)."
+      ],
+      "vedacoes": [
+        "Art. 5º, XLIII, CF: crimes hediondos, tortura, tráfico ilícito de entorpecentes e terrorismo são insuscetíveis de graça ou anistia.",
+        "Os decretos anuais costumam excluir também crimes contra a administração pública e organizações criminosas."
+      ],
+      "parametros": [
+        {
+          "id": "vedadoHediondo",
+          "rotulo": "Vedar a hediondos e equiparados",
+          "tipo": "booleano",
+          "padrao": true,
+          "ajuda": "Vedação constitucional do art. 5º, XLIII. Alcança hediondos, tortura, tráfico e terrorismo. Desmarcar simula uma alteração constitucional.",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivo": "cf|art. 5, xliii"
+              },
+              "norma": "original",
+              "fundamento": "Art. 5º, XLIII, CF"
+            }
+          ]
+        },
+        {
+          "id": "fracaoTipica",
+          "rotulo": "Fração de pena típica do decreto",
+          "tipo": "fracao",
+          "padrao": 0.3333333333333333,
+          "min": 0,
+          "max": 1,
+          "passo": 0.041666666666666664,
+          "ajuda": "Os decretos variam a cada ano; 1/3 para primários é a fração historicamente mais comum. Não há patamar legal fixo.",
+          "sem_fonte_legal": "A fração vem do decreto de indulto de cada ano: não há patamar legal fixo."
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "slug": "comutacao",
+      "nome": "Comutação de penas",
+      "fundamento": "Art. 84, XII, CF; art. 192, LEP",
+      "dispositivos": [
+        "cf|art. 84, xii",
+        "lep|art. 192"
+      ],
+      "categoria": "execucao",
+      "natureza": "concreto",
+      "descricao": "Indulto parcial: em vez de extinguir a punibilidade, REDUZ a pena remanescente na fração fixada pelo decreto presidencial. Beneficia quem cumpriu parte da pena mas não atingiu os requisitos do indulto pleno.",
+      "requisitos": [
+        "Decreto presidencial vigente que preveja a hipótese de comutação.",
+        "Cumprimento da fração mínima de pena definida no decreto.",
+        "Requisitos subjetivos do decreto (ausência de falta grave no período fixado)."
+      ],
+      "vedacoes": [
+        "Art. 5º, XLIII, CF: mesma vedação do indulto para hediondos e equiparados."
+      ],
+      "parametros": [
+        {
+          "id": "vedadoHediondo",
+          "rotulo": "Vedar a hediondos e equiparados",
+          "tipo": "booleano",
+          "padrao": true,
+          "ajuda": "Vedação constitucional do art. 5º, XLIII, aplicável também ao indulto parcial.",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivo": "cf|art. 5, xliii"
+              },
+              "norma": "original",
+              "fundamento": "Art. 5º, XLIII, CF"
+            }
+          ]
+        },
+        {
+          "id": "fracaoReducao",
+          "rotulo": "Fração de redução da pena remanescente",
+          "tipo": "fracao",
+          "padrao": 0.25,
+          "min": 0,
+          "max": 1,
+          "passo": 0.041666666666666664,
+          "ajuda": "Percentual de redução típico dos decretos de comutação. Varia a cada ano.",
+          "sem_fonte_legal": "A fração vem do decreto de comutação de cada ano: não há patamar legal fixo."
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "slug": "graca",
+      "nome": "Graça (indulto individual)",
+      "fundamento": "Art. 84, XII, CF; art. 188, LEP",
+      "dispositivos": [
+        "cf|art. 84, xii",
+        "lep|art. 188"
+      ],
+      "categoria": "execucao",
+      "natureza": "concreto",
+      "descricao": "Clemência individual concedida pelo Presidente da República a pessoa determinada, em regra mediante petição do condenado, do Ministério Público, do Conselho Penitenciário ou de autoridade administrativa.",
+      "requisitos": [
+        "Provocação por petição do condenado ou por iniciativa do MP, do Conselho Penitenciário ou da autoridade administrativa (art. 188, LEP).",
+        "Parecer do Conselho Penitenciário (art. 189, LEP).",
+        "Decisão discricionária do Presidente da República."
+      ],
+      "vedacoes": [
+        "Art. 5º, XLIII, CF: insuscetíveis de graça os crimes hediondos, a tortura, o tráfico e o terrorismo.",
+        "Art. 2º, I, Lei 8.072/90: reforça a vedação para hediondos e equiparados."
+      ],
+      "parametros": [
+        {
+          "id": "vedadoHediondo",
+          "rotulo": "Vedar a hediondos e equiparados",
+          "tipo": "booleano",
+          "padrao": true,
+          "ajuda": "Vedação expressa do art. 5º, XLIII, da CF e do art. 2º, I, da Lei 8.072/90.",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivos": [
+                  "cf|art. 5, xliii",
+                  "hediondos-8072|art. 2, i"
+                ]
+              },
+              "norma": "original",
+              "fundamento": "Art. 5º, XLIII, CF; art. 2º, I, Lei 8.072/90"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "slug": "unificacao",
+      "nome": "Unificação de penas (limite de cumprimento)",
+      "fundamento": "Art. 75, CP",
+      "dispositivos": [
+        "cp|art. 75"
+      ],
+      "categoria": "execucao",
+      "natureza": "concreto",
+      "descricao": "O tempo de cumprimento das penas privativas de liberdade não pode ser superior a 40 anos (limite elevado de 30 para 40 pela Lei 13.964/2019). A unificação incide apenas sobre o tempo de cumprimento; a progressão e o livramento são calculados sobre a pena total aplicada (Súmula 715, STF).",
+      "requisitos": [
+        "Condenação a penas privativas de liberdade cuja soma ultrapasse o limite legal.",
+        "Unificação determinada pelo juízo da execução."
+      ],
+      "vedacoes": [
+        "Súmula 715, STF: a pena unificada NÃO é considerada para a concessão de outros benefícios, como o livramento condicional ou o regime mais favorável.",
+        "Sobrevindo nova condenação, faz-se nova unificação, desprezando-se o período já cumprido (art. 75, §2º)."
+      ],
+      "parametros": [
+        {
+          "id": "limiteAnos",
+          "rotulo": "Limite máximo de cumprimento (anos)",
+          "tipo": "inteiro",
+          "padrao": 40,
+          "min": 1,
+          "max": 100,
+          "passo": 1,
+          "ajuda": "Teto do art. 75, elevado de 30 para 40 anos pela Lei 13.964/2019 (Pacote Anticrime). É o parâmetro central do debate sobre penas máximas no Brasil.",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivo": "cp|art. 75, caput"
+              },
+              "norma": "Lei nº 13.964",
+              "fundamento": "Art. 75, caput, CP (Lei 13.964/2019)"
+            }
+          ]
+        },
+        {
+          "id": "aplicaSumula715",
+          "rotulo": "Progressão e livramento calculados sobre a pena total (Súmula 715)",
+          "tipo": "booleano",
+          "padrao": true,
+          "ajuda": "Súmula 715, STF: a pena unificada não serve de base para os demais benefícios. Desmarcar simula a tese oposta, em que a unificação repercutiria em progressão e livramento.",
+          "redacoes": [
+            {
+              "fonte": {
+                "sumula": "STF 715"
+              },
+              "norma": "original",
+              "fundamento": "Súmula 715, STF"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

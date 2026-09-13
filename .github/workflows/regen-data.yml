@@ -3,13 +3,21 @@ name: Regenerar dados derivados
 # Quando data/crimes.json muda (inclusive via edição pela interface web do GitHub),
 # roda scripts/transform_data.py e commita o static/data/crimes.json regenerado.
 # Assim não é preciso rodar Python localmente para atualizar o catálogo.
+#
+# O derivado dos atributos (static/data/atributos.json) vem junto: o alcance de
+# cada atributo depende das penas do catálogo, e a base dos atributos e o
+# histórico legislativo também se editam à mão. O qualidade.json, que traz os
+# contadores da página inicial, também é derivado e também é commitado.
 
 on:
   push:
     branches: [main]
     paths:
       - 'data/crimes.json'
+      - 'data/atributos.json'
+      - 'data/historico-legislativo.json'
       - 'scripts/transform_data.py'
+      - 'scripts/derivar_atributos.ts'
   workflow_dispatch:
 
 permissions:
@@ -49,17 +57,30 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Instalar dependências
+        run: npm ci
+
       - name: Regenerar catálogo derivado
         run: python3 scripts/transform_data.py
 
+      - name: Regenerar derivado dos atributos
+        run: npm run atributos
+
       - name: Commitar mudanças (se houver)
         run: |
-          if [ -n "$(git status --porcelain static/data/crimes.json)" ]; then
+          ARQUIVOS="static/data/crimes.json static/data/qualidade.json static/data/atributos.json"
+          if [ -n "$(git status --porcelain $ARQUIVOS)" ]; then
             git config user.name "sispenas-bot"
             git config user.email "sispenas-bot@users.noreply.github.com"
-            git add static/data/crimes.json
-            git commit -m "chore(data): regenera static/data/crimes.json [skip ci]"
+            git add $ARQUIVOS
+            git commit -m "chore(data): regenera os dados derivados [skip ci]"
             git push
           else
-            echo "Nenhuma mudança no catálogo derivado."
+            echo "Nenhuma mudança nos dados derivados."
           fi

@@ -1,0 +1,2098 @@
+{
+  "_meta": {
+    "descricao": "Histórico legislativo dos dispositivos citados pelos atributos penais: uma linha por acontecimento na vida de cada dispositivo, em ordem cronológica (estudos/modelo-atributos.md, seção 4.5). A chave estrangeira é `dispositivo`, a chave canônica de data/fontes.json.",
+    "eventos": {
+      "criacao": "nasceu, no texto original ou incluído por lei posterior",
+      "alteracao": "uma lei lhe deu texto novo",
+      "revogacao": "uma lei, ou uma decisão, o tirou de vigência",
+      "renumeracao": "mudou de número",
+      "transferencia": "mudou de lugar"
+    },
+    "origem": "`compilado`: extraída do texto compilado do Planalto por scripts/robos/nucleo/historico.py, que a regenera; `manual`: escrita à mão, e preservada na regeneração.",
+    "pendente": "`publicacao` e `vigencia` ainda não são preenchidas: o compilado dá só o ano, e a data exata vem da lei alteradora."
+  },
+  "eventos": [
+    {
+      "dispositivo": "juizados-9099|art. 61, caput",
+      "evento": "criacao",
+      "norma": "original",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "juizados-9099|art. 61, caput",
+      "evento": "alteracao",
+      "norma": "Lei nº 11.313",
+      "ano": 2006,
+      "anotacao": "(Redação dada pela Lei nº 11.313, de 2006)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2004-2006/2006/Lei/L11313.htm#art1",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "juizados-9099|art. 76, caput",
+      "evento": "criacao",
+      "norma": "original",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "juizados-9099|art. 76, §1º",
+      "evento": "criacao",
+      "norma": "original",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "juizados-9099|art. 76, §2º",
+      "evento": "criacao",
+      "norma": "original",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "juizados-9099|art. 76, §2º, i",
+      "evento": "criacao",
+      "norma": "original",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "juizados-9099|art. 76, §2º, ii",
+      "evento": "criacao",
+      "norma": "original",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "juizados-9099|art. 76, §2º, iii",
+      "evento": "criacao",
+      "norma": "original",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "juizados-9099|art. 76, §3º",
+      "evento": "criacao",
+      "norma": "original",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "juizados-9099|art. 76, §4º",
+      "evento": "criacao",
+      "norma": "original",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "juizados-9099|art. 76, §5º",
+      "evento": "criacao",
+      "norma": "original",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "juizados-9099|art. 76, §6º",
+      "evento": "criacao",
+      "norma": "original",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "juizados-9099|art. 89, caput",
+      "evento": "criacao",
+      "norma": "original",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "juizados-9099|art. 89, §1º",
+      "evento": "criacao",
+      "norma": "original",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "juizados-9099|art. 89, §1º, i",
+      "evento": "criacao",
+      "norma": "original",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "juizados-9099|art. 89, §1º, ii",
+      "evento": "criacao",
+      "norma": "original",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "juizados-9099|art. 89, §1º, iii",
+      "evento": "criacao",
+      "norma": "original",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "juizados-9099|art. 89, §1º, iv",
+      "evento": "criacao",
+      "norma": "original",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "juizados-9099|art. 89, §2º",
+      "evento": "criacao",
+      "norma": "original",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "juizados-9099|art. 89, §3º",
+      "evento": "criacao",
+      "norma": "original",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "juizados-9099|art. 89, §4º",
+      "evento": "criacao",
+      "norma": "original",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "juizados-9099|art. 89, §5º",
+      "evento": "criacao",
+      "norma": "original",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "juizados-9099|art. 89, §6º",
+      "evento": "criacao",
+      "norma": "original",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "juizados-9099|art. 89, §7º",
+      "evento": "criacao",
+      "norma": "original",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cpp|art. 28-a, caput",
+      "evento": "criacao",
+      "norma": "Lei nº 13.964",
+      "ano": 2019,
+      "anotacao": "(Incluído pela Lei nº 13.964, de 2019)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art3",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cpp|art. 28-a, i",
+      "evento": "criacao",
+      "norma": "Lei nº 13.964",
+      "ano": 2019,
+      "anotacao": "(Incluído pela Lei nº 13.964, de 2019)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art3",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cpp|art. 28-a, ii",
+      "evento": "criacao",
+      "norma": "Lei nº 13.964",
+      "ano": 2019,
+      "anotacao": "(Incluído pela Lei nº 13.964, de 2019)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art3",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cpp|art. 28-a, iii",
+      "evento": "criacao",
+      "norma": "Lei nº 13.964",
+      "ano": 2019,
+      "anotacao": "(Incluído pela Lei nº 13.964, de 2019)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art3",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cpp|art. 28-a, iv",
+      "evento": "criacao",
+      "norma": "Lei nº 13.964",
+      "ano": 2019,
+      "anotacao": "(Incluído pela Lei nº 13.964, de 2019)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art3",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cpp|art. 28-a, v",
+      "evento": "criacao",
+      "norma": "Lei nº 13.964",
+      "ano": 2019,
+      "anotacao": "(Incluído pela Lei nº 13.964, de 2019)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art3",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cpp|art. 28-a, §1º",
+      "evento": "criacao",
+      "norma": "Lei nº 13.964",
+      "ano": 2019,
+      "anotacao": "(Incluído pela Lei nº 13.964, de 2019)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art3",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cpp|art. 28-a, §2º",
+      "evento": "criacao",
+      "norma": "Lei nº 13.964",
+      "ano": 2019,
+      "anotacao": "(Incluído pela Lei nº 13.964, de 2019)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art3",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cpp|art. 28-a, §2º, i",
+      "evento": "criacao",
+      "norma": "Lei nº 13.964",
+      "ano": 2019,
+      "anotacao": "(Incluído pela Lei nº 13.964, de 2019)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art3",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cpp|art. 28-a, §2º, ii",
+      "evento": "criacao",
+      "norma": "Lei nº 13.964",
+      "ano": 2019,
+      "anotacao": "(Incluído pela Lei nº 13.964, de 2019)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art3",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cpp|art. 28-a, §2º, iii",
+      "evento": "criacao",
+      "norma": "Lei nº 13.964",
+      "ano": 2019,
+      "anotacao": "(Incluído pela Lei nº 13.964, de 2019)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art3",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cpp|art. 28-a, §2º, iv",
+      "evento": "criacao",
+      "norma": "Lei nº 13.964",
+      "ano": 2019,
+      "anotacao": "(Incluído pela Lei nº 13.964, de 2019)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art3",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cpp|art. 28-a, §3º",
+      "evento": "criacao",
+      "norma": "Lei nº 13.964",
+      "ano": 2019,
+      "anotacao": "(Incluído pela Lei nº 13.964, de 2019)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art3",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cpp|art. 28-a, §4º",
+      "evento": "criacao",
+      "norma": "Lei nº 13.964",
+      "ano": 2019,
+      "anotacao": "(Incluído pela Lei nº 13.964, de 2019)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art3",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cpp|art. 28-a, §5º",
+      "evento": "criacao",
+      "norma": "Lei nº 13.964",
+      "ano": 2019,
+      "anotacao": "(Incluído pela Lei nº 13.964, de 2019)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art3",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cpp|art. 28-a, §6º",
+      "evento": "criacao",
+      "norma": "Lei nº 13.964",
+      "ano": 2019,
+      "anotacao": "(Incluído pela Lei nº 13.964, de 2019)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art3",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cpp|art. 28-a, §7º",
+      "evento": "criacao",
+      "norma": "Lei nº 13.964",
+      "ano": 2019,
+      "anotacao": "(Incluído pela Lei nº 13.964, de 2019)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art3",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cpp|art. 28-a, §8º",
+      "evento": "criacao",
+      "norma": "Lei nº 13.964",
+      "ano": 2019,
+      "anotacao": "(Incluído pela Lei nº 13.964, de 2019)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art3",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cpp|art. 28-a, §9º",
+      "evento": "criacao",
+      "norma": "Lei nº 13.964",
+      "ano": 2019,
+      "anotacao": "(Incluído pela Lei nº 13.964, de 2019)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art3",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cpp|art. 28-a, §10º",
+      "evento": "criacao",
+      "norma": "Lei nº 13.964",
+      "ano": 2019,
+      "anotacao": "(Incluído pela Lei nº 13.964, de 2019)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art3",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cpp|art. 28-a, §11º",
+      "evento": "criacao",
+      "norma": "Lei nº 13.964",
+      "ano": 2019,
+      "anotacao": "(Incluído pela Lei nº 13.964, de 2019)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art3",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cpp|art. 28-a, §12º",
+      "evento": "criacao",
+      "norma": "Lei nº 13.964",
+      "ano": 2019,
+      "anotacao": "(Incluído pela Lei nº 13.964, de 2019)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art3",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cpp|art. 28-a, §13º",
+      "evento": "criacao",
+      "norma": "Lei nº 13.964",
+      "ano": 2019,
+      "anotacao": "(Incluído pela Lei nº 13.964, de 2019)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art3",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cpp|art. 28-a, §14º",
+      "evento": "criacao",
+      "norma": "Lei nº 13.964",
+      "ano": 2019,
+      "anotacao": "(Incluído pela Lei nº 13.964, de 2019)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art3",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cpp|art. 318, caput",
+      "evento": "alteracao",
+      "norma": "Lei nº 12.403",
+      "ano": 2011,
+      "anotacao": "(Redação dada pela Lei nº 12.403, de 2011)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2011-2014/2011/Lei/L12403.htm#art1",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cpp|art. 318, i",
+      "evento": "criacao",
+      "norma": "Lei nº 12.403",
+      "ano": 2011,
+      "anotacao": "(Incluído pela Lei nº 12.403, de 2011)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2011-2014/2011/Lei/L12403.htm#art1",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cpp|art. 318, ii",
+      "evento": "criacao",
+      "norma": "Lei nº 12.403",
+      "ano": 2011,
+      "anotacao": "(Incluído pela Lei nº 12.403, de 2011)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2011-2014/2011/Lei/L12403.htm#art1",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cpp|art. 318, iii",
+      "evento": "criacao",
+      "norma": "Lei nº 12.403",
+      "ano": 2011,
+      "anotacao": "(Incluído pela Lei nº 12.403, de 2011)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2011-2014/2011/Lei/L12403.htm#art1",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cpp|art. 318, iv",
+      "evento": "alteracao",
+      "norma": "Lei nº 13.257",
+      "ano": 2016,
+      "anotacao": "(Redação dada pela Lei nº 13.257, de 2016)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2015-2018/2016/Lei/L13257.htm#art41",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cpp|art. 318, v",
+      "evento": "criacao",
+      "norma": "Lei nº 13.257",
+      "ano": 2016,
+      "anotacao": "(Incluído pela Lei nº 13.257, de 2016)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2015-2018/2016/Lei/L13257.htm#art41",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cpp|art. 318, vi",
+      "evento": "criacao",
+      "norma": "Lei nº 13.257",
+      "ano": 2016,
+      "anotacao": "(Incluído pela Lei nº 13.257, de 2016)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2015-2018/2016/Lei/L13257.htm#art41",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cpp|art. 318, parágrafo único",
+      "evento": "criacao",
+      "norma": "Lei nº 12.403",
+      "ano": 2011,
+      "anotacao": "(Incluído pela Lei nº 12.403, de 2011)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2011-2014/2011/Lei/L12403.htm#art1",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cpp|art. 319, ix",
+      "evento": "criacao",
+      "norma": "Lei nº 12.403",
+      "ano": 2011,
+      "anotacao": "(Incluído pela Lei nº 12.403, de 2011)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2011-2014/2011/Lei/L12403.htm#art1",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "orgcrim-12850|art. 4, caput",
+      "evento": "criacao",
+      "norma": "original",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "orgcrim-12850|art. 4, i",
+      "evento": "criacao",
+      "norma": "original",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "orgcrim-12850|art. 4, ii",
+      "evento": "criacao",
+      "norma": "original",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "orgcrim-12850|art. 4, iii",
+      "evento": "criacao",
+      "norma": "original",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "orgcrim-12850|art. 4, iv",
+      "evento": "criacao",
+      "norma": "original",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "orgcrim-12850|art. 4, v",
+      "evento": "criacao",
+      "norma": "original",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "orgcrim-12850|art. 4, §1º",
+      "evento": "criacao",
+      "norma": "original",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "orgcrim-12850|art. 4, §2º",
+      "evento": "criacao",
+      "norma": "original",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "orgcrim-12850|art. 4, §3º",
+      "evento": "criacao",
+      "norma": "original",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "orgcrim-12850|art. 4, §4º",
+      "evento": "criacao",
+      "norma": "original",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "orgcrim-12850|art. 4, §4º",
+      "evento": "alteracao",
+      "norma": "Lei nº 13.964",
+      "ano": 2019,
+      "anotacao": "(Redação dada pela Lei nº 13.964, de 2019)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art14",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "orgcrim-12850|art. 4, §4º-a",
+      "evento": "criacao",
+      "norma": "Lei nº 13.964",
+      "ano": 2019,
+      "anotacao": "(Incluído pela Lei nº 13.964, de 2019)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art14",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "orgcrim-12850|art. 4, §5º",
+      "evento": "criacao",
+      "norma": "original",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "orgcrim-12850|art. 4, §6º",
+      "evento": "criacao",
+      "norma": "original",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "orgcrim-12850|art. 4, §7º",
+      "evento": "criacao",
+      "norma": "original",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "orgcrim-12850|art. 4, §7º",
+      "evento": "alteracao",
+      "norma": "Lei nº 13.964",
+      "ano": 2019,
+      "anotacao": "(Redação dada pela Lei nº 13.964, de 2019)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art14",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "orgcrim-12850|art. 4, §7º, i",
+      "evento": "criacao",
+      "norma": "Lei nº 13.964",
+      "ano": 2019,
+      "anotacao": "(Incluído pela Lei nº 13.964, de 2019)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art14",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "orgcrim-12850|art. 4, §7º, ii",
+      "evento": "criacao",
+      "norma": "Lei nº 13.964",
+      "ano": 2019,
+      "anotacao": "(Incluído pela Lei nº 13.964, de 2019)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art14",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "orgcrim-12850|art. 4, §7º, iii",
+      "evento": "criacao",
+      "norma": "Lei nº 13.964",
+      "ano": 2019,
+      "anotacao": "(Incluído pela Lei nº 13.964, de 2019)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art14",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "orgcrim-12850|art. 4, §7º, iv",
+      "evento": "criacao",
+      "norma": "Lei nº 13.964",
+      "ano": 2019,
+      "anotacao": "(Incluído pela Lei nº 13.964, de 2019)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art14",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "orgcrim-12850|art. 4, §7º-a",
+      "evento": "criacao",
+      "norma": "Lei nº 13.964",
+      "ano": 2019,
+      "anotacao": "(Incluído pela Lei nº 13.964, de 2019)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art14",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "orgcrim-12850|art. 4, §7º-b",
+      "evento": "criacao",
+      "norma": "Lei nº 13.964",
+      "ano": 2019,
+      "anotacao": "(Incluído pela Lei nº 13.964, de 2019)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art14",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "orgcrim-12850|art. 4, §8º",
+      "evento": "criacao",
+      "norma": "original",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "orgcrim-12850|art. 4, §8º",
+      "evento": "alteracao",
+      "norma": "Lei nº 13.964",
+      "ano": 2019,
+      "anotacao": "(Redação dada pela Lei nº 13.964, de 2019)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art14",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "orgcrim-12850|art. 4, §9º",
+      "evento": "criacao",
+      "norma": "original",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "orgcrim-12850|art. 4, §10º",
+      "evento": "criacao",
+      "norma": "original",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "orgcrim-12850|art. 4, §10º-a",
+      "evento": "criacao",
+      "norma": "Lei nº 13.964",
+      "ano": 2019,
+      "anotacao": "(Incluído pela Lei nº 13.964, de 2019)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art14",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "orgcrim-12850|art. 4, §11º",
+      "evento": "criacao",
+      "norma": "original",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "orgcrim-12850|art. 4, §12º",
+      "evento": "criacao",
+      "norma": "original",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "orgcrim-12850|art. 4, §13º",
+      "evento": "criacao",
+      "norma": "original",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "orgcrim-12850|art. 4, §13º",
+      "evento": "alteracao",
+      "norma": "Lei nº 13.964",
+      "ano": 2019,
+      "anotacao": "(Redação dada pela Lei nº 13.964, de 2019)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art14",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "orgcrim-12850|art. 4, §14º",
+      "evento": "criacao",
+      "norma": "original",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "orgcrim-12850|art. 4, §15º",
+      "evento": "criacao",
+      "norma": "original",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "orgcrim-12850|art. 4, §16º",
+      "evento": "criacao",
+      "norma": "original",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "orgcrim-12850|art. 4, §16º",
+      "evento": "alteracao",
+      "norma": "Lei nº 13.964",
+      "ano": 2019,
+      "anotacao": "(Redação dada pela Lei nº 13.964, de 2019)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art14",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "orgcrim-12850|art. 4, §16º, i",
+      "evento": "criacao",
+      "norma": "Lei nº 13.964",
+      "ano": 2019,
+      "anotacao": "(Incluído pela Lei nº 13.964, de 2019)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art14",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "orgcrim-12850|art. 4, §16º, ii",
+      "evento": "criacao",
+      "norma": "Lei nº 13.964",
+      "ano": 2019,
+      "anotacao": "(Incluído pela Lei nº 13.964, de 2019)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art14",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "orgcrim-12850|art. 4, §16º, iii",
+      "evento": "criacao",
+      "norma": "Lei nº 13.964",
+      "ano": 2019,
+      "anotacao": "(Incluído pela Lei nº 13.964, de 2019)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art14",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "orgcrim-12850|art. 4, §17º",
+      "evento": "criacao",
+      "norma": "Lei nº 13.964",
+      "ano": 2019,
+      "anotacao": "(Incluído pela Lei nº 13.964, de 2019)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art14",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "orgcrim-12850|art. 4, §18º",
+      "evento": "criacao",
+      "norma": "Lei nº 13.964",
+      "ano": 2019,
+      "anotacao": "(Incluído pela Lei nº 13.964, de 2019)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art14",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cp|art. 14, ii",
+      "evento": "criacao",
+      "norma": "Lei nº 7.209",
+      "ano": 1984,
+      "anotacao": "(Incluído pela Lei nº 7.209, de 11.7.1984)",
+      "url": "https://www.planalto.gov.br/ccivil_03/LEIS/1980-1988/L7209.htm#art14",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cp|art. 15, caput",
+      "evento": "alteracao",
+      "norma": "Lei nº 7.209",
+      "ano": 1984,
+      "anotacao": "(Redação dada pela Lei nº 7.209, de 11.7.1984)",
+      "url": "https://www.planalto.gov.br/ccivil_03/LEIS/1980-1988/L7209.htm#art15",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cp|art. 16, caput",
+      "evento": "alteracao",
+      "norma": "Lei nº 7.209",
+      "ano": 1984,
+      "anotacao": "(Redação dada pela Lei nº 7.209, de 11.7.1984)",
+      "url": "https://www.planalto.gov.br/ccivil_03/LEIS/1980-1988/L7209.htm#art16",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cp|art. 33, §2º",
+      "evento": "alteracao",
+      "norma": "Lei nº 7.209",
+      "ano": 1984,
+      "anotacao": "(Redação dada pela Lei nº 7.209, de 11.7.1984)",
+      "url": "https://www.planalto.gov.br/ccivil_03/LEIS/1980-1988/L7209.htm#art33",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cp|art. 33, §3º",
+      "evento": "alteracao",
+      "norma": "Lei nº 7.209",
+      "ano": 1984,
+      "anotacao": "(Redação dada pela Lei nº 7.209, de 11.7.1984)",
+      "url": "https://www.planalto.gov.br/ccivil_03/LEIS/1980-1988/L7209.htm#art33",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cp|art. 42, caput",
+      "evento": "alteracao",
+      "norma": "Lei nº 7.209",
+      "ano": 1984,
+      "anotacao": "(Redação dada pela Lei nº 7.209, de 11.7.1984)",
+      "url": "https://www.planalto.gov.br/ccivil_03/LEIS/1980-1988/L7209.htm#art42",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cp|art. 44, caput",
+      "evento": "alteracao",
+      "norma": "Lei nº 9.714",
+      "ano": 1998,
+      "anotacao": "(Redação dada pela Lei nº 9.714, de 1998)",
+      "url": "https://www.planalto.gov.br/ccivil_03/LEIS/L9714.htm#art44.",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cp|art. 44, i",
+      "evento": "alteracao",
+      "norma": "Lei nº 9.714",
+      "ano": 1998,
+      "anotacao": "(Redação dada pela Lei nº 9.714, de 1998)",
+      "url": "https://www.planalto.gov.br/ccivil_03/LEIS/L9714.htm#art44.",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cp|art. 44, ii",
+      "evento": "alteracao",
+      "norma": "Lei nº 9.714",
+      "ano": 1998,
+      "anotacao": "(Redação dada pela Lei nº 9.714, de 1998)",
+      "url": "https://www.planalto.gov.br/ccivil_03/LEIS/L9714.htm#art44.",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cp|art. 44, iii",
+      "evento": "alteracao",
+      "norma": "Lei nº 9.714",
+      "ano": 1998,
+      "anotacao": "(Redação dada pela Lei nº 9.714, de 1998)",
+      "url": "https://www.planalto.gov.br/ccivil_03/LEIS/L9714.htm#art44.",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cp|art. 44, §2º",
+      "evento": "criacao",
+      "norma": "Lei nº 9.714",
+      "ano": 1998,
+      "anotacao": "(Incluído pela Lei nº 9.714, de 1998)",
+      "url": "https://www.planalto.gov.br/ccivil_03/LEIS/L9714.htm#art44.",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cp|art. 44, §3º",
+      "evento": "criacao",
+      "norma": "Lei nº 9.714",
+      "ano": 1998,
+      "anotacao": "(Incluído pela Lei nº 9.714, de 1998)",
+      "url": "https://www.planalto.gov.br/ccivil_03/LEIS/L9714.htm#art44.",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cp|art. 44, §4º",
+      "evento": "criacao",
+      "norma": "Lei nº 9.714",
+      "ano": 1998,
+      "anotacao": "(Incluído pela Lei nº 9.714, de 1998)",
+      "url": "https://www.planalto.gov.br/ccivil_03/LEIS/L9714.htm#art44.",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cp|art. 44, §5º",
+      "evento": "criacao",
+      "norma": "Lei nº 9.714",
+      "ano": 1998,
+      "anotacao": "(Incluído pela Lei nº 9.714, de 1998)",
+      "url": "https://www.planalto.gov.br/ccivil_03/LEIS/L9714.htm#art44.",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cp|art. 75, caput",
+      "evento": "alteracao",
+      "norma": "Lei nº 13.964",
+      "ano": 2019,
+      "anotacao": "(Redação dada pela Lei nº 13.964, de 2019)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art2",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cp|art. 75, §1º",
+      "evento": "alteracao",
+      "norma": "Lei nº 13.964",
+      "ano": 2019,
+      "anotacao": "(Redação dada pela Lei nº 13.964, de 2019)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art2",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cp|art. 75, §2º",
+      "evento": "alteracao",
+      "norma": "Lei nº 7.209",
+      "ano": 1984,
+      "anotacao": "(Redação dada pela Lei nº 7.209, de 11.7.1984)",
+      "url": "https://www.planalto.gov.br/ccivil_03/LEIS/1980-1988/L7209.htm#art75",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cp|art. 77, caput",
+      "evento": "alteracao",
+      "norma": "Lei nº 7.209",
+      "ano": 1984,
+      "anotacao": "(Redação dada pela Lei nº 7.209, de 11.7.1984)",
+      "url": "https://www.planalto.gov.br/ccivil_03/LEIS/1980-1988/L7209.htm#art77",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cp|art. 77, i",
+      "evento": "alteracao",
+      "norma": "Lei nº 7.209",
+      "ano": 1984,
+      "anotacao": "(Redação dada pela Lei nº 7.209, de 11.7.1984)",
+      "url": "https://www.planalto.gov.br/ccivil_03/LEIS/1980-1988/L7209.htm#art77",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cp|art. 77, ii",
+      "evento": "alteracao",
+      "norma": "Lei nº 7.209",
+      "ano": 1984,
+      "anotacao": "(Redação dada pela Lei nº 7.209, de 11.7.1984)",
+      "url": "https://www.planalto.gov.br/ccivil_03/LEIS/1980-1988/L7209.htm#art77",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cp|art. 77, iii",
+      "evento": "alteracao",
+      "norma": "Lei nº 7.209",
+      "ano": 1984,
+      "anotacao": "(Redação dada pela Lei nº 7.209, de 11.7.1984)",
+      "url": "https://www.planalto.gov.br/ccivil_03/LEIS/1980-1988/L7209.htm#art77",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cp|art. 77, §1º",
+      "evento": "alteracao",
+      "norma": "Lei nº 7.209",
+      "ano": 1984,
+      "anotacao": "(Redação dada pela Lei nº 7.209, de 11.7.1984)",
+      "url": "https://www.planalto.gov.br/ccivil_03/LEIS/1980-1988/L7209.htm#art77",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cp|art. 77, §2º",
+      "evento": "alteracao",
+      "norma": "Lei nº 9.714",
+      "ano": 1998,
+      "anotacao": "(Redação dada pela Lei nº 9.714, de 1998)",
+      "url": "https://www.planalto.gov.br/ccivil_03/LEIS/L9714.htm#art77§2",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cp|art. 83, caput",
+      "evento": "alteracao",
+      "norma": "Lei nº 7.209",
+      "ano": 1984,
+      "anotacao": "(Redação dada pela Lei nº 7.209, de 11.7.1984)",
+      "url": "https://www.planalto.gov.br/ccivil_03/LEIS/1980-1988/L7209.htm#art83",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cp|art. 83, i",
+      "evento": "alteracao",
+      "norma": "Lei nº 7.209",
+      "ano": 1984,
+      "anotacao": "(Redação dada pela Lei nº 7.209, de 11.7.1984)",
+      "url": "https://www.planalto.gov.br/ccivil_03/LEIS/1980-1988/L7209.htm#art83",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cp|art. 83, ii",
+      "evento": "alteracao",
+      "norma": "Lei nº 7.209",
+      "ano": 1984,
+      "anotacao": "(Redação dada pela Lei nº 7.209, de 11.7.1984)",
+      "url": "https://www.planalto.gov.br/ccivil_03/LEIS/1980-1988/L7209.htm#art83",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cp|art. 83, iii",
+      "evento": "alteracao",
+      "norma": "Lei nº 13.964",
+      "ano": 2019,
+      "anotacao": "(Redação dada pela Lei nº 13.964, de 2019)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art2",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cp|art. 83, iii, a",
+      "evento": "criacao",
+      "norma": "Lei nº 13.964",
+      "ano": 2019,
+      "anotacao": "(Incluído pela Lei nº 13.964, de 2019)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art2",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cp|art. 83, iii, b",
+      "evento": "criacao",
+      "norma": "Lei nº 13.964",
+      "ano": 2019,
+      "anotacao": "(Incluído pela Lei nº 13.964, de 2019)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art2",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cp|art. 83, iii, c",
+      "evento": "criacao",
+      "norma": "Lei nº 13.964",
+      "ano": 2019,
+      "anotacao": "(Incluído pela Lei nº 13.964, de 2019)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art2",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cp|art. 83, iii, d",
+      "evento": "criacao",
+      "norma": "Lei nº 13.964",
+      "ano": 2019,
+      "anotacao": "(Incluído pela Lei nº 13.964, de 2019)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art2",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cp|art. 83, iv",
+      "evento": "alteracao",
+      "norma": "Lei nº 7.209",
+      "ano": 1984,
+      "anotacao": "(Redação dada pela Lei nº 7.209, de 11.7.1984)",
+      "url": "https://www.planalto.gov.br/ccivil_03/LEIS/1980-1988/L7209.htm#art83",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cp|art. 83, v",
+      "evento": "criacao",
+      "norma": "Lei nº 13.344",
+      "ano": 2016,
+      "anotacao": "(Incluído pela Lei nº 13.344, de 2016)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2015-2018/2016/Lei/L13344.htm#art12",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cp|art. 83, parágrafo único",
+      "evento": "alteracao",
+      "norma": "Lei nº 7.209",
+      "ano": 1984,
+      "anotacao": "(Redação dada pela Lei nº 7.209, de 11.7.1984)",
+      "url": "https://www.planalto.gov.br/ccivil_03/LEIS/1980-1988/L7209.htm#art83",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cp|art. 109, caput",
+      "evento": "alteracao",
+      "norma": "Lei nº 12.234",
+      "ano": 2010,
+      "anotacao": "(Redação dada pela Lei nº 12.234, de 2010)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2007-2010/2010/Lei/L12234.htm#art2",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cp|art. 109, vi",
+      "evento": "alteracao",
+      "norma": "Lei nº 12.234",
+      "ano": 2010,
+      "anotacao": "(Redação dada pela Lei nº 12.234, de 2010)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2007-2010/2010/Lei/L12234.htm#art2",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cp|art. 109, parágrafo único",
+      "evento": "alteracao",
+      "norma": "Lei nº 7.209",
+      "ano": 1984,
+      "anotacao": "(Redação dada pela Lei nº 7.209, de 11.7.1984)",
+      "url": "https://www.planalto.gov.br/ccivil_03/LEIS/1980-1988/L7209.htm#art109",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cp|art. 115, caput",
+      "evento": "alteracao",
+      "norma": "Lei nº 15.160",
+      "ano": 2025,
+      "anotacao": "(Redação dada pela Lei nº 15.160, de 2025)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2025/Lei/L15160.htm#art2",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 112, caput",
+      "evento": "criacao",
+      "norma": "original",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 112, caput",
+      "evento": "alteracao",
+      "norma": "Lei nº 10.792",
+      "ano": 2003,
+      "anotacao": "(Redação dada pela Lei nº 10.792, de 2003)",
+      "url": "https://www.planalto.gov.br/ccivil_03/leis/2003/L10.792.htm#art112",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 112, caput",
+      "evento": "alteracao",
+      "norma": "Lei nº 13.964",
+      "ano": 2019,
+      "anotacao": "(Redação dada pela Lei nº 13.964, de 2019)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art4",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 112, caput",
+      "evento": "alteracao",
+      "norma": "Lei nº 15.402",
+      "ano": 2026,
+      "anotacao": "(Redação dada pela Lei nº 15.402, de 2026)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15402.htm#art1",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 112, parágrafo único",
+      "evento": "criacao",
+      "norma": "original",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 112, i",
+      "evento": "criacao",
+      "norma": "Lei nº 13.964",
+      "ano": 2019,
+      "anotacao": "(Incluído pela Lei nº 13.964, de 2019)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art4",
+      "valor_depois": "16%",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 112, i",
+      "evento": "alteracao",
+      "norma": "Lei nº 15.402",
+      "ano": 2026,
+      "anotacao": "(Redação dada pela Lei nº 15.402, de 2026)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15402.htm#art1",
+      "valor_antes": "16%",
+      "valor_depois": "25%",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 112, ii",
+      "evento": "criacao",
+      "norma": "Lei nº 13.964",
+      "ano": 2019,
+      "anotacao": "(Incluído pela Lei nº 13.964, de 2019)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art4",
+      "valor_depois": "20%",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 112, ii",
+      "evento": "alteracao",
+      "norma": "Lei nº 15.402",
+      "ano": 2026,
+      "anotacao": "(Redação dada pela Lei nº 15.402, de 2026)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15402.htm#art1",
+      "valor_antes": "20%",
+      "valor_depois": "30%",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 112, iii",
+      "evento": "criacao",
+      "norma": "Lei nº 13.964",
+      "ano": 2019,
+      "anotacao": "(Incluído pela Lei nº 13.964, de 2019)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art4",
+      "valor_depois": "25%",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 112, iii",
+      "evento": "alteracao",
+      "norma": "Lei nº 15.402",
+      "ano": 2026,
+      "anotacao": "(Redação dada pela Lei nº 15.402, de 2026)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15402.htm#art1",
+      "valor_antes": "25%",
+      "valor_depois": "20%",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 112, iv",
+      "evento": "criacao",
+      "norma": "Lei nº 13.964",
+      "ano": 2019,
+      "anotacao": "(Incluído pela Lei nº 13.964, de 2019)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art4",
+      "valor_depois": "30%",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 112, v",
+      "evento": "criacao",
+      "norma": "Lei nº 13.964",
+      "ano": 2019,
+      "anotacao": "(Incluído pela Lei nº 13.964, de 2019)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art4",
+      "valor_depois": "40%",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 112, v",
+      "evento": "alteracao",
+      "norma": "Lei nº 15.358",
+      "ano": 2026,
+      "anotacao": "(Redação dada pela Lei nº 15.358, de 2026)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2026/Lei/L15358.htm#art35",
+      "valor_antes": "40%",
+      "valor_depois": "70%",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 112, vi",
+      "evento": "criacao",
+      "norma": "Lei nº 13.964",
+      "ano": 2019,
+      "anotacao": "(Incluído pela Lei nº 13.964, de 2019)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art4",
+      "valor_depois": "50%",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 112, vi",
+      "evento": "alteracao",
+      "norma": "Lei nº 15.358",
+      "ano": 2026,
+      "anotacao": "(Redação dada pela Lei nº 15.358, de 2026)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2026/Lei/L15358.htm#art35",
+      "valor_antes": "50%",
+      "valor_depois": "75%",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 112, vi, a",
+      "evento": "criacao",
+      "norma": "Lei nº 13.964",
+      "ano": 2019,
+      "anotacao": "(Incluído pela Lei nº 13.964, de 2019)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art4",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 112, vi, b",
+      "evento": "criacao",
+      "norma": "Lei nº 13.964",
+      "ano": 2019,
+      "anotacao": "(Incluído pela Lei nº 13.964, de 2019)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art4",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 112, vi, b",
+      "evento": "alteracao",
+      "norma": "Lei nº 15.358",
+      "ano": 2026,
+      "anotacao": "(Redação dada pela Lei nº 15.358, de 2026)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2026/Lei/L15358.htm#art35",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 112, vi, c",
+      "evento": "criacao",
+      "norma": "Lei nº 13.964",
+      "ano": 2019,
+      "anotacao": "(Incluído pela Lei nº 13.964, de 2019)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art4",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 112, vi, d",
+      "evento": "criacao",
+      "norma": "Lei nº 15.358",
+      "ano": 2026,
+      "anotacao": "(Incluído pela Lei nº 15.358, de 2026)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2026/Lei/L15358.htm#art35",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 112, vi-a",
+      "evento": "criacao",
+      "norma": "Lei nº 14.994",
+      "ano": 2024,
+      "anotacao": "(Incluído pela Lei nº 14.994, de 2024)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2024/Lei/L14994.htm#art4",
+      "valor_depois": "55%",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 112, vi-a",
+      "evento": "revogacao",
+      "norma": "Lei nº 15.358",
+      "ano": 2026,
+      "anotacao": "(Redação dada pela Lei nº 15.358, de 2026)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2026/Lei/L15358.htm#art35",
+      "valor_antes": "55%",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 112, vii",
+      "evento": "criacao",
+      "norma": "Lei nº 13.964",
+      "ano": 2019,
+      "anotacao": "(Incluído pela Lei nº 13.964, de 2019)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art4",
+      "valor_depois": "60%",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 112, vii",
+      "evento": "alteracao",
+      "norma": "Lei nº 15.358",
+      "ano": 2026,
+      "anotacao": "(Redação dada pela Lei nº 15.358, de 2026)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2026/Lei/L15358.htm#art35",
+      "valor_antes": "60%",
+      "valor_depois": "80%",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 112, viii",
+      "evento": "criacao",
+      "norma": "Lei nº 13.964",
+      "ano": 2019,
+      "anotacao": "(Incluído pela Lei nº 13.964, de 2019)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art4",
+      "valor_depois": "70%",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 112, viii",
+      "evento": "alteracao",
+      "norma": "Lei nº 15.358",
+      "ano": 2026,
+      "anotacao": "(Redação dada pela Lei nº 15.358, de 2026)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2026/Lei/L15358.htm#art35",
+      "valor_antes": "70%",
+      "valor_depois": "85%",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 112, §1º",
+      "evento": "alteracao",
+      "norma": "Lei nº 10.792",
+      "ano": 2003,
+      "anotacao": "(Redação dada pela Lei nº 10.792, de 2003)",
+      "url": "https://www.planalto.gov.br/ccivil_03/leis/2003/L10.792.htm#art112",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 112, §1º",
+      "evento": "alteracao",
+      "norma": "Lei nº 13.964",
+      "ano": 2019,
+      "anotacao": "(Redação dada pela Lei nº 13.964, de 2019)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art4",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 112, §1º",
+      "evento": "alteracao",
+      "norma": "Lei nº 14.843",
+      "ano": 2024,
+      "anotacao": "(Redação dada pela Lei nº 14.843, de 2024)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2024/Lei/L14843.htm#art2",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 112, §2º",
+      "evento": "criacao",
+      "norma": "Lei nº 10.792",
+      "ano": 2003,
+      "anotacao": "(Incluído pela Lei nº 10.792, de 2003)",
+      "url": "https://www.planalto.gov.br/ccivil_03/leis/2003/L10.792.htm#art112",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 112, §2º",
+      "evento": "alteracao",
+      "norma": "Lei nº 13.964",
+      "ano": 2019,
+      "anotacao": "(Redação dada pela Lei nº 13.964, de 2019)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art4",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 112, §3º",
+      "evento": "criacao",
+      "norma": "Lei nº 13.769",
+      "ano": 2018,
+      "anotacao": "(Incluído pela Lei nº 13.769, de 2018)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2015-2018/2018/Lei/L13769.htm#art3",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 112, §3º, i",
+      "evento": "criacao",
+      "norma": "Lei nº 13.769",
+      "ano": 2018,
+      "anotacao": "(Incluído pela Lei nº 13.769, de 2018)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2015-2018/2018/Lei/L13769.htm#art3",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 112, §3º, ii",
+      "evento": "criacao",
+      "norma": "Lei nº 13.769",
+      "ano": 2018,
+      "anotacao": "(Incluído pela Lei nº 13.769, de 2018)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2015-2018/2018/Lei/L13769.htm#art3",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 112, §3º, iii",
+      "evento": "criacao",
+      "norma": "Lei nº 13.769",
+      "ano": 2018,
+      "anotacao": "(Incluído pela Lei nº 13.769, de 2018)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2015-2018/2018/Lei/L13769.htm#art3",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 112, §3º, iv",
+      "evento": "criacao",
+      "norma": "Lei nº 13.769",
+      "ano": 2018,
+      "anotacao": "(Incluído pela Lei nº 13.769, de 2018)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2015-2018/2018/Lei/L13769.htm#art3",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 112, §3º, v",
+      "evento": "criacao",
+      "norma": "Lei nº 13.769",
+      "ano": 2018,
+      "anotacao": "(Incluído pela Lei nº 13.769, de 2018)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2015-2018/2018/Lei/L13769.htm#art3",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 112, §4º",
+      "evento": "criacao",
+      "norma": "Lei nº 13.769",
+      "ano": 2018,
+      "anotacao": "(Incluído pela Lei nº 13.769, de 2018)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2015-2018/2018/Lei/L13769.htm#art3",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 112, §5º",
+      "evento": "criacao",
+      "norma": "Lei nº 13.964",
+      "ano": 2019,
+      "anotacao": "(Incluído pela Lei nº 13.964, de 2019)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art4",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 112, §6º",
+      "evento": "criacao",
+      "norma": "Lei nº 13.964",
+      "ano": 2019,
+      "anotacao": "(Incluído pela Lei nº 13.964, de 2019)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art4",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 112, §7º",
+      "evento": "criacao",
+      "norma": "Lei nº 13.964",
+      "ano": 2019,
+      "anotacao": "(Incluído pela Lei nº 13.964, de 2019)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art4",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 117, caput",
+      "evento": "criacao",
+      "norma": "original",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 117, i",
+      "evento": "criacao",
+      "norma": "original",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 117, ii",
+      "evento": "criacao",
+      "norma": "original",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 117, iii",
+      "evento": "criacao",
+      "norma": "original",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 117, iv",
+      "evento": "criacao",
+      "norma": "original",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 122, caput",
+      "evento": "criacao",
+      "norma": "original",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 122, i",
+      "evento": "revogacao",
+      "norma": "Lei nº 14.843",
+      "ano": 2024,
+      "anotacao": "(Revogado pela Lei nº 14.843, de 2024)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2024/Lei/L14843.htm#art3",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 122, i",
+      "evento": "revogacao",
+      "norma": "Lei nº 14.843",
+      "ano": 2024,
+      "anotacao": "(Redação dada pela Lei nº 14.843, de 2024)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2024/Lei/L14843.htm#art2",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 122, ii",
+      "evento": "criacao",
+      "norma": "original",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 122, iii",
+      "evento": "revogacao",
+      "norma": "Lei nº 14.843",
+      "ano": 2024,
+      "anotacao": "(Revogado pela Lei nº 14.843, de 2024)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2024/Lei/L14843.htm#art3",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 122, iii",
+      "evento": "revogacao",
+      "norma": "Lei nº 14.843",
+      "ano": 2024,
+      "anotacao": "(Redação dada pela Lei nº 14.843, de 2024)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2024/Lei/L14843.htm#art2",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 122, parágrafo único",
+      "evento": "criacao",
+      "norma": "Lei nº 12.258",
+      "ano": 2010,
+      "anotacao": "(Incluído pela Lei nº 12.258, de 2010)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2007-2010/2010/Lei/L12258.htm#art2",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 122, §1º",
+      "evento": "alteracao",
+      "norma": "Lei nº 13.964",
+      "ano": 2019,
+      "anotacao": "(Redação dada pela Lei nº 13.964, de 2019)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art4",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 122, §2º",
+      "evento": "criacao",
+      "norma": "Lei nº 13.964",
+      "ano": 2019,
+      "anotacao": "(Incluído pela Lei nº 13.964, de 2019)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art4",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 122, §2º",
+      "evento": "alteracao",
+      "norma": "Lei nº 14.843",
+      "ano": 2024,
+      "anotacao": "(Redação dada pela Lei nº 14.843, de 2024)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2024/Lei/L14843.htm#art2",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 122, §3º",
+      "evento": "criacao",
+      "norma": "Lei nº 14.843",
+      "ano": 2024,
+      "anotacao": "(Incluído pela Lei nº 14.843, de 2024)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2024/Lei/L14843.htm#art1",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 123, ii",
+      "evento": "criacao",
+      "norma": "original",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 126, caput",
+      "evento": "criacao",
+      "norma": "original",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 126, caput",
+      "evento": "alteracao",
+      "norma": "Lei nº 12.433",
+      "ano": 2011,
+      "anotacao": "(Redação dada pela Lei nº 12.433, de 2011)",
+      "url": "https://www.planalto.gov.br/_Ato2011-2014/2011/Lei/L12433.htm#art1",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 126, §1º",
+      "evento": "criacao",
+      "norma": "original",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 126, §1º",
+      "evento": "alteracao",
+      "norma": "Lei nº 12.433",
+      "ano": 2011,
+      "anotacao": "(Redação dada pela Lei nº 12.433, de 2011)",
+      "url": "https://www.planalto.gov.br/_Ato2011-2014/2011/Lei/L12433.htm#art1",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 126, §1º, i",
+      "evento": "criacao",
+      "norma": "Lei nº 12.433",
+      "ano": 2011,
+      "anotacao": "(Incluído pela Lei nº 12.433, de 2011)",
+      "url": "https://www.planalto.gov.br/_Ato2011-2014/2011/Lei/L12433.htm#art1",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 126, §1º, ii",
+      "evento": "criacao",
+      "norma": "Lei nº 12.433",
+      "ano": 2011,
+      "anotacao": "(Incluído pela Lei nº 12.433, de 2011)",
+      "url": "https://www.planalto.gov.br/_Ato2011-2014/2011/Lei/L12433.htm#art1",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 126, §2º",
+      "evento": "criacao",
+      "norma": "original",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 126, §2º",
+      "evento": "alteracao",
+      "norma": "Lei nº 12.433",
+      "ano": 2011,
+      "anotacao": "(Redação dada pela Lei nº 12.433, de 2011)",
+      "url": "https://www.planalto.gov.br/_Ato2011-2014/2011/Lei/L12433.htm#art1",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 126, §3º",
+      "evento": "criacao",
+      "norma": "original",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 126, §3º",
+      "evento": "alteracao",
+      "norma": "Lei nº 12.433",
+      "ano": 2011,
+      "anotacao": "(Redação dada pela Lei nº 12.433, de 2011)",
+      "url": "https://www.planalto.gov.br/_Ato2011-2014/2011/Lei/L12433.htm#art1",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 126, §4º",
+      "evento": "criacao",
+      "norma": "Lei nº 12.433",
+      "ano": 2011,
+      "anotacao": "(Incluído pela Lei nº 12.433, de 2011)",
+      "url": "https://www.planalto.gov.br/_Ato2011-2014/2011/Lei/L12433.htm#art1",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 126, §5º",
+      "evento": "criacao",
+      "norma": "Lei nº 12.433",
+      "ano": 2011,
+      "anotacao": "(Incluído pela Lei nº 12.433, de 2011)",
+      "url": "https://www.planalto.gov.br/_Ato2011-2014/2011/Lei/L12433.htm#art1",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 126, §6º",
+      "evento": "criacao",
+      "norma": "Lei nº 12.433",
+      "ano": 2011,
+      "anotacao": "(Incluído pela Lei nº 12.433, de 2011)",
+      "url": "https://www.planalto.gov.br/_Ato2011-2014/2011/Lei/L12433.htm#art1",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 126, §7º",
+      "evento": "criacao",
+      "norma": "Lei nº 12.433",
+      "ano": 2011,
+      "anotacao": "(Incluído pela Lei nº 12.433, de 2011)",
+      "url": "https://www.planalto.gov.br/_Ato2011-2014/2011/Lei/L12433.htm#art1",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 126, §8º",
+      "evento": "criacao",
+      "norma": "Lei nº 12.433",
+      "ano": 2011,
+      "anotacao": "(Incluído pela Lei nº 12.433, de 2011)",
+      "url": "https://www.planalto.gov.br/_Ato2011-2014/2011/Lei/L12433.htm#art1",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 126, §9º",
+      "evento": "criacao",
+      "norma": "Lei nº 15.402",
+      "ano": 2026,
+      "anotacao": "(Incluído pela Lei nº 15.402, de 2026)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15402.htm#art1",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 146-b, caput",
+      "evento": "criacao",
+      "norma": "Lei nº 12.258",
+      "ano": 2010,
+      "anotacao": "(Incluído pela Lei nº 12.258, de 2010)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2007-2010/2010/Lei/L12258.htm#art2",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 146-b, i",
+      "evento": "criacao",
+      "norma": "Lei nº 12.258",
+      "ano": 2010,
+      "anotacao": "(Incluído pela Lei nº 12.258, de 2010)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2007-2010/2010/Lei/L12258.htm#art2",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 146-b, ii",
+      "evento": "criacao",
+      "norma": "Lei nº 12.258",
+      "ano": 2010,
+      "anotacao": "(Incluído pela Lei nº 12.258, de 2010)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2007-2010/2010/Lei/L12258.htm#art2",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 146-b, iii",
+      "evento": "criacao",
+      "norma": "Lei nº 12.258",
+      "ano": 2010,
+      "anotacao": "(Incluído pela Lei nº 12.258, de 2010)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2007-2010/2010/Lei/L12258.htm#art2",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 146-b, iv",
+      "evento": "criacao",
+      "norma": "Lei nº 12.258",
+      "ano": 2010,
+      "anotacao": "(Incluído pela Lei nº 12.258, de 2010)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2007-2010/2010/Lei/L12258.htm#art2",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 146-b, v",
+      "evento": "criacao",
+      "norma": "Lei nº 12.258",
+      "ano": 2010,
+      "anotacao": "(Incluído pela Lei nº 12.258, de 2010)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2007-2010/2010/Lei/L12258.htm#art2",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 146-b, vi",
+      "evento": "criacao",
+      "norma": "Lei nº 14.843",
+      "ano": 2024,
+      "anotacao": "(Incluído pela Lei nº 14.843, de 2024)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2024/Lei/L14843.htm#art2",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 146-b, vii",
+      "evento": "criacao",
+      "norma": "Lei nº 14.843",
+      "ano": 2024,
+      "anotacao": "(Incluído pela Lei nº 14.843, de 2024)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2024/Lei/L14843.htm#art2",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 146-b, viii",
+      "evento": "criacao",
+      "norma": "Lei nº 14.843",
+      "ano": 2024,
+      "anotacao": "(Incluído pela Lei nº 14.843, de 2024)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2024/Lei/L14843.htm#art2",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 146-b, parágrafo único",
+      "evento": "criacao",
+      "norma": "Lei nº 12.258",
+      "ano": 2010,
+      "anotacao": "(Incluído pela Lei nº 12.258, de 2010)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_Ato2007-2010/2010/Lei/L12258.htm#art2",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 188, caput",
+      "evento": "criacao",
+      "norma": "original",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "lep|art. 192, caput",
+      "evento": "criacao",
+      "norma": "original",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cf|art. 5, xliii",
+      "evento": "criacao",
+      "norma": "original",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "cf|art. 84, xii",
+      "evento": "criacao",
+      "norma": "original",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    },
+    {
+      "dispositivo": "hediondos-8072|art. 2, i",
+      "evento": "criacao",
+      "norma": "original",
+      "natureza": "legislativa",
+      "origem": "compilado"
+    }
+  ]
+}

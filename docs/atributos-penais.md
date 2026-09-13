@@ -11,19 +11,27 @@ O SISPENAS modela os **22 atributos** abaixo. Todos os valores de pena são trat
 
 ## Como o catálogo é modelado
 
-Desde a v1.1.0, cada atributo é um **registro declarativo** (`AtributoDef`), e não uma
-regra embutida no código. O registro reúne:
+Cada atributo é um **registro de dados**, em
+[`data/atributos.json`](https://github.com/amorim-rc/sispenas/blob/main/data/atributos.json),
+e não uma regra embutida no código. O registro reúne:
 
-- **metadados** — nome, fundamento legal, categoria e *natureza*;
+- **metadados** — número (estável, como o id dos tipos penais), nome, fundamento legal,
+  categoria e *natureza*;
 - **requisitos** e **vedações**, com citação do dispositivo ou súmula;
-- **parâmetros editáveis** — cada patamar, fração ou vedação é um dado, com valor padrão
-  extraído da legislação vigente e o dispositivo de origem;
-- uma **função pura de avaliação**, que lê os parâmetros em vez de constantes.
+- **parâmetros editáveis** — cada patamar, fração ou vedação é um dado, com o valor padrão
+  da legislação vigente e as **redações** de onde ele vem: o dispositivo, a lei que deu
+  cada redação e, quando o número mudou, o valor antigo.
 
-Essa separação é o que permite a **Busca por atributo**: alterar um patamar recalcula o
-catálogo inteiro de tipos penais sem tocar no código. É também o passo preparatório para
-mover o catálogo de atributos para dados versionados — a frente 5 do
-[backlog](https://github.com/amorim-rc/sispenas/blob/main/backlog.md).
+No código fica só uma **função pura de avaliação** por atributo, que lê os parâmetros em
+vez de constantes. Essa separação é o que permite a **Busca por atributo**: alterar um
+patamar recalcula o catálogo inteiro de tipos penais sem tocar no código.
+
+A vida de cada dispositivo — criação, alterações e revogação, com a lei e o link para o
+artigo dela no Planalto — fica em `data/historico-legislativo.json`, extraída do texto
+compilado. Dela saem, no arquivo público
+[`/data/atributos.json`](pathname:///sispenas/data/atributos.json), a **última alteração
+legislativa** de cada atributo e de cada parâmetro, e o **alcance** de cada atributo sobre
+o catálogo de tipos penais (ver [Dados abertos](./dados-abertos.md)).
 
 ### Natureza do atributo
 
@@ -47,8 +55,8 @@ trocada por pena máxima ou por um valor fixo aplicado a todos os tipos.
 
 | Atributo | Fundamento | Critério objetivo |
 |-----------|-----------|-------------------|
-| **Transação penal** | Art. 76, Lei 9.099/95 | Pena máxima ≤ 2 anos (menor potencial ofensivo) |
-| **Suspensão condicional do processo** | Art. 89, Lei 9.099/95 | Pena mínima ≤ 1 ano |
+| **Transação penal** | Art. 76, Lei 9.099/95 | Pena máxima ≤ 2 anos, ou contravenção (menor potencial ofensivo); nunca no crime militar (art. 90-A) |
+| **Suspensão condicional do processo** | Art. 89, Lei 9.099/95 | Pena mínima ≤ 1 ano; nunca no crime militar (art. 90-A) |
 | **ANPP** | Art. 28-A, CPP | Pena mínima < 4 anos, sem violência/grave ameaça, confissão |
 | **Colaboração premiada** | Art. 4º, Lei 12.850/13 | Redução de até 2/3 ou perdão judicial; até 1/2 se posterior à sentença |
 
@@ -70,7 +78,7 @@ trocada por pena máxima ou por um valor fixo aplicado a todos os tipos.
 | **Progressão de regime** | Art. 112, LEP | Frações de 16% a 85% conforme reincidência/hediondez/resultado morte |
 | **Livramento condicional** | Art. 83, CP | 1/3 (primário), 1/2 (reincidente), 2/3 (hediondo); vedado ao reincidente específico em hediondo e nas quatro hipóteses do art. 112 da LEP |
 | **Prescrição** | Art. 109, CP | Tabela por pena (abstrata e concreta) |
-| **Saída temporária** | Art. 122, LEP | Regime semiaberto; 1/6 (primário) ou 1/4 (reincidente); vedada em hediondo com resultado morte (Lei 14.843/2024) |
+| **Saída temporária** | Art. 122, LEP | Regime semiaberto, só para estudo (art. 122, II); 1/6 (primário) ou 1/4 (reincidente); vedada a crime hediondo ou com violência ou grave ameaça contra pessoa (art. 122, §2º, Lei 14.843/2024) |
 | **Detração** | Art. 42, CP | Desconto de prisão provisória (qualitativo) |
 | **Remição** | Art. 126, LEP | Trabalho (1 dia/3) e estudo (1 dia/12h); +1/3 por conclusão de curso |
 | **Prisão domiciliar** | Art. 117, LEP; art. 318, CPP | Hipóteses humanitárias; HC 143.641/SP (gestantes e mães) |

@@ -10,7 +10,7 @@
 import type {Cenario} from '../types';
 import type {AtributoDef, AtributoResultado, Categoria, Parametros} from './types';
 import {valoresPadrao} from './types';
-import {CATALOGO, POR_ID} from './catalogo';
+import {CATALOGO, POR_ID} from './carregador';
 
 export type {
   Avaliacao,
@@ -25,7 +25,7 @@ export type {
   Status,
 } from './types';
 export {foiEditado, valoresPadrao} from './types';
-export {CATALOGO, POR_ID} from './catalogo';
+export {CATALOGO, POR_ID} from './carregador';
 
 /** Avalia um único atributo, com parâmetros próprios ou padrão. */
 export function avaliarAtributo(

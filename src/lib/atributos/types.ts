@@ -1,13 +1,13 @@
 // Modelo declarativo do catálogo de atributos penais — SISPENAS.
 //
 // Cada atributo é um REGISTRO de dados (nome, fundamento, requisitos, vedações e
-// PARÂMETROS editáveis) acompanhado de uma função pura de avaliação que lê esses
-// parâmetros em vez de constantes embutidas. Isso permite:
+// PARÂMETROS editáveis), guardado em data/atributos.json e montado por
+// carregador.ts, acompanhado de uma função pura de avaliação (avaliadores.ts)
+// que lê esses parâmetros em vez de constantes embutidas. Isso permite:
 //
 //   1. editar qualquer parâmetro do atributo em tempo de execução (tela "Busca por
 //      atributo") e observar o efeito sobre o catálogo de tipos penais;
-//   2. no futuro, mover o catálogo para JSON e atualizá-lo como `data/crimes.json`,
-//      sem tocar no código do motor (ver backlog.md, frente 5).
+//   2. atualizar a base como `data/crimes.json`, sem tocar no código do motor.
 //
 // AVISO: implementação para fins de PESQUISA. Simplifica controvérsias doutrinárias
 // e jurisprudenciais. Não substitui análise jurídica.

@@ -36,16 +36,18 @@ import urllib.error
 import urllib.request
 from pathlib import Path
 
-from nucleo.tempo import hoje  # noqa: E402
-
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
 
 RAIZ = Path(__file__).resolve().parents[3]
 # `scripts/robos` para os pacotes dos robôs e do núcleo; `scripts` para o
 # `pena_parser`, que é compartilhado com o construtor do catálogo e por isso
-# não mora aqui.
+# não mora aqui. Os imports do núcleo vêm DEPOIS: rodado como script, o
+# `sys.path[0]` é `scripts/robos/nucleo`, e `nucleo` não se resolve sem isto.
 sys.path.insert(0, str(RAIZ / "scripts"))
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
+from nucleo.tempo import hoje  # noqa: E402
+
 FONTES = RAIZ / "data" / "fontes.json"
 SNAPSHOTS = RAIZ / "crawler" / "snapshots"
 

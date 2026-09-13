@@ -5,7 +5,7 @@ políticas públicas para estudar o **impacto dos atributos penais** sobre os ti
 brasileiros.
 
 Construído em **Docusaurus 3 + React + TypeScript**. Catálogo de **1.507 tipos penais**
-de 64 diplomas, conferido toda semana contra o texto compilado do `planalto.gov.br`.
+de 61 diplomas, conferido toda semana contra o texto compilado do `planalto.gov.br`.
 
 ## Recursos
 
@@ -52,6 +52,15 @@ python3 scripts/transform_data.py
 O script grava o catálogo enriquecido em `static/data/crimes.json` (consumido pelo site).
 Correções manuais podem ser registradas em `CORRECOES`, no próprio script.
 
+Os atributos penais ficam em `data/atributos.json`, e a história dos dispositivos em que
+eles se fundam, em `data/historico-legislativo.json`. O derivado público, com a última
+alteração legislativa e o alcance de cada atributo, é gerado depois do catálogo:
+
+```bash
+python3 scripts/validar_atributos.py
+npm run atributos    # grava static/data/atributos.json
+```
+
 ## Documentação
 
 A documentação (Metodologia, Catálogo de tipos penais, Atributos penais, Completude,
@@ -78,7 +87,7 @@ benefícios, permitindo simular alterações legislativas) e a **atualiza**. Com
 |---|---|---|
 | **Arquitetura** | Software com servidor: Apache + **PHP + PostgreSQL**, com CRUD, controle de acesso e fluxo de aprovação (papéis administrador/alimentador/usuário); código entregue ao Ministério da Justiça | Site **estático** (Docusaurus 3 + React + TS) sobre **JSON**, publicável no GitHub Pages, sem servidor/banco; sem CRUD nem papéis |
 | **Unidade "tipo"** | Conduta + circunstâncias com cominação própria; um artigo é desmembrado em várias unidades; inclui **"tipos mistos"** (margens de majorantes/minorantes pré-calculadas em abstrato) | Mesmo conceito de tipo por artigo/parágrafo, exposto via **"tipos correlatos"**; **não** gera sistematicamente os "tipos mistos" calculados (lacuna) |
-| **Tamanho do catálogo** | **1.529** tipos (CP + 37 leis especiais) | **1.507** tipos (64 diplomas; meta de ~1.688) |
+| **Tamanho do catálogo** | **1.529** tipos (CP + 37 leis especiais) | **1.507** tipos (61 diplomas; meta de ~1.688) |
 | **Pena (armazenamento)** | Cadastrada **em dias** (1 mês = 30 dias, 1 ano = 360 dias); exibida em anos/meses | Canônica **em meses**; exibida na **unidade natural** (dias/meses/anos), com conversão automática |
 | **Multa** | Critério com conectores **"E" / "E/OU" / "OU"** (cumulativa/alternativa/isolada) | Dimensão independente: `tem_multa` + `multa_regime` (`cumulativa`/`alternativa`/`isolada`/`nenhuma`), espelhando os conectores |
 | **Critérios "em abstrato"** | 9: pena mín., pena máx., tipo de prisão, multa, violência, grave ameaça, hediondo, elemento subjetivo, vedação específica | Mesmos critérios como filtros; acrescenta ação penal e menor potencial ofensivo |
