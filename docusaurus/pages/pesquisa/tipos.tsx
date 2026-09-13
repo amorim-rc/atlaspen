@@ -1,8 +1,8 @@
 import type {ReactNode} from 'react';
 import Layout from '@theme/Layout';
 import Heading from '@theme/Heading';
-import Pesquisa from '@site/src/components/Pesquisa';
-import Citacao from '@site/src/components/Citacao';
+import Pesquisa from '@site/docusaurus/components/Pesquisa';
+import Citacao from '@site/docusaurus/components/Citacao';
 
 import styles from './pesquisa.module.css';
 

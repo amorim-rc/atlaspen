@@ -1,6 +1,10 @@
 # Dependências
 /node_modules
 
+# Artefatos de build do Astro
+/dist
+/.astro
+
 # Artefatos de build do Docusaurus
 /build
 /.docusaurus

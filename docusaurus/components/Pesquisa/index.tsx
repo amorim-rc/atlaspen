@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import BrowserOnly from '@docusaurus/BrowserOnly';
-import {useCrimes} from '@site/src/lib/useCrimes';
+import {useCrimes} from '@site/docusaurus/useCrimes';
 import type {Crime, PenaPrivativa} from '@site/src/lib/types';
 import Detalhe from './Detalhe';
 import styles from './styles.module.css';

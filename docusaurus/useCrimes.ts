@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 import useBaseUrl from '@docusaurus/useBaseUrl';
-import type {Crime} from './types';
+import type {Crime} from '../src/lib/types';
 
 export interface CrimesState {
   crimes: Crime[];

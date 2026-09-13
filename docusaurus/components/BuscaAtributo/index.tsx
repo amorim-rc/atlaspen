@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import BrowserOnly from '@docusaurus/BrowserOnly';
-import {useCrimes} from '@site/src/lib/useCrimes';
+import {useCrimes} from '@site/docusaurus/useCrimes';
 import {
   CATALOGO,
   CATEGORIA_LABEL,

@@ -5,7 +5,7 @@ import Heading from '@theme/Heading';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import BrowserOnly from '@docusaurus/BrowserOnly';
 
-import Citacao from '@site/src/components/Citacao';
+import Citacao from '@site/docusaurus/components/Citacao';
 import styles from './index.module.css';
 
 /**

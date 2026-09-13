@@ -1,0 +1,12 @@
+// Typecheck do site antigo, em Docusaurus, enquanto ele convive com o Astro.
+// Sai com a pasta docusaurus/ no último commit da migração.
+{
+  "extends": "@docusaurus/tsconfig",
+  "compilerOptions": {
+    "baseUrl": "..",
+    "ignoreDeprecations": "6.0",
+    "strict": true
+  },
+  "include": ["../docusaurus", "../src/lib", "../src/data", "../docusaurus.config.ts", "../sidebars.ts"],
+  "exclude": ["../.docusaurus", "../build"]
+}

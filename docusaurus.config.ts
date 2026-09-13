@@ -45,8 +45,14 @@ const config: Config = {
         // próprio (src/pages/release-notes) alimentado por arquivos .ts, um por
         // entrada, em src/data/changelog/entries/. Ver docs/create-changelog-entry.
         blog: false,
+        // Durante a migração para Astro, o site antigo sai de src/: o Astro
+        // exige src/pages só para ele. Tudo o que é do Docusaurus mora em
+        // docusaurus/ até ser aposentado (design_handoff_atlaspen, commit 11).
+        pages: {
+          path: 'docusaurus/pages',
+        },
         theme: {
-          customCss: './src/css/custom.css',
+          customCss: './docusaurus/css/custom.css',
         },
       } satisfies Preset.Options,
     ],
