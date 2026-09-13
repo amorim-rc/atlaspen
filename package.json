@@ -16,7 +16,7 @@
     "build:astro": "astro build",
     "preview": "astro preview",
     "typecheck": "astro check && tsc -p docusaurus/tsconfig.json",
-    "verificar": "tsc -p scripts/tsconfig.verificar.json && node .verificar-build/scripts/verificar_atributos.js",
+    "verificar": "tsc -p scripts/tsconfig.verificar.json && node .verificar-build/scripts/verificar_atributos.js && node .verificar-build/scripts/verificar_injecao.js",
     "equivalencia": "tsc -p scripts/tsconfig.verificar.json && node .verificar-build/scripts/equivalencia_atributos.js",
     "atributos": "tsc -p scripts/tsconfig.verificar.json && node .verificar-build/scripts/derivar_atributos.js",
     "changelog:json": "node scripts/gerar-changelog-json.mjs"

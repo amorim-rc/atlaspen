@@ -1,18 +1,20 @@
-// Carregador do catálogo de atributos penais — SISPENAS.
+// Montagem do catálogo de atributos penais — função pura.
 //
-// Monta os `AtributoDef` que o motor usa a partir da base (data/atributos.json)
-// e das funções de avaliação (avaliadores.ts). A ordem é a da base, e é ela a
-// ordem de exibição dentro de cada categoria. Para acrescentar um atributo:
-// registro novo na base, com o próximo id, e a função dele em avaliadores.ts.
+// Recebe a base (o conteúdo de data/atributos.json, ou uma cópia editada dela)
+// e as funções de avaliação (avaliadores.ts), e devolve os `AtributoDef` que o
+// motor usa. A ordem é a da base, e é ela a ordem de exibição dentro de cada
+// categoria. Para acrescentar um atributo: registro novo na base, com o próximo
+// id, e a função dele em avaliadores.ts.
 //
-// Lê a FONTE, e não o derivado de static/data: o derivado (última alteração e
-// alcance) é produzido por este mesmo motor, e ler um do outro faria círculo.
+// Este módulo não importa dado nenhum. Quem liga o catálogo real é catalogo.ts;
+// a simulação legislativa monta o seu a partir de uma cópia em memória, e os
+// testes, de uma base fictícia.
 
-import fonte from '../../../data/atributos.json';
-import type {AtributoDef, Categoria, Natureza, ParametroDef, ParamTipo} from './types';
+import type {AtributoDef, Avaliacao, Categoria, Natureza, ParametroDef, ParamTipo, Parametros} from './types';
+import type {Cenario} from '../types';
 import {AVALIADORES} from './avaliadores';
 
-interface ParametroFonte {
+export interface ParametroFonte {
   id: string;
   rotulo: string;
   tipo: ParamTipo;
@@ -24,7 +26,7 @@ interface ParametroFonte {
   redacoes?: {fundamento: string}[];
 }
 
-interface AtributoFonte {
+export interface AtributoFonte {
   id: number;
   slug: string;
   nome: string;
@@ -37,7 +39,12 @@ interface AtributoFonte {
   parametros: ParametroFonte[];
 }
 
-const ATRIBUTOS = (fonte as unknown as {atributos: AtributoFonte[]}).atributos;
+/** A forma de data/atributos.json que o motor lê. */
+export interface BaseAtributos {
+  atributos: AtributoFonte[];
+}
+
+export type Avaliador = (c: Cenario, p: Parametros) => Avaliacao;
 
 function parametro(p: ParametroFonte): ParametroDef {
   // As redações vêm em ordem cronológica (o validador exige): a vigente é a
@@ -56,23 +63,34 @@ function parametro(p: ParametroFonte): ParametroDef {
   };
 }
 
-export const CATALOGO: AtributoDef[] = ATRIBUTOS.map((a) => {
-  const avaliar = AVALIADORES[a.slug];
-  if (!avaliar) throw new Error(`Atributo ${a.id} (${a.slug}) sem função de avaliação`);
-  return {
-    id: a.slug,
-    nome: a.nome,
-    fundamento: a.fundamento,
-    categoria: a.categoria,
-    natureza: a.natureza,
-    descricao: a.descricao,
-    requisitos: a.requisitos,
-    vedacoes: a.vedacoes,
-    parametros: a.parametros.map(parametro),
-    avaliar,
-  };
-});
+/**
+ * Monta os `AtributoDef` a partir de uma base. Atributo sem função de avaliação
+ * é erro, e não silêncio: um atributo que o motor não sabe avaliar sairia da
+ * tela sem que ninguém notasse.
+ */
+export function montarCatalogo(
+  base: BaseAtributos,
+  avaliadores: Record<string, Avaliador> = AVALIADORES,
+): AtributoDef[] {
+  return base.atributos.map((a) => {
+    const avaliar = avaliadores[a.slug];
+    if (!avaliar) throw new Error(`Atributo ${a.id} (${a.slug}) sem função de avaliação`);
+    return {
+      id: a.slug,
+      nome: a.nome,
+      fundamento: a.fundamento,
+      categoria: a.categoria,
+      natureza: a.natureza,
+      descricao: a.descricao,
+      requisitos: a.requisitos,
+      vedacoes: a.vedacoes,
+      parametros: a.parametros.map(parametro),
+      avaliar,
+    };
+  });
+}
 
-export const POR_ID: Record<string, AtributoDef> = Object.fromEntries(
-  CATALOGO.map((b) => [b.id, b]),
-);
+/** Índice por id (o `slug` da base). */
+export function indexarCatalogo(catalogo: readonly AtributoDef[]): Record<string, AtributoDef> {
+  return Object.fromEntries(catalogo.map((b) => [b.id, b]));
+}

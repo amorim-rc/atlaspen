@@ -1,16 +1,17 @@
-// Motor de cálculo de atributos penais — SISPENAS.
+// Motor de cálculo de atributos penais — API pública.
 //
-// API pública do módulo. `calcularAtributos(cenario)` mantém a assinatura usada
-// pela "Busca por tipo penal"; o segundo argumento (opcional) permite avaliar o
-// catálogo com parâmetros editados, base da "Busca por atributo".
+// O motor em si (nucleo.ts) recebe o catálogo por parâmetro. Este módulo é a
+// ligação com o catálogo real (catalogo.ts): mantém as assinaturas que as telas
+// e os scripts de verificação já usam, e por isso `calcularAtributos(cenario)`
+// continua avaliando a lei vigente quando ninguém passa outro catálogo.
 //
 // AVISO: implementação para fins de PESQUISA. Simplifica controvérsias
 // doutrinárias e jurisprudenciais. Não substitui análise jurídica.
 
 import type {Cenario} from '../types';
 import type {AtributoDef, AtributoResultado, Categoria, Parametros} from './types';
-import {valoresPadrao} from './types';
-import {CATALOGO, POR_ID} from './carregador';
+import {CATALOGO, POR_ID} from './catalogo';
+import {calcularAtributos as calcularSobre} from './nucleo';
 
 export type {
   Avaliacao,
@@ -25,27 +26,13 @@ export type {
   Status,
 } from './types';
 export {foiEditado, valoresPadrao} from './types';
-export {CATALOGO, POR_ID} from './carregador';
-
-/** Avalia um único atributo, com parâmetros próprios ou padrão. */
-export function avaliarAtributo(
-  def: AtributoDef,
-  c: Cenario,
-  params?: Parametros,
-): AtributoResultado {
-  const p = params ?? valoresPadrao(def);
-  return {
-    id: def.id,
-    nome: def.nome,
-    fundamento: def.fundamento,
-    categoria: def.categoria,
-    natureza: def.natureza,
-    ...def.avaliar(c, p),
-  };
-}
+export {avaliarAtributo} from './nucleo';
+export {indexarCatalogo, montarCatalogo} from './carregador';
+export type {AtributoFonte, BaseAtributos, ParametroFonte} from './carregador';
+export {CATALOGO, POR_ID};
 
 /**
- * Avalia o catálogo inteiro para um cenário.
+ * Avalia o catálogo para um cenário: o vigente, ou o que for passado.
  *
  * @param overrides parâmetros editados, por id de atributo. Atributos ausentes
  *   do mapa são avaliados com os valores legais padrão.
@@ -53,8 +40,9 @@ export function avaliarAtributo(
 export function calcularAtributos(
   c: Cenario,
   overrides?: Record<string, Parametros>,
+  catalogo: readonly AtributoDef[] = CATALOGO,
 ): AtributoResultado[] {
-  return CATALOGO.map((def) => avaliarAtributo(def, c, overrides?.[def.id]));
+  return calcularSobre(catalogo, c, overrides);
 }
 
 export function getAtributo(id: string): AtributoDef | undefined {

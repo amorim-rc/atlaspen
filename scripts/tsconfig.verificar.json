@@ -16,6 +16,7 @@
   },
   "include": [
     "verificar_atributos.ts",
+    "verificar_injecao.ts",
     "equivalencia_atributos.ts",
     "derivar_atributos.ts",
     "../src/lib/**/*.ts"
