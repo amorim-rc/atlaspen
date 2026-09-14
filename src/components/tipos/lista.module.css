@@ -212,9 +212,12 @@
   cursor: pointer;
 }
 
+/* A última coluna não ordena e herda da regra de cima o `border: 0` do botão:
+   devolve a linha, para que ela corra a largura inteira da tabela. */
 .tabela thead th:last-child {
   display: table-cell;
   vertical-align: middle;
+  border-bottom: 1px solid var(--cor-borda-forte);
   cursor: default;
 }
 
@@ -252,6 +255,12 @@
   min-width: 8rem;
 }
 
+/* O nome do diploma quebra, para a tabela caber sem rolagem lateral. */
+.celLei {
+  white-space: normal;
+  min-width: 6.5rem;
+}
+
 .celCrime {
   min-width: 14rem;
 }
@@ -281,8 +290,14 @@
   color: var(--cor-acento);
 }
 
+/* As etiquetas da modalidade quebram linha: lado a lado, empurravam a tabela
+   para fora da página nas telas médias. */
 .celModalidade {
-  white-space: nowrap;
+  white-space: normal;
+}
+
+.celModalidade .tag {
+  margin-bottom: 0.2rem;
 }
 
 .tag {

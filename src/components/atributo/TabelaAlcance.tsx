@@ -89,7 +89,7 @@ export default function TabelaAlcance({slug, linhas, inicial, contagem, situacao
   return (
     <section className={s.secaoTabela} id="tipos-alcancados" aria-label="Tipos penais alcançados">
       <div className={s.cabecalhoSecao}>
-        <span className="rotulo">Tipos penais, um a um</span>
+        <span className="rotulo">Cruzamento com tipos penais</span>
         {filtradas && filtradas.length > 0 && (
           <button
             type="button"
@@ -136,6 +136,7 @@ export default function TabelaAlcance({slug, linhas, inicial, contagem, situacao
       {visiveis.length === 0 ? (
         <p className={s.vazioTabela}>Nenhum tipo penal nessa situação com o filtro atual.</p>
       ) : (
+        <div className={s.rolagemTabela}>
         <table className={s.tabela}>
           <caption className="sr-only">
             {total !== null ? `${fmt(total)} tipos, página ${p} de ${paginas}` : 'primeira página'}
@@ -167,6 +168,7 @@ export default function TabelaAlcance({slug, linhas, inicial, contagem, situacao
             ))}
           </tbody>
         </table>
+        </div>
       )}
       {total !== null && paginas > 1 && (
         <nav className={s.paginacao} aria-label="Páginas">

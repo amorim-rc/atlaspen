@@ -20,16 +20,16 @@ const t = texto.data;
   <header slot="cabecalho" class="pagina cabecalho">
     <h1>O projeto</h1>
     <p class="intro">
-      Quem faz esta base, como ela é feita e o que ainda falta. Nada aqui é ferramenta de consulta: é a prestação de
-      contas do método.
+      Quem faz esta base, como ela é feita e o que ainda falta. Aqui constam declarações metodológicas e posicionamento da
+      equipe AtlasPen.
     </p>
   </header>
 
   <article class="texto">
     <header class="topo-texto">
-      <p class="genero">{t.genero}</p>
+      <p class="genero sem-recuo">{t.genero}</p>
       <h2>{t.titulo}</h2>
-      <p class="meta">
+      <p class="meta sem-recuo">
         {dataExtenso(t.data)}
         {t.revisado_em && <> · revisado em {dataExtenso(t.revisado_em)}</>}
         {' · '}{t.assinatura}
@@ -47,7 +47,6 @@ const t = texto.data;
     padding-block: 2rem 0.5rem;
   }
   .intro {
-    max-width: 62ch;
     color: var(--cor-tinta-corpo);
   }
   .texto {

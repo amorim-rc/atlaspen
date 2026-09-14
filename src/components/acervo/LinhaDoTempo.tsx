@@ -27,6 +27,8 @@ interface Props {
   marcos: Marco[];
   eventos: EventoDoAno[];
   registros: RegistroAcervo[];
+  /** A lista abaixo lê e grava os seus filtros na URL (na página /acervo). */
+  naUrl?: boolean;
 }
 
 /** Que constituição vigorava — as faixas de fundo e o contexto do ano. */
@@ -77,7 +79,7 @@ function distribuir(marcas: {pos: number; texto: string}[], largura: number, vao
   return out;
 }
 
-export default function LinhaDoTempo({inicio, fim, marcos, eventos, registros}: Props) {
+export default function LinhaDoTempo({inicio, fim, marcos, eventos, registros, naUrl = false}: Props) {
   const vao = fim - inicio;
   const grafico = useRef<HTMLDivElement>(null);
   const [largura, setLargura] = useState(1096);
@@ -187,7 +189,7 @@ export default function LinhaDoTempo({inicio, fim, marcos, eventos, registros}: 
   const marcosTotal = marcos.length;
 
   return (
-    <div className={s.linha}>
+    <div className={s.linha} id="linha-do-tempo">
       <div className={s.cartaoLinha}>
         <div className={s.cabecalhoLinha}>
           <span className={s.intervalo}>
@@ -337,7 +339,7 @@ export default function LinhaDoTempo({inicio, fim, marcos, eventos, registros}: 
           )}
         </div>
         <div className={s.corpoLista}>
-          <ListaAcervo registros={registros} ano={fixado ? ano : null} />
+          <ListaAcervo registros={registros} ano={fixado ? ano : null} naUrl={naUrl} />
         </div>
       </div>
     </div>

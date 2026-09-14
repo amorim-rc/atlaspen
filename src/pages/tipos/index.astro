@@ -13,20 +13,15 @@ const tipos = todosOsTipos();
 const linhas = ordenar(tipos.map(paraLinha), FILTROS_VAZIOS);
 const leis = [...new Set(tipos.map((t) => t.lei))].sort((a, b) => a.localeCompare(b, 'pt-BR', {numeric: true}));
 const acoes = [...new Set(tipos.map((t) => t.acao))].filter((a) => a && a !== '—').sort((a, b) => a.localeCompare(b, 'pt-BR'));
+const INTRO =
+  'Todo tipo penal do catálogo, com a pena cominada. Busque por crime, artigo ou lei e verifique a ficha de cada tipo, onde mostra os impactos e atributos da pena.';
 ---
 
-<Base
-  titulo="Tipos penais"
-  descricao="Todo tipo penal do catálogo, com a pena cominada. Busque por crime, artigo ou lei; a ficha de cada tipo mostra o que a pena abre ou fecha ao condenado."
-  ativo="tipos"
->
+<Base titulo="Tipos penais" descricao={INTRO} ativo="tipos">
   <header class="pagina cabecalho">
     <p class="rotulo">Catálogo</p>
     <h1>Tipos penais</h1>
-    <p class="intro">
-      Todo tipo penal do catálogo, com a pena cominada. Busque por crime, artigo ou lei; a ficha de cada tipo mostra o
-      que a pena cominada e a pena aplicada abrem ou fecham ao condenado.
-    </p>
+    <p class="intro">{INTRO}</p>
   </header>
   <div class="pagina">
     <ListaTipos client:load total={tipos.length} leis={leis} acoes={acoes} inicial={linhas.slice(0, POR_PAGINA)} />
@@ -41,7 +36,6 @@ const acoes = [...new Set(tipos.map((t) => t.acao))].filter((a) => a && a !== '�
     padding-block: 2rem 1.2rem;
   }
   .intro {
-    max-width: 62ch;
     color: var(--cor-tinta-corpo);
   }
 </style>

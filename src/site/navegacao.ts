@@ -40,7 +40,7 @@ export const RODAPE: {titulo: string; itens: LinkRodape[]}[] = [
       {rotulo: 'Atributos', rota: '/atributos'},
       {rotulo: 'Simulação legislativa', rota: '/simulacao'},
       {rotulo: 'Acervo histórico', rota: '/acervo'},
-      {rotulo: 'Linha do tempo', rota: '/acervo/linha-do-tempo'},
+      {rotulo: 'Linha do tempo', rota: '/acervo#linha-do-tempo'},
     ],
   },
   {

@@ -38,7 +38,7 @@ const selo = r.categoria === 'vetado' ? 'NUNCA VIGOROU' : 'NÃO VIGENTE';
 
       <header class="cabecalho-registro">
         <div class="identidade">
-          <p class="dispositivo">{r.dispositivo} · {ROTULO_CATEGORIA[r.categoria]}</p>
+          <p class="dispositivo sem-recuo">{r.dispositivo} · {ROTULO_CATEGORIA[r.categoria]}</p>
           <h1>{r.nome}</h1>
         </div>
         <span class:list={['selo', `selo-${r.categoria}`]}>{selo}</span>
@@ -82,7 +82,7 @@ const selo = r.categoria === 'vetado' ? 'NUNCA VIGOROU' : 'NÃO VIGENTE';
           </ol>
           {
             !r.dataRevogacao && r.categoria !== 'vetado' && (
-              <p class="nota">O ano é o da norma que tirou o dispositivo de vigência; a data exata ainda não foi conferida.</p>
+              <p class="nota sem-recuo">O ano é o da norma que tirou o dispositivo de vigência; a data exata ainda não foi conferida.</p>
             )
           }
         </section>
@@ -101,7 +101,7 @@ const selo = r.categoria === 'vetado' ? 'NUNCA VIGOROU' : 'NÃO VIGENTE';
           )
         }
 
-        <p class="links">
+        <p class="links sem-recuo">
           {
             r.fonteUrl && (
               <a href={r.fonteUrl} rel="noopener" target="_blank">
@@ -109,7 +109,7 @@ const selo = r.categoria === 'vetado' ? 'NUNCA VIGOROU' : 'NÃO VIGENTE';
               </a>
             )
           }
-          {anoDaSaida && <a href={caminho(`/acervo/linha-do-tempo?ano=${anoDaSaida}`)}>{anoDaSaida} na linha do tempo</a>}
+          {anoDaSaida && <a href={caminho(`/acervo?ano=${anoDaSaida}#linha-do-tempo`)}>{anoDaSaida} na linha do tempo</a>}
           <a href={caminho('/acervo')}>todo o acervo</a>
         </p>
       </div>

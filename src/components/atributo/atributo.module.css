@@ -691,10 +691,36 @@ a.notaMono {
   color: var(--cor-tinta-media);
 }
 
+/* A tabela rola dentro do cartão em vez de ser cortada por ele: era o que
+   comia a etiqueta da situação no fim da linha. */
+.rolagemTabela {
+  overflow-x: auto;
+}
+
+/* Layout fixo: a tabela nunca passa da largura do cartão. Dispositivo, pena e
+   situação têm largura própria; crime e fundamento dividem o resto e quebram
+   linha. Sem isso, a etiqueta da situação era cortada na borda. */
 .tabela {
   width: 100%;
+  table-layout: fixed;
   border-collapse: collapse;
   font-size: var(--fs-pequeno);
+}
+
+.tabela th:nth-child(1) {
+  width: 7.5rem;
+}
+
+.tabela th:nth-child(3) {
+  width: 8.5rem;
+}
+
+.tabela th:nth-child(4) {
+  width: 8rem;
+}
+
+.tabela .celPena {
+  white-space: normal;
 }
 
 .tabela th {
@@ -813,6 +839,12 @@ a.notaMono {
   cursor: pointer;
 }
 
+/* O cruzamento com os tipos penais, na largura inteira da ficha. */
+.tabelaLarga {
+  padding: 1.1rem 1.25rem 1.4rem;
+  border-top: 1px solid var(--cor-borda);
+}
+
 /* ── pé ── */
 .pe {
   display: grid;
@@ -850,7 +882,7 @@ a.notaMono {
   min-height: 2rem;
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 1100px) {
   .grade {
     grid-template-columns: minmax(0, 1fr);
   }

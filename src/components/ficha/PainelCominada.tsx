@@ -238,10 +238,9 @@ export default function PainelCominada({crime, estado: e, atualizar, legal, base
       <p className={s.outraAba}>
         {NATUREZAS.concreto.length} atributos dependem da pena concreta —{' '}
         <a href="?modo=concreta" onClick={outra}>
-          ver na outra aba
+          verifique na aba
         </a>
-        . {NATUREZAS.incondicionado.length} não dependem de patamar de pena (
-        {NATUREZAS.incondicionado.map((d) => d.nome.toLowerCase()).join(' e ')}) e estão no pé daquela aba.
+        .
       </p>
     </section>
   );

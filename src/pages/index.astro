@@ -4,8 +4,7 @@
 // Os contadores dizem o tamanho da base e a data da última conferência — o que
 // separa um catálogo mantido de um arquivo abandonado. São calculados no build,
 // dos mesmos dados das telas: no desenho eram ilustrativos. Abaixo deles, uma
-// faixa por item da barra de navegação, na ordem da barra, com a pergunta que
-// cada tela responde.
+// faixa por item da barra de navegação, na ordem da barra.
 import Base from '../layouts/Base.astro';
 import Assinatura from '../components/marca/Assinatura.astro';
 import {NOME, NOME_EXTENSO} from '../site/config';
@@ -32,39 +31,21 @@ const contadores = [
   {n: CATALOGO.length, rotulo: 'atributos penais', nota: 'com parâmetros editáveis', rota: '/atributos'},
   {n: registrosDoAcervo().length, rotulo: 'registros no acervo', nota: 'revogados, vetados, não recepcionados', rota: '/acervo'},
   {n: diplomas.size, rotulo: 'diplomas cobertos', nota: 'com ao menos um tipo penal catalogado', rota: '/projeto/completude'},
-  {n: new Date().getFullYear() - INICIO_DA_LINHA, rotulo: 'anos na linha do tempo', nota: `de ${INICIO_DA_LINHA} a hoje`, rota: '/acervo/linha-do-tempo'},
+  {n: new Date().getFullYear() - INICIO_DA_LINHA, rotulo: 'anos na linha do tempo', nota: `de ${INICIO_DA_LINHA} a hoje`, rota: '/acervo#linha-do-tempo'},
 ];
 
-const RESUMOS: Record<ChaveNav, {o_que: string; pergunta: string}> = {
-  tipos: {
-    o_que: 'Todo tipo penal vigente, com a pena cominada e a simulação do que ela abre ou fecha.',
-    pergunta: 'quanto pega este crime, e o que isso implica?',
-  },
-  atributos: {
-    o_que: 'O percurso inverso: parta do instituto e veja quais tipos ele alcança, editando seus patamares.',
-    pergunta: 'quem consegue progressão, e quem a lei deixou de fora?',
-  },
-  simulacao: {
-    o_que:
-      'Proponha uma alteração legislativa — no patamar de um atributo penal ou na pena de um tipo penal — e meça o que entra, o que sai e o que não se move no catálogo.',
-    pergunta: 'se a lei mudar, quem passa a ser alcançado?',
-  },
-  acervo: {
-    o_que: 'Os tipos penais que saíram de vigência — revogados, vetados ou não recepcionados — e a linha do tempo da lei penal desde 1822.',
-    pergunta: 'o que deixou de ser crime, e quando?',
-  },
-  notas: {
-    o_que: 'Cada alteração que cria, modifica ou extingue tipos e atributos penais na base, versão a versão, a partir do lançamento.',
-    pergunta: 'o que mudou na base, e desde quando?',
-  },
-  projeto: {
-    o_que: 'A história do projeto, a metodologia, a completude do catálogo, os dados abertos, os robôs de conferência e os textos do grupo.',
-    pergunta: 'quem faz isto, de onde vêm os dados e o que ainda falta?',
-  },
+const RESUMOS: Record<ChaveNav, string> = {
+  tipos: 'Todo tipo penal vigente, com a pena cominada e a simulação do que ela abre ou fecha.',
+  atributos: 'O percurso inverso: parta do instituto e veja quais tipos ele alcança, editando seus patamares.',
+  simulacao:
+    'Proponha uma alteração legislativa, no patamar de um atributo ou na pena cominada de um tipo penal, e meça o impacto legal da mudança.',
+  acervo: 'Os tipos penais que saíram de vigência, revogados, vetados ou não recepcionados, e a linha do tempo da lei penal desde 1822.',
+  notas: 'Cada alteração que cria, modifica ou extingue tipos e atributos penais na base, versão a versão.',
+  projeto: 'A história do projeto, a metodologia, a completude do catálogo, os dados abertos, os robôs de conferência e os textos do grupo.',
 };
 
 const DESCRICAO =
-  'Toda pena cominada no direito brasileiro, os atributos penais existentes e simulação legislativa para planejamento de políticas públicas. Ferramenta de pesquisa mantida por um grupo de trabalho e pesquisa. Nada deste site constitui aconselhamento jurídico.';
+  'Toda pena cominada no direito brasileiro, e o que cada patamar de pena abre ou fecha ao condenado. Ferramenta mantida por um grupo independente; não é aconselhamento jurídico.';
 ---
 
 <Base titulo={NOME} descricao={DESCRICAO}>
@@ -113,17 +94,14 @@ const DESCRICAO =
   </section>
 
   <section class="pagina bloco" aria-labelledby="titulo-secoes">
-    <h2 class="rotulo" id="titulo-secoes">Onde encontrar cada coisa</h2>
+    <h2 class="rotulo" id="titulo-secoes">O que você vai encontrar aqui:</h2>
     <ul class="secoes">
       {
         NAVEGACAO.map((item) => (
           <li>
             <a href={caminho(item.rota)}>
               <span class="nome-secao">{item.rotuloLongo}</span>
-              <span class="texto-secao">
-                <span>{RESUMOS[item.chave].o_que}</span>
-                <span class="pergunta">{RESUMOS[item.chave].pergunta}</span>
-              </span>
+              <span class="texto-secao">{RESUMOS[item.chave]}</span>
             </a>
           </li>
         ))
@@ -153,7 +131,6 @@ const DESCRICAO =
     color: var(--cor-tinta-corpo);
   }
   .descricao {
-    max-width: 62ch;
     line-height: 1.65;
     color: var(--cor-tinta-corpo);
   }
@@ -247,19 +224,14 @@ const DESCRICAO =
     font-weight: 500;
   }
   .texto-secao {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
+    display: block;
     min-width: 0;
     font-size: var(--fs-pequeno);
     line-height: 1.5;
+    text-align: justify;
+    hyphens: auto;
+    text-indent: var(--recuo-paragrafo);
     color: var(--cor-tinta-corpo);
-  }
-  .pergunta {
-    font-family: var(--fonte-mono);
-    font-size: var(--fs-rotulo);
-    font-style: italic;
-    color: var(--cor-tinta-fraca);
   }
   @media (max-width: 720px) {
     .contadores {

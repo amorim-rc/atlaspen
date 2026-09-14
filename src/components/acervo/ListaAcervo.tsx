@@ -49,10 +49,12 @@ export default function ListaAcervo({registros, ano = null, naUrl = false}: Prop
 
   useEffect(() => {
     if (!naUrl || !montado) return;
-    const p = new URLSearchParams();
-    if (q.trim()) p.set('q', q.trim());
-    if (categoria) p.set('categoria', categoria);
-    if (artigo) p.set('artigo', artigo);
+    // Parte da URL atual: o ?ano= é da linha do tempo, e não se perde aqui.
+    const p = new URLSearchParams(window.location.search);
+    for (const [chave, valor] of [['q', q.trim()], ['categoria', categoria], ['artigo', artigo]] as const) {
+      if (valor) p.set(chave, valor);
+      else p.delete(chave);
+    }
     const s2 = p.toString();
     const novo = window.location.pathname + (s2 ? `?${s2}` : '') + window.location.hash;
     if (novo !== window.location.pathname + window.location.search + window.location.hash) {

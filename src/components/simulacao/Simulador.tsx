@@ -96,7 +96,7 @@ const NOTA_OPERACAO: Record<Sentido, Record<Operacao, string>> = {
   },
   atributo: {
     criar: 'Cria um instituto que não existe e define de que ele depende: a pena, o limiar, as vedações e os requisitos do réu.',
-    modificar: 'Move os parâmetros de um instituto que já existe — limiar, fração, vedação — e recalcula o alcance dele sobre o catálogo.',
+    modificar: 'Move os parâmetros de um instituto que já existe (limiar, fração, vedação) e recalcula o alcance dele sobre o catálogo.',
     extinguir: 'Retira um instituto do sistema e mostra os tipos que ficam sem ele.',
   },
 };
@@ -304,7 +304,7 @@ function FormAtributoNovo({def, onChange}: {def: DefinicaoAtributo; onChange: (d
         ))}
       </fieldset>
       <p className={s.notaBloco}>
-        Requisito do réu que o catálogo não conhece — confissão, reparação do dano — deixa o tipo como condicional, e não como
+        Requisito do réu que o catálogo não conhece (confissão, reparação do dano) deixa o tipo como condicional, e não como
         cabível. A primariedade segue a premissa: réu primário.
       </p>
     </div>
@@ -354,7 +354,7 @@ function Objeto({m, tipos, atualizar}: {m: Mudanca; tipos: TipoDoMotor[] | null;
           ))}
         </select>
       </label>
-      {def && <p className={s.normaObjeto}>{def.fundamento}</p>}
+      {def && <p className={`${s.normaObjeto} sem-recuo`}>{def.fundamento}</p>}
       {def && m.op === 'modificar' && (
         <div className={s.parametros}>
           {def.parametros.map((p) => (
@@ -481,7 +481,7 @@ function Impacto({r, validas, legal, simulado}: {r: Resultado; validas: Mudanca[
                   ) : (
                     <p className={s.notaBloco}>Nenhum atributo muda para este dispositivo.</p>
                   )}
-                  <p className={s.notaMono}>
+                  <p className={`${s.notaMono} sem-recuo`}>
                     {fmt(r.porAtributo.length - quantos)} de {fmt(r.porAtributo.length)} atributos não se movem neste dispositivo.
                   </p>
                 </section>
@@ -524,7 +524,7 @@ function Impacto({r, validas, legal, simulado}: {r: Resultado; validas: Mudanca[
                     </ul>
                   )}
                   {ps.length > LIMITE_LINHAS && (
-                    <p className={s.notaMono}>e mais {fmt(ps.length - LIMITE_LINHAS)} — a lista completa sai no CSV</p>
+                    <p className={`${s.notaMono} sem-recuo`}>e mais {fmt(ps.length - LIMITE_LINHAS)} — a lista completa sai no CSV</p>
                   )}
                 </section>
               );
@@ -537,7 +537,11 @@ function Impacto({r, validas, legal, simulado}: {r: Resultado; validas: Mudanca[
                 {fmt(parados.length)} de {fmt(r.porAtributo.length)} atributos
               </span>
             </h3>
-            <p className={s.notaBloco}>{parados.map((a) => a.nome).join(' · ')}</p>
+            <ul className={s.parados}>
+              {parados.map((a) => (
+                <li key={a.id}>{a.nome}</li>
+              ))}
+            </ul>
           </section>
         )}
       </div>
@@ -768,7 +772,7 @@ export default function Simulador({versao, conferidoEm}: Props) {
             ) : validas.length === 0 ? (
               <div className={s.vazio}>
                 <p>Monte a primeira mudança à esquerda: o sentido, a operação e o objeto. O impacto aparece aqui enquanto se monta.</p>
-                <p className={s.notaMono}>
+                <p className={`${s.notaMono} sem-recuo`}>
                   Lei vigente: {fmt(resultado.totalAntes.dispositivos)} dispositivos e {fmt(resultado.totalAntes.cenarios)} cenários com pena
                   privativa; {fmt(resultado.atributosAntes)} atributos.
                 </p>

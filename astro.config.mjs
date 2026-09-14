@@ -66,6 +66,13 @@ export default defineConfig({
   integrations: [react(), sitemap()],
   vite: {
     plugins: [fontesSemColisao()],
+    // Só em desenvolvimento. O React entra pré-empacotado já na partida: quando o
+    // Vite o descobria no meio da sessão, reotimizava as dependências e a página
+    // aberta ficava com pedaços de duas versões ("_jsxDEV is not a function"),
+    // e as ilhas não montavam até apagar node_modules/.vite.
+    optimizeDeps: {
+      include: ['react', 'react-dom', 'react-dom/client', 'react/jsx-runtime', 'react/jsx-dev-runtime'],
+    },
   },
   markdown: {
     // Os docs/ continuam escritos para o GitHub e na sintaxe que o hook do

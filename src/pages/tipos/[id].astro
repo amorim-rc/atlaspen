@@ -109,7 +109,7 @@ if (!vigente) {
     rotulo: 'Última alteração deste dispositivo',
     texto: 'Ainda não datada.',
     detalhe:
-      'o histórico legislativo dos tipos penais está em coleta (frente 4 do backlog); até lá, a ficha não afirma de quando é a redação',
+      'o histórico legislativo dos tipos penais ainda está em coleta.',
   };
 }
 
@@ -182,7 +182,7 @@ const linkHistorico = calculavel && vigente ? '?modo=historico' : '#historico';
 
       <header class="cabecalho-ficha">
         <div class="identidade">
-          <p class="dispositivo">{crime.lei} · {crime.artigo}</p>
+          <p class="dispositivo sem-recuo">{crime.lei} · {crime.artigo}</p>
           <h1>{crime.crime}</h1>
           <details class="mais-sobre" open data-mais-sobre>
             <summary>mais sobre o tipo</summary>
@@ -321,7 +321,7 @@ const linkHistorico = calculavel && vigente ? '?modo=historico' : '#historico';
                 <span class="rotulo">Hediondez condicionada ao caso</span>
                 <p>
                   {crime.hediondo_condicao} A classificação depende de circunstância do caso, não do tipo: a ficha
-                  mantém o padrão seguro — não hediondo — e mostra a hipótese. Marcar "hediondo neste caso" na aba de
+                  mantém o padrão seguro, não hediondo, e mostra a hipótese. Marcar "hediondo neste caso" na aba de
                   pena concreta refaz as frações de progressão e de livramento.
                 </p>
               </>

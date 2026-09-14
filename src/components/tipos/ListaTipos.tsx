@@ -231,8 +231,8 @@ export default function ListaTipos({total, leis, acoes, inicial}: Props) {
               Menor potencial ofensivo
             </label>
           </div>
-          <p className={s.dica}>
-            "Reclusão" inclui reclusão com multa; combine com "Multa" para ficar só com os que têm multa.
+          <p className={`${s.dica} sem-recuo`}>
+            "Reclusão" inclui reclusão com multa. Combine com "Multa" para visualizar apenas os que cominam multa.
           </p>
           {ativos.length > 0 && (
             <button type="button" className={s.limpar} onClick={() => setF({...FILTROS_VAZIOS, ordem: f.ordem, decrescente: f.decrescente})}>
@@ -262,7 +262,7 @@ export default function ListaTipos({total, leis, acoes, inicial}: Props) {
           </div>
           <h2>Nenhum tipo penal responde a isso</h2>
           <p>
-            Nenhum registro do catálogo reúne todos estes filtros. A combinação pode não existir na lei — ou o tipo que
+            Nenhum registro do catálogo reúne todos estes filtros. A combinação pode não existir na lei, ou o tipo que
             você procura pode ainda não ter sido coletado.
           </p>
           {sugestoes.length > 0 && (

@@ -144,7 +144,7 @@ for (const r of [...acervo, ...diplomasHistoricos]) {
 console.log(`  ${fichasAcervo} de ${acervo.length + diplomasHistoricos.length} fichas do acervo com o nome no HTML`);
 
 const SECOES = [
-  '/', '/tipos', '/atributos', '/acervo', '/acervo/linha-do-tempo', '/notas', '/projeto', '/simulacao',
+  '/', '/tipos', '/atributos', '/acervo', '/notas', '/projeto', '/simulacao',
   ...['metodologia', 'completude', 'catalogo-tipos-penais', 'atributos-penais', 'os-robos', 'dados-abertos']
     .map((d) => `/projeto/${d}`),
 ];

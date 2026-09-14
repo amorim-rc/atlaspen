@@ -288,7 +288,8 @@ export default function FichaAtributo({slug, inicial, ultima, alteracoes, ultima
           <span className={s.textoAlcance}>
             {numeros ? (
               <>
-                dispositivos de {fmt(numeros.totalDispositivos)} com o atributo cabível ou condicional —{' '}
+                dispositivos de {fmt(numeros.totalDispositivos)} com o atributo cabível ou condicional.
+                <br />
                 {pct(alcance(numeros.dispositivos), numeros.totalDispositivos)} do catálogo com pena privativa.
               </>
             ) : erro ? (
@@ -455,7 +456,7 @@ export default function FichaAtributo({slug, inicial, ultima, alteracoes, ultima
                 </button>
               ))}
             </div>
-            <p className={s.notaMono}>
+            <p className={`${s.notaMono} sem-recuo`}>
               Hediondez, violência, grave ameaça, culpa, resultado morte e previsão de perdão judicial não entram aqui: são
               campos de cada tipo penal, lidos do catálogo dispositivo a dispositivo.
             </p>
@@ -487,9 +488,9 @@ export default function FichaAtributo({slug, inicial, ultima, alteracoes, ultima
               />
             </div>
             <p className={s.notaTracejada}>
-              A diferença entre as duas colunas não é erro: um crime muito desdobrado — homicídio, furto — pesa uma vez por
-              moldura à direita e uma vez só à esquerda. Ao citar um número, cite a unidade, o denominador e a premissa: a
-              citação no pé desta página já os leva.
+              A diferença entre as duas colunas não é erro: um crime com muitas molduras, como homicídio ou furto, produz
+              muitos cenários variados de cabimento dos atributos. Ao citar um número, cite a unidade, o denominador e a
+              premissa. Use a citação no pé desta página, pois ela já carrega a explicação.
             </p>
           </section>
 
@@ -515,22 +516,27 @@ export default function FichaAtributo({slug, inicial, ultima, alteracoes, ultima
                 ))}
               </ul>
               {restantesOnde !== null && restantesOnde > 0 && (
-                <p className={s.notaMono}>e mais {fmt(restantesOnde)} cenários de condenação</p>
+                <p className={`${s.notaMono} sem-recuo`}>e mais {fmt(restantesOnde)} cenários de condenação</p>
               )}
             </section>
           )}
 
-          <TabelaAlcance
-            slug={slug}
-            linhas={linhasTabela}
-            inicial={inicial.linhas}
-            contagem={contagem}
-            situacao={situacao}
-            q={e.q}
-            pagina={e.pagina}
-            mudar={(patch) => mudar(patch)}
-          />
         </div>
+      </div>
+
+      {/* A tabela ocupa a largura inteira da ficha: dentro da coluna de resultados,
+          o fundamento de cada linha ficava com uma palavra por linha. */}
+      <div className={s.tabelaLarga}>
+        <TabelaAlcance
+          slug={slug}
+          linhas={linhasTabela}
+          inicial={inicial.linhas}
+          contagem={contagem}
+          situacao={situacao}
+          q={e.q}
+          pagina={e.pagina}
+          mudar={(patch) => mudar(patch)}
+        />
       </div>
 
       <footer className={s.pe}>
@@ -538,9 +544,9 @@ export default function FichaAtributo({slug, inicial, ultima, alteracoes, ultima
           <span className="rotulo">Pressuposto metodológico</span>
           <p>
             {def.natureza === 'concreto'
-              ? 'O alcance pressupõe uma pena concreta que o catálogo não tem — por padrão, o réu condenado no mínimo legal — e as circunstâncias do réu marcadas acima. É a hipótese que permite comparar os tipos entre si; não é previsão do que acontece num processo.'
+              ? 'O alcance pressupõe uma pena concreta que o catálogo não tem, por padrão a do réu condenado no mínimo legal, e as circunstâncias do réu marcadas acima. É a hipótese que permite comparar os tipos entre si; não é previsão do que acontece num processo.'
               : def.natureza === 'abstrato'
-                ? 'O alcance lê a pena cominada de cada tipo e as circunstâncias do réu marcadas acima. Onde o atributo depende de requisito que o catálogo não registra — confissão, reparação, a circunstância que a lei elege —, o resultado é condicional, e não cabível.'
+                ? 'O alcance lê a pena cominada de cada tipo e as circunstâncias do réu marcadas acima. Onde o atributo depende de requisito que o catálogo não registra, como a confissão, a reparação ou a circunstância que a lei elege, o resultado é condicional, e não cabível.'
                 : 'O atributo não depende de patamar de pena. O alcance mede os tipos com pena privativa; os demais ficam fora da varredura, como em todo o catálogo.'}{' '}
             A <a href={caminho('/projeto/metodologia')}>metodologia</a> diz o que essa escolha mede e o que deixa de fora.
           </p>
