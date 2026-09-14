@@ -6,11 +6,13 @@
 
 import {lerEntradas} from './_ler-changelog.mjs';
 
+// Espelha ROTULO_TIPO de src/data/changelog/types.ts. As etiquetas saem em
+// itálico (a linha abaixo embrulha as tags em *...*), como na interface.
 const TIPO_ROTULO = {
-  novidade: 'Novidade',
-  melhoria: 'Melhoria',
-  correcao: 'Correção',
-  estrutural: 'Mudança estrutural',
+  incriminadora: 'novatio legis incriminadora',
+  pejus: 'novatio legis in pejus',
+  mellius: 'novatio legis in mellius',
+  abolitio: 'abolitio criminis',
 };
 
 const versao = process.argv[2];

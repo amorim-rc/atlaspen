@@ -1,15 +1,17 @@
 ---
-// Um documento do projeto, servido do markdown de docs/ em coluna de leitura.
-// Sem redesenho de conteúdo (design_handoff_atlaspen/09, item 4).
+// Um documento do projeto, servido do markdown de docs/ em coluna de leitura,
+// com o índice do projeto ao lado. Sem redesenho de conteúdo
+// (design_handoff_atlaspen/09, item 4). A completude tem página própria
+// (completude.astro), com o template de 6d.
 import {getCollection, render} from 'astro:content';
-import Base from '../../layouts/Base.astro';
+import Projeto from '../../layouts/Projeto.astro';
 import {DOCUMENTOS_DO_PROJETO} from '../../site/redirecionamentos';
 import '../../styles/prosa.css';
 
 export async function getStaticPaths() {
   const docs = await getCollection('docs');
   return docs
-    .filter((d) => DOCUMENTOS_DO_PROJETO.includes(d.id))
+    .filter((d) => DOCUMENTOS_DO_PROJETO.includes(d.id) && d.id !== 'completude')
     .map((doc) => ({params: {doc: doc.id}, props: {doc}}));
 }
 
@@ -18,8 +20,11 @@ const {Content, headings} = await render(doc);
 const titulo = doc.data.title ?? headings.find((h) => h.depth === 1)?.text ?? doc.id;
 ---
 
-<Base titulo={titulo} descricao={doc.data.description ?? `${titulo} — documentação do projeto AtlasPen.`} ativo="projeto" tipoOg="article">
-  <article class="pagina" style="padding-block: 2.5rem">
-    <div class="prosa leitura"><Content /></div>
-  </article>
-</Base>
+<Projeto
+  titulo={titulo}
+  descricao={doc.data.description ?? `${titulo} — documentação do projeto AtlasPen.`}
+  atual={`/projeto/${doc.id}`}
+  tipoOg="article"
+>
+  <article class="prosa leitura" style="padding-top: 0.5rem"><Content /></article>
+</Projeto>

@@ -1,8 +1,8 @@
 // A navegação do site: a barra de topo, a gaveta e o rodapé.
 //
 // Barra e gaveta seguem o turno mais recente dos desenhos (Simulacao
-// legislativa.dc.html): seis destinos. "Textos" saiu da barra depois do turno 5
-// e é alcançado pela página inicial e pelo rodapé.
+// legislativa.dc.html): seis destinos. "Textos" saiu da barra depois do turno 5:
+// os textos moram em /projeto, que abre na história do projeto.
 
 import {REPOSITORIO} from './config';
 
@@ -50,7 +50,7 @@ export const RODAPE: {titulo: string; itens: LinkRodape[]}[] = [
       {rotulo: 'Completude', rota: '/projeto/completude'},
       {rotulo: 'Dicionário de dados', rota: '/projeto/dados-abertos'},
       {rotulo: 'Os robôs', rota: '/projeto/os-robos'},
-      {rotulo: 'Textos', rota: '/textos'},
+      {rotulo: 'História do projeto', rota: '/projeto'},
     ],
   },
   {

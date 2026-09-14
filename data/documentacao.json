@@ -159,6 +159,16 @@
         "scripts/robos/vigia/cobertura-limites.json",
         ".github/workflows/conferidor.yml"
       ]
+    },
+    {
+      "arquivo": "textos/historia.md",
+      "sobre": "A história do projeto, da pesquisa de 2008 à retomada e ao lançamento. É a página que /projeto abre por padrão; cita decisões datadas do backlog.",
+      "conferido_em": "2026-09-13",
+      "depende_de": [
+        "backlog.md",
+        "CITATION.cff",
+        "data/ids-aposentados.json"
+      ]
     }
   ]
 }

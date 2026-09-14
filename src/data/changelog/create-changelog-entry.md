@@ -5,7 +5,7 @@
 > **exclusivamente** alterações que criem, modifiquem ou extingam tipos penais ou
 > atributos penais, e o resto deste guia volta a valer para elas.
 
-As Notas de atualizações (`/release-notes`) são um **feed de mudanças**: cada
+As Notas de atualizações (`/notas`) são um **feed de mudanças**: cada
 alteração é uma entrada própria. Não há lista central — **adicionar uma nota é
 criar um arquivo**. O feed no site e o corpo da Release no GitHub leem os mesmos
 arquivos.
@@ -14,7 +14,7 @@ arquivos.
 
 1. **Um arquivo por mudança.** Local:
    `src/data/changelog/entries/<ano>/<id>.ts`, onde
-   `<id> = AAAA-MM-DD-<slug>` (ex.: `2026-07-22-dosimetria-tres-fases-art-68`).
+   `<id> = AAAA-MM-DD-<slug>` (ex.: `2027-03-02-progressao-nova-fracao`).
    O `<slug>` é curto, em minúsculas, sem acentos, palavras separadas por hífen.
    O nome do arquivo (sem `.ts`) **é** o `id`.
 
@@ -25,19 +25,19 @@ arquivos.
    import type {ChangelogEntry} from '../../types';
 
    const entrada: ChangelogEntry = {
-     id: '2026-07-22-dosimetria-tres-fases-art-68',
-     date: '2026-07-22',
-     title: 'Dosimetria pelas três fases do art. 68',
+     id: '2027-03-02-progressao-nova-fracao',
+     date: '2027-03-02',
+     title: 'Título curto: a lei, e o que ela mudou',
      summary: 'Um parágrafo que resume a mudança para quem só lê o resumo.',
      body: [
        'Primeiro parágrafo de detalhe, texto puro.',
        'Segundo parágrafo. Cada string é um parágrafo, renderizado as-is.',
      ],
-     tipo: 'novidade',
-     areas: ['Dosimetria'],
-     version: 'v1.2.0',
+     tipo: 'pejus',
+     areas: ['Atributos'],
+     version: 'v1.1.0',
      links: [
-       {label: 'Ver onde a mudança aparece', href: 'https://amorim-rc.github.io/sispenas/pesquisa/tipos?tipo=1'},
+       {label: 'Ver o atributo de progressão de regime', href: 'https://amorim-rc.github.io/sispenas/atributos/progressao'},
      ],
    };
 
@@ -47,11 +47,15 @@ arquivos.
 3. **`body` é TEXTO PURO** — sem markdown, sem backticks, sem listas, sem tabelas.
    Um item do array = um parágrafo. Se precisar enumerar, escreva em prosa.
 
-4. **`tipo`** (a natureza da mudança, um só):
-   - `novidade` — funcionalidade nova (fecha uma versão `1.Y.0`);
-   - `melhoria` — aprimoramento que não muda dado do catálogo;
-   - `correcao` — correção de dado ou de norma (`1.1.Z`);
-   - `estrutural` — quebra de contrato dos dados abertos ou das URLs (`X.0.0`).
+4. **`tipo`** (a natureza da mudança, um só, em termos penais; a interface
+   mostra o rótulo em latim, em itálico):
+   - `incriminadora` — *novatio legis incriminadora*: cria tipo penal;
+   - `pejus` — *novatio legis in pejus*: altera para pior;
+   - `mellius` — *novatio legis in mellius*: altera para melhor;
+   - `abolitio` — *abolitio criminis*: deixa de ser crime.
+
+   A natureza não decide a versão: a regra de versionamento está em
+   `docs/dados-abertos.md` (Estabilidade e versionamento).
 
 5. **`areas`** (uma ou mais): `Tipos penais`, `Atributos`, `Dosimetria`,
    `Acervo histórico`, `Interface`, `Documentação`. Grafia exata, com acento.
@@ -72,8 +76,8 @@ arquivos.
 
 ## Como é consumido
 
-- **Frontend**: `src/data/changelog/index.ts` agrega tudo por `require.context` e
-  ordena por data (mais recentes primeiro).
+- **Frontend**: `src/data/changelog/index.ts` agrega tudo por `import.meta.glob` e
+  ordena por data (mais recentes primeiro); `/notas` lê esse array no build.
 - **CI / Release**: `scripts/montar-nota-release.mjs vX.Y.Z` concatena as entradas
   daquela versão para formar o corpo da Release no GitHub.
 - **Paridade**: `scripts/gerar-changelog-json.mjs` emite `static/data/changelog.json`

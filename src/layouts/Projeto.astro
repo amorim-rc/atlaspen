@@ -1,0 +1,175 @@
+---
+// As páginas de /projeto: a barra lateral com os textos e os documentos, e o
+// conteúdo ao lado. Na tela estreita a barra vem antes do conteúdo, recolhida,
+// para não empurrar o texto para baixo da dobra.
+import Base from './Base.astro';
+import {INDICE_DO_PROJETO} from '../site/projeto';
+import {caminho} from '../site/url';
+
+interface Props {
+  titulo: string;
+  descricao: string;
+  /** A rota da página, para marcar o item corrente. */
+  atual: string;
+  tipoOg?: 'website' | 'article';
+}
+
+const {titulo, descricao, atual, tipoOg} = Astro.props;
+const total = INDICE_DO_PROJETO.reduce((n, g) => n + g.itens.length, 0);
+---
+
+<Base titulo={titulo} descricao={descricao} ativo="projeto" tipoOg={tipoOg}>
+  <slot name="cabecalho" />
+  <div class="pagina hub">
+    <details class="indice" open data-indice-projeto>
+      <summary>Textos e documentos do projeto <span class="num">{total}</span></summary>
+      <nav aria-label="Textos e documentos do projeto">
+        {
+          INDICE_DO_PROJETO.map((g) => (
+            <section class="grupo">
+              <h2 class="rotulo">{g.grupo}</h2>
+              <ul>
+                {g.itens.map((i) => (
+                  <li>
+                    <a
+                      href={caminho(i.rota)}
+                      aria-current={i.rota === atual ? 'page' : undefined}
+                      {...(i.marca === 'externo' || i.marca === 'pdf' ? {rel: 'noopener', target: '_blank'} : {})}
+                    >
+                      <span class="titulo-item">
+                        {i.titulo}
+                        {i.marca && <span class="marca">{i.marca}</span>}
+                      </span>
+                      <span class="resumo-item">{i.resumo}</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ))
+        }
+      </nav>
+    </details>
+    <script is:inline>
+      // Na tela estreita, o índice começa recolhido. Sem JS, fica aberto.
+      if (window.matchMedia('(max-width: 860px)').matches) {
+        document.querySelector('[data-indice-projeto]').open = false;
+      }
+    </script>
+    <div class="conteudo">
+      <slot />
+    </div>
+  </div>
+</Base>
+
+<style>
+  .hub {
+    display: grid;
+    grid-template-columns: 16rem minmax(0, 1fr);
+    gap: 2.5rem;
+    align-items: start;
+    padding-block: 1.5rem 1rem;
+  }
+  .indice {
+    position: sticky;
+    top: 1rem;
+  }
+  .indice > summary {
+    display: none;
+  }
+  nav {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+  .grupo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  li a {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    padding: 0.45rem 0.6rem;
+    border-left: 2px solid transparent;
+    border-radius: 0 var(--raio) var(--raio) 0;
+    color: var(--cor-tinta);
+    text-decoration: none;
+  }
+  li a:hover {
+    background: var(--cor-superficie);
+  }
+  li a:hover .titulo-item {
+    color: var(--cor-acento);
+  }
+  li a[aria-current='page'] {
+    border-left-color: var(--cor-acento);
+    background: var(--cor-superficie);
+  }
+  li a[aria-current='page'] .titulo-item {
+    color: var(--cor-acento);
+  }
+  .titulo-item {
+    display: flex;
+    align-items: baseline;
+    gap: 0.4rem;
+    font-family: var(--fonte-serifa);
+    font-size: 1.0625rem;
+    font-weight: 500;
+    line-height: 1.3;
+  }
+  .marca {
+    font-family: var(--fonte-mono);
+    font-size: 0.625rem;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--cor-tinta-fraca);
+  }
+  .resumo-item {
+    font-size: var(--fs-meta);
+    line-height: 1.45;
+    color: var(--cor-tinta-media);
+  }
+  .conteudo {
+    min-width: 0;
+  }
+  @media (max-width: 860px) {
+    .hub {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 1.2rem;
+    }
+    .indice {
+      position: static;
+      border: 1px solid var(--cor-borda);
+      border-radius: var(--raio);
+      background: var(--cor-superficie);
+    }
+    .indice > summary {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      min-height: var(--alvo-toque);
+      padding: 0 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    .indice > summary .num {
+      font-family: var(--fonte-mono);
+      font-size: var(--fs-rotulo);
+      color: var(--cor-tinta-fraca);
+    }
+    nav {
+      padding: 0.2rem 0.5rem 0.9rem;
+    }
+  }
+</style>

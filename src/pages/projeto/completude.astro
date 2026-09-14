@@ -1,0 +1,354 @@
+---
+// Completude do catálogo (Notas e projeto.dc.html, 6d).
+//
+// A geração continua no script: scripts/gerar_completude.py escreve
+// docs/completude.md, e esta página lê a tabela que ele escreveu — não
+// recalcula a situação de cada diploma, que é decisão do script (a lista dos
+// diplomas ainda em coleta mora lá). O que muda é o template: a barra dá o peso
+// de cada diploma no catálogo, a situação vira etiqueta e o aviso do
+// denominador incerto sobe para antes da tabela.
+import {getEntry} from 'astro:content';
+import Projeto from '../../layouts/Projeto.astro';
+import {todosOsTipos} from '../../site/catalogo-servidor';
+import {DIPLOMAS} from '../../site/diplomas-servidor';
+import {caminho} from '../../site/url';
+
+const doc = await getEntry('docs', 'completude');
+if (!doc?.body) throw new Error('docs/completude.md não encontrado');
+
+type Situacao = 'concluido' | 'em_coleta' | 'nao_iniciado';
+const secao = doc.body.split('## Índice por diploma')[1]?.split('\n## ')[0] ?? '';
+const linhas = [...secao.matchAll(/^\| (.+?) \| (\d+) \| (.+?) \|$/gm)].map((m) => ({
+  nome: m[1],
+  tipos: Number(m[2]),
+  situacao: (m[3].includes('não iniciado') ? 'nao_iniciado' : m[3].includes('em coleta') ? 'em_coleta' : 'concluido') as Situacao,
+}));
+// A tabela é gerada; se o formato mudar, a página tem de quebrar no build, e não
+// publicar uma tabela vazia ou pela metade.
+const declarado = Number(/\| Diplomas com tipo penal vigente \| (\d+) \|/.exec(doc.body)?.[1]);
+if (!linhas.length || declarado !== linhas.length) {
+  throw new Error(
+    `docs/completude.md: li ${linhas.length} diplomas na tabela, e o indicador declara ${declarado}. ` +
+      'O formato gerado por scripts/gerar_completude.py mudou?',
+  );
+}
+
+const total = todosOsTipos().length;
+const maior = Math.max(...linhas.map((l) => l.tipos));
+const fmt = (n: number) => n.toLocaleString('pt-BR');
+const ROTULO: Record<Situacao, string> = {concluido: 'concluído', em_coleta: 'em coleta', nao_iniciado: 'não iniciado'};
+
+const indicadores = [
+  {valor: total, rotulo: 'tipos penais catalogados', rota: '/tipos'},
+  {valor: linhas.length, rotulo: 'diplomas com tipo penal vigente'},
+  {valor: linhas.filter((l) => l.tipos > 0).length, rotulo: 'com coleta iniciada'},
+  {valor: DIPLOMAS.filter((d) => d.situacao !== 'vigente').length, rotulo: 'diplomas fora de vigência', rota: '/acervo'},
+];
+---
+
+<Projeto
+  titulo="Completude do catálogo"
+  descricao="Quanto de cada diploma já foi conferido, dispositivo a dispositivo, e o que ainda falta no catálogo de tipos penais."
+  atual="/projeto/completude"
+>
+  <article class="completude">
+    <header class="topo">
+      <h1>Completude do catálogo</h1>
+      <p class="fonte">
+        gerada por <code>scripts/gerar_completude.py</code> de <code>data/diplomas.json</code> e
+        <code>data/crimes.json</code>
+      </p>
+    </header>
+
+    <ul class="indicadores">
+      {
+        indicadores.map((i) => (
+          <li>
+            {i.rota ? (
+              <a href={caminho(i.rota)}>
+                <span class="valor num">{fmt(i.valor)}</span>
+                <span class="rotulo-ind">{i.rotulo}</span>
+              </a>
+            ) : (
+              <span class="cartao-ind">
+                <span class="valor num">{fmt(i.valor)}</span>
+                <span class="rotulo-ind">{i.rotulo}</span>
+              </span>
+            )}
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="aviso">
+      <strong>O que quer dizer "concluído".</strong> A conferência dispositivo a dispositivo não localizou nenhum preceito
+      faltante depois das revisões. Não é garantia: o denominador real — quantos tipos a lei comporta — não é conhecido com
+      certeza, e o diploma pode voltar a "em coleta" se uma revisão futura encontrar algo. "Em coleta" é diploma com
+      preceito sabidamente faltando; "não iniciado", diploma sem nenhum tipo reunido ainda.
+    </div>
+
+    <div class="tabela">
+      <div class="barra-filtro">
+        <label class="sr-only" for="filtro-diploma">Filtrar diploma</label>
+        <input id="filtro-diploma" type="search" placeholder="Filtrar diploma…" data-filtro-diploma />
+        <span class="contagem num" aria-live="polite" data-contagem-diplomas>{linhas.length} diplomas</span>
+      </div>
+      <div class="cabeca-tabela" aria-hidden="true">
+        <span>Diploma</span>
+        <span class="dir">Tipos</span>
+        <span>Peso no catálogo</span>
+        <span>Situação</span>
+      </div>
+      <ul class="linhas" aria-label="Diplomas com tipo penal vigente">
+        {
+          linhas.map((l) => (
+            <li data-nome={l.nome.toLowerCase()}>
+              <span class="nome">{l.nome}</span>
+              <span class="tipos num">
+                {fmt(l.tipos)}
+                <span class="sr-only"> tipos</span>
+              </span>
+              <span class="peso" title={`${((l.tipos / total) * 100).toLocaleString('pt-BR', {maximumFractionDigits: 1})}% do catálogo`}>
+                <span style={`width: ${l.tipos ? Math.max(1.5, (l.tipos / maior) * 100) : 0}%`} />
+              </span>
+              <span class:list={['situacao', `situacao-${l.situacao}`]}>{ROTULO[l.situacao]}</span>
+            </li>
+          ))
+        }
+      </ul>
+      <p class="vazio" hidden data-vazio-diplomas>Nenhum diploma responde a esse filtro.</p>
+    </div>
+
+    <p class="pe">
+      A lista dos tipos já reunidos, com o texto de cada um, está na <a href={caminho('/tipos')}>busca por tipo penal</a>.
+      Os diplomas que saíram de vigência estão no <a href={caminho('/acervo')}>acervo histórico</a>.
+    </p>
+  </article>
+
+  <script is:inline>
+    (function () {
+      var campo = document.querySelector('[data-filtro-diploma]');
+      var contagem = document.querySelector('[data-contagem-diplomas]');
+      var vazio = document.querySelector('[data-vazio-diplomas]');
+      var linhas = Array.prototype.slice.call(document.querySelectorAll('[data-nome]'));
+      var sem = function (t) {
+        return t.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+      };
+      campo.addEventListener('input', function () {
+        var q = sem(campo.value.trim());
+        var n = 0;
+        linhas.forEach(function (li) {
+          var ok = !q || sem(li.getAttribute('data-nome')).indexOf(q) !== -1;
+          li.hidden = !ok;
+          if (ok) n++;
+        });
+        contagem.textContent = n + (n === 1 ? ' diploma' : ' diplomas');
+        vazio.hidden = n > 0;
+      });
+    })();
+  </script>
+</Projeto>
+
+<style>
+  .completude {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    padding-top: 0.5rem;
+  }
+  .topo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  .fonte {
+    font-family: var(--fonte-mono);
+    font-size: var(--fs-rotulo);
+    color: var(--cor-tinta-fraca);
+  }
+  .fonte code {
+    font-size: inherit;
+  }
+  .indicadores {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.7rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .indicadores a,
+  .cartao-ind {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    height: 100%;
+    padding: 0.75rem 0.85rem;
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--raio);
+    background: var(--cor-superficie);
+    color: var(--cor-tinta);
+    text-decoration: none;
+  }
+  .indicadores a:hover {
+    border-color: var(--cor-acento);
+  }
+  .valor {
+    font-family: var(--fonte-serifa);
+    font-size: 1.75rem;
+    font-weight: 500;
+    line-height: 1;
+  }
+  .rotulo-ind {
+    font-size: var(--fs-meta);
+    line-height: 1.4;
+    color: var(--cor-tinta-media);
+  }
+  .aviso {
+    padding: 0.75rem 0.95rem;
+    border-left: 3px solid var(--cor-acento-suave);
+    background: var(--cor-papel-alt);
+    font-size: var(--fs-pequeno);
+    line-height: 1.6;
+    color: var(--cor-tinta-corpo);
+  }
+  .aviso strong {
+    font-weight: 600;
+    color: var(--cor-tinta);
+  }
+  .tabela {
+    border: 1px solid var(--cor-borda-forte);
+    border-radius: var(--raio-cartao);
+    background: var(--cor-superficie);
+    overflow: clip;
+  }
+  .barra-filtro {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 1rem;
+    padding: 0.7rem 1rem;
+    border-bottom: 1px solid var(--cor-borda);
+    background: var(--cor-papel-alt);
+  }
+  .barra-filtro input {
+    flex: 1 1 14rem;
+    min-height: 2.5rem;
+    padding: 0 0.7rem;
+    border: 1px solid var(--cor-borda-controle);
+    border-radius: var(--raio);
+    background: var(--cor-superficie);
+  }
+  .contagem {
+    font-family: var(--fonte-mono);
+    font-size: var(--fs-meta);
+    color: var(--cor-tinta-media);
+  }
+  .cabeca-tabela,
+  .linhas li {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 4.5rem 9rem 7.5rem;
+    gap: 1rem;
+    align-items: center;
+    padding: 0.55rem 1rem;
+  }
+  .cabeca-tabela {
+    border-bottom: 1px solid var(--cor-borda);
+    font-family: var(--fonte-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--cor-tinta-fraca);
+  }
+  .dir {
+    text-align: right;
+  }
+  .linhas {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .linhas li + li {
+    border-top: 1px solid var(--cor-borda);
+  }
+  .nome {
+    font-family: var(--fonte-serifa);
+    font-size: 1.0625rem;
+    line-height: 1.3;
+  }
+  .tipos {
+    font-family: var(--fonte-mono);
+    font-size: var(--fs-meta);
+    text-align: right;
+  }
+  .peso {
+    display: block;
+    height: 0.45rem;
+    border-radius: 2px;
+    background: var(--cor-trilho);
+    overflow: hidden;
+  }
+  .peso span {
+    display: block;
+    height: 100%;
+    background: var(--cor-acento);
+  }
+  .situacao {
+    justify-self: start;
+    padding: 0.15rem 0.5rem;
+    border-radius: 2px;
+    font-family: var(--fonte-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .situacao-concluido {
+    background: var(--cor-cabivel-fundo);
+    color: var(--cor-cabivel);
+  }
+  .situacao-em_coleta {
+    background: var(--cor-condicional-fundo);
+    color: var(--cor-condicional);
+  }
+  .situacao-nao_iniciado {
+    background: var(--cor-papel-alt);
+    color: var(--cor-tinta-media);
+  }
+  .vazio {
+    padding: 0.8rem 1rem;
+    color: var(--cor-tinta-media);
+  }
+  .pe {
+    font-size: var(--fs-pequeno);
+    color: var(--cor-tinta-corpo);
+  }
+  @media (max-width: 720px) {
+    .indicadores {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .cabeca-tabela {
+      display: none;
+    }
+    .linhas li {
+      grid-template-columns: minmax(0, 1fr) auto;
+      grid-template-areas:
+        'nome tipos'
+        'peso situacao';
+      gap: 0.4rem 0.8rem;
+    }
+    .nome {
+      grid-area: nome;
+    }
+    .tipos {
+      grid-area: tipos;
+    }
+    .peso {
+      grid-area: peso;
+      align-self: center;
+    }
+    .situacao {
+      grid-area: situacao;
+      justify-self: end;
+    }
+  }
+</style>

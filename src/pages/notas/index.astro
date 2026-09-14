@@ -1,15 +1,117 @@
 ---
-// Notas de atualizações (antes /release-notes). Até a v1.0.0 a página só avisa
-// que será alimentada depois do lançamento (AGENTS.md).
+// Notas de atualizações (antes /release-notes; Notas e projeto.dc.html, 6a e 6b).
+//
+// Até a v1.0.0 nada é publicado (AGENTS.md): a página declara o vazio, com a
+// versão em curso e a régua do que entra no feed. O vazio é declarado, não é um
+// erro. Depois do lançamento, o feed lê as entradas de src/data/changelog/entries/.
 import Base from '../../layouts/Base.astro';
+import FeedNotas from '../../components/notas/FeedNotas';
+import entradas from '../../data/changelog';
+import {VERSAO} from '../../site/servidor';
+import {caminho} from '../../site/url';
+import {REPOSITORIO} from '../../site/config';
+
+const publicado = !VERSAO.startsWith('0.') && entradas.length > 0;
 ---
 
-<Base titulo="Notas de atualizações" descricao="As atualizações que criem, modifiquem ou extingam tipos ou atributos penais, a partir do lançamento da versão 1.0.0." ativo="notas">
-  <section class="pagina" style="padding-block: 2.5rem">
+<Base
+  titulo="Notas de atualizações"
+  descricao="As atualizações que criem, modifiquem ou extingam tipos ou atributos penais, a partir do lançamento da versão 1.0.0."
+  ativo="notas"
+>
+  <header class="pagina cabecalho">
     <h1>Notas de atualizações</h1>
-    <p>
-      Esta página passa a ser alimentada depois do lançamento da versão 1.0.0. Vai registrar as
-      atualizações que criem, modifiquem ou extingam tipos penais ou atributos penais.
+    <p class="intro">
+      Uma entrada por mudança no catálogo. Só entra aqui o que cria, modifica ou extingue tipo penal ou atributo penal.
     </p>
-  </section>
+  </header>
+
+  <div class="pagina corpo">
+    {
+      publicado ? (
+        <FeedNotas client:load entradas={entradas} />
+      ) : (
+        <section class="vazio-declarado" aria-labelledby="nada-publicado">
+          <h2 id="nada-publicado">Nada publicado ainda</h2>
+          <p>
+            O feed passa a ser alimentado com o lançamento da versão 1.0.0. A partir dele, cada atualização que criar,
+            modificar ou extinguir um tipo penal ou um atributo penal ganha uma entrada própria, com data, norma de origem e
+            o link para o lugar exato onde a mudança aparece.
+          </p>
+          <p>
+            Correções de interface, ajustes de texto e mudanças internas não entram aqui. Elas ficam no{' '}
+            <a href={`${REPOSITORIO}/commits/main`} rel="noopener">histórico público do repositório</a>.
+          </p>
+          <div class="versao">
+            <span class="rotulo">Versão em curso</span>
+            <span class="numero num">{VERSAO}</span>
+            <span class="nota">O número não anda até o lançamento oficial, a versão 1.0.0.</span>
+          </div>
+          <div class="enquanto">
+            <h3 class="rotulo">Enquanto isso</h3>
+            <a href={caminho('/projeto/completude')}>Acompanhar a completude do catálogo</a>
+            <a href={caminho('/projeto/metodologia')}>Ler a metodologia</a>
+          </div>
+        </section>
+      )
+    }
+  </div>
 </Base>
+
+<style>
+  .cabecalho {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    padding-block: 2rem 1rem;
+  }
+  .intro {
+    max-width: 62ch;
+    color: var(--cor-tinta-corpo);
+  }
+  .corpo {
+    padding-bottom: 1rem;
+  }
+  .vazio-declarado {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    max-width: 40rem;
+    padding: 1.4rem 1.3rem;
+    border: 1px solid var(--cor-borda-forte);
+    border-radius: var(--raio-cartao);
+    background: var(--cor-papel);
+    box-shadow: var(--sombra-cartao);
+  }
+  .vazio-declarado h2 {
+    font-size: var(--fs-titulo-2);
+  }
+  .vazio-declarado p {
+    line-height: 1.7;
+    color: var(--cor-tinta-corpo);
+  }
+  .versao {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--cor-borda);
+    border-left: 3px solid var(--cor-acento);
+    border-radius: var(--raio);
+    background: var(--cor-superficie);
+  }
+  .numero {
+    font-family: var(--fonte-mono);
+    font-size: 1.375rem;
+    font-weight: 500;
+  }
+  .nota {
+    font-size: var(--fs-pequeno);
+    color: var(--cor-tinta-media);
+  }
+  .enquanto {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+</style>

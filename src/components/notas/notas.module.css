@@ -1,0 +1,223 @@
+/*
+ * O feed das notas de atualizações (Notas e projeto.dc.html, 6b). A natureza
+ * em latim, em itálico; a cor só reforça o rótulo.
+ */
+
+.feed {
+  border: 1px solid var(--cor-borda-forte);
+  border-radius: var(--raio-cartao);
+  background: var(--cor-papel);
+  overflow: clip;
+}
+
+.filtros {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 1rem 1.1rem;
+  border-bottom: 1px solid var(--cor-borda);
+}
+
+.linhaFiltro {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.rotuloFiltro {
+  width: 5rem;
+  font-family: var(--fonte-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--cor-tinta-fraca);
+}
+
+.chip {
+  min-height: 2.25rem;
+  padding: 0 0.7rem;
+  border: 1px solid var(--cor-borda-forte);
+  border-radius: 2px;
+  background: var(--cor-superficie);
+  color: var(--cor-tinta-corpo);
+  font-family: var(--fonte-mono);
+  font-size: var(--fs-rotulo);
+  cursor: pointer;
+}
+
+.latim {
+  font-style: italic;
+}
+
+.chipAtivo {
+  border-color: var(--cor-tinta);
+  background: var(--cor-tinta);
+  color: var(--cor-papel);
+}
+
+.total {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.3rem 1rem;
+  padding: 0.6rem 1.1rem;
+  border-bottom: 1px solid var(--cor-borda);
+  background: var(--cor-papel-alt);
+  font-family: var(--fonte-mono);
+  font-size: var(--fs-rotulo);
+  color: var(--cor-tinta-media);
+}
+
+.vazio {
+  padding: 1rem 1.1rem;
+  color: var(--cor-tinta-media);
+}
+
+.entradas {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.entrada {
+  display: grid;
+  grid-template-columns: 6.5rem minmax(0, 1fr);
+  gap: 1.2rem;
+  padding: 1rem 1.1rem;
+  border-bottom: 1px solid var(--cor-borda);
+  scroll-margin-top: 1rem;
+}
+
+.entradaAberta {
+  background: var(--cor-superficie);
+}
+
+.quando {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.4rem;
+  font-family: var(--fonte-mono);
+  font-size: var(--fs-meta);
+  color: var(--cor-tinta-media);
+}
+
+.versao {
+  padding: 0.1rem 0.4rem;
+  border: 1px solid var(--cor-borda-forte);
+  border-radius: 2px;
+  font-size: var(--fs-rotulo);
+  color: var(--cor-tinta-fraca);
+}
+
+.corpo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  min-width: 0;
+}
+
+.etiquetas {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.natureza {
+  padding: 0.15rem 0.45rem;
+  border-radius: 2px;
+  font-family: var(--fonte-mono);
+  font-size: 0.6875rem;
+  font-style: italic;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.natureza_incriminadora {
+  background: var(--cor-cabivel-fundo);
+  color: var(--cor-cabivel);
+}
+
+.natureza_pejus {
+  background: var(--cor-simulacao-fundo);
+  color: var(--cor-simulacao);
+}
+
+.natureza_mellius {
+  background: var(--cor-origem-fundo);
+  color: var(--cor-origem);
+}
+
+.natureza_abolitio {
+  background: var(--cor-incabivel-fundo);
+  color: var(--cor-acento);
+}
+
+.area {
+  padding: 0.1rem 0.4rem;
+  border: 1px solid var(--cor-borda-forte);
+  border-radius: 2px;
+  font-family: var(--fonte-mono);
+  font-size: 0.6875rem;
+  color: var(--cor-tinta-media);
+}
+
+.titulo {
+  font-size: 1.3rem;
+  line-height: 1.25;
+}
+
+.titulo a {
+  color: var(--cor-tinta);
+  text-decoration: none;
+}
+
+.titulo a:hover {
+  color: var(--cor-acento);
+  text-decoration: underline;
+}
+
+.resumo,
+.detalhe p {
+  line-height: 1.7;
+  color: var(--cor-tinta-corpo);
+}
+
+.detalhe {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.detalhe a {
+  font-size: var(--fs-pequeno);
+}
+
+.alternar {
+  align-self: flex-start;
+  min-height: 2rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--cor-acento);
+  font-family: var(--fonte-mono);
+  font-size: var(--fs-rotulo);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+@media (max-width: 640px) {
+  .entrada {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.5rem;
+  }
+  .quando {
+    flex-direction: row;
+    align-items: center;
+  }
+  .rotuloFiltro {
+    width: 100%;
+  }
+}

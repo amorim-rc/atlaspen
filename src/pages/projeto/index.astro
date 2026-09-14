@@ -1,19 +1,82 @@
 ---
-// O projeto — índice dos documentos (antes /docs/*).
-import {getCollection} from 'astro:content';
-import Base from '../../layouts/Base.astro';
-import {DOCUMENTOS_DO_PROJETO} from '../../site/redirecionamentos';
-import {caminho} from '../../site/url';
+// O projeto (Notas e projeto.dc.html, 6c). O índice dos textos e documentos na
+// barra lateral; carregado por padrão, o texto que narra a história do projeto.
+import {getEntry, render} from 'astro:content';
+import Projeto from '../../layouts/Projeto.astro';
+import {dataExtenso} from '../../site/datas';
+import '../../styles/prosa.css';
 
-const docs = (await getCollection('docs')).filter((d) => DOCUMENTOS_DO_PROJETO.includes(d.id));
-const ordenados = DOCUMENTOS_DO_PROJETO.map((id) => docs.find((d) => d.id === id)).filter(Boolean);
+const texto = await getEntry('textos', 'historia');
+if (!texto) throw new Error('textos/historia.md não encontrado');
+const {Content} = await render(texto);
+const t = texto.data;
 ---
 
-<Base titulo="O projeto" descricao="Metodologia, completude, dicionário de dados e os robôs de conferência do AtlasPen." ativo="projeto">
-  <section class="pagina" style="padding-block: 2.5rem">
+<Projeto
+  titulo="O projeto"
+  descricao="Quem faz o AtlasPen, como a base é feita e o que ainda falta: a história do projeto, a metodologia, a completude, os dados abertos e os robôs de conferência."
+  atual="/projeto"
+>
+  <header slot="cabecalho" class="pagina cabecalho">
     <h1>O projeto</h1>
-    <ul>
-      {ordenados.map((d) => <li><a href={caminho(`/projeto/${d!.id}`)}>{d!.data.title ?? d!.id}</a></li>)}
-    </ul>
-  </section>
-</Base>
+    <p class="intro">
+      Quem faz esta base, como ela é feita e o que ainda falta. Nada aqui é ferramenta de consulta: é a prestação de
+      contas do método.
+    </p>
+  </header>
+
+  <article class="texto">
+    <header class="topo-texto">
+      <p class="genero">{t.genero}</p>
+      <h2>{t.titulo}</h2>
+      <p class="meta">
+        {dataExtenso(t.data)}
+        {t.revisado_em && <> · revisado em {dataExtenso(t.revisado_em)}</>}
+        {' · '}{t.assinatura}
+      </p>
+    </header>
+    <div class="prosa leitura"><Content /></div>
+  </article>
+</Projeto>
+
+<style>
+  .cabecalho {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    padding-block: 2rem 0.5rem;
+  }
+  .intro {
+    max-width: 62ch;
+    color: var(--cor-tinta-corpo);
+  }
+  .texto {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+  .topo-texto {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    max-width: var(--largura-leitura);
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--cor-borda);
+  }
+  .genero {
+    font-family: var(--fonte-mono);
+    font-size: var(--fs-rotulo);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--cor-acento);
+  }
+  .topo-texto h2 {
+    font-size: var(--fs-titulo-1);
+    line-height: 1.2;
+  }
+  .meta {
+    font-family: var(--fonte-mono);
+    font-size: var(--fs-meta);
+    color: var(--cor-tinta-fraca);
+  }
+</style>
