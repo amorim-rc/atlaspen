@@ -1,17 +1,94 @@
 ---
-// Acervo histórico (antes /docs/acervo-historico). Até a lista e o registro
-// entrarem, serve o documento gerado por scripts/gerar_completude.py.
-import {getEntry, render} from 'astro:content';
+// Acervo histórico — a lista (antes /docs/acervo-historico).
+//
+// O que saiu de vigência, com a mesma anatomia do catálogo vigente: lista
+// filtrável e ficha por registro. Base separada: nada daqui entra em estatística
+// de direito vigente. Aceita ?artigo= (o link da aba histórico da ficha do tipo),
+// ?q= e ?categoria=.
 import Base from '../../layouts/Base.astro';
-import '../../styles/prosa.css';
+import ListaAcervo from '../../components/acervo/ListaAcervo';
+import {registrosDoAcervo} from '../../site/acervo-servidor';
+import {caminho} from '../../site/url';
 
-const doc = await getEntry('docs', 'acervo-historico');
-if (!doc) throw new Error('docs/acervo-historico.md não encontrado');
-const {Content} = await render(doc);
+const registros = registrosDoAcervo();
+const dispositivos = registros.filter((r) => r.tipo === 'dispositivo').length;
+const diplomas = registros.length - dispositivos;
 ---
 
-<Base titulo="Acervo histórico" descricao="O que já foi crime no Brasil: tipos penais revogados, vetados e não recepcionados." ativo="acervo">
-  <article class="pagina" style="padding-block: 2.5rem">
-    <div class="prosa leitura"><Content /></div>
-  </article>
+<Base
+  titulo="Acervo histórico"
+  descricao="Os tipos penais que saíram de vigência no Brasil — revogados, vetados e não recepcionados —, com a norma que os tirou de vigência."
+  ativo="acervo"
+>
+  <header class="pagina cabecalho">
+    <h1>Acervo histórico</h1>
+    <div class="intro">
+      <p>
+        Os tipos penais que saíram de vigência no Brasil: revogados, vetados na sanção ou não recepcionados pela
+        Constituição de 1988. Cada registro traz o dispositivo, o que houve com ele e a norma que o tirou de vigência.
+        São <span class="num">{registros.length}</span> registros: <span class="num">{dispositivos}</span> dispositivos e{' '}
+        <span class="num">{diplomas}</span> diplomas inteiros.
+      </p>
+      <p>
+        A pergunta "o que deixou de ser crime, e quando?" é tão relevante para a pesquisa quanto "o que é crime hoje", e o
+        acervo responde também a quem chega por uma referência antiga e precisa saber o que aconteceu com ela. Sair de
+        vigência nem sempre é deixar de ser crime: parte dessas condutas seguiu punível em outro tipo penal, e o registro
+        diz o que houve.
+      </p>
+      <p>
+        Os registros nascem da conferência do catálogo contra o texto compilado do Planalto: quando um dispositivo se
+        revela fora de vigência, ele sai dos tipos penais e entra aqui, com a norma que o revogou. Os diplomas inteiros
+        vêm do inventário que mede a completude do catálogo. Texto original e data exata entram à medida que são
+        conferidos; até lá, cada registro diz o que se sabe e declara o que falta.
+      </p>
+    </div>
+    <p class="aviso">
+      <span aria-hidden="true">⚠</span>
+      Nada daqui entra em estatística de direito vigente. As duas bases nunca se somam.
+    </p>
+    <a class="para-linha" href={caminho('/acervo/linha-do-tempo')}>Ver na linha do tempo, de 1822 a hoje →</a>
+  </header>
+
+  <div class="pagina corpo">
+    <ListaAcervo client:load registros={registros} naUrl />
+  </div>
 </Base>
+
+<style>
+  .cabecalho {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    padding-block: 2rem 1.2rem;
+  }
+  .intro {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    max-width: 64ch;
+    color: var(--cor-tinta-corpo);
+    line-height: 1.65;
+  }
+  .aviso {
+    display: flex;
+    gap: 0.6rem;
+    align-items: baseline;
+    max-width: 64ch;
+    padding: 0.6rem 0.8rem;
+    border-radius: var(--raio);
+    background: var(--cor-papel-alt);
+    font-size: var(--fs-pequeno);
+  }
+  .aviso span {
+    font-family: var(--fonte-mono);
+    font-weight: 600;
+    color: var(--cor-acento);
+  }
+  .para-linha {
+    align-self: flex-start;
+    font-size: var(--fs-pequeno);
+  }
+  .corpo {
+    padding-bottom: 1rem;
+  }
+</style>

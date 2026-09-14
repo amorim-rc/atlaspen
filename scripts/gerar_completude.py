@@ -26,64 +26,40 @@ RAIZ = Path(__file__).resolve().parent.parent
 # que a revisão não localizou preceito faltante, sempre passível de erro.
 INCOMPLETOS: set[str] = {"cpm"}
 
-# Dispositivos históricos identificados na conferência, a catalogar no acervo
-# (v1.3.0): (dispositivo, categoria, o que houve). Categoria ∈ revogado |
-# alterado | não recepcionado | vetado.
-ACERVO_CASOS: list[tuple[str, str, str]] = [
-    ("Lei 9.807/99, art. 19 (revelação de identidade de testemunha protegida)",
-     "vetado",
-     "Vetado na sanção da lei; nunca vigorou. O catálogo chegou a ter um "
-     "registro indevido, removido na v1.1.2."),
-    ("CP, art. 240 (adultério)", "revogado", "Revogado pela Lei 11.106/2005."),
-    ("CP, art. 217 (sedução)", "revogado", "Revogado pela Lei 12.015/2009."),
-    ("CP, arts. 219 a 222 (rapto)", "revogado", "Revogados pela Lei 12.015/2009."),
-    ("ECA, art. 233 (tortura de criança)", "revogado",
-     "Revogado pela Lei 9.455/1997 (Lei de Tortura). **Constava como vigente no "
-     "catálogo até a v1.3.0.**"),
-    ("LCP, arts. 60 e 61 (mendicância e importunação ofensiva)", "revogado",
-     "Revogados pelas Leis 11.983/2009 e 13.718/2018."),
-    ("LCP, art. 27 (exploração da credulidade pública)", "revogado",
-     "Revogado pela Lei 9.521/1997."),
-    ("LCP, art. 39 (associação secreta)", "revogado",
-     "Revogado pela Lei 14.197/2021."),
-    ("LCP, art. 65 (perturbação da tranquilidade)", "revogado",
-     "Revogado pela Lei 14.132/2021, que criou a perseguição (CP, art. 147-A)."),
-    ("LCP, art. 69 (atividade remunerada de estrangeiro)", "revogado",
-     "Revogado pela Lei 6.815/1980. O compilado mantém o texto dos quatro "
-     "artigos acima, com a revogação anotada ao lado — foi assim que a leva "
-     "automática da v1.3.0 os tomou por vigentes."),
-]
-
-# Tipos penais que saíram do catálogo POR REVOGAÇÃO: eram crime, deixaram de
-# ser, e ainda constavam entre os vigentes.
+# Os dispositivos do acervo histórico vivem em data/acervo.json — a mesma fonte
+# que o site lê em /acervo. Eram duas constantes daqui (os casos identificados
+# na conferência e os tipos retirados do catálogo por revogação); passaram a
+# dado para que o acervo não seja uma transcrição à mão da tabela deste
+# gerador.
 #
-# Só entra aqui o que a LEI tirou de vigência. Registro que saiu porque estava
-# errado (duplicata, infração administrativa, texto de outro diploma) não é
-# acervo histórico: isso é descrito na nota da versão em que saiu. Misturar as
+# Só entra no acervo o que a LEI tirou de vigência. Registro que saiu porque
+# estava errado (duplicata, infração administrativa, texto de outro diploma) não
+# é acervo histórico: isso é descrito na nota da versão em que saiu. Misturar as
 # duas coisas transformaria o acervo — que é material de pesquisa sobre o que já
 # foi crime no Brasil — num histórico dos nossos enganos.
-#
-# Sem `id`: a numeração do catálogo foi reiniciada na v1.4.0, e citar o número
-# antigo apontaria para outro crime.
-RETIRADOS: list[tuple[str, str, str]] = [
-    ("CP, art. 150, §2º (violação de domicílio contra funcionário público)",
-     "v1.3.0", "Revogado pela Lei 13.869/2019 (Lei de Abuso de Autoridade)."),
-    ("CP, art. 185 (usurpação de nome ou pseudônimo alheio)",
-     "v1.3.0", "Revogado pela Lei 10.695/2003."),
-    ("CP, art. 350 (exercício arbitrário ou abuso de poder)",
-     "v1.3.0", "Revogado pela Lei 13.869/2019 (Lei de Abuso de Autoridade)."),
-    ("ECA, art. 233 (tortura de criança ou adolescente)",
-     "v1.3.0", "Revogado pela Lei 9.455/1997 (Lei de Tortura)."),
-    ("LCP, arts. 27, 39, 65 e 69 (credulidade pública, associação secreta, "
-     "perturbação da tranquilidade, atividade remunerada de estrangeiro)",
-     "v1.4.0",
-     "Revogados pelas Leis 9.521/1997, 14.197/2021, 14.132/2021 e 6.815/1980. "
-     "Os registros existiram por poucas horas, criados pela leva automática da "
-     "v1.3.0."),
-    ("Lei 4.595/64, art. 44, §7º (operação de instituição financeira sem "
-     "autorização do Banco Central)",
-     "v1.4.0", "Revogado pela Lei 13.506/2017, que converteu a MP 784/2017."),
-]
+CATEGORIAS_ACERVO = {"revogado": "revogado", "nao_recepcionado": "não recepcionado", "vetado": "vetado"}
+
+
+def _carregar_acervo() -> list[dict]:
+    """Os registros de data/acervo.json, com os campos que a tabela exige."""
+    dados = json.loads((RAIZ / "data" / "acervo.json").read_text(encoding="utf-8"))
+    registros = dados["registros"]
+    ids: set[str] = set()
+    for r in registros:
+        faltando = [c for c in ("id", "dispositivo", "nome", "categoria", "o_que_houve", "normas") if not r.get(c)]
+        if faltando:
+            raise SystemExit(f"data/acervo.json: registro {r.get('id')!r} sem {', '.join(faltando)}")
+        if r["categoria"] not in CATEGORIAS_ACERVO:
+            raise SystemExit(f"data/acervo.json: categoria desconhecida em {r['id']!r}: {r['categoria']!r}")
+        if r["id"] in ids:
+            raise SystemExit(f"data/acervo.json: id repetido: {r['id']!r}")
+        ids.add(r["id"])
+    return registros
+
+
+def _rotulo(r: dict) -> str:
+    """ "CP, art. 240 (adultério)": o dispositivo e o nome, como a tabela os cita."""
+    return f"{r['dispositivo']} ({r['nome'][0].lower()}{r['nome'][1:]})"
 
 
 def main() -> int:
@@ -233,10 +209,12 @@ def _gerar_acervo(historicos: list[dict]) -> None:
       "encontrados durante a conferência do catálogo. São a semente do acervo — "
       "cada um receberá, na v2.2.0, uma entrada com o texto original e o histórico.")
     p("")
+    registros = _carregar_acervo()
     p("| Dispositivo | Categoria | O que houve |")
     p("|---|---|---|")
-    for disp, cat, hist in ACERVO_CASOS:
-        p(f"| {disp} | {cat} | {hist} |")
+    for r in registros:
+        if r.get("caso"):
+            p(f"| {_rotulo(r)} | {CATEGORIAS_ACERVO[r['categoria']]} | {r['o_que_houve']} |")
     p("")
     p("## Tipos retirados do catálogo por revogação")
     p("")
@@ -246,8 +224,9 @@ def _gerar_acervo(historicos: list[dict]) -> None:
     p("")
     p("| Registro | Saiu em | Revogado por |")
     p("|---|---|---|")
-    for registro, versao, motivo in RETIRADOS:
-        p(f"| {registro} | {versao} | {motivo} |")
+    for r in registros:
+        if r.get("retirado"):
+            p(f"| {_rotulo(r)} | {r['retirado']['versao']} | {r['retirado']['nota']} |")
     p("")
     p(":::caution[As URLs desses registros deixaram de responder]")
     p("`id` é endereço público (`/pesquisa/tipos?tipo=N`), e esses saíram do ar "

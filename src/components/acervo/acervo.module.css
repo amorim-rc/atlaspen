@@ -1,0 +1,720 @@
+/*
+ * O acervo histórico e a linha do tempo (Atributos, acervo e eixo
+ * temporal.dc.html, 4b; Linha do tempo e tela inicial.dc.html, 5a).
+ *
+ * Categoria em texto, nunca só em cor: o rótulo diz "revogado", "vetado" ou
+ * "não recepcionado", e a cor só o reforça.
+ */
+
+/* ── lista ── */
+.lista {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.buscaAcervo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem 1rem;
+}
+
+.buscaAcervo input {
+  flex: 1 1 18rem;
+  min-height: var(--alvo-toque);
+  padding: 0 0.8rem;
+  border: 1px solid var(--cor-borda-controle);
+  border-radius: var(--raio);
+  background: var(--cor-superficie);
+  font-size: 1rem;
+}
+
+.contagem {
+  font-family: var(--fonte-mono);
+  font-size: var(--fs-meta);
+  color: var(--cor-tinta-media);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 2.25rem;
+  padding: 0 0.8rem;
+  border: 1px solid var(--cor-borda-controle);
+  border-radius: 999px;
+  background: var(--cor-papel);
+  color: var(--cor-tinta-corpo);
+  font-size: var(--fs-pequeno);
+  cursor: pointer;
+}
+
+.chip :global(.num) {
+  font-family: var(--fonte-mono);
+  font-size: var(--fs-rotulo);
+  color: var(--cor-tinta-fraca);
+}
+
+.chipAtivo {
+  border-color: var(--cor-tinta);
+  background: var(--cor-tinta);
+  color: var(--cor-papel);
+}
+
+.chipAtivo :global(.num) {
+  color: var(--cor-papel);
+}
+
+.recorte {
+  padding: 0.6rem 0.8rem;
+  border-left: 3px solid var(--cor-acento-suave);
+  background: var(--cor-papel-alt);
+  font-size: var(--fs-pequeno);
+}
+
+.botaoLink {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--cor-acento);
+  font: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.vazio {
+  padding: 0.8rem 1rem;
+  border: 1px dashed var(--cor-borda-controle);
+  border-radius: var(--raio);
+  font-size: var(--fs-pequeno);
+  line-height: 1.6;
+  color: var(--cor-tinta-media);
+}
+
+.registros {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.registro {
+  border: 1px solid var(--cor-borda);
+  border-left: 3px solid var(--cor-borda-controle);
+  border-radius: 2px;
+  background: var(--cor-superficie);
+}
+
+.registroAberto {
+  border-left-color: var(--cor-acento);
+}
+
+.cabecaRegistro {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  grid-template-areas:
+    'nome tag seta'
+    'disp tag seta';
+  gap: 0.15rem 0.8rem;
+  align-items: center;
+  width: 100%;
+  min-height: var(--alvo-toque);
+  padding: 0.6rem 0.8rem;
+  border: 0;
+  background: none;
+  color: var(--cor-tinta);
+  text-align: left;
+  cursor: pointer;
+}
+
+.cabecaRegistro:hover .nome {
+  color: var(--cor-acento);
+}
+
+.nome {
+  grid-area: nome;
+  font-family: var(--fonte-serifa);
+  font-size: 1.0625rem;
+  line-height: 1.3;
+}
+
+.dispositivo {
+  grid-area: disp;
+  font-family: var(--fonte-mono);
+  font-size: var(--fs-meta);
+  color: var(--cor-tinta-media);
+}
+
+.tag {
+  grid-area: tag;
+  padding: 0.1rem 0.5rem;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  font-family: var(--fonte-mono);
+  font-size: 0.6875rem;
+  white-space: nowrap;
+}
+
+.tag_revogado {
+  color: var(--cor-acento);
+}
+
+.tag_vetado {
+  color: var(--cor-condicional);
+}
+
+.tag_nao_recepcionado {
+  color: var(--cor-origem);
+}
+
+.seta {
+  grid-area: seta;
+  font-size: 1.25rem;
+  color: var(--cor-tinta-fraca);
+  transition: transform 0.15s;
+}
+
+.registroAberto .seta {
+  transform: rotate(90deg);
+}
+
+.corpoRegistro {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: 1.2rem 1.6rem;
+  padding: 0.4rem 0.8rem 1rem 0.8rem;
+  border-top: 1px solid var(--cor-borda);
+  padding-top: 0.9rem;
+}
+
+.colunaTexto,
+.colunaTempo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  min-width: 0;
+}
+
+.colunaTexto p {
+  font-size: var(--fs-pequeno);
+  line-height: 1.6;
+  color: var(--cor-tinta-corpo);
+}
+
+.colunaTexto :global(.rotulo) + p {
+  margin-bottom: 0.4rem;
+}
+
+.textoOriginal {
+  margin: 0;
+  padding: 0.7rem 0.85rem;
+  border-radius: var(--raio);
+  background: var(--cor-papel-alt);
+  font-family: var(--fonte-serifa);
+  font-style: italic;
+  line-height: 1.6;
+}
+
+.ausente {
+  padding: 0.6rem 0.75rem;
+  border: 1px dashed var(--cor-borda-controle);
+  border-radius: var(--raio);
+  font-size: var(--fs-meta) !important;
+  color: var(--cor-tinta-media) !important;
+}
+
+.passos {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.passos li {
+  display: grid;
+  grid-template-columns: 5.5rem 1rem minmax(0, 1fr);
+  gap: 0.6rem;
+  align-items: stretch;
+}
+
+.quando {
+  padding-top: 0.1rem;
+  font-family: var(--fonte-mono);
+  font-size: var(--fs-meta);
+  color: var(--cor-tinta-media);
+  font-variant-numeric: tabular-nums;
+}
+
+.pontoPasso {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.pontoPasso::before {
+  content: '';
+  width: 0.6rem;
+  height: 0.6rem;
+  margin-top: 0.3rem;
+  border: 2px solid var(--cor-acento);
+  border-radius: 50%;
+  background: var(--cor-superficie);
+  z-index: 1;
+}
+
+.passos li:not(:last-child) .pontoPasso::after {
+  content: '';
+  position: absolute;
+  top: 1rem;
+  bottom: -0.2rem;
+  width: 1px;
+  background: var(--cor-borda-controle);
+}
+
+.fatoPasso {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  padding-bottom: 0.85rem;
+  font-size: var(--fs-pequeno);
+  line-height: 1.4;
+}
+
+.normaPasso {
+  font-family: var(--fonte-mono);
+  font-size: var(--fs-rotulo);
+  color: var(--cor-tinta-fraca);
+}
+
+.linksRegistro {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem 1rem;
+  font-size: var(--fs-pequeno);
+}
+
+/* ── linha do tempo ── */
+.linha {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.cartaoLinha {
+  border: 1px solid var(--cor-borda-forte);
+  border-radius: var(--raio-cartao);
+  background: var(--cor-papel);
+  box-shadow: var(--sombra-cartao);
+  overflow: clip;
+}
+
+.cabecalhoLinha {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.5rem 1.5rem;
+  padding: 0.8rem 1.1rem;
+  border-bottom: 1px solid var(--cor-borda);
+}
+
+.intervalo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.3rem 0.9rem;
+}
+
+.resumoLinha {
+  font-size: var(--fs-pequeno);
+  color: var(--cor-tinta-media);
+}
+
+.legenda {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem 1rem;
+  font-family: var(--fonte-mono);
+  font-size: var(--fs-rotulo);
+  color: var(--cor-tinta-media);
+}
+
+.legenda > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.glifoConstituicao,
+.glifoCodigo,
+.glifoBarra {
+  display: inline-block;
+  flex: none;
+}
+
+.glifoConstituicao {
+  width: 0.5rem;
+  height: 0.5rem;
+  background: var(--cor-acento);
+  transform: rotate(45deg);
+}
+
+.glifoCodigo {
+  width: 0.6rem;
+  height: 0.6rem;
+  border: 2px solid var(--cor-tinta);
+  border-radius: 50%;
+}
+
+.glifoBarra {
+  width: 0.3rem;
+  height: 0.75rem;
+  background: var(--cor-tinta-media);
+}
+
+/* Em tela estreita, o gráfico rola na horizontal: comprimir 200 anos em 360px
+   faria cada ano ter menos de dois pixels. */
+.rolagemLinha {
+  overflow-x: auto;
+  padding: 0.6rem 1.1rem 0.2rem;
+}
+
+.grafico {
+  position: relative;
+  min-width: 56rem;
+  user-select: none;
+}
+
+.eras {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  pointer-events: none;
+}
+
+.era {
+  position: relative;
+  height: 100%;
+  border-left: 1px dashed var(--cor-borda);
+}
+
+.eraAlt {
+  background: color-mix(in srgb, var(--cor-papel-alt) 55%, transparent);
+}
+
+/* O rótulo da era mora na folga do topo da faixa de anos, acima da barra mais
+   alta: sobre as barras, seria coberto por elas. */
+.era span {
+  position: absolute;
+  top: 3.95rem;
+  left: 0.35rem;
+  font-family: var(--fonte-mono);
+  font-size: 0.6875rem;
+  color: var(--cor-tinta-fraca);
+  white-space: nowrap;
+}
+
+.faixaMarcos {
+  position: relative;
+  height: 3.75rem;
+}
+
+.rotuloMarco {
+  position: absolute;
+  transform: translateX(-50%);
+  font-family: var(--fonte-mono);
+  font-size: var(--fs-rotulo);
+  font-weight: 500;
+  color: var(--cor-acento);
+  white-space: nowrap;
+}
+
+.conectorV,
+.conectorH {
+  position: absolute;
+  background: var(--cor-borda-controle);
+}
+
+.conectorV {
+  width: 1px;
+  transform: translateX(-0.5px);
+}
+
+.conectorH {
+  height: 1px;
+}
+
+.losango {
+  position: absolute;
+  width: 0.6rem;
+  height: 0.6rem;
+  background: var(--cor-acento);
+  transform: translate(-50%, 0) rotate(45deg);
+}
+
+.anos {
+  position: relative;
+  display: flex;
+  box-sizing: border-box;
+  height: 7rem;
+  padding-top: 1.35rem;
+  border-bottom: 1px solid var(--cor-tinta);
+  cursor: crosshair;
+}
+
+.anos:focus-visible {
+  outline: 2px solid var(--cor-acento);
+  outline-offset: 3px;
+}
+
+.ano {
+  flex: 1 1 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  min-width: 0;
+}
+
+.barraAno {
+  display: block;
+  width: 70%;
+  min-width: 2px;
+  background: var(--cor-tinta-media);
+}
+
+.anoAtivo {
+  background: var(--cor-acento-veu);
+}
+
+.anoAtivo .barraAno {
+  background: var(--cor-acento);
+}
+
+.faixaCodigos {
+  position: relative;
+  height: 6.4rem;
+}
+
+.circulo {
+  position: absolute;
+  width: 0.75rem;
+  height: 0.75rem;
+  border: 2px solid var(--cor-tinta);
+  border-radius: 50%;
+  background: var(--cor-papel);
+  transform: translate(-50%, -50%);
+}
+
+.rotuloCodigo {
+  position: absolute;
+  width: 6.6rem;
+  transform: translateX(-50%);
+  font-family: var(--fonte-mono);
+  font-size: 0.6875rem;
+  line-height: 1.35;
+  text-align: center;
+  white-space: pre-line;
+  color: var(--cor-tinta-corpo);
+}
+
+.decadas {
+  position: relative;
+  height: 1.4rem;
+  border-top: 1px solid var(--cor-borda);
+}
+
+.decadas span {
+  position: absolute;
+  top: 0.25rem;
+  transform: translateX(-50%);
+  font-family: var(--fonte-mono);
+  font-size: 0.6875rem;
+  color: var(--cor-tinta-fraca);
+}
+
+.painelAno {
+  display: grid;
+  grid-template-columns: minmax(11rem, 15rem) minmax(0, 1fr);
+  gap: 1rem 1.6rem;
+  padding: 1rem 1.1rem 1.2rem;
+  border-top: 1px solid var(--cor-borda);
+  background: var(--cor-superficie);
+}
+
+.anoGrande {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.35rem;
+}
+
+.anoGrande > :global(.num) {
+  font-family: var(--fonte-serifa);
+  font-size: 2.75rem;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.contextoAno {
+  font-size: var(--fs-pequeno);
+  line-height: 1.45;
+  color: var(--cor-tinta-media);
+}
+
+.fixar {
+  min-height: 2.25rem;
+  margin-top: 0.3rem;
+  padding: 0 0.7rem;
+  border: 1px solid var(--cor-borda-controle);
+  border-radius: var(--raio);
+  background: var(--cor-papel);
+  font-family: var(--fonte-mono);
+  font-size: var(--fs-rotulo);
+  color: var(--cor-tinta-media);
+  cursor: pointer;
+}
+
+.fixarAtivo {
+  border-color: var(--cor-acento);
+  color: var(--cor-acento);
+}
+
+.eventosAno {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  min-width: 0;
+}
+
+.semEventos {
+  padding: 0.7rem 0.85rem;
+  border: 1px dashed var(--cor-borda-controle);
+  border-radius: var(--raio);
+  font-size: var(--fs-pequeno);
+  line-height: 1.55;
+  color: var(--cor-tinta-media);
+}
+
+.evento {
+  display: grid;
+  grid-template-columns: 8.5rem minmax(0, 1fr);
+  gap: 0.2rem 0.8rem;
+  align-items: baseline;
+  padding: 0.55rem 0.75rem;
+  border: 1px solid var(--cor-borda);
+  border-left: 3px solid currentColor;
+  border-radius: 2px;
+  background: var(--cor-papel);
+  color: var(--cor-tinta);
+  text-decoration: none;
+}
+
+a.evento:hover {
+  border-color: currentColor;
+}
+
+a.evento:hover .tituloEvento {
+  color: var(--cor-acento);
+  text-decoration: underline;
+}
+
+.tomSaida {
+  color: var(--cor-incabivel);
+}
+
+.tomExcecao {
+  color: var(--cor-condicional);
+}
+
+.tomMarco {
+  color: var(--cor-tinta);
+}
+
+.tomLei {
+  color: var(--cor-origem);
+}
+
+.categoriaEvento {
+  font-family: var(--fonte-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.06em;
+}
+
+.textoEvento {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  min-width: 0;
+}
+
+.tituloEvento {
+  font-size: var(--fs-pequeno);
+  line-height: 1.4;
+  color: var(--cor-tinta);
+}
+
+.normaEvento {
+  font-family: var(--fonte-mono);
+  font-size: var(--fs-rotulo);
+  color: var(--cor-tinta-fraca);
+  overflow-wrap: anywhere;
+}
+
+.cabecalhoLista {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.4rem 1rem;
+  padding: 0.7rem 1.1rem;
+  border-bottom: 1px solid var(--cor-borda);
+}
+
+.recorteAtivo {
+  min-height: 2.25rem;
+  padding: 0 0.8rem;
+  border: 1px solid var(--cor-acento);
+  border-radius: 999px;
+  background: var(--cor-acento-veu);
+  color: var(--cor-acento);
+  font-family: var(--fonte-mono);
+  font-size: var(--fs-rotulo);
+  cursor: pointer;
+}
+
+.notaMono {
+  font-family: var(--fonte-mono);
+  font-size: var(--fs-rotulo);
+  color: var(--cor-tinta-fraca);
+}
+
+.corpoLista {
+  padding: 0.9rem 1.1rem 1.1rem;
+}
+
+@media (max-width: 720px) {
+  .corpoRegistro,
+  .painelAno {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .evento {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .rolagemLinha,
+  .cabecalhoLinha,
+  .painelAno,
+  .cabecalhoLista,
+  .corpoLista {
+    padding-inline: 0.8rem;
+  }
+}

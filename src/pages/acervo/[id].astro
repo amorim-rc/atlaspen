@@ -1,0 +1,279 @@
+---
+// Ficha de um registro do acervo histórico (/acervo/{id}), estática e citável
+// (Atributos, acervo e eixo temporal.dc.html, 4b).
+//
+// A ficha diz o que a fonte diz. Texto original e data exata da revogação ficam
+// declarados como ausentes até serem conferidos contra o texto compilado — nunca
+// preenchidos por plausibilidade.
+import Base from '../../layouts/Base.astro';
+import {registrosDoAcervo, ROTULO_CATEGORIA, type RegistroAcervo} from '../../site/acervo-servidor';
+import {passosDoRegistro} from '../../components/acervo/tipos';
+import {caminho} from '../../site/url';
+import s from '../../components/acervo/acervo.module.css';
+
+export function getStaticPaths() {
+  return registrosDoAcervo().map((r) => ({params: {id: r.id}, props: {r}}));
+}
+
+const {r} = Astro.props as {r: RegistroAcervo};
+const passos = passosDoRegistro(r);
+const anoDaSaida = r.normas.find((n) => n.ano !== null)?.ano ?? null;
+const selo = r.categoria === 'vetado' ? 'NUNCA VIGOROU' : 'NÃO VIGENTE';
+---
+
+<Base
+  titulo={`${r.nome} — acervo histórico`}
+  descricao={`${r.dispositivo}: ${r.oQueHouve}`}
+  ativo="acervo"
+>
+  <div class="pagina ficha-pagina">
+    <article class="cartao">
+      <nav class="trilha" aria-label="Trilha">
+        <ol>
+          <li><a href={caminho('/acervo')}>Acervo histórico</a></li>
+          {r.tipo === 'dispositivo' && r.diploma && <li class="trilha-diploma">{r.diploma.nome}</li>}
+          <li aria-current="page">{r.tipo === 'diploma' ? 'diploma inteiro' : r.dispositivo}</li>
+        </ol>
+      </nav>
+
+      <header class="cabecalho-registro">
+        <div class="identidade">
+          <p class="dispositivo">{r.dispositivo} · {ROTULO_CATEGORIA[r.categoria]}</p>
+          <h1>{r.nome}</h1>
+        </div>
+        <span class:list={['selo', `selo-${r.categoria}`]}>{selo}</span>
+      </header>
+
+      <div class="corpo">
+        <section class="bloco">
+          <h2 class="rotulo">O que houve</h2>
+          <p>{r.oQueHouve}</p>
+        </section>
+
+        <section class="bloco">
+          <h2 class="rotulo">Texto original</h2>
+          {
+            r.textoOriginal ? (
+              <blockquote class={s.textoOriginal}>{r.textoOriginal}</blockquote>
+            ) : (
+              <p class="ausente">
+                Ainda não transcrito. Entra quando o registro for conferido contra o texto compilado; até lá, a ficha diz o
+                que se sabe e declara o que falta.
+              </p>
+            )
+          }
+        </section>
+
+        <section class="bloco">
+          <h2 class="rotulo">Linha do tempo {r.tipo === 'diploma' ? 'do diploma' : 'do dispositivo'}</h2>
+          <ol class={s.passos}>
+            {
+              passos.map((p) => (
+                <li>
+                  <span class={`${s.quando} num`}>{p.quando}</span>
+                  <span class={s.pontoPasso} aria-hidden="true" />
+                  <span class={s.fatoPasso}>
+                    <span>{p.fato}</span>
+                    <span class={s.normaPasso}>{p.norma}</span>
+                  </span>
+                </li>
+              ))
+            }
+          </ol>
+          {
+            !r.dataRevogacao && r.categoria !== 'vetado' && (
+              <p class="nota">O ano é o da norma que tirou o dispositivo de vigência; a data exata ainda não foi conferida.</p>
+            )
+          }
+        </section>
+
+        {
+          r.retirado && (
+            <section class="caixa-retirado">
+              <h2 class="rotulo">Constou entre os tipos vigentes</h2>
+              <p>
+                Este registro esteve no catálogo de tipos vigentes até a {r.retirado.versao}, quando a conferência contra o
+                texto compilado mostrou que a lei já o havia revogado. A numeração dos tipos foi reiniciada depois (em
+                31/07/2026 e em 06/08/2026), e o número que ele tinha naquela época não vale mais como referência: o
+                endereço estável deste registro é esta ficha.
+              </p>
+            </section>
+          )
+        }
+
+        <p class="links">
+          {
+            r.fonteUrl && (
+              <a href={r.fonteUrl} rel="noopener" target="_blank">
+                {r.tipo === 'diploma' ? 'texto compilado no Planalto' : `${r.diploma?.nome ?? 'diploma'}, texto compilado no Planalto`}
+              </a>
+            )
+          }
+          {anoDaSaida && <a href={caminho(`/acervo/linha-do-tempo?ano=${anoDaSaida}`)}>{anoDaSaida} na linha do tempo</a>}
+          <a href={caminho('/acervo')}>todo o acervo</a>
+        </p>
+      </div>
+
+      <footer class="pe">
+        <span aria-hidden="true">⚠</span> Nada daqui entra em estatística de direito vigente. As duas bases nunca se somam.
+      </footer>
+    </article>
+  </div>
+</Base>
+
+<style>
+  .ficha-pagina {
+    padding-block: 1.5rem 0;
+  }
+  .cartao {
+    max-width: 48rem;
+    border: 1px solid var(--cor-borda-forte);
+    border-radius: var(--raio-cartao);
+    background: var(--cor-papel);
+    box-shadow: var(--sombra-cartao);
+    overflow: clip;
+  }
+  .trilha {
+    padding: 0.65rem 1.25rem;
+    border-bottom: 1px solid var(--cor-borda);
+    font-family: var(--fonte-mono);
+    font-size: var(--fs-meta);
+    color: var(--cor-tinta-fraca);
+  }
+  .trilha ol {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.2rem 0.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .trilha li + li::before {
+    content: '/';
+    margin-right: 0.5rem;
+  }
+  .trilha a {
+    color: var(--cor-tinta-fraca);
+    text-decoration: none;
+  }
+  .trilha a:hover {
+    color: var(--cor-acento);
+    text-decoration: underline;
+  }
+  .trilha [aria-current] {
+    color: var(--cor-tinta-corpo);
+  }
+  .cabecalho-registro {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.3rem 1.25rem 1.1rem;
+    border-bottom: 1px solid var(--cor-borda);
+  }
+  .identidade {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+  .dispositivo {
+    font-family: var(--fonte-mono);
+    font-size: var(--fs-meta);
+    color: var(--cor-tinta-media);
+  }
+  .selo {
+    flex: none;
+    padding: 0.25rem 0.65rem;
+    border: 1px solid currentColor;
+    border-radius: 999px;
+    font-family: var(--fonte-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.06em;
+    color: var(--cor-acento);
+  }
+  .selo-vetado {
+    color: var(--cor-condicional);
+  }
+  .selo-nao_recepcionado {
+    color: var(--cor-origem);
+  }
+  .corpo {
+    display: flex;
+    flex-direction: column;
+    gap: 1.3rem;
+    padding: 1.2rem 1.25rem 1.3rem;
+  }
+  .bloco {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .bloco > p {
+    line-height: 1.65;
+    color: var(--cor-tinta-corpo);
+  }
+  .ausente {
+    padding: 0.7rem 0.85rem;
+    border: 1px dashed var(--cor-borda-controle);
+    border-radius: var(--raio);
+    font-size: var(--fs-pequeno);
+    color: var(--cor-tinta-media) !important;
+  }
+  .nota {
+    font-family: var(--fonte-mono);
+    font-size: var(--fs-rotulo);
+    color: var(--cor-tinta-fraca) !important;
+  }
+  .caixa-retirado {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    padding: 0.8rem 0.95rem;
+    border: 1px dashed var(--cor-borda-controle);
+    border-radius: var(--raio);
+  }
+  .caixa-retirado p {
+    font-size: var(--fs-pequeno);
+    line-height: 1.6;
+    color: var(--cor-tinta-corpo);
+  }
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.2rem;
+    font-size: var(--fs-pequeno);
+  }
+  .pe {
+    padding: 0.7rem 1.25rem;
+    border-top: 1px solid var(--cor-borda);
+    background: var(--cor-papel-alt);
+    font-size: var(--fs-pequeno);
+    color: var(--cor-tinta-corpo);
+  }
+  .pe span {
+    font-family: var(--fonte-mono);
+    color: var(--cor-acento);
+  }
+  @media (max-width: 640px) {
+    .ficha-pagina {
+      padding-inline: 0.5rem;
+    }
+    .trilha,
+    .cabecalho-registro,
+    .corpo,
+    .pe {
+      padding-inline: 1rem;
+    }
+    .trilha-diploma {
+      display: none;
+    }
+    .cabecalho-registro {
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .cartao {
+      border: 0;
+      box-shadow: none;
+    }
+  }
+</style>

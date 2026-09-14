@@ -126,6 +126,23 @@ for (const a of atributos) {
 }
 console.log(`  ${atributos.length} fichas de atributo`);
 
+// O acervo: os dispositivos de data/acervo.json e os diplomas não vigentes.
+const acervo = JSON.parse(readFileSync(join(RAIZ, 'data', 'acervo.json'), 'utf-8')).registros;
+const diplomasHistoricos = JSON.parse(readFileSync(join(RAIZ, 'data', 'diplomas.json'), 'utf-8')).diplomas.filter(
+  (d) => d.situacao !== 'vigente',
+);
+let fichasAcervo = 0;
+for (const r of [...acervo, ...diplomasHistoricos]) {
+  const arquivo = pagina(`/acervo/${r.id}`);
+  if (!existsSync(arquivo)) {
+    falha(`/acervo/${r.id}: ficha do acervo ausente`);
+    continue;
+  }
+  if (!readFileSync(arquivo, 'utf-8').includes(escapar(r.nome))) falha(`/acervo/${r.id}: o nome não está no HTML`);
+  else fichasAcervo += 1;
+}
+console.log(`  ${fichasAcervo} de ${acervo.length + diplomasHistoricos.length} fichas do acervo com o nome no HTML`);
+
 const SECOES = [
   '/', '/tipos', '/atributos', '/acervo', '/acervo/linha-do-tempo', '/notas', '/projeto', '/simulacao',
   ...['metodologia', 'completude', 'catalogo-tipos-penais', 'atributos-penais', 'os-robos', 'dados-abertos']

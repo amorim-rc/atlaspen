@@ -40,12 +40,12 @@ Dispositivos que saíram de vigência, foram alterados ou nunca vigoraram, encon
 | CP, art. 240 (adultério) | revogado | Revogado pela Lei 11.106/2005. |
 | CP, art. 217 (sedução) | revogado | Revogado pela Lei 12.015/2009. |
 | CP, arts. 219 a 222 (rapto) | revogado | Revogados pela Lei 12.015/2009. |
-| ECA, art. 233 (tortura de criança) | revogado | Revogado pela Lei 9.455/1997 (Lei de Tortura). **Constava como vigente no catálogo até a v1.3.0.** |
+| ECA, art. 233 (tortura de criança ou adolescente) | revogado | Revogado pela Lei 9.455/1997 (Lei de Tortura). Constava como vigente no catálogo até a v1.3.0. |
 | LCP, arts. 60 e 61 (mendicância e importunação ofensiva) | revogado | Revogados pelas Leis 11.983/2009 e 13.718/2018. |
 | LCP, art. 27 (exploração da credulidade pública) | revogado | Revogado pela Lei 9.521/1997. |
 | LCP, art. 39 (associação secreta) | revogado | Revogado pela Lei 14.197/2021. |
 | LCP, art. 65 (perturbação da tranquilidade) | revogado | Revogado pela Lei 14.132/2021, que criou a perseguição (CP, art. 147-A). |
-| LCP, art. 69 (atividade remunerada de estrangeiro) | revogado | Revogado pela Lei 6.815/1980. O compilado mantém o texto dos quatro artigos acima, com a revogação anotada ao lado — foi assim que a leva automática da v1.3.0 os tomou por vigentes. |
+| LCP, art. 69 (atividade remunerada de estrangeiro) | revogado | Revogado pela Lei 6.815/1980. O compilado mantém o texto dos arts. 27, 39, 65 e 69 com a revogação anotada ao lado — foi assim que a leva automática da v1.3.0 os tomou por vigentes. |
 
 ## Tipos retirados do catálogo por revogação
 
@@ -53,11 +53,14 @@ Estes eram crime, deixaram de ser, e ainda constavam entre os tipos vigentes —
 
 | Registro | Saiu em | Revogado por |
 |---|---|---|
+| ECA, art. 233 (tortura de criança ou adolescente) | v1.3.0 | Revogado pela Lei 9.455/1997 (Lei de Tortura). |
+| LCP, art. 27 (exploração da credulidade pública) | v1.4.0 | Revogado pela Lei 9.521/1997. O registro existiu por poucas horas, criado pela leva automática da v1.3.0. |
+| LCP, art. 39 (associação secreta) | v1.4.0 | Revogado pela Lei 14.197/2021. O registro existiu por poucas horas, criado pela leva automática da v1.3.0. |
+| LCP, art. 65 (perturbação da tranquilidade) | v1.4.0 | Revogado pela Lei 14.132/2021. O registro existiu por poucas horas, criado pela leva automática da v1.3.0. |
+| LCP, art. 69 (atividade remunerada de estrangeiro) | v1.4.0 | Revogado pela Lei 6.815/1980. O registro existiu por poucas horas, criado pela leva automática da v1.3.0. |
 | CP, art. 150, §2º (violação de domicílio contra funcionário público) | v1.3.0 | Revogado pela Lei 13.869/2019 (Lei de Abuso de Autoridade). |
 | CP, art. 185 (usurpação de nome ou pseudônimo alheio) | v1.3.0 | Revogado pela Lei 10.695/2003. |
 | CP, art. 350 (exercício arbitrário ou abuso de poder) | v1.3.0 | Revogado pela Lei 13.869/2019 (Lei de Abuso de Autoridade). |
-| ECA, art. 233 (tortura de criança ou adolescente) | v1.3.0 | Revogado pela Lei 9.455/1997 (Lei de Tortura). |
-| LCP, arts. 27, 39, 65 e 69 (credulidade pública, associação secreta, perturbação da tranquilidade, atividade remunerada de estrangeiro) | v1.4.0 | Revogados pelas Leis 9.521/1997, 14.197/2021, 14.132/2021 e 6.815/1980. Os registros existiram por poucas horas, criados pela leva automática da v1.3.0. |
 | Lei 4.595/64, art. 44, §7º (operação de instituição financeira sem autorização do Banco Central) | v1.4.0 | Revogado pela Lei 13.506/2017, que converteu a MP 784/2017. |
 
 :::caution[As URLs desses registros deixaram de responder]

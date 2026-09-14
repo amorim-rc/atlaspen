@@ -1,23 +1,73 @@
 ---
-// Página inicial — provisória. A versão final, com os contadores da base e a
-// orientação por pergunta (Linha do tempo e tela inicial.dc.html, 5b), entra com
-// o acervo e a linha do tempo.
+// Página inicial (Linha do tempo e tela inicial.dc.html, 5b).
+//
+// Os contadores dizem o tamanho da base e a data da última conferência — o que
+// separa um catálogo mantido de um arquivo abandonado. São calculados no build,
+// dos mesmos dados das telas: no desenho eram ilustrativos. Abaixo deles, uma
+// faixa por item da barra de navegação, na ordem da barra, com a pergunta que
+// cada tela responde.
 import Base from '../layouts/Base.astro';
-import {NOME} from '../site/config';
+import Assinatura from '../components/marca/Assinatura.astro';
+import {NOME, NOME_EXTENSO} from '../site/config';
 import {caminho} from '../site/url';
 import {RAIZ_LEGADA} from '../site/redirecionamentos';
+import {NAVEGACAO, type ChaveNav} from '../site/navegacao';
+import {CONFERIDO_EM} from '../site/servidor';
+import {dataCurta} from '../site/datas';
+import {todosOsTipos} from '../site/catalogo-servidor';
+import {diplomaDoRotulo} from '../site/diplomas-servidor';
+import {INICIO_DA_LINHA, registrosDoAcervo} from '../site/acervo-servidor';
+import {CATALOGO} from '../lib/atributos';
+import {chaveDispositivo} from '../lib/atributos/reverso';
 
 const base = caminho('/');
+const fmt = (n: number) => n.toLocaleString('pt-BR');
 
-const secoes = [
-  {nome: 'Tipos penais', rota: '/tipos', o_que: 'Todo tipo penal vigente, com a pena cominada e a simulação do que ela abre ou fecha.'},
-  {nome: 'Atributos penais', rota: '/atributos', o_que: 'O percurso inverso: parta do instituto e veja quais tipos ele alcança, editando seus patamares.'},
-  {nome: 'Acervo', rota: '/acervo', o_que: 'O que já foi crime no Brasil — revogado, vetado ou não recepcionado.'},
-  {nome: 'Projeto', rota: '/projeto', o_que: 'Metodologia, completude, dados abertos, os robôs de conferência e as notas de atualização.'},
+const tipos = todosOsTipos();
+const diplomas = new Set(tipos.map((t) => diplomaDoRotulo(t.lei)?.id).filter(Boolean));
+
+const contadores = [
+  {n: tipos.length, rotulo: 'cenários de condenação', nota: 'cada forma de cada tipo penal, com a sua pena', rota: '/tipos'},
+  {n: new Set(tipos.map(chaveDispositivo)).size, rotulo: 'dispositivos', nota: 'artigos distintos, por diploma', rota: '/tipos'},
+  {n: CATALOGO.length, rotulo: 'atributos penais', nota: 'com parâmetros editáveis', rota: '/atributos'},
+  {n: registrosDoAcervo().length, rotulo: 'registros no acervo', nota: 'revogados, vetados, não recepcionados', rota: '/acervo'},
+  {n: diplomas.size, rotulo: 'diplomas cobertos', nota: 'com ao menos um tipo penal catalogado', rota: '/projeto/completude'},
+  {n: new Date().getFullYear() - INICIO_DA_LINHA, rotulo: 'anos na linha do tempo', nota: `de ${INICIO_DA_LINHA} a hoje`, rota: '/acervo/linha-do-tempo'},
 ];
+
+const RESUMOS: Record<ChaveNav, {o_que: string; pergunta: string}> = {
+  tipos: {
+    o_que: 'Todo tipo penal vigente, com a pena cominada e a simulação do que ela abre ou fecha.',
+    pergunta: 'quanto pega este crime, e o que isso implica?',
+  },
+  atributos: {
+    o_que: 'O percurso inverso: parta do instituto e veja quais tipos ele alcança, editando seus patamares.',
+    pergunta: 'quem consegue progressão, e quem a lei deixou de fora?',
+  },
+  simulacao: {
+    o_que:
+      'Proponha uma alteração legislativa — numa pena cominada ou no patamar de um atributo — e meça o que entra, o que sai e o que não se move no catálogo.',
+    pergunta: 'se a lei mudar, quem passa a ser alcançado?',
+  },
+  acervo: {
+    o_que: 'Os tipos penais que saíram de vigência — revogados, vetados ou não recepcionados — e a linha do tempo da lei penal desde 1822.',
+    pergunta: 'o que deixou de ser crime, e quando?',
+  },
+  notas: {
+    o_que: 'Cada alteração que cria, modifica ou extingue tipos e atributos penais na base, versão a versão, a partir do lançamento.',
+    pergunta: 'o que mudou na base, e desde quando?',
+  },
+  projeto: {
+    o_que: 'A história do projeto, a metodologia, a completude do catálogo, os dados abertos, os robôs de conferência e os textos do grupo.',
+    pergunta: 'quem faz isto, de onde vêm os dados e o que ainda falta?',
+  },
+};
+
+const DESCRICAO =
+  'Toda pena cominada no direito brasileiro, os atributos penais existentes e simulação legislativa para planejamento de políticas públicas. Ferramenta de pesquisa mantida por um grupo de trabalho e pesquisa. Nada deste site constitui aconselhamento jurídico.';
 ---
 
-<Base titulo={NOME} descricao="Catálogo aberto de tipos e atributos penais brasileiros: a pena cominada de cada tipo e o que cada patamar de pena abre ou fecha ao condenado.">
+<Base titulo={NOME} descricao={DESCRICAO}>
   <Fragment slot="head">
     {/* Até a v1.0.0 a pesquisa era servida na raiz, com o tipo em /?tipo=N. A raiz
         é a página inicial e não pode virar stub: ela mesma leva esses links à
@@ -33,18 +83,48 @@ const secoes = [
       }
     </script>
   </Fragment>
-  <section class="pagina abertura">
-    <h1>AtlasPen — tipos e atributos penais</h1>
-    <p>
-      Toda pena cominada no direito brasileiro, e o que cada patamar de pena abre ou fecha ao condenado.
-      Ferramenta de pesquisa mantida por um grupo independente; não é aconselhamento jurídico.
-    </p>
+
+  <header class="pagina abertura">
+    <h1>
+      <Assinatura tamanho="clamp(2.5rem, 7vw, 3.6rem)" class="titulo-marca" />
+      <span class="extenso">{NOME_EXTENSO}</span>
+    </h1>
+    <p class="descricao">{DESCRICAO}</p>
+  </header>
+
+  <section class="pagina bloco" aria-labelledby="titulo-base">
+    <div class="cabeca-bloco">
+      <h2 class="rotulo" id="titulo-base">O que há na base</h2>
+      {CONFERIDO_EM && <span class="conferido">conferido em {dataCurta(CONFERIDO_EM)}</span>}
+    </div>
+    <ul class="contadores">
+      {
+        contadores.map((c) => (
+          <li>
+            <a href={caminho(c.rota)}>
+              <span class="numero num">{fmt(c.n)}</span>
+              <span class="rotulo-contador">{c.rotulo}</span>
+              <span class="nota-contador">{c.nota}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section class="pagina bloco" aria-labelledby="titulo-secoes">
+    <h2 class="rotulo" id="titulo-secoes">Onde encontrar cada coisa</h2>
     <ul class="secoes">
       {
-        secoes.map((s) => (
+        NAVEGACAO.map((item) => (
           <li>
-            <a href={caminho(s.rota)}>{s.nome}</a>
-            <span>{s.o_que}</span>
+            <a href={caminho(item.rota)}>
+              <span class="nome-secao">{item.rotuloLongo}</span>
+              <span class="texto-secao">
+                <span>{RESUMOS[item.chave].o_que}</span>
+                <span class="pergunta">{RESUMOS[item.chave].pergunta}</span>
+              </span>
+            </a>
           </li>
         ))
       }
@@ -57,44 +137,142 @@ const secoes = [
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    padding-block: 3rem 1rem;
+    padding-block: 3rem 1.6rem;
   }
-  .abertura > p {
-    max-width: 60ch;
+  .abertura h1 {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+  }
+  .extenso {
+    max-width: 30ch;
+    font-family: var(--fonte-serifa);
+    font-size: clamp(1.25rem, 3vw, 1.625rem);
+    font-weight: 400;
+    line-height: 1.3;
     color: var(--cor-tinta-corpo);
+  }
+  .descricao {
+    max-width: 62ch;
+    line-height: 1.65;
+    color: var(--cor-tinta-corpo);
+  }
+  .bloco {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding-block: 1.1rem;
+  }
+  .cabeca-bloco {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.3rem 1rem;
+  }
+  .conferido {
+    font-family: var(--fonte-mono);
+    font-size: var(--fs-rotulo);
+    color: var(--cor-tinta-fraca);
+  }
+  .contadores {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.7rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .contadores a {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    height: 100%;
+    padding: 0.8rem 0.9rem;
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--raio);
+    background: var(--cor-superficie);
+    color: var(--cor-tinta);
+    text-decoration: none;
+  }
+  .contadores a:hover {
+    border-color: var(--cor-acento);
+  }
+  .numero {
+    font-family: var(--fonte-serifa);
+    font-size: 1.875rem;
+    font-weight: 500;
+    line-height: 1;
+  }
+  .rotulo-contador {
+    font-size: var(--fs-pequeno);
+    line-height: 1.35;
+  }
+  .nota-contador {
+    font-family: var(--fonte-mono);
+    font-size: 0.6875rem;
+    line-height: 1.4;
+    color: var(--cor-tinta-fraca);
   }
   .secoes {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    margin: 0.5rem 0 0;
+    margin: 0;
     padding: 0;
     list-style: none;
-    max-width: 44rem;
   }
-  .secoes li {
+  .secoes a {
     display: grid;
-    grid-template-columns: 10rem minmax(0, 1fr);
-    gap: 0.75rem;
-    padding: 0.7rem 0.8rem;
+    grid-template-columns: 12rem minmax(0, 1fr);
+    gap: 0.9rem;
+    align-items: baseline;
+    padding: 0.75rem 0.9rem;
     border: 1px solid var(--cor-borda);
     border-left: 3px solid var(--cor-acento);
     border-radius: 2px;
     background: var(--cor-superficie);
+    color: var(--cor-tinta);
+    text-decoration: none;
   }
-  .secoes a {
+  .secoes a:hover {
+    border-color: var(--cor-acento);
+  }
+  .secoes a:hover .nome-secao {
+    color: var(--cor-acento);
+  }
+  .nome-secao {
     font-family: var(--fonte-serifa);
     font-size: 1.125rem;
     font-weight: 500;
   }
-  .secoes span {
+  .texto-secao {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    min-width: 0;
     font-size: var(--fs-pequeno);
+    line-height: 1.5;
     color: var(--cor-tinta-corpo);
   }
+  .pergunta {
+    font-family: var(--fonte-mono);
+    font-size: var(--fs-rotulo);
+    font-style: italic;
+    color: var(--cor-tinta-fraca);
+  }
+  @media (max-width: 720px) {
+    .contadores {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
   @media (max-width: 560px) {
-    .secoes li {
+    .abertura {
+      padding-block: 2rem 1rem;
+    }
+    .secoes a {
       grid-template-columns: minmax(0, 1fr);
-      gap: 0.2rem;
+      gap: 0.3rem;
     }
   }
 </style>

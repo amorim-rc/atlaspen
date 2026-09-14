@@ -162,6 +162,11 @@ function leiBase(lei: string): string {
   return lei.replace(/\s*\(atualiz\.?\)/, '').trim();
 }
 
+/** A unidade DISPOSITIVO: lei e artigo-base. As formas de um crime partilham a chave. */
+export function chaveDispositivo(c: Pick<TipoDoMotor, 'lei' | 'artigo'>): string {
+  return `${leiBase(c.lei)}|${artigoBase(c.artigo)}`;
+}
+
 /** Melhor status entre variantes: basta uma alcançar para o crime ser alcançado. */
 const RANK: Record<Status, number> = {cabivel: 2, condicional: 1, incabivel: 0};
 
@@ -192,7 +197,7 @@ export function contarDuasUnidades(linhas: LinhaReversa[]): AlcanceDuasUnidades 
 
   const melhorPorDispositivo = new Map<string, Status>();
   for (const l of linhas) {
-    const chave = `${leiBase(l.crime.lei)}|${artigoBase(l.crime.artigo)}`;
+    const chave = chaveDispositivo(l.crime);
     const atual = melhorPorDispositivo.get(chave);
     if (atual === undefined || RANK[l.resultado.status] > RANK[atual]) {
       melhorPorDispositivo.set(chave, l.resultado.status);
