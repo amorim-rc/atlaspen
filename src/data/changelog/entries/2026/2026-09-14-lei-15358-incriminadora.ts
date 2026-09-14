@@ -15,7 +15,7 @@ const entrada: ChangelogEntry = {
   areas: ['Tipos penais'],
   version: 'v0.0.1',
   links: [
-    {label: 'Lei nº 15.358, de 2026, no Planalto', href: 'https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2026/Lei/L15358.htm'},
+    {label: 'Lei nº 15.358, de 2026, no Planalto', href: 'https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15358.htm'},
     {label: 'CP, art. 121, §2º-D', href: 'https://amorim-rc.github.io/sispenas/tipos/1306'},
     {label: 'CP, art. 129, §3º-A', href: 'https://amorim-rc.github.io/sispenas/tipos/1314'},
     {label: 'CP, art. 147-C', href: 'https://amorim-rc.github.io/sispenas/tipos/1312'},

@@ -13,7 +13,7 @@ const entrada: ChangelogEntry = {
   areas: ['Tipos penais'],
   version: 'v0.0.1',
   links: [
-    {label: 'Lei nº 15.410, de 2026, no Planalto', href: 'https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/L15410.htm'},
+    {label: 'Lei nº 15.410, de 2026, no Planalto', href: 'https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15410.htm'},
     {label: 'Lei 9.455/97, art. 1º, III', href: 'https://amorim-rc.github.io/sispenas/tipos/1332'},
   ],
 };

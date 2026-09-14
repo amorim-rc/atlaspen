@@ -15,7 +15,7 @@ const entrada: ChangelogEntry = {
   areas: ['Tipos penais'],
   version: 'v0.0.1',
   links: [
-    {label: 'Lei nº 15.397, de 2026, no Planalto', href: 'https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/L15397.htm'},
+    {label: 'Lei nº 15.397, de 2026, no Planalto', href: 'https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15397.htm'},
     {label: 'CP, art. 155, §4º, V', href: 'https://amorim-rc.github.io/sispenas/tipos/815'},
     {label: 'CP, art. 155, §8º', href: 'https://amorim-rc.github.io/sispenas/tipos/816'},
     {label: 'CP, art. 157, §1º-A', href: 'https://amorim-rc.github.io/sispenas/tipos/811'},

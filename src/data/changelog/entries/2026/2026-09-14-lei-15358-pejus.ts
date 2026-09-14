@@ -14,7 +14,7 @@ const entrada: ChangelogEntry = {
   areas: ['Atributos'],
   version: 'v0.0.1',
   links: [
-    {label: 'Lei nº 15.358, de 2026, no Planalto', href: 'https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2026/Lei/L15358.htm#art35'},
+    {label: 'Lei nº 15.358, de 2026, no Planalto', href: 'https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15358.htm#art35'},
     {label: 'Progressão de regime', href: 'https://amorim-rc.github.io/sispenas/atributos/progressao'},
     {label: 'Livramento condicional', href: 'https://amorim-rc.github.io/sispenas/atributos/livramento'},
   ],

@@ -13,7 +13,7 @@ const entrada: ChangelogEntry = {
   areas: ['Tipos penais'],
   version: 'v0.0.1',
   links: [
-    {label: 'Lei nº 15.384, de 2026, no Planalto', href: 'https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/L15384.htm'},
+    {label: 'Lei nº 15.384, de 2026, no Planalto', href: 'https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15384.htm'},
     {label: 'Vicaricídio (CP, art. 121-B)', href: 'https://amorim-rc.github.io/sispenas/tipos/1308'},
     {label: 'CP, art. 121-B, parágrafo único, I', href: 'https://amorim-rc.github.io/sispenas/tipos/1309'},
     {label: 'CP, art. 121-B, parágrafo único, II', href: 'https://amorim-rc.github.io/sispenas/tipos/1310'},

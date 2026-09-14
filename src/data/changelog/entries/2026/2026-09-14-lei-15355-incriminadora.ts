@@ -11,7 +11,7 @@ const entrada: ChangelogEntry = {
   areas: ['Tipos penais'],
   version: 'v0.0.1',
   links: [
-    {label: 'Lei nº 15.355, de 2026, no Planalto', href: 'https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/L15355.htm'},
+    {label: 'Lei nº 15.355, de 2026, no Planalto', href: 'https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15355.htm'},
     {label: 'Lei 9.605/98, art. 32, §1º-C', href: 'https://amorim-rc.github.io/sispenas/tipos/1328'},
   ],
 };

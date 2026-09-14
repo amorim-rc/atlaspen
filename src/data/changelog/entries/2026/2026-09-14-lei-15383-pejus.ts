@@ -13,7 +13,7 @@ const entrada: ChangelogEntry = {
   areas: ['Tipos penais', 'Dosimetria'],
   version: 'v0.0.1',
   links: [
-    {label: 'Lei nº 15.383, de 2026, no Planalto', href: 'https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/L15383.htm'},
+    {label: 'Lei nº 15.383, de 2026, no Planalto', href: 'https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15383.htm'},
     {label: 'Lei 11.340/2006, art. 24-A', href: 'https://amorim-rc.github.io/sispenas/tipos/477'},
   ],
 };
