@@ -368,9 +368,14 @@ o site novo ir ao ar. Sem número de frente, para não renumerar o resto.
   art. 61 da Lei 9.099/95 é a máxima, e não foi reproduzido.
 - **Notas de 2026.** O repositório só tem a vigência das Leis 15.397 (04/05/2026) e 15.402
   (08/05/2026); as datas de publicação das demais ficaram de fora, porque o Planalto não
-  respondeu na sessão de 14/09/2026. A Lei 15.348/2026, que restringiu o art. 1º, II, da Lei
-  8.176/91 ao GLP, não virou nota: reduzir o alcance do tipo pede decisão entre *in mellius*
-  e *abolitio* parcial.
+  respondeu nas sessões de 14/09/2026. Pelo mesmo motivo, os links das notas para as Leis
+  15.355, 15.383, 15.384, 15.397, 15.410 e 15.487 seguem o padrão de endereço do Planalto (o
+  mesmo dos links já conferidos das Leis 15.358 e 15.402) sem terem sido abertos: conferir
+  um a um.
+- **Lei 15.348/2026 (Auxílio Gás do Povo).** Entre as leis que ela altera está a 8.176/91;
+  pelo registro do catálogo, restringiu o art. 1º, II, ao uso de GLP para fins automotivos.
+  Não virou nota: reduzir o alcance do tipo pede decisão entre *in mellius* e *abolitio*
+  parcial.
 - **Natureza das notas.** Aplicou-se a régua do contrato: *incriminadora* é o dispositivo
   com pena própria que entra no catálogo, inclusive as formas qualificadas e as causas de
   aumento com moldura própria. Confirmar se o grupo quer essa leitura ou a doutrinária, em

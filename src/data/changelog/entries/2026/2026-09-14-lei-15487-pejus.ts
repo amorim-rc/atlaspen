@@ -14,6 +14,7 @@ const entrada: ChangelogEntry = {
   areas: ['Tipos penais', 'Atributos'],
   version: 'v0.0.1',
   links: [
+    {label: 'Lei nº 15.487, de 2026, no Planalto', href: 'https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/L15487.htm'},
     {label: 'ECA, art. 240', href: 'https://amorim-rc.github.io/sispenas/tipos/455'},
     {label: 'ECA, art. 241', href: 'https://amorim-rc.github.io/sispenas/tipos/456'},
     {label: 'ECA, art. 241-A', href: 'https://amorim-rc.github.io/sispenas/tipos/457'},

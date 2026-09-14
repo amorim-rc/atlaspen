@@ -15,6 +15,7 @@ const entrada: ChangelogEntry = {
   areas: ['Tipos penais'],
   version: 'v0.0.1',
   links: [
+    {label: 'Lei nº 15.397, de 2026, no Planalto', href: 'https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/L15397.htm'},
     {label: 'Furto simples (CP, art. 155, caput)', href: 'https://amorim-rc.github.io/sispenas/tipos/86'},
     {label: 'Roubo simples (CP, art. 157, caput)', href: 'https://amorim-rc.github.io/sispenas/tipos/95'},
     {label: 'Latrocínio (CP, art. 157, §3º, II)', href: 'https://amorim-rc.github.io/sispenas/tipos/105'},

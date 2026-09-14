@@ -195,17 +195,24 @@
   font-size: var(--fs-pequeno);
 }
 
-.alternar {
-  align-self: flex-start;
-  min-height: 2rem;
+/* O título abre e fecha o detalhe da nota, no lugar. */
+.tituloBotao {
   padding: 0;
   border: 0;
   background: none;
-  color: var(--cor-acento);
-  font-family: var(--fonte-mono);
-  font-size: var(--fs-rotulo);
-  text-decoration: underline;
+  color: var(--cor-tinta);
+  font: inherit;
+  text-align: left;
   cursor: pointer;
+}
+
+.tituloBotao:hover {
+  color: var(--cor-acento);
+  text-decoration: underline;
+}
+
+.tituloBotao[aria-expanded='true'] {
+  color: var(--cor-acento);
 }
 
 @media (max-width: 640px) {

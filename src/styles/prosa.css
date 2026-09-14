@@ -13,9 +13,21 @@
   margin-top: 1rem;
 }
 
+/* Os textos do Projeto levam recuo de parágrafo; a nota, a lista e a citação, não. */
+.prosa p {
+  text-indent: var(--recuo-paragrafo);
+}
+
+.prosa :is(.nota, li, blockquote) p {
+  text-indent: 0;
+}
+
+/* O título do texto ocupa a largura do texto: a quebra "equilibrada" do resto do
+   site o partia em duas linhas curtas. */
 .prosa h1 {
   font-size: var(--fs-titulo-1);
   margin-bottom: 0.5rem;
+  text-wrap: wrap;
 }
 
 .prosa h2 {

@@ -208,20 +208,36 @@
   margin-top: 0.3rem;
 }
 
+/* "o fundamento" alinha com o texto de cima, sem o marcador do <details>; os
+   tópicos abertos descem com recuo e marcador próprios. */
 .porque summary {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   min-height: 2rem;
+  list-style: none;
   font-family: var(--fonte-mono);
   font-size: var(--fs-rotulo);
   color: var(--cor-acento);
   cursor: pointer;
 }
 
+.porque summary::-webkit-details-marker {
+  display: none;
+}
+
+.porque summary:hover {
+  text-decoration: underline;
+}
+
 .porque ul {
-  margin: 0.2rem 0 0;
-  padding-left: 1.1rem;
+  margin: 0.1rem 0 0 1rem;
+  padding-left: 1rem;
+  list-style: disc;
   font-size: 0.8125rem;
+}
+
+.porque li::marker {
+  color: var(--cor-acento);
 }
 
 .porque li + li {

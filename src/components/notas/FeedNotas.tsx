@@ -48,6 +48,13 @@ export default function FeedNotas({entradas}: Props) {
     window.history.replaceState(null, '', window.location.pathname + (q ? `?${q}` : '') + window.location.hash);
   }, [tipo, area, montado]);
 
+  // O título abre e fecha o detalhe no lugar; o endereço ganha a âncora da nota
+  // (para citar), sem a página saltar até ela.
+  const alternar = (id: string, estaAberta: boolean) => {
+    setAberta(estaAberta ? null : id);
+    window.history.replaceState(null, '', window.location.pathname + window.location.search + (estaAberta ? '' : `#${id}`));
+  };
+
   const areas = AREAS_CHANGELOG.filter((a) => entradas.some((e) => e.areas.includes(a)));
   const visiveis = entradas.filter((e) => (!tipo || e.tipo === tipo) && (!area || e.areas.includes(area)));
   const versoes = new Set(visiveis.map((e) => e.version).filter(Boolean)).size;
@@ -104,6 +111,7 @@ export default function FeedNotas({entradas}: Props) {
         <ol className={s.entradas}>
           {visiveis.map((e) => {
             const estaAberta = aberta === e.id;
+            const temDetalhe = e.body.length > 0 || (e.links?.length ?? 0) > 0;
             return (
               <li key={e.id} id={e.id} className={`${s.entrada} ${estaAberta ? s.entradaAberta : ''}`}>
                 <div className={s.quando}>
@@ -120,10 +128,22 @@ export default function FeedNotas({entradas}: Props) {
                     ))}
                   </div>
                   <h2 className={s.titulo}>
-                    <a href={`#${e.id}`}>{e.title}</a>
+                    {temDetalhe ? (
+                      <button
+                        type="button"
+                        className={s.tituloBotao}
+                        aria-expanded={estaAberta}
+                        aria-controls={`detalhe-${e.id}`}
+                        onClick={() => alternar(e.id, estaAberta)}
+                      >
+                        {e.title}
+                      </button>
+                    ) : (
+                      e.title
+                    )}
                   </h2>
                   <p className={s.resumo}>{e.summary}</p>
-                  {estaAberta && (e.body.length > 0 || (e.links?.length ?? 0) > 0) && (
+                  {estaAberta && temDetalhe && (
                     <div className={s.detalhe} id={`detalhe-${e.id}`}>
                       {e.body.map((p, i) => (
                         <p key={i}>{p}</p>
@@ -134,17 +154,6 @@ export default function FeedNotas({entradas}: Props) {
                         </a>
                       ))}
                     </div>
-                  )}
-                  {(e.body.length > 0 || (e.links?.length ?? 0) > 0) && (
-                    <button
-                      type="button"
-                      className={s.alternar}
-                      aria-expanded={estaAberta}
-                      aria-controls={`detalhe-${e.id}`}
-                      onClick={() => setAberta(estaAberta ? null : e.id)}
-                    >
-                      {estaAberta ? 'menos detalhe' : 'mais detalhe'}
-                    </button>
                   )}
                 </div>
               </li>

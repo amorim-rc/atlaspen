@@ -59,14 +59,14 @@ h3 {
   font-size: var(--fs-titulo-3);
 }
 
-/* Todo texto corrido é justificado, com recuo de parágrafo. A hifenização
-   (lang="pt-BR" no html) evita os rios que a justificação abriria. */
+/* Todo texto corrido é justificado. A hifenização (lang="pt-BR" no html) evita
+   os rios que a justificação abriria. O recuo de parágrafo é só dos textos do
+   Projeto (prosa.css); no resto, os parágrafos se separam pelo espaço entre eles. */
 p {
   margin: 0;
   text-wrap: pretty;
   text-align: justify;
   hyphens: auto;
-  text-indent: var(--recuo-paragrafo);
 }
 
 /* Metadado não é parágrafo: rótulo, dispositivo, data, endereço. */

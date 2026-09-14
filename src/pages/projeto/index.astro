@@ -69,9 +69,11 @@ const t = texto.data;
     text-transform: uppercase;
     color: var(--cor-acento);
   }
+  /* O título ocupa a largura do texto abaixo dele, sem a quebra equilibrada. */
   .topo-texto h2 {
     font-size: var(--fs-titulo-1);
     line-height: 1.2;
+    text-wrap: wrap;
   }
   .meta {
     font-family: var(--fonte-mono);
