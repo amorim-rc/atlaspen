@@ -15,7 +15,7 @@
 // Atributos de natureza `abstrato` não dependem dessa presunção: sua avaliação
 // é exata a partir das penas cominadas.
 
-import type {Cenario, Crime} from '../types';
+import type {Cenario, TipoDoMotor} from '../types';
 import {cenarioFromCrime} from '../cenario';
 import type {AtributoDef, AtributoResultado, Parametros, Status} from './types';
 // Do núcleo, e não do index: a busca reversa recebe o atributo que avalia e não
@@ -91,11 +91,11 @@ export function cenarioReversoPadrao(): CenarioReverso {
  * única exceção é o art. 28 da Lei 11.343/06, cujas sanções (advertência,
  * prestação de serviços, medida educativa) não são privativas de liberdade.
  */
-export function crimesComPenaPrivativa(crimes: Crime[]): Crime[] {
+export function crimesComPenaPrivativa<T extends Pick<TipoDoMotor, 'tem_pena_privativa'>>(crimes: T[]): T[] {
   return crimes.filter((c) => c.tem_pena_privativa !== false);
 }
 
-function penaConcretaPresumida(c: Crime, rev: CenarioReverso): number {
+function penaConcretaPresumida(c: TipoDoMotor, rev: CenarioReverso): number {
   switch (rev.base) {
     case 'minima':
       return c.pena_min_meses || c.pena_max_meses;
@@ -113,7 +113,7 @@ function penaConcretaPresumida(c: Crime, rev: CenarioReverso): number {
  * `perdaoJudicialPrevisto`, lidos do catálogo); aqui só se sobrepõem a pena
  * concreta presumida e as circunstâncias do réu.
  */
-export function cenarioParaCrime(c: Crime, rev: CenarioReverso): Cenario {
+export function cenarioParaCrime(c: TipoDoMotor, rev: CenarioReverso): Cenario {
   return {
     ...cenarioFromCrime(c),
     penaConcreta: penaConcretaPresumida(c, rev),
@@ -126,18 +126,18 @@ export function cenarioParaCrime(c: Crime, rev: CenarioReverso): Cenario {
   };
 }
 
-export interface LinhaReversa {
-  crime: Crime;
+export interface LinhaReversa<T extends TipoDoMotor = TipoDoMotor> {
+  crime: T;
   resultado: AtributoResultado;
 }
 
 /** Avalia um atributo (com seus parâmetros correntes) contra todo o catálogo. */
-export function avaliarCatalogo(
+export function avaliarCatalogo<T extends TipoDoMotor>(
   def: AtributoDef,
   params: Parametros,
-  crimes: Crime[],
+  crimes: T[],
   rev: CenarioReverso,
-): LinhaReversa[] {
+): LinhaReversa<T>[] {
   return crimes.map((crime) => ({
     crime,
     resultado: avaliarAtributo(def, cenarioParaCrime(crime, rev), params),

@@ -11,7 +11,6 @@ const ordenados = DOCUMENTOS_DO_PROJETO.map((id) => docs.find((d) => d.id === id
 
 <Base titulo="O projeto" descricao="Metodologia, completude, dicionário de dados e os robôs de conferência do AtlasPen." ativo="projeto">
   <section class="pagina" style="padding-block: 2.5rem">
-    <p class="rotulo">Projeto</p>
     <h1>O projeto</h1>
     <ul>
       {ordenados.map((d) => <li><a href={caminho(`/projeto/${d!.id}`)}>{d!.data.title ?? d!.id}</a></li>)}

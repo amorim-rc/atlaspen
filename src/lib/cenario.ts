@@ -1,6 +1,6 @@
 // Construção do cenário de cálculo a partir de um tipo penal do catálogo.
 
-import type {Cenario, Crime} from './types';
+import type {Cenario, TipoDoMotor} from './types';
 import {ehTituloXII} from './dosimetria/aplicaveis';
 
 /**
@@ -12,7 +12,7 @@ import {ehTituloXII} from './dosimetria/aplicaveis';
  * caso concreto (primariedade, confissão, reparação) recebe um padrão neutro e
  * é ajustável na simulação.
  */
-export function cenarioFromCrime(c: Crime): Cenario {
+export function cenarioFromCrime(c: TipoDoMotor): Cenario {
   return {
     penaMin: c.pena_min_meses,
     penaMax: c.pena_max_meses,

@@ -164,6 +164,30 @@ export interface Crime {
   duplicata_ids: number[];
 }
 
+/**
+ * O que o motor de atributos lê de um tipo penal. As telas que varrem o
+ * catálogo no navegador baixam só isto, e não o registro inteiro.
+ */
+export type TipoDoMotor = Pick<
+  Crime,
+  | 'id'
+  | 'lei'
+  | 'artigo'
+  | 'crime'
+  | 'pena_min_meses'
+  | 'pena_max_meses'
+  | 'pena_faixa_rotulo'
+  | 'hediondo'
+  | 'resultado_morte'
+  | 'violencia'
+  | 'grave_ameaca'
+  | 'elemento'
+  | 'tentativa'
+  | 'perdao_judicial_previsto'
+  | 'contravencao'
+  | 'tem_pena_privativa'
+>;
+
 /** Parâmetros do caso concreto usados no cálculo dinâmico de atributos. */
 export interface Cenario {
   /** Pena mínima em meses (permite simular alteração legislativa). */

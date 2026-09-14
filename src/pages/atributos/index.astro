@@ -1,17 +1,229 @@
 ---
-// Atributos penais — a lista (antes /pesquisa/atributos). A busca reversa entra
-// com o commit dos atributos.
+// Atributos penais — a lista (antes /pesquisa/atributos).
+//
+// O percurso inverso ao da busca por tipo penal: parte do instituto. Cada
+// atributo leva à sua ficha, com endereço próprio. O alcance de cada um é
+// calculado no build, nas duas unidades e com o denominador ao lado, pela lei
+// vigente e sob a premissa padrão da varredura.
 import Base from '../../layouts/Base.astro';
-import {CATALOGO} from '../../lib/atributos';
+import {CATALOGO, CATEGORIA_LABEL, NATUREZA_LABEL, valoresPadrao, type Categoria} from '../../lib/atributos';
+import {avaliarCatalogo, cenarioReversoPadrao, contarDuasUnidades, crimesComPenaPrivativa} from '../../lib/atributos/reverso';
+import {todosOsTipos} from '../../site/catalogo-servidor';
+import {derivadoDe} from '../../site/atributos-servidor';
 import {caminho} from '../../site/url';
+
+const comPena = crimesComPenaPrivativa(todosOsTipos());
+const rev = cenarioReversoPadrao();
+const fmt = (n: number) => n.toLocaleString('pt-BR');
+const GRUPOS: Categoria[] = ['processual', 'aplicacao', 'execucao'];
+
+const cartoes = CATALOGO.map((def) => {
+  const a = contarDuasUnidades(avaliarCatalogo(def, valoresPadrao(def), comPena, rev));
+  const d = derivadoDe(def.id);
+  const u = d?.ultima_alteracao;
+  return {
+    def,
+    dispositivos: a.dispositivos.cabivel + a.dispositivos.condicional,
+    totalDispositivos: a.totalDispositivos,
+    cenarios: a.cenarios.cabivel + a.cenarios.condicional,
+    totalCenarios: a.totalCenarios,
+    alteracao: u?.norma ? `${u.norma}${u.ano ? `, de ${u.ano}` : ''}` : d?.alteracoes_legislativas === 0 ? 'texto original' : null,
+    texto: [def.nome, def.fundamento, def.descricao, ...def.requisitos, ...def.vedacoes].join(' '),
+  };
+});
 ---
 
-<Base titulo="Atributos penais" descricao="Os atributos penais: requisitos, vedações e patamares legais, e os tipos penais que cada um alcança." ativo="atributos">
-  <section class="pagina" style="padding-block: 2.5rem">
-    <p class="rotulo">Atributos</p>
+<Base
+  titulo="Atributos penais"
+  descricao="Os atributos penais — transação, suspensão do processo, ANPP, progressão, livramento, prescrição e os demais —, com os patamares da lei e os tipos penais que cada um alcança."
+  ativo="atributos"
+>
+  <header class="pagina cabecalho">
     <h1>Atributos penais</h1>
-    <ul>
-      {CATALOGO.map((a) => <li><a href={caminho(`/atributos/${a.id}`)}>{a.nome}</a></li>)}
-    </ul>
-  </section>
+    <p class="intro">
+      O percurso inverso ao da busca por tipo penal: parta do instituto e veja quais tipos ele alcança. Cada atributo
+      tem ficha própria, com os patamares da lei editáveis e o catálogo inteiro reavaliado a cada mudança.
+    </p>
+    <p class="nota">
+      Alcance pela lei vigente, contando cabíveis e condicionais, sobre os tipos com pena privativa; nos atributos que
+      dependem da pena aplicada, presumida a pena mínima cominada.
+    </p>
+    <div class="busca">
+      <label class="sr-only" for="busca-atributos">Buscar atributo</label>
+      <input id="busca-atributos" type="search" placeholder="Buscar por atributo, fundamento legal ou requisito…" data-busca-atributos />
+      <span class="contagem mono" aria-live="polite" data-contagem-atributos>{CATALOGO.length} de {CATALOGO.length} atributos</span>
+    </div>
+  </header>
+
+  <div class="pagina grupos">
+    {
+      GRUPOS.map((g) => (
+        <section class="grupo" id={g} data-grupo>
+          <h2>{CATEGORIA_LABEL[g]}</h2>
+          <ul class="cartoes">
+            {cartoes
+              .filter((c) => c.def.categoria === g)
+              .map((c) => (
+                <li data-texto={c.texto.toLowerCase()}>
+                  <a class="cartao" href={caminho(`/atributos/${c.def.id}`)}>
+                    <span class="topo-cartao">
+                      <span class="nome">{c.def.nome}</span>
+                      <span class={`natureza natureza-${c.def.natureza}`}>{NATUREZA_LABEL[c.def.natureza]}</span>
+                    </span>
+                    <span class="fundamento">{c.def.fundamento}</span>
+                    <span class="descricao">{c.def.descricao}</span>
+                    <span class="alcance num">
+                      {fmt(c.dispositivos)} de {fmt(c.totalDispositivos)} dispositivos · {fmt(c.cenarios)} de {fmt(c.totalCenarios)} cenários
+                    </span>
+                    {c.alteracao && <span class="alteracao">última alteração: {c.alteracao}</span>}
+                  </a>
+                </li>
+              ))}
+          </ul>
+        </section>
+      ))
+    }
+    <p class="vazio" hidden data-vazio-atributos>Nenhum atributo responde a essa busca.</p>
+  </div>
+
+  <script is:inline>
+    (function () {
+      var campo = document.querySelector('[data-busca-atributos]');
+      var contagem = document.querySelector('[data-contagem-atributos]');
+      var vazio = document.querySelector('[data-vazio-atributos]');
+      var itens = Array.prototype.slice.call(document.querySelectorAll('[data-texto]'));
+      var sem = function (t) {
+        return t.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+      };
+      campo.addEventListener('input', function () {
+        var q = sem(campo.value.trim());
+        var n = 0;
+        itens.forEach(function (li) {
+          var ok = !q || sem(li.getAttribute('data-texto')).indexOf(q) !== -1;
+          li.hidden = !ok;
+          if (ok) n++;
+        });
+        document.querySelectorAll('[data-grupo]').forEach(function (g) {
+          g.hidden = !g.querySelector('li:not([hidden])');
+        });
+        contagem.textContent = n + ' de ' + itens.length + ' atributos';
+        vazio.hidden = n > 0;
+      });
+    })();
+  </script>
 </Base>
+
+<style>
+  .cabecalho {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    padding-block: 2rem 1rem;
+  }
+  .intro {
+    max-width: 62ch;
+    color: var(--cor-tinta-corpo);
+  }
+  .nota {
+    max-width: 62ch;
+    font-family: var(--fonte-mono);
+    font-size: var(--fs-rotulo);
+    color: var(--cor-tinta-fraca);
+  }
+  .busca {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem 1rem;
+    margin-top: 0.4rem;
+  }
+  .busca input {
+    flex: 1 1 18rem;
+    min-height: var(--alvo-toque);
+    padding: 0 0.8rem;
+    border: 1px solid var(--cor-borda-controle);
+    border-radius: var(--raio);
+    background: var(--cor-superficie);
+  }
+  .contagem {
+    color: var(--cor-tinta-media);
+  }
+  .grupos {
+    display: flex;
+    flex-direction: column;
+    gap: 1.8rem;
+  }
+  .grupo h2 {
+    margin-bottom: 0.8rem;
+    font-size: var(--fs-titulo-3);
+  }
+  .cartoes {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+    gap: 0.8rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .cartao {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    height: 100%;
+    padding: 0.95rem 1rem;
+    border: 1px solid var(--cor-borda);
+    border-left: 3px solid var(--cor-acento);
+    border-radius: 2px;
+    background: var(--cor-superficie);
+    color: var(--cor-tinta);
+    text-decoration: none;
+  }
+  .cartao:hover {
+    border-color: var(--cor-acento);
+  }
+  .topo-cartao {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.6rem;
+  }
+  .nome {
+    font-family: var(--fonte-serifa);
+    font-size: 1.1875rem;
+    font-weight: 500;
+    line-height: 1.25;
+  }
+  .natureza {
+    flex: none;
+    font-family: var(--fonte-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--cor-tinta-fraca);
+  }
+  .natureza-concreto {
+    color: var(--cor-acento);
+  }
+  .fundamento,
+  .alteracao {
+    font-family: var(--fonte-mono);
+    font-size: var(--fs-rotulo);
+    color: var(--cor-tinta-fraca);
+  }
+  .descricao {
+    font-size: var(--fs-pequeno);
+    line-height: 1.55;
+    color: var(--cor-tinta-corpo);
+  }
+  .alcance {
+    margin-top: auto;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--cor-borda);
+    font-family: var(--fonte-mono);
+    font-size: var(--fs-rotulo);
+    color: var(--cor-tinta-corpo);
+  }
+  .vazio {
+    color: var(--cor-tinta-media);
+  }
+</style>

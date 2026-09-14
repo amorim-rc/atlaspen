@@ -1,21 +1,130 @@
 ---
-// Ficha do atributo — uma página estática por atributo (/atributos/{slug}). O
-// slug é o da base (data/atributos.json), estável: é âncora de citação.
+// Ficha do atributo penal — uma página estática por atributo (/atributos/{slug}),
+// gerada da base (data/atributos.json). O slug é estável: é âncora de citação.
+//
+// O estado legal sai do build — alcance nas duas unidades e a primeira página
+// da tabela —, para que a página seja indexável e legível sem JS. A ilha baixa
+// o catálogo enxuto (/atributos/tipos.json) e passa a recalcular.
 import Base from '../../layouts/Base.astro';
-import {CATALOGO, type AtributoDef} from '../../lib/atributos';
+import FichaAtributo from '../../components/atributo/FichaAtributo';
+import type {AlteracaoResumo} from '../../components/atributo/ControleParametro';
+import type {LinhaResumo} from '../../components/atributo/TabelaAlcance';
+import type {Situacao} from '../../components/atributo/estado';
+import {CATALOGO, CATEGORIA_LABEL, POR_ID, valoresPadrao} from '../../lib/atributos';
+import {avaliarCatalogo, cenarioReversoPadrao, contarDuasUnidades, crimesComPenaPrivativa} from '../../lib/atributos/reverso';
+import {todosOsTipos} from '../../site/catalogo-servidor';
+import {derivadoDe, type Alteracao} from '../../site/atributos-servidor';
+import {caminho} from '../../site/url';
 
 export function getStaticPaths() {
-  return CATALOGO.map((def) => ({params: {slug: def.id}, props: {id: def.id}}));
+  return CATALOGO.map((def) => ({params: {slug: def.id}}));
 }
 
-const {id} = Astro.props as {id: string};
-const def = CATALOGO.find((a) => a.id === id) as AtributoDef;
+const slug = Astro.params.slug as string;
+const def = POR_ID[slug];
+const todos = todosOsTipos();
+const comPena = crimesComPenaPrivativa(todos);
+const linhas = avaliarCatalogo(def, valoresPadrao(def), comPena, cenarioReversoPadrao());
+const alcance = contarDuasUnidades(linhas);
+const c = alcance.cenarios;
+const situacao: Situacao = c.cabivel > 0 ? 'cabivel' : c.condicional > 0 ? 'condicional' : 'todos';
+const inicialLinhas: LinhaResumo[] = linhas
+  .filter((l) => situacao === 'todos' || l.resultado.status === situacao)
+  .slice(0, 40)
+  .map((l) => ({
+    id: l.crime.id,
+    lei: l.crime.lei,
+    artigo: l.crime.artigo,
+    crime: l.crime.crime,
+    faixa: l.crime.pena_faixa_rotulo,
+    status: l.resultado.status,
+    resumo: l.resultado.resumo,
+  }));
+
+// A última alteração, na semântica do derivado: null com zero alterações é o
+// texto original; null com null é "não se sabe".
+const derivado = derivadoDe(slug);
+function resumo(a: Alteracao | null, n: number | null): AlteracaoResumo | null {
+  if (a) return {norma: a.norma, ano: a.ano, url: a.url};
+  return n === 0 ? {norma: 'original', ano: null, url: null} : null;
+}
+const ultimaPorParametro = Object.fromEntries(
+  (derivado?.parametros ?? []).map((p) => [p.id, resumo(p.ultima_alteracao, p.alteracoes_legislativas)]),
+);
 ---
 
-<Base titulo={def.nome} descricao={def.descricao} ativo="atributos" tipoOg="article">
-  <article class="pagina" style="padding-block: 2.5rem">
-    <p class="mono">{def.fundamento}</p>
-    <h1>{def.nome}</h1>
-    <p>{def.descricao}</p>
-  </article>
+<Base titulo={def.nome} descricao={`${def.nome} (${def.fundamento}): ${def.descricao}`} ativo="atributos" tipoOg="article">
+  <div class="pagina ficha-pagina">
+    <article class="cartao">
+      <nav class="trilha" aria-label="Trilha">
+        <ol>
+          <li><a href={caminho('/atributos')}>Atributos</a></li>
+          <li class="trilha-categoria"><a href={caminho(`/atributos#${def.categoria}`)}>{CATEGORIA_LABEL[def.categoria]}</a></li>
+          <li aria-current="page">{def.nome}</li>
+        </ol>
+      </nav>
+      <FichaAtributo
+        client:load
+        slug={slug}
+        inicial={{alcance, linhas: inicialLinhas, situacao, fora: todos.length - comPena.length}}
+        ultima={resumo(derivado?.ultima_alteracao ?? null, derivado?.alteracoes_legislativas ?? null)}
+        alteracoes={derivado?.alteracoes_legislativas ?? null}
+        ultimaPorParametro={ultimaPorParametro}
+      />
+    </article>
+  </div>
 </Base>
+
+<style>
+  .ficha-pagina {
+    padding-block: 1.5rem 0;
+  }
+  .cartao {
+    border: 1px solid var(--cor-borda-forte);
+    border-radius: var(--raio-cartao);
+    background: var(--cor-papel);
+    box-shadow: var(--sombra-cartao);
+    overflow: clip;
+  }
+  .trilha {
+    padding: 0.65rem 1.25rem;
+    border-bottom: 1px solid var(--cor-borda);
+    font-family: var(--fonte-mono);
+    font-size: var(--fs-meta);
+    color: var(--cor-tinta-fraca);
+  }
+  .trilha ol {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.2rem 0.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .trilha li + li::before {
+    content: '/';
+    margin-right: 0.5rem;
+  }
+  .trilha a {
+    color: var(--cor-tinta-fraca);
+    text-decoration: none;
+  }
+  .trilha a:hover {
+    color: var(--cor-acento);
+    text-decoration: underline;
+  }
+  .trilha [aria-current] {
+    color: var(--cor-tinta-corpo);
+  }
+  @media (max-width: 640px) {
+    .ficha-pagina {
+      padding-inline: 0.5rem;
+    }
+    .trilha {
+      padding-inline: 1rem;
+    }
+    .trilha-categoria {
+      display: none;
+    }
+  }
+</style>
