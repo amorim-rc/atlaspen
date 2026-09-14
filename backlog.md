@@ -159,6 +159,10 @@ lançamento sai com domínio próprio, e nome e domínio devem mudar juntos.
 **Próximo passo, do mantenedor:** um plano completo de revamp, com nome provisório. Ele
 decide o nome, a marca e o que combina com a reconstrução do site.
 
+**Em curso (14/09/2026).** O revamp adota o nome provisório AtlasPen no que o leitor vê.
+Falta a validação da equipe inteira e a compra do domínio atlaspen.org.br; só então mudam a
+URL, o repositório e os robôs. Ver "Pendências do revamp AtlasPen", no fim desta fase.
+
 ---
 
 ## 4. Histórico legislativo: a última alteração de cada registro
@@ -317,6 +321,81 @@ mudar. Por isso vem depois dela.
 - Na busca por atributo, a pena concreta dos atributos de natureza `concreto` é
   **presumida** para varrer o catálogo, com base selecionável e padrão na mínima
   cominada.
+
+---
+
+## Pendências do revamp AtlasPen, antes de ir ao ar
+
+Registradas em 14/09/2026, na branch `revamp/atlaspen`. O mantenedor trata todas antes de
+o site novo ir ao ar. Sem número de frente, para não renumerar o resto.
+
+### Simulação legislativa: o que a primeira versão não faz
+
+- **Premissa fixa.** A varredura presume réu primário, condenado na pena mínima cominada
+  nos atributos que dependem da pena aplicada. A tela não oferece os controles de premissa
+  que a ficha do atributo tem (base da pena concreta, circunstâncias do réu).
+- **Campos livres do tipo.** Espécie de pena (reclusão ou detenção) e ação penal ficaram de
+  fora porque o motor não os lê. Entram quando algum atributo passar a lê-los; o regime
+  inicial do art. 33 do CP depende da espécie e é o primeiro candidato.
+- **Tipo modificado.** Nome e dispositivo não se editam, e o elemento subjetivo só alterna
+  entre doloso e culposo. Um tipo criado no pacote não pode ser modificado por outra
+  mudança do mesmo pacote.
+- **Atributo novo.** A definição genérica tem um limiar só (até ou acima dele), sobre uma
+  pena. Não cobre frações, prazos nem valores calculados (progressão, prescrição, regime),
+  nem mais de um limiar.
+- **Etiqueta das mudanças em atributo.** Só aparece quando a mudança só alarga ou só
+  estreita o alcance. A que só altera valores (prazo, fração, regime) fica "sentido não
+  classificado".
+- **Regime inicial** não entra na extinção de atributo.
+- **Nota exportada.** O identificador é `AAAA-MMDD-XXXX`, um resumo da hipótese, e não um
+  contador (não há servidor); não há link curto, e o link completo é a hipótese. A versão do
+  catálogo e a data da conferência vão escritas na nota, mas o link reabre sobre o catálogo
+  do dia: não há arquivo das versões antigas para refazer a conta na base citada. O PDF é a
+  impressão do navegador, e o CSV traz só os pares que mudam.
+- **Fora do cálculo.** A simulação não mexe na dosimetria nem na moldura concreta, só nos
+  atributos. O denominador de "atingidos" é a união do catálogo vigente com o simulado.
+- **Testes.** Há testes do motor e da URL (`scripts/verificar_simulacao.ts`); não há teste
+  de interface nem medida de desempenho além de 22 atributos × 1.472 tipos.
+
+### Dados e conteúdo
+
+- **Linha do tempo.** Conferir as 16 datas de `data/marcos.json`.
+- **Acervo.** São 25 registros (o desenho dizia 27). Texto original e data exata da
+  revogação estão ausentes em todos, e declarados como ausentes.
+- **História do projeto** (`textos/historia.md`). Conferir o início da retomada (primeiro
+  commit em 22/06/2026), as "três pessoas de início" e os nomes da equipe de 2008. O
+  exemplo do artigo de 2008 sobre a Lei 11.313/2006 fala em pena mínima onde a regra do
+  art. 61 da Lei 9.099/95 é a máxima, e não foi reproduzido.
+- **Notas de 2026.** O repositório só tem a vigência das Leis 15.397 (04/05/2026) e 15.402
+  (08/05/2026); as datas de publicação das demais ficaram de fora, porque o Planalto não
+  respondeu na sessão de 14/09/2026. A Lei 15.348/2026, que restringiu o art. 1º, II, da Lei
+  8.176/91 ao GLP, não virou nota: reduzir o alcance do tipo pede decisão entre *in mellius*
+  e *abolitio* parcial.
+- **Natureza das notas.** Aplicou-se a régua do contrato: *incriminadora* é o dispositivo
+  com pena própria que entra no catálogo, inclusive as formas qualificadas e as causas de
+  aumento com moldura própria. Confirmar se o grupo quer essa leitura ou a doutrinária, em
+  que a forma nova de conduta já punível é *in pejus*.
+- **Proponente.** A régua "lei deste ano ou do anterior" (`ANOS_DE_LEI_RECENTE`) é
+  heurística; validar com as primeiras rodadas reais.
+- **Última alteração dos tipos.** A ficha do tipo diz "ainda não datada" até entrar a coleta
+  das datas de redação.
+
+### Nome, endereço e robôs
+
+- A URL do site (`amorim-rc.github.io/sispenas`), o nome do repositório e os robôs
+  (`sispenas-automacao`, `sispenas-bot`) mudam quando o nome for validado pela equipe
+  inteira e o domínio **atlaspen.org.br** for comprado. Um PR só, com a camada de
+  redirecionamento de `src/site/redirecionamentos.ts`.
+- "Equipe AtlasPen" permanece, por enquanto, como titular na LICENSE e no CITATION.
+
+### Interface
+
+- Os textos do site passam por revisão do mantenedor.
+- O parâmetro `?em=` (eixo temporal, desenho 4c) segue reservado e sem implementação.
+- Decisões de acuidade tomadas no revamp, a confirmar: frações canônicas (1/3) no lugar das
+  aproximações decimais dos dados; os 35 tipos sem pena privativa sem vereditos; "bons
+  antecedentes" fora da ficha, porque o motor não o lê; perfil do réu com dois estados; o
+  editor de moldura da ficha recolhido; o símbolo colorido todo no acento.
 
 ---
 
