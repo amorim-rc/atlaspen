@@ -1,0 +1,900 @@
+/*
+ * A simulação legislativa (Simulacao legislativa.dc.html, 9a e 9b).
+ *
+ * Os dois sentidos em cartões grandes, porque são a decisão de fundo; o resto é
+ * preenchimento. A nota exportada imprime sozinha: no papel, só ela.
+ */
+
+.simulador {
+  border: 1px solid var(--cor-borda-forte);
+  border-radius: var(--raio-cartao);
+  background: var(--cor-papel);
+  box-shadow: var(--sombra-cartao);
+  overflow: clip;
+}
+
+/* ── 1 · sentido da operação: o rótulo do passo fica fora dos cartões ── */
+.blocoSentidos {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 1rem 1.1rem;
+  border-bottom: 1px solid var(--cor-borda);
+}
+
+.sentidos {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.8rem;
+}
+
+.sentido {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--cor-borda-forte);
+  border-radius: var(--raio);
+  background: var(--cor-realce);
+  color: var(--cor-tinta);
+  text-align: left;
+  cursor: pointer;
+}
+
+.sentido:hover {
+  border-color: var(--cor-acento-suave);
+}
+
+.sentidoAtivo {
+  border-color: var(--cor-acento);
+  background: var(--cor-superficie);
+  box-shadow: inset 0 0 0 1px var(--cor-acento);
+}
+
+.etiquetaSentido {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--fonte-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--cor-tinta-fraca);
+}
+
+.marcaSentido {
+  width: 0.75rem;
+  height: 0.75rem;
+  border: 2px solid var(--cor-borda-controle);
+  border-radius: 50%;
+}
+
+.sentidoAtivo .marcaSentido {
+  border-color: var(--cor-acento);
+  background: var(--cor-acento);
+}
+
+.tituloSentido {
+  font-family: var(--fonte-serifa);
+  font-size: 1.3rem;
+  line-height: 1.25;
+}
+
+.descricaoSentido {
+  font-size: var(--fs-pequeno);
+  line-height: 1.55;
+  color: var(--cor-tinta-corpo);
+}
+
+/* ── corpo: composição à esquerda, impacto à direita ── */
+.corpo {
+  display: grid;
+  grid-template-columns: minmax(20rem, 26rem) minmax(0, 1fr);
+}
+
+.composicao {
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--cor-borda);
+}
+
+.bloco {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 1rem 1.1rem;
+  border-bottom: 1px solid var(--cor-borda);
+}
+
+.bloco:last-child {
+  border-bottom: 0;
+}
+
+.blocoObjeto {
+  background: var(--cor-superficie);
+}
+
+.rotuloBloco {
+  font-family: var(--fonte-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--cor-tinta-fraca);
+}
+
+.cabecaBloco {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.3rem 1rem;
+}
+
+.notaMono {
+  font-family: var(--fonte-mono);
+  font-size: var(--fs-rotulo);
+  color: var(--cor-tinta-fraca);
+}
+
+.notaBloco {
+  font-size: var(--fs-meta);
+  line-height: 1.55;
+  color: var(--cor-tinta-media);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.chip {
+  min-height: 2.25rem;
+  padding: 0 0.85rem;
+  border: 1px solid var(--cor-borda-forte);
+  border-radius: 2px;
+  background: var(--cor-superficie);
+  color: var(--cor-tinta-corpo);
+  font-family: var(--fonte-mono);
+  font-size: var(--fs-meta);
+  cursor: pointer;
+}
+
+.chipAtivo {
+  border-color: var(--cor-tinta);
+  background: var(--cor-tinta);
+  color: var(--cor-papel);
+}
+
+.falta {
+  padding: 0.45rem 0.65rem;
+  border-left: 3px solid var(--cor-condicional);
+  background: var(--cor-condicional-fundo);
+  font-size: var(--fs-meta);
+  color: var(--cor-tinta);
+}
+
+/* ── campos ── */
+.campos {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.duasColunas {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.6rem;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  min-width: 0;
+  font-size: var(--fs-meta);
+  color: var(--cor-tinta-corpo);
+}
+
+.campo input,
+.campo select {
+  min-height: 2.5rem;
+  padding: 0 0.6rem;
+  border: 1px solid var(--cor-borda-controle);
+  border-radius: var(--raio);
+  background: var(--cor-papel);
+  color: var(--cor-tinta);
+  font-size: 1rem;
+  max-width: 100%;
+}
+
+.marcas {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.legenda {
+  margin-bottom: 0.25rem;
+  font-family: var(--fonte-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cor-tinta-fraca);
+}
+
+.marca {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  min-height: 2rem;
+  font-size: var(--fs-pequeno);
+}
+
+.marca input {
+  width: 1.05rem;
+  height: 1.05rem;
+  accent-color: var(--cor-acento);
+}
+
+.naLei {
+  font-family: var(--fonte-mono);
+  font-size: var(--fs-rotulo);
+  color: var(--cor-simulacao);
+}
+
+.parametros {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.seletor {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.escolhido {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 0.6rem 0.75rem;
+  border-left: 3px solid var(--cor-acento);
+  background: var(--cor-realce);
+}
+
+.normaObjeto {
+  font-family: var(--fonte-mono);
+  font-size: var(--fs-meta);
+  color: var(--cor-tinta-media);
+}
+
+.nomeObjeto {
+  font-family: var(--fonte-serifa);
+  font-size: 1.3rem;
+  line-height: 1.2;
+}
+
+.achados {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+}
+
+.achados li + li {
+  border-top: 1px solid var(--cor-borda);
+}
+
+.achados button {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  width: 100%;
+  min-height: var(--alvo-toque);
+  padding: 0.45rem 0.7rem;
+  border: 0;
+  background: var(--cor-superficie);
+  color: var(--cor-tinta);
+  font-size: var(--fs-pequeno);
+  text-align: left;
+  cursor: pointer;
+}
+
+.achados button:hover {
+  background: var(--cor-realce);
+}
+
+.carregando,
+.erro {
+  font-size: var(--fs-pequeno);
+  color: var(--cor-tinta-media);
+}
+
+.erro {
+  padding: 0.7rem 0.9rem;
+  border-left: 3px solid var(--cor-incabivel);
+  background: var(--cor-incabivel-fundo);
+  color: var(--cor-tinta);
+}
+
+/* ── pacote ── */
+.pacote {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+  background: var(--cor-realce);
+}
+
+.itemAtivo {
+  border-color: var(--cor-borda-controle);
+  background: var(--cor-superficie);
+  box-shadow: inset 3px 0 0 var(--cor-acento);
+}
+
+.topoItem {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.3rem 0.8rem;
+}
+
+.etiquetas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+.etiqueta,
+.etiquetaNeutra {
+  padding: 0.15rem 0.45rem;
+  border-radius: 2px;
+  font-family: var(--fonte-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.04em;
+}
+
+.etiqueta {
+  font-style: italic;
+  font-weight: 600;
+}
+
+.etiquetaNeutra {
+  background: var(--cor-papel-alt);
+  color: var(--cor-tinta-media);
+}
+
+.et_incriminadora {
+  background: var(--cor-cabivel-fundo);
+  color: var(--cor-cabivel);
+}
+
+.et_pejus {
+  background: var(--cor-simulacao-fundo);
+  color: var(--cor-simulacao);
+}
+
+.et_mellius {
+  background: var(--cor-origem-fundo);
+  color: var(--cor-origem);
+}
+
+.et_abolitio {
+  background: var(--cor-incabivel-fundo);
+  color: var(--cor-acento);
+}
+
+.et_proposta {
+  background: var(--cor-papel-alt);
+  color: var(--cor-tinta-corpo);
+}
+
+.acoesItem {
+  display: flex;
+  gap: 0.8rem;
+}
+
+.botaoLink {
+  min-height: 1.75rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--cor-acento);
+  font-family: var(--fonte-mono);
+  font-size: var(--fs-rotulo);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.descricaoItem {
+  font-size: var(--fs-pequeno);
+  line-height: 1.5;
+}
+
+.botao,
+.botaoPrimario {
+  align-self: flex-start;
+  min-height: 2.5rem;
+  padding: 0 0.9rem;
+  border: 1px solid var(--cor-borda-controle);
+  border-radius: var(--raio);
+  background: var(--cor-superficie);
+  color: var(--cor-tinta-corpo);
+  font-family: var(--fonte-mono);
+  font-size: var(--fs-meta);
+  cursor: pointer;
+}
+
+.botao:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.botaoPrimario {
+  border-color: var(--cor-acento);
+  background: var(--cor-acento);
+  color: #fff;
+  font-family: var(--fonte-corpo);
+  font-size: var(--fs-pequeno);
+  font-weight: 500;
+}
+
+.botaoPrimario:hover {
+  background: var(--cor-acento-forte);
+}
+
+/* ── impacto ── */
+.impacto {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  background: var(--cor-superficie);
+}
+
+.cabecaImpacto {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 1rem 1.1rem;
+  border-bottom: 1px solid var(--cor-borda);
+}
+
+.miolo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  padding: 1rem 1.1rem;
+}
+
+.vazio {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 0.9rem 1rem;
+  border: 1px dashed var(--cor-borda-controle);
+  border-radius: var(--raio);
+  font-size: var(--fs-pequeno);
+  line-height: 1.6;
+  color: var(--cor-tinta-corpo);
+}
+
+.placar {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.8rem;
+}
+
+.numeroPlacar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.rotuloPlacar {
+  font-family: var(--fonte-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cor-tinta-fraca);
+}
+
+.valorPlacar {
+  font-family: var(--fonte-serifa);
+  font-size: 2rem;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.notaPlacar {
+  font-size: var(--fs-meta);
+  line-height: 1.4;
+  color: var(--cor-tinta-media);
+}
+
+.recorte {
+  padding: 0.6rem 0.75rem;
+  border-left: 3px solid var(--cor-acento-suave);
+  background: var(--cor-realce);
+  font-size: var(--fs-meta);
+  line-height: 1.55;
+  color: var(--cor-tinta-corpo);
+}
+
+.recorte strong {
+  font-weight: 600;
+}
+
+.listas {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.grupo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.tituloGrupo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.2rem 0.7rem;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+.nomeGrupo {
+  font-family: var(--fonte-serifa);
+  font-size: 1.15rem;
+  font-weight: 500;
+}
+
+.unidades {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  margin: 0;
+  font-size: var(--fs-meta);
+  color: var(--cor-tinta-corpo);
+}
+
+.unidades div {
+  display: grid;
+  grid-template-columns: 4.5rem minmax(0, 1fr);
+  gap: 0.5rem;
+}
+
+.unidades dt {
+  font-family: var(--fonte-mono);
+  font-size: var(--fs-rotulo);
+  color: var(--cor-tinta-fraca);
+}
+
+.unidades dd {
+  margin: 0;
+}
+
+.delta {
+  font-family: var(--fonte-mono);
+  font-size: var(--fs-rotulo);
+  color: var(--cor-tinta-media);
+}
+
+.linhas {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+}
+
+/* O nome ocupa a linha inteira; o "antes → depois" vem embaixo. Em colunas, o
+   nome do tipo espremia a uma palavra por linha na coluna de impacto. */
+.linhaPar {
+  display: grid;
+  grid-template-columns: 1.6rem minmax(0, 1fr);
+  gap: 0.25rem 0.6rem;
+  align-items: baseline;
+  padding: 0.5rem 0.7rem;
+}
+
+.mudancaPar {
+  grid-column: 2;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.2rem 0.45rem;
+}
+
+.linhaPar + .linhaPar {
+  border-top: 1px solid var(--cor-borda);
+}
+
+.sinal {
+  padding: 0.15rem 0;
+  border-radius: 2px;
+  font-family: var(--fonte-mono);
+  font-size: var(--fs-meta);
+  font-weight: 600;
+  text-align: center;
+}
+
+.sinalMais {
+  background: var(--cor-cabivel-fundo);
+  color: var(--cor-cabivel);
+}
+
+.sinalMenos {
+  background: var(--cor-incabivel-fundo);
+  color: var(--cor-incabivel);
+}
+
+.sinalMuda {
+  background: var(--cor-simulacao-fundo);
+  color: var(--cor-simulacao);
+}
+
+.sinalIgual {
+  background: var(--cor-papel-alt);
+  color: var(--cor-tinta-media);
+}
+
+.objetoPar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  min-width: 0;
+  font-family: var(--fonte-serifa);
+  font-size: 1rem;
+  line-height: 1.25;
+}
+
+.objetoPar a {
+  color: var(--cor-tinta);
+  text-decoration: none;
+}
+
+.objetoPar a:hover {
+  color: var(--cor-acento);
+  text-decoration: underline;
+}
+
+.antes,
+.depois {
+  font-family: var(--fonte-mono);
+  font-size: var(--fs-rotulo);
+  line-height: 1.35;
+}
+
+.antes {
+  color: var(--cor-tinta-media);
+}
+
+.depois {
+  font-weight: 500;
+  color: var(--cor-tinta);
+}
+
+.seta {
+  font-family: var(--fonte-mono);
+  color: var(--cor-acento);
+  text-align: center;
+}
+
+.rodapeImpacto {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  margin-top: auto;
+  padding: 1rem 1.1rem;
+  border-top: 1px solid var(--cor-borda);
+  background: var(--cor-realce);
+}
+
+.ressalva {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.ressalva p {
+  font-size: var(--fs-meta);
+  line-height: 1.6;
+  color: var(--cor-tinta-corpo);
+}
+
+.acoes {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.aviso {
+  font-family: var(--fonte-mono);
+  font-size: var(--fs-rotulo);
+  color: var(--cor-cabivel);
+}
+
+/* ── a nota exportada (9b) ── */
+.nota {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 46rem;
+  margin: 1.4rem auto;
+  padding: 2rem 2.2rem;
+  border: 1px solid var(--cor-borda-forte);
+  border-radius: var(--raio-cartao);
+  background: var(--cor-superficie);
+  box-shadow: 0 1px 3px rgba(33, 31, 27, 0.09);
+  scroll-margin-top: 1rem;
+}
+
+.topoNota {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.6rem 1rem;
+  padding-bottom: 0.9rem;
+  border-bottom: 1px solid var(--cor-borda);
+}
+
+.marcaNota {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.assinaturaNota {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--fonte-serifa);
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--cor-tinta);
+}
+
+.assinaturaNota svg,
+.assinaturaNota span {
+  color: var(--cor-acento);
+}
+
+.extensoNota {
+  font-family: var(--fonte-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cor-tinta-fraca);
+}
+
+.metaNota {
+  font-family: var(--fonte-mono);
+  font-size: var(--fs-rotulo);
+  text-align: right;
+  color: var(--cor-tinta-fraca);
+}
+
+.tituloNota {
+  font-size: var(--fs-titulo-2);
+  line-height: 1.25;
+}
+
+.secaoNota,
+.citarNota {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.secaoNota h3,
+.citarNota h3 {
+  font-family: var(--fonte-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cor-acento);
+}
+
+.secaoNota p {
+  font-size: var(--fs-pequeno);
+  line-height: 1.7;
+  color: var(--cor-tinta);
+}
+
+.citarNota {
+  padding-top: 0.8rem;
+  border-top: 1px solid var(--cor-borda);
+}
+
+.citarNota h3 {
+  color: var(--cor-tinta-fraca);
+}
+
+.citarNota p {
+  font-family: var(--fonte-serifa);
+  font-style: italic;
+  line-height: 1.6;
+}
+
+@media (max-width: 900px) {
+  .corpo {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .composicao {
+    border-right: 0;
+    border-bottom: 1px solid var(--cor-borda);
+  }
+}
+
+@media (max-width: 640px) {
+  .sentidos,
+  .placar,
+  .duasColunas {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .blocoSentidos,
+  .bloco,
+  .cabecaImpacto,
+  .miolo,
+  .rodapeImpacto {
+    padding-inline: 0.8rem;
+  }
+  .nota {
+    margin-inline: 0;
+    padding: 1.3rem 1rem;
+  }
+}
+
+/* No papel, só a nota: é o PDF para anexar. */
+@media print {
+  :global(body *) {
+    visibility: hidden;
+  }
+  .nota,
+  .nota * {
+    visibility: visible;
+  }
+  .nota {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    box-shadow: none;
+  }
+  .semImpressao {
+    display: none !important;
+  }
+}

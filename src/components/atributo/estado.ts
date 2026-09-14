@@ -82,7 +82,7 @@ function formatDiasDeMeses(meses: number): string {
   return partes.length === 1 ? partes[0] : `${partes.slice(0, -1).join(', ')} e ${partes.at(-1)}`;
 }
 
-function lerValor(d: ParametroDef, t: string): number | boolean | undefined {
+export function lerValor(d: ParametroDef, t: string): number | boolean | undefined {
   switch (d.tipo) {
     case 'booleano':
       return t === 'sim' ? true : t === 'nao' ? false : undefined;
@@ -102,7 +102,7 @@ function lerValor(d: ParametroDef, t: string): number | boolean | undefined {
   }
 }
 
-function escreverValor(d: ParametroDef, v: number | boolean): string {
+export function escreverValor(d: ParametroDef, v: number | boolean): string {
   switch (d.tipo) {
     case 'booleano':
       return v ? 'sim' : 'nao';
@@ -120,7 +120,7 @@ function escreverValor(d: ParametroDef, v: number | boolean): string {
   }
 }
 
-function limitar(d: ParametroDef, v: number | boolean): number | boolean {
+export function limitar(d: ParametroDef, v: number | boolean): number | boolean {
   if (typeof v === 'boolean') return v;
   return Math.min(Math.max(v, d.min ?? 0), d.max ?? Number.POSITIVE_INFINITY);
 }
