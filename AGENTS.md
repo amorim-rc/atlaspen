@@ -8,24 +8,27 @@ Este arquivo é lido pelo Codex e demais agentes pelo nome; o Claude Code o lê 
 `CLAUDE.md`, que só o importa. Regra nova entra **aqui**. Os próximos passos possíveis do
 projeto estão em `backlog.md`.
 
-## Versão e notas: nada é publicado até a v1.0.0
+## Versão e notas: o feed já registra, a Release espera a v1.0.0
 
-Decisão de 10/09/2026, executada em 11/09/2026:
+Decisões de 10/09/2026 e de 14/09/2026:
 
-- O projeto está na versão **`0.0.0`** e **não sobe versão** até o lançamento oficial.
-- **Não crie entrada de changelog.** O diretório `src/data/changelog/entries/` fica vazio,
-  e o `scripts/validar-changelog.mjs` reprova qualquer entrada enquanto a versão for `0.x`.
-- O `release.yml` não publica nada enquanto a versão for `0.x`, e o Proponente não sobe
-  versão nem escreve nota.
-- A página Notas de atualizações só avisa que será alimentada depois do lançamento.
+- Até o lançamento oficial, a **v1.0.0**, o projeto anda em **`0.0.x`**. O `release.yml`
+  não publica Release nem tag enquanto a versão for `0.x`.
+- **O feed de notas já funciona em `0.0.x`** e publica **exclusivamente** alterações de
+  LEI que criem, modifiquem ou extingam tipos penais ou atributos penais. Correção de dado
+  do catálogo (o erro antigo que a conferência achou) **não** vira nota.
+- Cada entrada (`src/data/changelog/entries/<ano>/<id>.ts`, um arquivo por mudança; passo
+  a passo em `src/data/changelog/create-changelog-entry.md`) declara a natureza em termos
+  penais: `incriminadora`, `pejus`, `mellius` ou `abolitio`. O
+  `scripts/validar-changelog.mjs` reprova natureza fora do contrato e versão que não existe.
+- O PR que traz nota sobe o patch em `package.json` e no lockfile. O Proponente faz isso
+  sozinho quando a rodada tem alteração de lei recente: redação dada, ou dispositivo
+  incluído, por lei deste ano ou do anterior, lido da anotação do compilado.
 
-**Depois da v1.0.0**, cada versão volta a publicar a Release no GitHub e a nota no site, a
-partir das mesmas entradas (`src/data/changelog/entries/<ano>/<id>.ts`, um arquivo por
-mudança; passo a passo em `src/data/changelog/create-changelog-entry.md`). O feed publica
-**exclusivamente** alterações que criem, modifiquem ou extingam tipos penais ou atributos
-penais. A versão segue a regra de `docs/dados-abertos.md` (Estabilidade e versionamento);
-o PR que fecha a versão sobe `package.json` e `CITATION.cff`, e o merge na `main` dispara o
-`release.yml`, que cria a tag. **Nunca faça `git push origin vX.Y.Z` manual.**
+**Depois da v1.0.0**, cada versão volta a publicar também a Release no GitHub, a partir das
+mesmas entradas. A versão segue a regra de `docs/dados-abertos.md` (Estabilidade e
+versionamento), e o merge na `main` dispara o `release.yml`, que cria a tag. **Nunca faça
+`git push origin vX.Y.Z` manual.**
 
 ## Convenções do catálogo
 

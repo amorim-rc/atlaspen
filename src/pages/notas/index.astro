@@ -11,7 +11,9 @@ import {VERSAO} from '../../site/servidor';
 import {caminho} from '../../site/url';
 import {REPOSITORIO} from '../../site/config';
 
-const publicado = !VERSAO.startsWith('0.') && entradas.length > 0;
+// Desde 14/09/2026 o feed registra as alterações de lei já em 0.0.x; o que fica
+// para a v1.0.0 é a Release no GitHub.
+const publicado = entradas.length > 0;
 ---
 
 <Base
@@ -24,6 +26,13 @@ const publicado = !VERSAO.startsWith('0.') && entradas.length > 0;
     <p class="intro">
       Uma entrada por mudança no catálogo. Só entra aqui o que cria, modifica ou extingue tipo penal ou atributo penal.
     </p>
+    {
+      publicado && VERSAO.startsWith('0.') && (
+        <p class="nota-versao sem-recuo">
+          Até o lançamento oficial, a numeração anda em 0.0.x. Versão corrente: v{VERSAO}.
+        </p>
+      )
+    }
   </header>
 
   <div class="pagina corpo">
@@ -67,6 +76,11 @@ const publicado = !VERSAO.startsWith('0.') && entradas.length > 0;
   }
   .intro {
     color: var(--cor-tinta-corpo);
+  }
+  .nota-versao {
+    font-family: var(--fonte-mono);
+    font-size: var(--fs-rotulo);
+    color: var(--cor-tinta-fraca);
   }
   .corpo {
     padding-bottom: 1rem;

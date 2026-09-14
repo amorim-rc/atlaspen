@@ -59,8 +59,10 @@ PR próprio.
 ## 3. Um pull request — é aqui que você decide
 
 Um por rodada, um aberto por vez, autor `sispenas-automacao[bot]`, rótulo `conferidor`.
-Até a v1.0.0 ele **não sobe versão nem escreve nota**: só aplica a correção, e o merge
-não publica release. Depois do lançamento, volta a fechar uma versão.
+Quando alguma mudança vem de **lei recente**, ele escreve a nota de atualização e sobe o
+patch da versão (em `0.0.x` até o lançamento; o merge não publica release antes da v1.0.0).
+**Confira a natureza** de cada nota (*incriminadora*, *in pejus*, *in mellius*) na seção
+"Notas de atualização" do corpo. Correção de dado não vira nota, e o corpo diz o motivo.
 
 Dois tipos, nesta ordem de prioridade:
 

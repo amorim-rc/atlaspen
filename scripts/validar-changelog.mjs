@@ -1,20 +1,28 @@
-// Impede que o feed anuncie versão que ainda não existe.
+// Impede que o feed anuncie versão que ainda não existe, ou publique fora do
+// contrato.
 //
 // Aconteceu: três entradas foram escritas com v1.2.16, v1.2.17 e v1.2.18
 // enquanto o `package.json` seguia em 1.2.15, porque o bump era feito por
 // substituição de texto e falhava em silêncio quando a versão de origem não
 // batia. O feed prometia releases que nunca saíram.
 //
-// Duas regras, ambas verificáveis sem rede e sem depender de tags — o checkout
-// da CI nem sempre as traz, e a primeira versão desta checagem quebrou por isso:
+// Três regras, verificáveis sem rede e sem depender de tags — o checkout da CI
+// nem sempre as traz, e a primeira versão desta checagem quebrou por isso:
 //
 //   1. nenhuma entrada pode citar versão MAIOR que a do `package.json` — é o
 //      sintoma exato do bump que não aconteceu;
-//   2. a versão atual precisa ter ao menos uma entrada, senão a release sai com
-//      corpo vazio.
+//   2. havendo entradas, a versão atual precisa ter ao menos uma, senão o bump
+//      subiu sem nota;
+//   3. a natureza (`tipo`) e as áreas são as do contrato, em
+//      src/data/changelog/types.ts.
+//
+// Desde 14/09/2026 as regras valem também em 0.0.x: o feed já registra as
+// alterações de lei antes do lançamento. O que segue suspenso até a v1.0.0 é a
+// Release no GitHub, e isso o release.yml garante sozinho.
 import {readFileSync} from 'node:fs';
 
 import {lerEntradas} from './_ler-changelog.mjs';
+import {AREAS_CHANGELOG, TIPOS_CHANGELOG} from '../src/data/changelog/types.ts';
 
 /** Compara "v1.2.10" com "v1.3.0" por número, não por texto. */
 function comparar(a, b) {
@@ -29,17 +37,19 @@ function comparar(a, b) {
 const atual = `v${JSON.parse(readFileSync('package.json', 'utf8')).version}`;
 const entradas = await lerEntradas();
 
-// Até a v1.0.0 não há notas nem Release (decisão de 10/09/2026): o projeto está em
-// 0.x, e qualquer entrada é engano — anunciaria no feed o que a regra manda não
-// anunciar. As duas regras abaixo voltam a valer a partir do lançamento.
-if (atual.startsWith('v0.')) {
-  if (entradas.length) {
-    console.error(`✗ ${entradas.length} entrada(s) de changelog antes da v1.0.0 — ` +
-      'até o lançamento não se criam notas (ver AGENTS.md):');
-    for (const e of entradas) console.error(`  ${e.id}`);
-    process.exit(1);
-  }
-  console.log(`✓ ${atual}: nenhuma entrada, como manda a regra até a v1.0.0`);
+const fora = entradas.flatMap((e) => [
+  ...(TIPOS_CHANGELOG.includes(e.tipo) ? [] : [`${e.id}: natureza "${e.tipo}" fora do contrato`]),
+  ...(e.areas ?? []).filter((a) => !AREAS_CHANGELOG.includes(a)).map((a) => `${e.id}: área "${a}" fora do contrato`),
+]);
+if (fora.length) {
+  console.error(`✗ ${fora.length} problema(s) de contrato no changelog:`);
+  for (const f of fora) console.error(`  ${f}`);
+  console.error(`\nNaturezas válidas: ${TIPOS_CHANGELOG.join(', ')}.`);
+  process.exit(1);
+}
+
+if (!entradas.length) {
+  console.log(`✓ ${atual}: nenhuma entrada`);
   process.exit(0);
 }
 
@@ -56,8 +66,8 @@ if (futuras.length) {
 }
 
 if (!entradas.some((e) => e.version === atual)) {
-  console.error(`✗ nenhuma entrada carrega a versão atual (${atual}) — a release ` +
-    'sairia com corpo vazio.');
+  console.error(`✗ nenhuma entrada carrega a versão atual (${atual}) — a versão ` +
+    'subiu sem nota.');
   process.exit(1);
 }
 

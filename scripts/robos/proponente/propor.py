@@ -21,12 +21,13 @@ Quatro decisões, todas para que o PR seja revisável por gente:
   espécie de pena, revogação anotada), mas quem cria linha continua sendo gente:
   `--com-novas` liga a proposta de linha nova, e o workflow só a usa quando
   alguém pedir explicitamente.
-- **Até a v1.0.0, o PR não sobe versão nem escreve nota** (decisão de
-  10/09/2026): o projeto está em `0.x`, e o `validar-changelog.mjs` reprovaria
-  a entrada. A partir do lançamento, o PR volta a fechar uma versão: sobe
-  `package.json` e `CITATION.cff`, escreve a entrada de changelog, e mergear
-  publica a release. Entrada sem bump seria pior — anunciaria no feed uma
-  versão já publicada.
+- **Nota só para alteração de lei** (decisão de 14/09/2026). O feed publica o
+  que uma lei nova cria ou modifica, e não o erro antigo do catálogo que a
+  conferência achou. O que separa os dois é a anotação do compilado: redação
+  dada, ou dispositivo incluído, por lei deste ano ou do anterior. Com nota, o
+  PR fecha uma versão (em `0.0.x` até o lançamento) e sobe `package.json` e o
+  lockfile; sem nota, não sobe nada. Entrada sem bump seria pior: anunciaria
+  no feed uma versão já publicada.
 - **Nada de silencioso.** O bump é conferido depois de escrito (substituição de
   texto já falhou em silêncio aqui) e cada mudança leva no corpo o trecho da lei
   que a motivou.
@@ -63,6 +64,7 @@ from transform_data import _faixa_de_meses, proximo_id  # noqa: E402
 FONTES = RAIZ / "data" / "fontes.json"
 CATALOGO_FONTE = RAIZ / "data" / "crimes.json"
 PACKAGE = RAIZ / "package.json"
+LOCK = RAIZ / "package-lock.json"
 CITATION = RAIZ / "CITATION.cff"
 ENTRADAS = RAIZ / "src" / "data" / "changelog" / "entries"
 SITE = "https://amorim-rc.github.io/sispenas"
@@ -79,16 +81,17 @@ def proxima_versao(atual: str) -> str:
     return f"{maior}.{menor}.{patch + 1}"
 
 
-def versao_da_rodada() -> str | None:
-    """A versão que o PR fecha, ou None até a v1.0.0 (decisão de 10/09/2026).
+def versao_da_rodada() -> str:
+    """A versão que o PR fecha SE a rodada tiver nota (ver `aplicar`).
 
-    Em 0.x o projeto não sobe versão nem escreve nota: o PR só aplica a correção.
+    Até o lançamento o projeto anda em 0.0.x (decisão de 14/09/2026): o patch
+    sobe, e o `release.yml` continua sem publicar nada enquanto a versão for 0.x.
     """
-    atual = versao_atual()
-    return None if atual.startswith("0.") else proxima_versao(atual)
+    return proxima_versao(versao_atual())
 
 
-def _substituir_versao(caminho: Path, padrao: str, atual: str, nova: str) -> None:
+def _substituir_versao(caminho: Path, padrao: str, atual: str, nova: str,
+                       vezes: int = 1) -> None:
     """Troca a versão e CONFERE o resultado.
 
     O bump por substituição de texto já falhou em silêncio neste repositório
@@ -101,8 +104,8 @@ def _substituir_versao(caminho: Path, padrao: str, atual: str, nova: str) -> Non
     """
     texto = caminho.read_bytes().decode("utf-8")
     novo, trocas = re.subn(padrao.format(v=re.escape(atual)),
-                           lambda m: m.group(0).replace(atual, nova), texto, count=1)
-    if trocas != 1 or nova not in novo:
+                           lambda m: m.group(0).replace(atual, nova), texto, count=vezes)
+    if trocas != vezes or nova not in novo:
         raise SystemExit(f"bump falhou em {caminho.name}: {trocas} substituição(ões)")
     caminho.write_bytes(novo.encode("utf-8"))
 
@@ -110,7 +113,12 @@ def _substituir_versao(caminho: Path, padrao: str, atual: str, nova: str) -> Non
 def subir_versao(nova: str) -> None:
     atual = versao_atual()
     _substituir_versao(PACKAGE, r'"version":\s*"{v}"', atual, nova)
-    _substituir_versao(CITATION, r'version:\s*"{v}"', atual, nova)
+    # A raiz do lockfile repete a versão duas vezes: o pacote e packages[""].
+    if LOCK.exists():
+        _substituir_versao(LOCK, r'"version":\s*"{v}"', atual, nova, vezes=2)
+    # Até a v1.0.0 o CITATION.cff cita pela data e não tem campo de versão.
+    if re.search(r"^version:", CITATION.read_text(encoding="utf-8"), re.M):
+        _substituir_versao(CITATION, r'version:\s*"{v}"', atual, nova)
     conferida = json.loads(PACKAGE.read_text(encoding="utf-8"))["version"]
     if conferida != nova:
         raise SystemExit(f"package.json ficou em {conferida}, não em {nova}")
@@ -229,8 +237,9 @@ def corpo_auditoria(propostas: list[dict], versao: str | None, relatorio: str,
         "## Auditoria dos campos de classificação", "",
         f"{len(propostas)} mudança(s) propostas em campos que **decidem atributos** e que "
         "a conferência de penas não alcançava."
-        + (f" Fecha a versão **v{versao}**." if versao
-           else " Não sobe versão: até a v1.0.0 nada é publicado."), "",
+        + " Não escreve nota nem sobe versão: classificação corrigida contra o rol é "
+        "correção de dado. Se a mudança vier de lei nova, a entrada se escreve à mão "
+        "(`src/data/changelog/create-changelog-entry.md`).", "",
         "> ⚠️ **Isto pede o seu juízo, não só uma conferida.** A máquina comparou o "
         "catálogo com o rol legal e com as fórmulas de ação penal do próprio diploma; "
         "onde a lei condiciona a classificação a circunstância do caso, ela não propôs "
@@ -244,7 +253,7 @@ def corpo_auditoria(propostas: list[dict], versao: str | None, relatorio: str,
                 f"- **id {p['id']}** `{p['lei']} {p['artigo']}` — {p['de']} → **{p['para']}**",
                 f"  - *{p['crime'][:100]}*",
                 f"  - {p['fundamento']}",
-                f"  - <{SITE}/pesquisa/tipos?tipo={p['id']}>",
+                f"  - <{SITE}/tipos/{p['id']}>",
             ]
         L.append("")
     if fontes_novas:
@@ -268,7 +277,8 @@ def _rotulo(fonte: dict) -> str:
     return fonte["rotulos"][0]
 
 
-def corpo_pr(escolha: dict, versao: str | None) -> str:
+def corpo_pr(escolha: dict, versao: str | None, legais: list[dict] | None = None,
+             fora: list[dict] | None = None) -> str:
     """Corpo do PR: uma seção por mudança, cada uma com o trecho da lei."""
     f = escolha["fonte"]
     correcoes, novas, humanos = escolha["correcoes"], escolha["novas"], escolha["humanos"]
@@ -277,11 +287,25 @@ def corpo_pr(escolha: dict, versao: str | None) -> str:
         f"Rodada automática do conferidor. Texto oficial conferido: <{f['url']}>", "",
         f"- **{len(correcoes)}** correção(ões) de moldura ou espécie de pena em linha existente;",
         f"- **{len(novas)}** linha(s) nova(s) proposta(s);",
-        (f"- fecha a versão **v{versao}** (o merge publica a release)." if versao
-         else "- não sobe versão nem escreve nota: até a v1.0.0 nada é publicado."), "",
+        (f"- fecha a versão **v{versao}**, com {_plural(len(legais or []), 'nota', 'notas')} "
+         "de atualização." if versao
+         else "- não escreve nota nem sobe versão: nenhuma mudança vem de lei recente."), "",
         "> Cada mudança é uma **proposta** conferida contra o texto compilado, não uma "
         "conclusão jurídica. O merge continua exigindo revisão humana.", "",
     ]
+
+    if legais or fora:
+        L += ["## Notas de atualização", "",
+              "Vai para o feed só a alteração de lei: redação dada, ou dispositivo "
+              "incluído, por lei deste ano ou do anterior. **Confira a natureza** de "
+              "cada uma antes de aprovar.", ""]
+        for m in legais or []:
+            a = m["anotacao"]
+            L.append(f"- id {m['id']} `{m['depois']['artigo']}`: *{ROTULO_NATUREZA[m['natureza']]}*, "
+                     f"{a['norma']}, de {a['ano']}")
+        for x in fora or []:
+            L.append(f"- id {x['id']} `{x['artigo']}`: fora do feed, {x['motivo']}")
+        L.append("")
 
     if correcoes:
         L += ["## Correções de linha existente", ""]
@@ -293,7 +317,7 @@ def corpo_pr(escolha: dict, versao: str | None) -> str:
                 f"- **Antes:** {a['pena_min']}–{a['pena_max']} meses, {a['tipo_pena']}",
                 f"- **Depois:** {d['pena_min']}–{d['pena_max']} meses, {d['tipo_pena']}",
                 f"- **obs:** `{d['obs'][:150]}`",
-                f"- Conferir: <{SITE}/pesquisa/tipos?tipo={a['id']}>", "",
+                f"- Conferir: <{SITE}/tipos/{a['id']}>", "",
             ]
 
     if novas:
@@ -364,85 +388,177 @@ def _frase_correcoes(correcoes: list[dict]) -> str:
     return "; ".join(exemplos)
 
 
-def entrada_changelog(escolha: dict, versao: str, dia: str) -> tuple[Path, str]:
-    """A entrada do feed — texto puro, sem markdown (contrato do ChangelogEntry)."""
-    f = escolha["fonte"]
-    correcoes, novas = escolha["correcoes"], escolha["novas"]
-    ident = f"{dia}-conferidor-{f['id']}"
-    destino = ENTRADAS / dia[:4] / f"{ident}.ts"
-    n = 2
-    while destino.exists():
-        ident = f"{dia}-conferidor-{f['id']}-{n}"
+# ── Notas de atualização ────────────────────────────────────────────────────
+# O feed publica só alteração de LEI que cria, modifica ou extingue tipo penal
+# (AGENTS.md). Uma moldura divergente pode ser lei nova ou dado que estava
+# errado, e o que separa os dois é a anotação do compilado: redação dada, ou
+# dispositivo incluído, por lei deste ano ou do anterior é alteração
+# legislativa. A divergência sob redação antiga é correção de dado e fica fora
+# do feed; o corpo do PR diz o porquê de cada uma.
+ANOS_DE_LEI_RECENTE = 1
+# Espelha ROTULO_TIPO de src/data/changelog/types.ts.
+ROTULO_NATUREZA = {
+    "incriminadora": "novatio legis incriminadora",
+    "pejus": "novatio legis in pejus",
+    "mellius": "novatio legis in mellius",
+    "abolitio": "abolitio criminis",
+}
+_GRAVIDADE_ESPECIE = {"Prisão simples": 0, "Detenção": 1, "Reclusão": 2}
+
+
+def _lei_recente(anot: dict | None, ano: int) -> bool:
+    return bool(anot and anot.get("norma") and anot.get("ano")
+                and anot["ano"] >= ano - ANOS_DE_LEI_RECENTE)
+
+
+def natureza_da_correcao(p: dict) -> str | None:
+    """in pejus se a pena só sobe; in mellius se só desce; None se sobe e desce."""
+    a, d = p["antes"], p["depois"]
+    sobe = d["pena_min"] > a["pena_min"] or d["pena_max"] > a["pena_max"]
+    desce = d["pena_min"] < a["pena_min"] or d["pena_max"] < a["pena_max"]
+    ga = _GRAVIDADE_ESPECIE.get(a.get("tipo_pena"))
+    gd = _GRAVIDADE_ESPECIE.get(d.get("tipo_pena"))
+    if ga is not None and gd is not None:
+        sobe, desce = sobe or gd > ga, desce or gd < ga
+    if sobe and not desce:
+        return "pejus"
+    if desce and not sobe:
+        return "mellius"
+    return None
+
+
+def mudancas_da_lei(escolha: dict, ano: int) -> tuple[list[dict], list[dict]]:
+    """(o que vai para as notas, o que fica fora delas e por quê)."""
+    legais, fora = [], []
+    for p in escolha["correcoes"]:
+        anot, artigo = p.get("anotacao"), p["antes"]["artigo"]
+        natureza = natureza_da_correcao(p)
+        if not _lei_recente(anot, ano):
+            fora.append({"id": p["id"], "artigo": artigo,
+                         "motivo": "correção de dado; a redação vigente não é de lei recente"})
+        elif natureza is None:
+            fora.append({"id": p["id"], "artigo": artigo,
+                         "motivo": "a pena sobe num limite e desce no outro; a natureza fica para a revisão"})
+        else:
+            legais.append({"id": p["id"], "natureza": natureza, "anotacao": anot,
+                           "antes": p["antes"], "depois": p["depois"]})
+    for n in escolha["novas"]:
+        anot, linha = n["achado"].get("anotacao"), n["linha"]
+        if _lei_recente(anot, ano) and anot.get("acao") == "incluido":
+            legais.append({"id": linha["id"], "natureza": "incriminadora", "anotacao": anot,
+                           "antes": None, "depois": linha})
+        else:
+            fora.append({"id": linha["id"], "artigo": linha["artigo"],
+                         "motivo": "linha que faltava no catálogo; o dispositivo não foi incluído por lei recente"})
+    return legais, fora
+
+
+def _pela(norma: str) -> str:
+    return "pelo" if norma.lower().startswith("decreto") else "pela"
+
+
+def _faixa(linha: dict) -> str:
+    return f"{_faixa_de_meses(linha['pena_min'], linha['pena_max'])} de {linha['tipo_pena'].lower()}"
+
+
+def _links_ts(links: list[dict]) -> str:
+    return "\n".join(f"    {{label: {json.dumps(l['label'], ensure_ascii=False)}, "
+                     f"href: {json.dumps(l['href'], ensure_ascii=False)}}}," for l in links)
+
+
+def entradas_changelog(escolha: dict, legais: list[dict], versao: str,
+                       dia: str) -> list[tuple[Path, str]]:
+    """Uma entrada por lei e por natureza. Texto puro (contrato do ChangelogEntry)."""
+    rotulo = _rotulo(escolha["fonte"])
+    grupos: dict[tuple[str, int, str], list[dict]] = {}
+    for m in legais:
+        a = m["anotacao"]
+        grupos.setdefault((a["norma"], a["ano"], m["natureza"]), []).append(m)
+
+    saida: list[tuple[Path, str]] = []
+    for (norma, ano, natureza), itens in sorted(grupos.items()):
+        base = f"{dia}-lei-{re.sub(r'[^0-9]', '', norma)}-{natureza}"
+        ident, n = base, 2
         destino = ENTRADAS / dia[:4] / f"{ident}.ts"
-        n += 1
+        while destino.exists() or any(d == destino for d, _ in saida):
+            ident = f"{base}-{n}"
+            destino = ENTRADAS / dia[:4] / f"{ident}.ts"
+            n += 1
 
-    rotulo = _rotulo(f)
-    partes = []
-    if correcoes:
-        partes.append(_plural(len(correcoes), "pena corrigida", "penas corrigidas"))
-    if novas:
-        partes.append(_plural(len(novas), "tipo acrescentado", "tipos acrescentados"))
-    # Rótulo na frente e travessão: o artigo definido varia com o diploma ("no
-    # CP", "na Lei 6.766/79", "no ECA") e não há como acertá-lo sem uma tabela.
-    titulo = f"{rotulo} — {' e '.join(partes)} contra o texto oficial"
-
-    corpo = []
-    if correcoes:
-        n = len(correcoes)
-        quantos = "Um registro" if n == 1 else f"São {n} registros"
+        lei, qtd = f"{norma}, de {ano}", len(itens)
+        if natureza == "incriminadora":
+            titulo = f"{lei}: {_plural(qtd, 'tipo penal incluído', 'tipos penais incluídos')} ({rotulo})"
+            acao = "incluídos" if qtd > 1 else "incluído"
+            corpo = [f"{_artigo_em_prosa(m['depois']['artigo'])}: {m['depois']['crime']}, "
+                     f"{_faixa(m['depois'])}." for m in itens[:8]]
+        else:
+            verbo = "agravada" if natureza == "pejus" else "abrandada"
+            titulo = f"{lei}: {_plural(qtd, 'pena ' + verbo, 'penas ' + verbo + 's')} ({rotulo})"
+            acao = "com redação dada"
+            corpo = [f"{_artigo_em_prosa(m['antes']['artigo'])}: de {_faixa(m['antes'])} "
+                     f"para {_faixa(m['depois'])}." for m in itens[:8]]
+        if qtd > 8:
+            corpo.append(f"E mais {qtd - 8} dispositivos, na mesma lei.")
         corpo.append(
-            f"{quantos} cuja moldura ou espécie de pena "
-            f"não correspondia ao que o diploma comina hoje: "
-            f"{_frase_correcoes(correcoes)}. Cada correção foi conferida contra o "
-            "texto compilado no Planalto, dispositivo a dispositivo.")
-    if novas:
-        corpo.append(
-            f"Entram {_plural(len(novas), 'tipo', 'tipos')} que a lei prevê e o "
-            "catálogo não registrava — dispositivos com pena própria e preceitos que "
-            "cominam mais de uma pena, cada qual um tipo penal com sua própria página. "
-            "Os campos que a lei não declara seguem regra ou herdam do caput do mesmo "
-            "artigo, e é para eles que a revisão deve olhar primeiro.")
-    corpo.append(
-        "A conferência é semanal e determinística: baixa o texto compilado, lê as "
-        "molduras e compara com o publicado. Onde não há leitura segura, o achado vira "
-        "pergunta na triagem da semana em vez de virar dado.")
+            "A conferência é semanal e determinística: baixa o texto compilado, lê as "
+            "molduras e compara com o publicado. A lei que deu a redação vem da anotação "
+            "do próprio compilado.")
+        resumo = (f"{rotulo}: {_plural(qtd, 'dispositivo', 'dispositivos')} {acao} "
+                  f"{_pela(norma)} {lei}, segundo o texto compilado do Planalto.")
+        links = []
+        if itens[0]["anotacao"].get("url"):
+            links.append({"label": f"{lei}, no Planalto", "href": itens[0]["anotacao"]["url"]})
+        links += [{"label": _artigo_em_prosa(m["depois"]["artigo"]),
+                   "href": f"{SITE}/tipos/{m['id']}"} for m in itens[:5]]
 
-    ts = f"""import type {{ChangelogEntry}} from '../../types';
+        ts = f"""import type {{ChangelogEntry}} from '../../types';
 
 const entrada: ChangelogEntry = {{
   id: '{ident}',
   date: '{dia}',
   title: {json.dumps(titulo, ensure_ascii=False)},
   summary:
-    {json.dumps(f"Rodada automática do conferidor — {rotulo}: " + " e ".join(partes) + ", contra o texto compilado do Planalto.", ensure_ascii=False)},
+    {json.dumps(resumo, ensure_ascii=False)},
   body: [
 {chr(10).join('    ' + json.dumps(p, ensure_ascii=False) + ',' for p in corpo)}
   ],
-  tipo: '{'correcao' if correcoes else 'novidade'}',
+  tipo: '{natureza}',
   areas: ['Tipos penais'],
   version: 'v{versao}',
+  links: [
+{_links_ts(links)}
+  ],
 }};
 
 export default entrada;
 """
-    return destino, ts
+        saida.append((destino, ts))
+    return saida
 
 
 # ── Execução ────────────────────────────────────────────────────────────────
+def _relativo(destino: Path) -> str:
+    return str(destino if RAIZ not in destino.parents
+               else destino.relative_to(RAIZ)).replace("\\", "/")
+
+
 def aplicar(escolha: dict, versao: str | None, dia: str, saida: Path) -> dict:
-    """Aplica a rodada. `versao` None (até a v1.0.0) = sem nota e sem subir versão."""
+    """Aplica a rodada. Nota, e versão, só quando alguma mudança vem de lei recente."""
     if escolha["correcoes"]:
         corrigir.aplicar(escolha["correcoes"])
     if escolha["novas"]:
         criar.aplicar(escolha["novas"])
 
-    destino = None
-    if versao:
-        destino, ts = entrada_changelog(escolha, versao, dia)
-        destino.parent.mkdir(parents=True, exist_ok=True)
-        # CRLF como o resto do repositório (as demais entradas são CRLF).
-        destino.write_bytes(ts.replace("\n", "\r\n").encode("utf-8"))
+    legais, fora = mudancas_da_lei(escolha, int(dia[:4]))
+    destinos: list[Path] = []
+    if versao and legais:
+        for destino, ts in entradas_changelog(escolha, legais, versao, dia):
+            destino.parent.mkdir(parents=True, exist_ok=True)
+            # CRLF como o resto do repositório (as demais entradas são CRLF).
+            destino.write_bytes(ts.replace("\n", "\r\n").encode("utf-8"))
+            destinos.append(destino)
         subir_versao(versao)
+    fechada = versao if destinos else None
 
     fonte = escolha["fonte"]
     meta = {
@@ -451,76 +567,20 @@ def aplicar(escolha: dict, versao: str | None, dia: str, saida: Path) -> dict:
         "correcoes": len(escolha["correcoes"]),
         "novas": len(escolha["novas"]),
         "humanos": len(escolha["humanos"]),
-        # O workflow lê as duas chaves; vazias, e não ausentes, até a v1.0.0.
-        "versao": versao or "",
+        # O workflow lê as chaves; vazias, e não ausentes, quando não há nota.
+        "versao": fechada or "",
         "ramo": f"conferidor/{fonte['id']}-{dia}",
         "titulo": (f"fix(catalogo): {escolha['total']} ajuste(s) em "
                    f"{_rotulo(fonte)} conferidos com o texto compilado"),
-        "entrada": "" if destino is None else str(
-            destino if RAIZ not in destino.parents
-            else destino.relative_to(RAIZ)).replace("\\", "/"),
+        "entrada": _relativo(destinos[0]) if destinos else "",
+        "entradas": [_relativo(d) for d in destinos],
     }
     saida.mkdir(parents=True, exist_ok=True)
-    (saida / "corpo.md").write_text(corpo_pr(escolha, versao), encoding="utf-8", newline="\n")
+    (saida / "corpo.md").write_text(corpo_pr(escolha, fechada, legais, fora),
+                                    encoding="utf-8", newline="\n")
     (saida / "meta.json").write_text(json.dumps(meta, ensure_ascii=False, indent=2) + "\n",
                                      encoding="utf-8", newline="\n")
     return meta
-
-
-def entrada_changelog_auditoria(propostas: list[dict], versao: str,
-                                dia: str) -> tuple[Path, str]:
-    """Entrada do feed para a rodada de auditoria."""
-    ident = f"{dia}-auditoria-classificacao"
-    destino = ENTRADAS / dia[:4] / f"{ident}.ts"
-    n = 2
-    while destino.exists():
-        ident = f"{dia}-auditoria-classificacao-{n}"
-        destino = ENTRADAS / dia[:4] / f"{ident}.ts"
-        n += 1
-
-    por_campo: dict[str, int] = {}
-    for p in propostas:
-        por_campo[p["campo"]] = por_campo.get(p["campo"], 0) + 1
-    partes = []
-    if por_campo.get("hediondo"):
-        partes.append(_plural(por_campo["hediondo"], "tipo teve a hediondez corrigida",
-                              "tipos tiveram a hediondez corrigida"))
-    if por_campo.get("acao"):
-        partes.append(_plural(por_campo["acao"], "teve a ação penal corrigida",
-                              "tiveram a ação penal corrigida"))
-    titulo = "Classificação conferida contra a lei: " + " e ".join(partes)
-
-    corpo = [
-        "A hediondez de um crime não é opinião: está no art. 1º da Lei 8.072/1990, que é "
-        "uma lista fechada. A ação penal também tem regra — pública incondicionada, salvo "
-        "quando o próprio diploma diz o contrário. Os dois campos decidem atributos, e "
-        "nenhum dos dois era conferido contra a lei até agora.",
-        "A conferência semanal passa a compará-los: o rol de hediondos, transcrito numa "
-        "tabela que a máquina vigia contra alterações do texto legal, e as fórmulas de "
-        "ação penal escritas no próprio artigo. Onde a lei condiciona a classificação a "
-        "uma circunstância do caso — o homicídio praticado por grupo de extermínio, a "
-        "organização criminosa direcionada a crime hediondo —, nada é proposto: a lei não "
-        "decide pelo tipo, e quem decide é quem julga.",
-    ]
-    ts = f"""import type {{ChangelogEntry}} from '../../types';
-
-const entrada: ChangelogEntry = {{
-  id: '{ident}',
-  date: '{dia}',
-  title: {json.dumps(titulo, ensure_ascii=False)},
-  summary:
-    {json.dumps("Auditoria dos campos de classificação contra o texto legal: " + " e ".join(partes) + ".", ensure_ascii=False)},
-  body: [
-{chr(10).join('    ' + json.dumps(p, ensure_ascii=False) + ',' for p in corpo)}
-  ],
-  tipo: 'correcao',
-  areas: ['Tipos penais', 'Atributos'],
-  version: 'v{versao}',
-}};
-
-export default entrada;
-"""
-    return destino, ts
 
 
 def _rodada_de_auditoria(args) -> int:
@@ -541,21 +601,16 @@ def _rodada_de_auditoria(args) -> int:
     if not propostas:
         return 1
 
-    versao = versao_da_rodada()
+    # Classificação corrigida contra o rol é correção de dado: sem nota e sem
+    # versão. Se a mudança vier de lei nova, a entrada se escreve à mão.
     if not args.aplicar:
-        fecho = f"fecharia a v{versao}" if versao else "sem versão até a v1.0.0"
-        print(f"(simulacao - nada foi escrito; {fecho})")
+        print("(simulacao - nada foi escrito; a auditoria não escreve nota nem sobe versão)")
         return 0
 
     aplicar_auditoria(propostas)
     fontes_novas = aplicar_fontes_propostas()
     dia = hoje().isoformat()
-    destino = None
-    if versao:
-        destino, ts = entrada_changelog_auditoria(propostas, versao, dia)
-        destino.parent.mkdir(parents=True, exist_ok=True)
-        destino.write_bytes(ts.replace("\n", "\r\n").encode("utf-8"))
-        subir_versao(versao)
+    versao = None
 
     saida = Path(args.saida)
     saida.mkdir(parents=True, exist_ok=True)
@@ -569,7 +624,7 @@ def _rodada_de_auditoria(args) -> int:
         "humanos": len(achados) - len(propostas), "versao": versao or "",
         "ramo": f"conferidor/auditoria-{dia}",
         "titulo": f"fix(catalogo): {len(propostas)} ajuste(s) de hediondez e ação penal",
-        "entrada": destino.name if destino else "",
+        "entrada": "", "entradas": [],
     }
     (saida / "meta.json").write_text(json.dumps(meta, ensure_ascii=False, indent=2) + "\n",
                                      encoding="utf-8", newline="\n")
@@ -613,7 +668,9 @@ def main() -> int:
 
     versao = versao_da_rodada()
     if not args.aplicar:
-        fecho = f"fecharia a v{versao}" if versao else "sem versão até a v1.0.0"
+        legais, _ = mudancas_da_lei(escolha, hoje().year)
+        fecho = (f"fecharia a v{versao} com {_plural(len(legais), 'nota', 'notas')}" if legais
+                 else "sem nota nem versão: nada vem de lei recente")
         print(f"(simulação — nada foi escrito; {fecho})")
         return 0
 

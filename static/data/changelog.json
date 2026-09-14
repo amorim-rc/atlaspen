@@ -1,1 +1,314 @@
-[]
+[
+  {
+    "id": "2026-09-14-lei-15487-pejus",
+    "date": "2026-09-14",
+    "title": "Lei nº 15.487, de 2026: crimes do ECA no rol dos hediondos",
+    "summary": "A lei reescreveu o inciso VII do parágrafo único do art. 1º da Lei 8.072/90, que passou de duas para catorze hipóteses do Estatuto da Criança e do Adolescente.",
+    "body": [
+      "Entram no rol, no catálogo, os caputs dos arts. 240, 241, 241-A, 241-D e 244-A do ECA, e o caput do art. 241-B. O art. 241-C, simulação da participação de criança ou adolescente em cena de sexo explícito, ficou de fora.",
+      "A hediondez muda os atributos penais que a leem, como a progressão de regime e o livramento condicional."
+    ],
+    "tipo": "pejus",
+    "areas": [
+      "Tipos penais",
+      "Atributos"
+    ],
+    "version": "v0.0.1",
+    "links": [
+      {
+        "label": "ECA, art. 240",
+        "href": "https://amorim-rc.github.io/sispenas/tipos/455"
+      },
+      {
+        "label": "ECA, art. 241",
+        "href": "https://amorim-rc.github.io/sispenas/tipos/456"
+      },
+      {
+        "label": "ECA, art. 241-A",
+        "href": "https://amorim-rc.github.io/sispenas/tipos/457"
+      },
+      {
+        "label": "ECA, art. 241-B",
+        "href": "https://amorim-rc.github.io/sispenas/tipos/458"
+      },
+      {
+        "label": "ECA, art. 241-D",
+        "href": "https://amorim-rc.github.io/sispenas/tipos/460"
+      },
+      {
+        "label": "ECA, art. 244-A",
+        "href": "https://amorim-rc.github.io/sispenas/tipos/464"
+      }
+    ]
+  },
+  {
+    "id": "2026-09-14-lei-15410-incriminadora",
+    "date": "2026-09-14",
+    "title": "Lei nº 15.410, de 2026: tortura de mulher no contexto de violência doméstica",
+    "summary": "A lei incluiu o inciso III no art. 1º da Lei 9.455/97: submeter mulher, reiteradamente, a intenso sofrimento físico ou mental no contexto de violência doméstica e familiar.",
+    "body": [
+      "A pena é de reclusão de 2 a 8 anos, sem prejuízo das penas de outras infrações. Como forma de tortura, o crime é equiparado a hediondo (CF, art. 5º, XLIII)."
+    ],
+    "tipo": "incriminadora",
+    "areas": [
+      "Tipos penais"
+    ],
+    "version": "v0.0.1",
+    "links": [
+      {
+        "label": "Lei 9.455/97, art. 1º, III",
+        "href": "https://amorim-rc.github.io/sispenas/tipos/1332"
+      }
+    ]
+  },
+  {
+    "id": "2026-09-14-lei-15402-pejus",
+    "date": "2026-09-14",
+    "title": "Lei nº 15.402, de 2026: nova regra geral de progressão de regime",
+    "summary": "A lei, vigente desde 8 de maio de 2026, deu nova redação ao caput e aos incisos I a III do art. 112 da Lei de Execução Penal.",
+    "body": [
+      "A regra geral do caput passa a um sexto da pena, o que é mais gravoso que os 16% antes exigidos do primário condenado por crime sem violência ou grave ameaça.",
+      "Os percentuais de 25% (primário, com violência ou grave ameaça), 30% (reincidente, com violência ou grave ameaça) e 20% (reincidente, sem violência ou grave ameaça) mudam de inciso, não de valor. A lei incluiu ainda o §9º do art. 126, na remição."
+    ],
+    "tipo": "pejus",
+    "areas": [
+      "Atributos"
+    ],
+    "version": "v0.0.1",
+    "links": [
+      {
+        "label": "Lei nº 15.402, de 2026, no Planalto",
+        "href": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15402.htm#art1"
+      },
+      {
+        "label": "Progressão de regime",
+        "href": "https://amorim-rc.github.io/sispenas/atributos/progressao"
+      }
+    ]
+  },
+  {
+    "id": "2026-09-14-lei-15397-pejus",
+    "date": "2026-09-14",
+    "title": "Lei nº 15.397, de 2026: penas agravadas nos crimes patrimoniais",
+    "summary": "A Lei nº 15.397, vigente desde 4 de maio de 2026, elevou as penas de furto, roubo, latrocínio, receptação e interrupção de serviço de comunicação. Cada moldura foi conferida no texto compilado do Planalto.",
+    "body": [
+      "Furto (CP, art. 155): o caput passa de 1 a 4 anos para 1 a 6 anos de reclusão; o aumento do repouso noturno (§1º), de um terço para metade; a fraude eletrônica (§4º-B), de 4 a 8 para 4 a 10 anos; o furto de veículo levado a outro Estado ou ao exterior (§5º), de 3 a 8 para 4 a 10 anos. Os §§ 6º e 7º ganham nova redação, com 4 a 10 anos.",
+      "Roubo (CP, art. 157): o caput passa de 4 a 10 para 6 a 10 anos; o latrocínio (§3º, II), de 20 a 30 para 24 a 30 anos.",
+      "Receptação (CP, art. 180, caput): de 1 a 4 para 2 a 6 anos. Receptação de animal (art. 180-A): de 2 a 5 para 3 a 8 anos. Interrupção ou perturbação de serviço telegráfico, telefônico, informático, telemático ou de informação de utilidade pública (art. 266): de 1 a 3 para 2 a 4 anos."
+    ],
+    "tipo": "pejus",
+    "areas": [
+      "Tipos penais"
+    ],
+    "version": "v0.0.1",
+    "links": [
+      {
+        "label": "Furto simples (CP, art. 155, caput)",
+        "href": "https://amorim-rc.github.io/sispenas/tipos/86"
+      },
+      {
+        "label": "Roubo simples (CP, art. 157, caput)",
+        "href": "https://amorim-rc.github.io/sispenas/tipos/95"
+      },
+      {
+        "label": "Latrocínio (CP, art. 157, §3º, II)",
+        "href": "https://amorim-rc.github.io/sispenas/tipos/105"
+      },
+      {
+        "label": "Receptação simples (CP, art. 180, caput)",
+        "href": "https://amorim-rc.github.io/sispenas/tipos/129"
+      }
+    ]
+  },
+  {
+    "id": "2026-09-14-lei-15397-incriminadora",
+    "date": "2026-09-14",
+    "title": "Lei nº 15.397, de 2026: dispositivos incluídos nos crimes patrimoniais",
+    "summary": "A mesma lei incluiu no Código Penal dispositivos com pena própria, que o catálogo passou a registrar como tipos penais.",
+    "body": [
+      "Furto qualificado de bens de órgãos públicos ou de serviços essenciais (art. 155, §4º, V), 2 a 8 anos; furto de fios, cabos ou equipamentos de energia, telefonia ou dados (art. 155, §8º), 2 a 8 anos.",
+      "Roubo de bens que comprometam serviços públicos ou de relevância pública (art. 157, §1º-A), 6 a 12 anos; roubo com subtração de celular, computador ou dispositivo eletrônico, e de arma de fogo (art. 157, §2º, IX e X), causas de aumento que levam a moldura a 8 a 15 anos.",
+      "Cessão de conta bancária para financiar ou ocultar atividade criminosa (art. 171, §2º, VII), nas penas do caput do estelionato, 1 a 5 anos."
+    ],
+    "tipo": "incriminadora",
+    "areas": [
+      "Tipos penais"
+    ],
+    "version": "v0.0.1",
+    "links": [
+      {
+        "label": "CP, art. 155, §4º, V",
+        "href": "https://amorim-rc.github.io/sispenas/tipos/815"
+      },
+      {
+        "label": "CP, art. 155, §8º",
+        "href": "https://amorim-rc.github.io/sispenas/tipos/816"
+      },
+      {
+        "label": "CP, art. 157, §1º-A",
+        "href": "https://amorim-rc.github.io/sispenas/tipos/811"
+      },
+      {
+        "label": "CP, art. 157, §2º, IX",
+        "href": "https://amorim-rc.github.io/sispenas/tipos/813"
+      },
+      {
+        "label": "CP, art. 157, §2º, X",
+        "href": "https://amorim-rc.github.io/sispenas/tipos/814"
+      },
+      {
+        "label": "CP, art. 171, §2º, VII",
+        "href": "https://amorim-rc.github.io/sispenas/tipos/820"
+      }
+    ]
+  },
+  {
+    "id": "2026-09-14-lei-15384-incriminadora",
+    "date": "2026-09-14",
+    "title": "Lei nº 15.384, de 2026: vicaricídio",
+    "summary": "A lei incluiu no Código Penal o art. 121-B, o vicaricídio, com reclusão de 20 a 40 anos.",
+    "body": [
+      "O vicaricídio é crime hediondo (art. 1º, I-C, da Lei 8.072/90).",
+      "O parágrafo único aumenta a pena de um terço até a metade quando o crime é praticado na presença da mulher a quem se pretende causar sofrimento, punição ou controle; contra criança, adolescente, pessoa idosa ou pessoa com deficiência; ou em descumprimento de medida protetiva de urgência. O catálogo registra cada hipótese de aumento com a sua moldura, de 26 anos e 8 meses a 60 anos."
+    ],
+    "tipo": "incriminadora",
+    "areas": [
+      "Tipos penais"
+    ],
+    "version": "v0.0.1",
+    "links": [
+      {
+        "label": "Vicaricídio (CP, art. 121-B)",
+        "href": "https://amorim-rc.github.io/sispenas/tipos/1308"
+      },
+      {
+        "label": "CP, art. 121-B, parágrafo único, I",
+        "href": "https://amorim-rc.github.io/sispenas/tipos/1309"
+      },
+      {
+        "label": "CP, art. 121-B, parágrafo único, II",
+        "href": "https://amorim-rc.github.io/sispenas/tipos/1310"
+      },
+      {
+        "label": "CP, art. 121-B, parágrafo único, III",
+        "href": "https://amorim-rc.github.io/sispenas/tipos/1311"
+      }
+    ]
+  },
+  {
+    "id": "2026-09-14-lei-15383-pejus",
+    "date": "2026-09-14",
+    "title": "Lei nº 15.383, de 2026: aumento de pena no descumprimento de medida protetiva",
+    "summary": "A lei incluiu o §4º no art. 24-A da Lei 11.340/2006 (Lei Maria da Penha). A pena do descumprimento de medida protetiva de urgência, reclusão de 2 a 5 anos, é aumentada de um terço até a metade em duas hipóteses.",
+    "body": [
+      "O aumento vale quando o descumprimento decorre da violação de área de exclusão monitorada eletronicamente, ou da remoção ou alteração do dispositivo de monitoração. Entra como causa de aumento na dosimetria da ficha do tipo."
+    ],
+    "tipo": "pejus",
+    "areas": [
+      "Tipos penais",
+      "Dosimetria"
+    ],
+    "version": "v0.0.1",
+    "links": [
+      {
+        "label": "Lei 11.340/2006, art. 24-A",
+        "href": "https://amorim-rc.github.io/sispenas/tipos/477"
+      }
+    ]
+  },
+  {
+    "id": "2026-09-14-lei-15358-pejus",
+    "date": "2026-09-14",
+    "title": "Lei nº 15.358, de 2026: progressão mais longa para crimes hediondos",
+    "summary": "A lei deu nova redação aos incisos V a VIII do art. 112 da Lei de Execução Penal e incluiu a alínea \"d\" do inciso VI. As frações de progressão dos crimes hediondos e equiparados sobem.",
+    "body": [
+      "Para o condenado por crime hediondo ou equiparado, a progressão passa a exigir 70% da pena (inciso V, antes 40%), 75% (inciso VI, antes 50%), 80% (inciso VII, antes 60%) e 85% (inciso VIII, antes 70%).",
+      "O inciso VI alcança, com 75%, o comando de organização criminosa ultraviolenta (alínea \"b\") e a constituição de milícia privada, ao primário e ao reincidente (alínea \"c\"). A alínea \"d\", incluída, exige 75% do primário condenado por feminicídio e veda a ele o livramento condicional."
+    ],
+    "tipo": "pejus",
+    "areas": [
+      "Atributos"
+    ],
+    "version": "v0.0.1",
+    "links": [
+      {
+        "label": "Lei nº 15.358, de 2026, no Planalto",
+        "href": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2026/Lei/L15358.htm#art35"
+      },
+      {
+        "label": "Progressão de regime",
+        "href": "https://amorim-rc.github.io/sispenas/atributos/progressao"
+      },
+      {
+        "label": "Livramento condicional",
+        "href": "https://amorim-rc.github.io/sispenas/atributos/livramento"
+      }
+    ]
+  },
+  {
+    "id": "2026-09-14-lei-15358-incriminadora",
+    "date": "2026-09-14",
+    "title": "Lei nº 15.358, de 2026: formas por organização criminosa ultraviolenta",
+    "summary": "A lei incluiu no Código Penal formas com pena própria para o crime cometido por integrante de organização criminosa ultraviolenta, grupo paramilitar ou milícia privada, e a ameaça no contexto dessas organizações.",
+    "body": [
+      "Homicídio (art. 121, §2º-D), 20 a 40 anos; lesão corporal seguida de morte (art. 129, §3º-A), 20 a 40 anos; sequestro ou cárcere privado (art. 148, §3º), 12 a 20 anos; furto (art. 155, §9º), 4 a 10 anos; latrocínio (art. 157, §5º), 20 a 40 anos, hediondo.",
+      "Ameaça no contexto de organização criminosa ultraviolenta (art. 147-C), 1 a 3 anos.",
+      "O §2º-D do art. 121 não consta do rol da Lei 8.072/90, que remete ao §2º. A ficha o registra como não hediondo, e a hediondez fica a rever se o rol mudar."
+    ],
+    "tipo": "incriminadora",
+    "areas": [
+      "Tipos penais"
+    ],
+    "version": "v0.0.1",
+    "links": [
+      {
+        "label": "Lei nº 15.358, de 2026, no Planalto",
+        "href": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2026/Lei/L15358.htm"
+      },
+      {
+        "label": "CP, art. 121, §2º-D",
+        "href": "https://amorim-rc.github.io/sispenas/tipos/1306"
+      },
+      {
+        "label": "CP, art. 129, §3º-A",
+        "href": "https://amorim-rc.github.io/sispenas/tipos/1314"
+      },
+      {
+        "label": "CP, art. 147-C",
+        "href": "https://amorim-rc.github.io/sispenas/tipos/1312"
+      },
+      {
+        "label": "CP, art. 148, §3º",
+        "href": "https://amorim-rc.github.io/sispenas/tipos/1315"
+      },
+      {
+        "label": "CP, art. 155, §9º",
+        "href": "https://amorim-rc.github.io/sispenas/tipos/1316"
+      },
+      {
+        "label": "CP, art. 157, §5º",
+        "href": "https://amorim-rc.github.io/sispenas/tipos/1317"
+      }
+    ]
+  },
+  {
+    "id": "2026-09-14-lei-15355-incriminadora",
+    "date": "2026-09-14",
+    "title": "Lei nº 15.355, de 2026: desastre ambiental que prejudica animais",
+    "summary": "A lei incluiu o §1º-C no art. 32 da Lei 9.605/98: provocar desastre ambiental que prejudique a vida, a integridade física ou o bem-estar de animais silvestres ou domésticos.",
+    "body": [
+      "A pena é a do caput do art. 32: detenção de 3 meses a 1 ano, e multa."
+    ],
+    "tipo": "incriminadora",
+    "areas": [
+      "Tipos penais"
+    ],
+    "version": "v0.0.1",
+    "links": [
+      {
+        "label": "Lei 9.605/98, art. 32, §1º-C",
+        "href": "https://amorim-rc.github.io/sispenas/tipos/1328"
+      }
+    ]
+  }
+]

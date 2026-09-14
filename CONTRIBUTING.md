@@ -67,15 +67,15 @@ Exemplo presente: Art. 227 do CP (a multa só incide na hipótese do §3º).
 
 ## Versão e notas
 
-> **Até a v1.0.0 nada é publicado** (decisão de 10/09/2026, executada em 11/09/2026). O
-> projeto está na versão `0.0.0`: não se sobe versão nem se criam entradas de changelog, e
-> a CI reprova entrada criada nesse período. A página Notas de atualizações só avisa que
-> será alimentada depois do lançamento.
+> **Até a v1.0.0 a versão anda em `0.0.x`** (decisões de 10/09/2026 e de 14/09/2026). O
+> feed de notas já registra as alterações de lei, com a mesma régua de sempre; o que fica
+> para o lançamento é a Release no GitHub, que o `release.yml` só publica a partir da
+> v1.0.0.
 
-Depois da v1.0.0, cada versão publica **duas coisas a partir dos mesmos arquivos**: a
-Release no GitHub e a nota no site, em `/release-notes`. As notas registram
-**exclusivamente** alterações que criem, modifiquem ou extingam tipos penais ou atributos
-penais.
+Cada versão publica **duas coisas a partir dos mesmos arquivos**: a nota no site, em
+`/notas`, e, depois da v1.0.0, a Release no GitHub. As notas registram **exclusivamente**
+alterações de lei que criem, modifiquem ou extingam tipos penais ou atributos penais;
+correção de dado do catálogo não vira nota.
 
 1. **Cada alteração dessas vira uma entrada** em
    `src/data/changelog/entries/<ano>/<id>.ts`, um arquivo por mudança, texto puro, com

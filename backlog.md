@@ -96,6 +96,10 @@ ele não pode sair.
 **Concluída em 11/09/2026.** O projeto está em `0.0.0` e nada é publicado até a
 **v1.0.0**, o lançamento oficial, com domínio. A regra está no `AGENTS.md`.
 
+**Revista em 14/09/2026.** O feed de notas volta a registrar, já em `0.0.x`, as alterações
+de lei, com a natureza em termos penais; a primeira leva, a v0.0.1, traz as leis penais de
+2026. A Release no GitHub continua suspensa até a v1.0.0.
+
 **Decidido em 10/09/2026.** Retirar a numeração até o lançamento, porque os números
 antigos nunca existiram como lançamento (renumerá-los em `v0.0.X` foi descartado).
 Expurgar as Notas de atualizações; depois da v1.0.0, o feed publica exclusivamente

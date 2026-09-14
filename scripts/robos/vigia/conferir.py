@@ -45,7 +45,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from nucleo.dispositivo import (SNAPSHOTS, chave,  # noqa: E402,F401
                                 chaves_do_registro)
-from nucleo.parsear import parsear  # noqa: E402
+from nucleo.parsear import parsear, url_absoluta  # noqa: E402
 from nucleo.tempo import hoje  # noqa: E402
 from pena_parser import ler_pena, ler_penas  # noqa: E402
 
@@ -60,6 +60,20 @@ TRILHA = RAIZ / "data" / "conferencia.json"
 # Tolerância na comparação de molduras: 1 dia. Abaixo disso é arredondamento da
 # conversão para meses (o CP conta o mês como 30 dias), não divergência real.
 TOLERANCIA_MESES = 1 / 30 + 1e-6
+
+
+def _anotacao(disp, fonte: dict) -> dict | None:
+    """A lei que deu a redação vigente do dispositivo, como o compilado a anota.
+
+    É o que separa, para o Proponente, uma lei nova de um erro antigo do
+    catálogo: moldura divergente sob redação dada por lei recente é alteração
+    legislativa e vira nota; sob redação antiga, é dado que estava errado.
+    """
+    a = getattr(disp, "anotacao", None)
+    if not a or a.acao not in ("redacao", "incluido") or not a.norma or not a.ano:
+        return None
+    return {"acao": a.acao, "norma": a.norma, "ano": a.ano, "texto": a.texto,
+            "url": url_absoluta(fonte.get("url") or "", a.href)}
 
 
 def carregar_excecoes() -> list[dict]:
@@ -245,6 +259,7 @@ def conferir_fonte(fonte: dict, do_catalogo: dict[str, list[dict]],
                                  "max": m["max_meses"], "teto": m["teto_apenas"]},
                     "contexto": m.get("contexto", ""),
                     "epigrafe": disp.epigrafe, "texto_lei": disp.texto,
+                    "anotacao": _anotacao(disp, fonte),
                 })
 
         for linha in linhas:
@@ -258,6 +273,8 @@ def conferir_fonte(fonte: dict, do_catalogo: dict[str, list[dict]],
                     achados.append({
                         "tipo": "DIVERGENTE-moldura", "gravidade": 2, "chave": k,
                         "ids": [linha["id"]],
+                    "anotacao": _anotacao(disp, fonte),
+                        "anotacao": _anotacao(disp, fonte),
                         "detalhe": f"a lei comina só multa; o catálogo traz "
                                    f"{cmin:g}–{cmax:g} meses de {linha['tipo_pena']}",
                     })
@@ -277,6 +294,7 @@ def conferir_fonte(fonte: dict, do_catalogo: dict[str, list[dict]],
                 achados.append({
                     "tipo": "DIVERGENTE-moldura", "gravidade": 2, "chave": k,
                     "ids": [linha["id"]],
+                    "anotacao": _anotacao(disp, fonte),
                     "detalhe": f"lei {lmin:g}–{lmax:g} × catálogo {cmin:g}–{cmax:g} "
                                f"(meses); texto: {(disp.pena_texto or '')[:90]}",
                     "multiplas": pena.get("multiplas", False),
@@ -295,6 +313,7 @@ def conferir_fonte(fonte: dict, do_catalogo: dict[str, list[dict]],
                 achados.append({
                     "tipo": "DIVERGENTE-tipo", "gravidade": 2, "chave": k,
                     "ids": [linha["id"]],
+                    "anotacao": _anotacao(disp, fonte),
                     "detalhe": f"lei {pena['tipo']} × catálogo {linha['tipo_pena']}",
                     "multiplas": pena.get("multiplas", False),
                     "teto_apenas": pena["teto_apenas"],
@@ -337,6 +356,7 @@ def conferir_fonte(fonte: dict, do_catalogo: dict[str, list[dict]],
             "detalhe": f"{(d.epigrafe or d.texto or '')[:70]} — "
                        f"{(d.pena_texto or '')[:70]}",
             "vigencia_pendente": d.vigencia_pendente,
+            "anotacao": _anotacao(d, fonte),
             "epigrafe": d.epigrafe, "texto_lei": d.texto,
             "pena_lei": {"tipo": pena["tipo"], "min": pena["min_meses"],
                          "max": pena["max_meses"], "teto": pena["teto_apenas"]},

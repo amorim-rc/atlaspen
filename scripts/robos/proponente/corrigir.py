@@ -112,6 +112,10 @@ def gerar(fonte_id: str) -> tuple[list[dict], list[dict]]:
             humanos.append(a)
             continue
         p = propor(linha, lei["min"], lei["max"], lei["tipo"], a["detalhe"])
+        if p:
+            # A lei que deu a redação vigente, lida do compilado: é o que decide,
+            # no Proponente, se a correção vira nota (lei recente) ou não (dado).
+            p["anotacao"] = a.get("anotacao")
         (propostas if p else humanos).append(p or a)
     return propostas, humanos
 
