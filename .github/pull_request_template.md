@@ -15,10 +15,10 @@ CONTRIBUTING.md traz as convenções C1 a C8 do catálogo.
 - [ ] Atributos penais (`src/lib/atributos/`)
 - [ ] Dosimetria e demais regras (`src/lib/`)
 - [ ] Robôs e scripts (`scripts/`, `crawler/`)
-- [ ] Interface (`src/components/`, `src/pages/`, `src/css/`)
+- [ ] Interface (`src/components/`, `src/pages/`, `src/layouts/`, `src/styles/`)
 - [ ] Documentação (`docs/`, `*.md`)
 - [ ] Notas de atualizações (`src/data/changelog/`)
-- [ ] Infra e CI (`.github/`, configuração do Docusaurus)
+- [ ] Infra e CI (`.github/`, `astro.config.mjs`)
 
 ## Fonte legal
 

@@ -1,4 +1,4 @@
-# A segunda-feira do SISPENAS
+# A segunda-feira do AtlasPen
 
 Documento interno de operação — não é publicado no site. Responde a uma pergunta:
 **o que chega para mim toda semana, e o que cada coisa exige.**

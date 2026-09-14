@@ -36,7 +36,7 @@ import urllib.request
 from pathlib import Path
 
 BASE = "https://www.planalto.gov.br/ccivil_03/"
-UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) SISPENAS-inventario"
+UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AtlasPen-inventario"
 RAIZ = Path(__file__).resolve().parent.parent
 HOJE = "2026-07-19"
 

@@ -1,5 +1,5 @@
 blank_issues_enabled: true
 contact_links:
-  - name: Documentação do SISPENAS
-    url: https://amorim-rc.github.io/sispenas/docs/metodologia
+  - name: Documentação do AtlasPen
+    url: https://amorim-rc.github.io/sispenas/projeto/metodologia
     about: Consulte a metodologia, os atributos penais e o backlog antes de abrir uma issue.

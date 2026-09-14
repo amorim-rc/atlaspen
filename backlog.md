@@ -149,8 +149,8 @@ lançamento sai com domínio próprio, e nome e domínio devem mudar juntos.
    Enforce HTTPS.
 4. Verificar o domínio na conta ou na organização (Settings ▸ Pages ▸ Verified domains),
    o que impede apropriação por terceiros.
-5. No repositório: `url` e `baseUrl` no `docusaurus.config.ts` (ou no que o substituir na
-   reconstrução do site), e as URLs absolutas (README, CITATION).
+5. No repositório: `site` e `base` no `astro.config.mjs`, `SITE_URL` em
+   `src/site/config.ts`, e as URLs absolutas (README, CITATION).
 
 **Próximo passo, do mantenedor:** um plano completo de revamp, com nome provisório. Ele
 decide o nome, a marca e o que combina com a reconstrução do site.

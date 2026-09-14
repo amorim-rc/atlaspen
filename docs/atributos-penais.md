@@ -6,7 +6,7 @@ sidebar_position: 3
 
 # Atributos penais modelados
 
-O SISPENAS modela os **22 atributos** abaixo. Todos os valores de pena são tratados em
+O AtlasPen modela os **22 atributos** abaixo. Todos os valores de pena são tratados em
 **meses**. A implementação é para fins de pesquisa e simplifica controvérsias.
 
 ## Como o catálogo é modelado

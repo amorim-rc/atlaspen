@@ -1,4 +1,4 @@
-# CODEOWNERS do SISPENAS
+# CODEOWNERS do AtlasPen
 #
 # Quando um PR altera um caminho abaixo, o dono correspondente é chamado para revisar, e
 # o ruleset da `main` exige a aprovação dele. Vale a ÚLTIMA regra que casa o arquivo: por

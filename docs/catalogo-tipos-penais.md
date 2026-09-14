@@ -6,7 +6,7 @@ sidebar_position: 2
 
 # Catálogo de tipos penais
 
-O catálogo é a base factual do SISPENAS: é dele que saem as penas cominadas, a hediondez,
+O catálogo é a base factual do AtlasPen: é dele que saem as penas cominadas, a hediondez,
 a violência e as demais características que alimentam o cálculo dos atributos penais. Esta
 página descreve **como ele é estruturado, como é derivado e como sua qualidade é garantida
 nele**.

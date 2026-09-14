@@ -1,14 +1,14 @@
 cff-version: 1.2.0
-message: "Se você usar o SISPENAS em pesquisa ou publicação, por favor cite conforme abaixo."
-title: "SISPENAS — Sistema de Pesquisa de Tipos e Atributos Penais"
+message: "Se você usar o AtlasPen em pesquisa ou publicação, por favor cite conforme abaixo."
+title: "AtlasPen — Atlas Penal Brasileiro dos Tipos, Atributos e Impacto Legislativo"
 abstract: >-
   Ferramenta aberta de pesquisa de políticas públicas para estudar o impacto dos
-  atributos penais sobre os tipos penais brasileiros. Reimplementação digital e
-  interativa do SISPENAS originalmente concebido por Maíra Rocha Machado e Marta
-  Rodriguez de Assis Machado (Direito GV/FGV, 2008).
+  atributos penais sobre os tipos penais brasileiros. Retoma o SISPENAS, sistema
+  concebido por Maíra Rocha Machado e Marta Rodriguez de Assis Machado (Direito
+  GV/FGV, 2008).
 type: software
 authors:
-  - name: "Equipe SISPENAS"
+  - name: "Equipe AtlasPen"
 # Até a v1.0.0 não há versão publicada: cite pela data.
 date-released: "2026-09-11"
 license: MIT

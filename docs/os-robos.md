@@ -1,6 +1,6 @@
 ---
 title: Os robôs
-description: Como o SISPENAS descobre que a lei mudou — o que cada robô vigia, com que critério, e o que nenhum deles alcança.
+description: Como o AtlasPen descobre que a lei mudou — o que cada robô vigia, com que critério, e o que nenhum deles alcança.
 ---
 
 # Os robôs

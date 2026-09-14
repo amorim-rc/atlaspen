@@ -11,7 +11,7 @@ O catálogo completo é publicado como dado aberto em formato JSON:
 - **Arquivo:** [`/data/crimes.json`](pathname:///sispenas/data/crimes.json)
 - **Atributos penais:** [`/data/atributos.json`](pathname:///sispenas/data/atributos.json)
   (ver [Atributos penais](#atributos-penais), abaixo)
-- **Licença:** MIT com atribuição — cite como **"Equipe SISPENAS"**.
+- **Licença:** MIT com atribuição — cite como **"Equipe AtlasPen"**.
 
 ## Esquema de cada registro
 
@@ -251,7 +251,7 @@ exigência.
 
 ## Estabilidade e versionamento
 
-O SISPENAS segue o [Semantic Versioning 2.0.0](https://semver.org/lang/pt-BR/) —
+O AtlasPen segue o [Semantic Versioning 2.0.0](https://semver.org/lang/pt-BR/) —
 `MAIOR.MENOR.CORREÇÃO` — com uma leitura explícita do que cada posição significa
 **neste projeto**. Sem essa convenção, "v2.1" e "v3.0" viram apenas rótulos de ordem.
 
@@ -259,7 +259,8 @@ Dois públicos dependem de estabilidade, e são eles que definem a **API públic
 efeito de versionamento:
 
 1. quem consome os **dados abertos** (`static/data/crimes.json`) e os cita em pesquisa;
-2. quem referencia **URLs** (`/pesquisa/tipos?tipo=N`) em artigos e pareceres.
+2. quem referencia **URLs** (`/tipos/N`; as antigas, `/pesquisa/tipos?tipo=N`, levam a
+   elas) em artigos e pareceres.
 
 | Posição | Incrementa quando | Exemplos |
 |---|---|---|
@@ -286,5 +287,11 @@ esta regra vale. Os próximos passos estão no
 
 ## Como citar
 
-> Equipe SISPENAS. *SISPENAS — Sistema de Pesquisa de Tipos e Atributos Penais*.
-> Disponível em: https://github.com/amorim-rc/sispenas. Acesso em: [data].
+> Equipe AtlasPen. *AtlasPen — Atlas Penal Brasileiro dos Tipos, Atributos e Impacto
+> Legislativo*. Disponível em: https://github.com/amorim-rc/sispenas. Acesso em: [data].
+
+A pesquisa de origem, que o AtlasPen retoma, cita-se à parte:
+
+> MACHADO, Maíra Rocha; MACHADO, Marta Rodriguez de Assis (coord.). SISPENAS: Sistema de
+> Consulta sobre Crimes, Penas e Alternativas à Prisão. *Revista Jurídica*, Brasília,
+> v. 10, n. 90, ed. esp., p. 1-26, abr./maio 2008.

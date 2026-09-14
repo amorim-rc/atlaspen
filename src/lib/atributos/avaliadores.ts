@@ -1,4 +1,4 @@
-// Funções de avaliação dos atributos penais — SISPENAS.
+// Funções de avaliação dos atributos penais — AtlasPen.
 //
 // O atributo é dado (data/atributos.json: nome, fundamento, requisitos,
 // vedações, parâmetros e as redações de cada um); aqui fica só o cálculo, uma

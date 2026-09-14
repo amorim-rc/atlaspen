@@ -1,4 +1,4 @@
-// Modelo de dados do catálogo de tipos penais SISPENAS.
+// Modelo de dados do catálogo de tipos penais do AtlasPen.
 
 export type PenaPrivativa = 'Reclusão' | 'Detenção' | 'Prisão simples' | 'Nenhuma';
 export type MultaRegime = 'cumulativa' | 'alternativa' | 'isolada' | 'nenhuma';

@@ -1,4 +1,4 @@
-# Como contribuir — SISPENAS
+# Como contribuir — AtlasPen
 
 ## Visão geral
 

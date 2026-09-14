@@ -3,7 +3,7 @@
 ## Nosso compromisso
 
 No interesse de promover um ambiente aberto e acolhedor, nós, contribuidores e
-mantenedores, comprometemo-nos a tornar a participação no SISPENAS uma experiência livre
+mantenedores, comprometemo-nos a tornar a participação no AtlasPen uma experiência livre
 de assédio para todas as pessoas, independentemente de idade, corpo, deficiência,
 etnia, identidade e expressão de gênero, nível de experiência, nacionalidade, aparência
 pessoal, raça, religião ou identidade e orientação sexual.

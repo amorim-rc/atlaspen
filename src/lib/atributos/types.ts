@@ -1,4 +1,4 @@
-// Modelo declarativo do catálogo de atributos penais — SISPENAS.
+// Modelo declarativo do catálogo de atributos penais — AtlasPen.
 //
 // Cada atributo é um REGISTRO de dados (nome, fundamento, requisitos, vedações e
 // PARÂMETROS editáveis), guardado em data/atributos.json e montado por

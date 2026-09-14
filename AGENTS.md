@@ -1,4 +1,4 @@
-# Instruções para agentes de IA — SISPENAS
+# Instruções para agentes de IA — AtlasPen
 
 Ferramenta aberta de pesquisa de tipos penais e atributos penais. **Acuidade jurídica é o valor
 central**: um dado errado publicado é pior que um dado ausente. Nada entra no catálogo sem
@@ -49,7 +49,8 @@ ignoradas:
 - `resultado_morte` deriva do **nome** do tipo, nunca do `obs`.
 - Editar `.md` com Python/`sed` no Windows introduz **CRLF** (quebra os admonitions
   `:::note[...]`); use `write_bytes` ou confira o EOL.
-- Admonitions do Docusaurus v3: `:::note[Título]`, não `:::note Título`.
+- Admonitions: `:::note[Título]`, não `:::note Título` — é a sintaxe que
+  `src/site/markdown/admonicoes.ts` lê.
 
 ## Verificação antes de concluir
 

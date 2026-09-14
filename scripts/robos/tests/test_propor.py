@@ -58,7 +58,7 @@ class TestVersao:
         """Reescrever em LF trocaria a quebra de linha do arquivo inteiro e o
         diff do PR mostraria cinquenta linhas no lugar de uma."""
         alvo = tmp_path / "package.json"
-        alvo.write_bytes(b'{\r\n  "name": "sispenas",\r\n  "version": "1.3.0"\r\n}\r\n')
+        alvo.write_bytes(b'{\r\n  "name": "atlaspen",\r\n  "version": "1.3.0"\r\n}\r\n')
         propor._substituir_versao(alvo, r'"version":\s*"{v}"', "1.3.0", "1.3.1")
         bruto = alvo.read_bytes()
         assert b'"version": "1.3.1"' in bruto

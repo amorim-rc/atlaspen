@@ -2,7 +2,7 @@
 
 ## Escopo
 
-O SISPENAS é um site estático de pesquisa, sem backend, sem autenticação e sem coleta de
+O AtlasPen é um site estático de pesquisa, sem backend, sem autenticação e sem coleta de
 dados pessoais de usuários. Ainda assim, levamos a sério eventuais problemas de segurança
 (por exemplo, vulnerabilidades em dependências de build ou conteúdo malicioso).
 
