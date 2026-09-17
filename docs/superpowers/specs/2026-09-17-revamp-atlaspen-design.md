@@ -58,8 +58,6 @@ mesma natureza, e parte delas não se fecha por esforço de implementação.
   recebe isso por parâmetro (`src/lib/simulacao/motor.ts:259`). Quem trava é a interface:
   `src/components/simulacao/Simulador.tsx:69` faz `const REV = cenarioReversoPadrao()`, constante de
   módulo. Fechar é subir `REV` para estado e reaproveitar os controles que a ficha do atributo já tem.
-- **Etiqueta de "sentido não classificado".** Hoje a etiqueta só aparece quando a mudança só alarga
-  ou só estreita. Estender para a mudança que altera valores (prazo, fração, regime).
 
 **A2 — feature (o grosso do esforço)**
 
@@ -68,6 +66,11 @@ mesma natureza, e parte delas não se fecha por esforço de implementação.
   (progressão, prescrição, regime) é redesenhar esse contrato.
 - **Tipo modificado.** Nome e dispositivo não se editam; o elemento subjetivo só alterna entre doloso
   e culposo; um tipo criado no pacote não pode ser modificado por outra mudança do mesmo pacote.
+- **Etiqueta de "sentido não classificado".** Reclassificada de A1 para A2 em 17/09/2026, ao
+  escrever o plano. `src/lib/simulacao/motor.ts:377` recusa a etiqueta de propósito: *"o sentido
+  depende do valor, e a tela não o adivinha"*. O `valor` de `AtributoResultado` é **string**
+  (`"36 meses"`); classificar a direção exige que `AtributoDef` declare um numérico comparável e
+  o sentido dele (maior é pior, ou maior é melhor). É mudança de contrato, não fiação.
 - **Testes de interface e medida de desempenho.** Hoje há teste de motor e de URL
   (`scripts/verificar_simulacao.ts`, 254 linhas); não há teste de interface nem medição além de
   22 atributos × 1.472 tipos.
