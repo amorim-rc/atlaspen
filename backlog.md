@@ -597,3 +597,50 @@ A reconstrução do site pode absorver parte disso antes do lançamento.
 - simulação legislativa em lote ("aumentar em 2 anos a pena dos crimes patrimoniais");
 - exportação para pesquisa e API versionada;
 - esquema versionado dos dados abertos, com política de depreciação.
+---
+
+## 17. Hediondo por natureza e equiparado a hediondo
+
+**Objetivo.** Separar, no registro do tipo, o crime **hediondo** do crime **equiparado a
+hediondo**. Hoje o catálogo colapsa os dois em `hediondo: "Sim"`.
+
+**O que já se sabe (derivado da v2.0.6).** São 1.507 registros: 133 com `hediondo: "Sim"`,
+1.374 com `"Não"`, e 23 com `hediondo_condicao`. Entre os 133 estão, indistintos:
+
+| Registro | Dispositivo | Natureza |
+|---|---|---|
+| 315, 316, 322, 674 | Lei 11.343/06, arts. 33 e 36 | Tráfico — **equiparado** |
+| 383, 384, 386, 387 | Lei 9.455/97, art. 1º | Tortura — **equiparado** |
+| 790, 791, 793, 794 | Lei 13.260/16 | Terrorismo — **equiparado** |
+| demais | Lei 8.072/90, art. 1º | Hediondo **por natureza** |
+
+O fundamento é diferente e a distinção é constitucional: o art. 5º, XLIII, da CF equipara
+tráfico, tortura e terrorismo ao hediondo **quanto ao regime jurídico**, sem torná-los
+hediondos; a hediondez própria é a do rol do art. 1º da Lei 8.072/90, que é taxativo.
+
+**Por que importa, e não é ornamento.** Os avaliadores de `src/lib/atributos/avaliadores.ts`
+já escrevem "hediondo ou equiparado" na justificativa de livramento condicional (art. 83, V,
+do CP), progressão (art. 112, V a VIII, da LEP) e vedação de graça e indulto — ou seja, **a
+interface já usa o vocabulário que o dado não registra**. Enquanto os efeitos coincidirem, o
+colapso não produz veredito errado; ele quebra quando um dispositivo alcançar só uma das
+duas classes. O art. 112, VI, "b", da LEP na redação da Lei 15.358/2026 é o aviso: legislar
+sobre o regime dos hediondos e equiparados está em curso.
+
+**Proposta de método, ponto de partida para o estudo com o grupo.**
+
+- Vocabulário fechado no campo-fonte `hediondo`: `natureza | equiparado | nao`, imposto pela
+  CI. Alternativa a considerar: manter `hediondo` binário e acrescentar `hediondo_especie`,
+  que não invalida consumidor de dado aberto já existente. **A segunda é a menos destrutiva**
+  e deve ser a preferida se houver consumidor externo.
+- Um campo de **fundamento**, como na frente 6: o inciso do art. 1º da Lei 8.072/90, ou o
+  art. 5º, XLIII, da CF com a lei que define o equiparado.
+- **Temporalidade.** A composição do rol muda por lei — a Lei 8.930/94 incluiu o homicídio
+  qualificado, a Lei 13.142/2015 o homicídio contra agente de segurança, a Lei 14.344/2022 os
+  crimes contra criança e adolescente. A sucessão é da frente 11; nesta fase, a redação
+  vigente.
+- A etiqueta aparece na ficha do tipo e vira filtro na Busca por tipo penal.
+
+**Primeiro passo.** Conferir os 133 registros contra o rol vigente do art. 1º da Lei 8.072/90
+e contra o art. 5º, XLIII, da CF, classificando cada um. Os equiparados são poucos e
+conhecidos; o trabalho real está em confirmar que nenhum dos "por natureza" está no rol por
+inércia.
