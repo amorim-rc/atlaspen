@@ -19,6 +19,7 @@ import {
   crimesComPenaPrivativa,
 } from '../src/lib/atributos/reverso';
 import {escreverPremissa, lerPremissa, premissaIgualAoPadrao} from '../src/lib/atributos/premissa-url';
+import {escreverEstado, lerEstado} from '../src/components/atributo/estado';
 import {cenarioFromCrime} from '../src/lib/cenario';
 import {calcularConcurso, calcularDosimetria} from '../src/lib/dosimetria';
 
@@ -654,6 +655,19 @@ console.log('\nPremissa da varredura na URL');
 
   const ruim = lerPremissa(new URLSearchParams('base=inventada'));
   ok(ruim.base === 'minima', 'base fora do vocabulário cai no padrão');
+}
+
+console.log('\nA ficha grava a premissa nas mesmas chaves do codec');
+{
+  const def = CATALOGO.find((d) => d.natureza === 'concreto')!;
+  const padroes = valoresPadrao(def);
+  const e = lerEstado('?base=maxima&reincidente=sim', def, padroes);
+  ok(e.rev.base === 'maxima', 'a ficha lê base=maxima');
+  ok(e.rev.reincidenteEspecifico === true, 'a ficha lê reincidente=sim');
+  const s = escreverEstado(e, def);
+  ok(s.includes('base=maxima'), 'a ficha reescreve base=maxima');
+  ok(s.includes('reincidente=sim'), 'a ficha reescreve reincidente=sim');
+  ok(escreverEstado(lerEstado('', def, padroes), def) === '', 'a ficha no padrão não grava nada');
 }
 
 console.log(falhas === 0 ? '\n✓ Todas as verificações passaram.\n' : `\n✗ ${falhas} verificação(ões) falharam.\n`);

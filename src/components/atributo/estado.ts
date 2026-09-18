@@ -9,8 +9,8 @@
 // não a tela: o link é reproduzível. O padrão nunca é gravado.
 
 import type {AtributoDef, ParametroDef, Parametros, Status} from '../../lib/atributos';
-import type {BasePenaConcreta, CenarioReverso} from '../../lib/atributos/reverso';
-import {cenarioReversoPadrao} from '../../lib/atributos/reverso';
+import type {CenarioReverso} from '../../lib/atributos/reverso';
+import {escreverPremissa, lerPremissa} from '../../lib/atributos/premissa-url';
 import {decompor, diasDeMeses, escreverDuracao, lerDuracao} from '../../lib/pena';
 
 export type Situacao = Status | 'todos' | 'fora';
@@ -113,7 +113,6 @@ export function limitar(d: ParametroDef, v: number | boolean): number | boolean 
 
 // ── URL ───────────────────────────────────────────────────────────────────
 
-const BASES: BasePenaConcreta[] = ['minima', 'maxima', 'fixa'];
 const SITUACOES: Situacao[] = ['cabivel', 'condicional', 'incabivel', 'todos', 'fora'];
 
 export function lerEstado(search: string, def: AtributoDef, padroes: Parametros): EstadoAtributo {
@@ -125,19 +124,7 @@ export function lerEstado(search: string, def: AtributoDef, padroes: Parametros)
     const v = lerValor(d, t);
     if (v !== undefined) params[d.id] = limitar(d, v);
   }
-  const rev = cenarioReversoPadrao();
-  const base = q.get('base') as BasePenaConcreta | null;
-  if (base && BASES.includes(base)) rev.base = base;
-  const fixa = q.get('fixa');
-  if (fixa) {
-    const dias = lerDuracao(fixa);
-    if (dias !== null) rev.penaFixaMeses = dias / 30;
-  }
-  rev.reincidenteEspecifico = q.get('reincidente') === 'sim';
-  rev.comandoOrgcrimUltraviolenta = q.get('comando') === 'sim';
-  rev.confessou = q.get('confessou') === 'sim';
-  rev.reparouDano = q.get('reparou') === 'sim';
-  rev.bonsAntecedentes = q.get('antecedentes') !== 'nao';
+  const rev = lerPremissa(q);
   const sit = q.get('situacao') as Situacao | null;
   const pagina = Number(q.get('pag'));
   return {
@@ -155,16 +142,7 @@ export function escreverEstado(e: EstadoAtributo, def: AtributoDef): string {
     const v = e.params[d.id];
     if (v !== undefined && v !== d.padrao) q.set(`p.${d.id}`, escreverValor(d, v));
   }
-  const padrao = cenarioReversoPadrao();
-  if (e.rev.base !== padrao.base) q.set('base', e.rev.base);
-  if (e.rev.base === 'fixa' && e.rev.penaFixaMeses !== padrao.penaFixaMeses) {
-    q.set('fixa', escreverDuracao(diasDeMeses(e.rev.penaFixaMeses)));
-  }
-  if (e.rev.reincidenteEspecifico) q.set('reincidente', 'sim');
-  if (e.rev.comandoOrgcrimUltraviolenta) q.set('comando', 'sim');
-  if (e.rev.confessou) q.set('confessou', 'sim');
-  if (e.rev.reparouDano) q.set('reparou', 'sim');
-  if (!e.rev.bonsAntecedentes) q.set('antecedentes', 'nao');
+  escreverPremissa(q, e.rev);
   if (e.situacao) q.set('situacao', e.situacao);
   if (e.q.trim()) q.set('q', e.q.trim());
   if (e.pagina > 1) q.set('pag', String(e.pagina));

@@ -32,6 +32,7 @@ import {dataAbnt} from '../../site/datas';
 import {escreverEstado, lerEstado, rotuloValor, type EstadoAtributo, type Situacao} from './estado';
 import ControleParametro, {type AlteracaoResumo} from './ControleParametro';
 import TabelaAlcance, {type LinhaResumo} from './TabelaAlcance';
+import {premissaIgualAoPadrao} from '../../lib/atributos/premissa-url';
 import s from './atributo.module.css';
 
 export interface PropsFichaAtributo {
@@ -80,11 +81,6 @@ const CIRCUNSTANCIAS: {chave: 'reincidenteEspecifico' | 'comandoOrgcrimUltraviol
   {chave: 'confessou', rotulo: 'confessou'},
   {chave: 'reparouDano', rotulo: 'reparou o dano'},
 ];
-
-function iguaisAoPadrao(rev: CenarioReverso): boolean {
-  const p = cenarioReversoPadrao();
-  return (Object.keys(p) as (keyof CenarioReverso)[]).every((k) => p[k] === rev[k]);
-}
 
 function Unidade({
   titulo,
@@ -193,7 +189,7 @@ export default function FichaAtributo({slug, inicial, ultima, alteracoes, ultima
     [cp, editado, def, padroes, e.rev],
   );
   // Antes de o catálogo carregar, só o estado legal com a premissa padrão tem número pronto.
-  const numeros: AlcanceDuasUnidades | null = atual ?? (!editado && iguaisAoPadrao(e.rev) ? inicial.alcance : null);
+  const numeros: AlcanceDuasUnidades | null = atual ?? (!editado && premissaIgualAoPadrao(e.rev) ? inicial.alcance : null);
 
   const linhasTabela: LinhaResumo[] | null =
     linhas && fora
