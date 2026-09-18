@@ -43,8 +43,8 @@
       "normas": [{"norma": "Lei 11.106/2005", "ano": 2005}],
       "caso": true,
       "retirado": null,
-      "data_revogacao": null,
-      "texto_original": null
+      "data_revogacao": "2005-03-29",
+      "texto_original": "Art. 240 - Cometer adultério:\nPena - detenção, de quinze dias a seis meses.\n§ 1º - Incorre na mesma pena o co-réu.\n§ 2º - A ação penal somente pode ser intentada pelo cônjuge ofendido, e dentro de 1 (um) mês após o conhecimento do fato.\n§ 3º - A ação penal não pode ser intentada:\nI - pelo cônjuge desquitado;\nII - pelo cônjuge que consentiu no adultério ou o perdoou, expressa ou tacitamente.\n§ 4º - O juiz pode deixar de aplicar a pena:\nI - se havia cessado a vida em comum dos cônjuges;\nII - se o querelante havia praticado qualquer dos atos previstos no art. 317 do Código Civil."
     },
     {
       "id": "cp-217",
@@ -53,12 +53,12 @@
       "diploma": "cp",
       "artigos": ["cp-217"],
       "categoria": "revogado",
-      "o_que_houve": "Revogado pela Lei 12.015/2009.",
-      "normas": [{"norma": "Lei 12.015/2009", "ano": 2009}],
+      "o_que_houve": "Revogado pela Lei 11.106/2005.",
+      "normas": [{"norma": "Lei 11.106/2005", "ano": 2005}],
       "caso": true,
       "retirado": null,
-      "data_revogacao": null,
-      "texto_original": null
+      "data_revogacao": "2005-03-29",
+      "texto_original": "Art. 217 - Seduzir mulher virgem, menor de dezoito anos e maior de quatorze, e ter com ela conjunção carnal, aproveitando-se de sua inexperiência ou justificável confiança:\nPena - reclusão, de dois a quatro anos."
     },
     {
       "id": "cp-219-222",
@@ -67,12 +67,12 @@
       "diploma": "cp",
       "artigos": ["cp-219", "cp-220", "cp-221", "cp-222"],
       "categoria": "revogado",
-      "o_que_houve": "Revogados pela Lei 12.015/2009.",
-      "normas": [{"norma": "Lei 12.015/2009", "ano": 2009}],
+      "o_que_houve": "Revogados pela Lei 11.106/2005.",
+      "normas": [{"norma": "Lei 11.106/2005", "ano": 2005}],
       "caso": true,
       "retirado": null,
-      "data_revogacao": null,
-      "texto_original": null
+      "data_revogacao": "2005-03-29",
+      "texto_original": "Art. 219 - Raptar mulher honesta, mediante violência, grave ameaça ou fraude, para fim libidinoso:\nPena - reclusão, de dois a quatro anos.\n\nArt. 220 - Se a raptada é maior de catorze anos e menor de vinte e um, e o rapto se dá com seu consentimento:\nPena - detenção, de um a três anos.\n\nArt. 221 - É diminuída de um terço a pena, se o rapto é para fim de casamento, e de metade, se o agente, sem ter praticado com a vítima qualquer ato libidinoso, a restitue à liberdade ou a coloca em lugar seguro, à disposição da família.\n\nArt. 222 - Se o agente, ao efetuar o rapto, ou em seguida a este, pratica outro crime contra a raptada, aplicam-se cumulativamente a pena correspondente ao rapto e a cominada ao outro crime."
     },
     {
       "id": "eca-233",
@@ -85,8 +85,8 @@
       "normas": [{"norma": "Lei 9.455/1997", "ano": 1997}],
       "caso": true,
       "retirado": {"versao": "v1.3.0", "nota": "Revogado pela Lei 9.455/1997 (Lei de Tortura)."},
-      "data_revogacao": null,
-      "texto_original": null
+      "data_revogacao": "1997-04-08",
+      "texto_original": "Art. 233. Submeter criança ou adolescente sob sua autoridade, guarda ou vigilância a tortura:\nPena - reclusão de um a cinco anos.\n§ 1º Se resultar lesão corporal grave:\nPena - reclusão de dois a oito anos.\n§ 2º Se resultar lesão corporal gravíssima:\nPena - reclusão de quatro a doze anos.\n§ 3º Se resultar morte:\nPena - reclusão de quinze a trinta anos."
     },
     {
       "id": "lcp-60-61",
@@ -103,7 +103,7 @@
       "caso": true,
       "retirado": null,
       "data_revogacao": null,
-      "texto_original": null
+      "texto_original": "Art. 60. Mendigar, por ociosidade ou cupidez:\nPena – prisão simples, de quinze dias a três meses.\nParágrafo único. Aumenta-se a pena de um sexto a um terço, se a contravenção é praticada:\na) de modo vexatório, ameaçador ou fraudulento.\nb) mediante simulação de moléstia ou deformidade;\nc) em companhia de alienado ou de menor de dezoito anos.\n\nArt. 61. Importunar alguem, em lugar público ou acessivel ao público, de modo ofensivo ao pudor:\nPena – multa, de duzentos mil réis a dois contos de réis."
     },
     {
       "id": "lcp-27",
@@ -116,8 +116,8 @@
       "normas": [{"norma": "Lei 9.521/1997", "ano": 1997}],
       "caso": true,
       "retirado": {"versao": "v1.4.0", "nota": "Revogado pela Lei 9.521/1997. O registro existiu por poucas horas, criado pela leva automática da v1.3.0."},
-      "data_revogacao": null,
-      "texto_original": null
+      "data_revogacao": "1997-11-28",
+      "texto_original": "Art. 27. Explorar a credulidade pública mediante sortilégios, predição do futuro, explicação de sonho, ou práticas congêneres:\nPena – prisão simples, de um a seis meses, e multa, de quinhentos mil réis a cinco contos de réis."
     },
     {
       "id": "lcp-39",
@@ -130,8 +130,8 @@
       "normas": [{"norma": "Lei 14.197/2021", "ano": 2021}],
       "caso": true,
       "retirado": {"versao": "v1.4.0", "nota": "Revogado pela Lei 14.197/2021. O registro existiu por poucas horas, criado pela leva automática da v1.3.0."},
-      "data_revogacao": null,
-      "texto_original": null
+      "data_revogacao": "2021-12-01",
+      "texto_original": "Art. 39. Participar de associação de mais de cinco pessoas, que se reunam periodicamente, sob compromisso de ocultar à autoridade a existência, objetivo, organização ou administração da associação:\nPena – prisão simples, de um a seis meses, ou multa, de trezentos mil réis a três contos de réis.\n§ 1º Na mesma pena incorre o proprietário ou ocupante de prédio que o cede, no todo ou em parte, para reunião de associação que saiba ser de carater secreto.\n§ 2º O juiz pode, tendo em vista as circunstâncias, deixar de aplicar a pena, quando lícito o objeto da associação."
     },
     {
       "id": "lcp-65",
@@ -144,8 +144,8 @@
       "normas": [{"norma": "Lei 14.132/2021", "ano": 2021}],
       "caso": true,
       "retirado": {"versao": "v1.4.0", "nota": "Revogado pela Lei 14.132/2021. O registro existiu por poucas horas, criado pela leva automática da v1.3.0."},
-      "data_revogacao": null,
-      "texto_original": null
+      "data_revogacao": "2021-04-01",
+      "texto_original": "Art. 65. Molestar alguem ou perturbar-lhe a tranquilidade, por acinte ou por motivo reprovavel:\nPena – prisão simples, de quinze dias a dois meses, ou multa, de duzentos mil réis a dois contos de réis."
     },
     {
       "id": "lcp-69",
@@ -158,8 +158,8 @@
       "normas": [{"norma": "Lei 6.815/1980", "ano": 1980}],
       "caso": true,
       "retirado": {"versao": "v1.4.0", "nota": "Revogado pela Lei 6.815/1980. O registro existiu por poucas horas, criado pela leva automática da v1.3.0."},
-      "data_revogacao": null,
-      "texto_original": null
+      "data_revogacao": "1980-08-21",
+      "texto_original": "Art. 69. Exercer, no território nacional, atividade remunerada o estrangeiro que nele se encontre como turista, visitante ou viajante em trânsito:\nPena – prisão simples, de três meses a um ano."
     },
     {
       "id": "cp-150-p2",
@@ -172,8 +172,8 @@
       "normas": [{"norma": "Lei 13.869/2019", "ano": 2019}],
       "caso": false,
       "retirado": {"versao": "v1.3.0", "nota": "Revogado pela Lei 13.869/2019 (Lei de Abuso de Autoridade)."},
-      "data_revogacao": null,
-      "texto_original": null
+      "data_revogacao": "2020-01-03",
+      "texto_original": "§ 2º - Aumenta-se a pena de um terço, se o fato é cometido por funcionário público, fora dos casos legais, ou com inobservância das formalidades estabelecidas em lei, ou com abuso do poder."
     },
     {
       "id": "cp-185",
@@ -186,8 +186,8 @@
       "normas": [{"norma": "Lei 10.695/2003", "ano": 2003}],
       "caso": false,
       "retirado": {"versao": "v1.3.0", "nota": "Revogado pela Lei 10.695/2003."},
-      "data_revogacao": null,
-      "texto_original": null
+      "data_revogacao": "2003-08-01",
+      "texto_original": "Art. 185 - Atribuir falsamente a alguém, mediante o uso de nome, pseudônimo ou sinal por ele adotado para designar seus trabalhos, a autoria de obra literária, científica ou artística:\nPena - detenção, de 6 (seis) meses a 2 (dois) anos, e multa."
     },
     {
       "id": "cp-350",
@@ -200,8 +200,8 @@
       "normas": [{"norma": "Lei 13.869/2019", "ano": 2019}],
       "caso": false,
       "retirado": {"versao": "v1.3.0", "nota": "Revogado pela Lei 13.869/2019 (Lei de Abuso de Autoridade)."},
-      "data_revogacao": null,
-      "texto_original": null
+      "data_revogacao": "2020-01-03",
+      "texto_original": "Art. 350 - Ordenar ou executar medida privativa de liberdade individual, sem as formalidades legais ou com abuso de poder:\nPena - detenção, de um mês a um ano.\nParágrafo único - Na mesma pena incorre o funcionário que:\nI - ilegalmente recebe e recolhe alguém a prisão, ou a estabelecimento destinado a execução de pena privativa de liberdade ou de medida de segurança;\nII - prolonga a execução de pena ou de medida de segurança, deixando de expedir em tempo oportuno ou de executar imediatamente a ordem de liberdade;\nIII - submete pessoa que está sob sua guarda ou custódia a vexame ou a constrangimento não autorizado em lei;\nIV - efetua, com abuso de poder, qualquer diligência."
     },
     {
       "id": "lei4595-44-p7",
@@ -210,12 +210,12 @@
       "diploma": "lei4595",
       "artigos": ["lei4595-44"],
       "categoria": "revogado",
-      "o_que_houve": "Revogado pela Lei 13.506/2017, que converteu a MP 784/2017.",
+      "o_que_houve": "Revogado pela Lei 13.506/2017. A MP 784/2017 já o revogara, mas perdeu a vigência sem ser convertida.",
       "normas": [{"norma": "Lei 13.506/2017", "ano": 2017}],
       "caso": false,
-      "retirado": {"versao": "v1.4.0", "nota": "Revogado pela Lei 13.506/2017, que converteu a MP 784/2017."},
-      "data_revogacao": null,
-      "texto_original": null
+      "retirado": {"versao": "v1.4.0", "nota": "Revogado pela Lei 13.506/2017. A MP 784/2017 já o revogara, mas perdeu a vigência sem ser convertida."},
+      "data_revogacao": "2017-11-14",
+      "texto_original": "§ 7º Quaisquer pessoas físicas ou jurídicas que atuem como instituição financeira, sem estar devidamente autorizadas pelo Banco Central da Republica do Brasil, ficam sujeitas à multa referida neste artigo e detenção de 1 a 2 anos, ficando a esta sujeitos, quando pessoa jurídica, seus diretores e administradores."
     }
   ]
 }

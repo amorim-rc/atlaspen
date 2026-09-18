@@ -224,6 +224,8 @@
   font-family: var(--fonte-serifa);
   font-style: italic;
   line-height: 1.6;
+  /* O texto guarda caput, pena e parágrafos em linhas próprias. */
+  white-space: pre-line;
 }
 
 .ausente {

@@ -38,8 +38,8 @@ Dispositivos que saíram de vigência, foram alterados ou nunca vigoraram, encon
 |---|---|---|
 | Lei 9.807/99, art. 19 (revelação de identidade de testemunha protegida) | vetado | Vetado na sanção da lei; nunca vigorou. O catálogo chegou a ter um registro indevido, removido na v1.1.2. |
 | CP, art. 240 (adultério) | revogado | Revogado pela Lei 11.106/2005. |
-| CP, art. 217 (sedução) | revogado | Revogado pela Lei 12.015/2009. |
-| CP, arts. 219 a 222 (rapto) | revogado | Revogados pela Lei 12.015/2009. |
+| CP, art. 217 (sedução) | revogado | Revogado pela Lei 11.106/2005. |
+| CP, arts. 219 a 222 (rapto) | revogado | Revogados pela Lei 11.106/2005. |
 | ECA, art. 233 (tortura de criança ou adolescente) | revogado | Revogado pela Lei 9.455/1997 (Lei de Tortura). Constava como vigente no catálogo até a v1.3.0. |
 | LCP, arts. 60 e 61 (mendicância e importunação ofensiva) | revogado | Revogados pelas Leis 11.983/2009 e 13.718/2018. |
 | LCP, art. 27 (exploração da credulidade pública) | revogado | Revogado pela Lei 9.521/1997. |
@@ -61,7 +61,7 @@ Estes eram crime, deixaram de ser, e ainda constavam entre os tipos vigentes —
 | CP, art. 150, §2º (violação de domicílio contra funcionário público) | v1.3.0 | Revogado pela Lei 13.869/2019 (Lei de Abuso de Autoridade). |
 | CP, art. 185 (usurpação de nome ou pseudônimo alheio) | v1.3.0 | Revogado pela Lei 10.695/2003. |
 | CP, art. 350 (exercício arbitrário ou abuso de poder) | v1.3.0 | Revogado pela Lei 13.869/2019 (Lei de Abuso de Autoridade). |
-| Lei 4.595/64, art. 44, §7º (operação de instituição financeira sem autorização do Banco Central) | v1.4.0 | Revogado pela Lei 13.506/2017, que converteu a MP 784/2017. |
+| Lei 4.595/64, art. 44, §7º (operação de instituição financeira sem autorização do Banco Central) | v1.4.0 | Revogado pela Lei 13.506/2017. A MP 784/2017 já o revogara, mas perdeu a vigência sem ser convertida. |
 
 :::caution[As URLs desses registros deixaram de responder]
 `id` é endereço público (`/pesquisa/tipos?tipo=N`), e esses saíram do ar com a remoção. Enquanto o acervo não tem página própria, esta tabela é o destino de quem chegar por um link antigo — e a v2.2.0 fará a rota apontar para o registro histórico, em vez de terminar em erro.
