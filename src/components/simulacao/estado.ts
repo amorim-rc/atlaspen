@@ -23,7 +23,8 @@ import type {
   VedacaoNova,
 } from '../../lib/simulacao/tipos';
 import {CAMPOS_TIPO_PADRAO, DEFINICAO_PADRAO} from '../../lib/simulacao/motor';
-import {escreverDuracao, escreverValor, lerDuracao, lerValor, limitar} from '../atributo/estado';
+import {escreverValor, lerValor, limitar} from '../atributo/estado';
+import {escreverDuracao, lerDuracao} from '../../lib/pena';
 
 export function mudancaPadrao(sentido: Sentido, op: Operacao): Mudanca {
   if (sentido === 'tipo') {

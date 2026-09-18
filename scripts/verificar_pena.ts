@@ -16,8 +16,10 @@ import {
   compor,
   decompor,
   diasDeMeses,
+  escreverDuracao,
   formatDias,
   formatFaixa,
+  lerDuracao,
   limitarPena,
 } from '../src/lib/pena';
 import {moverMoldura} from '../src/lib/dosimetria/moldura';
@@ -106,6 +108,19 @@ console.log('\nO veredito da ficha');
     naturezas.abstrato === 8 && naturezas.concreto === 12 && naturezas.incondicionado === 2,
     `repartição pela natureza: 8 / 12 / 2 (obtido ${naturezas.abstrato} / ${naturezas.concreto} / ${naturezas.incondicionado})`,
   );
+}
+
+console.log('\nDuração compacta da URL');
+{
+  ok(lerDuracao('1a') === 360, '1a = 360 dias');
+  ok(lerDuracao('18m') === 540, '18m = 540 dias');
+  ok(lerDuracao('2a6m15d') === 915, '2a6m15d = 915 dias');
+  ok(lerDuracao('') === null, 'string vazia não é duração');
+  ok(lerDuracao('xyz') === null, 'lixo não é duração');
+  ok(escreverDuracao(360) === '1a', '360 dias escreve 1a');
+  ok(escreverDuracao(915) === '2a6m15d', '915 dias escreve 2a6m15d');
+  ok(escreverDuracao(0) === '0d', 'zero escreve 0d');
+  ok(lerDuracao(escreverDuracao(2160)) === 2160, 'ida e volta preserva 2.160 dias');
 }
 
 console.log(falhas === 0 ? '\n✓ Pena, moldura e veredito verificados.\n' : `\n✗ ${falhas} verificação(ões) falharam.\n`);

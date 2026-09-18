@@ -11,7 +11,7 @@
 import type {AtributoDef, ParametroDef, Parametros, Status} from '../../lib/atributos';
 import type {BasePenaConcreta, CenarioReverso} from '../../lib/atributos/reverso';
 import {cenarioReversoPadrao} from '../../lib/atributos/reverso';
-import {compor, decompor, diasDeMeses} from '../../lib/pena';
+import {decompor, diasDeMeses, escreverDuracao, lerDuracao} from '../../lib/pena';
 
 export type Situacao = Status | 'todos' | 'fora';
 
@@ -21,20 +21,6 @@ export interface EstadoAtributo {
   situacao: Situacao | null;
   q: string;
   pagina: number;
-}
-
-// ── duração compacta: 1a, 18m, 2a6m15d ────────────────────────────────────
-
-export function lerDuracao(t: string): number | null {
-  const m = /^(?:(\d+)a)?(?:(\d+)m)?(?:(\d+)d)?$/.exec(t.trim());
-  if (!m || (!m[1] && !m[2] && !m[3])) return null;
-  return compor({anos: Number(m[1] ?? 0), meses: Number(m[2] ?? 0), dias: Number(m[3] ?? 0)});
-}
-
-export function escreverDuracao(dias: number): string {
-  const p = decompor(dias);
-  const s = `${p.anos ? `${p.anos}a` : ''}${p.meses ? `${p.meses}m` : ''}${p.dias ? `${p.dias}d` : ''}`;
-  return s || '0d';
 }
 
 // ── valor de um parâmetro ─────────────────────────────────────────────────
