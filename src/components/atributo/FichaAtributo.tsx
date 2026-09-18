@@ -13,19 +13,16 @@ import {useEffect, useMemo, useState} from 'react';
 import type {TipoDoMotor} from '../../lib/types';
 import {CATEGORIA_CURTA, NATUREZA_LABEL, POR_ID, foiEditado, valoresPadrao, type AtributoDef} from '../../lib/atributos';
 import {
-  BASE_AJUDA,
-  BASE_LABEL,
   avaliarCatalogo,
   cenarioReversoPadrao,
   contarDuasUnidades,
   crimesComPenaPrivativa,
   type AlcanceDuasUnidades,
-  type BasePenaConcreta,
   type CenarioReverso,
   type Contagem,
 } from '../../lib/atributos/reverso';
 import {diasDeMeses, formatDias} from '../../lib/pena';
-import CampoPena from '../ficha/CampoPena';
+import ControlesPremissa from '../premissa/ControlesPremissa';
 import {caminho} from '../../site/url';
 import {NOME, SITE_URL} from '../../site/config';
 import {dataAbnt} from '../../site/datas';
@@ -74,13 +71,6 @@ function premissa(def: AtributoDef, rev: CenarioReverso): string {
   if (rev.reparouDano) partes.push('com reparação do dano');
   return partes.join(', ');
 }
-
-const CIRCUNSTANCIAS: {chave: 'reincidenteEspecifico' | 'comandoOrgcrimUltraviolenta' | 'confessou' | 'reparouDano'; rotulo: string}[] = [
-  {chave: 'reincidenteEspecifico', rotulo: 'reincidente específico'},
-  {chave: 'comandoOrgcrimUltraviolenta', rotulo: 'comando de orgcrim ultraviolenta'},
-  {chave: 'confessou', rotulo: 'confessou'},
-  {chave: 'reparouDano', rotulo: 'reparou o dano'},
-];
 
 function Unidade({
   titulo,
@@ -410,52 +400,7 @@ export default function FichaAtributo({slug, inicial, ultima, alteracoes, ultima
             <p className={s.linhaPressuposto}>
               <span className={s.rotuloAcento}>Pressuposto da varredura</span> {textoPressuposto}
             </p>
-            {def.natureza === 'concreto' && (
-              <>
-                <div className={s.bases} role="group" aria-label="Pena concreta presumida">
-                  <span className={s.rotuloBases}>Pena concreta presumida:</span>
-                  {(Object.keys(BASE_LABEL) as BasePenaConcreta[]).map((b) => (
-                    <button
-                      key={b}
-                      type="button"
-                      aria-pressed={e.rev.base === b}
-                      className={`${s.base} ${e.rev.base === b ? s.baseAtiva : ''}`}
-                      onClick={() => mudarRev({base: b})}
-                    >
-                      {BASE_LABEL[b]}
-                    </button>
-                  ))}
-                </div>
-                {e.rev.base === 'fixa' && (
-                  <CampoPena
-                    rotulo="pena concreta fixa"
-                    dias={diasDeMeses(e.rev.penaFixaMeses)}
-                    onChange={(d) => mudarRev({penaFixaMeses: d / 30})}
-                  />
-                )}
-                <p className={s.ajudaBase}>
-                  {BASE_AJUDA[e.rev.base]} Os números abaixo valem sob esta premissa e mudam se ela mudar.
-                </p>
-              </>
-            )}
-            <div className={s.circunstancias}>
-              <span className={s.notaMono}>circunstâncias do réu aplicadas a todo o catálogo</span>
-              {CIRCUNSTANCIAS.map((c) => (
-                <button
-                  key={c.chave}
-                  type="button"
-                  aria-pressed={e.rev[c.chave]}
-                  className={`${s.chip} ${e.rev[c.chave] ? s.chipAtivo : ''}`}
-                  onClick={() => mudarRev({[c.chave]: !e.rev[c.chave]})}
-                >
-                  {c.rotulo}
-                </button>
-              ))}
-            </div>
-            <p className={`${s.notaMono} sem-recuo`}>
-              Hediondez, violência, grave ameaça, culpa, resultado morte e previsão de perdão judicial não entram aqui: são
-              campos de cada tipo penal, lidos do catálogo dispositivo a dispositivo.
-            </p>
+            <ControlesPremissa rev={e.rev} onChange={mudarRev} mostrarBase={def.natureza === 'concreto'} />
           </section>
 
           <section className={s.unidades} aria-label="Alcance em duas unidades">

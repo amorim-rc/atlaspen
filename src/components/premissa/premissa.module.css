@@ -1,0 +1,83 @@
+/* Os controles da premissa da varredura (ControlesPremissa.tsx).
+   Copiados de atributo/atributo.module.css em 17/09/2026, quando os controles
+   passaram a servir também à simulação legislativa. */
+
+.notaMono {
+  font-family: var(--fonte-mono);
+  font-size: var(--fs-rotulo);
+  color: var(--cor-tinta-fraca);
+}
+
+.bases {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.rotuloBases {
+  font-size: var(--fs-pequeno);
+}
+
+.base {
+  min-height: 2.25rem;
+  padding: 0 0.8rem;
+  border: 1px solid var(--cor-borda-controle);
+  border-radius: var(--raio);
+  background: var(--cor-papel);
+  font-size: var(--fs-pequeno);
+  cursor: pointer;
+}
+
+.baseAtiva {
+  border-color: var(--cor-tinta);
+  background: var(--cor-tinta);
+  color: var(--cor-papel);
+  font-weight: 600;
+}
+
+.ajudaBase {
+  max-width: 44rem;
+  font-size: var(--fs-pequeno);
+  line-height: 1.6;
+  color: var(--cor-tinta-corpo);
+}
+
+.circunstancias {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  padding-top: 0.6rem;
+  border-top: 1px solid var(--cor-borda);
+}
+
+.circunstancias > .notaMono {
+  width: 100%;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2rem;
+  padding: 0 0.75rem;
+  border: 1px solid var(--cor-borda-controle);
+  border-radius: 999px;
+  background: var(--cor-papel);
+  color: var(--cor-tinta-corpo);
+  font-size: 0.8125rem;
+  cursor: pointer;
+}
+
+.chipAtivo {
+  border-color: var(--cor-tinta);
+  background: var(--cor-tinta);
+  color: var(--cor-papel);
+}
+
+@media (max-width: 640px) {
+  .chip,
+  .base {
+    min-height: var(--alvo-toque);
+  }
+}
