@@ -11,7 +11,9 @@
 import {useEffect, useMemo, useState} from 'react';
 import type {TipoDoMotor} from '../../lib/types';
 import {CATALOGO, POR_ID} from '../../lib/atributos';
-import {cenarioReversoPadrao} from '../../lib/atributos/reverso';
+import {cenarioReversoPadrao, type CenarioReverso} from '../../lib/atributos/reverso';
+import {premissaIgualAoPadrao} from '../../lib/atributos/premissa-url';
+import ControlesPremissa from '../premissa/ControlesPremissa';
 import {
   RESULTADO_MORTE,
   ROTULO_INCIDENCIA,
@@ -47,13 +49,13 @@ import {caminho} from '../../site/url';
 import {NOME_EXTENSO, SITE_URL} from '../../site/config';
 import {escreverPacote, lerPacote, mudancaPadrao} from './estado';
 import {
-  RECORTE,
   ROTULO_ETIQUETA,
   alcanceTexto,
   descrever,
   identificador,
   montarNota,
   notaEmMarkdown,
+  recorte,
   paresEmCsv,
   rotuloAntes,
   rotuloDepois,
@@ -66,7 +68,6 @@ interface Props {
   conferidoEm: string | null;
 }
 
-const REV = cenarioReversoPadrao();
 const fmt = (n: number) => n.toLocaleString('pt-BR');
 const delta = (n: number) => (n > 0 ? `+${fmt(n)}` : n < 0 ? `−${fmt(-n)}` : '±0');
 /** O regime inicial não se extingue: toda pena privativa começa em algum regime. */
@@ -283,7 +284,7 @@ function FormAtributoNovo({def, onChange}: {def: DefinicaoAtributo; onChange: (d
       </div>
       <CampoPena rotulo="limiar" dias={def.limiarDias} onChange={(d) => mudar({limiarDias: d})} />
       {def.incidencia === 'aplicada' && (
-        <p className={s.notaBloco}>A pena aplicada não é campo do tipo penal: presume-se a pena mínima cominada, como na busca por atributo.</p>
+        <p className={s.notaBloco}>A pena aplicada não é campo do tipo penal: presume-se a pena da premissa da varredura, no bloco de impacto.</p>
       )}
       <fieldset className={s.marcas}>
         <legend className={s.legenda}>Vedado a</legend>
@@ -304,8 +305,8 @@ function FormAtributoNovo({def, onChange}: {def: DefinicaoAtributo; onChange: (d
         ))}
       </fieldset>
       <p className={s.notaBloco}>
-        Requisito do réu que o catálogo não conhece (confissão, reparação do dano) deixa o tipo como condicional, e não como
-        cabível. A primariedade segue a premissa: réu primário.
+        Primariedade, confissão e reparação do dano seguem a premissa da varredura, no bloco de impacto. Requisito que a
+        premissa não liga deixa o tipo como condicional, e não como cabível.
       </p>
     </div>
   );
@@ -415,7 +416,19 @@ function LinhaPar({p, modo}: {p: Par; modo: 'tipo' | 'atributo'}) {
   );
 }
 
-function Impacto({r, validas, legal, simulado}: {r: Resultado; validas: Mudanca[]; legal: EstadoCatalogo; simulado: EstadoCatalogo}) {
+function Impacto({
+  r,
+  validas,
+  legal,
+  simulado,
+  rev,
+}: {
+  r: Resultado;
+  validas: Mudanca[];
+  legal: EstadoCatalogo;
+  simulado: EstadoCatalogo;
+  rev: CenarioReverso;
+}) {
   const soTipos = validas.every((m) => m.sentido === 'tipo');
   const parados = r.porAtributo.filter((a) => !mudou(a));
   const placar = [
@@ -446,7 +459,7 @@ function Impacto({r, validas, legal, simulado}: {r: Resultado; validas: Mudanca[
         ))}
       </div>
       <p className={s.recorte}>
-        <strong>Recorte:</strong> {RECORTE}. Atingido é o que tem ao menos um atributo que entra, sai ou muda de valor.
+        <strong>Recorte:</strong> {recorte(rev)}. Atingido é o que tem ao menos um atributo que entra, sai ou muda de valor.
         {catalogoMudou && (
           <>
             {' '}
@@ -562,10 +575,13 @@ export default function Simulador({versao, conferidoEm}: Props) {
   const [aviso, setAviso] = useState<string | null>(null);
   const [endereco, setEndereco] = useState(`${SITE_URL}simulacao`);
   const [hoje, setHoje] = useState<Date | null>(null);
+  const [rev, setRev] = useState<CenarioReverso>(cenarioReversoPadrao);
+  const mudarRev = (patch: Partial<CenarioReverso>) => setRev((a) => ({...a, ...patch}));
 
   useEffect(() => {
     const ler = () => {
       const e = lerPacote(window.location.search, POR_ID);
+      setRev(e.rev);
       if (e.pacote.length) {
         setPacote(e.pacote);
         setAtivo(e.ativo);
@@ -595,23 +611,24 @@ export default function Simulador({versao, conferidoEm}: Props) {
 
   useEffect(() => {
     if (!montado) return;
-    const novo = window.location.pathname + (padrao ? '' : escreverPacote(pacote, i, POR_ID));
+    const limpo = padrao && premissaIgualAoPadrao(rev);
+    const novo = window.location.pathname + (limpo ? '' : escreverPacote(padrao ? [] : pacote, i, POR_ID, rev));
     if (novo !== window.location.pathname + window.location.search) window.history.replaceState(null, '', novo);
     setEndereco(window.location.href.split('#')[0]);
-  }, [pacote, i, montado, padrao]);
+  }, [pacote, i, montado, padrao, rev]);
 
   const legal = useMemo(() => (tipos ? estadoLegal(tipos, CATALOGO) : null), [tipos]);
-  const avLegal = useMemo(() => (legal ? avaliarEstado(legal, REV) : null), [legal]);
+  const avLegal = useMemo(() => (legal ? avaliarEstado(legal, rev) : null), [legal, rev]);
   const problemas = useMemo(() => pacote.map((x) => (legal ? problemaDa(x, legal) : null)), [pacote, legal]);
   const validas = useMemo(() => (legal ? pacote.filter((_, k) => problemas[k] === null) : []), [pacote, problemas, legal]);
   const simulado = useMemo(() => (legal ? aplicarPacote(legal, validas) : null), [legal, validas]);
   const resultado = useMemo(() => {
     if (!legal || !simulado || !avLegal) return null;
-    return comparar(legal, simulado, avLegal, avaliarEstado(simulado, REV, {legal, avaliacoes: avLegal}));
-  }, [legal, simulado, avLegal]);
+    return comparar(legal, simulado, avLegal, avaliarEstado(simulado, rev, {legal, avaliacoes: avLegal}));
+  }, [legal, simulado, avLegal, rev]);
   const etiquetas: Etiqueta[][] = useMemo(
-    () => pacote.map((x) => (legal && avLegal ? etiquetasDa(x, legal, REV, avLegal) : [])),
-    [pacote, legal, avLegal],
+    () => pacote.map((x) => (legal && avLegal ? etiquetasDa(x, legal, rev, avLegal) : [])),
+    [pacote, legal, avLegal, rev],
   );
 
   const atualizar = (novo: Mudanca) => setPacote((p) => p.map((x, k) => (k === i ? novo : x)));
@@ -638,11 +655,11 @@ export default function Simulador({versao, conferidoEm}: Props) {
   };
 
   const etiquetasValidas = etiquetas.filter((_, k) => problemas[k] === null);
-  const idNota = hoje ? identificador(escreverPacote(validas, 0, POR_ID), hoje) : '';
+  const idNota = hoje ? identificador(escreverPacote(validas, 0, POR_ID, rev), hoje) : '';
   const titulo = tituloEditado?.trim() ? tituloEditado : legal ? tituloAutomatico(validas, legal) : '';
   const nota =
     notaAberta && legal && resultado && hoje
-      ? montarNota({validas, etiquetas: etiquetasValidas, legal, resultado, titulo, versao, conferidoEm, url: endereco, hoje, id: idNota})
+      ? montarNota({validas, etiquetas: etiquetasValidas, legal, resultado, titulo, versao, conferidoEm, url: endereco, hoje, id: idNota, rev})
       : null;
 
   return (
@@ -764,6 +781,13 @@ export default function Simulador({versao, conferidoEm}: Props) {
             <h2 className={s.rotuloBloco}>Impacto</h2>
             <span className={s.notaMono}>recalculado a cada mudança</span>
           </div>
+          <section className={s.premissa} aria-label="Premissa da varredura">
+            <p className={s.linhaPremissa}>
+              <span className={s.rotuloAcento}>Premissa da varredura</span> A pena aplicada e as circunstâncias do réu não são
+              campos do tipo penal: a varredura as presume. Os números do impacto valem sob esta premissa e mudam se ela mudar.
+            </p>
+            <ControlesPremissa rev={rev} onChange={mudarRev} mostrarBase />
+          </section>
           <div className={s.miolo} aria-live="polite">
             {erro ? (
               <p className={s.erro}>Não foi possível carregar o catálogo ({erro}). Recarregue a página.</p>
@@ -778,7 +802,7 @@ export default function Simulador({versao, conferidoEm}: Props) {
                 </p>
               </div>
             ) : (
-              <Impacto r={resultado} validas={validas} legal={legal} simulado={simulado} />
+              <Impacto r={resultado} validas={validas} legal={legal} simulado={simulado} rev={rev} />
             )}
           </div>
 
@@ -787,8 +811,7 @@ export default function Simulador({versao, conferidoEm}: Props) {
               <div className={s.ressalva}>
                 <span className={s.rotuloBloco}>Ressalva desta rodada</span>
                 <p>
-                  O alcance pressupõe réu primário, condenado na pena mínima cominada nos atributos que dependem da pena aplicada, sem
-                  circunstância que altere a moldura. A base conta dispositivos e cenários, não processos.
+                  O alcance pressupõe a premissa da varredura declarada no recorte, sem circunstância que altere a moldura. A base conta dispositivos e cenários, não processos.
                   {validas.some((x) => x.sentido === 'tipo' && x.op === 'modificar') &&
                     ' Cada dispositivo é tratado isoladamente: as formas qualificadas e privilegiadas têm moldura própria e não acompanham o caput — para mover o crime inteiro, acrescente cada dispositivo ao pacote.'}
                   {validas.some((x) => x.sentido === 'tipo' && x.op === 'criar') &&

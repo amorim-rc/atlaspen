@@ -11,7 +11,8 @@ import type {EstadoCatalogo} from '../../lib/simulacao/motor';
 import {ROTULO_INCIDENCIA, ROTULO_REQUISITO, ROTULO_VEDACAO, camposDoTipo} from '../../lib/simulacao/motor';
 import type {AlcanceAtributo, Etiqueta, Mudanca, Par, Resultado, Unidades} from '../../lib/simulacao/tipos';
 import type {AtributoResultado} from '../../lib/atributos/types';
-import {formatDias, formatFaixa} from '../../lib/pena';
+import {diasDeMeses, formatDias, formatFaixa} from '../../lib/pena';
+import {circunstanciasPorExtenso, type CenarioReverso} from '../../lib/atributos/reverso';
 import {ROTULO_TIPO} from '../../data/changelog/types';
 import {NOME, NOME_EXTENSO} from '../../site/config';
 import {dataAbnt, dataCurta} from '../../site/datas';
@@ -22,9 +23,27 @@ export const ROTULO_ETIQUETA: Record<Etiqueta, string> = {...ROTULO_TIPO, propos
 const fmt = (n: number) => n.toLocaleString('pt-BR');
 const juntar = (l: string[]) => (l.length <= 1 ? (l[0] ?? '') : `${l.slice(0, -1).join(', ')} e ${l.at(-1)}`);
 
-/** O recorte, por extenso: acompanha todo número de alcance. */
-export const RECORTE =
+/** O recorte sob a premissa padrão — o texto que a nota trazia quando a premissa era fixa. */
+export const RECORTE_PADRAO =
   'tipos penais com pena privativa de liberdade, presumido o réu primário e condenado na pena mínima cominada nos atributos que dependem da pena aplicada';
+
+/**
+ * O recorte, por extenso: acompanha todo número de alcance.
+ *
+ * Deixou de ser constante em 17/09/2026, quando a premissa da varredura passou a
+ * ser editável na simulação. Uma nota que declara premissa diferente da que
+ * calculou o número é pior que uma nota sem premissa. Sob a premissa padrão, o
+ * texto é o de antes, palavra por palavra (RECORTE_PADRAO).
+ */
+export function recorte(rev: CenarioReverso): string {
+  const circ = circunstanciasPorExtenso(rev);
+  const reu = rev.reincidenteEspecifico ? circ : ['réu primário', ...circ];
+  const pena =
+    rev.base === 'fixa'
+      ? `condenado a ${formatDias(diasDeMeses(rev.penaFixaMeses))}`
+      : `condenado na pena ${rev.base === 'maxima' ? 'máxima' : 'mínima'} cominada`;
+  return `tipos penais com pena privativa de liberdade, presumido o ${reu.join(', ')} e ${pena} nos atributos que dependem da pena aplicada`;
+}
 
 export function rotuloTipo(t: {crime: string; lei: string; artigo: string}): string {
   return `${t.crime} (${t.lei}, ${t.artigo.replace(/^Art\./, 'art.')})`;
@@ -152,8 +171,9 @@ export function montarNota(args: {
   url: string;
   hoje: Date;
   id: string;
+  rev: CenarioReverso;
 }): Nota {
-  const {validas, etiquetas, legal, resultado: r, titulo, versao, conferidoEm, url, hoje, id} = args;
+  const {validas, etiquetas, legal, resultado: r, titulo, versao, conferidoEm, url, hoje, id, rev} = args;
   const secoes: {titulo: string; texto: string}[] = [];
 
   secoes.push({
@@ -170,7 +190,7 @@ export function montarNota(args: {
   secoes.push({
     titulo: 'Resultado',
     texto: [
-      `Recorte: ${RECORTE}. Catálogo simulado: ${fmt(r.totalDepois.dispositivos)} dispositivos e ${fmt(
+      `Recorte: ${recorte(rev)}. Catálogo simulado: ${fmt(r.totalDepois.dispositivos)} dispositivos e ${fmt(
         r.totalDepois.cenarios,
       )} cenários (hoje, ${fmt(r.totalAntes.dispositivos)} e ${fmt(r.totalAntes.cenarios)}).`,
       ...(mudam.length ? mudam.map((a) => linhaDoAtributo(a, r)) : ['Nenhum atributo penal muda de alcance ou de valor.']),
@@ -202,7 +222,7 @@ export function montarNota(args: {
   }
 
   const limites = [
-    `O cálculo pressupõe réu primário, condenado na pena mínima cominada nos atributos que dependem da pena aplicada, sem circunstância que altere a moldura. Conta dispositivos e cenários do catálogo, não processos.`,
+    `O cálculo pressupõe a premissa declarada no recorte, sem circunstância que altere a moldura. Conta dispositivos e cenários do catálogo, não processos.`,
   ];
   if (validas.some((m) => m.sentido === 'tipo' && m.op === 'criar'))
     limites.push('Tipo novo é hipótese pura: o cálculo não lhe aplica vedação específica além das declaradas.');

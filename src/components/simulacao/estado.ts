@@ -25,6 +25,8 @@ import type {
 import {CAMPOS_TIPO_PADRAO, DEFINICAO_PADRAO} from '../../lib/simulacao/motor';
 import {escreverValor, lerValor, limitar} from '../atributo/estado';
 import {escreverDuracao, lerDuracao} from '../../lib/pena';
+import {escreverPremissa, lerPremissa} from '../../lib/atributos/premissa-url';
+import {cenarioReversoPadrao, type CenarioReverso} from '../../lib/atributos/reverso';
 
 export function mudancaPadrao(sentido: Sentido, op: Operacao): Mudanca {
   if (sentido === 'tipo') {
@@ -184,10 +186,21 @@ export function lerMudanca(texto: string, porId: Record<string, AtributoDef>): M
   return null;
 }
 
-export function escreverPacote(pacote: Mudanca[], ativo: number, porId: Record<string, AtributoDef>): string {
+/**
+ * O pacote na URL, com a premissa da varredura junto: o link é a hipótese, e a
+ * hipótese inclui sob que réu e que pena ela foi medida. A premissa padrão não
+ * se grava, e por isso um link antigo, sem premissa, abre como abria.
+ */
+export function escreverPacote(
+  pacote: Mudanca[],
+  ativo: number,
+  porId: Record<string, AtributoDef>,
+  rev: CenarioReverso = cenarioReversoPadrao(),
+): string {
   const q = new URLSearchParams();
   for (const m of pacote) q.append('m', escreverMudanca(m, porId));
   if (ativo > 0) q.set('i', String(ativo));
+  escreverPremissa(q, rev);
   const s = q
     .toString()
     .replace(/%3B/gi, ';')
@@ -196,12 +209,15 @@ export function escreverPacote(pacote: Mudanca[], ativo: number, porId: Record<s
   return s ? `?${s}` : '';
 }
 
-export function lerPacote(search: string, porId: Record<string, AtributoDef>): {pacote: Mudanca[]; ativo: number} {
+export function lerPacote(
+  search: string,
+  porId: Record<string, AtributoDef>,
+): {pacote: Mudanca[]; ativo: number; rev: CenarioReverso} {
   const q = new URLSearchParams(search);
   const pacote = q
     .getAll('m')
     .map((t) => lerMudanca(t, porId))
     .filter((m): m is Mudanca => m !== null);
   const i = Number(q.get('i'));
-  return {pacote, ativo: Number.isInteger(i) && i >= 0 && i < pacote.length ? i : 0};
+  return {pacote, ativo: Number.isInteger(i) && i >= 0 && i < pacote.length ? i : 0, rev: lerPremissa(q)};
 }

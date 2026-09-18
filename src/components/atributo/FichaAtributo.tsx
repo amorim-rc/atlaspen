@@ -15,6 +15,7 @@ import {CATEGORIA_CURTA, NATUREZA_LABEL, POR_ID, foiEditado, valoresPadrao, type
 import {
   avaliarCatalogo,
   cenarioReversoPadrao,
+  circunstanciasPorExtenso,
   contarDuasUnidades,
   crimesComPenaPrivativa,
   type AlcanceDuasUnidades,
@@ -65,10 +66,7 @@ function premissa(def: AtributoDef, rev: CenarioReverso): string {
     );
   } else if (def.natureza === 'abstrato') partes.push('avaliação exata pela pena cominada');
   else partes.push('atributo que não depende de patamar de pena');
-  if (rev.reincidenteEspecifico) partes.push('réu reincidente específico');
-  if (rev.comandoOrgcrimUltraviolenta) partes.push('com comando de organização criminosa ultraviolenta');
-  if (rev.confessou) partes.push('com confissão formal');
-  if (rev.reparouDano) partes.push('com reparação do dano');
+  partes.push(...circunstanciasPorExtenso(rev));
   return partes.join(', ');
 }
 

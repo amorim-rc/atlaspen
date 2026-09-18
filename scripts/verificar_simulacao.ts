@@ -26,6 +26,7 @@ import {
 } from '../src/lib/simulacao/motor';
 import type {Mudanca} from '../src/lib/simulacao/tipos';
 import {escreverPacote, lerPacote} from '../src/components/simulacao/estado';
+import {RECORTE_PADRAO, recorte} from '../src/components/simulacao/nota';
 
 let falhas = 0;
 const ok = (cond: boolean, msg: string) => {
@@ -248,6 +249,44 @@ console.log('\nIda e volta pela URL');
     porId,
   );
   ok(simples === '?m=am;teto;tetoMeses=3a&m=tm;2;max=2a', `a URL de uma hipótese comum é legível: ${simples}`);
+}
+
+console.log('\nA premissa vai e volta pela URL do pacote');
+{
+  const porId = {teto, 'sem-violencia': semViolencia, prazo};
+  const m: Mudanca = {sentido: 'atributo', op: 'modificar', atributo: 'teto', params: {tetoMeses: 36}};
+  const padrao = cenarioReversoPadrao();
+
+  ok(escreverPacote([m], 0, porId, padrao) === escreverPacote([m], 0, porId), 'passar o padrão é o mesmo que não passar');
+  ok(!escreverPacote([m], 0, porId, padrao).includes('base='), 'a premissa padrão não suja a URL');
+
+  const mexida = {...padrao, base: 'maxima' as const, reincidenteEspecifico: true};
+  const url = escreverPacote([m], 0, porId, mexida);
+  ok(url.includes('base=maxima') && url.includes('reincidente=sim'), `a premissa mexida entra na URL: ${url}`);
+
+  const volta = lerPacote(url, porId);
+  ok(volta.rev.base === 'maxima', 'a base volta da URL');
+  ok(volta.rev.reincidenteEspecifico === true, 'a circunstância volta da URL');
+  ok(volta.pacote.length === 1, 'o pacote continua chegando inteiro');
+  ok(lerPacote('?m=am;teto;tetoMeses=3a', porId).rev.base === 'minima', 'link antigo, sem premissa, abre no padrão');
+}
+
+console.log('\nO recorte da nota acompanha a premissa');
+{
+  const padrao = cenarioReversoPadrao();
+  ok(recorte(padrao) === RECORTE_PADRAO, 'no padrão, o recorte é o texto de antes, palavra por palavra');
+
+  const maxima = recorte({...padrao, base: 'maxima'});
+  ok(maxima.includes('pena máxima cominada') && !maxima.includes('pena mínima cominada'), 'na máxima, o recorte fala da máxima e não da mínima');
+
+  const reinc = recorte({...padrao, reincidenteEspecifico: true});
+  ok(reinc.includes('reincidente específico') && !reinc.includes('primário'), 'a reincidência substitui o réu primário');
+
+  const fixa = recorte({...padrao, base: 'fixa', penaFixaMeses: 36});
+  ok(fixa.includes('3 anos'), `a pena fixa entra por extenso: ${fixa}`);
+
+  const confesso = recorte({...padrao, confessou: true});
+  ok(confesso.includes('com confissão formal'), 'a circunstância usa o mesmo vocabulário da ficha');
 }
 
 console.log(falhas === 0 ? '\n✓ Simulação legislativa verificada.\n' : `\n✗ ${falhas} falha(s) na simulação.\n`);

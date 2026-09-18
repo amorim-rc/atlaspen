@@ -71,6 +71,20 @@ export interface CenarioReverso {
   bonsAntecedentes: boolean;
 }
 
+/**
+ * As circunstâncias do réu ligadas, por extenso, na ordem em que as telas as
+ * citam. Um só vocabulário para a ficha do atributo e para a nota da simulação.
+ * Bons antecedentes não entra: o motor não o lê (decisão do revamp, backlog.md).
+ */
+export function circunstanciasPorExtenso(rev: CenarioReverso): string[] {
+  const partes: string[] = [];
+  if (rev.reincidenteEspecifico) partes.push('réu reincidente específico');
+  if (rev.comandoOrgcrimUltraviolenta) partes.push('com comando de organização criminosa ultraviolenta');
+  if (rev.confessou) partes.push('com confissão formal');
+  if (rev.reparouDano) partes.push('com reparação do dano');
+  return partes;
+}
+
 export function cenarioReversoPadrao(): CenarioReverso {
   return {
     base: 'minima',
