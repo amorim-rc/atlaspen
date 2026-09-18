@@ -331,9 +331,6 @@ o site novo ir ao ar. Sem número de frente, para não renumerar o resto.
 
 ### Simulação legislativa: o que a primeira versão não faz
 
-- **Premissa fixa.** A varredura presume réu primário, condenado na pena mínima cominada
-  nos atributos que dependem da pena aplicada. A tela não oferece os controles de premissa
-  que a ficha do atributo tem (base da pena concreta, circunstâncias do réu).
 - **Campos livres do tipo.** Espécie de pena (reclusão ou detenção) e ação penal ficaram de
   fora porque o motor não os lê. Entram quando algum atributo passar a lê-los; o regime
   inicial do art. 33 do CP depende da espécie e é o primeiro candidato.
@@ -356,6 +353,11 @@ o site novo ir ao ar. Sem número de frente, para não renumerar o resto.
   atributos. O denominador de "atingidos" é a união do catálogo vigente com o simulado.
 - **Testes.** Há testes do motor e da URL (`scripts/verificar_simulacao.ts`); não há teste
   de interface nem medida de desempenho além de 22 atributos × 1.472 tipos.
+- ~~**Premissa fixa.**~~ Fechada em 18/09/2026. A tela oferece os mesmos controles da ficha
+  do atributo — base da pena concreta e circunstâncias do réu —, no topo do bloco de
+  impacto, e a premissa entra na URL e no recorte da nota exportada. Os controles moram em
+  `src/components/premissa/ControlesPremissa.tsx`, partilhados pelas duas telas. Com isso
+  os requisitos de confissão e reparação do atributo novo passam a responder à premissa.
 
 ### Dados e conteúdo
 

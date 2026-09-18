@@ -143,9 +143,12 @@ repositório, tudo é redirecionado **exceto as URLs de project site**. Renomear
 renomear. Decisão: adiar o repositório, fazer todo o resto, e deixar o PR de endereço engatilhado
 para quando **atlaspen.org.br** existir.
 
-**Higiene, de passagem.** Não há `.gitattributes`. `README.md` está em LF e `CONTRIBUTING.md`,
-`AGENTS.md`, `docs/dados-abertos.md` e `docs/os-robos.md` estão em CRLF. Normalizar com
-`.gitattributes` entra em B.
+**Higiene, de passagem.** Não há `.gitattributes`. Corrigido em 18/09/2026: o que parecia
+inconsistência do repositório não é. `git ls-files --eol` mostra **LF em todo o índice**; o CRLF
+de `CONTRIBUTING.md`, `AGENTS.md`, `backlog.md` e dos `docs/` existe só na cópia de trabalho, por
+causa do `core.autocrlf=true` da máquina do mantenedor. Um `.gitattributes` com `* text=auto eol=lf`
+ainda vale a pena — tira a dependência da configuração de cada máquina, que é o que faz o aviso de
+CRLF nos admonitions do `AGENTS.md` existir —, mas é prevenção, não conserto.
 
 ---
 
