@@ -9,7 +9,7 @@
       "norma": "a designação da norma",
       "nota": "o que o marco precisa dizer além da data (opcional)"
     },
-    "conferencia": "Datas a conferir contra o Planalto (legislação histórica) antes do lançamento."
+    "conferencia": "Conferidas em 18/09/2026 contra o cabeçalho e o fecho de cada norma no Planalto (ccivil_03): as 16 datas e as três notas. As de 1967 e 1988 saem do fecho (\"Brasília, 24 de janeiro de 1967\"; \"Brasília, 5 de outubro de 1988\"), porque o cabeçalho traz só o ano. As notas: art. 361 do CP (vigência em 1º/01/1942); EC nº 1, de 17/10/1969; Lei nº 6.578, de 11/10/1978, que revoga o DL 1.004/1969."
   },
   "marcos": [
     {"data": "1824-03-25", "tipo": "constituicao", "rotulo": "Constituição Política do Império do Brasil", "eixo": "1824", "norma": "Constituição de 25 de março de 1824"},
