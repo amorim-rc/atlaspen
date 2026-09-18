@@ -18,6 +18,7 @@ import {
   contar,
   crimesComPenaPrivativa,
 } from '../src/lib/atributos/reverso';
+import {escreverPremissa, lerPremissa, premissaIgualAoPadrao} from '../src/lib/atributos/premissa-url';
 import {cenarioFromCrime} from '../src/lib/cenario';
 import {calcularConcurso, calcularDosimetria} from '../src/lib/dosimetria';
 
@@ -618,6 +619,41 @@ console.log('\n6. Dosimetria por fases (art. 68, CP)');
   const formalExcessivo = calcularConcurso([72, 6], 'formal', 1 / 2);
   ok(formalExcessivo.total === 78,
     `art. 70, par. único: exasperação (108) excede a soma (78) → aplica a soma (obtido ${formalExcessivo.total})`);
+}
+
+console.log('\nPremissa da varredura na URL');
+{
+  const padrao = cenarioReversoPadrao();
+  ok(premissaIgualAoPadrao(padrao), 'o padrão é igual ao padrão');
+
+  const vazio = new URLSearchParams();
+  escreverPremissa(vazio, padrao);
+  ok(vazio.toString() === '', 'o padrão não grava nada na URL');
+
+  const mexido = {...padrao, base: 'maxima' as const, reincidenteEspecifico: true, bonsAntecedentes: false};
+  ok(!premissaIgualAoPadrao(mexido), 'premissa mexida difere do padrão');
+
+  const q = new URLSearchParams();
+  escreverPremissa(q, mexido);
+  ok(q.get('base') === 'maxima', 'grava base=maxima');
+  ok(q.get('reincidente') === 'sim', 'grava reincidente=sim');
+  ok(q.get('antecedentes') === 'nao', 'grava antecedentes=nao');
+  ok(q.get('confessou') === null, 'não grava o que está no padrão');
+
+  const volta = lerPremissa(new URLSearchParams(q.toString()));
+  ok(volta.base === 'maxima', 'lê base=maxima de volta');
+  ok(volta.reincidenteEspecifico === true, 'lê reincidente de volta');
+  ok(volta.bonsAntecedentes === false, 'lê antecedentes de volta');
+  ok(volta.confessou === false, 'o ausente volta como padrão');
+
+  const fixa = {...padrao, base: 'fixa' as const, penaFixaMeses: 36};
+  const qf = new URLSearchParams();
+  escreverPremissa(qf, fixa);
+  ok(qf.get('fixa') === '3a', 'a pena fixa vai em duração compacta');
+  ok(lerPremissa(new URLSearchParams(qf.toString())).penaFixaMeses === 36, 'a pena fixa volta em meses');
+
+  const ruim = lerPremissa(new URLSearchParams('base=inventada'));
+  ok(ruim.base === 'minima', 'base fora do vocabulário cai no padrão');
 }
 
 console.log(falhas === 0 ? '\n✓ Todas as verificações passaram.\n' : `\n✗ ${falhas} verificação(ões) falharam.\n`);
