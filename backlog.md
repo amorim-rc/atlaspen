@@ -343,14 +343,18 @@ o site novo ir ao ar. Sem número de frente, para não renumerar o resto.
 - **Etiqueta das mudanças em atributo.** Só aparece quando a mudança só alarga ou só
   estreita o alcance. A que só altera valores (prazo, fração, regime) fica "sentido não
   classificado".
-- **Regime inicial** não entra na extinção de atributo.
+- ~~**Regime inicial** não entra na extinção de atributo.~~ Não é pendência: é decisão, e
+  certa. Toda pena privativa começa em algum regime, e extinguir o regime inicial não tem
+  sentido (`EXTINGUIVEIS`, em `src/components/simulacao/Simulador.tsx`). Reclassificada em
+  17/09/2026.
 - **Nota exportada.** O identificador é `AAAA-MMDD-XXXX`, um resumo da hipótese, e não um
   contador (não há servidor); não há link curto, e o link completo é a hipótese. A versão do
   catálogo e a data da conferência vão escritas na nota, mas o link reabre sobre o catálogo
   do dia: não há arquivo das versões antigas para refazer a conta na base citada. O PDF é a
   impressão do navegador, e o CSV traz só os pares que mudam.
-- **Fora do cálculo.** A simulação não mexe na dosimetria nem na moldura concreta, só nos
-  atributos. O denominador de "atingidos" é a união do catálogo vigente com o simulado.
+- **Fora do cálculo** (escopo declarado, não pendência; reclassificado em 17/09/2026). A
+  simulação não mexe na dosimetria nem na moldura concreta, só nos atributos. O denominador
+  de "atingidos" é a união do catálogo vigente com o simulado.
 - **Testes.** Há testes do motor e da URL (`scripts/verificar_simulacao.ts`); não há teste
   de interface nem medida de desempenho além de 22 atributos × 1.472 tipos.
 - ~~**Premissa fixa.**~~ Fechada em 18/09/2026. A tela oferece os mesmos controles da ficha
@@ -361,9 +365,16 @@ o site novo ir ao ar. Sem número de frente, para não renumerar o resto.
 
 ### Dados e conteúdo
 
-- **Linha do tempo.** Conferir as 16 datas de `data/marcos.json`.
-- **Acervo.** São 25 registros (o desenho dizia 27). Texto original e data exata da
-  revogação estão ausentes em todos, e declarados como ausentes.
+- ~~**Linha do tempo.**~~ Fechada em 18/09/2026. As 16 datas de `data/marcos.json` e as três
+  notas conferem com o cabeçalho e o fecho de cada norma no Planalto; nenhuma mudou.
+- **Acervo.** Conferido em 18/09/2026. Dos 14 dispositivos, 13 têm texto original e 12 têm a
+  data da perda de vigência. A conferência corrigiu duas normas: sedução e rapto (CP, arts. 217
+  e 219 a 222) saíram pela Lei 11.106/2005, e não pela 12.015/2009, e a Lei 13.506/2017 não
+  converteu a MP 784/2017. Em aberto, para o mantenedor: `lei9807-19`, cujo veto não se
+  confirma no Planalto (a lei publicada não tem "VETADO"); `lcp-60-61`, dois artigos
+  revogados por duas leis num registro de uma data só; e a data dos 11 diplomas inteiros, que
+  `data/diplomas.json` não tem como campo. Os 25 registros são 14 dispositivos e 11 diplomas;
+  os 27 eram do protótipo do desenho.
 - **História do projeto** (`textos/historia.md`). Conferir o início da retomada (primeiro
   commit em 22/06/2026), as "três pessoas de início" e os nomes da equipe de 2008. O
   exemplo do artigo de 2008 sobre a Lei 11.313/2006 fala em pena mínima onde a regra do
@@ -396,7 +407,8 @@ o site novo ir ao ar. Sem número de frente, para não renumerar o resto.
 ### Interface
 
 - Os textos do site passam por revisão do mantenedor.
-- O parâmetro `?em=` (eixo temporal, desenho 4c) segue reservado e sem implementação.
+- O parâmetro `?em=` (eixo temporal, desenho 4c) segue reservado e sem implementação. Não é
+  acabamento do revamp: é a frente 9 inteira (reclassificado em 17/09/2026).
 - Decisões de acuidade tomadas no revamp, a confirmar: frações canônicas (1/3) no lugar das
   aproximações decimais dos dados; os 35 tipos sem pena privativa sem vereditos; "bons
   antecedentes" fora da ficha, porque o motor não o lê; perfil do réu com dois estados; o
