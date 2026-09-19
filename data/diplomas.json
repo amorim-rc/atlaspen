@@ -613,6 +613,7 @@
       "fonte_url": "https://www.planalto.gov.br/ccivil_03/leis/l7802.htm",
       "conferido_em": "2026-07-29",
       "norma_revogadora": "Lei nº 14.785/2023, art. 65, I",
+      "data_revogacao": "2023-12-28",
       "preceitos_esperados": 0,
       "tipos_catalogados": 0
     },
@@ -1032,6 +1033,7 @@
       "fonte_url": "https://www.planalto.gov.br/ccivil_03/leis/2003/l10.671.htm",
       "conferido_em": "2026-07-19",
       "norma_revogadora": "Lei nº 14.597/2023, art. 217, III",
+      "data_revogacao": "2023-06-15",
       "preceitos_esperados": 0,
       "tipos_catalogados": 0
     },
@@ -1043,6 +1045,8 @@
       "fonte_url": "https://www.planalto.gov.br/ccivil_03/leis/l7170.htm",
       "conferido_em": "2026-07-19",
       "norma_revogadora": "Lei nº 14.197/2021 (crimes contra o Estado Democrático, hoje CP arts. 359-I a 359-T)",
+      "data_revogacao": "2021-12-01",
+      "data_revogacao_nota": "A Lei 14.197/2021 entrou em vigor 90 dias depois de publicada.",
       "preceitos_esperados": 0,
       "tipos_catalogados": 0
     },
@@ -1054,6 +1058,8 @@
       "fonte_url": "https://www.planalto.gov.br/ccivil_03/leis/l4898.htm",
       "conferido_em": "2026-07-19",
       "norma_revogadora": "Lei nº 13.869/2019",
+      "data_revogacao": "2020-01-03",
+      "data_revogacao_nota": "A Lei 13.869/2019 entrou em vigor 120 dias depois de publicada.",
       "preceitos_esperados": 0,
       "tipos_catalogados": 0
     },
@@ -1065,6 +1071,8 @@
       "fonte_url": "https://www.planalto.gov.br/ccivil_03/leis/l6368.htm",
       "conferido_em": "2026-07-19",
       "norma_revogadora": "Lei nº 11.343/2006",
+      "data_revogacao": "2006-10-08",
+      "data_revogacao_nota": "A Lei 11.343/2006 entrou em vigor 45 dias depois de publicada.",
       "preceitos_esperados": 0,
       "tipos_catalogados": 0
     },
@@ -1076,6 +1084,8 @@
       "fonte_url": "https://www.planalto.gov.br/ccivil_03/leis/l5250.htm",
       "conferido_em": "2026-07-19",
       "norma_revogadora": "ADPF 130 (STF, 2009)",
+      "data_revogacao": "1988-10-05",
+      "data_revogacao_nota": "Não recepcionada: perdeu a vigência com a Constituição de 1988. O STF o declarou na ADPF 130, em 2009.",
       "preceitos_esperados": 0,
       "tipos_catalogados": 0
     },
@@ -1087,6 +1097,7 @@
       "fonte_url": "https://www.planalto.gov.br/ccivil_03/leis/1950-1969/l2252.htm",
       "conferido_em": "2026-07-19",
       "norma_revogadora": "Lei nº 12.015/2009 (conduta hoje no ECA, art. 244-B)",
+      "data_revogacao": "2009-08-10",
       "preceitos_esperados": 0,
       "tipos_catalogados": 0
     },
@@ -1098,6 +1109,7 @@
       "fonte_url": "https://www.planalto.gov.br/ccivil_03/leis/l9437.htm",
       "conferido_em": "2026-07-19",
       "norma_revogadora": "Lei nº 10.826/2003",
+      "data_revogacao": "2003-12-23",
       "preceitos_esperados": 0,
       "tipos_catalogados": 0
     },
@@ -1109,6 +1121,8 @@
       "fonte_url": "https://www.planalto.gov.br/ccivil_03/leis/l8666cons.htm",
       "conferido_em": "2026-07-19",
       "norma_revogadora": "Lei nº 14.133/2021 (crimes movidos para o CP, arts. 337-E a 337-P)",
+      "data_revogacao": "2021-04-01",
+      "data_revogacao_nota": "Os crimes (arts. 89 a 108) saíram na data da publicação da Lei 14.133/2021 (art. 193, I); o resto da lei, depois (art. 193, II).",
       "preceitos_esperados": 0,
       "tipos_catalogados": 0
     },
@@ -1120,6 +1134,8 @@
       "fonte_url": "https://www.planalto.gov.br/ccivil_03/decreto-lei/del7661.htm",
       "conferido_em": "2026-07-19",
       "norma_revogadora": "Lei nº 11.101/2005",
+      "data_revogacao": "2005-06-09",
+      "data_revogacao_nota": "A Lei 11.101/2005 entrou em vigor 120 dias depois de publicada, ressalvado o art. 192, que mantém o decreto-lei nos processos já em curso.",
       "preceitos_esperados": 0,
       "tipos_catalogados": 0
     },
@@ -1130,7 +1146,9 @@
       "situacao": "revogado",
       "fonte_url": "https://www.planalto.gov.br/ccivil_03/leis/l6815.htm",
       "conferido_em": "2026-07-19",
-      "norma_revogadora": "Lei nº 13.445/2017, art. 124, I",
+      "norma_revogadora": "Lei nº 13.445/2017, art. 124, II",
+      "data_revogacao": "2017-11-21",
+      "data_revogacao_nota": "A Lei 13.445/2017 entrou em vigor 180 dias depois de publicada.",
       "preceitos_esperados": 0,
       "tipos_catalogados": 0
     }

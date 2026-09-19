@@ -192,6 +192,17 @@ META: dict[str, dict] = {
         "faixas": [[2, 21]],
         "rotulos": ["Lei 12.850/13"],
     },
+    "lei15358": {
+        "nome": "Marco Legal do Combate ao Crime Organizado (Lei Antifacção)",
+        "norma": "Lei nº 15.358, de 24 de março de 2026",
+        "url": "_ato2023-2026/2026/lei/L15358.htm",
+        "faixas": [[2, 3]],
+        "rotulos": ["Lei 15.358/26"],
+        "obs": "O §1º do art. 2º é causa de aumento e o §5º é causa de "
+               "diminuição — ambos em data/modificadores.json. O §3º do art. "
+               "2º foi vetado, e as remissões a ele (art. 4º desta Lei e "
+               "art. 1º, par. ún., VIII, da Lei 8.072/90) são inócuas.",
+    },
     "lei11101": {
         "nome": "Lei de Falências (crimes falimentares)",
         "norma": "Lei nº 11.101, de 9 de fevereiro de 2005",
@@ -372,15 +383,20 @@ META: dict[str, dict] = {
         "rotulos": ["Lei 14.344/22"],
     },
     "lei7802": {
-        "nome": "Agrotóxicos (crimes)",
+        "nome": "Agrotóxicos (antiga)",
         "norma": "Lei nº 7.802, de 11 de julho de 1989",
         "url": "leis/l7802.htm",
-        "faixas": [[15, 16]],
-        "rotulos": ["Lei 7.802/89"],
-        "ajuste": {
-            "esperados": 2,
-            "motivo": "Arts. 15 e 16 cominam reclusão em linha corrida.",
-        },
+        "situacao": "revogado",
+        "revogadora": "Lei nº 14.785/2023, art. 65, I",
+        "data_revogacao": "2023-12-28",
+        "rotulos": [],
+    },
+    "lei14785": {
+        "nome": "Agrotóxicos (crimes)",
+        "norma": "Lei nº 14.785, de 27 de dezembro de 2023",
+        "url": "_ato2023-2026/2023/lei/l14785.htm",
+        "faixas": [[56, 57]],
+        "rotulos": ["Lei 14.785/23"],
     },
     "lei11340": {
         "nome": "Lei Maria da Penha (crime do art. 24-A)",
@@ -626,6 +642,7 @@ META: dict[str, dict] = {
         "url": "leis/2003/l10.671.htm",
         "situacao": "revogado",
         "revogadora": "Lei nº 14.597/2023, art. 217, III",
+        "data_revogacao": "2023-06-15",
         "rotulos": [],
     },
     "lei7170": {
@@ -635,6 +652,8 @@ META: dict[str, dict] = {
         "situacao": "revogado",
         "revogadora": "Lei nº 14.197/2021 (crimes contra o Estado Democrático, "
                       "hoje CP arts. 359-I a 359-T)",
+        "data_revogacao": "2021-12-01",
+        "data_revogacao_nota": "A Lei 14.197/2021 entrou em vigor 90 dias depois de publicada.",
         "rotulos": [],
     },
     "lei4898": {
@@ -643,6 +662,8 @@ META: dict[str, dict] = {
         "url": "leis/l4898.htm",
         "situacao": "revogado",
         "revogadora": "Lei nº 13.869/2019",
+        "data_revogacao": "2020-01-03",
+        "data_revogacao_nota": "A Lei 13.869/2019 entrou em vigor 120 dias depois de publicada.",
         "rotulos": [],
     },
     "lei6368": {
@@ -651,6 +672,8 @@ META: dict[str, dict] = {
         "url": "leis/l6368.htm",
         "situacao": "revogado",
         "revogadora": "Lei nº 11.343/2006",
+        "data_revogacao": "2006-10-08",
+        "data_revogacao_nota": "A Lei 11.343/2006 entrou em vigor 45 dias depois de publicada.",
         "rotulos": [],
     },
     "lei5250": {
@@ -659,6 +682,8 @@ META: dict[str, dict] = {
         "url": "leis/l5250.htm",
         "situacao": "nao_recepcionado",
         "revogadora": "ADPF 130 (STF, 2009)",
+        "data_revogacao": "1988-10-05",
+        "data_revogacao_nota": "Não recepcionada: perdeu a vigência com a Constituição de 1988. O STF o declarou na ADPF 130, em 2009.",
         "rotulos": [],
     },
     "lei2252": {
@@ -667,6 +692,7 @@ META: dict[str, dict] = {
         "url": "leis/1950-1969/l2252.htm",
         "situacao": "revogado",
         "revogadora": "Lei nº 12.015/2009 (conduta hoje no ECA, art. 244-B)",
+        "data_revogacao": "2009-08-10",
         "rotulos": [],
     },
     "lei9437": {
@@ -675,6 +701,7 @@ META: dict[str, dict] = {
         "url": "leis/l9437.htm",
         "situacao": "revogado",
         "revogadora": "Lei nº 10.826/2003",
+        "data_revogacao": "2003-12-23",
         "rotulos": [],
     },
     "lei8666": {
@@ -684,6 +711,8 @@ META: dict[str, dict] = {
         "situacao": "revogado",
         "revogadora": "Lei nº 14.133/2021 (crimes movidos para o CP, arts. "
                       "337-E a 337-P)",
+        "data_revogacao": "2021-04-01",
+        "data_revogacao_nota": "Os crimes (arts. 89 a 108) saíram na data da publicação da Lei 14.133/2021 (art. 193, I); o resto da lei, depois (art. 193, II).",
         "rotulos": [],
     },
     "dl7661": {
@@ -692,6 +721,8 @@ META: dict[str, dict] = {
         "url": "decreto-lei/del7661.htm",
         "situacao": "revogado",
         "revogadora": "Lei nº 11.101/2005",
+        "data_revogacao": "2005-06-09",
+        "data_revogacao_nota": "A Lei 11.101/2005 entrou em vigor 120 dias depois de publicada, ressalvado o art. 192, que mantém o decreto-lei nos processos já em curso.",
         "rotulos": [],
     },
     "lei6815": {
@@ -699,7 +730,9 @@ META: dict[str, dict] = {
         "norma": "Lei nº 6.815, de 19 de agosto de 1980",
         "url": "leis/l6815.htm",
         "situacao": "revogado",
-        "revogadora": "Lei nº 13.445/2017, art. 124, I",
+        "revogadora": "Lei nº 13.445/2017, art. 124, II",
+        "data_revogacao": "2017-11-21",
+        "data_revogacao_nota": "A Lei 13.445/2017 entrou em vigor 180 dias depois de publicada.",
         "rotulos": [],
     },
 }
@@ -866,6 +899,11 @@ def montar(cache: Path) -> dict:
         }
         if situacao != "vigente":
             item["norma_revogadora"] = meta["revogadora"]
+            # A perda de vigência dos dispositivos PENAIS do diploma, que é o que o
+            # acervo mede; a nota explica vacatio, revogação escalonada ou não recepção.
+            item["data_revogacao"] = meta.get("data_revogacao")
+            if meta.get("data_revogacao_nota"):
+                item["data_revogacao_nota"] = meta["data_revogacao_nota"]
             item["preceitos_esperados"] = 0
         else:
             arquivo = cache / f"{slug}.html"

@@ -28,7 +28,7 @@ Ponto de partida do acervo: os diplomas inteiros que saíram de vigência, regis
 | Armas de fogo (antiga) | Lei nº 9.437, de 20 de fevereiro de 1997 | revogado — Lei nº 10.826/2003 |
 | Licitações (antiga) | Lei nº 8.666, de 21 de junho de 1993 | revogado — Lei nº 14.133/2021 (crimes movidos para o CP, arts. 337-E a 337-P) |
 | Falências (antiga) | Decreto-Lei nº 7.661, de 21 de junho de 1945 | revogado — Lei nº 11.101/2005 |
-| Estatuto do Estrangeiro | Lei nº 6.815, de 19 de agosto de 1980 | revogado — Lei nº 13.445/2017, art. 124, I |
+| Estatuto do Estrangeiro | Lei nº 6.815, de 19 de agosto de 1980 | revogado — Lei nº 13.445/2017, art. 124, II |
 
 ## Casos já identificados para o acervo
 

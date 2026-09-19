@@ -6,8 +6,10 @@
 // E o eixo: data/marcos.json (constituições e códigos) e o histórico
 // legislativo dos dispositivos citados pelos atributos.
 //
-// O que a fonte não diz, a tela não diz: data exata da revogação e texto
-// original ficam ausentes até serem conferidos (frente 12 do backlog).
+// O que a fonte não diz, a tela não diz: data da revogação e texto original
+// ficam ausentes até serem conferidos contra o Planalto. Conferidos em
+// 18/09/2026: todos os dispositivos têm os dois; os diplomas inteiros têm a
+// data, e o texto deles é a própria fonte oficial.
 
 import acervo from '../../data/acervo.json';
 import marcosBrutos from '../../data/marcos.json';
@@ -84,14 +86,17 @@ export function registrosDoAcervo(): RegistroAcervo[] {
       nome: d.nome,
       dispositivo: `${d.norma.replace(/, de .*$/, '')} (diploma inteiro)`,
       categoria: d.situacao === 'nao_recepcionado' ? 'nao_recepcionado' : 'revogado',
-      oQueHouve: `${d.situacao === 'nao_recepcionado' ? 'Não recepcionado' : 'Revogado'} — ${norma}.`,
+      oQueHouve: `${d.situacao === 'nao_recepcionado' ? 'Não recepcionado' : 'Revogado'} — ${norma}.${
+        d.data_revogacao_nota ? ` ${d.data_revogacao_nota}` : ''
+      }`,
       normas: [{norma, ano: anoDaNorma(norma)}],
       retirado: null,
       artigos: [d.id],
       diploma: {id: d.id, nome: d.nome, norma: d.norma},
       fonteUrl: d.fonte_url ?? null,
       publicacao: pub ? {data: pub, norma: d.norma} : null,
-      dataRevogacao: null,
+      dataRevogacao: d.data_revogacao ?? null,
+      // O texto de um diploma inteiro não cabe na ficha: o link da fonte cumpre esse papel.
       textoOriginal: null,
     };
   });

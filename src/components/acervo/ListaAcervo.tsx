@@ -153,6 +153,8 @@ export default function ListaAcervo({registros, ano = null, naUrl = false}: Prop
                       <span className="rotulo">Texto original</span>
                       {r.textoOriginal ? (
                         <blockquote className={s.textoOriginal}>{r.textoOriginal}</blockquote>
+                      ) : r.tipo === 'diploma' ? (
+                        <p className={s.ausente}>Diploma inteiro: o texto está na fonte oficial, citada nesta ficha.</p>
                       ) : (
                         <p className={s.ausente}>
                           Ainda não transcrito. Entra quando o registro for conferido contra o texto compilado; até lá,
@@ -161,7 +163,7 @@ export default function ListaAcervo({registros, ano = null, naUrl = false}: Prop
                       )}
                     </div>
                     <div className={s.colunaTempo}>
-                      <span className="rotulo">Linha do tempo do dispositivo</span>
+                      <span className="rotulo">Linha do tempo {r.tipo === 'diploma' ? 'do diploma' : 'do dispositivo'}</span>
                       <ol className={s.passos}>
                         {passosDoRegistro(r).map((p, i) => (
                           <li key={i}>

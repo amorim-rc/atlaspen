@@ -15,6 +15,10 @@ export interface Diploma {
   fonte_url?: string;
   rotulos_catalogo?: string[];
   norma_revogadora?: string;
+  /** Perda de vigência dos dispositivos penais do diploma (AAAA-MM-DD). */
+  data_revogacao?: string | null;
+  /** Vacatio, revogação escalonada ou não recepção. */
+  data_revogacao_nota?: string;
   preceitos_esperados?: number;
   tipos_catalogados?: number;
 }
