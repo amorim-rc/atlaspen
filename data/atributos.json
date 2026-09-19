@@ -75,7 +75,9 @@
             }
           ]
         }
-      ]
+      ],
+      "alcanca_sem_pena_privativa": true,
+      "fundamento_sem_pena_privativa": "Art. 61, Lei 9.099/95: infração de menor potencial ofensivo é o crime com pena máxima não superior a 2 anos, \"cumulada ou não com multa\"."
     },
     {
       "id": 2,
@@ -171,7 +173,9 @@
             }
           ]
         }
-      ]
+      ],
+      "alcanca_sem_pena_privativa": true,
+      "fundamento_sem_pena_privativa": "Art. 89, Lei 9.099/95: alcança o crime com pena mínima cominada igual ou inferior a um ano, e a multa isolada está nesse patamar."
     },
     {
       "id": 3,
@@ -263,8 +267,53 @@
               "fundamento": "Art. 28-A, §2º, II, CPP"
             }
           ]
+        },
+        {
+          "id": "vedadoSeCabeTransacao",
+          "rotulo": "Vedar quando cabe transação",
+          "tipo": "booleano",
+          "padrao": true,
+          "ajuda": "Art. 28-A, §2º, I: o acordo não se aplica se for cabível transação penal de competência dos Juizados Especiais Criminais.",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivo": "cpp|art. 28-a, §2º, i"
+              },
+              "norma": "Lei nº 13.964",
+              "fundamento": "Art. 28-A, §2º, I, CPP"
+            }
+          ]
+        },
+        {
+          "id": "tetoMenorPotencialMeses",
+          "rotulo": "Teto do menor potencial ofensivo",
+          "tipo": "meses",
+          "padrao": 24,
+          "min": 0,
+          "max": 240,
+          "passo": 1,
+          "ajuda": "O mesmo teto da transação penal (art. 61, Lei 9.099/95): até ele, cabe transação, e por isso não cabe o acordo.",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivo": "juizados-9099|art. 61"
+              },
+              "norma": "original",
+              "fundamento": "Art. 61, Lei 9.099/95 (redação original)",
+              "valor": 12
+            },
+            {
+              "fonte": {
+                "dispositivo": "juizados-9099|art. 61"
+              },
+              "norma": "Lei nº 11.313",
+              "fundamento": "Art. 61, Lei 9.099/95"
+            }
+          ]
         }
-      ]
+      ],
+      "alcanca_sem_pena_privativa": true,
+      "fundamento_sem_pena_privativa": "Art. 28-A, §2º, I, CPP: não cabe quando for cabível transação penal — o que ocorre no tipo só com multa."
     },
     {
       "id": 4,
@@ -345,7 +394,8 @@
             }
           ]
         }
-      ]
+      ],
+      "alcanca_sem_pena_privativa": false
     },
     {
       "id": 5,
@@ -435,7 +485,8 @@
             }
           ]
         }
-      ]
+      ],
+      "alcanca_sem_pena_privativa": false
     },
     {
       "id": 6,
@@ -515,7 +566,8 @@
             }
           ]
         }
-      ]
+      ],
+      "alcanca_sem_pena_privativa": false
     },
     {
       "id": 7,
@@ -594,7 +646,8 @@
             }
           ]
         }
-      ]
+      ],
+      "alcanca_sem_pena_privativa": false
     },
     {
       "id": 8,
@@ -631,7 +684,8 @@
             }
           ]
         }
-      ]
+      ],
+      "alcanca_sem_pena_privativa": false
     },
     {
       "id": 9,
@@ -725,7 +779,8 @@
             }
           ]
         }
-      ]
+      ],
+      "alcanca_sem_pena_privativa": false
     },
     {
       "id": 10,
@@ -767,7 +822,8 @@
             }
           ]
         }
-      ]
+      ],
+      "alcanca_sem_pena_privativa": false
     },
     {
       "id": 11,
@@ -1109,7 +1165,8 @@
             }
           ]
         }
-      ]
+      ],
+      "alcanca_sem_pena_privativa": false
     },
     {
       "id": 12,
@@ -1252,7 +1309,8 @@
             }
           ]
         }
-      ]
+      ],
+      "alcanca_sem_pena_privativa": false
     },
     {
       "id": 13,
@@ -1444,7 +1502,9 @@
             }
           ]
         }
-      ]
+      ],
+      "alcanca_sem_pena_privativa": true,
+      "fundamento_sem_pena_privativa": "Art. 114, I, CP: a multa única cominada prescreve em 2 anos. As demais sanções não privativas têm regra própria, e a ficha diz \"depende\"."
     },
     {
       "id": 14,
@@ -1546,7 +1606,8 @@
             }
           ]
         }
-      ]
+      ],
+      "alcanca_sem_pena_privativa": false
     },
     {
       "id": 15,
@@ -1583,7 +1644,8 @@
             }
           ]
         }
-      ]
+      ],
+      "alcanca_sem_pena_privativa": false
     },
     {
       "id": 16,
@@ -1662,7 +1724,8 @@
             }
           ]
         }
-      ]
+      ],
+      "alcanca_sem_pena_privativa": false
     },
     {
       "id": 17,
@@ -1717,7 +1780,8 @@
             }
           ]
         }
-      ]
+      ],
+      "alcanca_sem_pena_privativa": false
     },
     {
       "id": 18,
@@ -1764,7 +1828,8 @@
           "ajuda": "Não há vedação legal por hediondez. O parâmetro existe para simular propostas legislativas que a introduzam.",
           "sem_fonte_legal": "Não há vedação legal de monitoração por hediondez: o parâmetro existe para simular propostas legislativas que a introduzam."
         }
-      ]
+      ],
+      "alcanca_sem_pena_privativa": false
     },
     {
       "id": 19,
@@ -1815,7 +1880,8 @@
           "ajuda": "Os decretos variam a cada ano; 1/3 para primários é a fração historicamente mais comum. Não há patamar legal fixo.",
           "sem_fonte_legal": "A fração vem do decreto de indulto de cada ano: não há patamar legal fixo."
         }
-      ]
+      ],
+      "alcanca_sem_pena_privativa": false
     },
     {
       "id": 20,
@@ -1865,7 +1931,8 @@
           "ajuda": "Percentual de redução típico dos decretos de comutação. Varia a cada ano.",
           "sem_fonte_legal": "A fração vem do decreto de comutação de cada ano: não há patamar legal fixo."
         }
-      ]
+      ],
+      "alcanca_sem_pena_privativa": false
     },
     {
       "id": 21,
@@ -1908,7 +1975,8 @@
             }
           ]
         }
-      ]
+      ],
+      "alcanca_sem_pena_privativa": false
     },
     {
       "id": 22,
@@ -1965,7 +2033,8 @@
             }
           ]
         }
-      ]
+      ],
+      "alcanca_sem_pena_privativa": false
     }
   ]
 }

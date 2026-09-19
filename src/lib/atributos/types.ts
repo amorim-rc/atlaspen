@@ -86,6 +86,10 @@ export interface AtributoDef {
   requisitos: string[];
   /** Hipóteses de vedação legal ou sumular. */
   vedacoes: string[];
+  /** O atributo alcança tipo sem pena privativa (só multa, outras penas)? */
+  alcancaSemPenaPrivativa: boolean;
+  /** Por quê, quando alcança: o dispositivo que o diz. */
+  fundamentoSemPenaPrivativa?: string;
   parametros: ParametroDef[];
   avaliar: (c: Cenario, p: Parametros) => Avaliacao;
 }

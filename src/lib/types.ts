@@ -189,6 +189,7 @@ export type TipoDoMotor = Pick<
   | 'contravencao'
   | 'tem_pena_privativa'
   | 'pena_por_remissao'
+  | 'tipo_pena'
 >;
 
 /** Parâmetros do caso concreto usados no cálculo dinâmico de atributos. */
@@ -265,6 +266,14 @@ export interface Cenario {
    * a pena (art. 61 da Lei 9.099/95). Campo do TIPO.
    */
   contravencao: boolean;
+  /** O tipo não comina pena privativa (só multa, ou outras penas): lido de `tem_pena_privativa`. */
+  semPenaPrivativa: boolean;
+  /**
+   * Sem pena privativa, e a sanção é só multa. É só a ela que o art. 114, I, do CP
+   * dá o prazo de 2 anos: "outras penas" (Lei 7.437/85, art. 8º; Lei 11.343/06,
+   * art. 28) têm regra própria, que o motor não calcula.
+   */
+  multaIsolada: boolean;
   /**
    * Crime militar (CPM). A Lei 9.099/95 não se aplica no âmbito da Justiça Militar
    * (art. 90-A): nem transação penal nem suspensão condicional do processo.

@@ -147,11 +147,20 @@ export const AVALIADORES: Record<string, (c: Cenario, p: Parametros) => Avaliaca
     // Art. 28-A, §2º, II, CPP: "se o investigado for reincidente" — qualquer reincidência.
     const naoVedado = !bool(p, 'vedadoReincidente') || !ehReincidente(c);
     const confissaoOk = !bool(p, 'exigeConfissao') || c.confessou;
+    // Art. 28-A, §2º, I, CPP: não cabe se for cabível transação penal — a infração
+    // de menor potencial ofensivo (contravenção, ou pena máxima até o teto do art.
+    // 61 da Lei 9.099/95). Fora da Justiça Militar, onde a Lei 9.099/95 não se aplica.
+    const cabeTransacao =
+      bool(p, 'vedadoSeCabeTransacao') &&
+      !c.justicaMilitar &&
+      (c.contravencao || c.penaMax <= num(p, 'tetoMenorPotencialMeses'));
 
     let status: 'cabivel' | 'incabivel' | 'condicional' = 'incabivel';
     let resumo: string;
     if (!dentroPena) {
       resumo = `Pena mínima igual ou superior a ${formatPena(limite)}.`;
+    } else if (cabeTransacao) {
+      resumo = 'Cabe transação penal: o acordo não se aplica (art. 28-A, §2º, I).';
     } else if (!semViolencia) {
       resumo = 'Infração praticada com violência ou grave ameaça.';
     } else if (!naoVedado) {
@@ -534,6 +543,25 @@ export const AVALIADORES: Record<string, (c: Cenario, p: Parametros) => Avaliaca
     };
   },
   prescricao: (c, p) => {
+    if (c.multaIsolada) {
+      // Art. 114, I, CP: a multa única cominada prescreve em 2 anos.
+      const prazoMulta = num(p, 'prazoMultaIsolada');
+      return {
+        status: 'cabivel',
+        valor: formatPena(prazoMulta),
+        resumo: `Multa única cominada: ${formatPena(prazoMulta)}.`,
+        detalhes: [`A multa, quando é a única cominada ou aplicada, prescreve em ${formatPena(prazoMulta)} (art. 114, I, CP).`],
+      };
+    }
+    if (c.semPenaPrivativa) {
+      // "Outras penas" (Lei 11.343/06, art. 28; Lei 7.437/85, art. 8º): o prazo
+      // depende da sanção, e o motor não o inventa.
+      return {
+        status: 'condicional',
+        resumo: 'Sem pena privativa nem multa isolada: o prazo depende da sanção cominada.',
+        detalhes: ['O art. 109 do CP mede o prazo pela pena privativa, e o art. 114, pela multa; a sanção deste tipo é outra, com regra própria.'],
+      };
+    }
     const fator = bool(p, 'reducaoEtaria') ? 0.5 : 1;
     const prazo = (penaMeses: number): number => {
       let base: number;

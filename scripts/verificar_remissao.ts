@@ -40,6 +40,7 @@ const tipo = (id: number, artigo: string, crime: string, min: number, max: numbe
   contravencao: false,
   tem_pena_privativa: true,
   pena_por_remissao: null,
+  tipo_pena: 'Reclusão',
   ...extra,
 });
 const remissao = (artigos: string[], operador: 'nenhum' | 'aumento' | 'diminuicao', fracao: string | null) => ({
@@ -66,6 +67,7 @@ const teto: AtributoDef = {
   descricao: '',
   requisitos: [],
   vedacoes: [],
+  alcancaSemPenaPrivativa: false,
   parametros: [{id: 'tetoMeses', rotulo: '', tipo: 'meses', padrao: 60, ajuda: ''}],
   avaliar: (c, p) => ({status: c.penaMax <= num(p, 'tetoMeses') ? 'cabivel' : 'incabivel', resumo: '', detalhes: []}),
 };

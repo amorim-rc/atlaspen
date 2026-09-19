@@ -57,6 +57,7 @@ const tipo = (id: number, artigo: string, crime: string, min: number, max: numbe
   contravencao: false,
   tem_pena_privativa: true,
   pena_por_remissao: null,
+  tipo_pena: 'Reclusão',
   ...extra,
 });
 
@@ -65,7 +66,7 @@ const T2 = tipo(2, 'Art. 1º, §1º', 'Furto fictício qualificado', 24, 36);
 const T3 = tipo(3, 'Art. 2º', 'Roubo fictício', 48, 120, {violencia: 'Sim'});
 const T4 = tipo(4, 'Art. 3º', 'Sem pena privativa', 0, 0, {tem_pena_privativa: false});
 
-const base = {categoria: 'processual' as const, natureza: 'abstrato' as const, descricao: '', requisitos: [], vedacoes: []};
+const base = {categoria: 'processual' as const, natureza: 'abstrato' as const, descricao: '', requisitos: [], vedacoes: [], alcancaSemPenaPrivativa: false};
 const teto: AtributoDef = {
   ...base,
   id: 'teto',

@@ -36,6 +36,8 @@ export interface AtributoFonte {
   descricao: string;
   requisitos: string[];
   vedacoes: string[];
+  alcanca_sem_pena_privativa: boolean;
+  fundamento_sem_pena_privativa?: string;
   parametros: ParametroFonte[];
 }
 
@@ -84,6 +86,8 @@ export function montarCatalogo(
       descricao: a.descricao,
       requisitos: a.requisitos,
       vedacoes: a.vedacoes,
+      alcancaSemPenaPrivativa: a.alcanca_sem_pena_privativa,
+      ...(a.fundamento_sem_pena_privativa ? {fundamentoSemPenaPrivativa: a.fundamento_sem_pena_privativa} : {}),
       parametros: a.parametros.map(parametro),
       avaliar,
     };

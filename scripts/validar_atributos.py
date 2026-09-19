@@ -78,6 +78,10 @@ def validar() -> list[str]:
         for k in ("nome", "fundamento", "descricao"):
             if not a.get(k):
                 erros.append(f"{onde}: {k} vazio")
+        if not isinstance(a.get("alcanca_sem_pena_privativa"), bool):
+            erros.append(f"{onde}: alcanca_sem_pena_privativa tem de ser true/false")
+        elif a["alcanca_sem_pena_privativa"] and not a.get("fundamento_sem_pena_privativa"):
+            erros.append(f"{onde}: alcança tipo sem pena privativa sem dizer o fundamento")
         for k in a.get("dispositivos", []):
             chave_ok(onde, k)
 

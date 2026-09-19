@@ -45,6 +45,7 @@ const base: BaseAtributos = {
       descricao: 'Cabe quando a pena máxima não passa do teto.',
       requisitos: ['Pena máxima até o teto.'],
       vedacoes: [],
+      alcanca_sem_pena_privativa: false,
       parametros: [
         {id: 'teto', rotulo: 'Teto', tipo: 'meses', padrao: 36, min: 0, max: 600, passo: 1, ajuda: '—'},
       ],

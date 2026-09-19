@@ -25,6 +25,7 @@ export function paraOMotor(c: TipoDoMotor): TipoDoMotor {
     contravencao: c.contravencao,
     tem_pena_privativa: c.tem_pena_privativa,
     pena_por_remissao: c.pena_por_remissao,
+    tipo_pena: c.tipo_pena,
   };
 }
 

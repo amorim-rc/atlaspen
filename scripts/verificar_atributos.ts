@@ -443,6 +443,42 @@ console.log('\n3. Casos-âncora de direito penal');
       }
     }
 
+    // ── Só multa, e a ANPP quando cabe transação (A2, spec 3) ───────────────
+    {
+      const def = (id: string) => CATALOGO.find((b) => b.id === id)!;
+      // O bullying está no catálogo com a lei que o incluiu (Lei 14.811/24) e o
+      // artigo do CP no rótulo: "Art. 146-A, caput (CP)".
+      const bullying = todos.find((c) => /^Art\. 146-A, caput/.test(c.artigo));
+      ok(!!bullying && !bullying.tem_pena_privativa, 'o bullying (CP, art. 146-A) é só multa');
+      if (bullying) {
+        const c = cenarioFromCrime(bullying);
+        ok(c.semPenaPrivativa === true && c.multaIsolada === true, 'o cenário sabe que o tipo é só multa');
+        const t = avaliarAtributo(def('transacao'), c, valoresPadrao(def('transacao')));
+        ok(t.status === 'cabivel', 'bullying: transação cabível (Lei 9.099/95, art. 61, "cumulada ou não com multa")');
+        const p = avaliarAtributo(def('prescricao'), c, valoresPadrao(def('prescricao')));
+        ok(p.valor === formatPena(24), `bullying: prescrição da multa isolada em 2 anos (CP, art. 114, I) — obtido ${p.valor}`);
+        const a = avaliarAtributo(def('anpp'), c, valoresPadrao(def('anpp')));
+        ok(a.status === 'incabivel' && /transação/.test(a.resumo), 'bullying: ANPP incabível porque cabe transação (CPP, art. 28-A, §2º, I)');
+      }
+      // "Outras penas" não é multa isolada: o art. 114, I, não é dele.
+      const preconceito = todos.find((c) => /7\.437/.test(c.lei) && /^Art\. 8º/.test(c.artigo));
+      ok(!!preconceito, 'a Lei 7.437/85, art. 8º, está no catálogo');
+      if (preconceito) {
+        const c = cenarioFromCrime(preconceito);
+        ok(c.semPenaPrivativa === true && c.multaIsolada === false, 'Lei 7.437/85, art. 8º: sem pena privativa, e não é multa');
+        const p = avaliarAtributo(def('prescricao'), c, valoresPadrao(def('prescricao')));
+        ok(p.status === 'condicional' && p.valor === undefined,
+          `Lei 7.437/85, art. 8º: a prescrição depende da sanção, sem prazo inventado (obtido ${p.status} ${p.valor})`);
+      }
+      const domicilio = achar(/^CP$/i, /^Art\. 150, caput/);
+      if (domicilio) {
+        const a = avaliar(def('anpp'), domicilio, {});
+        ok(a.status === 'incabivel', `violação de domicílio (menor potencial): ANPP incabível, cabe transação (obtido ${a.status})`);
+      }
+      const alcancam = CATALOGO.filter((d) => d.alcancaSemPenaPrivativa).map((d) => d.id).sort().join(',');
+      ok(alcancam === 'anpp,prescricao,sursis-processual,transacao', `os quatro atributos que alcançam tipo sem pena privativa (obtido ${alcancam})`);
+    }
+
     // Inciso V — hediondo primário, sem resultado morte: 70%, livramento aos 2/3.
     const trafico = achar(/11\.343/, /^Art\. 33, caput/);
     if (trafico) {

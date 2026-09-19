@@ -48,6 +48,8 @@ export function cenarioFromCrime(c: TipoDoMotor): Cenario {
     admiteTentativa: c.tentativa === 'Sim',
     perdaoJudicialPrevisto: c.perdao_judicial_previsto === true,
     contravencao: c.contravencao === true,
+    semPenaPrivativa: c.tem_pena_privativa === false,
+    multaIsolada: c.tem_pena_privativa === false && c.tipo_pena === 'Multa',
     // Pelo diploma, como o CPM é reconhecido no resto do motor.
     justicaMilitar: /^CPM/.test(c.lei ?? ''),
   };
