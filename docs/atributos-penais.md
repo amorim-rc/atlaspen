@@ -57,7 +57,7 @@ trocada por pena máxima ou por um valor fixo aplicado a todos os tipos.
 |-----------|-----------|-------------------|
 | **Transação penal** | Art. 76, Lei 9.099/95 | Pena máxima ≤ 2 anos, ou contravenção (menor potencial ofensivo); nunca no crime militar (art. 90-A) |
 | **Suspensão condicional do processo** | Art. 89, Lei 9.099/95 | Pena mínima ≤ 1 ano; nunca no crime militar (art. 90-A) |
-| **ANPP** | Art. 28-A, CPP | Pena mínima < 4 anos, sem violência/grave ameaça, confissão |
+| **ANPP** | Art. 28-A, CPP | Pena mínima < 4 anos, sem violência/grave ameaça, confissão; vedado ao reincidente (§2º, II) e quando cabe transação penal (§2º, I) |
 | **Colaboração premiada** | Art. 4º, Lei 12.850/13 | Redução de até 2/3 ou perdão judicial; até 1/2 se posterior à sentença |
 
 ## Aplicação da pena
@@ -76,7 +76,7 @@ trocada por pena máxima ou por um valor fixo aplicado a todos os tipos.
 | Atributo | Fundamento | Critério |
 |-----------|-----------|----------|
 | **Progressão de regime** | Art. 112, LEP | Frações de 16% a 85% conforme reincidência/hediondez/resultado morte |
-| **Livramento condicional** | Art. 83, CP | 1/3 (primário), 1/2 (reincidente), 2/3 (hediondo); vedado ao reincidente específico em hediondo e nas quatro hipóteses do art. 112 da LEP |
+| **Livramento condicional** | Art. 83, CP | 1/3 (primário, ou reincidente em crime culposo), 1/2 (reincidente em crime doloso), 2/3 (hediondo); vedado ao reincidente específico em hediondo e nas quatro hipóteses do art. 112 da LEP |
 | **Prescrição** | Art. 109, CP | Tabela por pena (abstrata e concreta) |
 | **Saída temporária** | Art. 122, LEP | Regime semiaberto, só para estudo (art. 122, II); 1/6 (primário) ou 1/4 (reincidente); vedada a crime hediondo ou com violência ou grave ameaça contra pessoa (art. 122, §2º, Lei 14.843/2024) |
 | **Detração** | Art. 42, CP | Desconto de prisão provisória (qualitativo) |

@@ -173,12 +173,19 @@ outro dispositivo — o art. 304 do CP pune o uso com "a pena cominada à falsif
 ```json
 "pena_por_remissao": {
   "dispositivo_fonte": "CP, arts. 297 a 302",
+  "lei_fonte": "CP",
+  "artigos_fonte": ["Art. 297", "Art. 298", "Art. 299", "Art. 300", "Art. 301", "Art. 302"],
   "operador": "nenhum",
   "fracao": null
 }
 ```
 
-O `operador` é `nenhum`, `aumento` ou `diminuicao`; os dois últimos exigem `fracao`. Quem
+O `operador` é `nenhum`, `aumento` ou `diminuicao`; os dois últimos exigem `fracao`, e seguem
+a dosimetria: `diminuicao` com `1/3` multiplica a moldura de origem por 2/3. `lei_fonte` e
+`artigos_fonte` apontam os registros de origem, e toda origem tem de ter moldura. O motor
+avalia o tipo com a moldura de cada origem: o veredito é o comum, ou "depende" quando elas
+divergem. Quando o catálogo já desdobra a remissão em registros "c/c" (Lei 2.889/56, arts.
+2º e 3º), são os desdobrados que contam nas estatísticas, e não o registro de remissão. Quem
 declara remissão **não publica moldura própria**: seriam duas respostas para a mesma
 pergunta, e o build reprova. A razão de o estado existir é que as duas saídas anteriores
 erravam — publicar a moldura de um dos dispositivos-fonte afirma como certa uma pena que
@@ -276,7 +283,7 @@ elemento culposo.
 | `pena_min` | inteiro | **em meses** (compat.; a unidade real é derivada de `obs`) |
 | `pena_max` | inteiro | **em meses** (compat.; a unidade real é derivada de `obs`) |
 | `sancoes_nao_privativas` | lista | só quando não há pena privativa (C2) |
-| `pena_por_remissao` | objeto | opcional; `{dispositivo_fonte, operador, fracao}` quando a moldura é a de outro dispositivo (C2). Incompatível com `pena_min`/`pena_max` |
+| `pena_por_remissao` | objeto | opcional; `{dispositivo_fonte, lei_fonte, artigos_fonte, operador, fracao}` quando a moldura é a de outro dispositivo (C2). Incompatível com `pena_min`/`pena_max` |
 | `tipo_pena` | texto | Reclusão / Detenção / Prisão simples / Multa / Morte / Outras penas / — |
 | `acao` | texto | ação penal |
 | `hediondo` | Sim / Não / — | inclui equiparados (C6) |

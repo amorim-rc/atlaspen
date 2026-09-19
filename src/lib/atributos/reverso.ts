@@ -23,7 +23,6 @@ import {avaliarTipo} from './remissao';
 import type {AtributoDef, AtributoResultado, Parametros, Status} from './types';
 // Do núcleo, e não do index: a busca reversa recebe o atributo que avalia e não
 // deve arrastar consigo o catálogo real.
-import {avaliarAtributo} from './nucleo';
 
 /** De onde sai a pena concreta presumida na varredura do catálogo. */
 export type BasePenaConcreta = 'minima' | 'maxima' | 'fixa';

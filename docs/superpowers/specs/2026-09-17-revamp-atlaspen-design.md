@@ -71,11 +71,13 @@ mesma natureza, e parte delas não se fecha por esforço de implementação.
   depende do valor, e a tela não o adivinha"*. O `valor` de `AtributoResultado` é **string**
   (`"36 meses"`); classificar a direção exige que `AtributoDef` declare um numérico comparável e
   o sentido dele (maior é pior, ou maior é melhor). É mudança de contrato, não fiação.
-- **Reincidência em três estados** (lote do A4, item 1). O cenário só tem
+- ~~**Reincidência em três estados**~~ (lote do A4, item 1) — **fechado em 19/09/2026**, em quatro
+  estados; ver `2026-09-19-a2-motor-reincidencia-remissao-multa-design.md`. O cenário só tem
   `reincidenteEspecifico`, e ANPP (CPP, art. 28-A, §2º, II), sursis (CP, art. 77, I) e
   regime inicial (CP, art. 33, §2º) vedam ou agravam **qualquer** reincidência. Primário,
   reincidente e reincidente específico, no cenário, nos controles de premissa e na ficha.
-- **Os 35 tipos sem veredito** (lote do A4, item 2). Os 4 de pena por remissão (CP, art.
+- ~~**Os 35 tipos sem veredito**~~ (lote do A4, item 2) — **fechado em 19/09/2026**; a remissão da
+  Lei 2.889/56 já estava desdobrada em "c/c", e só o CP 304 e o CPM 315 entraram. Os 4 de pena por remissão (CP, art.
   304; Lei 2.889/56, arts. 2º e 3º; CPM, art. 315) avaliados contra cada dispositivo de
   origem, com veredito "depende" quando as origens divergem — publicar uma só moldura
   afirmaria uma pena que depende de qual origem se aplica, e marcá-los como tendo pena

@@ -363,6 +363,20 @@ o site novo ir ao ar. Sem número de frente, para não renumerar o resto.
   `src/components/premissa/ControlesPremissa.tsx`, partilhados pelas duas telas. Com isso
   os requisitos de confissão e reparação do atributo novo passam a responder à premissa.
 
+- **A2, primeira parte, fechada em 19/09/2026.** Reincidência em quatro estados (primário,
+  reincidente em crime culposo, em crime doloso, específico), cada atributo lendo a que a lei
+  dele pergunta; pena por remissão avaliada por origem — CP, art. 304, e CPM, art. 315, entram
+  na estatística (1.472 → 1.474); os guarda-chuvas da Lei 2.889/56 ficam fora, porque o
+  catálogo já os desdobra em registros "c/c"; tipos só com multa com vereditos na ficha; ANPP
+  vedada quando cabe transação (art. 28-A, §2º, I: 1.046 → 688 tipos). **Em aberto:**
+  - a progressão dos crimes comuns (LEP, art. 112, II a IV) para o reincidente genérico —
+    conferir a jurisprudência antes de mexer (nos hediondos, o Tema 1084 do STJ já responde);
+  - os atributos que o motor não calcula para tipo sem pena privativa: a ficha diz que não
+    os calcula, e não que a lei os afaste. Desistência voluntária, arrependimento posterior e
+    perdão judicial não dependem da espécie de pena, e pedem análise;
+  - a ANPP no crime militar: o motor não a veda, e o CPM está fora da Lei 9.099/95 — conferir
+    se o mesmo vale para o art. 28-A do CPP.
+
 ### Dados e conteúdo
 
 - ~~**Linha do tempo.**~~ Fechada em 18/09/2026. As 16 datas de `data/marcos.json` e as três

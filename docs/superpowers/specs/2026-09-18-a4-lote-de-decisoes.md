@@ -45,8 +45,10 @@ estados e declarar a limitação nos três atributos.
 - **4 com pena por remissão:** CP, art. 304 (uso de documento falso); Lei 2.889/56, arts. 2º e 3º
   (associação e incitação ao genocídio, **hediondos**); CPM, art. 315. Eles **têm** pena privativa,
   a do dispositivo a que remetem, e o registro já diz isso em `pena_por_remissao`. O derivado os
-  marca como sem pena privativa e os tira de toda a varredura: a associação para genocídio não
-  mostra progressão, livramento nem prescrição.
+  marca como sem pena privativa e os tira de toda a varredura. (Corrigido em 19/09/2026: esta
+  versão dizia que a associação para genocídio não mostrava progressão, livramento nem
+  prescrição. Mostrava: o catálogo a desdobra em registros "Art. 2º c/c art. 1º", que têm
+  pena privativa. Só os registros-guarda-chuva e o CP 304 e o CPM 315 ficavam sem veredito.)
 
 O comentário de `crimesComPenaPrivativa` (`src/lib/atributos/reverso.ts`) diz que "a única exceção
 é o art. 28 da Lei 11.343/06". Está desatualizado.
