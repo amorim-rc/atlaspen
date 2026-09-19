@@ -1260,7 +1260,9 @@
       "nome": "Prescrição da pretensão punitiva",
       "fundamento": "Art. 109, CP",
       "dispositivos": [
-        "cp|art. 109"
+        "cp|art. 109",
+        "cp|art. 110, caput",
+        "cp|art. 114, i"
       ],
       "categoria": "execucao",
       "natureza": "abstrato",
@@ -1401,6 +1403,44 @@
               },
               "norma": "Lei nº 15.160",
               "fundamento": "Art. 115, CP"
+            }
+          ]
+        },
+        {
+          "id": "aumentoReincidente",
+          "rotulo": "Aumento do prazo da executória para o reincidente",
+          "tipo": "fracao",
+          "padrao": 0.3333333333333333,
+          "min": 0,
+          "max": 1,
+          "passo": 0.041666666666666664,
+          "ajuda": "Art. 110, caput: depois do trânsito em julgado, os prazos do art. 109, regulados pela pena aplicada, aumentam-se de um terço se o condenado é reincidente. Não alcança a prescrição da pretensão punitiva (Súmula 220, STJ).",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivo": "cp|art. 110, caput"
+              },
+              "norma": "Lei nº 7.209",
+              "fundamento": "Art. 110, caput, CP"
+            }
+          ]
+        },
+        {
+          "id": "prazoMultaIsolada",
+          "rotulo": "Multa única cominada ou aplicada → prazo",
+          "tipo": "meses",
+          "padrao": 24,
+          "min": 0,
+          "max": 240,
+          "passo": 12,
+          "ajuda": "Art. 114, I: a prescrição da pena de multa ocorre em 2 anos quando a multa for a única cominada ou aplicada.",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivo": "cp|art. 114, i"
+              },
+              "norma": "Lei nº 9.268",
+              "fundamento": "Art. 114, I, CP"
             }
           ]
         }
