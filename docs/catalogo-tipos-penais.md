@@ -44,6 +44,7 @@ data/crimes.json  ──►  scripts/transform_data.py  ──►  static/data/c
 | `tipo_pena` | `Reclusão`, `Detenção`, `Prisão simples`, `Multa`, `Morte` (crimes de guerra do CPM, art. 56), `Outras penas` (sanção cominada que não é privativa nem pecuniária) ou `—`. |
 | `acao` | Ação penal (pública incondicionada, condicionada, privada). |
 | `hediondo` | `Sim` / `Não` — inclui os **equiparados** (tráfico, tortura, terrorismo). |
+| `hediondo_especie`, `hediondo_fundamento` | Derivados da tabela `data/hediondos.json`: `natureza` (rol do art. 1º da Lei 8.072/90, taxativo), `equiparado` (art. 5º, XLIII, da CF — o crime responde como hediondo sem o ser) ou `nao`, mais o dispositivo que produz a classificação. Hediondez afirmada sem regra na tabela reprova na CI. |
 | `hediondo_condicao` | Opcional. Quando a hediondez depende do CASO — o homicídio só é hediondo se praticado em atividade de grupo de extermínio —, aqui fica a hipótese, em texto, e `hediondo` permanece `Não`. |
 | `acao_condicao` | Opcional, mesma ideia para a ação penal (art. 161, §3º: privada se a propriedade é particular). |
 | `pena_por_remissao` | Opcional. `{dispositivo_fonte, lei_fonte, artigos_fonte, operador, fracao}` quando o tipo não comina moldura própria e importa a de outro dispositivo — art. 304 do CP, "a pena cominada à falsificação". Incompatível com `pena_min`/`pena_max`. O operador segue a dosimetria: `diminuicao` com `1/3` multiplica a moldura de origem por 2/3; `aumento`, por 4/3. |

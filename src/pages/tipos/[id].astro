@@ -47,7 +47,15 @@ const marcas: Marca[] = [
   crime.acao_condicional
     ? {rotulo: `${acao} — depende do caso`, tom: 'simulacao' as const, titulo: crime.acao_condicao}
     : {rotulo: acao},
-  ...(crime.hediondo === 'Sim' ? [{rotulo: 'Hediondo', tom: 'acento' as const}] : []),
+  ...(crime.hediondo === 'Sim'
+    ? [
+        {
+          rotulo: crime.hediondo_especie === 'equiparado' ? 'Equiparado a hediondo' : 'Hediondo',
+          tom: 'acento' as const,
+          titulo: crime.hediondo_fundamento ?? undefined,
+        },
+      ]
+    : []),
   ...(crime.hediondo_condicional
     ? [{rotulo: 'Hediondez condicionada', tom: 'simulacao' as const, titulo: crime.hediondo_condicao}]
     : []),
@@ -303,6 +311,21 @@ const linkHistorico = calculavel && vigente ? '?modo=historico' : '#historico';
 
       <footer class="pe">
         <div class="bloco-pe">
+          {
+            crime.hediondo === 'Sim' && crime.hediondo_fundamento && (
+              <>
+                <span class="rotulo">
+                  {crime.hediondo_especie === 'equiparado' ? 'Equiparado a hediondo' : 'Hediondo por natureza'}
+                </span>
+                <p>
+                  {crime.hediondo_especie === 'equiparado'
+                    ? 'A Constituição equipara tortura, tráfico e terrorismo ao hediondo quanto ao regime jurídico, sem torná-los hediondos. '
+                    : 'O rol do art. 1º da Lei 8.072/90 é taxativo. '}
+                  Fundamento: {crime.hediondo_fundamento}.
+                </p>
+              </>
+            )
+          }
           {
             crime.hediondo_condicional && (
               <>

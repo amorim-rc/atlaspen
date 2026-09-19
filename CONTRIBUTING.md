@@ -234,12 +234,25 @@ nome** (art. 112, VI e VIII, LEP → frações de 50% e 70%).
   resulta morte, triplica"), e por isso é ignorado nessa derivação — do contrário, o art.
   135 (omissão de socorro) seria marcado indevidamente.
 
-### C6. `hediondo` inclui os equiparados
+### C6. `hediondo` inclui os equiparados, e a espécie diz qual é qual ⛔ imposta
 
 Tráfico, tortura e terrorismo entram como `hediondo: "Sim"` — é o que aciona as vedações
 do art. 5º, XLIII, da CF (graça, indulto, anistia). Exceções consolidadas ficam como
 `"Não"`: tráfico privilegiado (art. 33, §4º — STF, HC 118.533) e associação para o
 tráfico (art. 35).
+
+**A espécie e o fundamento não se digitam.** `hediondo_especie`
+(`natureza | equiparado | nao`) e `hediondo_fundamento` são **derivados** da tabela curada
+`data/hediondos.json` por `scripts/hediondez.py`, que o construtor do catálogo e o Auditor
+compartilham. Hediondo **por natureza** é o do rol do art. 1º da Lei 8.072/90, que é
+taxativo; **equiparado** é a extensão de regime da Constituição, que não torna o crime
+hediondo.
+
+Daí uma regra dura: **`hediondo: "Sim"` sem regra na tabela reprova na CI**
+(`validar_hediondez`). Para marcar um tipo como hediondo, escreva antes a regra, com o
+inciso do rol no `fundamento`. Foi assim que se descobriu, em 19/09/2026, que oito
+registros militares afirmavam hediondez sem nada que a sustentasse — e que dois deles não
+se sustentavam.
 
 ### C7. A faixa de pena vem de `pena_min`/`pena_max` ⛔ imposta
 
@@ -286,7 +299,7 @@ elemento culposo.
 | `pena_por_remissao` | objeto | opcional; `{dispositivo_fonte, lei_fonte, artigos_fonte, operador, fracao}` quando a moldura é a de outro dispositivo (C2). Incompatível com `pena_min`/`pena_max` |
 | `tipo_pena` | texto | Reclusão / Detenção / Prisão simples / Multa / Morte / Outras penas / — |
 | `acao` | texto | ação penal |
-| `hediondo` | Sim / Não / — | inclui equiparados (C6) |
+| `hediondo` | Sim / Não | inclui equiparados; a espécie e o fundamento são derivados da tabela (C6) |
 | `elemento` | texto | Doloso / Culposo / Preterdoloso |
 | `tentativa` | Sim / Não / — | pressuposto do art. 15 do CP |
 | `violencia` | Sim / Não / — | |

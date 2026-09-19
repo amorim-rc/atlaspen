@@ -23427,12 +23427,13 @@
     "pena_max": 270,
     "tipo_pena": "Reclusão",
     "acao": "Pública Incondicionada",
-    "hediondo": "Sim",
+    "hediondo": "Não",
     "elemento": "Doloso",
     "tentativa": "Sim",
     "violencia": "Sim",
     "grave_ameaca": "Sim",
-    "obs": "Registro criado em 06/08/2026: desdobramento por inciso, porque a hediondez varia dentro do §2º."
+    "obs": "Registro criado em 06/08/2026: desdobramento por inciso, porque a hediondez varia dentro do §2º.",
+    "hediondo_condicao": "Somente quando a arma empregada é de fogo: o rol (Lei 8.072/90, art. 1º, II, b) alcança o roubo pelo emprego de arma de fogo, e o art. 242, §2º, I, do CPM diz apenas \"arma\"."
   },
   {
     "id": 1458,
@@ -23459,7 +23460,7 @@
     "pena_max": 270,
     "tipo_pena": "Reclusão",
     "acao": "Pública Incondicionada",
-    "hediondo": "Sim",
+    "hediondo": "Não",
     "elemento": "Doloso",
     "tentativa": "Sim",
     "violencia": "Sim",

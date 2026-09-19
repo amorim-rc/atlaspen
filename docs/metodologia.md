@@ -45,6 +45,8 @@ Para viabilizar filtros combinados e o cálculo de atributos, alguns campos são
 | `multa_regime` | `cumulativa` / `alternativa` / `isolada` / `nenhuma` | conectores no texto |
 | `infracao_menor_potencial` | contravenção, ou crime com pena máxima ≤ 2 anos ou só com multa (art. 61 da Lei 9.099/95); nunca crime militar (art. 90-A) | `contravencao`, ou `pena_max ≤ 24`, ou multa isolada; fora o CPM; dentro o art. 28 da Lei 11.343/06 (art. 48, §1º) |
 | `vigente` | o dispositivo ainda vigora? | ausência de `vigencia_ate` |
+| `hediondo_especie` | `natureza`, `equiparado` ou `nao` | **não é heurística**: casamento com a tabela curada `data/hediondos.json` (`scripts/hediondez.py`), a mesma contra a qual a auditoria roda |
+| `hediondo_fundamento` | o dispositivo que torna o tipo hediondo | o `fundamento` da regra que casou |
 
 :::warning[Multa é uma dimensão independente]
 No Direito Penal brasileiro a multa é, na maioria dos casos, **cumulada** com a pena

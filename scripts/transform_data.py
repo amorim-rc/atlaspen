@@ -219,6 +219,51 @@ def validar_vocabulario(crimes: list) -> list:
     ]
 
 
+# A hediondez tem tabela curada (`data/hediondos.json`) e módulo próprio, que o
+# Auditor e este construtor compartilham para não divergirem em silêncio.
+import hediondez as _hediondez  # noqa: E402
+
+
+def derivar_hediondez(c: dict, tabela: dict) -> None:
+    """`hediondo_especie` e `hediondo_fundamento`, da tabela curada.
+
+    O catálogo diz SE o tipo é hediondo; a tabela diz por qual dispositivo, e é
+    ela que separa o hediondo por natureza (rol do art. 1º da Lei 8.072/90) do
+    equiparado (art. 5º, XLIII, da CF). Derivar em vez de digitar impede que o
+    campo publicado discorde da tabela contra a qual a auditoria roda.
+    """
+    r = _hediondez.classificar(c, tabela)
+    if c.get("hediondo") == "Sim":
+        c["hediondo_especie"] = r["especie"]
+        c["hediondo_fundamento"] = r["fundamento"]
+    else:
+        c["hediondo_especie"] = "nao"
+        c["hediondo_fundamento"] = r["fundamento"] if r["regra"] == "excecao" else None
+
+
+def validar_hediondez(crimes: list, tabela: dict) -> list:
+    """Invariante DURO: hediondez afirmada tem dispositivo que a sustente.
+
+    Em 19/09/2026 esta regra encontrou oito registros do CPM marcados como
+    hediondos sem nada na tabela: roubo e extorsão militares, cuja hediondez vem
+    do juízo de identidade do art. 1º, parágrafo único, VI, e que ninguém tinha
+    escrito. Dois deles não se sustentaram.
+    """
+    problemas = []
+    for c in crimes:
+        r = _hediondez.classificar(c, tabela)
+        onde = f"id={c.get('id')} ({c.get('lei')} {c.get('artigo')})"
+        if c.get("hediondo") == "Sim" and r["especie"] == "nao":
+            problemas.append(
+                f"{onde}: hediondo sem regra em data/hediondos.json — escreva a regra "
+                f"com o inciso do rol, ou corrija o campo")
+        if (c.get("hediondo") == "Não" and r["especie"] != "nao"
+                and not r["condicional"] and not c.get("hediondo_condicao")):
+            problemas.append(
+                f"{onde}: a tabela diz hediondo ({r['fundamento']}) e o registro diz que não")
+    return problemas
+
+
 def validar_tipos_penais(crimes: list) -> list:
     """Invariante DURO: todo registro é um tipo penal com sanção cominada.
 
@@ -689,8 +734,10 @@ def main():
     review_rows = []
 
     # Invariantes estruturais: falham sempre, independentemente de --estrito.
+    tabela_hediondez = _hediondez.carregar()
     problemas = (validar_ids(crimes) + validar_tipos_penais(crimes)
                  + validar_vocabulario(crimes)
+                 + validar_hediondez(crimes, tabela_hediondez)
                  + validar_moldura(crimes) + validar_condicionais(crimes)
                  + validar_vigencia(crimes)
                  + validar_pena_por_remissao(crimes))
@@ -735,6 +782,7 @@ def main():
         remissao_conta = bool(c.get("pena_por_remissao")) and (c.get("lei"), c.get("artigo")) not in desdobrados
         c["tem_pena_privativa"] = bool(pmax or c["pena_min_meses"] or remissao_conta)
         c["contravencao"], c["infracao_menor_potencial"] = menor_potencial(c)
+        derivar_hediondez(c, tabela_hediondez)
         c.setdefault("sancoes_nao_privativas", [])
         c.setdefault("pena_por_remissao", None)
         if c["pena_por_remissao"]:

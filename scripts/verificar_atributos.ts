@@ -66,6 +66,7 @@ console.log('0. Integração catálogo → motor de atributos');
     'perdao_judicial_previsto',
     'pena_min_meses',
     'pena_max_meses',
+    'hediondo_especie',
   ];
   for (const campo of campos) {
     ok(
@@ -73,6 +74,17 @@ console.log('0. Integração catálogo → motor de atributos');
       `todo registro tem o campo "${String(campo)}" (rode scripts/transform_data.py se falhar)`,
     );
   }
+  // Hediondez afirmada tem dispositivo que a sustente: a espécie e o fundamento
+  // saem da tabela curada, e `validar_hediondez` (transform_data.py) reprova o
+  // registro que afirma hediondez sem regra. Aqui é a trava do lado do motor.
+  ok(
+    todos.every((c) => (c.hediondo === 'Sim') === (c.hediondo_especie !== 'nao')),
+    'hediondo no catálogo e espécie derivada dizem a mesma coisa',
+  );
+  ok(
+    todos.every((c) => c.hediondo !== 'Sim' || !!c.hediondo_fundamento),
+    'todo tipo hediondo cita o dispositivo que o torna hediondo',
+  );
   // A pena por remissão é privativa com moldura própria zero: a pena é a da origem,
   // e o motor a lê de lá (src/lib/atributos/remissao.ts).
   ok(

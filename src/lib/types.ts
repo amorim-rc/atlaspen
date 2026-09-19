@@ -99,6 +99,15 @@ export interface Crime {
    */
   contravencao: boolean;
   derivado_auto: boolean;
+  /**
+   * Espécie da hediondez, derivada da tabela curada `data/hediondos.json`
+   * (`scripts/hediondez.py`). `natureza` é o rol do art. 1º da Lei 8.072/90, que
+   * é taxativo; `equiparado` é a extensão de regime do art. 5º, XLIII, da CF —
+   * tortura, tráfico e terrorismo não são hediondos, respondem como tal.
+   */
+  hediondo_especie: 'natureza' | 'equiparado' | 'nao';
+  /** O dispositivo que produz a classificação, como a tabela o escreve. */
+  hediondo_fundamento: string | null;
   /** Derivados de `hediondo_condicao`/`acao_condicao`: a classificação depende do caso. */
   hediondo_condicional: boolean;
   acao_condicional: boolean;

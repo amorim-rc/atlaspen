@@ -66,6 +66,7 @@ function tipo(id: number, min: number, max: number): Crime {
     id, lei: 'LEI-FICTICIA', artigo: `Art. ${id}`, crime: `Tipo ${id}`,
     pena_min: min, pena_max: max, tipo_pena: 'Reclusão', acao: 'Pública Incondicionada',
     hediondo: 'Não', elemento: 'Doloso', tentativa: 'Sim', violencia: 'Não', grave_ameaca: 'Não',
+    hediondo_especie: 'nao', hediondo_fundamento: null,
     obs: '', pena_privativa: 'Reclusão', tem_multa: false, multa_regime: 'nenhuma',
     infracao_menor_potencial: false, contravencao: false, derivado_auto: false,
     hediondo_condicional: false, acao_condicional: false, vigente: true,

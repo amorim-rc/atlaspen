@@ -661,10 +661,30 @@ A reconstrução do site pode absorver parte disso antes do lançamento.
 - esquema versionado dos dados abertos, com política de depreciação.
 ---
 
-## 17. Hediondo por natureza e equiparado a hediondo
+## 17. Hediondo por natureza e equiparado a hediondo — **primeira parte feita**
 
 **Objetivo.** Separar, no registro do tipo, o crime **hediondo** do crime **equiparado a
-hediondo**. Hoje o catálogo colapsa os dois em `hediondo: "Sim"`.
+hediondo**. O catálogo colapsava os dois em `hediondo: "Sim"`.
+
+**Feito em 19/09/2026.** `hediondo_especie` (`natureza | equiparado | nao`) e
+`hediondo_fundamento` são DERIVADOS da tabela curada `data/hediondos.json`, por
+`scripts/hediondez.py`, que o construtor e o Auditor compartilham — decisão do mantenedor
+pelo campo novo, que não quebra consumidor do dado aberto. `validar_hediondez` reprova, na
+CI, hediondez afirmada sem regra na tabela, e a ficha do tipo passou a dizer "Hediondo por
+natureza" ou "Equiparado a hediondo", com o dispositivo. São 114 por natureza e 17
+equiparados.
+
+A derivação achou **oito registros militares** que afirmavam hediondez sem nada na tabela.
+Seis ganharam regra com o inciso do rol a que correspondem; dois não se sustentaram e foram
+decididos pelo mantenedor: o roubo militar com emprego de arma (art. 242, §2º, I) passou a
+hediondez **condicional** — o rol alcança a arma **de fogo**, e o CPM diz só "arma" —, e a
+extorsão militar com emprego de arma (art. 243, §1º c/c art. 242, §2º, I) **deixou de ser
+hedionda**, porque o rol não tem figura correspondente.
+
+**O que resta desta frente:** o campo de fundamento para a hediondez **condicional** (hoje a
+condição é texto livre); a varredura do Livro II do CPM contra os doze incisos, que o
+`fora_de_alcance` ainda mantém fora (374 registros); e a temporalidade — desde quando cada
+tipo é hediondo —, que vai com a frente 11.
 
 **O que já se sabe (derivado da v2.0.6).** São 1.507 registros: 133 com `hediondo: "Sim"`,
 1.374 com `"Não"`, e 23 com `hediondo_condicao`. Entre os 133 estão, indistintos:

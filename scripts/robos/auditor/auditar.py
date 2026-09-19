@@ -44,6 +44,8 @@ RAIZ = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(RAIZ / "scripts"))
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
+import hediondez  # noqa: E402
+
 from nucleo.dispositivo import SNAPSHOTS, chave, chaves_do_registro  # noqa: E402
 from nucleo.parsear import parsear  # noqa: E402
 from pena_parser import ler_penas  # noqa: E402
@@ -116,9 +118,11 @@ def _impressao(fonte_id: str, chaves: list[str]) -> str | None:
     return hashlib.sha256(bruto.encode("utf-8")).hexdigest()[:16]
 
 
-def _casa(regra: dict, registro: dict) -> bool:
-    return bool(re.search(regra["lei"], registro["lei"] or "")
-                and re.search(regra["artigo"], registro["artigo"] or ""))
+# O casamento regra→registro e o alcance da tabela vivem em `scripts/hediondez.py`,
+# compartilhados com o construtor do catálogo: duas implementações do mesmo
+# critério divergem em silêncio, e o campo publicado passaria a discordar desta
+# auditoria.
+_casa = hediondez.casa
 
 
 def auditar_hediondez(catalogo: list[dict]) -> list[dict]:
@@ -148,8 +152,6 @@ def auditar_hediondez(catalogo: list[dict]) -> list[dict]:
                        "confiar nos achados abaixo",
         })
 
-    fora = [f for f in tabela.get("fora_de_alcance", [])]
-
     def esta_fora(registro: dict) -> bool:
         """Diploma fora da auditoria — salvo os dispositivos já decididos.
 
@@ -159,13 +161,7 @@ def auditar_hediondez(catalogo: list[dict]) -> list[dict]:
         auditado contra a tabela, e só o resto continua de fora. Sem isso, o
         trabalho de decidir não produziria vigilância nenhuma.
         """
-        for f in fora:
-            if not re.search(f["lei"], registro["lei"] or ""):
-                continue
-            if any(re.search(e, registro["artigo"] or "") for e in f.get("exceto", [])):
-                return False
-            return True
-        return False
+        return hediondez.fora_de_alcance(registro, tabela)
 
     n_fora = 0
     for registro in catalogo:
@@ -229,7 +225,7 @@ def auditar_hediondez(catalogo: list[dict]) -> list[dict]:
         achados.append({
             "campo": "hediondez", "tipo": "FORA-DE-ALCANCE", "gravidade": 0,
             "detalhe": f"{n_fora} registro(s) fora desta auditoria: "
-                       + " ".join(f["motivo"] for f in fora),
+                       + " ".join(f["motivo"] for f in tabela.get("fora_de_alcance", [])),
         })
     if condicionais:
         achados.append({
