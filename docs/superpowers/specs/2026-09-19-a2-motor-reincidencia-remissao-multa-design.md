@@ -120,7 +120,13 @@ export function avaliarPorRemissao(
 
 - **Origens**: os registros com `lei === lei_fonte` e `artigo` começando por um dos `artigos_fonte`
   — o mesmo critério de `validar_pena_por_remissao`. A moldura de cada uma passa pelo operador:
-  `nenhum` (a mesma), `diminuicao` (× (1 − fração)), `aumento` (× (1 + fração)).
+  `nenhum` (a mesma), `diminuicao` (× (1 − fração)), `aumento` (× (1 + fração)). É a convenção da
+  dosimetria ("diminui-se de um terço"), a mesma de `data/modificadores.json`. O projeto nunca a
+  escreveu para a remissão; hoje os dois registros com operador (Lei 2.889/56, arts. 2º e 3º,
+  "metade da pena", `diminuicao` com `1/2`) dão o mesmo número nas duas leituras possíveis, mas a
+  próxima fração não daria. A definição entra em `docs/dados-abertos.md` e em
+  `docs/catalogo-tipos-penais.md`, junto com a correção da frase que diz que esses tipos "ficam
+  fora das estatísticas de alcance".
 - **Cenário de cada origem**: `cenarioFromCrime(tipo)` com `penaMin`/`penaMax` da origem. Os campos
   do tipo (hediondez, violência, culpa) são **do tipo que remete**, não da origem.
 - **Junção**: mesmo `status` e mesmo `valor` em todas as origens → esse resultado. Senão, `status:
