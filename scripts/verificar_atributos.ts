@@ -190,8 +190,8 @@ console.log('1. Integridade do registro de atributos');
     });
     for (const c of crimes) {
       const base = cenarioFromCrime(c);
-      for (const extra of [{}, {reincidenteEspecifico: true}, {fatoAnteriorA15402: true},
-        {reincidenteEspecifico: true, fatoAnteriorA15402: true}]) {
+      for (const extra of [{}, {reincidencia: 'especifico' as const}, {fatoAnteriorA15402: true},
+        {reincidencia: 'especifico' as const, fatoAnteriorA15402: true}]) {
         b.avaliar({...base, ...extra}, espiao);
       }
     }
@@ -413,7 +413,7 @@ console.log('\n3. Casos-âncora de direito penal');
     if (milicia) {
       const r = avaliar(progressaoDef, milicia, {});
       ok(/75%/.test(r.resumo), `milícia privada, primário: progressão a 75% — inciso VI, "c" (obtido "${r.resumo}")`);
-      const rein = avaliar(progressaoDef, milicia, {primario: false, reincidenteEspecifico: true});
+      const rein = avaliar(progressaoDef, milicia, {reincidencia: 'especifico' as const});
       ok(
         /75%/.test(rein.resumo),
         `milícia privada, reincidente: 75% — a alínea "c" não distingue (obtido "${rein.resumo}")`,
@@ -435,7 +435,7 @@ console.log('\n3. Casos-âncora de direito penal');
 
     // Inciso VIII — reincidente em hediondo com resultado morte: 85%, vedado.
     if (latrocinioTipo) {
-      const ajuste = {primario: false, reincidenteEspecifico: true};
+      const ajuste = {reincidencia: 'especifico' as const};
       const r = avaliar(progressaoDef, latrocinioTipo, ajuste);
       ok(
         /85%/.test(r.resumo),
@@ -462,8 +462,8 @@ console.log('\n3. Casos-âncora de direito penal');
         `furto, primário, fato desde 08/05/2026: 1/6 pelo caput (obtido "${depois.resumo}")`);
       // Reincidente sem violência: 20% nas duas, mas por dispositivos diferentes
       // — o inciso II de 2019 e o inciso III da redação nova.
-      const rAntes = avaliar(progressaoDef, furto, {fatoAnteriorA15402: true, reincidenteEspecifico: true});
-      const rDepois = avaliar(progressaoDef, furto, {reincidenteEspecifico: true});
+      const rAntes = avaliar(progressaoDef, furto, {fatoAnteriorA15402: true, reincidencia: 'especifico' as const});
+      const rDepois = avaliar(progressaoDef, furto, {reincidencia: 'especifico' as const});
       ok(/20%/.test(rAntes.resumo) && /20%/.test(rDepois.resumo),
         'furto, reincidente: 20% antes e depois — muda o fundamento, não o percentual');
       ok(
@@ -481,7 +481,7 @@ console.log('\n3. Casos-âncora de direito penal');
       const r = avaliar(progressaoDef, golpe, {});
       ok(/16\.67%|16,67%/.test(r.resumo),
         `golpe de Estado, primário: 1/6 pelo caput — Título XII ressalvado (obtido "${r.resumo}")`);
-      const rein = avaliar(progressaoDef, golpe, {reincidenteEspecifico: true});
+      const rein = avaliar(progressaoDef, golpe, {reincidencia: 'especifico' as const});
       ok(rein.status === 'condicional',
         'Título XII, reincidente: condicional — o caput e o inciso III comportam leituras diferentes');
       ok(
@@ -631,7 +631,7 @@ console.log('\nPremissa da varredura na URL');
   escreverPremissa(vazio, padrao);
   ok(vazio.toString() === '', 'o padrão não grava nada na URL');
 
-  const mexido = {...padrao, base: 'maxima' as const, reincidenteEspecifico: true, bonsAntecedentes: false};
+  const mexido = {...padrao, base: 'maxima' as const, reincidencia: 'especifico' as const, bonsAntecedentes: false};
   ok(!premissaIgualAoPadrao(mexido), 'premissa mexida difere do padrão');
 
   const q = new URLSearchParams();
@@ -643,7 +643,7 @@ console.log('\nPremissa da varredura na URL');
 
   const volta = lerPremissa(new URLSearchParams(q.toString()));
   ok(volta.base === 'maxima', 'lê base=maxima de volta');
-  ok(volta.reincidenteEspecifico === true, 'lê reincidente de volta');
+  ok(volta.reincidencia === 'especifico', 'lê reincidente de volta');
   ok(volta.bonsAntecedentes === false, 'lê antecedentes de volta');
   ok(volta.confessou === false, 'o ausente volta como padrão');
 
@@ -663,7 +663,7 @@ console.log('\nA ficha grava a premissa nas mesmas chaves do codec');
   const padroes = valoresPadrao(def);
   const e = lerEstado('?base=maxima&reincidente=sim', def, padroes);
   ok(e.rev.base === 'maxima', 'a ficha lê base=maxima');
-  ok(e.rev.reincidenteEspecifico === true, 'a ficha lê reincidente=sim');
+  ok(e.rev.reincidencia === 'especifico', 'a ficha lê reincidente=sim');
   const s = escreverEstado(e, def);
   ok(s.includes('base=maxima'), 'a ficha reescreve base=maxima');
   ok(s.includes('reincidente=sim'), 'a ficha reescreve reincidente=sim');

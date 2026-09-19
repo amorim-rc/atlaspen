@@ -17,8 +17,7 @@ export function cenarioFromCrime(c: TipoDoMotor): Cenario {
     penaMin: c.pena_min_meses,
     penaMax: c.pena_max_meses,
     penaConcreta: c.pena_min_meses || c.pena_max_meses || 12,
-    primario: true,
-    reincidenteEspecifico: false,
+    reincidencia: 'primario',
     hediondo: c.hediondo === 'Sim',
     resultadoMorte: c.resultado_morte === true,
     // Feminicídio deriva do NOME do tipo, pela mesma razão que `resultado_morte`

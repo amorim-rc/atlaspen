@@ -16,6 +16,7 @@ import type {Cenario} from '../types';
 import type {Avaliacao, Parametros} from './types';
 import {num, bool} from './types';
 import {formatPena, formatFracao} from '../format';
+import {reincidenteEspecifico} from './reincidencia';
 
 const ANO = 12;
 
@@ -32,7 +33,7 @@ const ANO = 12;
  * do resultado morte e por isso é testada antes da "a".
  */
 export function vedacaoLivramentoArt112(c: Cenario): string | null {
-  if (c.hediondo && c.resultadoMorte && c.reincidenteEspecifico) {
+  if (c.hediondo && c.resultadoMorte && reincidenteEspecifico(c)) {
     return (
       'Art. 112, VIII, LEP: reincidente em crime hediondo ou equiparado com resultado ' +
       'morte — 85% da pena, vedado o livramento condicional.'
@@ -46,7 +47,7 @@ export function vedacaoLivramentoArt112(c: Cenario): string | null {
       'condicional.'
     );
   }
-  if (c.feminicidio && !c.reincidenteEspecifico) {
+  if (c.feminicidio && !reincidenteEspecifico(c)) {
     return (
       'Art. 112, VI, "d", LEP (alínea incluída pela Lei 15.358/2026): primário condenado ' +
       'pela prática de feminicídio — vedado o livramento condicional.'
@@ -143,7 +144,7 @@ export const AVALIADORES: Record<string, (c: Cenario, p: Parametros) => Avaliaca
     const limite = num(p, 'limiteMinMeses');
     const dentroPena = c.penaMin < limite;
     const semViolencia = !bool(p, 'exigeSemViolencia') || (!c.violencia && !c.graveAmeaca);
-    const naoVedado = !bool(p, 'vedadoReincidente') || !c.reincidenteEspecifico;
+    const naoVedado = !bool(p, 'vedadoReincidente') || !reincidenteEspecifico(c);
     const confissaoOk = !bool(p, 'exigeConfissao') || c.confessou;
 
     let status: 'cabivel' | 'incabivel' | 'condicional' = 'incabivel';
@@ -199,7 +200,7 @@ export const AVALIADORES: Record<string, (c: Cenario, p: Parametros) => Avaliaca
     const viaCulposo = bool(p, 'culposoSemTeto') && c.culposo;
     const dentroPena = viaCulposo || c.penaConcreta <= limite;
     const semViolencia = viaCulposo || !bool(p, 'exigeSemViolencia') || (!c.violencia && !c.graveAmeaca);
-    const naoVedado = !bool(p, 'vedadoReincidenteEspecifico') || !c.reincidenteEspecifico;
+    const naoVedado = !bool(p, 'vedadoReincidenteEspecifico') || !reincidenteEspecifico(c);
     const cabivel = dentroPena && semViolencia && naoVedado;
     return {
       status: cabivel ? 'cabivel' : 'incabivel',
@@ -230,7 +231,7 @@ export const AVALIADORES: Record<string, (c: Cenario, p: Parametros) => Avaliaca
   'sursis-pena': (c, p) => {
     const limite = num(p, 'limiteComumMeses');
     const limiteEtario = num(p, 'limiteEtarioMeses');
-    const naoVedado = !bool(p, 'vedadoReincidente') || !c.reincidenteEspecifico;
+    const naoVedado = !bool(p, 'vedadoReincidente') || !reincidenteEspecifico(c);
     const cabivel = c.penaConcreta <= limite && naoVedado;
     const cabivelEtario = c.penaConcreta <= limiteEtario;
     return {
@@ -259,8 +260,8 @@ export const AVALIADORES: Record<string, (c: Cenario, p: Parametros) => Avaliaca
     const pisoSemi = num(p, 'limiteSemiabertoMeses');
     let regime: string;
     if (c.penaConcreta > pisoFechado) regime = 'Fechado';
-    else if (c.penaConcreta > pisoSemi) regime = c.reincidenteEspecifico ? 'Fechado' : 'Semiaberto';
-    else regime = c.reincidenteEspecifico ? 'Semiaberto' : 'Aberto';
+    else if (c.penaConcreta > pisoSemi) regime = reincidenteEspecifico(c) ? 'Fechado' : 'Semiaberto';
+    else regime = reincidenteEspecifico(c) ? 'Semiaberto' : 'Aberto';
 
     const detalhes = [
       `Pena superior a ${formatPena(pisoFechado)}: regime inicial fechado.`,
@@ -349,7 +350,7 @@ export const AVALIADORES: Record<string, (c: Cenario, p: Parametros) => Avaliaca
     const comViolencia = c.violencia || c.graveAmeaca;
     let fracao: number;
     let inciso: string;
-    if (c.hediondo && c.resultadoMorte && c.reincidenteEspecifico) {
+    if (c.hediondo && c.resultadoMorte && reincidenteEspecifico(c)) {
       fracao = num(p, 'fracaoReincidenteHediondoMorte');
       inciso = 'VIII — reincidente específico, hediondo com resultado morte (livramento vedado)';
     } else if (c.comandoOrgcrimUltraviolenta && c.hediondo) {
@@ -361,13 +362,13 @@ export const AVALIADORES: Record<string, (c: Cenario, p: Parametros) => Avaliaca
       inciso =
         'VI, "b" — comando de organização criminosa ultraviolenta estruturada para crime ' +
         'hediondo (livramento vedado)';
-    } else if (c.feminicidio && !c.reincidenteEspecifico) {
+    } else if (c.feminicidio && !reincidenteEspecifico(c)) {
       fracao = num(p, 'fracaoFeminicidioPrimario');
       inciso = 'VI, "d" — primário, feminicídio (livramento vedado)';
     } else if (c.hediondo && c.resultadoMorte) {
       fracao = num(p, 'fracaoPrimarioHediondoMorte');
       inciso = 'VI, "a" — primário, hediondo com resultado morte (livramento vedado)';
-    } else if (c.hediondo && c.reincidenteEspecifico) {
+    } else if (c.hediondo && reincidenteEspecifico(c)) {
       fracao = num(p, 'fracaoReincidenteHediondo');
       inciso = 'VII — reincidente, hediondo';
     } else if (c.hediondo) {
@@ -389,13 +390,13 @@ export const AVALIADORES: Record<string, (c: Cenario, p: Parametros) => Avaliaca
       // gravosa para o primário sem violência (16% viraram 16,67%) e lei mais
       // gravosa não retroage. A retroatividade da lei benéfica se apura por
       // SITUAÇÃO CONCRETA, não em bloco.
-      if (comViolencia && c.reincidenteEspecifico) {
+      if (comViolencia && reincidenteEspecifico(c)) {
         fracao = num(p, 'fracaoReincidenteViolencia');
         inciso = 'IV — reincidente, crime com violência/grave ameaça (redação de 2019)';
       } else if (comViolencia) {
         fracao = num(p, 'fracaoPrimarioViolencia');
         inciso = 'III — primário, crime com violência/grave ameaça (redação de 2019)';
-      } else if (c.reincidenteEspecifico) {
+      } else if (reincidenteEspecifico(c)) {
         fracao = num(p, 'fracaoReincidenteSemViolencia');
         inciso = 'II — reincidente, sem violência/grave ameaça (redação de 2019)';
       } else {
@@ -408,17 +409,17 @@ export const AVALIADORES: Record<string, (c: Cenario, p: Parametros) => Avaliaca
       // primário sobra o caput, e isso é leitura literal. Para o REINCIDENTE o
       // texto comporta duas saídas — ver o resumo devolvido abaixo.
       fracao = num(p, 'fracaoCaputRegimeAnterior');
-      inciso = c.reincidenteEspecifico
+      inciso = reincidenteEspecifico(c)
         ? 'caput — crime do Título XII, reincidente (LEITURA EM DISPUTA: 1/6 pelo ' +
           'caput, ou 20% pelo inciso III)'
         : 'caput — crime do Título XII, primário (os incisos I e II o ressalvam)';
-    } else if (comViolencia && c.reincidenteEspecifico) {
+    } else if (comViolencia && reincidenteEspecifico(c)) {
       fracao = num(p, 'fracaoReincidenteViolencia');
       inciso = 'II — reincidente, crime com violência/grave ameaça';
     } else if (comViolencia) {
       fracao = num(p, 'fracaoPrimarioViolencia');
       inciso = 'I — primário, crime com violência/grave ameaça';
-    } else if (c.reincidenteEspecifico) {
+    } else if (reincidenteEspecifico(c)) {
       fracao = num(p, 'fracaoReincidenteSemViolencia');
       inciso = 'III — reincidente em crime diverso dos dos incisos I e II';
     } else {
@@ -446,7 +447,7 @@ export const AVALIADORES: Record<string, (c: Cenario, p: Parametros) => Avaliaca
           'violência a lei nova é mais gravosa (16% → 16,67%) e não retroage.',
       );
     }
-    if (c.tituloXII && c.reincidenteEspecifico) {
+    if (c.tituloXII && reincidenteEspecifico(c)) {
       detalhes.push(
         'DUAS LEITURAS SUSTENTÁVEIS, e a diferença é de 3,33 pontos. Pelo inciso III ' +
           '(20%): ele alcança o "reincidente em crime diverso dos referidos nos incisos ' +
@@ -459,7 +460,7 @@ export const AVALIADORES: Record<string, (c: Cenario, p: Parametros) => Avaliaca
     }
     const percentual = `${(fracao * 100).toFixed(2).replace(/\.?0+$/, '')}%`;
     return {
-      status: c.tituloXII && c.reincidenteEspecifico ? 'condicional' : 'cabivel',
+      status: c.tituloXII && reincidenteEspecifico(c) ? 'condicional' : 'cabivel',
       resumo: `Fração de ${percentual} → ${formatPena(tempo)} de cumprimento.`,
       detalhes,
       valor: `${percentual} — ${formatPena(tempo)}`,
@@ -480,7 +481,7 @@ export const AVALIADORES: Record<string, (c: Cenario, p: Parametros) => Avaliaca
         },
       };
     }
-    if (c.hediondo && c.reincidenteEspecifico && bool(p, 'vedadoReincidenteHediondo')) {
+    if (c.hediondo && reincidenteEspecifico(c) && bool(p, 'vedadoReincidenteHediondo')) {
       return {
         status: 'incabivel',
         resumo: 'Vedado ao reincidente específico em crime hediondo.',
@@ -500,7 +501,7 @@ export const AVALIADORES: Record<string, (c: Cenario, p: Parametros) => Avaliaca
     if (c.hediondo) {
       fracao = num(p, 'fracaoHediondo');
       base = `crime hediondo/equiparado (${formatFracao(num(p, 'fracaoHediondo'))})`;
-    } else if (c.reincidenteEspecifico) {
+    } else if (reincidenteEspecifico(c)) {
       fracao = num(p, 'fracaoReincidente');
       base = `reincidente em crime doloso (${formatFracao(num(p, 'fracaoReincidente'))})`;
     } else {
@@ -553,7 +554,7 @@ export const AVALIADORES: Record<string, (c: Cenario, p: Parametros) => Avaliaca
     // alcançava só o hediondo com resultado morte (redação da Lei 13.964/2019).
     const porHediondo = bool(p, 'vedadoHediondo') && c.hediondo;
     const porViolencia = bool(p, 'vedadoViolencia') && (c.violencia || c.graveAmeaca);
-    const fracao = c.reincidenteEspecifico ? num(p, 'fracaoReincidente') : num(p, 'fracaoPrimario');
+    const fracao = reincidenteEspecifico(c) ? num(p, 'fracaoReincidente') : num(p, 'fracaoPrimario');
     const tempo = c.penaConcreta * fracao;
     return {
       status: porHediondo || porViolencia ? 'incabivel' : 'condicional',
@@ -565,7 +566,7 @@ export const AVALIADORES: Record<string, (c: Cenario, p: Parametros) => Avaliaca
       detalhes: [
         'Exclusiva do regime semiaberto.',
         'Só para frequência a curso supletivo profissionalizante ou de instrução do 2º grau ou superior (art. 122, II): a Lei 14.843/2024 revogou a visita à família e as atividades de retorno ao convívio social.',
-        `Cumprimento mínimo: ${formatFracao(fracao)} da pena (${c.reincidenteEspecifico ? 'reincidente' : 'primário'}) → ${formatPena(tempo)}.`,
+        `Cumprimento mínimo: ${formatFracao(fracao)} da pena (${reincidenteEspecifico(c) ? 'reincidente' : 'primário'}) → ${formatPena(tempo)}.`,
         'Depende de comportamento adequado e compatibilidade com os objetivos da pena (art. 123, I e III).',
         'Vedada ao condenado por crime hediondo ou com violência ou grave ameaça contra pessoa, que também não tem trabalho externo sem vigilância direta (art. 122, §2º, na redação da Lei 14.843/2024). Antes dela, a vedação alcançava só o hediondo com resultado morte.',
       ],

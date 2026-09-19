@@ -10,8 +10,7 @@ import {diasDeMeses} from '../../lib/pena';
 import CampoPena from '../ficha/CampoPena';
 import s from './premissa.module.css';
 
-const CIRCUNSTANCIAS: {chave: 'reincidenteEspecifico' | 'comandoOrgcrimUltraviolenta' | 'confessou' | 'reparouDano'; rotulo: string}[] = [
-  {chave: 'reincidenteEspecifico', rotulo: 'reincidente específico'},
+const CIRCUNSTANCIAS: {chave: 'comandoOrgcrimUltraviolenta' | 'confessou' | 'reparouDano'; rotulo: string}[] = [
   {chave: 'comandoOrgcrimUltraviolenta', rotulo: 'comando de orgcrim ultraviolenta'},
   {chave: 'confessou', rotulo: 'confessou'},
   {chave: 'reparouDano', rotulo: 'reparou o dano'},
@@ -57,6 +56,14 @@ export default function ControlesPremissa({rev, onChange, mostrarBase}: PropsCon
       )}
       <div className={s.circunstancias}>
         <span className={s.notaMono}>circunstâncias do réu aplicadas a todo o catálogo</span>
+        <button
+          type="button"
+          aria-pressed={rev.reincidencia === 'especifico'}
+          className={`${s.chip} ${rev.reincidencia === 'especifico' ? s.chipAtivo : ''}`}
+          onClick={() => onChange({reincidencia: rev.reincidencia === 'especifico' ? 'primario' : 'especifico'})}
+        >
+          reincidente específico
+        </button>
         {CIRCUNSTANCIAS.map((c) => (
           <button
             key={c.chave}

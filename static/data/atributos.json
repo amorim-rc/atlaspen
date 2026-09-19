@@ -5,7 +5,7 @@
     "alcance": "Ids dos tipos penais com pena privativa em que o atributo é cabível e condicional, com os parâmetros no padrão (lei vigente) e sob o cenário de referência. Incabível é o resto.",
     "cenario_referencia": {
       "pena_concreta": "mínima cominada",
-      "reincidente_especifico": false,
+      "reincidencia": "primario",
       "comando_orgcrim_ultraviolenta": false,
       "confessou": false,
       "reparou_dano": false,

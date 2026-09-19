@@ -37,7 +37,7 @@ export const RECORTE_PADRAO =
  */
 export function recorte(rev: CenarioReverso): string {
   const circ = circunstanciasPorExtenso(rev);
-  const reu = rev.reincidenteEspecifico ? circ : ['réu primário', ...circ];
+  const reu = rev.reincidencia === 'primario' ? ['réu primário', ...circ] : circ;
   const pena =
     rev.base === 'fixa'
       ? `condenado a ${formatDias(diasDeMeses(rev.penaFixaMeses))}`

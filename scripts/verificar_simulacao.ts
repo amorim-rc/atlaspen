@@ -260,13 +260,13 @@ console.log('\nA premissa vai e volta pela URL do pacote');
   ok(escreverPacote([m], 0, porId, padrao) === escreverPacote([m], 0, porId), 'passar o padrão é o mesmo que não passar');
   ok(!escreverPacote([m], 0, porId, padrao).includes('base='), 'a premissa padrão não suja a URL');
 
-  const mexida = {...padrao, base: 'maxima' as const, reincidenteEspecifico: true};
+  const mexida = {...padrao, base: 'maxima' as const, reincidencia: 'especifico' as const};
   const url = escreverPacote([m], 0, porId, mexida);
   ok(url.includes('base=maxima') && url.includes('reincidente=sim'), `a premissa mexida entra na URL: ${url}`);
 
   const volta = lerPacote(url, porId);
   ok(volta.rev.base === 'maxima', 'a base volta da URL');
-  ok(volta.rev.reincidenteEspecifico === true, 'a circunstância volta da URL');
+  ok(volta.rev.reincidencia === 'especifico', 'a circunstância volta da URL');
   ok(volta.pacote.length === 1, 'o pacote continua chegando inteiro');
   ok(lerPacote('?m=am;teto;tetoMeses=3a', porId).rev.base === 'minima', 'link antigo, sem premissa, abre no padrão');
 }
@@ -279,7 +279,7 @@ console.log('\nO recorte da nota acompanha a premissa');
   const maxima = recorte({...padrao, base: 'maxima'});
   ok(maxima.includes('pena máxima cominada') && !maxima.includes('pena mínima cominada'), 'na máxima, o recorte fala da máxima e não da mínima');
 
-  const reinc = recorte({...padrao, reincidenteEspecifico: true});
+  const reinc = recorte({...padrao, reincidencia: 'especifico' as const});
   ok(reinc.includes('reincidente específico') && !reinc.includes('primário'), 'a reincidência substitui o réu primário');
 
   const fixa = recorte({...padrao, base: 'fixa', penaFixaMeses: 36});

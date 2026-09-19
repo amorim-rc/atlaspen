@@ -16,11 +16,10 @@ import {cenarioReversoPadrao} from './reverso';
 
 const BASES: BasePenaConcreta[] = ['minima', 'maxima', 'fixa'];
 
-type Circunstancia = 'reincidenteEspecifico' | 'comandoOrgcrimUltraviolenta' | 'confessou' | 'reparouDano';
+type Circunstancia = 'comandoOrgcrimUltraviolenta' | 'confessou' | 'reparouDano';
 
 /** As circunstâncias do réu cujo padrão é `false`: a URL grava `sim` quando ligadas. */
 const LIGA: [Circunstancia, string][] = [
-  ['reincidenteEspecifico', 'reincidente'],
   ['comandoOrgcrimUltraviolenta', 'comando'],
   ['confessou', 'confessou'],
   ['reparouDano', 'reparou'],
@@ -36,6 +35,7 @@ export function lerPremissa(q: URLSearchParams): CenarioReverso {
     if (dias !== null) rev.penaFixaMeses = dias / 30;
   }
   for (const [chave, nome] of LIGA) rev[chave] = q.get(nome) === 'sim';
+  rev.reincidencia = q.get('reincidente') === 'sim' ? 'especifico' : 'primario';
   // Bons antecedentes é o único cujo padrão é `true`: grava-se a negativa.
   rev.bonsAntecedentes = q.get('antecedentes') !== 'nao';
   return rev;
@@ -48,6 +48,7 @@ export function escreverPremissa(q: URLSearchParams, rev: CenarioReverso): void 
     q.set('fixa', escreverDuracao(diasDeMeses(rev.penaFixaMeses)));
   }
   for (const [chave, nome] of LIGA) if (rev[chave]) q.set(nome, 'sim');
+  if (rev.reincidencia === 'especifico') q.set('reincidente', 'sim');
   if (!rev.bonsAntecedentes) q.set('antecedentes', 'nao');
 }
 

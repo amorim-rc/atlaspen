@@ -189,6 +189,14 @@ export type TipoDoMotor = Pick<
 >;
 
 /** Parâmetros do caso concreto usados no cálculo dinâmico de atributos. */
+/**
+ * A reincidência do réu, em quatro estados, porque a lei distingue: "reincidente"
+ * (ANPP, regime, saída temporária, prescrição executória) e "reincidente em crime
+ * doloso" (sursis, substituição, livramento). O específico — no mesmo crime ou em
+ * crime da mesma natureza — é sempre doloso nos atributos que o leem.
+ */
+export type Reincidencia = 'primario' | 'culposo' | 'doloso' | 'especifico';
+
 export interface Cenario {
   /** Pena mínima em meses (permite simular alteração legislativa). */
   penaMin: number;
@@ -196,8 +204,8 @@ export interface Cenario {
   penaMax: number;
   /** Pena concreta aplicada em meses (para atributos de execução). */
   penaConcreta: number;
-  primario: boolean;
-  reincidenteEspecifico: boolean;
+  /** A reincidência do réu. Circunstância do CASO, não do tipo. */
+  reincidencia: Reincidencia;
   hediondo: boolean;
   resultadoMorte: boolean;
   /**

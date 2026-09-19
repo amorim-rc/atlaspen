@@ -17,6 +17,8 @@
 
 import type {Cenario, TipoDoMotor} from '../types';
 import {cenarioFromCrime} from '../cenario';
+import type {Reincidencia} from '../types';
+import {ROTULO_REINCIDENCIA} from './reincidencia';
 import type {AtributoDef, AtributoResultado, Parametros, Status} from './types';
 // Do núcleo, e não do index: a busca reversa recebe o atributo que avalia e não
 // deve arrastar consigo o catálogo real.
@@ -58,7 +60,7 @@ export interface CenarioReverso {
   base: BasePenaConcreta;
   /** Pena concreta em meses, usada quando `base === 'fixa'`. */
   penaFixaMeses: number;
-  reincidenteEspecifico: boolean;
+  reincidencia: Reincidencia;
   /**
    * Comando de organização criminosa ultraviolenta (art. 112, VI, "b", LEP).
    * É circunstância do RÉU — o mesmo tipo penal responde de um jeito para quem
@@ -78,7 +80,7 @@ export interface CenarioReverso {
  */
 export function circunstanciasPorExtenso(rev: CenarioReverso): string[] {
   const partes: string[] = [];
-  if (rev.reincidenteEspecifico) partes.push('réu reincidente específico');
+  if (rev.reincidencia !== 'primario') partes.push(`réu ${ROTULO_REINCIDENCIA[rev.reincidencia]}`);
   if (rev.comandoOrgcrimUltraviolenta) partes.push('com comando de organização criminosa ultraviolenta');
   if (rev.confessou) partes.push('com confissão formal');
   if (rev.reparouDano) partes.push('com reparação do dano');
@@ -89,7 +91,7 @@ export function cenarioReversoPadrao(): CenarioReverso {
   return {
     base: 'minima',
     penaFixaMeses: 24,
-    reincidenteEspecifico: false,
+    reincidencia: 'primario',
     comandoOrgcrimUltraviolenta: false,
     confessou: false,
     reparouDano: false,
@@ -131,8 +133,7 @@ export function cenarioParaCrime(c: TipoDoMotor, rev: CenarioReverso): Cenario {
   return {
     ...cenarioFromCrime(c),
     penaConcreta: penaConcretaPresumida(c, rev),
-    primario: !rev.reincidenteEspecifico,
-    reincidenteEspecifico: rev.reincidenteEspecifico,
+    reincidencia: rev.reincidencia,
     comandoOrgcrimUltraviolenta: rev.comandoOrgcrimUltraviolenta,
     confessou: rev.confessou,
     reparouDano: rev.reparouDano,

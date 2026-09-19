@@ -171,7 +171,7 @@ export function atributoNovo(d: DefinicaoAtributo, id: string): AtributoDef {
         };
       }
       const faltam = d.requisitos.filter(
-        (r) => !((r === 'primario' && c.primario) || (r === 'confissao' && c.confessou) || (r === 'reparacao' && c.reparouDano)),
+        (r) => !((r === 'primario' && c.reincidencia === 'primario') || (r === 'confissao' && c.confessou) || (r === 'reparacao' && c.reparouDano)),
       );
       if (faltam.length) {
         return {status: 'condicional', resumo: `Depende de ${juntar(faltam.map((r) => ROTULO_REQUISITO[r]))}.`, detalhes: []};

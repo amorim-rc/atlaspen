@@ -141,7 +141,7 @@ const meta = {
     'Incabível é o resto.',
   cenario_referencia: {
     pena_concreta: rev.base === 'minima' ? 'mínima cominada' : rev.base,
-    reincidente_especifico: rev.reincidenteEspecifico,
+    reincidencia: rev.reincidencia,
     comando_orgcrim_ultraviolenta: rev.comandoOrgcrimUltraviolenta,
     confessou: rev.confessou,
     reparou_dano: rev.reparouDano,

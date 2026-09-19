@@ -40,8 +40,7 @@ export default function PainelConcreta({crime, estado: e, atualizar, pena, legal
       calcularAtributos({
         ...cenarioFromCrime(crime),
         penaConcreta: mesesDeDias(pena),
-        primario: !e.reincidente,
-        reincidenteEspecifico: e.reincidente,
+        reincidencia: e.reincidente ? 'especifico' : 'primario',
         comandoOrgcrimUltraviolenta: e.comando,
         fatoAnteriorA15402: e.anterior,
         hediondo: hediondoNoCaso,
