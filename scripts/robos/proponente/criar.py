@@ -91,13 +91,16 @@ def _nome_do_crime(epigrafe: str | None, texto: str | None,
     base = epigrafe or (caput or {}).get("crime")
     limpo = re.sub(r"\s+", " ", (texto or "")).strip()
     if not base:
-        return (limpo.split(":")[0][:110]).rstrip(" ,.;")
+        # Sem corte por tamanho: o nome cortado no caractere 110 publicou "…ou
+        # telefônico" como "…telegráfico, ra" (CP, art. 151, §3º). Nome longo a
+        # revisão encurta; nome cortado ninguém nota.
+        return limpo.split(":")[0].rstrip(" ,.;")
     base = base.rstrip(" ,.;")
     if condicao:
         return f"{base} ({condicao})"
     q = _QUALIFICADORA.match(limpo)
     if q:
-        return f"{base} — {q.group(0).strip().rstrip(' ,.;')}"[:180]
+        return f"{base} — {q.group(0).strip().rstrip(' ,.;')}"
     return base
 
 

@@ -298,7 +298,7 @@ inconstitucional o §3º do art. 232 do Código Penal Militar e deslocou o estup
 de vulnerável praticado por militar para o art. 217-A do Código Penal. Três
 registros afetados, **nenhum ato no DOU**. O Sentinela jamais veria. É a lacuna
 mais séria que resta, e vai exigir robô próprio — para o **STF**, o **STJ** e o
-**STM**, que é quem julga os 393 registros militares do catálogo. Está no
+**STM**, que é quem julga os 393 registros militares vigentes do catálogo (394 com o que a ADI 7555 tirou de vigência). Está no
 [backlog](https://github.com/amorim-rc/sispenas/blob/main/backlog.md).
 
 **O tipo penal antigo que nunca foi cadastrado, e o que morreu sem aviso.** O

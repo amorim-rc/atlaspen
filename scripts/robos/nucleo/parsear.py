@@ -188,8 +188,10 @@ def ler_anotacao(texto: str,
 # artigo definido, e o texto começava em "disposto"; com a letra insensível, um
 # hífen seguido de minúscula viraria sufixo. Só "Art" é que se lê em qualquer
 # caixa.
+# "Ar." sem o t é erro do próprio compilado (Código Eleitoral, arts. 337 e 352) e
+# só vale com o ponto: sem ele, "Ar" seria começo de palavra.
 _ARTIGO = re.compile(
-    r"^Art\s*\.?\s*(\d+)\s*(?-i:[ºo°])?((?:[-–—](?-i:[A-Z]))*)\s*(?:[.\-–—º°]|\s)", re.I)
+    r"^(?:Art\s*\.?|Ar\s*\.)\s*(\d+)\s*(?-i:[ºo°])?((?:[-–—](?-i:[A-Z]))*)\s*(?:[.\-–—º°]|\s)", re.I)
 # "§ 1º", "§ 1o", "§ 2°", "§ 2º-D", "Parágrafo único".
 _PAR_NUMERO = re.compile(r"^§\s*(\d+)\s*[ºo°]?", re.I)
 _PAR_SUFIXO = re.compile(r"^(\s*)[-–—]\s?([A-Z])(?![a-zà-ÿ])")

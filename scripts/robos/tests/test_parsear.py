@@ -123,6 +123,10 @@ def test_sufixo_duplo_e_artigo_proprio(carregar):
     ("Art. 4o Poderá ser ajuizada ação cautelar", "Art. 4", "Poderá ser ajuizada"),
     # Sufixo legítimo, colado ao número.
     ("Art. 121-A. Matar mulher por razões da condição do sexo feminino", "Art. 121-A", "Matar mulher"),
+    # Erro de digitação do próprio compilado: o Código Eleitoral grafa "Ar. 337"
+    # e "Ar. 352". Sem este caso, os dois artigos colavam no anterior, e o art.
+    # 337 e o art. 352 ficaram fora do catálogo sem que o Vigia acusasse.
+    ("Ar. 337. Participar, o estrangeiro ou brasileiro", "Art. 337", "Participar"),
 ])
 def test_hifen_de_pontuacao_nao_vira_sufixo(texto, artigo, comeco):
     ds = como_dicionarios(parsear(f"<html><body><p>{texto}:</p></body></html>"))

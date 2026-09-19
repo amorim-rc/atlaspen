@@ -254,9 +254,11 @@ publicado é pior que dado ausente.
 | Ação Penal Privada | 27 |
 | Privada | 1 |
 
-- **O vocabulário não é fechado.** "Privada" (id 730, CP, art. 138, §1º) e "Ação Penal
-  Privada" são a mesma categoria com dois rótulos, e o filtro da Busca por tipo penal
-  mostra as duas como opções distintas.
+- ~~**O vocabulário não é fechado.**~~ Fechado em 19/09/2026: o id 730 passou a "Ação Penal
+  Privada" e `validar_vocabulario` (em `scripts/transform_data.py`) reprova, na CI, grafia
+  fora do vocabulário de `acao`, `tipo_pena`, `elemento`, `hediondo`, `tentativa`,
+  `violencia` e `grave_ameaca`. O vocabulário ainda é o antigo: fechar as espécies
+  (representação × requisição, personalíssima) continua sendo desta frente.
 - "Pública Condicionada" não distingue **representação** de **requisição do Ministro da
   Justiça**.
 - Só 7 registros usam `acao_condicional` / `acao_condicao`.
@@ -286,6 +288,14 @@ não são incondicionados; em seguida, uma amostra dos incondicionados.
 ## 7. Amostra qualitativa para validação técnico-científica
 
 **Objetivo.** Extrair uma amostra qualitativa dos registros para validar os achados.
+
+**Protocolo escrito e registrado em 19/09/2026: `auditoria/protocolo.md`.** Ele responde às
+perguntas abaixo — estratificação por diploma e por origem da moldura, 300 registros para um
+erro máximo de 1% a 95% de confiança, conferência cega, dupla conferência em 50 fichas com κ
+de Cohen, e censo onde a população é pequena. **O sorteio só acontece na versão amadurecida**,
+depois do merge do revamp, dos critérios de hediondez e de ação penal e dos testes do motor:
+conferir antes seria medir erro que já está sendo corrigido. A semente é o hash do commit de
+merge que o mantenedor declarar.
 
 **Perguntas para o estudo com o grupo**, de onde sai o desenho da amostra (decisão de
 11/09/2026):
@@ -378,6 +388,24 @@ o site novo ir ao ar. Sem número de frente, para não renumerar o resto.
     se o mesmo vale para o art. 28-A do CPP.
 
 ### Dados e conteúdo
+
+- **Código Eleitoral conferido inteiro em 19/09/2026**, artigo a artigo, contra o compilado
+  baixado no mesmo dia. Entraram 5 tipos que faltavam (arts. 326-B, 337 *caput*, 349 e 352,
+  este em dois registros); o art. 284 do Código Eleitoral passou a dar o mínimo dos 34
+  registros que publicavam zero (um ano na reclusão, quinze dias na detenção); 8 nomes de tipo
+  foram corrigidos — o do art. 305 dizia o contrário da lei —; os arts. 353 e 354 viraram pena
+  por remissão; o art. 297 perdeu violência e grave ameaça, que o tipo não tem; e o modificador
+  do art. 326-B apontava para uma lei que nenhum registro usa. **Em aberto:**
+  - **Lei 6.538/78 (6 registros) publica mínimo zero.** A lei comina "reclusão até oito anos"
+    sem indicar o grau mínimo, e, ao contrário do Código Eleitoral (art. 284) e do CPM
+    (art. 58), não tem regra de parte geral que o fixe. Qual é o mínimo é questão jurídica em
+    aberto, e o registro cala o que não se sabe. Enquanto isso, `cenarioFromCrime`
+    (`src/lib/cenario.ts`) presume a pena máxima quando o mínimo é zero — é o que resta, mas
+    é presunção, não leitura da lei.
+  - **Nome truncado é achado sem robô.** Dez nomes eram o texto da lei cortado no meio de uma
+    palavra, pelos cortes fixos de `criar.py` (110), `gerar_cpm.py` (150) e `extrair_cpm.py`
+    (120). Os cortes do Proponente saíram; falta o Auditor acusar nome que seja prefixo do
+    texto do dispositivo interrompido no meio de palavra.
 
 - ~~**Linha do tempo.**~~ Fechada em 18/09/2026. As 16 datas de `data/marcos.json` e as três
   notas conferem com o cabeçalho e o fecho de cada norma no Planalto; nenhuma mudou.

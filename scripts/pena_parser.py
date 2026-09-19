@@ -16,8 +16,11 @@ Regras que a revisão manual e a F2 deixaram claras:
   art. 121, § 2º-D traz "de 20 (vinte) a 40 (quarenta anos)"), e o extenso entre
   parênteses só repete o algarismo — some antes do parse.
 - **Pena só com teto.** "até cinco anos" (CPM, art. 290) não tem mínimo
-  explícito: o mínimo é o legal (1 dia), e registrá-lo como zero é diferente de
-  "sem pena privativa".
+  explícito no preceito, e o parser devolve só o teto (`teto_apenas`). O mínimo
+  vem da parte geral do diploma, quando ela o fixa — CPM, art. 58 (um ano na
+  reclusão, trinta dias na detenção); Código Eleitoral, art. 284 (um ano e quinze
+  dias) — e é o catálogo que o registra, não o parser. Onde a lei não fixa
+  mínimo (Lei 6.538/78), o registro mantém zero, que não é "sem pena privativa".
 """
 from __future__ import annotations
 

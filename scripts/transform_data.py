@@ -194,6 +194,31 @@ def validar_moldura(crimes: list) -> list:
     return problemas
 
 
+# O vocabulário fechado de cada campo categórico. Grafia fora dele não é erro de
+# forma: o site filtra por igualdade, e o id 730 (CP, art. 138, §1º), gravado
+# "Privada" em vez de "Ação Penal Privada", sumia do filtro de ação privada.
+VOCABULARIO = {
+    "acao": {"Pública Incondicionada", "Pública Condicionada", "Ação Penal Privada"},
+    "tipo_pena": {"Reclusão", "Detenção", "Prisão simples", "Morte", "Impedimento",
+                  "Multa", "Outras penas", "—"},
+    "elemento": {"Doloso", "Culposo", "Preterdoloso"},
+    "hediondo": {"Sim", "Não"},
+    "tentativa": {"Sim", "Não"},
+    "violencia": {"Sim", "Não"},
+    "grave_ameaca": {"Sim", "Não"},
+}
+
+
+def validar_vocabulario(crimes: list) -> list:
+    """Invariante DURO: todo campo categórico usa o vocabulário fechado."""
+    return [
+        f"id={c.get('id')} ({c.get('lei')} {c.get('artigo')}): {campo}={c.get(campo)!r} "
+        f"fora do vocabulário {sorted(valores)}"
+        for c in crimes for campo, valores in VOCABULARIO.items()
+        if c.get(campo) not in valores
+    ]
+
+
 def validar_tipos_penais(crimes: list) -> list:
     """Invariante DURO: todo registro é um tipo penal com sanção cominada.
 
@@ -665,6 +690,7 @@ def main():
 
     # Invariantes estruturais: falham sempre, independentemente de --estrito.
     problemas = (validar_ids(crimes) + validar_tipos_penais(crimes)
+                 + validar_vocabulario(crimes)
                  + validar_moldura(crimes) + validar_condicionais(crimes)
                  + validar_vigencia(crimes)
                  + validar_pena_por_remissao(crimes))

@@ -256,9 +256,10 @@ _ACAO_CONDICIONADA = re.compile(
     r"|depende\s+de\s+representa[çc]"
     r"|a[çc][ãa]o\s+penal\s+p[úu]blica\s+condicionada", re.I)
 
-# O catálogo escreve a ação penal privada de duas formas ("Privada" e "Ação
-# Penal Privada"); a auditoria aceita as duas e só acusa quando a ESPÉCIE
-# diverge, não a grafia.
+# A auditoria compara a ESPÉCIE, não a grafia. O catálogo chegou a escrever a
+# ação privada de duas formas ("Privada" e "Ação Penal Privada"); desde
+# 19/09/2026 o `transform_data.py` (VOCABULARIO) só aceita a segunda, e a
+# equivalência aqui fica para relatório de dado antigo.
 # Quando o próprio artigo declara a ação INCONDICIONADA numa hipótese (art. 153,
 # §2º do CP) ou ressalva casos ("salvo quando praticados em prejuízo de entidade
 # de direito público"), a fórmula não vale para o artigo inteiro — e a auditoria

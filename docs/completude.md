@@ -17,7 +17,7 @@ conferência do catálogo) e de
 
 | Indicador | Valor |
 |---|---|
-| Tipos penais catalogados | **1507** |
+| Tipos penais catalogados | **1512** |
 | Diplomas com tipo penal vigente | 63 |
 | — com coleta iniciada | 61 |
 | Diplomas revogados/não recepcionados | [11](/docs/acervo-historico) |
@@ -32,7 +32,7 @@ conferência do catálogo) e de
 |---|---:|---|
 | Código Penal — Parte Especial | 531 | concluído ❓ |
 | Código Penal Militar — Parte Especial | 394 | 🔶 em coleta |
-| Código Eleitoral | 61 | concluído ❓ |
+| Código Eleitoral | 66 | concluído ❓ |
 | Crimes contra o meio ambiente | 60 | concluído ❓ |
 | Lei das Contravenções Penais | 52 | concluído ❓ |
 | Estatuto da Criança e do Adolescente (crimes) | 30 | concluído ❓ |

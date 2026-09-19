@@ -8399,7 +8399,7 @@
     "lei": "CE (Lei 4.737/65)",
     "artigo": "Art. 289",
     "crime": "Inscrever-se fraudulentamente como eleitor",
-    "pena_min": 0,
+    "pena_min": 12,
     "pena_max": 60,
     "tipo_pena": "Reclusão",
     "acao": "Pública Incondicionada",
@@ -8408,14 +8408,14 @@
     "tentativa": "Sim",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "até 5 anos reclusão. até 5 anos e 5 a 15 dias-multa (art. 289)"
+    "obs": "até 5 anos reclusão. até 5 anos e 5 a 15 dias-multa (art. 289). Mínimo de um ano pelo art. 284 do Código Eleitoral: o artigo não indica o grau mínimo."
   },
   {
     "id": 524,
     "lei": "CE (Lei 4.737/65)",
     "artigo": "Art. 290",
-    "crime": "Induzir alguém a inscrever-se fraudulentamente como eleitor",
-    "pena_min": 0,
+    "crime": "Induzir alguém a se inscrever eleitor com infração de qualquer dispositivo do Código Eleitoral",
+    "pena_min": 12,
     "pena_max": 24,
     "tipo_pena": "Reclusão",
     "acao": "Pública Incondicionada",
@@ -8424,14 +8424,14 @@
     "tentativa": "Sim",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "até 2 anos reclusão. até 2 anos e 15 a 30 dias-multa (art. 290)"
+    "obs": "até 2 anos reclusão. até 2 anos e 15 a 30 dias-multa (art. 290). Mínimo de um ano pelo art. 284 do Código Eleitoral: o artigo não indica o grau mínimo."
   },
   {
     "id": 525,
     "lei": "CE (Lei 4.737/65)",
     "artigo": "Art. 298",
     "crime": "Prender ou deter eleitor, mesário, fiscal ou candidato (art. 236)",
-    "pena_min": 0,
+    "pena_min": 12,
     "pena_max": 48,
     "tipo_pena": "Reclusão",
     "acao": "Pública Incondicionada",
@@ -8440,7 +8440,7 @@
     "tentativa": "Sim",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "até 4 anos reclusão. até 4 anos (art. 298)"
+    "obs": "até 4 anos reclusão. até 4 anos (art. 298). Mínimo de um ano pelo art. 284 do Código Eleitoral: o artigo não indica o grau mínimo."
   },
   {
     "id": 526,
@@ -8463,7 +8463,7 @@
     "lei": "CE (Lei 4.737/65)",
     "artigo": "Art. 300",
     "crime": "Servidor público valer-se da autoridade para coagir alguém a votar",
-    "pena_min": 0,
+    "pena_min": 0.5,
     "pena_max": 6,
     "tipo_pena": "Detenção",
     "acao": "Pública Incondicionada",
@@ -8472,14 +8472,14 @@
     "tentativa": "Sim",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "Detenção até 6 meses e 60 a 100 dias-multa (art. 300)"
+    "obs": "Detenção até 6 meses e 60 a 100 dias-multa (art. 300). Mínimo de quinze dias pelo art. 284 do Código Eleitoral: o artigo não indica o grau mínimo."
   },
   {
     "id": 528,
     "lei": "CE (Lei 4.737/65)",
     "artigo": "Art. 301",
     "crime": "Usar de violência ou grave ameaça para coagir alguém a votar",
-    "pena_min": 0,
+    "pena_min": 12,
     "pena_max": 48,
     "tipo_pena": "Reclusão",
     "acao": "Pública Incondicionada",
@@ -8488,14 +8488,14 @@
     "tentativa": "Sim",
     "violencia": "Sim",
     "grave_ameaca": "Sim",
-    "obs": "Reclusão até 4 anos e 5 a 15 dias-multa (art. 301)"
+    "obs": "Reclusão até 4 anos e 5 a 15 dias-multa (art. 301). Mínimo de um ano pelo art. 284 do Código Eleitoral: o artigo não indica o grau mínimo."
   },
   {
     "id": 529,
     "lei": "CE (Lei 4.737/65)",
     "artigo": "Art. 309",
     "crime": "Votar ou tentar votar mais de uma vez, ou em lugar de outrem",
-    "pena_min": 0,
+    "pena_min": 12,
     "pena_max": 36,
     "tipo_pena": "Reclusão",
     "acao": "Pública Incondicionada",
@@ -8504,7 +8504,7 @@
     "tentativa": "Sim",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "Reclusão até 3 anos (art. 309)"
+    "obs": "Reclusão até 3 anos (art. 309). Mínimo de um ano pelo art. 284 do Código Eleitoral: o artigo não indica o grau mínimo."
   },
   {
     "id": 530,
@@ -10495,7 +10495,7 @@
     "lei": "CE (Lei 4.737/65)",
     "artigo": "Art. 350 (se o documento é particular)",
     "crime": "Falsidade ideológica eleitoral (documento particular)",
-    "pena_min": 0,
+    "pena_min": 12,
     "pena_max": 36,
     "tipo_pena": "Reclusão",
     "acao": "Pública Incondicionada",
@@ -10504,7 +10504,7 @@
     "tentativa": "Sim",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "até 3 anos reclusão + 3 a 10 dias-multa. Mesma conduta do caput, quando o documento é particular"
+    "obs": "até 3 anos reclusão + 3 a 10 dias-multa. Mesma conduta do caput, quando o documento é particular. Mínimo de um ano pelo art. 284 do Código Eleitoral: o artigo não indica o grau mínimo."
   },
   {
     "id": 653,
@@ -10895,7 +10895,7 @@
     "id": 677,
     "lei": "CPM (DL 1.001/69)",
     "artigo": "Art. 141, caput",
-    "crime": "Entrar em entendimento com país estrangeiro, ou organização nêle existente, para gerar conflito ou divergência de caráte",
+    "crime": "Entendimento para gerar conflito ou divergência com o Brasil",
     "pena_min": 48,
     "pena_max": 96,
     "tipo_pena": "Reclusão",
@@ -11343,7 +11343,7 @@
     "id": 705,
     "lei": "CPM (DL 1.001/69)",
     "artigo": "Art. 290, caput",
-    "crime": "Receber, preparar, produzir, vender, fornecer, ainda que gratuitamente, ter em depósito, transportar, trazer consigo, ai",
+    "crime": "Tráfico, posse ou uso de entorpecente ou substância de efeito similar",
     "pena_min": 12,
     "pena_max": 60,
     "tipo_pena": "Reclusão",
@@ -11747,7 +11747,7 @@
     "pena_min": 6,
     "pena_max": 24,
     "tipo_pena": "Detenção",
-    "acao": "Privada",
+    "acao": "Ação Penal Privada",
     "hediondo": "Não",
     "elemento": "Doloso",
     "tentativa": "Sim",
@@ -12271,7 +12271,7 @@
     "id": 763,
     "lei": "CPM (DL 1.001/69)",
     "artigo": "Art. 176, caput",
-    "crime": "Ofender inferior hierárquico, mediante ato de violência que, por natureza ou pelo meio empregado, seja considerado avilt",
+    "crime": "Ofensa aviltante a inferior hierárquico",
     "pena_min": 12,
     "pena_max": 24,
     "tipo_pena": "Detenção",
@@ -12465,8 +12465,8 @@
     "id": 775,
     "lei": "CE (Lei 4.737/65)",
     "artigo": "Art. 291",
-    "crime": "Efetuar registro/alistamento/atualização de eleitor com infração das disposições do Código Eleitoral",
-    "pena_min": 0,
+    "crime": "Efetuar o juiz, fraudulentamente, a inscrição de alistando",
+    "pena_min": 12,
     "pena_max": 60,
     "tipo_pena": "Reclusão",
     "acao": "Pública Incondicionada",
@@ -12475,7 +12475,7 @@
     "tentativa": "Sim",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "até 5 anos reclusão + multa. Se doloso. Se culposo: 15d-1m"
+    "obs": "até 5 anos reclusão + 5 a 15 dias-multa. Mínimo de um ano pelo art. 284 do Código Eleitoral: o artigo não indica o grau mínimo."
   },
   {
     "id": 776,
@@ -12498,16 +12498,16 @@
     "lei": "CE (Lei 4.737/65)",
     "artigo": "Art. 297",
     "crime": "Impedir/embaraçar exercício do sufrágio (impedir ou embaraçar o exercício do voto)",
-    "pena_min": 0,
+    "pena_min": 0.5,
     "pena_max": 6,
     "tipo_pena": "Detenção",
     "acao": "Pública Incondicionada",
     "hediondo": "Não",
     "elemento": "Doloso",
     "tentativa": "Sim",
-    "violencia": "Sim",
-    "grave_ameaca": "Sim",
-    "obs": "até 6 meses detenção + multa"
+    "violencia": "Não",
+    "grave_ameaca": "Não",
+    "obs": "até 6 meses detenção + multa. Mínimo de quinze dias pelo art. 284 do Código Eleitoral: o artigo não indica o grau mínimo."
   },
   {
     "id": 778,
@@ -12545,8 +12545,8 @@
     "id": 780,
     "lei": "CE (Lei 4.737/65)",
     "artigo": "Art. 305",
-    "crime": "Interferir o juiz eleitoral na realização da eleição, a pretexto de manter a ordem, para favorecer candidato/partido",
-    "pena_min": 0,
+    "crime": "Intervir autoridade estranha à mesa receptora, salvo o juiz eleitoral, no seu funcionamento",
+    "pena_min": 0.5,
     "pena_max": 6,
     "tipo_pena": "Detenção",
     "acao": "Pública Incondicionada",
@@ -12555,7 +12555,7 @@
     "tentativa": "Sim",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "até 6 meses detenção + multa"
+    "obs": "até 6 meses detenção + multa. Mínimo de quinze dias pelo art. 284 do Código Eleitoral: o artigo não indica o grau mínimo."
   },
   {
     "id": 781,
@@ -12578,7 +12578,7 @@
     "lei": "CE (Lei 4.737/65)",
     "artigo": "Art. 310",
     "crime": "Praticar, ou permitir membro da mesa receptora que se pratique, irregularidade que determine a anulação de votação",
-    "pena_min": 0,
+    "pena_min": 0.5,
     "pena_max": 6,
     "tipo_pena": "Detenção",
     "acao": "Pública Incondicionada",
@@ -12587,14 +12587,14 @@
     "tentativa": "Sim",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "até 6 meses detenção ou pagamento de 90 a 120 dias-multa. Praticar, ou permitir membro da mesa receptora que seja praticada, qualquer irregularidade que determine a anulação de votação, salvo no caso do art. 311. A cominação é ALTERNATIVA: a multa isolada basta para punir o fato — o que importa para a transação penal e para a substituição. O nome anterior descrevia o art. 312 (violação do sigilo do voto), cuja pena é detenção até dois anos"
+    "obs": "até 6 meses detenção ou pagamento de 90 a 120 dias-multa. Praticar, ou permitir membro da mesa receptora que seja praticada, qualquer irregularidade que determine a anulação de votação, salvo no caso do art. 311. A cominação é ALTERNATIVA: a multa isolada basta para punir o fato — o que importa para a transação penal e para a substituição. O nome anterior descrevia o art. 312 (violação do sigilo do voto), cuja pena é detenção até dois anos. Mínimo de quinze dias pelo art. 284 do Código Eleitoral: o artigo não indica o grau mínimo."
   },
   {
     "id": 783,
     "lei": "CE (Lei 4.737/65)",
     "artigo": "Art. 312",
-    "crime": "Violar/perturbar/tentar violar ou perturbar os trabalhos da junta eleitoral",
-    "pena_min": 0,
+    "crime": "Violar ou tentar violar o sigilo do voto",
+    "pena_min": 0.5,
     "pena_max": 24,
     "tipo_pena": "Detenção",
     "acao": "Pública Incondicionada",
@@ -12603,7 +12603,7 @@
     "tentativa": "Sim",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "até 2 anos detenção + multa"
+    "obs": "até 2 anos detenção + multa. Mínimo de quinze dias pelo art. 284 do Código Eleitoral: o artigo não indica o grau mínimo."
   },
   {
     "id": 784,
@@ -12626,7 +12626,7 @@
     "lei": "CE (Lei 4.737/65)",
     "artigo": "Art. 315",
     "crime": "Alteração da votação em mapas ou boletins de apuração",
-    "pena_min": 0,
+    "pena_min": 12,
     "pena_max": 60,
     "tipo_pena": "Reclusão",
     "acao": "Pública Incondicionada",
@@ -12635,7 +12635,7 @@
     "tentativa": "Sim",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "até 5 anos reclusão + pagamento de 5 a 15 dias-multa. O nome anterior descrevia o art. 323 (divulgação de fatos inverídicos na propaganda eleitoral), cuja pena é detenção de 2 meses a 1 ano ou 120 a 150 dias-multa — e que já tem registro próprio no catálogo"
+    "obs": "até 5 anos reclusão + pagamento de 5 a 15 dias-multa. O nome anterior descrevia o art. 323 (divulgação de fatos inverídicos na propaganda eleitoral), cuja pena é detenção de 2 meses a 1 ano ou 120 a 150 dias-multa — e que já tem registro próprio no catálogo. Mínimo de um ano pelo art. 284 do Código Eleitoral: o artigo não indica o grau mínimo."
   },
   {
     "id": 786,
@@ -12674,7 +12674,7 @@
     "lei": "CE (Lei 4.737/65)",
     "artigo": "Art. 326",
     "crime": "Injúria eleitoral (injuriar alguém na propaganda eleitoral ou visando fins de propaganda)",
-    "pena_min": 1,
+    "pena_min": 0.5,
     "pena_max": 6,
     "tipo_pena": "Detenção",
     "acao": "Pública Incondicionada",
@@ -12683,13 +12683,13 @@
     "tentativa": "Sim",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "1-6 meses detenção + multa"
+    "obs": "até 6 meses detenção ou 30 a 60 dias-multa. O registro publicava mínimo de 1 mês, que a lei não comina. Mínimo de quinze dias pelo art. 284 do Código Eleitoral: o artigo não indica o grau mínimo."
   },
   {
     "id": 789,
     "lei": "CE (Lei 4.737/65)",
     "artigo": "Art. 348",
-    "crime": "Falsificar/fabricar/alterar/suprimir/destruir/ocultar documento eleitoral público ou particular, com o fim de criar obrigação ou alterar a verdade sobre fato juridicamente relevante",
+    "crime": "Falsificação de documento público para fins eleitorais",
     "pena_min": 24,
     "pena_max": 72,
     "tipo_pena": "Reclusão",
@@ -12699,7 +12699,7 @@
     "tentativa": "Sim",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "2 a 6 anos reclusão + multa"
+    "obs": "2 a 6 anos reclusão + 15 a 30 dias-multa. Falsificar, no todo ou em parte, documento público, ou alterar documento público verdadeiro, para fins eleitorais"
   },
   {
     "id": 790,
@@ -14856,7 +14856,7 @@
     "lei": "CE (Lei 4.737/65)",
     "artigo": "Art. 295",
     "crime": "Retenção de título eleitoral contra a vontade do eleitor",
-    "pena_min": 0,
+    "pena_min": 0.5,
     "pena_max": 2,
     "tipo_pena": "Detenção",
     "acao": "Pública Incondicionada",
@@ -14865,14 +14865,14 @@
     "tentativa": "Não",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "detenção até 2 meses ou dias-multa"
+    "obs": "detenção até 2 meses ou dias-multa. Mínimo de quinze dias pelo art. 284 do Código Eleitoral: o artigo não indica o grau mínimo."
   },
   {
     "id": 925,
     "lei": "CE (Lei 4.737/65)",
     "artigo": "Art. 296",
     "crime": "Promoção de desordem que prejudique os trabalhos eleitorais",
-    "pena_min": 0,
+    "pena_min": 0.5,
     "pena_max": 2,
     "tipo_pena": "Detenção",
     "acao": "Pública Incondicionada",
@@ -14881,7 +14881,7 @@
     "tentativa": "Não",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "detenção até 2 meses + dias-multa"
+    "obs": "detenção até 2 meses + dias-multa. Mínimo de quinze dias pelo art. 284 do Código Eleitoral: o artigo não indica o grau mínimo."
   },
   {
     "id": 926,
@@ -14904,7 +14904,7 @@
     "lei": "CE (Lei 4.737/65)",
     "artigo": "Art. 307",
     "crime": "Fornecimento ao eleitor de cédula oficial já assinalada",
-    "pena_min": 0,
+    "pena_min": 12,
     "pena_max": 60,
     "tipo_pena": "Reclusão",
     "acao": "Pública Incondicionada",
@@ -14913,14 +14913,14 @@
     "tentativa": "Não",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "reclusão até 5 anos + dias-multa"
+    "obs": "reclusão até 5 anos + dias-multa. Mínimo de um ano pelo art. 284 do Código Eleitoral: o artigo não indica o grau mínimo."
   },
   {
     "id": 928,
     "lei": "CE (Lei 4.737/65)",
     "artigo": "Art. 308",
     "crime": "Rubrica e fornecimento de cédula oficial fora da oportunidade de entrega ao eleitor",
-    "pena_min": 0,
+    "pena_min": 12,
     "pena_max": 60,
     "tipo_pena": "Reclusão",
     "acao": "Pública Incondicionada",
@@ -14929,14 +14929,14 @@
     "tentativa": "Não",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "reclusão até 5 anos + dias-multa"
+    "obs": "reclusão até 5 anos + dias-multa. Mínimo de um ano pelo art. 284 do Código Eleitoral: o artigo não indica o grau mínimo."
   },
   {
     "id": 929,
     "lei": "CE (Lei 4.737/65)",
     "artigo": "Art. 311",
     "crime": "Votar em seção eleitoral em que não está inscrito, ou o presidente da mesa permiti-lo, salvo casos previstos",
-    "pena_min": 0,
+    "pena_min": 0.5,
     "pena_max": 1,
     "tipo_pena": "Detenção",
     "acao": "Pública Incondicionada",
@@ -14945,14 +14945,14 @@
     "tentativa": "Não",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "detenção até 1 mês ou dias-multa (eleitor); dias-multa maiores para o presidente da mesa"
+    "obs": "detenção até 1 mês ou dias-multa (eleitor); dias-multa maiores para o presidente da mesa. Mínimo de quinze dias pelo art. 284 do Código Eleitoral: o artigo não indica o grau mínimo."
   },
   {
     "id": 930,
     "lei": "CE (Lei 4.737/65)",
     "artigo": "Art. 314",
     "crime": "Deixar o juiz e os membros da Junta de recolher, fechar e lacrar as cédulas apuradas na urna ao terminar a apuração",
-    "pena_min": 0,
+    "pena_min": 0.5,
     "pena_max": 2,
     "tipo_pena": "Detenção",
     "acao": "Pública Incondicionada",
@@ -14961,14 +14961,14 @@
     "tentativa": "Não",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "detenção até 2 meses ou dias-multa"
+    "obs": "detenção até 2 meses ou dias-multa. Mínimo de quinze dias pelo art. 284 do Código Eleitoral: o artigo não indica o grau mínimo."
   },
   {
     "id": 931,
     "lei": "CE (Lei 4.737/65)",
     "artigo": "Art. 316",
     "crime": "Omissão de protestos nas atas de eleição ou de apuração",
-    "pena_min": 0,
+    "pena_min": 12,
     "pena_max": 60,
     "tipo_pena": "Reclusão",
     "acao": "Pública Incondicionada",
@@ -14977,7 +14977,7 @@
     "tentativa": "Não",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "reclusão até 5 anos + dias-multa"
+    "obs": "reclusão até 5 anos + dias-multa. Mínimo de um ano pelo art. 284 do Código Eleitoral: o artigo não indica o grau mínimo."
   },
   {
     "id": 932,
@@ -15000,7 +15000,7 @@
     "lei": "CE (Lei 4.737/65)",
     "artigo": "Art. 318",
     "crime": "Contagem dos votos pela mesa receptora havendo voto sob impugnação",
-    "pena_min": 0,
+    "pena_min": 0.5,
     "pena_max": 1,
     "tipo_pena": "Detenção",
     "acao": "Pública Incondicionada",
@@ -15009,14 +15009,14 @@
     "tentativa": "Não",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "detenção até 1 mês ou dias-multa"
+    "obs": "detenção até 1 mês ou dias-multa. Mínimo de quinze dias pelo art. 284 do Código Eleitoral: o artigo não indica o grau mínimo."
   },
   {
     "id": 934,
     "lei": "CE (Lei 4.737/65)",
     "artigo": "Art. 319",
     "crime": "Subscrição pelo eleitor de mais de uma ficha de registro",
-    "pena_min": 0,
+    "pena_min": 0.5,
     "pena_max": 1,
     "tipo_pena": "Detenção",
     "acao": "Pública Incondicionada",
@@ -15025,7 +15025,7 @@
     "tentativa": "Não",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "detenção até 1 mês ou dias-multa"
+    "obs": "detenção até 1 mês ou dias-multa. Mínimo de quinze dias pelo art. 284 do Código Eleitoral: o artigo não indica o grau mínimo."
   },
   {
     "id": 935,
@@ -15048,7 +15048,7 @@
     "lei": "CE (Lei 4.737/65)",
     "artigo": "Art. 321",
     "crime": "Colher a assinatura do eleitor em mais de uma ficha de registro de partido",
-    "pena_min": 0,
+    "pena_min": 0.5,
     "pena_max": 2,
     "tipo_pena": "Detenção",
     "acao": "Pública Incondicionada",
@@ -15057,7 +15057,7 @@
     "tentativa": "Não",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "detenção até 2 meses ou dias-multa"
+    "obs": "detenção até 2 meses ou dias-multa. Mínimo de quinze dias pelo art. 284 do Código Eleitoral: o artigo não indica o grau mínimo."
   },
   {
     "id": 937,
@@ -15080,7 +15080,7 @@
     "lei": "CE (Lei 4.737/65)",
     "artigo": "Art. 331",
     "crime": "Inutilização, alteração ou perturbação de meio de propaganda eleitoral",
-    "pena_min": 0,
+    "pena_min": 0.5,
     "pena_max": 6,
     "tipo_pena": "Detenção",
     "acao": "Pública Incondicionada",
@@ -15089,14 +15089,14 @@
     "tentativa": "Não",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "detenção até 6 meses ou dias-multa"
+    "obs": "detenção até 6 meses ou dias-multa. Mínimo de quinze dias pelo art. 284 do Código Eleitoral: o artigo não indica o grau mínimo."
   },
   {
     "id": 939,
     "lei": "CE (Lei 4.737/65)",
     "artigo": "Art. 332",
     "crime": "Impedimento do exercício de propaganda eleitoral",
-    "pena_min": 0,
+    "pena_min": 0.5,
     "pena_max": 6,
     "tipo_pena": "Detenção",
     "acao": "Pública Incondicionada",
@@ -15105,7 +15105,7 @@
     "tentativa": "Não",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "detenção até 6 meses + dias-multa"
+    "obs": "detenção até 6 meses + dias-multa. Mínimo de quinze dias pelo art. 284 do Código Eleitoral: o artigo não indica o grau mínimo."
   },
   {
     "id": 940,
@@ -15176,7 +15176,7 @@
     "lei": "CE (Lei 4.737/65)",
     "artigo": "Art. 340",
     "crime": "Fabricar, adquirir, fornecer, subtrair ou guardar urnas, mapas, cédulas ou papéis de uso exclusivo eleitoral, para fim de fraude",
-    "pena_min": 0,
+    "pena_min": 12,
     "pena_max": 36,
     "tipo_pena": "Reclusão",
     "acao": "Pública Incondicionada",
@@ -15185,14 +15185,14 @@
     "tentativa": "Não",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "reclusão até 3 anos + dias-multa"
+    "obs": "reclusão até 3 anos + dias-multa. Mínimo de um ano pelo art. 284 do Código Eleitoral: o artigo não indica o grau mínimo."
   },
   {
     "id": 945,
     "lei": "CE (Lei 4.737/65)",
     "artigo": "Art. 341",
     "crime": "Retardar ou não publicar, o funcionário de órgão oficial, as decisões, citações ou intimações da Justiça Eleitoral",
-    "pena_min": 0,
+    "pena_min": 0.5,
     "pena_max": 1,
     "tipo_pena": "Detenção",
     "acao": "Pública Incondicionada",
@@ -15201,14 +15201,14 @@
     "tentativa": "Não",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "detenção até 1 mês ou dias-multa"
+    "obs": "detenção até 1 mês ou dias-multa. Mínimo de quinze dias pelo art. 284 do Código Eleitoral: o artigo não indica o grau mínimo."
   },
   {
     "id": 946,
     "lei": "CE (Lei 4.737/65)",
     "artigo": "Art. 342",
     "crime": "Omissão do Ministério Público na denúncia ou na execução de sentença eleitoral",
-    "pena_min": 0,
+    "pena_min": 0.5,
     "pena_max": 2,
     "tipo_pena": "Detenção",
     "acao": "Pública Incondicionada",
@@ -15217,14 +15217,14 @@
     "tentativa": "Não",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "detenção até 2 meses ou dias-multa"
+    "obs": "detenção até 2 meses ou dias-multa. Mínimo de quinze dias pelo art. 284 do Código Eleitoral: o artigo não indica o grau mínimo."
   },
   {
     "id": 947,
     "lei": "CE (Lei 4.737/65)",
     "artigo": "Art. 343",
     "crime": "Descumprimento pelo juiz do § 3º do art. 357 do Código Eleitoral",
-    "pena_min": 0,
+    "pena_min": 0.5,
     "pena_max": 2,
     "tipo_pena": "Detenção",
     "acao": "Pública Incondicionada",
@@ -15233,14 +15233,14 @@
     "tentativa": "Não",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "detenção até 2 meses ou dias-multa"
+    "obs": "detenção até 2 meses ou dias-multa. Mínimo de quinze dias pelo art. 284 do Código Eleitoral: o artigo não indica o grau mínimo."
   },
   {
     "id": 948,
     "lei": "CE (Lei 4.737/65)",
     "artigo": "Art. 344",
     "crime": "Recusa ou abandono do serviço eleitoral sem justa causa",
-    "pena_min": 0,
+    "pena_min": 0.5,
     "pena_max": 2,
     "tipo_pena": "Detenção",
     "acao": "Pública Incondicionada",
@@ -15249,7 +15249,7 @@
     "tentativa": "Não",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "detenção até 2 meses ou dias-multa"
+    "obs": "detenção até 2 meses ou dias-multa. Mínimo de quinze dias pelo art. 284 do Código Eleitoral: o artigo não indica o grau mínimo."
   },
   {
     "id": 949,
@@ -15272,7 +15272,7 @@
     "lei": "CE (Lei 4.737/65)",
     "artigo": "Art. 346",
     "crime": "Violar o disposto no art. 377 (uso de serviço ou material público em benefício de partido ou candidato)",
-    "pena_min": 0,
+    "pena_min": 0.5,
     "pena_max": 6,
     "tipo_pena": "Detenção",
     "acao": "Pública Incondicionada",
@@ -15281,7 +15281,7 @@
     "tentativa": "Não",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "detenção até 6 meses + dias-multa"
+    "obs": "detenção até 6 meses + dias-multa. Mínimo de quinze dias pelo art. 284 do Código Eleitoral: o artigo não indica o grau mínimo."
   },
   {
     "id": 951,
@@ -15289,15 +15289,27 @@
     "artigo": "Art. 353",
     "crime": "Uso de documento falsificado ou alterado para fins eleitorais",
     "pena_min": 0,
-    "pena_max": 60,
-    "tipo_pena": "Reclusão",
+    "pena_max": 0,
+    "tipo_pena": "—",
     "acao": "Pública Incondicionada",
     "hediondo": "Não",
     "elemento": "Doloso",
     "tentativa": "Não",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "Pena: a cominada à falsificação ou à alteração (arts. 348-350: reclusão até 5 anos)"
+    "obs": "Pena: a cominada à falsificação ou à alteração. O registro publicava reclusão até 5 anos, e a falsificação de documento público (art. 348) é punida com 2 a 6 anos",
+    "pena_por_remissao": {
+      "dispositivo_fonte": "CE, arts. 348 a 352",
+      "lei_fonte": "CE (Lei 4.737/65)",
+      "artigos_fonte": [
+        "Art. 348",
+        "Art. 349",
+        "Art. 350",
+        "Art. 352"
+      ],
+      "operador": "nenhum",
+      "fracao": null
+    }
   },
   {
     "id": 952,
@@ -15305,15 +15317,26 @@
     "artigo": "Art. 354",
     "crime": "Obtenção de documento falso para fins eleitorais",
     "pena_min": 0,
-    "pena_max": 60,
-    "tipo_pena": "Reclusão",
+    "pena_max": 0,
+    "tipo_pena": "—",
     "acao": "Pública Incondicionada",
     "hediondo": "Não",
     "elemento": "Doloso",
     "tentativa": "Não",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "Pena: a cominada à falsificação ou à alteração (arts. 348-350: reclusão até 5 anos)"
+    "obs": "Pena: a cominada à falsificação ou à alteração. O registro publicava reclusão até 5 anos, e a falsificação de documento público (art. 348) é punida com 2 a 6 anos",
+    "pena_por_remissao": {
+      "dispositivo_fonte": "CE, arts. 348 a 350",
+      "lei_fonte": "CE (Lei 4.737/65)",
+      "artigos_fonte": [
+        "Art. 348",
+        "Art. 349",
+        "Art. 350"
+      ],
+      "operador": "nenhum",
+      "fracao": null
+    }
   },
   {
     "id": 953,
@@ -16327,7 +16350,7 @@
     "id": 1016,
     "lei": "CPM (DL 1.001/69)",
     "artigo": "Art. 140, caput",
-    "crime": "Entrar ou tentar entrar o militar em entendimento com país estrangeiro, para empenhar o Brasil à neutralidade ou à guerr",
+    "crime": "Entendimento para empenhar o Brasil à neutralidade ou à guerra",
     "pena_min": 72,
     "pena_max": 144,
     "tipo_pena": "Reclusão",
@@ -16375,7 +16398,7 @@
     "id": 1019,
     "lei": "CPM (DL 1.001/69)",
     "artigo": "Art. 143, caput",
-    "crime": "Conseguir, para o fim de espionagem militar, notícia, informação ou documento, cujo sigilo seja de interêsse da seguranç",
+    "crime": "Consecução de notícia, informação ou documento para fim de espionagem",
     "pena_min": 48,
     "pena_max": 144,
     "tipo_pena": "Reclusão",
@@ -16551,7 +16574,7 @@
     "id": 1030,
     "lei": "CPM (DL 1.001/69)",
     "artigo": "Art. 147, caput",
-    "crime": "Fazer desenho ou levantar plano ou planta de fortificação, quartel, fábrica, arsenal, hangar ou aeródromo, ou de navio,",
+    "crime": "Fazer desenho ou levantar plano ou planta de fortificação, quartel, fábrica, arsenal, hangar, aeródromo, navio, aeronave ou engenho de guerra sob administração ou fiscalização militar, ou fotografá-los ou filmá-los",
     "pena_min": 12,
     "pena_max": 48,
     "tipo_pena": "Reclusão",
@@ -17801,7 +17824,7 @@
     "id": 1108,
     "lei": "CPM (DL 1.001/69)",
     "artigo": "Art. 235, caput",
-    "crime": "Praticar, ou permitir o militar que com ele se pratique, ato libidinoso em lugar sujeito à administração militar ou no e",
+    "crime": "Ato de libidinagem",
     "pena_min": 6,
     "pena_max": 12,
     "tipo_pena": "Detenção",
@@ -18665,7 +18688,7 @@
     "id": 1162,
     "lei": "CPM (DL 1.001/69)",
     "artigo": "Art. 288, caput",
-    "crime": "Interromper, perturbar ou dificultar serviço telegráfico, telefônico, telemétrico, de televisão, telepercepção, sinaliza",
+    "crime": "Interrupção ou perturbação de serviço ou meio de comunicação",
     "pena_min": 12,
     "pena_max": 36,
     "tipo_pena": "Detenção",
@@ -19269,7 +19292,7 @@
     "id": 1199,
     "lei": "CPM (DL 1.001/69)",
     "artigo": "Art. 328, caput",
-    "crime": "Impedir, perturbar ou fraudar a realização de hasta pública, concorrência ou tomada de preços, de interêsse da administr",
+    "crime": "Obstáculo à hasta pública, concorrência ou tomada de preços",
     "pena_min": 6,
     "pena_max": 24,
     "tipo_pena": "Detenção",
@@ -21527,7 +21550,7 @@
     "id": 1340,
     "lei": "CP",
     "artigo": "Art. 151, § 3º",
-    "crime": "Violação de correspondência — Se o agente comete o crime, com abuso de função em serviço postal, telegráfico, ra",
+    "crime": "Violação de correspondência com abuso de função em serviço postal, telegráfico, radioelétrico ou telefônico",
     "pena_min": 12,
     "pena_max": 36,
     "tipo_pena": "Detenção",
@@ -22328,7 +22351,7 @@
     "lei": "CE (Lei 4.737/65)",
     "artigo": "Art. 350 (se o documento é público)",
     "crime": "Falsidade ideológica eleitoral (documento público)",
-    "pena_min": 0,
+    "pena_min": 12,
     "pena_max": 60,
     "tipo_pena": "Reclusão",
     "acao": "Pública Incondicionada",
@@ -22337,7 +22360,7 @@
     "tentativa": "Sim",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "até 5 anos reclusão + 5 a 15 dias-multa. Omitir, em documento público, declaração que dele devia constar, ou nele inserir declaração falsa, para fins eleitorais"
+    "obs": "até 5 anos reclusão + 5 a 15 dias-multa. Omitir, em documento público, declaração que dele devia constar, ou nele inserir declaração falsa, para fins eleitorais. Mínimo de um ano pelo art. 284 do Código Eleitoral: o artigo não indica o grau mínimo."
   },
   {
     "id": 1391,
@@ -22359,7 +22382,7 @@
     "id": 1392,
     "lei": "CE (Lei 4.737/65)",
     "artigo": "Art. 326-A",
-    "crime": "Dar causa à instauração de investigação policial, de processo judicial, de investigação administrativa, de inq",
+    "crime": "Denunciação caluniosa com finalidade eleitoral",
     "pena_min": 24,
     "pena_max": 96,
     "tipo_pena": "Reclusão",
@@ -22374,9 +22397,9 @@
   {
     "id": 1393,
     "lei": "CE (Lei 4.737/65)",
-    "artigo": "Art. 336, parágrafo único",
-    "crime": "Na mesma pena incorrerá o responsável pelas emissoras de rádio ou televisão que autorizar transmissões de que",
-    "pena_min": 0,
+    "artigo": "Art. 337, parágrafo único",
+    "crime": "Autorizar a emissora transmissão, ou o jornal divulgação, de pronunciamento de estrangeiro ou de quem não está no gozo dos direitos políticos",
+    "pena_min": 0.5,
     "pena_max": 6,
     "tipo_pena": "Detenção",
     "acao": "Pública Incondicionada",
@@ -22385,13 +22408,13 @@
     "tentativa": "Sim",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "até 6 meses detenção. Acrescido a partir do texto compilado (dispositivo com pena própria)."
+    "obs": "até 6 meses detenção + 90 a 120 dias-multa. O registro dizia \"Art. 336, parágrafo único\": o texto é do parágrafo único do art. 337, que o compilado grafa \"Ar. 337\". Mínimo de quinze dias pelo art. 284 do Código Eleitoral: o artigo não indica o grau mínimo."
   },
   {
     "id": 1394,
     "lei": "CE (Lei 4.737/65)",
     "artigo": "Art. 354-A",
-    "crime": "Apropriar-se o candidato, o administrador financeiro da campanha, ou quem de fato exerça essa função, de bens",
+    "crime": "Apropriação, pelo candidato ou administrador financeiro da campanha, de recursos destinados ao financiamento eleitoral",
     "pena_min": 24,
     "pena_max": 72,
     "tipo_pena": "Reclusão",
@@ -22929,7 +22952,7 @@
     "tentativa": "Não",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "Registro criado em 06/08/2026 a partir do anexo A: inciso com conduta completa, autônoma, sob moldura única do caput."
+    "obs": "3 meses a 1 ano de detenção, sem prejuízo da multa. Forma culposa do art. 68, com pena própria no parágrafo único. Registro criado em 06/08/2026."
   },
   {
     "id": 1428,
@@ -24210,5 +24233,85 @@
     "violencia": "Não",
     "grave_ameaca": "Não",
     "obs": "Pena de morte no grau máximo (fuzilamento, art. 56 do CPM, tempo de guerra); reclusão de 15 anos no grau mínimo, aos CABEÇAS. A moldura em meses aplica o art. 81, §2º: cominada a morte como grau máximo, ela corresponde, para efeito de graduação, à reclusão por 30 anos. Registro criado em 10/08/2026: o caput comina duas penas, e o catálogo publicava só a dos co-autores."
+  },
+  {
+    "id": 1508,
+    "lei": "CE (Lei 4.737/65)",
+    "artigo": "Art. 326-B",
+    "crime": "Violência política contra candidata ou detentora de mandato eletivo",
+    "pena_min": 12,
+    "pena_max": 48,
+    "tipo_pena": "Reclusão",
+    "acao": "Pública Incondicionada",
+    "hediondo": "Não",
+    "elemento": "Doloso",
+    "tentativa": "Sim",
+    "violencia": "Não",
+    "grave_ameaca": "Sim",
+    "obs": "1 a 4 anos reclusão e multa. Assediar, constranger, humilhar, perseguir ou ameaçar, por qualquer meio, candidata a cargo eletivo ou detentora de mandato eletivo, com menosprezo ou discriminação à condição de mulher ou à sua cor, raça ou etnia, para impedir ou dificultar a campanha ou o mandato. Incluído pela Lei 14.192/2021. Registro criado em 19/09/2026 na conferência integral do Código Eleitoral"
+  },
+  {
+    "id": 1509,
+    "lei": "CE (Lei 4.737/65)",
+    "artigo": "Art. 337, caput",
+    "crime": "Participar o estrangeiro, ou o brasileiro que não está no gozo dos direitos políticos, de atividades partidárias",
+    "pena_min": 0.5,
+    "pena_max": 6,
+    "tipo_pena": "Detenção",
+    "acao": "Pública Incondicionada",
+    "hediondo": "Não",
+    "elemento": "Doloso",
+    "tentativa": "Sim",
+    "violencia": "Não",
+    "grave_ameaca": "Não",
+    "obs": "até 6 meses detenção + 90 a 120 dias-multa. Mínimo de quinze dias pelo art. 284 do Código Eleitoral. Registro criado em 19/09/2026 na conferência integral do Código Eleitoral: o compilado grafa \"Ar. 337\", e a leitura automática não via o artigo"
+  },
+  {
+    "id": 1510,
+    "lei": "CE (Lei 4.737/65)",
+    "artigo": "Art. 349",
+    "crime": "Falsificação de documento particular para fins eleitorais",
+    "pena_min": 12,
+    "pena_max": 60,
+    "tipo_pena": "Reclusão",
+    "acao": "Pública Incondicionada",
+    "hediondo": "Não",
+    "elemento": "Doloso",
+    "tentativa": "Sim",
+    "violencia": "Não",
+    "grave_ameaca": "Não",
+    "obs": "até 5 anos reclusão + 3 a 10 dias-multa. Mínimo de um ano pelo art. 284 do Código Eleitoral. Registro criado em 19/09/2026 na conferência integral do Código Eleitoral"
+  },
+  {
+    "id": 1511,
+    "lei": "CE (Lei 4.737/65)",
+    "artigo": "Art. 352 (se o documento é público)",
+    "crime": "Falso reconhecimento de firma ou letra para fins eleitorais (documento público)",
+    "pena_min": 12,
+    "pena_max": 60,
+    "tipo_pena": "Reclusão",
+    "acao": "Pública Incondicionada",
+    "hediondo": "Não",
+    "elemento": "Doloso",
+    "tentativa": "Sim",
+    "violencia": "Não",
+    "grave_ameaca": "Não",
+    "obs": "até 5 anos reclusão + 5 a 15 dias-multa. Mínimo de um ano pelo art. 284 do Código Eleitoral. Registro criado em 19/09/2026 na conferência integral do Código Eleitoral: o compilado grafa \"Ar. 352\", e a leitura automática não via o artigo"
+  },
+  {
+    "id": 1512,
+    "lei": "CE (Lei 4.737/65)",
+    "artigo": "Art. 352 (se o documento é particular)",
+    "crime": "Falso reconhecimento de firma ou letra para fins eleitorais (documento particular)",
+    "pena_min": 12,
+    "pena_max": 36,
+    "tipo_pena": "Reclusão",
+    "acao": "Pública Incondicionada",
+    "hediondo": "Não",
+    "elemento": "Doloso",
+    "tentativa": "Sim",
+    "violencia": "Não",
+    "grave_ameaca": "Não",
+    "obs": "até 3 anos reclusão + 3 a 10 dias-multa. Mínimo de um ano pelo art. 284 do Código Eleitoral. Registro criado em 19/09/2026 na conferência integral do Código Eleitoral: o compilado grafa \"Ar. 352\", e a leitura automática não via o artigo"
   }
 ]

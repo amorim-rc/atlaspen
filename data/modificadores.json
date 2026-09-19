@@ -2961,7 +2961,7 @@
     },
     {
       "id": "aumento-calunia-eleitoral-323-p2",
-      "nome": "Divulgação de fatos inverídicos com circunstância qualificada (+1/3 a 1/2)",
+      "nome": "Divulgação de fatos inverídicos por imprensa, internet ou com discriminação (+1/3 a 1/2)",
       "dispositivo": "CE, art. 323, §2º",
       "natureza": "aumento",
       "fase": 3,
@@ -2976,7 +2976,7 @@
           "Art. 323"
         ]
       },
-      "obs": "Aumenta-se a pena de 1/3 até metade se o crime é cometido por meio da imprensa, rádio ou televisão, ou contra mulher e menospreze ou discrimine sua condição de mulher.",
+      "obs": "Aumenta-se a pena de 1/3 até metade se o crime é cometido por meio da imprensa, rádio ou televisão, da internet ou de rede social, ou é transmitido em tempo real; ou se envolve menosprezo ou discriminação à condição de mulher ou à sua cor, raça ou etnia (§2º, incluído pela Lei 14.192/2021).",
       "ignora_embutida": true
     },
     {
@@ -3001,8 +3001,8 @@
     },
     {
       "id": "aumento-divulgacao-fato-inveridico-mulher-326b-pu",
-      "nome": "Divulgação de fato inverídico contra mulher (+1/3)",
-      "dispositivo": "Lei 14.192/21, art. 326-B do CE, parágrafo único",
+      "nome": "Violência política contra mulher gestante, maior de 60 anos ou com deficiência (+1/3)",
+      "dispositivo": "CE, art. 326-B, parágrafo único",
       "natureza": "aumento",
       "fase": 3,
       "sobre": "pena_provisoria",
@@ -3011,12 +3011,12 @@
       "piso_minimo": false,
       "escopo": {
         "tipo": "tipos_por_artigo",
-        "lei": "Lei 14.192/21",
+        "lei": "CE (Lei 4.737/65)",
         "artigos": [
           "Art. 326-B"
         ]
       },
-      "obs": "Aumenta-se a pena em 1/3 se o crime é cometido contra mulher, menosprezando ou discriminando sua condição de mulher.",
+      "obs": "Aumenta-se a pena em 1/3 se o crime é cometido contra mulher gestante, maior de 60 anos ou com deficiência (incluído pela Lei 14.192/2021). O modificador descrevia outro dispositivo e apontava para um tipo que o catálogo não tinha.",
       "ignora_embutida": true
     },
     {
@@ -3654,6 +3654,28 @@
         ]
       },
       "obs": "A pena é aumentada de 1/3 a 2/3 se o agente pratica as condutas do caput e do §1º nas circunstâncias que o §2º enumera. Incluído pela Lei 15.487/2026.",
+      "ignora_embutida": true
+    },
+    {
+      "id": "aumento-ofensa-eleitoral-327",
+      "nome": "Calúnia, difamação ou injúria eleitoral qualificada (+1/3 a 1/2)",
+      "dispositivo": "CE, art. 327",
+      "natureza": "aumento",
+      "fase": 3,
+      "sobre": "pena_provisoria",
+      "fracao_min": 0.3333333333333333,
+      "fracao_max": 0.5,
+      "piso_minimo": false,
+      "escopo": {
+        "tipo": "tipos_por_artigo",
+        "lei": "CE (Lei 4.737/65)",
+        "artigos": [
+          "Art. 324",
+          "Art. 325",
+          "Art. 326"
+        ]
+      },
+      "obs": "As penas dos arts. 324, 325 e 326 aumentam-se de 1/3 até metade se o crime é cometido contra o Presidente da República ou chefe de governo estrangeiro; contra funcionário público, em razão de suas funções; na presença de várias pessoas, ou por meio que facilite a divulgação; com menosprezo ou discriminação à condição de mulher ou à sua cor, raça ou etnia; ou pela internet, rede social ou transmissão em tempo real.",
       "ignora_embutida": true
     }
   ]
