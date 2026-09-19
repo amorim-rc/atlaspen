@@ -11,7 +11,7 @@ combinados por modalidade de pena e cálculo de atributos penais:
   - infracao_menor_potencial : bool (art. 61 da Lei 9.099: contravenção, pena máx.
     <= 2 anos ou só multa; nunca o CPM, art. 90-A)
   - contravencao : bool (prisão simples, ou registro da LCP ou da Lei 7.437/85)
-  - tem_pena_privativa : bool (comina prisão? entra nas estatísticas de alcance?)
+  - tem_pena_privativa : bool (comina prisão, própria ou por remissão? entra nas estatísticas de alcance?)
   - resultado_morte : bool (qualificado pelo resultado morte -> art. 112, VI/VIII, LEP)
   - perdao_judicial_previsto : bool (há previsão legal expressa de perdão judicial?)
   - chave_dispositivo / duplicata : rastreiam registros repetidos
@@ -424,6 +424,11 @@ def validar_pena_por_remissao(crimes: list) -> list:
             problemas.append(
                 f"id {c['id']}: `artigos_fonte` {rem['artigos_fonte']} não casa "
                 f"nenhum registro de {rem['lei_fonte']!r} — remissão para o vazio")
+        elif any(not (x.get("pena_max") or x.get("pena_min")) for x in alvos
+                 if not x.get("pena_por_remissao")):
+            problemas.append(
+                f"id {c['id']}: alguma origem de `pena_por_remissao` não tem moldura "
+                "própria — a remissão tem de chegar a uma pena")
         if c.get("pena_min") or c.get("pena_max"):
             problemas.append(
                 f"id {c['id']}: declara `pena_por_remissao` E moldura própria "
@@ -668,6 +673,16 @@ def main():
             print(f"ERRO: {p}", file=sys.stderr)
         return 1
 
+    # A remissão já desdobrada em registros "c/c" (Lei 2.889/56, arts. 2º e 3º,
+    # desde a revisão de 06/08/2026): os desdobrados contam nas estatísticas, e o
+    # guarda-chuva não, para o mesmo crime não contar duas vezes (decisão de
+    # 19/09/2026). Sem desdobramento, o guarda-chuva é quem conta.
+    desdobrados = {
+        (c.get("lei"), c.get("artigo")) for c in crimes if c.get("pena_por_remissao")
+        and any(x.get("lei") == c.get("lei") and "c/c" in (x.get("artigo") or "")
+                and re.match(re.escape(c.get("artigo") or "") + r"[ ,]", x.get("artigo") or "")
+                for x in crimes)}
+
     for c in crimes:
         tipo = c.get("tipo_pena")
         c["pena_privativa"] = PENA_PRIVATIVA_MAP.get(tipo, "Nenhuma")
@@ -688,17 +703,21 @@ def main():
         # Todo registro é tipo penal (garantido por validar_tipos_penais). O que
         # varia é ter ou não pena PRIVATIVA: só quem tem entra nas estatísticas de
         # alcance dos atributos, que se medem por patamar de pena.
-        c["tem_pena_privativa"] = bool(pmax or c["pena_min_meses"])
+        # A pena por remissão É privativa: a do dispositivo de origem, que o motor
+        # aplica origem a origem (src/lib/atributos/remissao.ts). Sem esta marca o
+        # tipo saía de toda a varredura; com moldura zero, cabia em todo teto.
+        remissao_conta = bool(c.get("pena_por_remissao")) and (c.get("lei"), c.get("artigo")) not in desdobrados
+        c["tem_pena_privativa"] = bool(pmax or c["pena_min_meses"] or remissao_conta)
         c["contravencao"], c["infracao_menor_potencial"] = menor_potencial(c)
         c.setdefault("sancoes_nao_privativas", [])
         c.setdefault("pena_por_remissao", None)
-        if not c["tem_pena_privativa"]:
+        if c["pena_por_remissao"]:
+            c["pena_faixa_rotulo"] = "pena definida por remissão a outro dispositivo"
+        elif not c["tem_pena_privativa"]:
             # Sem moldura não há número a prefixar com "pena:", e o rótulo passa
             # a ser a frase inteira do cabeçalho — por isso ele se basta e não
             # repete a palavra "pena".
-            c["pena_faixa_rotulo"] = (
-                "pena definida por remissão a outro dispositivo"
-                if c["pena_por_remissao"] else "sem pena privativa de liberdade")
+            c["pena_faixa_rotulo"] = "sem pena privativa de liberdade"
 
         # Resultado morte — derivado do nome do tipo, sobreponível por revisão.
         morte = bool(RESULTADO_MORTE.search(c.get("crime") or ""))

@@ -25,7 +25,8 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import {createHash} from 'crypto';
-import type {Cenario, Crime} from '../src/lib/types';
+import type {Cenario, Crime, TipoDoMotor} from '../src/lib/types';
+import {avaliarTipo} from '../src/lib/atributos/remissao';
 import {CATALOGO, avaliarAtributo, valoresPadrao} from '../src/lib/atributos';
 import {
   cenarioParaCrime,
@@ -45,7 +46,7 @@ const crimes = crimesComPenaPrivativa(todos).sort((a, b) => a.id - b.id);
 const crimesSha256 = createHash('sha256').update(JSON.stringify(todos)).digest('hex');
 const rev = cenarioReversoPadrao();
 
-const CENARIOS: [string, (c: Crime) => Cenario][] = [
+const CENARIOS: [string, (c: TipoDoMotor) => Cenario][] = [
   ['tipo', (c) => cenarioFromCrime(c)],
   ['reverso', (c) => cenarioParaCrime(c, rev)],
 ];
@@ -64,7 +65,7 @@ function congelar() {
       const h = createHash('sha256');
       let status = '';
       for (const c of crimes) {
-        const r = avaliarAtributo(def, montar(c), params);
+        const r = avaliarTipo(def, params, c, todos, montar);
         status += LETRA[r.status];
         h.update(JSON.stringify([c.id, r.status, r.resumo, r.detalhes, r.limiar ?? null]));
       }

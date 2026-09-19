@@ -22,6 +22,7 @@ import {
 import {escreverPremissa, lerPremissa, premissaIgualAoPadrao} from '../src/lib/atributos/premissa-url';
 import {escreverEstado, lerEstado} from '../src/components/atributo/estado';
 import {cenarioFromCrime} from '../src/lib/cenario';
+import {avaliarTipo} from '../src/lib/atributos/remissao';
 import {calcularConcurso, calcularDosimetria} from '../src/lib/dosimetria';
 
 // Lê o MESMO arquivo servido à aplicação (static/data/crimes.json), e não a fonte
@@ -72,9 +73,11 @@ console.log('0. Integração catálogo → motor de atributos');
       `todo registro tem o campo "${String(campo)}" (rode scripts/transform_data.py se falhar)`,
     );
   }
+  // A pena por remissão é privativa com moldura própria zero: a pena é a da origem,
+  // e o motor a lê de lá (src/lib/atributos/remissao.ts).
   ok(
-    crimes.every((c) => c.pena_max_meses > 0 || c.pena_min_meses > 0),
-    'todo tipo com pena privativa tem pena > 0',
+    crimes.every((c) => c.pena_por_remissao || c.pena_max_meses > 0 || c.pena_min_meses > 0),
+    'todo tipo com pena privativa tem pena > 0, própria ou da origem',
   );
   // O catálogo contém APENAS tipos penais: notas de referência, agravantes e
   // excludentes foram removidas na v1.1.0.
@@ -398,6 +401,46 @@ console.log('\n3. Casos-âncora de direito penal');
         `prescrição executória do reincidente: 4 anos + 1/3 (CP, art. 110) — "${presc('culposo').detalhes.join(' | ')}"`);
       ok(presc('culposo').valor === presc('primario').valor,
         'prescrição da pretensão punitiva: a reincidência não influi (Súmula 220, STJ)');
+    }
+
+    // ── A pena por remissão, no catálogo real (A2, spec 2) ──────────────────
+    {
+      const def = (id: string) => CATALOGO.find((b) => b.id === id)!;
+      const uso = achar(/^CP$/i, /^Art\. 304/);
+      ok(!!uso, 'o art. 304 do CP está entre os tipos com pena privativa');
+      if (uso) {
+        const molduras: number[] = [];
+        const transacao = avaliarTipo(def('transacao'), valoresPadrao(def('transacao')), uso, todos, (t) => {
+          molduras.push(t.pena_max_meses);
+          return cenarioFromCrime(t);
+        });
+        ok(molduras.length > 1 && molduras.every((m) => m > 0),
+          `o art. 304 é avaliado com a moldura de cada falsificação, nunca com zero (${molduras.join(', ')})`);
+        // Os arts. 301 e 302 (até 1 ano) são de menor potencial ofensivo; o 297 (2 a 6
+        // anos), não. A transação depende de qual falsificação foi usada.
+        ok(transacao.status === 'condicional' && transacao.detalhes.length > 1,
+          `uso de documento falso: transação "depende", uma linha por origem (obtido ${transacao.status})`);
+      }
+      // O guarda-chuva da associação para genocídio (Lei 2.889/56, art. 2º): o
+      // catálogo já o desdobra em registros "c/c art. 1º", que contam nas
+      // estatísticas; ele não conta, mas a ficha dele mostra os vereditos juntados.
+      const genocidio = todos.find((c) => /2\.889/.test(c.lei) && c.artigo === 'Art. 2º');
+      ok(!!genocidio && genocidio.hediondo === 'Sim' && !!genocidio.pena_por_remissao,
+        'o guarda-chuva da associação para genocídio é hediondo e remete ao art. 1º');
+      ok(!!genocidio && genocidio.tem_pena_privativa === false,
+        'e fica fora das estatísticas: os desdobrados "c/c" já contam o crime');
+      ok(crimes.some((c) => /2\.889/.test(c.lei) && /^Art\. 2º c\/c/.test(c.artigo)),
+        'os desdobrados "Art. 2º c/c art. 1º" continuam nas estatísticas');
+      if (genocidio) {
+        const cenarios: Cenario[] = [];
+        avaliarTipo(def('livramento'), valoresPadrao(def('livramento')), genocidio, todos, (t) => {
+          const c = {...cenarioFromCrime(t), penaConcreta: 120};
+          cenarios.push(c);
+          return c;
+        });
+        ok(cenarios.length > 0 && cenarios.every((c) => c.hediondo),
+          'associação para genocídio: toda origem avaliada como hedionda — o campo é do tipo que remete');
+      }
     }
 
     // Inciso V — hediondo primário, sem resultado morte: 70%, livramento aos 2/3.

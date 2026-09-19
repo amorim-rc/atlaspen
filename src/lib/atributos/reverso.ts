@@ -19,6 +19,7 @@ import type {Cenario, TipoDoMotor} from '../types';
 import {cenarioFromCrime} from '../cenario';
 import type {Reincidencia} from '../types';
 import {ROTULO_REINCIDENCIA} from './reincidencia';
+import {avaliarTipo} from './remissao';
 import type {AtributoDef, AtributoResultado, Parametros, Status} from './types';
 // Do núcleo, e não do index: a busca reversa recebe o atributo que avalia e não
 // deve arrastar consigo o catálogo real.
@@ -103,9 +104,10 @@ export function cenarioReversoPadrao(): CenarioReverso {
  * Tipos penais que entram nas estatísticas de alcance dos atributos.
  *
  * Atributos se medem por patamar de pena, então um tipo sem pena privativa
- * cominada satisfaria qualquer teto e seria contado como "cabível". Hoje a
- * única exceção é o art. 28 da Lei 11.343/06, cujas sanções (advertência,
- * prestação de serviços, medida educativa) não são privativas de liberdade.
+ * cominada satisfaria qualquer teto e seria contado como "cabível". Ficam de
+ * fora os tipos punidos só com multa ou com outras penas (art. 28 da Lei
+ * 11.343/06), e os guarda-chuvas de remissão que o catálogo desdobra em "c/c".
+ * A pena por remissão conta como privativa: é a da origem.
  */
 export function crimesComPenaPrivativa<T extends Pick<TipoDoMotor, 'tem_pena_privativa'>>(crimes: T[]): T[] {
   return crimes.filter((c) => c.tem_pena_privativa !== false);
@@ -152,10 +154,12 @@ export function avaliarCatalogo<T extends TipoDoMotor>(
   params: Parametros,
   crimes: T[],
   rev: CenarioReverso,
+  /** Onde se procuram as origens da pena por remissão; o padrão são os próprios tipos. */
+  catalogo: readonly TipoDoMotor[] = crimes,
 ): LinhaReversa<T>[] {
   return crimes.map((crime) => ({
     crime,
-    resultado: avaliarAtributo(def, cenarioParaCrime(crime, rev), params),
+    resultado: avaliarTipo(def, params, crime, catalogo, (t) => cenarioParaCrime(t, rev)),
   }));
 }
 

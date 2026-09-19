@@ -13,7 +13,7 @@
 import type {TipoDoMotor} from '../types';
 import type {AtributoDef, AtributoResultado, Parametros} from '../atributos/types';
 import {valoresPadrao} from '../atributos/types';
-import {avaliarAtributo} from '../atributos/nucleo';
+import {avaliarTipo} from '../atributos/remissao';
 import {cenarioParaCrime, chaveDispositivo, type CenarioReverso} from '../atributos/reverso';
 import {diasDeMeses, formatDias, formatFaixa, mesesDeDias} from '../pena';
 import type {
@@ -205,6 +205,7 @@ export function problemaDa(m: Mudanca, legal: EstadoCatalogo): string | null {
     const t = m.id === null ? undefined : legal.tipos.find((x) => x.id === m.id);
     if (!t) return 'Escolha o tipo penal.';
     if (m.op === 'modificar') {
+      if (t.pena_por_remissao) return 'Este tipo não comina moldura própria: a pena é a do dispositivo de origem. Modifique a origem.';
       const c = {...camposDoTipo(t), ...m.campos};
       if (c.penaMinDias > c.penaMaxDias) return 'A pena mínima passa da máxima.';
     }
@@ -270,8 +271,10 @@ export function avaliarEstado(
     const base = atrLegal?.get(a.def.id) === a ? reuso!.avaliacoes.get(a.def.id) : undefined;
     const mapa = new Map<number, AtributoResultado>();
     for (const t of tipos) {
-      const pronto = base && tipoLegal!.get(t.id) === t ? base.get(t.id) : undefined;
-      mapa.set(t.id, pronto ?? avaliarAtributo(a.def, cenarioParaCrime(t, rev), a.params));
+      // O tipo de remissão depende das origens, que o pacote pode ter mudado mesmo
+      // sem tocá-lo: ele nunca é reaproveitado.
+      const pronto = base && tipoLegal!.get(t.id) === t && !t.pena_por_remissao ? base.get(t.id) : undefined;
+      mapa.set(t.id, pronto ?? avaliarTipo(a.def, a.params, t, e.tipos, (x) => cenarioParaCrime(x, rev)));
     }
     out.set(a.def.id, mapa);
   }

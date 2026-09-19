@@ -120,7 +120,9 @@ export interface Crime {
   /**
    * O tipo comina pena privativa de liberdade? Só quem tem entra nas
    * estatísticas de alcance dos atributos, que se medem por patamar de pena.
-   * A exceção é o art. 28 da Lei 11.343/06, cujas sanções são não privativas.
+   * Própria ou por remissão (`pena_por_remissao`). Ficam de fora os tipos punidos
+   * só com multa ou com outras penas, e o guarda-chuva de remissão que o catálogo
+   * desdobra em registros "c/c".
    */
   tem_pena_privativa: boolean;
   /** Sanções próprias dos tipos sem pena privativa (art. 28, I a III, Lei 11.343/06). */

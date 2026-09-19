@@ -46,7 +46,7 @@ data/crimes.json  ──►  scripts/transform_data.py  ──►  static/data/c
 | `hediondo` | `Sim` / `Não` — inclui os **equiparados** (tráfico, tortura, terrorismo). |
 | `hediondo_condicao` | Opcional. Quando a hediondez depende do CASO — o homicídio só é hediondo se praticado em atividade de grupo de extermínio —, aqui fica a hipótese, em texto, e `hediondo` permanece `Não`. |
 | `acao_condicao` | Opcional, mesma ideia para a ação penal (art. 161, §3º: privada se a propriedade é particular). |
-| `pena_por_remissao` | Opcional. `{dispositivo_fonte, operador, fracao}` quando o tipo não comina moldura própria e importa a de outro dispositivo — art. 304 do CP, "a pena cominada à falsificação". Incompatível com `pena_min`/`pena_max`. |
+| `pena_por_remissao` | Opcional. `{dispositivo_fonte, lei_fonte, artigos_fonte, operador, fracao}` quando o tipo não comina moldura própria e importa a de outro dispositivo — art. 304 do CP, "a pena cominada à falsificação". Incompatível com `pena_min`/`pena_max`. O operador segue a dosimetria: `diminuicao` com `1/3` multiplica a moldura de origem por 2/3; `aumento`, por 4/3. |
 | `vigencia_ate` | Opcional. Data (AAAA-MM-DD) em que o dispositivo deixou de vigorar. Deriva `vigente: false`. |
 | `vigencia_nota` | **Obrigatória quando há `vigencia_ate`.** O que houve e qual dispositivo passa a reger a conduta. Um registro que sai do ar sem dizer por quê é pior que um registro errado: quem consulta um fato anterior não sabe se ainda pode se apoiar nele. |
 | `elemento` | `Doloso`, `Culposo`, `Preterdoloso`. |
@@ -66,7 +66,7 @@ Gerados por `scripts/transform_data.py`. **Todos são heurísticos** e sujeitos 
 | `pena_*_rotulo`, `pena_faixa_rotulo` | Exibição na unidade natural. |
 | `infracao_menor_potencial` | `contravencao`, **ou** `pena_max_meses <= 24`, **ou** multa isolada (art. 61 da Lei 9.099/95). Nunca no CPM (art. 90-A); sempre no art. 28 da Lei 11.343/06, que o art. 48, §1º, manda ao rito da Lei 9.099. |
 | `contravencao` | Pena de prisão simples (LICP, art. 1º), ou registro da LCP ou da Lei 7.437/85, que declaram contravenção tudo o que tipificam. |
-| `tem_pena_privativa` | O tipo comina prisão? Se não, declara `sancoes_nao_privativas` ou `pena_por_remissao`. |
+| `tem_pena_privativa` | O tipo comina prisão, própria ou por remissão? Se não, declara `sancoes_nao_privativas`, ou é o guarda-chuva de uma remissão desdobrada em registros "c/c". |
 | `resultado_morte` | Regex sobre o **nome** do tipo (art. 112, VI e VIII, LEP). |
 | `perdao_judicial_previsto` | Lista curada de dispositivos (art. 107, IX, CP). |
 | `chave_dispositivo`, `duplicata`, `duplicata_divergente` | Detecção de registros repetidos. |
@@ -101,9 +101,13 @@ A segunda é o **tipo que não comina moldura própria porque importa a de outro
 dispositivo**. O art. 304 do Código Penal pune o uso de documento falso com "a pena
 cominada à falsificação", e a moldura depende de qual dos arts. 297 a 302 foi usado — as
 faixas vão de detenção de um mês a reclusão de seis anos. Esses registros declaram
-`pena_por_remissao` e ficam igualmente fora das estatísticas de alcance. A alternativa que
-o catálogo praticava — publicar a moldura de um dos dispositivos-fonte — afirmava como
-certa uma pena que depende do caso.
+`pena_por_remissao`, e o motor os avalia com a moldura de cada dispositivo de origem: o
+veredito é o comum às origens, ou "depende" quando elas divergem. Por isso entram nas
+estatísticas de alcance (decisão de 19/09/2026). A exceção é a remissão que o catálogo já
+desdobra em registros "c/c" — a Lei 2.889/56, arts. 2º e 3º, desdobrada nas alíneas do
+art. 1º —: ali os desdobrados contam, e o guarda-chuva não, para o mesmo crime não contar
+duas vezes. A alternativa que o catálogo praticava — publicar a moldura de um dos
+dispositivos-fonte — afirmava como certa uma pena que depende do caso.
 
 :::note[Majorantes com pena própria são exibidas]
 As causas de aumento que constituem um **dispositivo com pena própria** — como o roubo

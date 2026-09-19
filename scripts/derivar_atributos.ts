@@ -18,7 +18,8 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import type {Crime} from '../src/lib/types';
-import {POR_ID, avaliarAtributo} from '../src/lib/atributos';
+import {POR_ID} from '../src/lib/atributos';
+import {avaliarTipo} from '../src/lib/atributos/remissao';
 import {
   cenarioParaCrime,
   cenarioReversoPadrao,
@@ -100,7 +101,7 @@ const atributos = fonte.atributos.map((a: any) => {
   const cabivel: number[] = [];
   const condicional: number[] = [];
   for (const c of crimes) {
-    const st = avaliarAtributo(def, cenarioParaCrime(c, rev), params).status;
+    const st = avaliarTipo(def, params, c, crimes, (t) => cenarioParaCrime(t, rev)).status;
     if (st === 'cabivel') cabivel.push(c.id);
     else if (st === 'condicional') condicional.push(c.id);
   }
