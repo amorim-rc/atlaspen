@@ -9,6 +9,7 @@
 // legal, os vereditos da lei vigente e os tipos correlatos.
 import Base from '../../layouts/Base.astro';
 import FichaTipo from '../../components/ficha/FichaTipo';
+import VereditosSemMoldura from '../../components/ficha/VereditosSemMoldura.astro';
 import PainelHistorico, {type DadosHistorico, type EventoResumo} from '../../components/ficha/PainelHistorico';
 import {correlatosDe, fontesRemissaoDe, patamaresDe, todosOsTipos} from '../../site/catalogo-servidor';
 import {diplomaDoRotulo} from '../../site/diplomas-servidor';
@@ -255,23 +256,10 @@ const linkHistorico = calculavel && vigente ? '?modo=historico' : '#historico';
           />
         ) : (
           <>
-            <section class="sem-calculo">
-              <h2>Por que esta ficha não calcula atributos</h2>
-              {crime.pena_por_remissao ? (
-                <p>
-                  Este tipo não comina moldura própria: aplica a pena de {crime.pena_por_remissao.dispositivo_fonte}.
-                  Como a moldura depende de qual dispositivo-fonte incide no caso, o catálogo não publica um número, e
-                  o cálculo se faz no dispositivo aplicável — partir daqui, de uma moldura ausente, faria caber todo
-                  atributo que depende de patamar de pena.
-                </p>
-              ) : (
-                <p>
-                  Este tipo não comina pena privativa de liberdade. Os atributos penais se medem por patamar de pena, e
-                  um tipo sem pena privativa satisfaria qualquer teto: por isso ele fica fora dos vereditos e das
-                  estatísticas de alcance, como na busca por atributo.
-                </p>
-              )}
-              {fontesRemissao.length > 0 && (
+            <VereditosSemMoldura crime={crime} />
+            {fontesRemissao.length > 0 && (
+              <section class="sem-calculo">
+                <h2>Dispositivos de origem da pena</h2>
                 <ul class="lista-tipos">
                   {fontesRemissao.map((x) => (
                     <li>
@@ -283,8 +271,8 @@ const linkHistorico = calculavel && vigente ? '?modo=historico' : '#historico';
                     </li>
                   ))}
                 </ul>
-              )}
-            </section>
+              </section>
+            )}
             {vigente && <PainelHistorico dados={dadosHistorico} comoAba={false} />}
           </>
         )

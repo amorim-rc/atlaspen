@@ -1,0 +1,120 @@
+---
+// Os vereditos de um tipo sem moldura própria, calculados no build: o tipo de
+// pena por remissão, avaliado origem a origem, e o tipo só com multa, avaliado
+// só pelos atributos que o alcançam. Sem pena concreta nem simulação: a moldura
+// é a da origem, ou não há moldura.
+import type {Crime} from '../../lib/types';
+import {CATALOGO, valoresPadrao} from '../../lib/atributos';
+import {cenarioFromCrime} from '../../lib/cenario';
+import {avaliarTipo} from '../../lib/atributos/remissao';
+import {todosOsTipos} from '../../site/catalogo-servidor';
+import {caminho} from '../../site/url';
+
+interface Props {
+  crime: Crime;
+}
+const {crime} = Astro.props;
+const remissao = !!crime.pena_por_remissao;
+// O guarda-chuva cuja remissão o catálogo desdobra em registros "c/c" (Lei
+// 2.889/56, arts. 2º e 3º): os desdobrados contam nas estatísticas, ele não.
+const desdobrado = remissao && !crime.tem_pena_privativa;
+const alcancados = remissao ? CATALOGO : CATALOGO.filter((d) => d.alcancaSemPenaPrivativa);
+const fora = remissao ? [] : CATALOGO.filter((d) => !d.alcancaSemPenaPrivativa);
+const catalogo = todosOsTipos();
+const vereditos = alcancados.map((d) => ({
+  d,
+  r: avaliarTipo(d, valoresPadrao(d), crime, catalogo, (t) => cenarioFromCrime(t)),
+}));
+const ROTULO = {cabivel: 'cabe', condicional: 'depende', incabivel: 'não cabe'} as const;
+---
+
+<section class="sem-moldura" aria-labelledby="titulo-sem-moldura">
+  <h2 id="titulo-sem-moldura">Atributos penais</h2>
+  <p class="nota">
+    {
+      remissao
+        ? 'A moldura depende do dispositivo de origem: cada atributo foi avaliado com a de cada origem. Quando elas divergem, o veredito é "depende", e a lista diz qual origem dá o quê.'
+        : 'O tipo não comina pena privativa de liberdade. Estes são os atributos que o alcançam mesmo assim.'
+    }
+  </p>
+  {
+    desdobrado && (
+      <p class="nota">
+        O catálogo desdobra este crime em um registro por dispositivo de origem ("c/c"). São os desdobrados que contam
+        nas estatísticas de alcance; este registro, não, para o mesmo crime não contar duas vezes.
+      </p>
+    )
+  }
+  <ul class="vereditos">
+    {
+      vereditos.map(({d, r}) => (
+        <li class={`veredito veredito-${r.status}`}>
+          <a href={caminho(`/atributos/${d.id}`)}>{d.nome}</a>
+          <span class="status">
+            {ROTULO[r.status]}
+            {r.valor ? ` · ${r.valor}` : ''}
+          </span>
+          <p class="resumo">{r.resumo}</p>
+          {!remissao && d.fundamentoSemPenaPrivativa && <p class="fundamento">{d.fundamentoSemPenaPrivativa}</p>}
+          {r.status === 'condicional' && remissao && (
+            <ul class="origens">
+              {r.detalhes.map((x) => (
+                <li>{x}</li>
+              ))}
+            </ul>
+          )}
+        </li>
+      ))
+    }
+  </ul>
+  {
+    fora.length > 0 && (
+      <p class="nota">
+        Não calculados para tipo sem pena privativa, porque o motor os mede por patamar de pena privativa. Isso não
+        afirma que a lei os afaste: parte deles não depende da espécie de pena, e a questão fica em aberto:{' '}
+        {fora.map((d) => d.nome).join(', ')}.
+      </p>
+    )
+  }
+</section>
+
+<style>
+  .sem-moldura {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .vereditos {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .veredito {
+    padding: 0.6rem 0.8rem;
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--raio);
+  }
+  .status {
+    margin-left: 0.5rem;
+    font-family: var(--fonte-mono);
+    font-size: var(--fs-rotulo);
+    text-transform: uppercase;
+  }
+  .veredito-cabivel .status {
+    color: var(--cor-acento);
+  }
+  .resumo,
+  .fundamento,
+  .nota {
+    margin: 0.25rem 0 0;
+    font-size: var(--fs-pequeno);
+    color: var(--cor-tinta-corpo);
+  }
+  .origens {
+    margin: 0.35rem 0 0;
+    font-size: var(--fs-pequeno);
+  }
+</style>
