@@ -298,7 +298,9 @@ def corpo_pr(escolha: dict, versao: str | None, legais: list[dict] | None = None
         L += ["## Notas de atualização", "",
               "Vai para o feed só a alteração de lei: redação dada, ou dispositivo "
               "incluído, por lei deste ano ou do anterior. **Confira a natureza** de "
-              "cada uma antes de aprovar.", ""]
+              "cada uma antes de aprovar: a proposta é mecânica (dispositivo novo = "
+              "incriminadora), e a régua do projeto é a doutrinária — se a conduta já "
+              "era punível, a natureza é in pejus.", ""]
         for m in legais or []:
             a = m["anotacao"]
             L.append(f"- id {m['id']} `{m['depois']['artigo']}`: *{ROTULO_NATUREZA[m['natureza']]}*, "

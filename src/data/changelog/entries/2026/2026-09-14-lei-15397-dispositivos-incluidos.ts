@@ -1,7 +1,7 @@
 import type {ChangelogEntry} from '../../types';
 
 const entrada: ChangelogEntry = {
-  id: '2026-09-14-lei-15397-incriminadora',
+  id: '2026-09-14-lei-15397-dispositivos-incluidos',
   date: '2026-09-14',
   title: 'Lei nº 15.397, de 2026: dispositivos incluídos nos crimes patrimoniais',
   summary:
@@ -11,7 +11,7 @@ const entrada: ChangelogEntry = {
     'Roubo de bens que comprometam serviços públicos ou de relevância pública (art. 157, §1º-A), 6 a 12 anos; roubo com subtração de celular, computador ou dispositivo eletrônico, e de arma de fogo (art. 157, §2º, IX e X), causas de aumento que levam a moldura a 8 a 15 anos.',
     'Cessão de conta bancária para financiar ou ocultar atividade criminosa (art. 171, §2º, VII), nas penas do caput do estelionato, 1 a 5 anos.',
   ],
-  tipo: 'incriminadora',
+  tipo: 'pejus',
   areas: ['Tipos penais'],
   version: 'v0.0.1',
   links: [

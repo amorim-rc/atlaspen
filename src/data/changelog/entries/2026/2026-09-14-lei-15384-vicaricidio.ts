@@ -1,7 +1,7 @@
 import type {ChangelogEntry} from '../../types';
 
 const entrada: ChangelogEntry = {
-  id: '2026-09-14-lei-15384-incriminadora',
+  id: '2026-09-14-lei-15384-vicaricidio',
   date: '2026-09-14',
   title: 'Lei nº 15.384, de 2026: vicaricídio',
   summary: 'A lei incluiu no Código Penal o art. 121-B, o vicaricídio, com reclusão de 20 a 40 anos.',
@@ -9,7 +9,7 @@ const entrada: ChangelogEntry = {
     'O vicaricídio é crime hediondo (art. 1º, I-C, da Lei 8.072/90).',
     'O parágrafo único aumenta a pena de um terço até a metade quando o crime é praticado na presença da mulher a quem se pretende causar sofrimento, punição ou controle; contra criança, adolescente, pessoa idosa ou pessoa com deficiência; ou em descumprimento de medida protetiva de urgência. O catálogo registra cada hipótese de aumento com a sua moldura, de 26 anos e 8 meses a 60 anos.',
   ],
-  tipo: 'incriminadora',
+  tipo: 'pejus',
   areas: ['Tipos penais'],
   version: 'v0.0.1',
   links: [

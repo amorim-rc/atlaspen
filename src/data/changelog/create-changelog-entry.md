@@ -49,10 +49,19 @@ arquivos.
 
 4. **`tipo`** (a natureza da mudança, um só, em termos penais; a interface
    mostra o rótulo em latim, em itálico):
-   - `incriminadora` — *novatio legis incriminadora*: cria tipo penal;
+   - `incriminadora` — *novatio legis incriminadora*: torna crime uma conduta que
+     antes era atípica;
    - `pejus` — *novatio legis in pejus*: altera para pior;
    - `mellius` — *novatio legis in mellius*: altera para melhor;
    - `abolitio` — *abolitio criminis*: deixa de ser crime.
+
+   A régua é a doutrinária (decisão de 18/09/2026). Forma qualificada, causa de
+   aumento com moldura própria, ou tipo novo para conduta que já era punível é
+   `pejus`, mesmo quando entra no catálogo como registro novo: o vicaricídio
+   (CP, art. 121-B) é `pejus`, porque a conduta já era homicídio. Quando só parte
+   da conduta era atípica, vale o núcleo, e a nota diz o que já era punível.
+   O Proponente propõe pela régua mecânica (dispositivo novo = `incriminadora`);
+   quem revisa confirma ou corrige.
 
    A natureza não decide a versão: a regra de versionamento está em
    `docs/dados-abertos.md` (Estabilidade e versionamento).

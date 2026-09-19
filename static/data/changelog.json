@@ -46,14 +46,14 @@
     ]
   },
   {
-    "id": "2026-09-14-lei-15410-incriminadora",
+    "id": "2026-09-14-lei-15410-tortura-mulher",
     "date": "2026-09-14",
     "title": "Lei nº 15.410, de 2026: tortura de mulher no contexto de violência doméstica",
     "summary": "A lei incluiu o inciso III no art. 1º da Lei 9.455/97: submeter mulher, reiteradamente, a intenso sofrimento físico ou mental no contexto de violência doméstica e familiar.",
     "body": [
       "A pena é de reclusão de 2 a 8 anos, sem prejuízo das penas de outras infrações. Como forma de tortura, o crime é equiparado a hediondo (CF, art. 5º, XLIII)."
     ],
-    "tipo": "incriminadora",
+    "tipo": "pejus",
     "areas": [
       "Tipos penais"
     ],
@@ -133,7 +133,7 @@
     ]
   },
   {
-    "id": "2026-09-14-lei-15397-incriminadora",
+    "id": "2026-09-14-lei-15397-dispositivos-incluidos",
     "date": "2026-09-14",
     "title": "Lei nº 15.397, de 2026: dispositivos incluídos nos crimes patrimoniais",
     "summary": "A mesma lei incluiu no Código Penal dispositivos com pena própria, que o catálogo passou a registrar como tipos penais.",
@@ -142,7 +142,7 @@
       "Roubo de bens que comprometam serviços públicos ou de relevância pública (art. 157, §1º-A), 6 a 12 anos; roubo com subtração de celular, computador ou dispositivo eletrônico, e de arma de fogo (art. 157, §2º, IX e X), causas de aumento que levam a moldura a 8 a 15 anos.",
       "Cessão de conta bancária para financiar ou ocultar atividade criminosa (art. 171, §2º, VII), nas penas do caput do estelionato, 1 a 5 anos."
     ],
-    "tipo": "incriminadora",
+    "tipo": "pejus",
     "areas": [
       "Tipos penais"
     ],
@@ -179,7 +179,7 @@
     ]
   },
   {
-    "id": "2026-09-14-lei-15384-incriminadora",
+    "id": "2026-09-14-lei-15384-vicaricidio",
     "date": "2026-09-14",
     "title": "Lei nº 15.384, de 2026: vicaricídio",
     "summary": "A lei incluiu no Código Penal o art. 121-B, o vicaricídio, com reclusão de 20 a 40 anos.",
@@ -187,7 +187,7 @@
       "O vicaricídio é crime hediondo (art. 1º, I-C, da Lei 8.072/90).",
       "O parágrafo único aumenta a pena de um terço até a metade quando o crime é praticado na presença da mulher a quem se pretende causar sofrimento, punição ou controle; contra criança, adolescente, pessoa idosa ou pessoa com deficiência; ou em descumprimento de medida protetiva de urgência. O catálogo registra cada hipótese de aumento com a sua moldura, de 26 anos e 8 meses a 60 anos."
     ],
-    "tipo": "incriminadora",
+    "tipo": "pejus",
     "areas": [
       "Tipos penais"
     ],
@@ -270,7 +270,7 @@
     ]
   },
   {
-    "id": "2026-09-14-lei-15358-incriminadora",
+    "id": "2026-09-14-lei-15358-formas-orgcrim",
     "date": "2026-09-14",
     "title": "Lei nº 15.358, de 2026: formas por organização criminosa ultraviolenta",
     "summary": "A lei incluiu no Código Penal formas com pena própria para o crime cometido por integrante de organização criminosa ultraviolenta, grupo paramilitar ou milícia privada, e a ameaça no contexto dessas organizações.",
@@ -279,7 +279,7 @@
       "Ameaça no contexto de organização criminosa ultraviolenta (art. 147-C), 1 a 3 anos.",
       "O §2º-D do art. 121 não consta do rol da Lei 8.072/90, que remete ao §2º. A ficha o registra como não hediondo, e a hediondez fica a rever se o rol mudar."
     ],
-    "tipo": "incriminadora",
+    "tipo": "pejus",
     "areas": [
       "Tipos penais"
     ],
@@ -321,7 +321,8 @@
     "title": "Lei nº 15.355, de 2026: desastre ambiental que prejudica animais",
     "summary": "A lei incluiu o §1º-C no art. 32 da Lei 9.605/98: provocar desastre ambiental que prejudique a vida, a integridade física ou o bem-estar de animais silvestres ou domésticos.",
     "body": [
-      "A pena é a do caput do art. 32: detenção de 3 meses a 1 ano, e multa."
+      "A pena é a do caput do art. 32: detenção de 3 meses a 1 ano, e multa.",
+      "O art. 54 da mesma lei já punia, com reclusão de 1 a 4 anos, a poluição que provoque a mortandade de animais."
     ],
     "tipo": "incriminadora",
     "areas": [
