@@ -684,7 +684,7 @@ console.log('\nPremissa da varredura na URL');
   const q = new URLSearchParams();
   escreverPremissa(q, mexido);
   ok(q.get('base') === 'maxima', 'grava base=maxima');
-  ok(q.get('reincidente') === 'sim', 'grava reincidente=sim');
+  ok(q.get('reu') === 'especifico', 'grava reu=especifico');
   ok(q.get('antecedentes') === 'nao', 'grava antecedentes=nao');
   ok(q.get('confessou') === null, 'não grava o que está no padrão');
 
@@ -702,6 +702,14 @@ console.log('\nPremissa da varredura na URL');
 
   const ruim = lerPremissa(new URLSearchParams('base=inventada'));
   ok(ruim.base === 'minima', 'base fora do vocabulário cai no padrão');
+  const culposo = new URLSearchParams();
+  escreverPremissa(culposo, {...padrao, reincidencia: 'culposo'});
+  ok(culposo.get('reu') === 'culposo', 'a reincidência vai na chave reu');
+  ok(culposo.get('reincidente') === null, 'a chave antiga não é mais escrita');
+  ok(lerPremissa(new URLSearchParams('reu=doloso')).reincidencia === 'doloso', 'reu=doloso volta');
+  ok(lerPremissa(new URLSearchParams('reincidente=sim')).reincidencia === 'especifico',
+    'link antigo: reincidente=sim continua sendo o específico');
+  ok(lerPremissa(new URLSearchParams('reu=inventado')).reincidencia === 'primario', 'reu fora do vocabulário cai no primário');
 }
 
 console.log('\nA ficha grava a premissa nas mesmas chaves do codec');
@@ -713,7 +721,7 @@ console.log('\nA ficha grava a premissa nas mesmas chaves do codec');
   ok(e.rev.reincidencia === 'especifico', 'a ficha lê reincidente=sim');
   const s = escreverEstado(e, def);
   ok(s.includes('base=maxima'), 'a ficha reescreve base=maxima');
-  ok(s.includes('reincidente=sim'), 'a ficha reescreve reincidente=sim');
+  ok(s.includes('reu=especifico') && !s.includes('reincidente='), 'a ficha lê o link antigo e o reescreve na chave nova (reu=especifico)');
   ok(escreverEstado(lerEstado('', def, padroes), def) === '', 'a ficha no padrão não grava nada');
 }
 

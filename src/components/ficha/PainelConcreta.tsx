@@ -5,8 +5,8 @@
 // `incondicionado` (detração, remição) não têm patamar e ficam no pé, fora da
 // lista (design_handoff_atlaspen/09, item 1).
 //
-// O perfil tem o que o motor distingue, e nada além: primário ou reincidente
-// específico, o comando de facção ultraviolenta (art. 112, VI, "b", LEP), o fato
+// O perfil tem o que o motor distingue, e nada além: a reincidência em quatro
+// estados (primário, em crime culposo, em crime doloso, específico), o comando de facção ultraviolenta (art. 112, VI, "b", LEP), o fato
 // anterior à Lei 15.402/2026 e, quando o tipo a condiciona, a hediondez do caso.
 
 import {useMemo, type MouseEvent} from 'react';
@@ -15,6 +15,7 @@ import {CATALOGO, calcularAtributos} from '../../lib/atributos';
 import {contarVereditos, daNatureza} from '../../lib/atributos/veredito';
 import {cenarioFromCrime} from '../../lib/cenario';
 import {DIAS_POR_ANO, PENA_MAXIMA_ENTRADA, formatContagemDias, formatDias, mesesDeDias} from '../../lib/pena';
+import {REINCIDENCIAS, ROTULO_REINCIDENCIA} from '../../lib/atributos/reincidencia';
 import {caminho} from '../../site/url';
 import type {EstadoFicha, Modo} from './estado';
 import CampoPena from './CampoPena';
@@ -40,12 +41,12 @@ export default function PainelConcreta({crime, estado: e, atualizar, pena, legal
       calcularAtributos({
         ...cenarioFromCrime(crime),
         penaConcreta: mesesDeDias(pena),
-        reincidencia: e.reincidente ? 'especifico' : 'primario',
+        reincidencia: e.reincidencia,
         comandoOrgcrimUltraviolenta: e.comando,
         fatoAnteriorA15402: e.anterior,
         hediondo: hediondoNoCaso,
       }),
-    [crime, pena, e.reincidente, e.comando, e.anterior, hediondoNoCaso],
+    [crime, pena, e.reincidencia, e.comando, e.anterior, hediondoNoCaso],
   );
   const concretos = daNatureza(todos, 'concreto');
   const incondicionados = daNatureza(todos, 'incondicionado');
@@ -97,19 +98,16 @@ export default function PainelConcreta({crime, estado: e, atualizar, pena, legal
         <fieldset className={s.grupoPerfil}>
           <legend className="rotulo">Condenado</legend>
           <div className={s.pilulas} role="radiogroup" aria-label="Reincidência">
-            {[
-              {valor: false, rotulo: 'primário'},
-              {valor: true, rotulo: 'reincidente específico'},
-            ].map((o) => (
-              <label key={o.rotulo} className={`${s.pilula} ${e.reincidente === o.valor ? s.pilulaAtiva : ''}`}>
+            {REINCIDENCIAS.map((r) => (
+              <label key={r} className={`${s.pilula} ${e.reincidencia === r ? s.pilulaAtiva : ''}`}>
                 <input
                   type="radio"
                   name="reincidencia"
                   className="sr-only"
-                  checked={e.reincidente === o.valor}
-                  onChange={() => atualizar({reincidente: o.valor})}
+                  checked={e.reincidencia === r}
+                  onChange={() => atualizar({reincidencia: r})}
                 />
-                {o.rotulo}
+                {ROTULO_REINCIDENCIA[r]}
               </label>
             ))}
           </div>

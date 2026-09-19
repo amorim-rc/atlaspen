@@ -27,6 +27,7 @@ import {POR_ID} from '../src/lib/dosimetria';
 import {CATALOGO, calcularAtributos} from '../src/lib/atributos';
 import {ordenarPorVeredito, veredito} from '../src/lib/atributos/veredito';
 import {cenarioFromCrime} from '../src/lib/cenario';
+import {ESTADO_LEGAL, escreverEstado as escreverEstadoFicha, lerEstado as lerEstadoFicha} from '../src/components/ficha/estado';
 
 let falhas = 0;
 const ok = (cond: boolean, msg: string) => {
@@ -121,6 +122,18 @@ console.log('\nDuração compacta da URL');
   ok(escreverDuracao(915) === '2a6m15d', '915 dias escreve 2a6m15d');
   ok(escreverDuracao(0) === '0d', 'zero escreve 0d');
   ok(lerDuracao(escreverDuracao(2160)) === 2160, 'ida e volta preserva 2.160 dias');
+}
+
+console.log('\nA reincidência na URL da ficha do tipo');
+{
+  const MODOS = ['cominada', 'concreta', 'historico'] as const;
+  const legal = {min: 360, max: 1440, concreta: 360};
+  const e = {...ESTADO_LEGAL, modo: 'concreta' as const, reincidencia: 'doloso' as const};
+  const s = escreverEstadoFicha(e, legal);
+  ok(s.includes('reu=doloso'), `a ficha grava reu=doloso: ${s}`);
+  ok(lerEstadoFicha('?reu=culposo', [...MODOS]).reincidencia === 'culposo', 'a ficha lê reu=culposo');
+  ok(lerEstadoFicha('?reincidente=sim', [...MODOS]).reincidencia === 'especifico', 'link antigo da ficha: reincidente=sim é o específico');
+  ok(escreverEstadoFicha(ESTADO_LEGAL, legal) === '', 'o primário não suja a URL da ficha');
 }
 
 console.log(falhas === 0 ? '\n✓ Pena, moldura e veredito verificados.\n' : `\n✗ ${falhas} verificação(ões) falharam.\n`);

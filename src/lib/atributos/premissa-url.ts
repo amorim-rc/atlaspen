@@ -1,7 +1,7 @@
 // A premissa da varredura na URL, em chaves partilhadas pela ficha do atributo
 // e pela simulação legislativa.
 //
-//   ?base=maxima&reincidente=sim
+//   ?base=maxima&reu=doloso
 //   ?base=fixa&fixa=3a&antecedentes=nao
 //
 // O padrão NUNCA é gravado: um link carrega o que foi mexido, e só. Quem cita
@@ -13,8 +13,12 @@
 import {diasDeMeses, escreverDuracao, lerDuracao} from '../pena';
 import type {BasePenaConcreta, CenarioReverso} from './reverso';
 import {cenarioReversoPadrao} from './reverso';
+import type {Reincidencia} from '../types';
 
 const BASES: BasePenaConcreta[] = ['minima', 'maxima', 'fixa'];
+
+/** Os estados que a URL grava; o primário é o padrão e não se grava. */
+const REUS: Reincidencia[] = ['culposo', 'doloso', 'especifico'];
 
 type Circunstancia = 'comandoOrgcrimUltraviolenta' | 'confessou' | 'reparouDano';
 
@@ -35,7 +39,10 @@ export function lerPremissa(q: URLSearchParams): CenarioReverso {
     if (dias !== null) rev.penaFixaMeses = dias / 30;
   }
   for (const [chave, nome] of LIGA) rev[chave] = q.get(nome) === 'sim';
-  rev.reincidencia = q.get('reincidente') === 'sim' ? 'especifico' : 'primario';
+  const reu = q.get('reu') as Reincidencia | null;
+  // `reincidente=sim` é a chave de antes de 19/09/2026, quando só havia o
+  // específico: um link citado não muda de sentido.
+  rev.reincidencia = reu && REUS.includes(reu) ? reu : q.get('reincidente') === 'sim' ? 'especifico' : 'primario';
   // Bons antecedentes é o único cujo padrão é `true`: grava-se a negativa.
   rev.bonsAntecedentes = q.get('antecedentes') !== 'nao';
   return rev;
@@ -48,7 +55,7 @@ export function escreverPremissa(q: URLSearchParams, rev: CenarioReverso): void 
     q.set('fixa', escreverDuracao(diasDeMeses(rev.penaFixaMeses)));
   }
   for (const [chave, nome] of LIGA) if (rev[chave]) q.set(nome, 'sim');
-  if (rev.reincidencia === 'especifico') q.set('reincidente', 'sim');
+  if (rev.reincidencia !== 'primario') q.set('reu', rev.reincidencia);
   if (!rev.bonsAntecedentes) q.set('antecedentes', 'nao');
 }
 

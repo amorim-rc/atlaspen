@@ -1,7 +1,7 @@
 // O estado da ficha do tipo penal na URL (design_handoff_reestruturacao/03 e 07).
 //
 //   /tipos/1?modo=cominada&penaMin=1440&penaMax=9600&mod=tentativa:1/3
-//   /tipos/1?modo=concreta&concreta=2880&reincidente=sim
+//   /tipos/1?modo=concreta&concreta=2880&reu=doloso
 //
 // Penas em DIAS inteiros. Ausência de parâmetro = valor legal do tipo, e o
 // padrão nunca é gravado: /tipos/1 limpo é a ficha em estado legal puro, e o
@@ -10,6 +10,7 @@
 
 import type {SelecaoModificador} from '../../lib/dosimetria/types';
 import {limitarPena} from '../../lib/pena';
+import type {Reincidencia} from '../../lib/types';
 
 export type Modo = 'cominada' | 'concreta' | 'historico';
 
@@ -22,7 +23,7 @@ export interface EstadoFicha {
   mod: SelecaoModificador[];
   /** Pena aplicada, em dias; `null` = o padrão (a mínima cominada). */
   concreta: number | null;
-  reincidente: boolean;
+  reincidencia: Reincidencia;
   comando: boolean;
   /** Fato anterior a 08/05/2026, vigência da Lei 15.402/2026. */
   anterior: boolean;
@@ -38,7 +39,7 @@ export const ESTADO_LEGAL: EstadoFicha = {
   penaMax: null,
   mod: [],
   concreta: null,
-  reincidente: false,
+  reincidencia: 'primario',
   comando: false,
   anterior: false,
   hediondo: false,
@@ -128,7 +129,12 @@ export function lerEstado(search: string, modos: Modo[]): EstadoFicha {
     penaMax: lerDias(q.get('penaMax')),
     mod,
     concreta: lerDias(q.get('concreta')),
-    reincidente: sim(q.get('reincidente')),
+    // `reincidente=sim` é a chave de antes de 19/09/2026: o específico.
+    reincidencia: (['culposo', 'doloso', 'especifico'] as const).includes(q.get('reu') as never)
+      ? (q.get('reu') as Reincidencia)
+      : sim(q.get('reincidente'))
+        ? 'especifico'
+        : 'primario',
     comando: sim(q.get('comando')),
     anterior: sim(q.get('anterior')),
     hediondo: sim(q.get('hediondo')),
@@ -152,7 +158,7 @@ export function escreverEstado(
     q.set('mod', e.mod.map((s) => (s.fracao !== undefined ? `${s.id}:${escreverFracao(s.fracao)}` : s.id)).join(','));
   }
   if (e.concreta !== null && e.concreta !== legal.concreta) q.set('concreta', String(e.concreta));
-  if (e.reincidente) q.set('reincidente', 'sim');
+  if (e.reincidencia !== 'primario') q.set('reu', e.reincidencia);
   if (e.comando) q.set('comando', 'sim');
   if (e.anterior) q.set('anterior', 'sim');
   if (e.hediondo) q.set('hediondo', 'sim');

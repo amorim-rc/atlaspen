@@ -7,6 +7,7 @@
 
 import {BASE_AJUDA, BASE_LABEL, type BasePenaConcreta, type CenarioReverso} from '../../lib/atributos/reverso';
 import {diasDeMeses} from '../../lib/pena';
+import {REINCIDENCIAS, ROTULO_REINCIDENCIA} from '../../lib/atributos/reincidencia';
 import CampoPena from '../ficha/CampoPena';
 import s from './premissa.module.css';
 
@@ -54,16 +55,22 @@ export default function ControlesPremissa({rev, onChange, mostrarBase}: PropsCon
           </p>
         </>
       )}
+      <div className={s.bases} role="group" aria-label="Reincidência presumida">
+        <span className={s.rotuloBases}>Réu:</span>
+        {REINCIDENCIAS.map((r) => (
+          <button
+            key={r}
+            type="button"
+            aria-pressed={rev.reincidencia === r}
+            className={`${s.base} ${rev.reincidencia === r ? s.baseAtiva : ''}`}
+            onClick={() => onChange({reincidencia: r})}
+          >
+            {ROTULO_REINCIDENCIA[r]}
+          </button>
+        ))}
+      </div>
       <div className={s.circunstancias}>
         <span className={s.notaMono}>circunstâncias do réu aplicadas a todo o catálogo</span>
-        <button
-          type="button"
-          aria-pressed={rev.reincidencia === 'especifico'}
-          className={`${s.chip} ${rev.reincidencia === 'especifico' ? s.chipAtivo : ''}`}
-          onClick={() => onChange({reincidencia: rev.reincidencia === 'especifico' ? 'primario' : 'especifico'})}
-        >
-          reincidente específico
-        </button>
         {CIRCUNSTANCIAS.map((c) => (
           <button
             key={c.chave}

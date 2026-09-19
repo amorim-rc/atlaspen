@@ -262,7 +262,7 @@ console.log('\nA premissa vai e volta pela URL do pacote');
 
   const mexida = {...padrao, base: 'maxima' as const, reincidencia: 'especifico' as const};
   const url = escreverPacote([m], 0, porId, mexida);
-  ok(url.includes('base=maxima') && url.includes('reincidente=sim'), `a premissa mexida entra na URL: ${url}`);
+  ok(url.includes('base=maxima') && url.includes('reu=especifico'), `a premissa mexida entra na URL: ${url}`);
 
   const volta = lerPacote(url, porId);
   ok(volta.rev.base === 'maxima', 'a base volta da URL');
