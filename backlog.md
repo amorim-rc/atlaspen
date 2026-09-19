@@ -387,10 +387,12 @@ o site novo ir ao ar. Sem número de frente, para não renumerar o resto.
   pelo registro do catálogo, restringiu o art. 1º, II, ao uso de GLP para fins automotivos.
   Não virou nota: reduzir o alcance do tipo pede decisão entre *in mellius* e *abolitio*
   parcial.
-- **Natureza das notas.** Aplicou-se a régua do contrato: *incriminadora* é o dispositivo
-  com pena própria que entra no catálogo, inclusive as formas qualificadas e as causas de
-  aumento com moldura própria. Confirmar se o grupo quer essa leitura ou a doutrinária, em
-  que a forma nova de conduta já punível é *in pejus*.
+- ~~**Natureza das notas.**~~ Fechada em 18/09/2026: régua doutrinária. *Incriminadora*
+  é só a conduta antes atípica; a forma nova de conduta já punível é *in pejus*. Quatro
+  notas de 2026 passaram a *pejus* (15.358, formas por organização criminosa; 15.384,
+  vicaricídio; 15.397, dispositivos incluídos; 15.410, tortura de mulher). A 15.355
+  segue *incriminadora* e passou a dizer que o art. 54 da Lei 9.605/98 já punia parte da
+  conduta. A regra está no `AGENTS.md` e em `create-changelog-entry.md`.
 - **Proponente.** A régua "lei deste ano ou do anterior" (`ANOS_DE_LEI_RECENTE`) é
   heurística; validar com as primeiras rodadas reais.
 - **Última alteração dos tipos.** A ficha do tipo diz "ainda não datada" até entrar a coleta
@@ -409,10 +411,14 @@ o site novo ir ao ar. Sem número de frente, para não renumerar o resto.
 - Os textos do site passam por revisão do mantenedor.
 - O parâmetro `?em=` (eixo temporal, desenho 4c) segue reservado e sem implementação. Não é
   acabamento do revamp: é a frente 9 inteira (reclassificado em 17/09/2026).
-- Decisões de acuidade tomadas no revamp, a confirmar: frações canônicas (1/3) no lugar das
-  aproximações decimais dos dados; os 35 tipos sem pena privativa sem vereditos; "bons
-  antecedentes" fora da ficha, porque o motor não o lê; perfil do réu com dois estados; o
-  editor de moldura da ficha recolhido; o símbolo colorido todo no acento.
+- ~~Decisões de acuidade tomadas no revamp, a confirmar.~~ Fechadas em 18/09/2026.
+  Confirmadas: frações canônicas na tela, "bons antecedentes" fora da ficha, editor de
+  moldura recolhido, símbolo colorido no acento. Duas viraram trabalho do A2, porque
+  escondiam veredito errado: o perfil do réu passa a ter três estados (primário,
+  reincidente, reincidente específico — ANPP, sursis e regime inicial vedam qualquer
+  reincidente, e o motor só conhecia o específico), e os 35 tipos sem veredito passam
+  a tê-lo (os 4 de pena por remissão e os 31 punidos só com multa). Ver
+  `docs/superpowers/specs/2026-09-18-a4-lote-de-decisoes.md`.
 
 ---
 
