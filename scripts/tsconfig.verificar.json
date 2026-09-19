@@ -19,6 +19,7 @@
     "verificar_injecao.ts",
     "verificar_pena.ts",
     "verificar_simulacao.ts",
+    "verificar_remissao.ts",
     "equivalencia_atributos.ts",
     "derivar_atributos.ts",
     "../src/lib/**/*.ts"

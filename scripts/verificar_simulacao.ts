@@ -56,6 +56,7 @@ const tipo = (id: number, artigo: string, crime: string, min: number, max: numbe
   perdao_judicial_previsto: false,
   contravencao: false,
   tem_pena_privativa: true,
+  pena_por_remissao: null,
   ...extra,
 });
 

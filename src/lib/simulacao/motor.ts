@@ -131,6 +131,7 @@ function montarTipo(id: number, c: CamposTipo, base?: TipoDoMotor): TipoDoMotor 
     perdao_judicial_previsto: base?.perdao_judicial_previsto ?? false,
     contravencao: c.contravencao,
     tem_pena_privativa: c.penaMaxDias > 0 || c.penaMinDias > 0,
+    pena_por_remissao: null,
   };
 }
 

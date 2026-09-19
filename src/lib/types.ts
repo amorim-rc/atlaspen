@@ -186,6 +186,7 @@ export type TipoDoMotor = Pick<
   | 'perdao_judicial_previsto'
   | 'contravencao'
   | 'tem_pena_privativa'
+  | 'pena_por_remissao'
 >;
 
 /** Parâmetros do caso concreto usados no cálculo dinâmico de atributos. */
