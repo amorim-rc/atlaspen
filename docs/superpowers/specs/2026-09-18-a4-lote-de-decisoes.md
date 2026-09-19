@@ -100,8 +100,10 @@ publicada.
   fixa `null`. Três deles pedem escolha: a Lei 8.666/1993 (os crimes caíram em 2021; o resto, em
   2023), a Lei 5.250/1967 (não recepcionada: 1988, ou a ADPF 130, de 2009?) e a Lei 6.815/1980
   (revogada por lei com *vacatio*). **Recomendação:** acrescentar o campo, com a data da perda de
-  vigência **dos dispositivos penais** do diploma — é o que o acervo mede —, e a da ADPF 130 para
-  a Lei de Imprensa, com nota.
+  vigência **dos dispositivos penais** do diploma — é o que o acervo mede. Para a Lei de Imprensa,
+  **5/10/1988**, com a ADPF 130 na nota: a não recepção opera desde a promulgação da Constituição,
+  e o STF a declarou em 2009. (Corrigido em 18/09/2026; a primeira versão deste lote recomendava a
+  data da ADPF.)
 - **25 e não 27.** 14 dispositivos e 11 diplomas; os 27 eram do protótipo do desenho. Não há
   registro faltando.
 
@@ -122,3 +124,17 @@ Conferidas contra o código; nenhuma esconde erro. **Recomendação: confirmar a
 
 - **`ANOS_DE_LEI_RECENTE` do Proponente.** Só se valida com rodadas reais; fica como está.
 - **Revisão dos textos do site.** É leitura sua; não há o que decidir antes dela.
+
+---
+
+## Decisões do mantenedor, 18/09/2026
+
+| Item | Decisão | Onde entra |
+|---|---|---|
+| 1. Reincidência | Três estados — primário, reincidente, reincidente específico | A2 (contrato do cenário) |
+| 2. Os 35 tipos | Corrigir os 4 de remissão e mostrar os vereditos dos 31 | Remissão: agora (dado). Os 31: A2 (motor) |
+| 3. Natureza das notas | Régua doutrinária; o Proponente propõe pela mecânica e a pessoa confirma | Agora (notas e `AGENTS.md`) |
+| 4. `lei9807-19` | Retirar do acervo e redirecionar. O veto não consta do Planalto, da publicação original no DOU nem do LegIn da Câmara | Agora |
+| 4. `lcp-60-61` | Desmembrar em `lcp-60` e `lcp-61`, com redirecionamento | Agora |
+| 4. Diplomas | Campo de data de revogação, com as três regras deste lote | Agora |
+| 5. Acuidade | As quatro confirmadas | Backlog |

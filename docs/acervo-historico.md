@@ -36,12 +36,12 @@ Dispositivos que saíram de vigência, foram alterados ou nunca vigoraram, encon
 
 | Dispositivo | Categoria | O que houve |
 |---|---|---|
-| Lei 9.807/99, art. 19 (revelação de identidade de testemunha protegida) | vetado | Vetado na sanção da lei; nunca vigorou. O catálogo chegou a ter um registro indevido, removido na v1.1.2. |
 | CP, art. 240 (adultério) | revogado | Revogado pela Lei 11.106/2005. |
 | CP, art. 217 (sedução) | revogado | Revogado pela Lei 11.106/2005. |
 | CP, arts. 219 a 222 (rapto) | revogado | Revogados pela Lei 11.106/2005. |
 | ECA, art. 233 (tortura de criança ou adolescente) | revogado | Revogado pela Lei 9.455/1997 (Lei de Tortura). Constava como vigente no catálogo até a v1.3.0. |
-| LCP, arts. 60 e 61 (mendicância e importunação ofensiva) | revogado | Revogados pelas Leis 11.983/2009 e 13.718/2018. |
+| LCP, art. 60 (mendicância) | revogado | Revogado pela Lei 11.983/2009. |
+| LCP, art. 61 (importunação ofensiva ao pudor) | revogado | Revogado pela Lei 13.718/2018, que criou a importunação sexual (CP, art. 215-A). |
 | LCP, art. 27 (exploração da credulidade pública) | revogado | Revogado pela Lei 9.521/1997. |
 | LCP, art. 39 (associação secreta) | revogado | Revogado pela Lei 14.197/2021. |
 | LCP, art. 65 (perturbação da tranquilidade) | revogado | Revogado pela Lei 14.132/2021, que criou a perseguição (CP, art. 147-A). |

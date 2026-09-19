@@ -17,21 +17,11 @@
       "texto_original": "o texto do dispositivo antes de sair de vigência. null = ainda não transcrito e conferido"
     }
   },
+  "ids_aposentados": {
+    "lei9807-19": "Retirado em 18/09/2026. O veto que o registro afirmava não consta do Planalto, da publicação original no DOU nem do LegIn da Câmara; a Lei 9.807/1999 não tem crime. A URL redireciona para /acervo.",
+    "lcp-60-61": "Desmembrado em 18/09/2026 em lcp-60 e lcp-61: dois artigos revogados por leis diferentes, cada um com a sua data. A URL redireciona para /acervo."
+  },
   "registros": [
-    {
-      "id": "lei9807-19",
-      "dispositivo": "Lei 9.807/99, art. 19",
-      "nome": "Revelação de identidade de testemunha protegida",
-      "diploma": "lei9807",
-      "artigos": ["lei9807-19"],
-      "categoria": "vetado",
-      "o_que_houve": "Vetado na sanção da lei; nunca vigorou. O catálogo chegou a ter um registro indevido, removido na v1.1.2.",
-      "normas": [{"norma": "Lei 9.807/1999, veto na sanção", "ano": 1999}],
-      "caso": true,
-      "retirado": null,
-      "data_revogacao": null,
-      "texto_original": null
-    },
     {
       "id": "cp-240",
       "dispositivo": "CP, art. 240",
@@ -89,21 +79,32 @@
       "texto_original": "Art. 233. Submeter criança ou adolescente sob sua autoridade, guarda ou vigilância a tortura:\nPena - reclusão de um a cinco anos.\n§ 1º Se resultar lesão corporal grave:\nPena - reclusão de dois a oito anos.\n§ 2º Se resultar lesão corporal gravíssima:\nPena - reclusão de quatro a doze anos.\n§ 3º Se resultar morte:\nPena - reclusão de quinze a trinta anos."
     },
     {
-      "id": "lcp-60-61",
-      "dispositivo": "LCP, arts. 60 e 61",
-      "nome": "Mendicância e importunação ofensiva",
+      "id": "lcp-60",
+      "dispositivo": "LCP, art. 60",
+      "nome": "Mendicância",
       "diploma": "lcp",
-      "artigos": ["lcp-60", "lcp-61"],
+      "artigos": ["lcp-60"],
       "categoria": "revogado",
-      "o_que_houve": "Revogados pelas Leis 11.983/2009 e 13.718/2018.",
-      "normas": [
-        {"norma": "Lei 11.983/2009", "ano": 2009, "alcance": "art. 60"},
-        {"norma": "Lei 13.718/2018", "ano": 2018, "alcance": "art. 61"}
-      ],
+      "o_que_houve": "Revogado pela Lei 11.983/2009.",
+      "normas": [{"norma": "Lei 11.983/2009", "ano": 2009}],
       "caso": true,
       "retirado": null,
-      "data_revogacao": null,
-      "texto_original": "Art. 60. Mendigar, por ociosidade ou cupidez:\nPena – prisão simples, de quinze dias a três meses.\nParágrafo único. Aumenta-se a pena de um sexto a um terço, se a contravenção é praticada:\na) de modo vexatório, ameaçador ou fraudulento.\nb) mediante simulação de moléstia ou deformidade;\nc) em companhia de alienado ou de menor de dezoito anos.\n\nArt. 61. Importunar alguem, em lugar público ou acessivel ao público, de modo ofensivo ao pudor:\nPena – multa, de duzentos mil réis a dois contos de réis."
+      "data_revogacao": "2009-07-17",
+      "texto_original": "Art. 60. Mendigar, por ociosidade ou cupidez:\nPena – prisão simples, de quinze dias a três meses.\nParágrafo único. Aumenta-se a pena de um sexto a um terço, se a contravenção é praticada:\na) de modo vexatório, ameaçador ou fraudulento.\nb) mediante simulação de moléstia ou deformidade;\nc) em companhia de alienado ou de menor de dezoito anos."
+    },
+    {
+      "id": "lcp-61",
+      "dispositivo": "LCP, art. 61",
+      "nome": "Importunação ofensiva ao pudor",
+      "diploma": "lcp",
+      "artigos": ["lcp-61"],
+      "categoria": "revogado",
+      "o_que_houve": "Revogado pela Lei 13.718/2018, que criou a importunação sexual (CP, art. 215-A).",
+      "normas": [{"norma": "Lei 13.718/2018", "ano": 2018}],
+      "caso": true,
+      "retirado": null,
+      "data_revogacao": "2018-09-25",
+      "texto_original": "Art. 61. Importunar alguem, em lugar público ou acessivel ao público, de modo ofensivo ao pudor:\nPena – multa, de duzentos mil réis a dois contos de réis."
     },
     {
       "id": "lcp-27",

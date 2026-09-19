@@ -67,6 +67,11 @@ export const REDIRECIONAMENTOS: Redirecionamento[] = [
   // Notas de atualizações.
   {de: '/release-notes', para: '/notas'},
   ...NOTAS_POR_VERSAO.map((v) => ({de: `/release-notes/${v}`, para: '/notas'})),
+  // Registros do acervo que deixaram de existir (data/acervo.json, ids_aposentados).
+  // lei9807-19: o veto que ele afirmava não tem fonte, e a lei não tem crime.
+  // lcp-60-61: desmembrado em lcp-60 e lcp-61; a lista mostra os dois.
+  {de: '/acervo/lei9807-19', para: '/acervo'},
+  {de: '/acervo/lcp-60-61', para: '/acervo'},
 ];
 
 /**
