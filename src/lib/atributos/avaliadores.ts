@@ -16,7 +16,7 @@ import type {Cenario} from '../types';
 import type {Avaliacao, Parametros} from './types';
 import {num, bool} from './types';
 import {formatPena, formatFracao} from '../format';
-import {reincidenteEspecifico} from './reincidencia';
+import {ehReincidente, reincidenteEmDoloso, reincidenteEspecifico} from './reincidencia';
 
 const ANO = 12;
 
@@ -144,7 +144,8 @@ export const AVALIADORES: Record<string, (c: Cenario, p: Parametros) => Avaliaca
     const limite = num(p, 'limiteMinMeses');
     const dentroPena = c.penaMin < limite;
     const semViolencia = !bool(p, 'exigeSemViolencia') || (!c.violencia && !c.graveAmeaca);
-    const naoVedado = !bool(p, 'vedadoReincidente') || !reincidenteEspecifico(c);
+    // Art. 28-A, §2º, II, CPP: "se o investigado for reincidente" — qualquer reincidência.
+    const naoVedado = !bool(p, 'vedadoReincidente') || !ehReincidente(c);
     const confissaoOk = !bool(p, 'exigeConfissao') || c.confessou;
 
     let status: 'cabivel' | 'incabivel' | 'condicional' = 'incabivel';
@@ -200,19 +201,25 @@ export const AVALIADORES: Record<string, (c: Cenario, p: Parametros) => Avaliaca
     const viaCulposo = bool(p, 'culposoSemTeto') && c.culposo;
     const dentroPena = viaCulposo || c.penaConcreta <= limite;
     const semViolencia = viaCulposo || !bool(p, 'exigeSemViolencia') || (!c.violencia && !c.graveAmeaca);
-    const naoVedado = !bool(p, 'vedadoReincidenteEspecifico') || !reincidenteEspecifico(c);
-    const cabivel = dentroPena && semViolencia && naoVedado;
+    // Art. 44, II e §3º, CP: o reincidente em crime doloso não tem direito, mas o juiz
+    // pode substituir se for socialmente recomendável e a reincidência não for
+    // específica. O reincidente em crime culposo não é alcançado pelo inciso II.
+    const especifico = bool(p, 'vedadoReincidenteEspecifico') && reincidenteEspecifico(c);
+    const dolosoNaoEspecifico = !especifico && reincidenteEmDoloso(c);
+    const cabivel = dentroPena && semViolencia && !especifico;
     return {
-      status: cabivel ? 'cabivel' : 'incabivel',
+      status: !cabivel ? 'incabivel' : dolosoNaoEspecifico ? 'condicional' : 'cabivel',
       resumo: !dentroPena
         ? `Pena concreta superior a ${formatPena(limite)}.`
         : !semViolencia
           ? 'Crime doloso com violência ou grave ameaça.'
-          : !naoVedado
+          : especifico
             ? 'Reincidência específica.'
-            : viaCulposo
-              ? 'Crime culposo: substituição cabível qualquer que seja a pena.'
-              : `Pena concreta ≤ ${formatPena(limite)}, crime sem violência/grave ameaça.`,
+            : dolosoNaoEspecifico
+              ? 'Reincidente em crime doloso: depende de a substituição ser socialmente recomendável (art. 44, §3º).'
+              : viaCulposo
+                ? 'Crime culposo: substituição cabível qualquer que seja a pena.'
+                : `Pena concreta ≤ ${formatPena(limite)}, crime sem violência/grave ameaça.`,
       detalhes: [
         `Pena privativa não superior a ${formatPena(limite)} e crime cometido sem violência ou grave ameaça (crime doloso).`,
         'Crimes culposos: cabível qualquer que seja a pena.',
@@ -231,16 +238,20 @@ export const AVALIADORES: Record<string, (c: Cenario, p: Parametros) => Avaliaca
   'sursis-pena': (c, p) => {
     const limite = num(p, 'limiteComumMeses');
     const limiteEtario = num(p, 'limiteEtarioMeses');
-    const naoVedado = !bool(p, 'vedadoReincidente') || !reincidenteEspecifico(c);
+    // Art. 77, I, CP: "não seja reincidente em crime doloso". O §2º (etário e
+    // humanitário) amplia só o teto de pena; os requisitos do caput continuam.
+    const naoVedado = !bool(p, 'vedadoReincidente') || !reincidenteEmDoloso(c);
     const cabivel = c.penaConcreta <= limite && naoVedado;
-    const cabivelEtario = c.penaConcreta <= limiteEtario;
+    const cabivelEtario = c.penaConcreta <= limiteEtario && naoVedado;
     return {
       status: cabivel ? 'cabivel' : cabivelEtario ? 'condicional' : 'incabivel',
       resumo: cabivel
         ? `Pena concreta ≤ ${formatPena(limite)}.`
         : cabivelEtario
           ? `Sursis etário/humanitário: pena ≤ ${formatPena(limiteEtario)} (maior de 70 anos ou por saúde).`
-          : 'Pena concreta acima do limite do sursis.',
+          : !naoVedado
+            ? 'Reincidente em crime doloso (art. 77, I).'
+            : 'Pena concreta acima do limite do sursis.',
       detalhes: [
         `Sursis comum: pena privativa não superior a ${formatPena(limite)}, réu não reincidente em crime doloso.`,
         `Sursis etário: pena ≤ ${formatPena(limiteEtario)} para condenado maior de 70 anos.`,
@@ -260,8 +271,9 @@ export const AVALIADORES: Record<string, (c: Cenario, p: Parametros) => Avaliaca
     const pisoSemi = num(p, 'limiteSemiabertoMeses');
     let regime: string;
     if (c.penaConcreta > pisoFechado) regime = 'Fechado';
-    else if (c.penaConcreta > pisoSemi) regime = reincidenteEspecifico(c) ? 'Fechado' : 'Semiaberto';
-    else regime = reincidenteEspecifico(c) ? 'Semiaberto' : 'Aberto';
+    // Art. 33, §2º, "b" e "c", CP: "não reincidente" — qualquer reincidência.
+    else if (c.penaConcreta > pisoSemi) regime = ehReincidente(c) ? 'Fechado' : 'Semiaberto';
+    else regime = ehReincidente(c) ? 'Semiaberto' : 'Aberto';
 
     const detalhes = [
       `Pena superior a ${formatPena(pisoFechado)}: regime inicial fechado.`,
@@ -501,7 +513,8 @@ export const AVALIADORES: Record<string, (c: Cenario, p: Parametros) => Avaliaca
     if (c.hediondo) {
       fracao = num(p, 'fracaoHediondo');
       base = `crime hediondo/equiparado (${formatFracao(num(p, 'fracaoHediondo'))})`;
-    } else if (reincidenteEspecifico(c)) {
+    } else if (reincidenteEmDoloso(c)) {
+      // Art. 83, II, CP: "reincidente em crime doloso"; o culposo fica no inciso I.
       fracao = num(p, 'fracaoReincidente');
       base = `reincidente em crime doloso (${formatFracao(num(p, 'fracaoReincidente'))})`;
     } else {
@@ -534,6 +547,10 @@ export const AVALIADORES: Record<string, (c: Cenario, p: Parametros) => Avaliaca
     };
     const abstrata = prazo(c.penaMax);
     const concreta = c.penaConcreta > 0 ? prazo(c.penaConcreta) : null;
+    // Art. 110, caput, CP: depois do trânsito em julgado, os prazos aumentam de um
+    // terço se o condenado é reincidente. A pretensão punitiva não muda (Súmula 220, STJ).
+    const aumento = ehReincidente(c) ? num(p, 'aumentoReincidente') : 0;
+    const executoria = concreta !== null && aumento > 0 ? concreta * (1 + aumento) : null;
     return {
       status: 'cabivel',
       valor: formatPena(abstrata),
@@ -543,6 +560,9 @@ export const AVALIADORES: Record<string, (c: Cenario, p: Parametros) => Avaliaca
         concreta
           ? `Prescrição pela pena concreta de ${formatPena(c.penaConcreta)}: ${formatPena(concreta)}.`
           : 'Informe uma pena concreta para calcular a prescrição retroativa/executória.',
+        ...(executoria !== null
+          ? [`Executória, reincidente: ${formatPena(concreta!)} aumentados de ${formatFracao(aumento)} → ${formatPena(executoria)} (art. 110).`]
+          : []),
         fator === 0.5
           ? 'Redução do art. 115 APLICADA (menor de 21 no fato ou maior de 70 na sentença).'
           : 'Redução pela metade se o agente é menor de 21 na data do fato ou maior de 70 na sentença (art. 115).',
@@ -554,7 +574,8 @@ export const AVALIADORES: Record<string, (c: Cenario, p: Parametros) => Avaliaca
     // alcançava só o hediondo com resultado morte (redação da Lei 13.964/2019).
     const porHediondo = bool(p, 'vedadoHediondo') && c.hediondo;
     const porViolencia = bool(p, 'vedadoViolencia') && (c.violencia || c.graveAmeaca);
-    const fracao = reincidenteEspecifico(c) ? num(p, 'fracaoReincidente') : num(p, 'fracaoPrimario');
+    // Art. 123, II, LEP: 1/4 "se reincidente" — qualquer reincidência.
+    const fracao = ehReincidente(c) ? num(p, 'fracaoReincidente') : num(p, 'fracaoPrimario');
     const tempo = c.penaConcreta * fracao;
     return {
       status: porHediondo || porViolencia ? 'incabivel' : 'condicional',
@@ -566,7 +587,7 @@ export const AVALIADORES: Record<string, (c: Cenario, p: Parametros) => Avaliaca
       detalhes: [
         'Exclusiva do regime semiaberto.',
         'Só para frequência a curso supletivo profissionalizante ou de instrução do 2º grau ou superior (art. 122, II): a Lei 14.843/2024 revogou a visita à família e as atividades de retorno ao convívio social.',
-        `Cumprimento mínimo: ${formatFracao(fracao)} da pena (${reincidenteEspecifico(c) ? 'reincidente' : 'primário'}) → ${formatPena(tempo)}.`,
+        `Cumprimento mínimo: ${formatFracao(fracao)} da pena (${ehReincidente(c) ? 'reincidente' : 'primário'}) → ${formatPena(tempo)}.`,
         'Depende de comportamento adequado e compatibilidade com os objetivos da pena (art. 123, I e III).',
         'Vedada ao condenado por crime hediondo ou com violência ou grave ameaça contra pessoa, que também não tem trabalho externo sem vigilância direta (art. 122, §2º, na redação da Lei 14.843/2024). Antes dela, a vedação alcançava só o hediondo com resultado morte.',
       ],

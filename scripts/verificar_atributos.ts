@@ -9,7 +9,8 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
-import type {Cenario, Crime} from '../src/lib/types';
+import type {Cenario, Crime, Reincidencia} from '../src/lib/types';
+import {formatFracao, formatPena} from '../src/lib/format';
 import {CATALOGO, avaliarAtributo, valoresPadrao} from '../src/lib/atributos';
 import {AVALIADORES} from '../src/lib/atributos/avaliadores';
 import {
@@ -352,6 +353,52 @@ console.log('\n3. Casos-âncora de direito penal');
     const livramentoDef = CATALOGO.find((b) => b.id === 'livramento')!;
     const avaliar = (def: (typeof CATALOGO)[number], c: Crime, ajustes: Partial<Cenario>) =>
       avaliarAtributo(def, {...cenarioFromCrime(c), ...ajustes}, valoresPadrao(def));
+
+    // ── A reincidência pela letra de cada lei (A2, spec 1.3) ────────────────
+    // Furto simples: sem violência, pena mínima de 1 ano, fora do menor potencial
+    // ofensivo — o tipo em que as sete regras se leem sem interferência.
+    const furtoR = achar(/^CP$/i, /^Art\. 155, caput/);
+    ok(!!furtoR, 'o furto simples (CP, art. 155, caput) está no catálogo');
+    if (furtoR) {
+      const def = (id: string) => CATALOGO.find((b) => b.id === id)!;
+      const reu = (r: Reincidencia, extra: Partial<Cenario> = {}): Partial<Cenario> => ({reincidencia: r, ...extra});
+
+      ok(avaliar(def('anpp'), furtoR, reu('culposo')).status === 'incabivel',
+        'ANPP: reincidente em crime culposo é reincidente (CPP, art. 28-A, §2º, II)');
+      ok(avaliar(def('anpp'), furtoR, reu('primario')).status !== 'incabivel',
+        'ANPP: o primário continua podendo');
+
+      ok(avaliar(def('sursis-pena'), furtoR, reu('culposo')).status === 'cabivel',
+        'sursis: reincidente em crime culposo não é vedado (CP, art. 77, I)');
+      ok(avaliar(def('sursis-pena'), furtoR, reu('doloso')).status === 'incabivel',
+        'sursis: reincidente em crime doloso é vedado, também no etário (CP, art. 77, I e §2º)');
+
+      ok(avaliar(def('substituicao'), furtoR, reu('culposo')).status === 'cabivel',
+        'substituição: reincidente em crime culposo não é vedado (CP, art. 44, II)');
+      ok(avaliar(def('substituicao'), furtoR, reu('doloso')).status === 'condicional',
+        'substituição: reincidente em crime doloso depende de ser socialmente recomendável (CP, art. 44, §3º)');
+      ok(avaliar(def('substituicao'), furtoR, reu('especifico')).status === 'incabivel',
+        'substituição: reincidente específico é vedado (CP, art. 44, §3º)');
+
+      ok(avaliar(def('regime'), furtoR, reu('primario')).valor === 'aberto',
+        'regime: primário com pena de 1 ano começa no aberto');
+      ok(avaliar(def('regime'), furtoR, reu('culposo')).valor === 'semiaberto',
+        'regime: qualquer reincidente sai do aberto (CP, art. 33, §2º, c)');
+
+      const livr = (r: Reincidencia) => avaliar(livramentoDef, furtoR, reu(r, {penaConcreta: 36})).valor ?? '';
+      ok(livr('culposo').startsWith(formatFracao(1 / 3)), `livramento: reincidente culposo fica no inciso I (obtido "${livr('culposo')}")`);
+      ok(livr('doloso').startsWith(formatFracao(1 / 2)), `livramento: reincidente em doloso cumpre metade, inciso II (obtido "${livr('doloso')}")`);
+
+      const saida = (r: Reincidencia) => avaliar(def('saida-temporaria'), furtoR, reu(r)).detalhes.join(' ');
+      ok(saida('culposo').includes(formatFracao(1 / 4)), 'saída temporária: qualquer reincidente cumpre 1/4 (LEP, art. 123, II)');
+      ok(saida('primario').includes(formatFracao(1 / 6)), 'saída temporária: o primário, 1/6');
+
+      const presc = (r: Reincidencia) => avaliar(def('prescricao'), furtoR, reu(r));
+      ok(presc('culposo').detalhes.join(' ').includes(formatPena(48 * (4 / 3))),
+        `prescrição executória do reincidente: 4 anos + 1/3 (CP, art. 110) — "${presc('culposo').detalhes.join(' | ')}"`);
+      ok(presc('culposo').valor === presc('primario').valor,
+        'prescrição da pretensão punitiva: a reincidência não influi (Súmula 220, STJ)');
+    }
 
     // Inciso V — hediondo primário, sem resultado morte: 70%, livramento aos 2/3.
     const trafico = achar(/11\.343/, /^Art\. 33, caput/);
