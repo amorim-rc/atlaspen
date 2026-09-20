@@ -68,7 +68,7 @@ Nem todo campo tem o mesmo peso: alguns definem o que o sistema responde, outros
 apenas descrevem. A tabela abaixo diz **onde cada um é usado**, para quem for reaproveitar
 os dados saber o que pode mudar sem quebrar uma conta.
 
-### Fonte — redigida à mão, é a autoridade
+### Fonte
 
 | Campo | Onde é usado |
 |---|---|
