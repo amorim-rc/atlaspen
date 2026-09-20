@@ -1,6 +1,6 @@
 # Violência e grave ameaça: catálogo × texto da lei
 
-Gerado por `scripts/robos/auditor/conferir_violencia.py`. 3024 respostas conferidas (2779 conferem, 171 divergem, 74 pedem juízo).
+Gerado por `scripts/robos/auditor/conferir_violencia.py`. 3024 respostas conferidas (2792 conferem, 149 divergem, 83 pedem juízo).
 
 O critério está em `scripts/violencia.py`: `violencia` afirma violência **dolosa** contra **pessoa**, como meio ou como núcleo do tipo. Violência contra a coisa não conta; crime culposo não conta; cláusula de resultado não descreve a conduta.
 
@@ -10,10 +10,7 @@ O catálogo e a lei não dizem a mesma coisa. Cada linha é uma pergunta.
 
 | id | diploma | dispositivo | tipo | campo | catálogo | derivado | regra | o que a lei diz |
 |---|---|---|---|---|---|---|---|---|
-| 1391 | CE (Lei 4.737/65) | Art. 326, § 2º | Injúria real na propaganda eleitoral | violencia | Não | Sim | violencia-meio | se a injuria consiste em violencia ou vias de fato, que, por sua natureza ou meio empregad |
 | 26 | CP | Art. 123 | Infanticídio | violencia | Sim | Não | silencio-da-lei |  |
-| 41 | CP | Art. 129, §11 | Lesão corporal em violência doméstica com aumento de 1/3 — v | violencia | Não | Sim | violencia-nucleo | lesao corporal ofender a integridade corporal ou a saude de outrem: |
-| 68 | CP | Art. 147-B | Violência psicológica contra a mulher | grave_ameaca | Não | Sim | ameaca-meio | es, comportamentos, crencas e decisoes, mediante ameaca, constrangimento, humilhacao, mani |
 | 69 | CP | Art. 148, caput | Sequestro e cárcere privado | violencia | Sim | Não | silencio-da-lei |  |
 | 69 | CP | Art. 148, caput | Sequestro e cárcere privado | grave_ameaca | Sim | Não | silencio-da-lei |  |
 | 70 | CP | Art. 148, §1º | Sequestro qualificado (fins libidinosos, menor de 18, maus-t | violencia | Sim | Não | silencio-da-lei |  |
@@ -54,8 +51,6 @@ O catálogo e a lei não dizem a mesma coisa. Cada linha é uma pergunta.
 | 311 | CP | Art. 359-N | Interrupção do processo eleitoral por violação de mecanismos | grave_ameaca | Sim | Não | silencio-da-lei |  |
 | 495 | CP | Art. 337-J | Violação de sigilo em licitação | violencia | Sim | Não | silencio-da-lei |  |
 | 495 | CP | Art. 337-J | Violação de sigilo em licitação | grave_ameaca | Sim | Não | silencio-da-lei |  |
-| 582 | CP | Art. 155, §4º, I | Furto qualificado com destruição ou rompimento de obstáculo | violencia | Sim | Não | violencia-contra-a-coisa | destruicao ou rompimento de obstaculo |
-| 588 | CP | Art. 157, §2º-A, II | Roubo majorado — destruição de obstáculo com explosivo | violencia | Sim | Não | violencia-contra-a-coisa | destruicao ou rompimento de obstaculo |
 | 611 | CP | Art. 217-A, §1º | Estupro de vulnerável — vítima deficiente ou sem discernimen | violencia | Sim | Não | silencio-da-lei |  |
 | 621 | CP | Art. 148, §1º, I | Sequestro/cárcere privado qualificado — se a vítima é ascend | violencia | Sim | Não | silencio-da-lei |  |
 | 622 | CP | Art. 148, §1º, II | Sequestro/cárcere privado qualificado — internação da vítima | violencia | Sim | Não | silencio-da-lei |  |
@@ -65,7 +60,6 @@ O catálogo e a lei não dizem a mesma coisa. Cada linha é uma pergunta.
 | 722 | CP | Art. 250, §1º, I | Incêndio — aumento pelo intuito de obter vantagem pecuniária | violencia | Sim | Não | silencio-da-lei |  |
 | 723 | CP | Art. 250, §1º, II, a | Incêndio — em casa habitada ou destinada a habitação | violencia | Sim | Não | silencio-da-lei |  |
 | 724 | CP | Art. 250, §1º, II, b | Incêndio — em edifício público ou destinado a uso público, a | violencia | Sim | Não | silencio-da-lei |  |
-| 737 | CP | Art. 251, §2º | Explosão — aumento pelas hipóteses do incêndio ou pelo bem v | violencia | Sim | Não | culposo-nao-e-violento | Crime culposo: a violência do art. 44, I, do CP é dolosa. |
 | 992 | CP | Art. 137, caput | Rixa (participar de rixa, salvo para separar os contendores) | violencia | Sim | Não | silencio-da-lei |  |
 | 1308 | CP | Art. 121-B, caput | Vicaricídio | violencia | Sim | Não | silencio-da-lei |  |
 | 1309 | CP | Art. 121-B, par. único, I | Vicaricídio — na presença da mulher a quem se pretende causa | violencia | Sim | Não | silencio-da-lei |  |
@@ -79,8 +73,6 @@ O catálogo e a lei não dizem a mesma coisa. Cada linha é uma pergunta.
 | 1484 | CP | Art. 159, §4º c/c §2º | Extorsão mediante sequestro com lesão grave e delação premia | grave_ameaca | Sim | Não | silencio-da-lei |  |
 | 1485 | CP | Art. 159, §4º c/c §3º | Extorsão mediante sequestro com resultado morte e delação pr | violencia | Sim | Não | silencio-da-lei |  |
 | 1485 | CP | Art. 159, §4º c/c §3º | Extorsão mediante sequestro com resultado morte e delação pr | grave_ameaca | Sim | Não | silencio-da-lei |  |
-| 1495 | CP | Art. 129, §10 c/c §2º | Violência doméstica com aumento de 1/3 — lesão corporal de n | violencia | Não | Sim | violencia-nucleo | lesao corporal ofender a integridade corporal ou a saude de outrem: |
-| 1496 | CP | Art. 129, §10 c/c §3º | Violência doméstica com aumento de 1/3 — lesão corporal segu | violencia | Não | Sim | violencia-nucleo | lesao corporal ofender a integridade corporal ou a saude de outrem: |
 | 682 | CPM (DL 1.001/69) | Art. 157, caput | Violência contra superior | violencia | Sim | Não | silencio-da-lei |  |
 | 695 | CPM (DL 1.001/69) | Art. 206, caput | Homicídio culposo | violencia | Sim | Não | silencio-da-lei |  |
 | 762 | CPM (DL 1.001/69) | Art. 175, caput | Praticar violência contra inferior hierárquico | violencia | Sim | Não | silencio-da-lei |  |
@@ -92,17 +84,11 @@ O catálogo e a lei não dizem a mesma coisa. Cada linha é uma pergunta.
 | 1053 | CPM (DL 1.001/69) | Art. 177, caput | Resistência mediante ameaça ou violência | violencia | Sim | Não | silencio-da-lei |  |
 | 1054 | CPM (DL 1.001/69) | Art. 177, §1º | Resistência mediante ameaça ou violência — Se o ato não se e | violencia | Sim | Não | silencio-da-lei |  |
 | 1055 | CPM (DL 1.001/69) | Art. 177, §1º-A | Resistência mediante ameaça ou violência — Se da resistência | violencia | Sim | Não | silencio-da-lei |  |
-| 1061 | CPM (DL 1.001/69) | Art. 180, §1º | Evasão de prêso ou internado — Se a evasão ou a tentativa oc | violencia | Não | Sim | violencia-meio | tentar evadir-se o preso ou internado, usando de violencia contra a pessoa: |
 | 1080 | CPM (DL 1.001/69) | Art. 207, §2º | Provocação indireta ao suicídio (maus-tratos que levam ao su | violencia | Sim | Não | silencio-da-lei |  |
 | 1081 | CPM (DL 1.001/69) | Art. 208, caput | Genocídio | violencia | Sim | Não | silencio-da-lei |  |
-| 1082 | CPM (DL 1.001/69) | Art. 209, §3º | Lesão leve — Se os resultados previstos nos §§ 1º e 2º deste | violencia | Sim | Não | culposo-nao-e-violento | Crime culposo: a violência do art. 44, I, do CP é dolosa. |
-| 1084 | CPM (DL 1.001/69) | Art. 210, caput | Lesão culposa | violencia | Sim | Não | culposo-nao-e-violento | Crime culposo: a violência do art. 44, I, do CP é dolosa. |
 | 1087 | CPM (DL 1.001/69) | Art. 212, §1º | Abandono de pessoa — Se do abandono resulta lesão grave | violencia | Sim | Não | silencio-da-lei |  |
 | 1093 | CPM (DL 1.001/69) | Art. 217, caput | Injúria real | violencia | Sim | Não | silencio-da-lei |  |
 | 1095 | CPM (DL 1.001/69) | Art. 225, §2º | Sequestro ou cárcere privado — Se resulta à vítima, em razão | violencia | Sim | Não | silencio-da-lei |  |
-| 1104 | CPM (DL 1.001/69) | Art. 232, §1º | Estupro — Se da conduta resulta lesão de natureza grave, ou  | grave_ameaca | Não | Sim | ameaca-meio | nstranger alguem, mediante violencia ou grave ameaca, a ter conjuncao carnal ou a praticar |
-| 1105 | CPM (DL 1.001/69) | Art. 232, §2º | Estupro — Se da conduta resulta morte | grave_ameaca | Não | Sim | ameaca-meio | nstranger alguem, mediante violencia ou grave ameaca, a ter conjuncao carnal ou a praticar |
-| 1106 | CPM (DL 1.001/69) | Art. 232, §3º | Estupro de vulnerável militar — vítima menor de 14 anos ou s | grave_ameaca | Não | Sim | ameaca-meio | nstranger alguem, mediante violencia ou grave ameaca, a ter conjuncao carnal ou a praticar |
 | 1116 | CPM (DL 1.001/69) | Art. 244, caput | Extorsão mediante seqüestro (tempo de paz) | grave_ameaca | Sim | Não | silencio-da-lei |  |
 | 1118 | CPM (DL 1.001/69) | Art. 246, caput | Extorsão indireta | grave_ameaca | Sim | Não | silencio-da-lei |  |
 | 1207 | CPM (DL 1.001/69) | Art. 333, caput | Violência arbitrária | violencia | Sim | Não | silencio-da-lei |  |
@@ -117,9 +103,6 @@ O catálogo e a lei não dizem a mesma coisa. Cada linha é uma pergunta.
 | 1287 | CPM (DL 1.001/69) | Art. 403, §3º | Lesão leve — No caso do § 3º do art. 209 | violencia | Sim | Não | silencio-da-lei |  |
 | 1289 | CPM (DL 1.001/69) | Art. 405, caput | Roubo ou extorsão (tempo de guerra) | violencia | Sim | Não | silencio-da-lei |  |
 | 1289 | CPM (DL 1.001/69) | Art. 405, caput | Roubo ou extorsão (tempo de guerra) | grave_ameaca | Sim | Não | silencio-da-lei |  |
-| 1292 | CPM (DL 1.001/69) | Art. 407, §1º | Rapto — Se da violência resulta lesão grave | grave_ameaca | Não | Sim | ameaca-meio | r mulher honesta, mediante violencia ou grave ameaca, para fim libidinoso, em lugar de efe |
-| 1293 | CPM (DL 1.001/69) | Art. 407, §2º | Rapto — Se resulta morte | violencia | Não | Sim | violencia-meio | rapto raptar mulher honesta, mediante violencia ou grave ameaca, para fim libidinoso, e |
-| 1293 | CPM (DL 1.001/69) | Art. 407, §2º | Rapto — Se resulta morte | grave_ameaca | Não | Sim | ameaca-meio | r mulher honesta, mediante violencia ou grave ameaca, para fim libidinoso, em lugar de efe |
 | 1294 | CPM (DL 1.001/69) | Art. 408, caput | Violência carnal | violencia | Sim | Não | silencio-da-lei |  |
 | 1295 | CPM (DL 1.001/69) | Art. 408, par. único, a) | Violência carnal — Se da violência resulta | violencia | Sim | Não | silencio-da-lei |  |
 | 1296 | CPM (DL 1.001/69) | Art. 408, par. único, b) | Violência carnal — morte | violencia | Sim | Não | silencio-da-lei |  |
@@ -149,16 +132,12 @@ O catálogo e a lei não dizem a mesma coisa. Cada linha é uma pergunta.
 | 475 | Lei 10.741/03 | Art. 107 | Coação de pessoa idosa a doar, contratar, testar ou outorgar | grave_ameaca | Sim | Não | silencio-da-lei |  |
 | 671 | Lei 12.850/13 | Art. 2º, §2º | Organização criminosa armada (com emprego de arma de fogo) — | violencia | Sim | Não | silencio-da-lei |  |
 | 671 | Lei 12.850/13 | Art. 2º, §2º | Organização criminosa armada (com emprego de arma de fogo) — | grave_ameaca | Sim | Não | silencio-da-lei |  |
-| 1330 | Lei 12.850/13 | Art. 21-A | Solicitação ou ordem de violência ou grave ameaça contra age | grave_ameaca | Não | Sim | ameaca-meio | r a alguem a pratica de violencia ou de grave ameaca contra agente publico, advogado, defe |
-| 1331 | Lei 12.850/13 | Art. 21-B | Ajuste de duas ou mais pessoas para a prática de violência o | grave_ameaca | Não | Sim | ameaca-meio | ssoas para a pratica de violencia ou de grave ameaca contra agente publico, advogado, defe |
 | 790 | Lei 13.260/16 | Art. 2º | Terrorismo (praticar atos por razões de xenofobia/discrimina | violencia | Sim | Não | silencio-da-lei |  |
 | 790 | Lei 13.260/16 | Art. 2º | Terrorismo (praticar atos por razões de xenofobia/discrimina | grave_ameaca | Sim | Não | silencio-da-lei |  |
 | 1461 | Lei 13.260/16 | Art. 5º, §2º | Atos preparatórios de terrorismo sem viagem ou treinamento n | violencia | Sim | Não | silencio-da-lei |  |
 | 1461 | Lei 13.260/16 | Art. 5º, §2º | Atos preparatórios de terrorismo sem viagem ou treinamento n | grave_ameaca | Sim | Não | silencio-da-lei |  |
 | 559 | Lei 14.192/21 | Art. 326-B (CE) | Violência política contra a mulher (assediar/constranger/hum | violencia | Sim | Não | silencio-da-lei |  |
 | 871 | Lei 14.597/23 | Art. 201 | Tumulto ou violência em evento esportivo (promover tumulto,  | violencia | Sim | Não | silencio-da-lei |  |
-| 479 | Lei 14.811/24 | Art. 146-A, caput (CP) | Intimidação sistemática (bullying) | violencia | Não | Sim | violencia-meio | ticamente, individualmente ou em grupo, mediante violencia fisica ou psicologica, uma ou m |
-| 480 | Lei 14.811/24 | Art. 146-A, §único (CP) | Intimidação sistemática virtual (cyberbullying) | violencia | Não | Sim | violencia-meio | ticamente, individualmente ou em grupo, mediante violencia fisica ou psicologica, uma ou m |
 | 1402 | Lei 15.358/26 | Art. 2º, caput | Domínio social estruturado | violencia | Sim | Não | silencio-da-lei |  |
 | 1402 | Lei 15.358/26 | Art. 2º, caput | Domínio social estruturado | grave_ameaca | Sim | Não | silencio-da-lei |  |
 | 551 | Lei 2.889/56 | Art. 1º, a | Genocídio — matar membros do grupo | violencia | Sim | Não | silencio-da-lei |  |
@@ -172,7 +151,6 @@ O catálogo e a lei não dizem a mesma coisa. Cada linha é uma pergunta.
 | 562 | Lei 9.434/97 | Art. 14, §1º | Remoção de tecidos, órgãos ou partes do corpo em desacordo c | violencia | Sim | Não | silencio-da-lei |  |
 | 642 | Lei 9.434/97 | Art. 14, §2º | Remoção de tecidos ou órgãos em pessoa viva com resultado le | violencia | Sim | Não | silencio-da-lei |  |
 | 643 | Lei 9.434/97 | Art. 14, §3º | Remoção de tecidos ou órgãos em pessoa viva com resultado le | violencia | Sim | Não | silencio-da-lei |  |
-| 384 | Lei 9.455/97 | Art. 1º, II | Tortura para aplicar castigo pessoal ou medida de caráter pr | grave_ameaca | Não | Sim | ameaca-meio | autoridade, com emprego de violencia ou grave ameaca, a intenso sofrimento fisico ou menta |
 | 386 | Lei 9.455/97 | Art. 1º, §3º (resultado lesão grave) | Tortura qualificada pelo resultado lesão grave | violencia | Sim | Não | silencio-da-lei |  |
 | 386 | Lei 9.455/97 | Art. 1º, §3º (resultado lesão grave) | Tortura qualificada pelo resultado lesão grave | grave_ameaca | Sim | Não | silencio-da-lei |  |
 | 387 | Lei 9.455/97 | Art. 1º, §3º (resultado morte) | Tortura qualificada pelo resultado morte | violencia | Sim | Não | silencio-da-lei |  |
@@ -201,7 +179,8 @@ As regras não decidem: a violência é meio alternativo a outros não violentos
 | 65 | CP | Art. 146 | Constrangimento ilegal | violencia | Sim | — | meio-alternativo | violencia ou grave ameaca, ou depois de lhe haver reduzido, por qualquer outro meio |
 | 65 | CP | Art. 146 | Constrangimento ilegal | grave_ameaca | Sim | — | meio-alternativo | violencia ou grave ameaca, ou depois de lhe haver reduzido, por qualquer outro meio |
 | 67 | CP | Art. 147-A | Perseguição | grave_ameaca | Sim | — | ameaca-sem-qualificativo | ameacando |
-| 68 | CP | Art. 147-B | Violência psicológica contra a mulher | violencia | Não | — | — | violencia psicologica |
+| 68 | CP | Art. 147-B | Violência psicológica contra a mulher | violencia | Não | — | violencia-em-sentido-proprio | violencia psicologica |
+| 68 | CP | Art. 147-B | Violência psicológica contra a mulher | grave_ameaca | Não | — | ameaca-sem-qualificativo | ameaca |
 | 73 | CP | Art. 149-A | Tráfico de Pessoas | violencia | Sim | — | meio-alternativo | grave ameaca, violencia, coacao, fraude |
 | 73 | CP | Art. 149-A | Tráfico de Pessoas | grave_ameaca | Sim | — | meio-alternativo | grave ameaca, violencia, coacao, fraude |
 | 157 | CP | Art. 203 | Frustração de direito assegurado por lei trabalhista | violencia | Não | — | meio-alternativo | fraude ou violencia |
@@ -213,7 +192,8 @@ As regras não decidem: a violência é meio alternativo a outros não violentos
 | 277 | CP | Art. 335 | Impedimento, perturbação ou fraude de concorrência | grave_ameaca | Sim | — | meio-alternativo | violencia, grave ameaca, fraude ou oferecimento de vantagem |
 | 296 | CP | Art. 358 | Fraude em arrematação judicial | violencia | Não | — | meio-alternativo | violencia ou fraude |
 | 296 | CP | Art. 358 | Fraude em arrematação judicial | grave_ameaca | Não | — | meio-alternativo | violencia ou fraude |
-| 312 | CP | Art. 359-P | Violência política | grave_ameaca | Sim | — | — | violencia politica |
+| 312 | CP | Art. 359-P | Violência política | violencia | Sim | — | violencia-em-sentido-proprio | violencia politica |
+| 312 | CP | Art. 359-P | Violência política | grave_ameaca | Sim | — | violencia-em-sentido-proprio | violencia politica |
 | 496 | CP | Art. 337-K | Afastamento de licitante | violencia | Não | — | meio-alternativo | violencia, grave ameaca, fraude ou oferecimento de vantagem |
 | 496 | CP | Art. 337-K | Afastamento de licitante | grave_ameaca | Não | — | meio-alternativo | violencia, grave ameaca, fraude ou oferecimento de vantagem |
 | 635 | CP | Art. 149-A, I | Tráfico de pessoas — para remoção de órgãos, tecidos ou part | violencia | Sim | — | meio-alternativo | grave ameaca, violencia, coacao, fraude |
@@ -242,6 +222,9 @@ As regras não decidem: a violência é meio alternativo a outros não violentos
 | 578 | CP (atualiz.) | Art. 147-A, §1º, III | Stalking qualificado contra mulher por razões de gênero (per | grave_ameaca | Sim | — | ameaca-sem-qualificativo | ameacando |
 | 747 | CPM (DL 1.001/69) | Art. 222, caput | Constrangimento ilegal | violencia | Sim | — | meio-alternativo | violencia ou grave ameaca, ou depois de lhe haver reduzido, por qualquer outro meio |
 | 747 | CPM (DL 1.001/69) | Art. 222, caput | Constrangimento ilegal | grave_ameaca | Sim | — | meio-alternativo | violencia ou grave ameaca, ou depois de lhe haver reduzido, por qualquer outro meio |
+| 1053 | CPM (DL 1.001/69) | Art. 177, caput | Resistência mediante ameaça ou violência | grave_ameaca | Sim | — | ameaca-sem-qualificativo | ameaca |
+| 1054 | CPM (DL 1.001/69) | Art. 177, §1º | Resistência mediante ameaça ou violência — Se o ato não se e | grave_ameaca | Sim | — | ameaca-sem-qualificativo | ameaca |
+| 1055 | CPM (DL 1.001/69) | Art. 177, §1º-A | Resistência mediante ameaça ou violência — Se da resistência | grave_ameaca | Sim | — | ameaca-sem-qualificativo | ameaca |
 | 1089 | CPM (DL 1.001/69) | Art. 213, caput | Maus tratos | violencia | Sim | — | perigo-a-pessoa | privando-a de alimentacao |
 | 1090 | CPM (DL 1.001/69) | Art. 213, §1º | Maus tratos — Se do fato resulta lesão grave | violencia | Sim | — | perigo-a-pessoa | privando-a de alimentacao |
 | 1091 | CPM (DL 1.001/69) | Art. 213, §2º | Maus tratos — Se resulta morte | violencia | Sim | — | perigo-a-pessoa | privando-a de alimentacao |
@@ -259,23 +242,27 @@ As regras não decidem: a violência é meio alternativo a outros não violentos
 | 982 | Lei 10.741/03 | Art. 99, §1º | Exposição a perigo da pessoa idosa com resultado lesão corpo | violencia | Não | — | perigo-a-pessoa | sujeitando-a a trabalho excessivo |
 | 983 | Lei 10.741/03 | Art. 99, §2º | Exposição a perigo da pessoa idosa com resultado morte | violencia | Não | — | perigo-a-pessoa | sujeitando-a a trabalho excessivo |
 | 428 | Lei 13.869/19 | Art. 15 | Constranger a depor pessoa que deva guardar segredo ou que s | grave_ameaca | Não | — | ameaca-sem-qualificativo | ameaca |
-| 1329 | Lei 13.869/19 | Art. 15-A | Violência institucional — submeter vítima ou testemunha de c | violencia | Não | — | — | violencia institucional |
-| 1329 | Lei 13.869/19 | Art. 15-A | Violência institucional — submeter vítima ou testemunha de c | grave_ameaca | Não | — | — | violencia institucional |
+| 1329 | Lei 13.869/19 | Art. 15-A | Violência institucional — submeter vítima ou testemunha de c | violencia | Não | — | violencia-em-sentido-proprio | violencia institucional |
+| 1329 | Lei 13.869/19 | Art. 15-A | Violência institucional — submeter vítima ou testemunha de c | grave_ameaca | Não | — | violencia-em-sentido-proprio | violencia institucional |
 | 559 | Lei 14.192/21 | Art. 326-B (CE) | Violência política contra a mulher (assediar/constranger/hum | grave_ameaca | Sim | — | ameaca-sem-qualificativo | ameacar |
+| 479 | Lei 14.811/24 | Art. 146-A, caput (CP) | Intimidação sistemática (bullying) | violencia | Não | — | violencia-em-sentido-proprio | violencia fisica ou psicologica |
+| 479 | Lei 14.811/24 | Art. 146-A, caput (CP) | Intimidação sistemática (bullying) | grave_ameaca | Não | — | violencia-em-sentido-proprio | violencia fisica ou psicologica |
+| 480 | Lei 14.811/24 | Art. 146-A, §único (CP) | Intimidação sistemática virtual (cyberbullying) | violencia | Não | — | violencia-em-sentido-proprio | violencia fisica ou psicologica |
+| 480 | Lei 14.811/24 | Art. 146-A, §único (CP) | Intimidação sistemática virtual (cyberbullying) | grave_ameaca | Não | — | violencia-em-sentido-proprio | violencia fisica ou psicologica |
 
 ## Por regra aplicada
 
 | regra | respostas |
 |---|---:|
-| silencio-da-lei | 2607 |
+| silencio-da-lei | 2605 |
 | culposo-nao-e-violento | 128 |
-| violencia-meio | 77 |
+| violencia-meio | 75 |
 | violencia-nucleo | 67 |
-| ameaca-meio | 65 |
+| ameaca-meio | 61 |
 | meio-alternativo | 36 |
+| ameaca-sem-qualificativo | 20 |
 | perigo-a-pessoa | 18 |
-| ameaca-sem-qualificativo | 16 |
-| — | 4 |
+| violencia-em-sentido-proprio | 9 |
 | ameaca-mal-injusto-e-grave | 3 |
-| violencia-contra-a-coisa | 2 |
 | aborto-sem-consentimento | 1 |
+| violencia-contra-a-coisa | 1 |

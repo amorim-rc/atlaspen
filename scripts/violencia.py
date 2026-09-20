@@ -54,7 +54,8 @@ _COISA = re.compile(
 # "não": são "alguém precisa ler". A violência psicológica do art. 147-B é o
 # caso-limite — o tipo se chama violência e a conduta não é física.
 _AMBIGUO = re.compile(
-    r'violencia psicologica|violencia moral|violencia patrimonial'
+    r'violencia fisica ou psicologica|violencia psicologica ou fisica'
+    r'|violencia psicologica|violencia moral|violencia patrimonial'
     r'|violencia institucional|violencia obstetrica|violencia politica', re.I)
 
 # Tipos de PERIGO à pessoa: expõem a vida ou a saúde sem descrever violência
@@ -82,8 +83,11 @@ REGRAS: list[Regra] = [
         r'|vias de fato'
         r'|reduzid[oa] a impossibilidade de resistencia', re.I),
         'A lei descreve a violência à pessoa como MEIO da conduta.'),
+    # "Mediante ameaça", sem o qualificativo, NÃO entra aqui: o art. 147-B pune
+    # causar dano emocional "mediante ameaça, constrangimento, humilhação", e
+    # decidir que ali há a GRAVE ameaça do art. 28-A do CPP é juízo, não leitura.
     Regra('ameaca-meio', 'grave_ameaca', 'Sim', re.compile(
-        r'grave ameaca|seria ameaca|mediante ameaca', re.I),
+        r'grave ameaca|seria ameaca', re.I),
         'A lei descreve a grave ameaça como MEIO da conduta.'),
     # O art. 147 do CP não escreve "grave ameaça": escreve "ameaçar alguém […]
     # de causar-lhe mal injusto e grave". É a mesma coisa, e só uma regra
@@ -173,12 +177,30 @@ def classificar(registro: dict, texto_proprio: str, texto_caput: str = '') -> di
         for origem, texto in (('propria', proprio), ('caput', caput)):
             if not texto:
                 continue
-            if campo == 'violencia' and _COISA.search(texto) and not re.search(
-                    r'violencia (a|contra a) pessoa|vias de fato', texto):
+            # A violência contra a coisa só responde quando NENHUM texto — nem o
+            # do dispositivo, nem o do caput — descreve violência à pessoa. O
+            # roubo majorado por destruição de obstáculo (CP, art. 157, §2º-A, II)
+            # saía não violento, embora o caput do roubo exija violência à pessoa.
+            tem_pessoa = any(
+                _casa(r, t) for r in REGRAS if r.campo == 'violencia' and r.valor == 'Sim'
+                for t in (proprio, caput) if t)
+            if campo == 'violencia' and _COISA.search(texto) and not tem_pessoa:
                 saida[campo] = Classificacao(
                     'Não', 'violencia-contra-a-coisa', _COISA.search(texto).group(0), origem,
                     'A violência do dispositivo é contra a COISA, e o art. 44, I, do CP '
                     'exige violência à pessoa.')
+                decidido = True
+                break
+            ambiguo = _AMBIGUO.search(texto)
+            if campo == 'violencia' and ambiguo:
+                # Também antes das regras: "mediante violência física ou
+                # psicológica" (CP, art. 146-A, o bullying) casa com a fórmula de
+                # meio e sairia como violento, quando a conduta se consuma só com
+                # a psicológica. Quem decide se aquilo é a violência do art. 28-A
+                # do CPP é uma pessoa.
+                saida[campo] = Classificacao(
+                    None, 'violencia-em-sentido-proprio', ambiguo.group(0), 'indecisa',
+                    'A lei usa "violência" em sentido que a regra não resolve.')
                 decidido = True
                 break
             alternativo = _ALTERNATIVO.search(texto)
@@ -222,8 +244,9 @@ def classificar(registro: dict, texto_proprio: str, texto_caput: str = '') -> di
                 # A lei usa palavra de violência em sentido que a regra não
                 # resolve — "violência psicológica" (CP, art. 147-B) é violência
                 # para o art. 44, I? Isso é juízo, e vai para a fila.
+                achado = _AMBIGUO.search(proprio) or _AMBIGUO.search(caput)
                 saida[campo] = Classificacao(
-                    None, None, _AMBIGUO.search(proprio or caput).group(0), 'indecisa',
+                    None, 'violencia-em-sentido-proprio', achado.group(0), 'indecisa',
                     'A lei usa a palavra em sentido que a regra não resolve.')
             else:
                 # Silêncio da lei: o tipo não descreve violência nem grave ameaça,
