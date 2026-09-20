@@ -76,6 +76,18 @@ Mexeu no conferidor ou nos dados que ele lê? Rode também
 `python scripts/robos/auditor/auditar.py` e `python scripts/robos/vigia/conferir.py`, que não
 falham o build mas dizem o que ficou aberto.
 
+Mexeu em `violencia`, `grave_ameaca` ou `acao`? Rode os dois derivadores, que comparam o
+campo publicado com o texto do dispositivo e abrem três listas — confere, diverge e pede
+juízo:
+
+```
+python scripts/robos/auditor/conferir_violencia.py --md auditoria/violencia-e-grave-ameaca.md
+python scripts/robos/auditor/conferir_acao_penal.py --md auditoria/acao-penal.md
+```
+
+Eles NÃO escrevem no catálogo. O que a regra não decide sai marcado como juízo, e juízo é da
+pessoa que assina.
+
 ## O que NÃO entra no catálogo, e onde entra
 
 - **`scripts/robos/auditor/excecoes-auditoria.json`** — o achado da auditoria que já foi julgado

@@ -305,6 +305,14 @@ A conferência achou seis erros publicados:
 Mais duas condições declaradas onde faltavam: injúria real (privada, salvo se da violência
 resulta lesão) e os seis do art. 154-A.
 
+**19/09/2026, segunda parte: o derivador.** `scripts/acao_penal.py` acha as regras de ação
+penal do diploma, descobre o alcance de cada uma (artigo, lista de artigos, seção, capítulo,
+título) e responde com o dispositivo que decidiu. `conferir_acao_penal.py` abre as três
+listas: **1.363 conferem, 0 divergem, 149 pedem juízo** (regras com ressalva, como o art. 182,
+ou registros que já declaram `acao_condicao`). Ele achou mais quatro erros, corrigidos: o
+art. 184, §3º, que o art. 186, IV, manda apurar por representação, e os arts. 239, 248 e 249,
+que publicavam ação privada sem nenhuma regra que a sustentasse.
+
 **O que resta desta frente:** o campo de **fundamento** da ação penal — decisão do
 mantenedor em 19/09/2026 de não marcar por regra os 1.446 incondicionados, porque "regra
 geral, art. 100" em massa é preenchimento por plausibilidade; a revisão por amostra desses
