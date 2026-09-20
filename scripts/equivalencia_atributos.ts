@@ -49,6 +49,13 @@ const rev = cenarioReversoPadrao();
 const CENARIOS: [string, (c: TipoDoMotor) => Cenario][] = [
   ['tipo', (c) => cenarioFromCrime(c)],
   ['reverso', (c) => cenarioParaCrime(c, rev)],
+  // Os dois cenários acima são de réu PRIMÁRIO, e por isso o congelamento não
+  // via nada do que a reincidência muda: a correção da progressão dos crimes
+  // comuns (LEP, art. 112, II e III), em 19/09/2026, passou por ele sem uma
+  // diferença sequer. Os dois abaixo fecham essa janela — o doloso pega a
+  // reincidência genérica, e o específico, o que a lei reserva a ela.
+  ['reincidente-doloso', (c) => ({...cenarioFromCrime(c), reincidencia: 'doloso'})],
+  ['reincidente-especifico', (c) => ({...cenarioFromCrime(c), reincidencia: 'especifico'})],
 ];
 
 interface Cenariado {

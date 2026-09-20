@@ -406,8 +406,13 @@ o site novo ir ao ar. Sem número de frente, para não renumerar o resto.
   na estatística (1.472 → 1.474); os guarda-chuvas da Lei 2.889/56 ficam fora, porque o
   catálogo já os desdobra em registros "c/c"; tipos só com multa com vereditos na ficha; ANPP
   vedada quando cabe transação (art. 28-A, §2º, I: 1.046 → 688 tipos). **Em aberto:**
-  - a progressão dos crimes comuns (LEP, art. 112, II a IV) para o reincidente genérico —
-    conferir a jurisprudência antes de mexer (nos hediondos, o Tema 1084 do STJ já responde);
+  - ~~a progressão dos crimes comuns para o reincidente genérico~~ — **fechado em
+    19/09/2026**, pela bateria de casos-padrão: o motor dava ao reincidente genérico a fração
+    do PRIMÁRIO (16,67% no furto, 25% no roubo), e a LEP, na redação da Lei 15.402/2026, manda
+    20% ao reincidente em crime diverso dos dos incisos I e II (inciso III) e 30% ao
+    reincidente em crime com violência (inciso II). O texto diz "reincidente" e não o
+    qualifica; a exigência de reincidência ESPECÍFICA é dos incisos dos hediondos (V a VIII),
+    onde o Tema 1084 do STJ opera. Falta o mantenedor confirmar a leitura;
   - os atributos que o motor não calcula para tipo sem pena privativa: a ficha diz que não
     os calcula, e não que a lei os afaste. Desistência voluntária, arrependimento posterior e
     perdão judicial não dependem da espécie de pena, e pedem análise;

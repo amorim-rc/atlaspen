@@ -8,7 +8,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "typecheck": "astro check",
-    "verificar": "tsc -p scripts/tsconfig.verificar.json && node .verificar-build/scripts/verificar_atributos.js && node .verificar-build/scripts/verificar_injecao.js && node .verificar-build/scripts/verificar_pena.js && node .verificar-build/scripts/verificar_simulacao.js && node .verificar-build/scripts/verificar_remissao.js",
+    "verificar": "tsc -p scripts/tsconfig.verificar.json && node .verificar-build/scripts/verificar_atributos.js && node .verificar-build/scripts/verificar_injecao.js && node .verificar-build/scripts/verificar_pena.js && node .verificar-build/scripts/verificar_simulacao.js && node .verificar-build/scripts/verificar_remissao.js && node .verificar-build/scripts/verificar_casos.js",
     "equivalencia": "tsc -p scripts/tsconfig.verificar.json && node .verificar-build/scripts/equivalencia_atributos.js",
     "atributos": "tsc -p scripts/tsconfig.verificar.json && node .verificar-build/scripts/derivar_atributos.js",
     "changelog:json": "node scripts/gerar-changelog-json.mjs"

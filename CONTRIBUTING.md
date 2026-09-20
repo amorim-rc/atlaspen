@@ -55,8 +55,9 @@ determinístico, sem IA, descrito em [`scripts/robos/README.md`](scripts/robos/R
    - `transform_data.py --estrito` — convenções C1, C2, C3 e o teto de contradições (C4);
    - se o derivado commitado corresponde à fonte;
    - `npm run typecheck`;
-   - `npm run verificar` — invariantes do motor de atributos e casos-âncora de direito
-     penal contra o catálogo real;
+   - `npm run verificar` — invariantes do motor de atributos, casos-âncora de direito penal
+     contra o catálogo real e a tabela de casos-padrão (`scripts/verificar_casos.ts`: tipo
+     real, premissa explícita, veredito esperado e o dispositivo que o sustenta);
    - `npm run build`.
 
 ### Correções finas (multa e afins)

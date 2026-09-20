@@ -411,13 +411,13 @@ export const AVALIADORES: Record<string, (c: Cenario, p: Parametros) => Avaliaca
       // gravosa para o primário sem violência (16% viraram 16,67%) e lei mais
       // gravosa não retroage. A retroatividade da lei benéfica se apura por
       // SITUAÇÃO CONCRETA, não em bloco.
-      if (comViolencia && reincidenteEspecifico(c)) {
+      if (comViolencia && ehReincidente(c)) {
         fracao = num(p, 'fracaoReincidenteViolencia');
         inciso = 'IV — reincidente, crime com violência/grave ameaça (redação de 2019)';
       } else if (comViolencia) {
         fracao = num(p, 'fracaoPrimarioViolencia');
         inciso = 'III — primário, crime com violência/grave ameaça (redação de 2019)';
-      } else if (reincidenteEspecifico(c)) {
+      } else if (ehReincidente(c)) {
         fracao = num(p, 'fracaoReincidenteSemViolencia');
         inciso = 'II — reincidente, sem violência/grave ameaça (redação de 2019)';
       } else {
@@ -430,17 +430,23 @@ export const AVALIADORES: Record<string, (c: Cenario, p: Parametros) => Avaliaca
       // primário sobra o caput, e isso é leitura literal. Para o REINCIDENTE o
       // texto comporta duas saídas — ver o resumo devolvido abaixo.
       fracao = num(p, 'fracaoCaputRegimeAnterior');
-      inciso = reincidenteEspecifico(c)
+      inciso = ehReincidente(c)
         ? 'caput — crime do Título XII, reincidente (LEITURA EM DISPUTA: 1/6 pelo ' +
           'caput, ou 20% pelo inciso III)'
         : 'caput — crime do Título XII, primário (os incisos I e II o ressalvam)';
-    } else if (comViolencia && reincidenteEspecifico(c)) {
+    } else if (comViolencia && ehReincidente(c)) {
+      // "Reincidente", nos incisos dos crimes COMUNS, é a reincidência genérica:
+      // o texto não a qualifica. A exigência de reincidência ESPECÍFICA vale nos
+      // incisos dos hediondos (V a VIII), que falam em "crime hediondo ou
+      // equiparado" — é o que o STJ decidiu no Tema 1084 (REsp 1.910.240), e o
+      // fundamento de lá não se transporta para cá. Conferido em 19/09/2026,
+      // contra a redação da Lei 15.402/2026.
       fracao = num(p, 'fracaoReincidenteViolencia');
       inciso = 'II — reincidente, crime com violência/grave ameaça';
     } else if (comViolencia) {
       fracao = num(p, 'fracaoPrimarioViolencia');
       inciso = 'I — primário, crime com violência/grave ameaça';
-    } else if (reincidenteEspecifico(c)) {
+    } else if (ehReincidente(c)) {
       fracao = num(p, 'fracaoReincidenteSemViolencia');
       inciso = 'III — reincidente em crime diverso dos dos incisos I e II';
     } else {

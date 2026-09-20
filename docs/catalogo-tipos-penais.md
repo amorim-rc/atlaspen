@@ -178,6 +178,16 @@ entrar**. O catálogo não pode regredir.
 - **Zero contradições** (C4) e derivado sincronizado com a fonte.
 - **Casos-âncora de direito penal** (`npm run verificar`): cada atributo avaliado contra o
   catálogo real, com os invariantes do motor.
+- **Casos-padrão do motor** (`scripts/verificar_casos.ts`, no mesmo comando): 47 afirmações
+  com tipo real, premissa explícita, veredito esperado e o dispositivo que o sustenta —
+  transação, ANPP, sursis, substituição, regime, progressão, livramento, prescrição,
+  clemência e execução, nos quatro estados de reincidência. Tipo não encontrado é FALHA, e
+  não caso pulado: uma tabela que se desliga sozinha não verifica nada. Foi ela que, em
+  19/09/2026, mostrou que o reincidente genérico recebia a fração de progressão do primário.
+- **Congelamento dos vereditos** (`npm run equivalencia`): 22 atributos × 1.479 tipos × 4
+  cenários (página do tipo, busca por atributo, reincidente em crime doloso e reincidente
+  específico). Refatorar o motor sem mudar resposta nenhuma é o resultado esperado; mudança
+  de veredito só passa se alguém regravar o congelamento e disser por quê.
 - **Conferência semanal contra o Planalto** (`conferidor.yml`): pena, espécie, existência e
   situação de cada dispositivo, com a cobertura publicada no relatório — ver
   [Dados abertos](/docs/dados-abertos#de-onde-vem-cada-registro-e-como-ele-é-revisado).
