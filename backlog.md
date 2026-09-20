@@ -279,9 +279,36 @@ método (decisão de 11/09/2026).
   art. 225 do CP e a Lei 13.964/2019 incluiu o §5º do art. 171. Nesta fase basta a
   redação vigente; a sucessão é da frente 11.
 
-**Primeiro passo.** O estudo com o grupo fecha o vocabulário e o campo de fundamento.
-Depois, escrever a convenção no `CONTRIBUTING.md` e revisar primeiro os 61 registros que
-não são incondicionados; em seguida, uma amostra dos incondicionados.
+**Feito em 19/09/2026.** O vocabulário está fechado e imposto pela CI: `Pública
+Incondicionada`, `Pública Condicionada à Representação`, `Pública Condicionada à
+Requisição`, `Ação Penal Privada` e `Ação Penal Privada Personalíssima`. Os 66 registros que
+não eram incondicionados foram conferidos um a um contra o compilado, e o filtro da Busca
+continua atendendo os links antigos (`acao=Pública Condicionada` e `acao=Privada`).
+
+A conferência achou seis erros publicados:
+
+- **Estelionato (8 registros).** A Lei 15.397/2026 revogou o §5º do art. 171 em 4/5/2026, e
+  a ação voltou a ser pública incondicionada. Virou nota do feed (`pejus`), a v0.0.2.
+- **Violação sexual mediante fraude (art. 215).** Condicionada desde sempre no catálogo; o
+  art. 225, na redação da Lei 13.718/2018, é incondicionada.
+- **Registro não autorizado da intimidade sexual (art. 216-B).** O art. 225 alcança os
+  Capítulos I e II do Título VI, e o 216-B está no Capítulo I-A: vale o art. 100.
+- **Crime contra a honra em rede social (art. 141, §2º — 3 registros).** O parágrafo
+  triplica a pena e não muda a ação, que é por queixa (art. 145, *caput*). Dois deles
+  estavam como incondicionados e um como condicionado.
+- **Invasão de dispositivo informático (6 registros).** O art. 154-B manda representação em
+  TODOS os crimes do art. 154-A, com a ressalva da administração pública; quatro registros
+  publicavam incondicionada.
+- **Reter cartão de pessoa com deficiência (Lei 13.146, art. 91).** A lei não comina regra
+  de ação penal, e o registro publicava condicionada.
+
+Mais duas condições declaradas onde faltavam: injúria real (privada, salvo se da violência
+resulta lesão) e os seis do art. 154-A.
+
+**O que resta desta frente:** o campo de **fundamento** da ação penal — decisão do
+mantenedor em 19/09/2026 de não marcar por regra os 1.446 incondicionados, porque "regra
+geral, art. 100" em massa é preenchimento por plausibilidade; a revisão por amostra desses
+incondicionados (frente 7); e a temporalidade da espécie de ação, que vai com a frente 11.
 
 ---
 

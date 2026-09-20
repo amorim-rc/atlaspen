@@ -506,7 +506,7 @@
     "pena_min": 3,
     "pena_max": 12,
     "tipo_pena": "Detenção",
-    "acao": "Pública Condicionada",
+    "acao": "Pública Condicionada à Representação",
     "hediondo": "Não",
     "elemento": "Doloso",
     "tentativa": "Sim",
@@ -572,7 +572,7 @@
     "pena_min": 2,
     "pena_max": 10,
     "tipo_pena": "Detenção",
-    "acao": "Pública Condicionada",
+    "acao": "Pública Condicionada à Representação",
     "hediondo": "Não",
     "elemento": "Doloso",
     "tentativa": "Sim",
@@ -588,7 +588,7 @@
     "pena_min": 2,
     "pena_max": 12,
     "tipo_pena": "Detenção",
-    "acao": "Pública Condicionada",
+    "acao": "Pública Condicionada à Representação",
     "hediondo": "Não",
     "elemento": "Culposo",
     "tentativa": "Não",
@@ -604,7 +604,7 @@
     "pena_min": 2,
     "pena_max": 16,
     "tipo_pena": "Detenção",
-    "acao": "Pública Condicionada",
+    "acao": "Pública Condicionada à Representação",
     "hediondo": "Não",
     "elemento": "Culposo",
     "tentativa": "Não",
@@ -700,7 +700,7 @@
     "pena_min": 3,
     "pena_max": 12,
     "tipo_pena": "Detenção",
-    "acao": "Pública Condicionada",
+    "acao": "Pública Condicionada à Representação",
     "hediondo": "Não",
     "elemento": "Doloso",
     "tentativa": "Sim",
@@ -978,23 +978,24 @@
     "tentativa": "Sim",
     "violencia": "Sim",
     "grave_ameaca": "Não",
-    "obs": "3 meses a 1 ano detenção + multa, além da pena correspondente à violência"
+    "obs": "3 meses a 1 ano detenção + multa, além da pena correspondente à violência",
+    "acao_condicao": "Pública incondicionada quando da violência resulta lesão corporal (CP, art. 145, caput); nas demais hipóteses, privada."
   },
   {
     "id": 62,
     "lei": "CP",
     "artigo": "Art. 140, §3º",
-    "crime": "Injúria racial",
+    "crime": "Injúria por elementos referentes a religião ou à condição de pessoa idosa ou com deficiência",
     "pena_min": 12,
     "pena_max": 36,
     "tipo_pena": "Reclusão",
-    "acao": "Pública Condicionada",
+    "acao": "Pública Condicionada à Representação",
     "hediondo": "Não",
     "elemento": "Doloso",
     "tentativa": "Sim",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "1 a 3 anos reclusão + multa. Injúria consistente na utilização de elementos referentes a raça, cor, etnia, religião, origem, condição de pessoa idosa ou com deficiência. Equiparada a racismo (Lei 14.532/2023). Imprescritível e inafiançável"
+    "obs": "1 a 3 anos reclusão + multa. Se a injúria consiste na utilização de elementos referentes a religião ou à condição de pessoa idosa ou com deficiência (redação da Lei 14.532/2023). A injúria racial saiu daqui para o art. 2º-A da Lei 7.716/89. Ação condicionada a representação pelo art. 145, parágrafo único, do CP"
   },
   {
     "id": 63,
@@ -1020,13 +1021,13 @@
     "pena_min": 18,
     "pena_max": 72,
     "tipo_pena": "Detenção",
-    "acao": "Pública Condicionada",
+    "acao": "Ação Penal Privada",
     "hediondo": "Não",
     "elemento": "Doloso",
     "tentativa": "Sim",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "Aumento de 1/3 contra funcionário público em razão de suas funções. Muda a ação penal: pública condicionada à representação"
+    "obs": "Aumento de 1/3 contra funcionário público em razão de suas funções. Muda a ação penal: pública condicionada à representação. Ação privada pelo art. 145, caput, do CP: o §2º do art. 141 triplica a pena e não altera a ação"
   },
   {
     "id": 65,
@@ -1052,7 +1053,7 @@
     "pena_min": 1,
     "pena_max": 6,
     "tipo_pena": "Detenção",
-    "acao": "Pública Condicionada",
+    "acao": "Pública Condicionada à Representação",
     "hediondo": "Não",
     "elemento": "Doloso",
     "tentativa": "Sim",
@@ -1068,7 +1069,7 @@
     "pena_min": 6,
     "pena_max": 24,
     "tipo_pena": "Reclusão",
-    "acao": "Pública Condicionada",
+    "acao": "Pública Condicionada à Representação",
     "hediondo": "Não",
     "elemento": "Doloso",
     "tentativa": "Sim",
@@ -1213,7 +1214,7 @@
     "pena_min": 1,
     "pena_max": 6,
     "tipo_pena": "Detenção",
-    "acao": "Pública Condicionada",
+    "acao": "Pública Condicionada à Representação",
     "hediondo": "Não",
     "elemento": "Doloso",
     "tentativa": "Sim",
@@ -1229,7 +1230,7 @@
     "pena_min": 1,
     "pena_max": 6,
     "tipo_pena": "Detenção",
-    "acao": "Pública Condicionada",
+    "acao": "Pública Condicionada à Representação",
     "hediondo": "Não",
     "elemento": "Doloso",
     "tentativa": "Sim",
@@ -1245,7 +1246,7 @@
     "pena_min": 1,
     "pena_max": 6,
     "tipo_pena": "Detenção",
-    "acao": "Pública Condicionada",
+    "acao": "Pública Condicionada à Representação",
     "hediondo": "Não",
     "elemento": "Doloso",
     "tentativa": "Sim",
@@ -1261,7 +1262,7 @@
     "pena_min": 1,
     "pena_max": 6,
     "tipo_pena": "Detenção",
-    "acao": "Pública Condicionada",
+    "acao": "Pública Condicionada à Representação",
     "hediondo": "Não",
     "elemento": "Doloso",
     "tentativa": "Sim",
@@ -1294,7 +1295,7 @@
     "pena_min": 3,
     "pena_max": 12,
     "tipo_pena": "Detenção",
-    "acao": "Pública Condicionada",
+    "acao": "Pública Condicionada à Representação",
     "hediondo": "Não",
     "elemento": "Doloso",
     "tentativa": "Sim",
@@ -1310,13 +1311,14 @@
     "pena_min": 12,
     "pena_max": 48,
     "tipo_pena": "Reclusão",
-    "acao": "Pública Condicionada",
+    "acao": "Pública Condicionada à Representação",
     "hediondo": "Não",
     "elemento": "Doloso",
     "tentativa": "Sim",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "1-4 anos reclusão + multa. Invadir dispositivo informático de uso alheio, conectado ou não à rede de computadores, para obter/adulterar/destruir dados ou instalar vulnerabilidades. Lei 14.155/2021 aumentou penas"
+    "obs": "1-4 anos reclusão + multa. Invadir dispositivo informático de uso alheio, conectado ou não à rede de computadores, para obter/adulterar/destruir dados ou instalar vulnerabilidades. Lei 14.155/2021 aumentou penas",
+    "acao_condicao": "Incondicionada quando o crime é cometido contra a administração pública direta ou indireta de qualquer dos Poderes, ou contra concessionária de serviço público (CP, art. 154-B)."
   },
   {
     "id": 83,
@@ -1326,13 +1328,14 @@
     "pena_min": 16,
     "pena_max": 80,
     "tipo_pena": "Reclusão",
-    "acao": "Pública Condicionada",
+    "acao": "Pública Condicionada à Representação",
     "hediondo": "Não",
     "elemento": "Doloso",
     "tentativa": "Sim",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "Aumento de 1/3 a 2/3 se da invasão resulta prejuízo econômico"
+    "obs": "Aumento de 1/3 a 2/3 se da invasão resulta prejuízo econômico",
+    "acao_condicao": "Incondicionada quando o crime é cometido contra a administração pública direta ou indireta de qualquer dos Poderes, ou contra concessionária de serviço público (CP, art. 154-B)."
   },
   {
     "id": 84,
@@ -1342,13 +1345,14 @@
     "pena_min": 24,
     "pena_max": 60,
     "tipo_pena": "Reclusão",
-    "acao": "Pública Incondicionada",
+    "acao": "Pública Condicionada à Representação",
     "hediondo": "Não",
     "elemento": "Doloso",
     "tentativa": "Sim",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "2-5 anos reclusão + multa. Se da invasão resulta obtenção de conteúdo de comunicações eletrônicas privadas, segredos comerciais ou industriais, informações sigilosas"
+    "obs": "2-5 anos reclusão + multa. Se da invasão resulta obtenção de conteúdo de comunicações eletrônicas privadas, segredos comerciais ou industriais, informações sigilosas. A ação é condicionada a representação pelo art. 154-B do CP, que alcança todos os crimes do art. 154-A",
+    "acao_condicao": "Incondicionada quando o crime é cometido contra a administração pública direta ou indireta de qualquer dos Poderes, ou contra concessionária de serviço público (CP, art. 154-B)."
   },
   {
     "id": 85,
@@ -1358,13 +1362,14 @@
     "pena_min": 32,
     "pena_max": 100,
     "tipo_pena": "Reclusão",
-    "acao": "Pública Incondicionada",
+    "acao": "Pública Condicionada à Representação",
     "hediondo": "Não",
     "elemento": "Doloso",
     "tentativa": "Sim",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "Aumento de 1/3 a 2/3 sobre a invasão qualificada do §3º (reclusão de 2 a 5 anos), se houver divulgação, comercialização ou transmissão a terceiro dos dados obtidos: 2 anos e 8 meses a 8 anos e 4 meses. O aumento por vítima ocupante de cargo é o §5º, com registro próprio."
+    "obs": "Aumento de 1/3 a 2/3 sobre a invasão qualificada do §3º (reclusão de 2 a 5 anos), se houver divulgação, comercialização ou transmissão a terceiro dos dados obtidos: 2 anos e 8 meses a 8 anos e 4 meses. O aumento por vítima ocupante de cargo é o §5º, com registro próprio. A ação é condicionada a representação pelo art. 154-B do CP, que alcança todos os crimes do art. 154-A",
+    "acao_condicao": "Incondicionada quando o crime é cometido contra a administração pública direta ou indireta de qualquer dos Poderes, ou contra concessionária de serviço público (CP, art. 154-B)."
   },
   {
     "id": 86,
@@ -1502,7 +1507,7 @@
     "pena_min": 6,
     "pena_max": 24,
     "tipo_pena": "Detenção",
-    "acao": "Pública Condicionada",
+    "acao": "Pública Condicionada à Representação",
     "hediondo": "Não",
     "elemento": "Doloso",
     "tentativa": "Sim",
@@ -2033,13 +2038,13 @@
     "pena_min": 12,
     "pena_max": 60,
     "tipo_pena": "Reclusão",
-    "acao": "Pública Condicionada",
+    "acao": "Pública Incondicionada",
     "hediondo": "Não",
     "elemento": "Doloso",
     "tentativa": "Sim",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "1-5 anos reclusão + multa. Obter vantagem ilícita em prejuízo alheio induzindo/mantendo alguém em erro mediante artifício, ardil ou qualquer outro meio fraudulento. Ação condicionada à representação (Lei 13.964/2019)"
+    "obs": "1-5 anos reclusão + multa. Obter vantagem ilícita em prejuízo alheio induzindo/mantendo alguém em erro mediante artifício, ardil ou qualquer outro meio fraudulento. Ação condicionada à representação (Lei 13.964/2019). A ação penal voltou a ser pública incondicionada com a revogação do §5º do art. 171 pela Lei 15.397/2026, vigente em 4/5/2026"
   },
   {
     "id": 128,
@@ -2177,13 +2182,13 @@
     "pena_min": 24,
     "pena_max": 72,
     "tipo_pena": "Reclusão",
-    "acao": "Pública Condicionada",
+    "acao": "Pública Incondicionada",
     "hediondo": "Não",
     "elemento": "Doloso",
     "tentativa": "Sim",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "2-6 anos reclusão. Ter conjunção carnal ou praticar outro ato libidinoso com alguém, mediante fraude ou outro meio que impeça ou dificulte a livre manifestação de vontade da vítima"
+    "obs": "2-6 anos reclusão. Ter conjunção carnal ou praticar outro ato libidinoso com alguém, mediante fraude ou outro meio que impeça ou dificulte a livre manifestação de vontade da vítima. Ação pública incondicionada pelo art. 225 do CP, na redação da Lei 13.718/2018"
   },
   {
     "id": 137,
@@ -2225,13 +2230,13 @@
     "pena_min": 6,
     "pena_max": 12,
     "tipo_pena": "Detenção",
-    "acao": "Pública Condicionada",
+    "acao": "Pública Incondicionada",
     "hediondo": "Não",
     "elemento": "Doloso",
     "tentativa": "Sim",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "6 meses a 1 ano detenção. Produzir/fotografar/filmar/registrar cena de nudez ou ato sexual ou libidinoso de caráter íntimo e privado sem autorização dos participantes"
+    "obs": "6 meses a 1 ano detenção. Produzir/fotografar/filmar/registrar cena de nudez ou ato sexual ou libidinoso de caráter íntimo e privado sem autorização dos participantes. Ação pública incondicionada pela regra geral do art. 100 do CP: o art. 225 alcança os Capítulos I e II do Título VI, e o art. 216-B está no Capítulo I-A"
   },
   {
     "id": 140,
@@ -2769,13 +2774,13 @@
     "pena_min": 6,
     "pena_max": 24,
     "tipo_pena": "Detenção",
-    "acao": "Ação Penal Privada",
+    "acao": "Ação Penal Privada Personalíssima",
     "hediondo": "Não",
     "elemento": "Doloso",
     "tentativa": "Sim",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "6 meses a 2 anos detenção + multa"
+    "obs": "6 meses a 2 anos detenção + multa. Ação privada personalíssima: só o contraente enganado pode oferecer a queixa, e só depois de transitada em julgado a anulação do casamento (CP, art. 236, parágrafo único)"
   },
   {
     "id": 174,
@@ -9302,7 +9307,7 @@
     "pena_min": 9,
     "pena_max": 36,
     "tipo_pena": "Reclusão",
-    "acao": "Pública Condicionada",
+    "acao": "Pública Condicionada à Representação",
     "hediondo": "Não",
     "elemento": "Doloso",
     "tentativa": "Sim",
@@ -9478,13 +9483,13 @@
     "pena_min": 12,
     "pena_max": 60,
     "tipo_pena": "Reclusão",
-    "acao": "Pública Condicionada",
+    "acao": "Pública Incondicionada",
     "hediondo": "Não",
     "elemento": "Doloso",
     "tentativa": "Sim",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "1-5 anos reclusão + multa. Fraude na venda de imóvel ou bem"
+    "obs": "1-5 anos reclusão + multa. Fraude na venda de imóvel ou bem. A ação penal voltou a ser pública incondicionada com a revogação do §5º do art. 171 pela Lei 15.397/2026, vigente em 4/5/2026"
   },
   {
     "id": 590,
@@ -9494,13 +9499,13 @@
     "pena_min": 12,
     "pena_max": 60,
     "tipo_pena": "Reclusão",
-    "acao": "Pública Condicionada",
+    "acao": "Pública Incondicionada",
     "hediondo": "Não",
     "elemento": "Doloso",
     "tentativa": "Sim",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "1-5 anos reclusão + multa"
+    "obs": "1-5 anos reclusão + multa. A ação penal voltou a ser pública incondicionada com a revogação do §5º do art. 171 pela Lei 15.397/2026, vigente em 4/5/2026"
   },
   {
     "id": 591,
@@ -9510,13 +9515,13 @@
     "pena_min": 12,
     "pena_max": 60,
     "tipo_pena": "Reclusão",
-    "acao": "Pública Condicionada",
+    "acao": "Pública Incondicionada",
     "hediondo": "Não",
     "elemento": "Doloso",
     "tentativa": "Sim",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "1-5 anos reclusão + multa"
+    "obs": "1-5 anos reclusão + multa. A ação penal voltou a ser pública incondicionada com a revogação do §5º do art. 171 pela Lei 15.397/2026, vigente em 4/5/2026"
   },
   {
     "id": 592,
@@ -9526,13 +9531,13 @@
     "pena_min": 12,
     "pena_max": 60,
     "tipo_pena": "Reclusão",
-    "acao": "Pública Condicionada",
+    "acao": "Pública Incondicionada",
     "hediondo": "Não",
     "elemento": "Doloso",
     "tentativa": "Sim",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "1-5 anos reclusão + multa. Súmula 554 STF: não há crime quando o cheque é pré-datado"
+    "obs": "1-5 anos reclusão + multa. Súmula 554 STF: não há crime quando o cheque é pré-datado. A ação penal voltou a ser pública incondicionada com a revogação do §5º do art. 171 pela Lei 15.397/2026, vigente em 4/5/2026"
   },
   {
     "id": 593,
@@ -9542,13 +9547,13 @@
     "pena_min": 12,
     "pena_max": 60,
     "tipo_pena": "Reclusão",
-    "acao": "Pública Condicionada",
+    "acao": "Pública Incondicionada",
     "hediondo": "Não",
     "elemento": "Doloso",
     "tentativa": "Sim",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "1-5 anos reclusão + multa. Fraude de seguro"
+    "obs": "1-5 anos reclusão + multa. Fraude de seguro. A ação penal voltou a ser pública incondicionada com a revogação do §5º do art. 171 pela Lei 15.397/2026, vigente em 4/5/2026"
   },
   {
     "id": 594,
@@ -9558,13 +9563,13 @@
     "pena_min": 12,
     "pena_max": 60,
     "tipo_pena": "Reclusão",
-    "acao": "Pública Condicionada",
+    "acao": "Pública Incondicionada",
     "hediondo": "Não",
     "elemento": "Doloso",
     "tentativa": "Sim",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "1-5 anos reclusão + multa"
+    "obs": "1-5 anos reclusão + multa. A ação penal voltou a ser pública incondicionada com a revogação do §5º do art. 171 pela Lei 15.397/2026, vigente em 4/5/2026"
   },
   {
     "id": 595,
@@ -10304,7 +10309,7 @@
     "pena_min": 1,
     "pena_max": 6,
     "tipo_pena": "Detenção",
-    "acao": "Pública Condicionada",
+    "acao": "Pública Condicionada à Representação",
     "hediondo": "Não",
     "elemento": "Doloso",
     "tentativa": "Sim",
@@ -11763,7 +11768,7 @@
     "pena_min": 12,
     "pena_max": 48,
     "tipo_pena": "Reclusão",
-    "acao": "Pública Condicionada",
+    "acao": "Pública Condicionada à Representação",
     "hediondo": "Não",
     "elemento": "Doloso",
     "tentativa": "Sim",
@@ -11827,13 +11832,14 @@
     "pena_min": 16,
     "pena_max": 72,
     "tipo_pena": "Reclusão",
-    "acao": "Pública Incondicionada",
+    "acao": "Pública Condicionada à Representação",
     "hediondo": "Não",
     "elemento": "Doloso",
     "tentativa": "Sim",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "2-5 anos reclusão + multa. Aumento de 1/3 a 2/3"
+    "obs": "2-5 anos reclusão + multa. Aumento de 1/3 a 2/3. A ação é condicionada a representação pelo art. 154-B do CP, que alcança todos os crimes do art. 154-A",
+    "acao_condicao": "Incondicionada quando o crime é cometido contra a administração pública direta ou indireta de qualquer dos Poderes, ou contra concessionária de serviço público (CP, art. 154-B)."
   },
   {
     "id": 736,
@@ -12837,13 +12843,13 @@
     "pena_min": 6,
     "pena_max": 24,
     "tipo_pena": "Detenção",
-    "acao": "Pública Condicionada",
+    "acao": "Pública Incondicionada",
     "hediondo": "Não",
     "elemento": "Doloso",
     "tentativa": "Sim",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "6 meses a 2 anos detenção + multa. Reter BPC, cartão, etc."
+    "obs": "6 meses a 2 anos detenção + multa. Reter BPC, cartão, etc. Ação pública incondicionada pela regra geral do art. 100 do CP: a Lei 13.146/2015 não comina regra de ação penal"
   },
   {
     "id": 799,
@@ -13173,7 +13179,7 @@
     "pena_min": 0.5,
     "pena_max": 2,
     "tipo_pena": "Detenção",
-    "acao": "Pública Condicionada",
+    "acao": "Pública Condicionada à Representação",
     "hediondo": "Não",
     "elemento": "Doloso",
     "tentativa": "Sim",
@@ -13189,13 +13195,13 @@
     "pena_min": 12,
     "pena_max": 60,
     "tipo_pena": "Reclusão",
-    "acao": "Pública Condicionada",
+    "acao": "Pública Incondicionada",
     "hediondo": "Não",
     "elemento": "Doloso",
     "tentativa": "Sim",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "Reclusão de 1 a 5 anos e multa (nas mesmas penas do caput). Cessão de conta laranja (Lei 15.397/2026)"
+    "obs": "Reclusão de 1 a 5 anos e multa (nas mesmas penas do caput). Cessão de conta laranja (Lei 15.397/2026). A ação penal voltou a ser pública incondicionada com a revogação do §5º do art. 171 pela Lei 15.397/2026, vigente em 4/5/2026"
   },
   {
     "id": 821,
@@ -15986,7 +15992,7 @@
     "pena_min": 3,
     "pena_max": 24,
     "tipo_pena": "Detenção",
-    "acao": "Pública Condicionada",
+    "acao": "Pública Condicionada à Representação",
     "hediondo": "Não",
     "elemento": "Doloso",
     "tentativa": "Sim",
@@ -23891,13 +23897,14 @@
     "pena_min": 32,
     "pena_max": 90,
     "tipo_pena": "Reclusão",
-    "acao": "Pública Incondicionada",
+    "acao": "Pública Condicionada à Representação",
     "hediondo": "Não",
     "elemento": "Doloso",
     "tentativa": "Sim",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "Registro criado em 06/08/2026 pela regra do registro por moldura-base."
+    "obs": "Registro criado em 06/08/2026 pela regra do registro por moldura-base. A ação é condicionada a representação pelo art. 154-B do CP, que alcança todos os crimes do art. 154-A",
+    "acao_condicao": "Incondicionada quando o crime é cometido contra a administração pública direta ou indireta de qualquer dos Poderes, ou contra concessionária de serviço público (CP, art. 154-B)."
   },
   {
     "id": 1487,
@@ -24179,13 +24186,13 @@
     "pena_min": 9,
     "pena_max": 36,
     "tipo_pena": "Detenção",
-    "acao": "Pública Incondicionada",
+    "acao": "Ação Penal Privada",
     "hediondo": "Não",
     "elemento": "Doloso",
     "tentativa": "Sim",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "Registro criado em 06/08/2026 pela regra do registro por moldura-base."
+    "obs": "Registro criado em 06/08/2026 pela regra do registro por moldura-base. Ação privada pelo art. 145, caput, do CP: o §2º do art. 141 triplica a pena e não altera a ação"
   },
   {
     "id": 1505,
@@ -24195,13 +24202,13 @@
     "pena_min": 3,
     "pena_max": 18,
     "tipo_pena": "Detenção",
-    "acao": "Pública Incondicionada",
+    "acao": "Ação Penal Privada",
     "hediondo": "Não",
     "elemento": "Doloso",
     "tentativa": "Sim",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "Registro criado em 06/08/2026 pela regra do registro por moldura-base."
+    "obs": "Registro criado em 06/08/2026 pela regra do registro por moldura-base. Ação privada pelo art. 145, caput, do CP: o §2º do art. 141 triplica a pena e não altera a ação"
   },
   {
     "id": 1506,

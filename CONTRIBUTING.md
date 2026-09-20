@@ -299,6 +299,7 @@ elemento culposo.
 | `pena_por_remissao` | objeto | opcional; `{dispositivo_fonte, lei_fonte, artigos_fonte, operador, fracao}` quando a moldura é a de outro dispositivo (C2). Incompatível com `pena_min`/`pena_max` |
 | `tipo_pena` | texto | Reclusão / Detenção / Prisão simples / Multa / Morte / Outras penas / — |
 | `acao` | texto | ação penal |
+| `acao` | vocabulário fechado | Pública Incondicionada; Pública Condicionada à Representação; Pública Condicionada à Requisição; Ação Penal Privada; Ação Penal Privada Personalíssima ⛔ imposta |
 | `hediondo` | Sim / Não | inclui equiparados; a espécie e o fundamento são derivados da tabela (C6) |
 | `elemento` | texto | Doloso / Culposo / Preterdoloso |
 | `tentativa` | Sim / Não / — | pressuposto do art. 15 do CP |

@@ -266,11 +266,14 @@ _RESSALVA = re.compile(
 
 _ROTULO_ACAO = {
     "privada": "Ação Penal Privada",
-    "condicionada": "Pública Condicionada",
+    "condicionada": "Pública Condicionada à Representação",
 }
 _EQUIVALENTES = {
     "ação penal privada": "privada", "privada": "privada",
+    "ação penal privada personalíssima": "privada",
     "pública condicionada": "condicionada",
+    "pública condicionada à representação": "condicionada",
+    "pública condicionada à requisição": "condicionada",
     "ação penal pública condicionada": "condicionada",
     "pública incondicionada": "incondicionada",
     "ação penal pública incondicionada": "incondicionada",

@@ -101,7 +101,10 @@ class TestAcaoPenal:
                                  monkeypatch)
         achados = auditar.auditar_acao_penal(
             [registro(id=5, artigo="Art. 151, caput")], indice)
-        assert achados and achados[0]["para"] == "Pública Condicionada"
+        # O vocabulário fechado em 19/09/2026 diz DE QUE a ação depende: a fórmula
+        # "somente se procede mediante representação" propõe a representação, não a
+        # requisição do Ministro da Justiça, que é outro instituto.
+        assert achados and achados[0]["para"] == "Pública Condicionada à Representação"
 
     def test_silencio_da_lei_e_regra_do_art_100(self, monkeypatch):
         indice = self._com_texto("Matar alguém.", monkeypatch)

@@ -198,7 +198,15 @@ def validar_moldura(crimes: list) -> list:
 # forma: o site filtra por igualdade, e o id 730 (CP, art. 138, §1º), gravado
 # "Privada" em vez de "Ação Penal Privada", sumia do filtro de ação privada.
 VOCABULARIO = {
-    "acao": {"Pública Incondicionada", "Pública Condicionada", "Ação Penal Privada"},
+    # Fechado em 19/09/2026 (frente 6 do backlog): a espécie da ação penal, como a
+    # lei a nomeia. "Pública Condicionada" sozinha não dizia se depende de
+    # representação do ofendido ou de requisição do Ministro da Justiça, que são
+    # institutos diferentes; "Privada" e "Ação Penal Privada" eram o mesmo valor
+    # com dois rótulos, e a privada personalíssima (CP, art. 236, parágrafo único)
+    # não tinha onde ser registrada.
+    "acao": {"Pública Incondicionada", "Pública Condicionada à Representação",
+             "Pública Condicionada à Requisição", "Ação Penal Privada",
+             "Ação Penal Privada Personalíssima"},
     "tipo_pena": {"Reclusão", "Detenção", "Prisão simples", "Morte", "Impedimento",
                   "Multa", "Outras penas", "—"},
     "elemento": {"Doloso", "Culposo", "Preterdoloso"},

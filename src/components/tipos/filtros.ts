@@ -177,6 +177,17 @@ export function filtrosAtivos(f: Filtros): {rotulo: string; sem: Filtros}[] {
 
 export function lerFiltros(search: string): Filtros {
   const q = new URLSearchParams(search);
+/**
+ * O vocabulário da ação penal foi fechado em 19/09/2026 (frente 6): "Pública
+ * Condicionada" passou a dizer de que depende, e "Privada" virou "Ação Penal
+ * Privada". Um link já citado continua filtrando o que filtrava.
+ */
+const ACAO_ANTIGA: Record<string, string> = {
+  'Pública Condicionada': 'Pública Condicionada à Representação',
+  Privada: 'Ação Penal Privada',
+};
+const acaoAntiga = (v: string) => ACAO_ANTIGA[v] ?? v;
+
   const um = <T extends string>(v: string | null, validos: readonly T[]): T | '' =>
     v && (validos as readonly string[]).includes(v) ? (v as T) : '';
   const ordemBruta = q.get('ordem') ?? '';
@@ -189,7 +200,7 @@ export function lerFiltros(search: string): Filtros {
     hediondo: um(q.get('hed'), ['sim', 'nao'] as const),
     elemento: um(q.get('elem'), ['doloso', 'culposo', 'preterdoloso'] as const),
     violencia: um(q.get('viol'), ['violencia', 'grave-ameaca', 'ambos', 'nenhuma'] as const),
-    acao: q.get('acao') ?? '',
+    acao: acaoAntiga(q.get('acao') ?? ''),
     menorPotencial: q.get('mpo') === '1',
     ordem: (['lei', 'artigo', 'crime', 'min', 'max'] as const).includes(campo as CampoOrdem) ? (campo as CampoOrdem) : 'lei',
     decrescente: dir === 'desc',

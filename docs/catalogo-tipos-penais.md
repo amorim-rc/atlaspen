@@ -43,6 +43,7 @@ data/crimes.json  ──►  scripts/transform_data.py  ──►  static/data/c
 | `pena_min` / `pena_max` | Pena cominada **em meses**. |
 | `tipo_pena` | `Reclusão`, `Detenção`, `Prisão simples`, `Multa`, `Morte` (crimes de guerra do CPM, art. 56), `Outras penas` (sanção cominada que não é privativa nem pecuniária) ou `—`. |
 | `acao` | Ação penal (pública incondicionada, condicionada, privada). |
+| `acao` | Espécie de ação penal, em vocabulário fechado desde 19/09/2026: `Pública Incondicionada`, `Pública Condicionada à Representação`, `Pública Condicionada à Requisição`, `Ação Penal Privada` e `Ação Penal Privada Personalíssima` (CP, art. 236, parágrafo único). |
 | `hediondo` | `Sim` / `Não` — inclui os **equiparados** (tráfico, tortura, terrorismo). |
 | `hediondo_especie`, `hediondo_fundamento` | Derivados da tabela `data/hediondos.json`: `natureza` (rol do art. 1º da Lei 8.072/90, taxativo), `equiparado` (art. 5º, XLIII, da CF — o crime responde como hediondo sem o ser) ou `nao`, mais o dispositivo que produz a classificação. Hediondez afirmada sem regra na tabela reprova na CI. |
 | `hediondo_condicao` | Opcional. Quando a hediondez depende do CASO — o homicídio só é hediondo se praticado em atividade de grupo de extermínio —, aqui fica a hipótese, em texto, e `hediondo` permanece `Não`. |
