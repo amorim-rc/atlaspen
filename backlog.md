@@ -360,7 +360,12 @@ mudar. Por isso vem depois dela.
 
 ---
 
-## 8. Pena cominada separada da pena concreta
+## 8. ~~Pena cominada separada da pena concreta~~ — concluída
+
+**Concluída com o revamp (conferida em 20/09/2026).** A ficha do tipo tem três abas
+independentes — pena cominada (`PainelCominada`), pena concreta (`PainelConcreta`) e
+histórico (`PainelHistorico`) —, com a aba ativa na URL. O texto abaixo descreve o site
+antigo e fica como registro.
 
 **Objetivo.** Separar a exibição e a descrição da pena cominada das da pena concreta.
 **Vai junto com a reconstrução do site, que traz os detalhes.**

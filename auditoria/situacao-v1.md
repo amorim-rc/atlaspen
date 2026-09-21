@@ -42,12 +42,10 @@ Decisão da equipe em 10/09/2026: lançar enxuto.
 
 ## Cobertura: o que "todos os tipos" ainda não garante
 
-- **Código Penal Militar marcado "em coleta".** O inventário mede 351 de 351 preceitos, e a
-  marca vem de uma lista fixa em `scripts/gerar_completude.py`. Falta decidir se ela ainda
-  procede ou se o CPM pode passar a "concluído".
-- **Dois "não iniciado" falsos na página de completude.** A Lei 4.595/64 não tem crime vigente
-  (o do art. 38, §7º, foi revogado pela LC 105/2001), e o crime da Lei de Migração está no CP,
-  art. 232-A, onde já está catalogado. Correção de inventário, pequena.
+- ~~**Código Penal Militar marcado "em coleta"**~~ e ~~**dois "não iniciado" falsos**~~ —
+  corrigidos em 20/09/2026. O comparador de tipos acha 351 preceitos no CPM e nenhum sem
+  registro; a Lei 4.595/64 não tem crime vigente, e o crime da Lei de Migração é contado no
+  CP. Hoje: **61 de 61 diplomas com coleta**, denominador de 1.172 preceitos.
 - **O que nenhum robô alcança**, e está declarado como limite: decisão de tribunal que retira
   tipo do ordenamento (ADI) e tipo antigo nunca cadastrado. São o Robô dos tribunais e o
   Curador, ambos da fase 2.
@@ -63,7 +61,7 @@ Decisão da equipe em 10/09/2026: lançar enxuto.
 | 5. Atributos em dados | concluída | — | — |
 | 6. Ação penal | vocabulário fechado, derivador pronto, 66 registros conferidos à mão | os 149 com ressalva (revisão fina, bloco C); decidir o campo de fundamento, que o derivador já tem pronto para 1.363 registros | você |
 | 7. Amostra de validação | protocolo registrado (`auditoria/protocolo.md`) | o sorteio, só na versão amadurecida; uma segunda pessoa para a dupla conferência | tudo o resto, e uma pessoa |
-| 8. Pena cominada × pena concreta | o site novo já as separa na ficha do tipo | conferir e riscar | eu |
+| 8. Pena cominada × pena concreta | **concluída** (20/09/2026): três abas na ficha — cominada, concreta e histórico | — | — |
 | 17. Hediondo × equiparado | primeira parte feita | condição em texto livre (24); varredura do CPM contra o rol (374) | você e eu |
 
 ## O revamp, antes do merge
