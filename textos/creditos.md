@@ -8,10 +8,10 @@ resumo: Quem concebeu e constrói o AtlasPen, a pesquisa de 2008 que é seu ante
 
 ## Autoria
 
-O AtlasPen foi concebido e é desenvolvido por **Luccas de Amorim**. O projeto nasceu como
-uma base com cobertura completa dos tipos penais brasileiros, primeiro em planilha, com o
-nome de trabalho *algo-pen*, e passou a sistema de código e dados abertos em junho de 2026:
-o primeiro registro do repositório público é de 22 de junho de 2026.
+O AtlasPen foi concebido e é desenvolvido por **Luccas de Amorim**. O projeto nasceu em
+junho de 2026, com o nome de trabalho *algo-pen*, como uma base com cobertura completa dos
+tipos penais brasileiros, em código e dados abertos e em planilha: o primeiro registro do
+repositório público é de 22 de junho de 2026.
 
 A concepção, a arquitetura, o código, o modelo de dados, o catálogo de tipos penais, o motor
 de atributos, os robôs de conferência e a documentação são obra do autor, com o apoio de
