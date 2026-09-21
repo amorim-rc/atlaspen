@@ -4,7 +4,7 @@
     "gerado_por": "scripts/inventario_diplomas.py",
     "unidade": "preceito secundário: cada cominação de pena vigente no texto compilado do Planalto. Tipos do catálogo desdobram incisos e condutas, então tipos_catalogados pode legitimamente exceder preceitos_esperados.",
     "fonte": "Textos compilados oficiais de planalto.gov.br (ccivil_03), texto vigente (revogações riscadas excluídas), conferidos em 2026-07-19.",
-    "total_preceitos_esperados": 1174
+    "total_preceitos_esperados": 1172
   },
   "diplomas": [
     {
@@ -576,21 +576,6 @@
       ]
     },
     {
-      "id": "lei13445",
-      "nome": "Lei de Migração (crime do art. 232-A)",
-      "norma": "Lei nº 13.445, de 24 de maio de 2017",
-      "situacao": "vigente",
-      "fonte_url": "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2017/lei/l13445.htm",
-      "conferido_em": "2026-07-19",
-      "artigos_penais": "arts. 232",
-      "preceitos_medidos": 1,
-      "preceitos_esperados": 1,
-      "tipos_catalogados": 2,
-      "rotulos_catalogo": [
-        "Lei 13.445/17"
-      ]
-    },
-    {
       "id": "lei14344",
       "nome": "Lei Henry Borel",
       "norma": "Lei nº 14.344, de 24 de maio de 2022",
@@ -745,16 +730,16 @@
     },
     {
       "id": "lei4595",
-      "nome": "Sistema Financeiro Nacional (crime do art. 44, §7º)",
+      "nome": "Sistema Financeiro Nacional (crimes revogados)",
       "norma": "Lei nº 4.595, de 31 de dezembro de 1964",
       "situacao": "vigente",
       "fonte_url": "https://www.planalto.gov.br/ccivil_03/leis/l4595.htm",
       "conferido_em": "2026-07-19",
-      "artigos_penais": "arts. 44",
+      "artigos_penais": "arts. 34, 38 e 44",
       "preceitos_medidos": 0,
-      "preceitos_esperados": 1,
-      "ajuste_motivo": "O §7º do art. 44 comina reclusão em linha corrida.",
-      "tipos_catalogados": 1,
+      "preceitos_esperados": 0,
+      "ajuste_motivo": "Nenhum crime vigente: os três da lei foram revogados — o art. 34, §1º, pela Lei 13.506/2017; o art. 38, §7º, pela LC 105/2001; e o art. 44, §7º, pela Lei 13.506/2017. O diploma fica no inventário porque o acervo o usa para nomear o dispositivo revogado (conferido em 20/09/2026).",
+      "tipos_catalogados": 0,
       "rotulos_catalogo": [
         "Lei 4.595/64"
       ]
@@ -1187,7 +1172,7 @@
       "motivo": "Sanções de multa administrativa."
     },
     {
-      "norma": "Lei nº 13.344/2016, Lei nº 9.983/2000, Lei nº 12.737/2012, Lei nº 14.197/2021, Lei nº 14.133/2021 (crimes), Lei nº 14.811/2024, Lei nº 14.478/2022 (art. 171-A)",
+      "norma": "Lei nº 13.344/2016, Lei nº 9.983/2000, Lei nº 12.737/2012, Lei nº 14.197/2021, Lei nº 14.133/2021 (crimes), Lei nº 14.811/2024, Lei nº 14.478/2022 (art. 171-A), Lei nº 13.445/2017 (art. 232-A do CP)",
       "motivo": "Inserem tipos no CP/CE; contados no diploma hospedeiro."
     }
   ]

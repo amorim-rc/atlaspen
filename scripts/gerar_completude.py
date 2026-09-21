@@ -24,7 +24,11 @@ RAIZ = Path(__file__).resolve().parent.parent
 # a dispositivo, via scripts/diff_tipos.py, encontrou lacunas genuínas). Fora
 # desta lista, um diploma com coleta é dado como "concluído" — no sentido de
 # que a revisão não localizou preceito faltante, sempre passível de erro.
-INCOMPLETOS: set[str] = {"cpm"}
+# O CPM saiu daqui em 20/09/2026: marcado em 21/07, antes da revisão que fechou a
+# base, ele tinha 351 preceitos no texto e ZERO sem registro casado no comparador
+# de tipos (scripts/diff_tipos.py cpm), e o Vigia não acusava nenhum artigo
+# ausente. Uma marca que ninguém revisita diz ao leitor uma lacuna que não existe.
+INCOMPLETOS: set[str] = set()
 
 # Os dispositivos do acervo histórico vivem em data/acervo.json — a mesma fonte
 # que o site lê em /acervo. Eram duas constantes daqui (os casos identificados

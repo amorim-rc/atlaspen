@@ -368,13 +368,6 @@ META: dict[str, dict] = {
         "faixas": [[4, 4]],
         "rotulos": ["Lei 1.579/52"],
     },
-    "lei13445": {
-        "nome": "Lei de Migração (crime do art. 232-A)",
-        "norma": "Lei nº 13.445, de 24 de maio de 2017",
-        "url": "_ato2015-2018/2017/lei/l13445.htm",
-        "faixas": [[232, 232]],
-        "rotulos": ["Lei 13.445/17"],
-    },
     "lei14344": {
         "nome": "Lei Henry Borel",
         "norma": "Lei nº 14.344, de 24 de maio de 2022",
@@ -465,14 +458,14 @@ META: dict[str, dict] = {
         },
     },
     "lei4595": {
-        "nome": "Sistema Financeiro Nacional (crime do art. 44, §7º)",
+        "nome": "Sistema Financeiro Nacional (crimes revogados)",
         "norma": "Lei nº 4.595, de 31 de dezembro de 1964",
         "url": "leis/l4595.htm",
-        "faixas": [[44, 44]],
+        "faixas": [[34, 44]],
         "rotulos": ["Lei 4.595/64"],
         "ajuste": {
-            "esperados": 1,
-            "motivo": "O §7º do art. 44 comina reclusão em linha corrida.",
+            "esperados": 0,
+            "motivo": "Nenhum crime vigente: os três da lei foram revogados — o art. 34, §1º, pela Lei 13.506/2017; o art. 38, §7º, pela LC 105/2001; e o art. 44, §7º, pela Lei 13.506/2017. O diploma fica no inventário porque o acervo o usa para nomear o dispositivo revogado (conferido em 20/09/2026).",
         },
     },
     "lei5553": {
@@ -761,7 +754,8 @@ EXCLUIDOS = [
      "motivo": "Sanções de multa administrativa."},
     {"norma": "Lei nº 13.344/2016, Lei nº 9.983/2000, Lei nº 12.737/2012, "
               "Lei nº 14.197/2021, Lei nº 14.133/2021 (crimes), Lei nº "
-              "14.811/2024, Lei nº 14.478/2022 (art. 171-A)",
+              "14.811/2024, Lei nº 14.478/2022 (art. 171-A), Lei nº 13.445/2017 "
+              "(art. 232-A do CP)",
      "motivo": "Inserem tipos no CP/CE; contados no diploma hospedeiro."},
 ]
 

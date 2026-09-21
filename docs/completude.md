@@ -18,7 +18,7 @@ conferência do catálogo) e de
 | Indicador | Valor |
 |---|---|
 | Tipos penais catalogados | **1512** |
-| Diplomas com tipo penal vigente | 63 |
+| Diplomas com tipo penal vigente | 61 |
 | — com coleta iniciada | 61 |
 | Diplomas revogados/não recepcionados | [11](/docs/acervo-historico) |
 
@@ -31,7 +31,7 @@ conferência do catálogo) e de
 | Diploma | Tipos coletados | Situação |
 |---|---:|---|
 | Código Penal — Parte Especial | 531 | concluído ❓ |
-| Código Penal Militar — Parte Especial | 394 | 🔶 em coleta |
+| Código Penal Militar — Parte Especial | 394 | concluído ❓ |
 | Código Eleitoral | 66 | concluído ❓ |
 | Crimes contra o meio ambiente | 60 | concluído ❓ |
 | Lei das Contravenções Penais | 52 | concluído ❓ |
@@ -91,8 +91,6 @@ conferência do catálogo) e de
 | Lei de Inelegibilidades (crime do art. 25) | 1 | concluído ❓ |
 | Discriminação de pessoas com HIV/aids | 1 | concluído ❓ |
 | Estatuto da Advocacia (crime do art. 7º-B) | 1 | concluído ❓ |
-| Lei de Migração (crime do art. 232-A) | 0 | ⛔ não iniciado |
-| Sistema Financeiro Nacional (crime do art. 44, §7º) | 0 | ⛔ não iniciado |
 
 A lista completa dos tipos já reunidos, com o texto de cada um, está na [busca por tipo penal](/pesquisa/tipos).
 
