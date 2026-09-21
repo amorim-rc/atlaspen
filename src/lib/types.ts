@@ -150,6 +150,11 @@ export interface Crime {
   perdao_judicial_previsto: boolean;
   /** Identidade do dispositivo (lei + artigo), para detectar repetições. */
   chave_dispositivo: string;
+  /**
+   * A chave canônica do dispositivo (`cp|art. 121, §2º, i`), a do histórico
+   * legislativo e de data/fontes.json. `null` quando o artigo não se lê.
+   */
+  dispositivo_canonico: string | null;
 
   // ── Trilha de auditoria (scripts/robos/vigia/conferir.py --carimbar) ──
   /** Página do texto compilado contra a qual o registro foi conferido. */

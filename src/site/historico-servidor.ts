@@ -1,10 +1,10 @@
 // O histórico legislativo de um dispositivo, em tempo de build.
 //
-// Lê data/historico-legislativo.json, que é append-only e tem por chave o
-// dispositivo em forma canônica (`cp|art. 121, caput`), a mesma do campo
-// `chave_dispositivo` do catálogo. Hoje ele cobre os dispositivos citados pelos
-// atributos penais; a cadeia dos tipos é a frente 4 do backlog. Onde não há
-// evento, a ficha diz que não há — nunca preenche.
+// Lê data/historico-legislativo.json, que tem por chave o dispositivo em forma
+// canônica (`cp|art. 121, caput`), a do campo `dispositivo_canonico` do catálogo.
+// Desde 20/09/2026 (frente 4) ele cobre os artigos de todos os tipos penais, além
+// dos dispositivos citados pelos atributos. Onde não há evento, a ficha diz que
+// não há — nunca preenche.
 //
 // "Alteração" segue a regra de scripts/derivar_atributos.ts: o que uma lei fez
 // depois do texto original. Nascer no original não conta, e correção de dado
@@ -73,7 +73,8 @@ export function historicoDe(chave: string): Historico {
     ultima: alteracoes.at(-1) ?? null,
     original: doDispositivo.some((e) => e.evento === 'criacao' && e.norma === 'original') && !alteracoes.length,
     alteracoesDispositivo: alteracoes.length,
-    alteracoesArtigo: doArtigo.filter(eAlteracao).length,
+    // Leis, e não linhas: a mesma conta da derivação dos tipos e dos atributos.
+    alteracoesArtigo: new Set(doArtigo.filter(eAlteracao).map((e) => `${e.norma}|${e.ano ?? ''}`)).size,
     eventosArtigo: cronologico(doArtigo).reverse(),
   };
 }

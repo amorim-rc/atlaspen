@@ -78,7 +78,11 @@ function resumo(linhas: Linha[]) {
       url: ultima.url ?? null,
       ...(ultima.vigencia ? {vigencia: ultima.vigencia} : {}),
     },
-    alteracoes_legislativas: unicas.length,
+    // Conta LEIS, e não linhas do histórico: o Pacote Anticrime criou o art.
+    // 28-A do CPP em 25 unidades, e a ANPP aparecia com "25 alterações". Uma lei
+    // que inclui e altera no mesmo ato também é uma só. scripts/transform_data.py
+    // (derivar_ultima_alteracao) faz a mesma conta para os tipos.
+    alteracoes_legislativas: new Set(unicas.map((l) => `${l.norma}|${l.ano ?? ''}`)).size,
   };
 }
 

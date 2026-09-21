@@ -214,6 +214,23 @@ legislativa ou correção de dado) e a origem da informação. A data da última
 4. O Vigia registra, para cada tipo que confere, a anotação da redação vigente e o link
    dela; o `transform_data.py` deriva a última alteração no catálogo.
 
+**Passos 2 e 4 feitos em 20/09/2026**, por um caminho mais curto que o previsto: em vez do
+Vigia, o robô do histórico (`scripts/robos/nucleo/historico.py`), que já lia a vida inteira
+de cada dispositivo, passou a cobrir os artigos de todos os tipos — de 227 para 3.209
+eventos. A chave canônica de cada registro sai de `scripts/dispositivo_canonico.py`
+(publicada em `dispositivo_canonico`; 1.510 dos 1.512 registros casam com uma unidade real
+do texto), e o construtor deriva `ultima_alteracao` e `alteracoes_legislativas` pela regra
+dos atributos. Resultado: 1.113 tipos na redação original, 391 alterados, 8 que o compilado
+não data. A contagem passou a ser de **leis**, e não de linhas, também nos atributos — a
+ANPP aparecia com "25 alterações" porque o Pacote Anticrime a criou em 25 unidades.
+
+Achados pelo caminho: o compilado grafa "III perda ou inutilização" sem o travessão (CP,
+art. 129, §2º), e os dois parsers passaram a ler o inciso; e os registros 596 e 597 citavam
+incisos que o art. 158, §1º, não tem.
+
+**O que resta:** a data exata de publicação e de vigência de cada lei alteradora — o
+compilado dá só o ano —, que vem da própria lei.
+
 O evento `revogado` do mesmo esquema é o molde da base de tipos revogados da frente 12.
 
 ---

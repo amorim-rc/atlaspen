@@ -9590,7 +9590,7 @@
   {
     "id": 596,
     "lei": "CP",
-    "artigo": "Art. 158, §1º, I",
+    "artigo": "Art. 158, §1º (concurso de pessoas)",
     "crime": "Extorsão com aumento — concurso de duas ou mais pessoas",
     "pena_min": 64,
     "pena_max": 180,
@@ -9606,7 +9606,7 @@
   {
     "id": 597,
     "lei": "CP",
-    "artigo": "Art. 158, §1º, II",
+    "artigo": "Art. 158, §1º (emprego de arma)",
     "crime": "Extorsão com aumento — emprego de arma",
     "pena_min": 64,
     "pena_max": 180,

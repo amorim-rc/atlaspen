@@ -297,3 +297,31 @@ def test_pena_no_plural_e_pena():
     d = {x.chave: x for x in parsear(html)}["Art. 302|caput"]
     assert d.pena_texto is not None
     assert "de dois a quatro anos" in d.pena_texto
+
+
+def test_inciso_sem_travessao_e_inciso():
+    """O compilado do CP grafa "III perda ou inutilização do membro", sem o
+    travessão, no art. 129, §2º. O inciso sumia, e o histórico da lesão
+    gravíssima por perda de membro ficava sem data."""
+    html = ("<html><body><p>Art. 129. Ofender a integridade corporal:</p>"
+            "<p>§ 2° Se resulta:</p>"
+            "<p>II - enfermidade incuravel;</p>"
+            "<p>III perda ou inutilização do membro, sentido ou função;</p>"
+            "<p>IV - deformidade permanente;</p>"
+            "<p>Pena - reclusão, de dois a oito anos.</p></body></html>")
+    ds = como_dicionarios(parsear(html))
+    paragrafo = next(d for d in ds if d["artigo"] == "Art. 129" and "2" in d["marcador"])
+    assert [i["marcador"] for i in paragrafo["incisos"]] == ["II", "III", "IV"]
+    assert paragrafo["incisos"][1]["texto"].startswith("perda ou inutilização")
+
+
+def test_frase_que_comeca_por_numeral_nao_vira_inciso():
+    """A regra sem travessão exige numeral MAIÚSCULO seguido de minúscula: uma
+    frase como "I love" nunca aparece no compilado, mas "Vide" e "Incluído"
+    aparecem, e não podem virar inciso."""
+    html = ("<html><body><p>Art. 5º Texto do artigo:</p>"
+            "<p>Vide Lei nº 1.234, de 1990</p>"
+            "<p>I - primeiro inciso;</p></body></html>")
+    ds = como_dicionarios(parsear(html))
+    caput = next(d for d in ds if d["artigo"] == "Art. 5")
+    assert [i["marcador"] for i in caput["incisos"]] == ["I"]

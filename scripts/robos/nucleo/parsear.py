@@ -198,6 +198,11 @@ _PAR_SUFIXO = re.compile(r"^(\s*)[-–—]\s?([A-Z])(?![a-zà-ÿ])")
 _PROSA = re.compile(r"\s+[A-Za-zÀ-ÿ]")
 _PAR_UNICO = re.compile(r"^Par[áa]grafo\s+[úu]nico", re.I)
 _INCISO = re.compile(r"^([IVXLC]+)\s*[-–—]\s", re.I)
+# O inciso sem o travessão é erro de digitação do próprio compilado: o art. 129,
+# §2º, do CP grafa "III perda ou inutilização do membro", e o inciso sumia. Só
+# vale com o numeral em MAIÚSCULA seguido de palavra em minúscula — o formato de
+# todo inciso —, para não ler como inciso uma frase que comece por "I" ou "V".
+_INCISO_SEM_TRACO = re.compile(r"^([IVXLC]+)\s+(?=[a-zà-ÿ])")
 _ALINEA = re.compile(r"^([a-z])\)\s")
 # "PenaS", no plural, quando o preceito comina mais de uma espécie de sanção. O
 # Código de Trânsito escreve assim TODOS os seus doze crimes — "Penas - detenção,
@@ -550,7 +555,7 @@ def parsear(documento: str) -> list[Dispositivo]:
             atual.vigencia_pendente = atual.vigencia_pendente or pendente
             continue
 
-        mi = _INCISO.match(texto) or _ALINEA.match(texto)
+        mi = _INCISO.match(texto) or _INCISO_SEM_TRACO.match(texto) or _ALINEA.match(texto)
         if mi and atual is not None:
             atual.incisos.append({
                 "marcador": mi.group(1),

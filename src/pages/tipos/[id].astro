@@ -30,7 +30,10 @@ export function getStaticPaths() {
 
 const {crime} = Astro.props as {crime: Crime};
 const diploma = diplomaDoRotulo(crime.lei);
-const hist = historicoDe(crime.chave_dispositivo);
+// A chave canônica (`cpm|art. 205, §2º`), e não a do catálogo, que para o CPM
+// e as leis especiais leva o rótulo inteiro e não casava com o histórico.
+const chaveCanonica = crime.dispositivo_canonico ?? crime.chave_dispositivo;
+const hist = historicoDe(chaveCanonica);
 const vigente = crime.vigente !== false;
 const calculavel = crime.tem_pena_privativa && !crime.pena_por_remissao;
 
@@ -80,7 +83,7 @@ const especie = [
 // legislativo do artigo; não havendo nenhum dos dois, diz que não há.
 type Faixa = {estado: 'normal' | 'fora' | 'nao-datado'; rotulo: string; texto: string; detalhe?: string; url?: string};
 const semParenteses = (t: string) => t.replace(/^\(|\)$/g, '');
-const artigoDoRegistro = chaveDoArtigo(crime.chave_dispositivo).split('|')[1] ?? crime.artigo;
+const artigoDoRegistro = chaveDoArtigo(chaveCanonica).split('|')[1] ?? crime.artigo;
 let faixa: Faixa;
 if (!vigente) {
   faixa = {
@@ -92,15 +95,38 @@ if (!vigente) {
 } else if (crime.ultima_alteracao !== undefined) {
   const u = crime.ultima_alteracao;
   const n = crime.alteracoes_legislativas;
+  // Três respostas, e nenhuma se confunde com a outra: a lei que por último
+  // mexeu no dispositivo; a redação original, que é uma data conhecida (a do
+  // diploma); e o silêncio do compilado, que não é "original".
   faixa = u
     ? {
         estado: 'normal',
         rotulo: 'Última alteração deste dispositivo',
-        texto: `${u.evento === 'criacao' ? 'Incluído pela' : 'Redação dada pela'} ${u.norma ?? 'norma não identificada'}${u.ano ? `, de ${u.ano}` : ''}.`,
-        ...(typeof n === 'number' ? {detalhe: `${n} ${n === 1 ? 'alteração legislativa' : 'alterações legislativas'} desde o texto original`} : {}),
+        texto: `${u.evento === 'criacao' ? 'Incluído pela' : u.evento === 'revogacao' ? 'Revogado pela' : 'Redação dada pela'} ${u.norma ?? 'norma não identificada'}${u.ano ? `, de ${u.ano}` : ''}.`,
+        // O dispositivo incluído por lei não tem "texto original" de que se alterar:
+        // a lei que o incluiu é a primeira do histórico dele, e conta.
+        ...(typeof n === 'number'
+          ? {
+              detalhe:
+                u.evento === 'criacao' && n === 1
+                  ? 'sem alteração desde a inclusão'
+                  : `${n} ${n === 1 ? 'lei' : 'leis'} no histórico deste dispositivo`,
+            }
+          : {}),
         ...(u.url ? {url: u.url} : {}),
       }
-    : {estado: 'nao-datado', rotulo: 'Última alteração deste dispositivo', texto: 'Sem data conhecida: o texto compilado não data esta redação.'};
+    : n === 0
+      ? {
+          estado: 'normal',
+          rotulo: 'Última alteração deste dispositivo',
+          texto: `Redação original${diploma ? ` — ${diploma.norma}` : ''}, sem alteração desde então.`,
+        }
+      : {
+          estado: 'nao-datado',
+          rotulo: 'Última alteração deste dispositivo',
+          texto: 'Sem data conhecida: o texto compilado não data esta redação.',
+          detalhe: 'o compilado não anota quem deu o texto desta unidade, e o histórico não adivinha',
+        };
 } else if (hist.datado && (hist.ultima || hist.original)) {
   const u = hist.ultima;
   faixa = {
@@ -130,7 +156,7 @@ function tipoEvento(e: EventoHistorico): EventoResumo['tipo'] {
 }
 const dadosHistorico: DadosHistorico = {
   artigo: `${crime.lei} · ${artigoDoRegistro}`,
-  slugArtigo: slugDoArtigo(crime.chave_dispositivo),
+  slugArtigo: slugDoArtigo(chaveCanonica),
   eventos: hist.eventosArtigo.map((e) => ({
     ano: e.ano ?? null,
     tipo: tipoEvento(e),

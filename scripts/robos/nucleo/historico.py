@@ -43,7 +43,8 @@ Três silêncios, deliberados:
 a data exata vem da própria lei alteradora (próximo passo da frente 4).
 
 Uso, a partir da raiz — regenera as linhas extraídas do compilado para os
-dispositivos citados em `data/atributos.json`, e preserva as de origem manual:
+dispositivos citados em `data/atributos.json` e para os artigos de todos os tipos
+do catálogo (desde 20/09/2026), e preserva as de origem manual:
 
     python scripts/robos/nucleo/historico.py
 """
@@ -74,6 +75,9 @@ HISTORICO = RAIZ / "data" / "historico-legislativo.json"
 # O `_INCISO` de parsear exige espaço depois do hífen e não lê o VI-A do art.
 # 112 da LEP — o inciso do feminicídio, criado em 2024 e revogado em 2026.
 _INCISO = re.compile(r"^([IVXLC]+)(?:-((?-i:[A-Z])))?\s*[-–—]\s", re.I)
+# E sem o travessão, erro do próprio compilado ("III perda ou inutilização do
+# membro", CP, art. 129, §2º). O segundo grupo, vazio, mantém a forma do de cima.
+_INCISO_SEM_TRACO = re.compile(r"^([IVXLC]+)()\s+(?=[a-zà-ÿ])")
 # A linha da pena, e só ela: "Pena - reclusão…", "Pena: …". O `_PENA` de parsear
 # aceita qualquer "Pena" no começo, e aqui isso custa caro: a epígrafe "Pena de
 # tentativa (Incluído pela Lei nº 7.209…)", anotada, virava a última versão do
@@ -90,10 +94,11 @@ EVENTO = {"incluido": "criacao", "redacao": "alteracao",
 
 META = {
     "descricao": (
-        "Histórico legislativo dos dispositivos citados pelos atributos penais: uma "
-        "linha por acontecimento na vida de cada dispositivo, em ordem cronológica "
-        "(estudos/modelo-atributos.md, seção 4.5). A chave estrangeira é "
-        "`dispositivo`, a chave canônica de data/fontes.json."),
+        "Histórico legislativo dos artigos de todos os tipos penais do catálogo e dos "
+        "dispositivos citados pelos atributos penais: uma linha por acontecimento na "
+        "vida de cada dispositivo, em ordem cronológica (estudos/modelo-atributos.md, "
+        "seção 4.5). A chave estrangeira é `dispositivo`, a chave canônica de "
+        "data/fontes.json, que o catálogo publica em `dispositivo_canonico`."),
     "eventos": {
         "criacao": "nasceu, no texto original ou incluído por lei posterior",
         "alteracao": "uma lei lhe deu texto novo",
@@ -199,7 +204,7 @@ def versoes(documento: str, fonte: str) -> list[Versao]:
             inc = None
             corpo = t[mp[2]:] if mp else t[_PAR_UNICO.match(t).end():]
             nivel = "par"
-        elif mi := _INCISO.match(t):
+        elif mi := (_INCISO.match(t) or _INCISO_SEM_TRACO.match(t)):
             inc = mi.group(1).upper() + (f"-{mi.group(2)}" if mi.group(2) else "")
             corpo, nivel = t[mi.end():], "inc"
         elif ma := _ALINEA.match(t):
@@ -376,10 +381,30 @@ def gravar(linhas: list[dict], destino: Path = HISTORICO) -> None:
         encoding="utf-8", newline="\n")
 
 
+def chaves_do_catalogo() -> list[str]:
+    """O ARTIGO inteiro de cada registro do catálogo (frente 4, 20/09/2026).
+
+    O artigo, e não só a unidade do registro, porque a aba de histórico da ficha
+    mostra a vida do artigo todo, e a última alteração do registro é lida da
+    unidade dele dentro dessa lista. A chave vem de `scripts/dispositivo_canonico`,
+    o mesmo módulo com que o construtor do catálogo lê o histórico.
+    """
+    sys.path.insert(0, str(RAIZ / "scripts"))
+    import dispositivo_canonico as dc
+    rotulos = dc.rotulos_para_fonte()
+    catalogo = json.loads((RAIZ / "data" / "crimes.json").read_text(encoding="utf-8"))
+    chaves: list[str] = []
+    for registro in catalogo:
+        k = dc.chave(registro, rotulos)
+        if k:
+            chaves.append(k.split(", ")[0])
+    return list(dict.fromkeys(chaves))
+
+
 def main() -> int:
     sys.stdout.reconfigure(encoding="utf-8")
     atributos = json.loads(ATRIBUTOS.read_text(encoding="utf-8"))["atributos"]
-    chaves = chaves_citadas(atributos)
+    chaves = list(dict.fromkeys(chaves_citadas(atributos) + chaves_do_catalogo()))
     linhas, avisos = gerar(chaves)
     # Falha é chave que não existe no texto. Unidade que existe e não tem linha
     # é o compilado calando (ver o docstring), e isso já saiu como aviso.

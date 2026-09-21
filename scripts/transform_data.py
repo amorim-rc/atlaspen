@@ -736,6 +736,62 @@ def carregar_trilha() -> dict:
     return json.loads(CONFERENCIA.read_text(encoding="utf-8")).get("registros", {})
 
 
+
+# ── A última alteração de cada registro (frente 4) ──────────────────────────
+# A chave canônica vem de `scripts/dispositivo_canonico.py`, o mesmo módulo com
+# que o robô do histórico decide quais dispositivos gerar. A regra de "alteração"
+# é a dos atributos (`scripts/derivar_atributos.ts`, `resumo`), para que a ficha
+# do tipo e a do atributo contem a mesma coisa:
+#
+# - alteração é todo evento legislativo que não seja o nascimento no texto
+#   original (a inclusão por lei posterior conta);
+# - nenhuma linha no histórico = não se sabe (o compilado cala): `null`;
+# - só a linha do original = zero alterações, e `ultima_alteracao` é `null`.
+import dispositivo_canonico as _dc  # noqa: E402
+
+HISTORICO = ROOT / "data" / "historico-legislativo.json"
+
+
+def carregar_historico() -> dict[str, list[dict]]:
+    """{chave canônica da unidade: linhas, na ordem do arquivo}."""
+    if not HISTORICO.exists():
+        return {}
+    por: dict[str, list[dict]] = {}
+    for i, l in enumerate(json.loads(HISTORICO.read_text(encoding="utf-8"))["eventos"]):
+        por.setdefault(l["dispositivo"], []).append({**l, "_ordem": i})
+    return por
+
+
+def derivar_ultima_alteracao(c: dict, historico: dict[str, list[dict]], rotulos: dict) -> None:
+    chave = _dc.chave(c, rotulos)
+    c["dispositivo_canonico"] = chave
+    linhas = historico.get(chave or "", [])
+    if not linhas:
+        c["ultima_alteracao"] = None
+        c["alteracoes_legislativas"] = None
+        return
+    alteracoes = [l for l in linhas if l.get("natureza") == "legislativa"
+                  and not (l["evento"] == "criacao" and l.get("norma") == "original")]
+    if not alteracoes:
+        c["ultima_alteracao"] = None
+        c["alteracoes_legislativas"] = 0
+        return
+    ultima = max(alteracoes, key=lambda l: (l.get("ano") or 0, l["_ordem"]))
+    c["ultima_alteracao"] = {
+        "norma": ultima.get("norma"),
+        "ano": ultima.get("ano"),
+        "evento": ultima["evento"],
+        "dispositivo": ultima["dispositivo"],
+        "url": ultima.get("url"),
+        **({"vigencia": ultima["vigencia"]} if ultima.get("vigencia") else {}),
+    }
+    # Conta LEIS, e não linhas: o compilado anota o caput e a linha da pena de um
+    # dispositivo incluído, e o robô registra as duas como versões — contar linhas
+    # dava "2 alterações" ao art. 326-B do Código Eleitoral, incluído uma vez só.
+    # A mesma conta de scripts/derivar_atributos.ts (resumo), para os atributos.
+    c["alteracoes_legislativas"] = len({(l.get("norma"), l.get("ano")) for l in alteracoes})
+
+
 def main():
     crimes = json.loads(SRC.read_text(encoding="utf-8"))
     trilha = carregar_trilha()
@@ -743,6 +799,8 @@ def main():
 
     # Invariantes estruturais: falham sempre, independentemente de --estrito.
     tabela_hediondez = _hediondez.carregar()
+    historico = carregar_historico()
+    rotulos_fonte = _dc.rotulos_para_fonte()
     problemas = (validar_ids(crimes) + validar_tipos_penais(crimes)
                  + validar_vocabulario(crimes)
                  + validar_hediondez(crimes, tabela_hediondez)
@@ -813,6 +871,7 @@ def main():
         c["perdao_judicial_previsto"] = any(_casa(p, c) for p in PERDAO_JUDICIAL)
 
         c["chave_dispositivo"] = chave_dispositivo(c)
+        derivar_ultima_alteracao(c, historico, rotulos_fonte)
 
         # Classificação CIRCUNSTANCIADA: a lei não decide pelo tipo. O art. 121
         # só é hediondo quando praticado em atividade de grupo de extermínio; a

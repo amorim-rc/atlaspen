@@ -73,7 +73,7 @@ function tipo(id: number, min: number, max: number): Crime {
     pena_min_meses: min, pena_max_meses: max, pena_min_rotulo: '', pena_max_rotulo: '',
     pena_faixa_rotulo: '', tem_pena_privativa: true, sancoes_nao_privativas: [],
     pena_por_remissao: null, resultado_morte: false, resultado_morte_derivado: false,
-    perdao_judicial_previsto: false, chave_dispositivo: `ficticia|art. ${id}`,
+    perdao_judicial_previsto: false, chave_dispositivo: `ficticia|art. ${id}`, dispositivo_canonico: null,
     duplicata: false, duplicata_divergente: false, duplicata_ids: [],
   };
 }
