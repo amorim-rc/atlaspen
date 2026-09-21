@@ -12,6 +12,14 @@ decidido e o que falta. O glossário, que foi uma frente, está concluído e mor
 
 ---
 
+## O marco da v1.0.0: o endereço próprio
+
+Decisão do mantenedor em 20/09/2026: a v1.0.0 é o lançamento com o domínio atlaspen.org.br
+no ar e o repositório inteiramente renomeado, com os robôs. Até esse ponto, a fase é
+"pré-v1", e tudo o que puder entrar antes entra: a revisão fina dos campos, a frente 4, a
+autoria e a citação, e a auditoria por amostra. O recorte do que falta está em
+`auditoria/situacao-v1.md`.
+
 ## A estratégia: lançar enxuto, crescer por módulos
 
 Decisão da equipe em 10/09/2026. O lançamento oficial, a **v1.0.0**, sai com uma versão

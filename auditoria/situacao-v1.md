@@ -10,6 +10,13 @@ A base está conferida e o motor está testado. O que separa a v1 de hoje é: de
 de revisão fina que só você pode assinar, o merge do revamp, o nome e o domínio, e a auditoria
 por amostra — que só roda depois de todo o resto.
 
+## O marco da virada
+
+Decisão do mantenedor em 20/09/2026: **a v1.0.0 é o lançamento com endereço próprio** — o
+domínio atlaspen.org.br no ar e o repositório inteiramente renomeado, com os robôs. Até lá,
+tudo o que for possível entra antes, para que a primeira versão pública já saia madura: a v1
+não é o começo da revisão, é o resultado dela.
+
 ## O que a v1.0.0 promete
 
 Decisão da equipe em 10/09/2026: lançar enxuto.
