@@ -56,9 +56,9 @@ Decisão da equipe em 10/09/2026: lançar enxuto.
 
 | Frente | Estado | O que falta | Depende de |
 |---|---|---|---|
-| 1. Repositório para trabalho em grupo | parcial | transferir para uma organização; credencial do Codex; convenção de branch e commit para três pessoas e dois agentes; conferir o ruleset de tags `v*` | você |
+| 1. Repositório para trabalho em grupo | parcial; **em espera** desde 20/09/2026, sem prazo | transferir para uma organização; credencial do Codex; convenção de branch e commit para três pessoas e dois agentes; conferir o ruleset de tags `v*` | você |
 | 2. Versionamento | concluída | — | — |
-| 3. Nome e identidade | nome provisório AtlasPen no que o leitor vê | validação da equipe; compra de atlaspen.org.br; depois, um PR só com URL, repositório e robôs | você e a equipe |
+| 3. Nome e identidade | nome provisório AtlasPen no que o leitor vê; domínio **em espera** desde 20/09/2026 — não se sabe se sai | validação da equipe; compra de atlaspen.org.br; depois, um PR só com URL, repositório e robôs | você e a equipe |
 | 4. Histórico: a última alteração de cada registro | 2 de 4 passos | a chave canônica de dispositivo; o Vigia gravar a redação vigente de cada tipo e o construtor derivar a data da última alteração | eu |
 | 5. Atributos em dados | concluída | — | — |
 | 6. Ação penal | vocabulário fechado, derivador pronto, 66 registros conferidos à mão | os 149 com ressalva (revisão fina, bloco C); decidir o campo de fundamento, que o derivador já tem pronto para 1.363 registros | você |
@@ -96,8 +96,13 @@ completa, e a professora Maíra Rocha Machado aparece como colaboradora acadêmi
 de 2026.
 
 **Depois das melhorias técnicas, antes da v1:** os registros formais — o programa no INPI, o
-ORCID, o DOI no Zenodo (na própria v1) e o termo de colaboração com as professoras. Decisão do
-mantenedor em 20/09/2026.
+ORCID, o DOI no Zenodo (na própria v1) e o termo de colaboração com as professoras —, e a
+reescrita da história do projeto (`textos/historia.md`), que já tem a seção "O AtlasPen" no
+lugar de "A retomada" e ainda assina "Equipe AtlasPen". Decisão do mantenedor em 20/09/2026.
+
+**A data da planilha ainda não está provada.** Os detalhes enviados em 20/09/2026 são da
+**pasta** "Obra" do Google Drive, criada em 03/09/2026 — depois do primeiro commit. A prova é o
+"Criado em" e o histórico de versões do próprio arquivo `algo-pen.xlsx`.
 
 ## Caminho crítico sugerido
 
