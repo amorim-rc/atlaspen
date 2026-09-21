@@ -11,7 +11,7 @@ O catálogo completo é publicado como dado aberto em formato JSON:
 - **Arquivo:** [`/data/crimes.json`](pathname:///sispenas/data/crimes.json)
 - **Atributos penais:** [`/data/atributos.json`](pathname:///sispenas/data/atributos.json)
   (ver [Atributos penais](#atributos-penais), abaixo)
-- **Licença:** MIT com atribuição — cite como **"Equipe AtlasPen"**.
+- **Licença:** MIT com atribuição — cite como **AMORIM, Luccas de. AtlasPen** (ver [Como citar](#como-citar)).
 
 ## Esquema de cada registro
 
@@ -288,10 +288,10 @@ esta regra vale. Os próximos passos estão no
 
 ## Como citar
 
-> Equipe AtlasPen. *AtlasPen — Atlas Penal Brasileiro dos Tipos, Atributos e Impacto
-> Legislativo*. Disponível em: https://github.com/amorim-rc/sispenas. Acesso em: [data].
+> AMORIM, Luccas de. *AtlasPen — Atlas Penal Brasileiro dos Tipos, Atributos e Impacto
+> Legislativo*. 2026. Disponível em: https://github.com/amorim-rc/sispenas. Acesso em: [data].
 
-A pesquisa de origem, que o AtlasPen retoma, cita-se à parte:
+A pesquisa de 2008, que é o antecedente do AtlasPen, cita-se à parte:
 
 > MACHADO, Maíra Rocha; MACHADO, Marta Rodriguez de Assis (coord.). SISPENAS: Sistema de
 > Consulta sobre Crimes, Penas e Alternativas à Prisão. *Revista Jurídica*, Brasília,

@@ -2,13 +2,15 @@ cff-version: 1.2.0
 message: "Se você usar o AtlasPen em pesquisa ou publicação, por favor cite conforme abaixo."
 title: "AtlasPen — Atlas Penal Brasileiro dos Tipos, Atributos e Impacto Legislativo"
 abstract: >-
-  Ferramenta aberta de pesquisa de políticas públicas para estudar o impacto dos
-  atributos penais sobre os tipos penais brasileiros. Retoma o SISPENAS, sistema
-  concebido por Maíra Rocha Machado e Marta Rodriguez de Assis Machado (Direito
-  GV/FGV, 2008).
+  Base aberta de todos os tipos penais brasileiros e dos atributos penais que os
+  alcançam, com motor de cálculo e simulação legislativa, para pesquisa de
+  políticas públicas. Concebida e desenvolvida por Luccas de Amorim a partir de
+  2026. Tem como antecedente de pesquisa o SISPENAS, sistema da pesquisa coordenada
+  por Maíra Rocha Machado e Marta Rodriguez de Assis Machado (Direito GV/FGV, 2008).
 type: software
 authors:
-  - name: "Equipe AtlasPen"
+  - given-names: "Luccas"
+    family-names: "de Amorim"
 # Até a v1.0.0 não há versão publicada: cite pela data.
 date-released: "2026-09-11"
 license: MIT

@@ -169,6 +169,15 @@
         "CITATION.cff",
         "data/ids-aposentados.json"
       ]
+    },
+    {
+      "arquivo": "textos/creditos.md",
+      "sobre": "Autoria e créditos: quem concebeu e constrói o AtlasPen, o antecedente de pesquisa (SISPENAS, 2008) e quem colabora. Diz o mesmo que a LICENSE e o CITATION.cff, e tem de mudar junto com eles.",
+      "conferido_em": "2026-09-20",
+      "depende_de": [
+        "LICENSE",
+        "CITATION.cff"
+      ]
     }
   ]
 }

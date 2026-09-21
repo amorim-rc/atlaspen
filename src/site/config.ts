@@ -15,7 +15,8 @@ export const NOME_EXTENSO = 'Atlas Penal Brasileiro dos Tipos, Atributos e Impac
 /** Descritor curto, quando precisar de um. */
 export const DESCRITOR = 'catálogo aberto de tipos e atributos penais';
 
-export const EQUIPE = 'Equipe AtlasPen';
+/** O titular do código e da base (LICENSE), e quem se cita. Decisão de 20/09/2026. */
+export const TITULAR = 'Luccas de Amorim e contribuidores';
 
 export const REPOSITORIO = 'https://github.com/amorim-rc/sispenas';
 

@@ -51,6 +51,7 @@ export const RODAPE: {titulo: string; itens: LinkRodape[]}[] = [
       {rotulo: 'Dicionário de dados', rota: '/projeto/dados-abertos'},
       {rotulo: 'Os robôs', rota: '/projeto/os-robos'},
       {rotulo: 'História do projeto', rota: '/projeto'},
+      {rotulo: 'Autoria e créditos', rota: '/projeto/creditos'},
     ],
   },
   {

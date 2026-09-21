@@ -20,8 +20,13 @@ export const INDICE_DO_PROJETO: {grupo: string; itens: ItemProjeto[]}[] = [
     itens: [
       {
         titulo: 'História do projeto',
-        resumo: 'Da pesquisa de 2008 à retomada digital e ao lançamento.',
+        resumo: 'Como o AtlasPen nasceu, o antecedente de 2008 e o caminho até o lançamento.',
         rota: '/projeto',
+      },
+      {
+        titulo: 'Autoria e créditos',
+        resumo: 'Quem concebeu e constrói o AtlasPen, o antecedente de 2008 e quem colabora.',
+        rota: '/projeto/creditos',
       },
     ],
   },

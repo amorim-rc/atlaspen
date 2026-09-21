@@ -78,11 +78,18 @@ Dados abertos, Os robôs) fica em `docs/` e é publicada no próprio site, em `/
 lado dos textos do grupo (`textos/`). O pipeline de conferência tem documentação própria em
 `scripts/robos/README.md`. Os próximos passos possíveis estão em [`backlog.md`](backlog.md).
 
-## Origem e proposta original × implementação atual
+## Autoria e origem
 
-O AtlasPen retoma o SISPENAS, concebido em 2008 pelas professoras **Maíra Rocha Machado** e
-**Marta Rodriguez de Assis Machado** (Direito GV/FGV), em pesquisa vinculada a edital da
-Secretaria de Assuntos Legislativos do Ministério da Justiça:
+O AtlasPen foi concebido e é desenvolvido por **Luccas de Amorim**. O projeto nasceu como uma
+base com cobertura completa dos tipos penais brasileiros, primeiro em planilha, e passou a
+sistema de código e dados abertos em junho de 2026. Os créditos completos estão em
+[Autoria e créditos](https://amorim-rc.github.io/sispenas/projeto/creditos).
+
+Na busca por um número de referência de tipos penais existentes, o projeto encontrou o
+SISPENAS, concebido em 2008 pelas professoras **Maíra Rocha Machado** e **Marta Rodriguez de
+Assis Machado** (Direito GV/FGV), em pesquisa vinculada a edital da Secretaria de Assuntos
+Legislativos do Ministério da Justiça — o antecedente de pesquisa do AtlasPen. Desde junho
+de 2026, a professora Maíra Rocha Machado colabora com o projeto:
 
 > MACHADO, Maíra Rocha; MACHADO, Marta Rodriguez de Assis (coord.). **SISPENAS: Sistema de
 > Consulta sobre Crimes, Penas e Alternativas à Prisão**. Revista Jurídica, Brasília, v. 10,
@@ -138,4 +145,4 @@ automaticamente do texto legal e será revisada individualmente.
 
 ## Licença
 
-**MIT com atribuição** à **Equipe AtlasPen**. Veja [`LICENSE`](./LICENSE).
+**MIT com atribuição** — *AtlasPen, de Luccas de Amorim e contribuidores*. Veja [`LICENSE`](./LICENSE).

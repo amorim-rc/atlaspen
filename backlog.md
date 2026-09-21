@@ -494,7 +494,11 @@ o site novo ir ao ar. Sem número de frente, para não renumerar o resto.
   (`sispenas-automacao`, `sispenas-bot`) mudam quando o nome for validado pela equipe
   inteira e o domínio **atlaspen.org.br** for comprado. Um PR só, com a camada de
   redirecionamento de `src/site/redirecionamentos.ts`.
-- "Equipe AtlasPen" permanece, por enquanto, como titular na LICENSE e no CITATION.
+- ~~"Equipe AtlasPen" permanece, por enquanto, como titular na LICENSE e no CITATION.~~
+  Decidido em 20/09/2026: o titular é Luccas de Amorim, com os contribuidores, na LICENSE,
+  no CITATION, no README, no rodapé e na página /projeto/creditos. O SISPENAS (2008) fica
+  como antecedente de pesquisa, com a referência completa; a professora Maíra Rocha
+  Machado aparece como colaboradora acadêmica desde junho de 2026.
 
 ### Interface
 

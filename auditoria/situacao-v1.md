@@ -89,9 +89,15 @@ Decisão da equipe em 10/09/2026: lançar enxuto.
 
 ## Autoria e citação
 
-Antes da v1, porque a v1 é a primeira versão citável: `CITATION.cff`, `LICENSE` e a página
-de créditos precisam dizer quem concebeu e construiu o sistema, e o lançamento pode vir com
-DOI (Zenodo) e registro do programa no INPI. Proposta em separado.
+**Feito em 20/09/2026:** Luccas de Amorim como autor e titular, com os contribuidores, no
+`CITATION.cff`, na `LICENSE`, no README, no rodapé do site, em "Como citar" e na página nova
+`/projeto/creditos`. O SISPENAS (2008) fica como antecedente de pesquisa, com a referência
+completa, e a professora Maíra Rocha Machado aparece como colaboradora acadêmica desde junho
+de 2026.
+
+**Depois das melhorias técnicas, antes da v1:** os registros formais — o programa no INPI, o
+ORCID, o DOI no Zenodo (na própria v1) e o termo de colaboração com as professoras. Decisão do
+mantenedor em 20/09/2026.
 
 ## Caminho crítico sugerido
 

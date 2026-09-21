@@ -6,7 +6,7 @@
 // da conferência, licença e a forma de citar.
 import Simbolo from '../marca/Simbolo.astro';
 import Assinatura from '../marca/Assinatura.astro';
-import {EQUIPE, NOME} from '../../site/config';
+import {NOME, TITULAR} from '../../site/config';
 import {RODAPE} from '../../site/navegacao';
 import {caminho} from '../../site/url';
 import {dataCurta} from '../../site/datas';
@@ -50,7 +50,7 @@ const ano = new Date().getFullYear();
   </div>
   <div class="faixa">
     <div class="pagina faixa-interna">
-      <span>{NOME} © {ano} — {EQUIPE} · MIT com atribuição · cite como {NOME}</span>
+      <span>{NOME} © {ano} — {TITULAR} · MIT com atribuição · cite como {NOME}</span>
       <span>os dados são públicos; a leitura jurídica é de quem cita · não é aconselhamento jurídico</span>
     </div>
   </div>
