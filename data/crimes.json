@@ -8764,10 +8764,10 @@
     "acao": "Pública Incondicionada",
     "hediondo": "Não",
     "elemento": "Doloso",
-    "tentativa": "Sim",
+    "tentativa": "Não",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "5 dias a 6 meses prisão simples + multa"
+    "obs": "5 dias a 6 meses prisão simples + multa. Não admite tentativa: \"não é punível a tentativa de contravenção\" (LCP, art. 4º)"
   },
   {
     "id": 546,
@@ -9182,10 +9182,10 @@
     "acao": "Pública Incondicionada",
     "hediondo": "Não",
     "elemento": "Doloso",
-    "tentativa": "Sim",
+    "tentativa": "Não",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "1-4 anos prisão simples + multa (art. 45). O DL 6.259/44 é a lei específica das loterias; conduta paralela na LCP art. 51"
+    "obs": "1-4 anos prisão simples + multa (art. 45). O DL 6.259/44 é a lei específica das loterias; conduta paralela na LCP art. 51. Não admite tentativa: \"não é punível a tentativa de contravenção\" (LCP, art. 4º)"
   },
   {
     "id": 571,
@@ -9198,10 +9198,10 @@
     "acao": "Pública Incondicionada",
     "hediondo": "Não",
     "elemento": "Doloso",
-    "tentativa": "Sim",
+    "tentativa": "Não",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "6 meses a 1 ano prisão simples + multa (art. 46). O DL 6.259/44 é a lei específica das loterias; conduta paralela na LCP art. 52"
+    "obs": "6 meses a 1 ano prisão simples + multa (art. 46). O DL 6.259/44 é a lei específica das loterias; conduta paralela na LCP art. 52. Não admite tentativa: \"não é punível a tentativa de contravenção\" (LCP, art. 4º)"
   },
   {
     "id": 572,
@@ -9214,10 +9214,10 @@
     "acao": "Pública Incondicionada",
     "hediondo": "Não",
     "elemento": "Doloso",
-    "tentativa": "Sim",
+    "tentativa": "Não",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "6 meses a 1 ano prisão simples + multa (art. 47)"
+    "obs": "6 meses a 1 ano prisão simples + multa (art. 47). Não admite tentativa: \"não é punível a tentativa de contravenção\" (LCP, art. 4º)"
   },
   {
     "id": 573,
@@ -9230,10 +9230,10 @@
     "acao": "Pública Incondicionada",
     "hediondo": "Não",
     "elemento": "Doloso",
-    "tentativa": "Sim",
+    "tentativa": "Não",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "2-6 meses prisão simples + multa (art. 48)"
+    "obs": "2-6 meses prisão simples + multa (art. 48). Não admite tentativa: \"não é punível a tentativa de contravenção\" (LCP, art. 4º)"
   },
   {
     "id": 574,
@@ -10522,10 +10522,10 @@
     "acao": "Pública Incondicionada",
     "hediondo": "Não",
     "elemento": "Doloso",
-    "tentativa": "Sim",
+    "tentativa": "Não",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "1 a 3 meses prisão simples + multa. Crime de reter além do tempo estritamente necessário documento de identificação pessoal"
+    "obs": "1 a 3 meses prisão simples + multa. Crime de reter além do tempo estritamente necessário documento de identificação pessoal. Não admite tentativa: \"não é punível a tentativa de contravenção\" (LCP, art. 4º)"
   },
   {
     "id": 654,
@@ -14270,10 +14270,10 @@
     "acao": "Pública Incondicionada",
     "hediondo": "Não",
     "elemento": "Doloso",
-    "tentativa": "Sim",
+    "tentativa": "Não",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "3 meses a 1 ano prisão simples + multa. Alcance remanescente: preconceito de sexo ou estado civil (raça e cor são crime na Lei 7.716/89)"
+    "obs": "3 meses a 1 ano prisão simples + multa. Alcance remanescente: preconceito de sexo ou estado civil (raça e cor são crime na Lei 7.716/89). Não admite tentativa: \"não é punível a tentativa de contravenção\" (LCP, art. 4º)"
   },
   {
     "id": 888,
@@ -14286,10 +14286,10 @@
     "acao": "Pública Incondicionada",
     "hediondo": "Não",
     "elemento": "Doloso",
-    "tentativa": "Sim",
+    "tentativa": "Não",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "15 dias a 3 meses prisão simples + multa. Alcance remanescente: preconceito de sexo ou estado civil (raça e cor são crime na Lei 7.716/89)"
+    "obs": "15 dias a 3 meses prisão simples + multa. Alcance remanescente: preconceito de sexo ou estado civil (raça e cor são crime na Lei 7.716/89). Não admite tentativa: \"não é punível a tentativa de contravenção\" (LCP, art. 4º)"
   },
   {
     "id": 889,
@@ -14302,10 +14302,10 @@
     "acao": "Pública Incondicionada",
     "hediondo": "Não",
     "elemento": "Doloso",
-    "tentativa": "Sim",
+    "tentativa": "Não",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "15 dias a 3 meses prisão simples + multa. Alcance remanescente: preconceito de sexo ou estado civil (raça e cor são crime na Lei 7.716/89)"
+    "obs": "15 dias a 3 meses prisão simples + multa. Alcance remanescente: preconceito de sexo ou estado civil (raça e cor são crime na Lei 7.716/89). Não admite tentativa: \"não é punível a tentativa de contravenção\" (LCP, art. 4º)"
   },
   {
     "id": 890,
@@ -14318,10 +14318,10 @@
     "acao": "Pública Incondicionada",
     "hediondo": "Não",
     "elemento": "Doloso",
-    "tentativa": "Sim",
+    "tentativa": "Não",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "15 dias a 3 meses prisão simples + multa. Alcance remanescente: preconceito de sexo ou estado civil (raça e cor são crime na Lei 7.716/89)"
+    "obs": "15 dias a 3 meses prisão simples + multa. Alcance remanescente: preconceito de sexo ou estado civil (raça e cor são crime na Lei 7.716/89). Não admite tentativa: \"não é punível a tentativa de contravenção\" (LCP, art. 4º)"
   },
   {
     "id": 891,
@@ -14334,10 +14334,10 @@
     "acao": "Pública Incondicionada",
     "hediondo": "Não",
     "elemento": "Doloso",
-    "tentativa": "Sim",
+    "tentativa": "Não",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "3 meses a 1 ano prisão simples + multa. Alcance remanescente: preconceito de sexo ou estado civil (raça e cor são crime na Lei 7.716/89)"
+    "obs": "3 meses a 1 ano prisão simples + multa. Alcance remanescente: preconceito de sexo ou estado civil (raça e cor são crime na Lei 7.716/89). Não admite tentativa: \"não é punível a tentativa de contravenção\" (LCP, art. 4º)"
   },
   {
     "id": 892,
@@ -14350,10 +14350,10 @@
     "acao": "Pública Incondicionada",
     "hediondo": "Não",
     "elemento": "Doloso",
-    "tentativa": "Sim",
+    "tentativa": "Não",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "Pena: perda do cargo do funcionário dirigente responsável pela inscrição. Alcance remanescente: preconceito de sexo ou estado civil (raça e cor são crime na Lei 7.716/89)",
+    "obs": "Pena: perda do cargo do funcionário dirigente responsável pela inscrição. Alcance remanescente: preconceito de sexo ou estado civil (raça e cor são crime na Lei 7.716/89). Não admite tentativa: \"não é punível a tentativa de contravenção\" (LCP, art. 4º)",
     "sancoes_nao_privativas": [
       {
         "inciso": "-",
@@ -14372,10 +14372,10 @@
     "acao": "Pública Incondicionada",
     "hediondo": "Não",
     "elemento": "Doloso",
-    "tentativa": "Sim",
+    "tentativa": "Não",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "3 meses a 1 ano prisão simples + multa (empresa privada). Alcance remanescente: preconceito de sexo ou estado civil (raça e cor são crime na Lei 7.716/89)"
+    "obs": "3 meses a 1 ano prisão simples + multa (empresa privada). Alcance remanescente: preconceito de sexo ou estado civil (raça e cor são crime na Lei 7.716/89). Não admite tentativa: \"não é punível a tentativa de contravenção\" (LCP, art. 4º)"
   },
   {
     "id": 894,
