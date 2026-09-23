@@ -1,7 +1,7 @@
 # Onde estamos e o que falta para a v1.0.0
 
-Situação em 20/09/2026, na branch `revamp/atlaspen`, que está 57 commits à frente da `main`,
-sem push. O backlog completo está em `backlog.md`; este documento é o recorte do que decide o
+Situação em 22/09/2026, na branch `revamp/atlaspen`, que está 66 commits à frente da `main`,
+sem push. O prompt para retomar o trabalho em outra sessão está em `auditoria/retomada.md`. O backlog completo está em `backlog.md`; este documento é o recorte do que decide o
 lançamento.
 
 ## Em uma frase
@@ -108,8 +108,8 @@ lugar de "A retomada" e ainda assina "Equipe AtlasPen". Decisão do mantenedor e
 | 1 | Decisões da revisão fina, por família | você | 2, 3 |
 | 2 | Cada decisão vira regra escrita no derivador, e o dado é corrigido | eu | 1 |
 | 3 | Frente 4 (histórico) e frente 8 (conferir) | eu | 1 |
-| 4 | Decidir o escopo do A2, segunda parte | você | 1 |
-| 5 | Autoria e citação | você decide, eu escrevo | qualquer um |
+| 4 | A segunda parte da simulação (A2), que entra na v1 | eu | 1 |
+| 5 | ~~Autoria e citação~~ — feita em 20/09/2026 | — | — |
 | 6 | Merge do revamp na `main` | você autoriza | — |
 | 7 | Nome, domínio e organização do repositório (frentes 1 e 3), num PR de endereço | você e a equipe | — |
 | 8 | Sorteio e conferência da auditoria (frente 7), e as correções que ela trouxer | você, uma segunda pessoa e eu | — |
