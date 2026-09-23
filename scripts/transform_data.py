@@ -209,7 +209,15 @@ VOCABULARIO = {
              "Ação Penal Privada Personalíssima"},
     "tipo_pena": {"Reclusão", "Detenção", "Prisão simples", "Morte", "Impedimento",
                   "Multa", "Outras penas", "—"},
-    "elemento": {"Doloso", "Culposo", "Preterdoloso"},
+    # Régua escrita em 23/09/2026 (decisões 31, 31-D e 31-D2), e documentada no
+    # AGENTS.md. "Preterdoloso" foi REDEFINIDO: vale quando a lei exclui o dolo
+    # no resultado (CP 129, §3º; CPM 209, §3º-A) ou quando o resultado doloso
+    # configura outro crime, tratado em concurso. "Qualificado pelo resultado" é
+    # o valor novo: o tipo abriga resultado doloso OU culposo, num crime só
+    # (latrocínio, STF Súmula 610; estupro com resultado, NUCCI, 22. ed., p.
+    # 665-666). A diferença decide a tentativa (decisão 20): o preterdoloso não
+    # a admite, o qualificado pelo resultado admite.
+    "elemento": {"Doloso", "Culposo", "Preterdoloso", "Qualificado pelo resultado"},
     "hediondo": {"Sim", "Não"},
     "tentativa": {"Sim", "Não"},
     "violencia": {"Sim", "Não"},
@@ -546,6 +554,13 @@ def validar_condicionais(crimes: list) -> list:
     Um registro que declara `hediondo_condicao` está dizendo "depende do caso" —
     e marcar `hediondo: "Sim"` ao lado disso afirmaria o que a lei não afirma,
     além de ligar sozinho as vedações do art. 5º, XLIII, da Constituição.
+
+    Desde 23/09/2026 o mesmo vale para `violencia_condicao`, criado pela decisão
+    8. A condição existe porque o tipo se consuma SEM violência: o sequestro
+    pode ser obtido por fraude, a resistência por ameaça que não é grave. Marcar
+    "Sim" ao lado da condição retiraria ANPP (CPP, art. 28-A) e substituição
+    (CP, art. 44, I) de quem tem direito a elas — que é exatamente o dano que a
+    revisão fina foi corrigir.
     """
     problemas = []
     for c in crimes:
@@ -554,6 +569,11 @@ def validar_condicionais(crimes: list) -> list:
                 f"id {c['id']}: declara `hediondo_condicao` e ainda assim marca "
                 "`hediondo: Sim` — a condição existe justamente porque o tipo, "
                 "sozinho, não decide")
+        if c.get("violencia_condicao") and c.get("violencia") == "Sim":
+            problemas.append(
+                f"id {c['id']}: declara `violencia_condicao` e ainda assim marca "
+                "`violencia: Sim` — a condição existe justamente porque o tipo "
+                "se consuma sem violência")
     return problemas
 
 
@@ -880,6 +900,16 @@ def main():
         # marca é quem conhece o caso, na simulação.
         c["hediondo_condicional"] = bool(c.get("hediondo_condicao"))
         c["acao_condicional"] = bool(c.get("acao_condicao"))
+        # Decisão 8, de 23/09/2026. Onde existe, o motor mostra os atributos que
+        # a violência governa — ANPP, substituição, arrependimento posterior e
+        # progressão — nas DUAS hipóteses, com a condição escrita ao lado.
+        c["violencia_condicional"] = bool(c.get("violencia_condicao"))
+        c.setdefault("violencia_condicao", None)
+        # Divergência de jurisprudência ou de doutrina sobre a hediondez
+        # (decisão 28). Não é condição do fato: o tipo não muda conforme o caso,
+        # muda conforme quem julga. Por isso campo próprio, e não
+        # `hediondo_condicao` — foi o que os ids 320, 323 e 385 mostraram.
+        c.setdefault("hediondo_nota", None)
 
         # VIGÊNCIA. Um dispositivo pode deixar de valer sem sair do catálogo:
         # declarado inconstitucional com eficácia ex nunc (CPM, art. 232, §3º —

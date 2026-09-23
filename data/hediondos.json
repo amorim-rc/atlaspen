@@ -16,7 +16,8 @@
       "em": "2026-08-10",
       "impressao_anterior": "2730ff4423de579f",
       "o_que_mudou": "A Lei 15.487/2026 deu NOVA REDACAO ao inciso VII do paragrafo unico do art. 1o. Antes (Lei 14.811/2024) o inciso alcancava duas hipoteses do ECA — o §1o do art. 240 e o art. 241-B. Agora alcanca quatorze: o caput e os §§ 1o e 2o do art. 240; o caput e o paragrafo unico do art. 241; o caput e os §§ 1o e 3o do art. 241-A; o CAPUT do art. 241-B (os §§ 1o e 2o NAO entraram); o caput e os §§ 1o e 2o do art. 241-D; e o caput e o §1o do art. 244-A. O art. 241-C ficou de fora por inteiro. Cinco registros passaram de nao hediondo a hediondo (ids 455, 456, 457, 460 e 464) e o art. 241-C ganhou nota dizendo por que NAO e — sem ela, a proxima varredura o corrigiria por simetria com os vizinhos."
-    }
+    },
+    "ancoragem": "Desde 23/09/2026 (decisão C15) toda expressão de `artigo` termina em âncora `(?=$|,| )` — fim do rótulo, vírgula de inciso, ou espaço (o parêntese de desambiguação do catálogo e o 'c/c'). Sem ela, 'V' casava 'VI', 'VII' e 'VIII', e '§2º' casava '§2º-A' a '§2º-D': foi o que produziu a C12. Regra que alcança o diploma inteiro declara `aberta: true`, e `scripts/hediondez.py` recusa carregar expressão ancorada em '^' sem âncora de fim e sem `aberta`."
   },
   "impressao_do_texto": "b275e2f206eade89",
   "regras": [
@@ -24,158 +25,159 @@
       "fundamento": "CF, art. 5º, XLIII (equiparado)",
       "lei": "Lei 13\\.260",
       "artigo": "^Art\\. ",
-      "nota": "terrorismo"
+      "nota": "terrorismo Regra ABERTA de proposito: alcanca todo artigo do diploma.",
+      "aberta": true
     },
     {
       "fundamento": "CF, art. 5º, XLIII (equiparado)",
       "lei": "Lei 9\\.455",
-      "artigo": "^Art\\. 1º?(,\\s*(caput|[IVX]+))?$|^Art\\. 1º?, §[13]",
+      "artigo": "^Art\\. 1º(,\\s*(caput|[IVX]+))?$|^Art\\. 1º, § ?[13]º(?=$|,| )",
       "nota": "tortura (caput, §1º e §3º). A OMISSÃO do §2º tem pena própria de detenção e equiparação controvertida — condicional"
     },
     {
       "fundamento": "CF, art. 5º, XLIII (equiparado)",
       "lei": "Lei 9\\.455",
-      "artigo": "^Art\\. 1º?, §2º",
+      "artigo": "^Art\\. 1º, § ?2º(?=$|,| )",
       "condicional": true,
       "nota": "omissão perante a tortura: pena própria de detenção, e a doutrina diverge sobre estender a equiparação"
     },
     {
       "fundamento": "CF, art. 5º, XLIII (equiparado)",
       "lei": "Lei 11\\.343",
-      "artigo": "^Art\\. 33(, caput)?$|^Art\\. 33, §1º",
+      "artigo": "^Art\\. 33(, caput)?$|^Art\\. 33, § ?1º(?=$|,| )",
       "nota": "tráfico: caput e §1º (e seus incisos). O §2º (induzimento ao uso) e o §3º (uso compartilhado) não são tráfico; o §4º é exceção jurisprudencial"
     },
     {
       "fundamento": "CF, art. 5º, XLIII (equiparado)",
       "lei": "Lei 11\\.343",
-      "artigo": "^Art\\. 34",
+      "artigo": "^Art\\. 34(?=$|,| )",
       "condicional": true,
       "nota": "maquinário: o STJ tem decisões nos dois sentidos sobre a equiparação — é escolha do projeto, não leitura de texto"
     },
     {
       "fundamento": "CF, art. 5º, XLIII (equiparado)",
       "lei": "Lei 11\\.343",
-      "artigo": "^Art\\. 36",
+      "artigo": "^Art\\. 36(?=$|,| )",
       "nota": "financiamento do tráfico"
     },
     {
       "fundamento": "CF, art. 5º, XLIII (equiparado)",
       "lei": "Lei 11\\.343",
-      "artigo": "^Art\\. 37",
+      "artigo": "^Art\\. 37(?=$|,| )",
       "condicional": true,
       "nota": "informante/colaborador: a equiparação é reconhecida por parte da jurisprudência e negada por outra — decisão do projeto, não leitura de texto"
     },
     {
       "fundamento": "Lei 8.072, art. 1º, I",
       "lei": "^CP$",
-      "artigo": "^Art\\. 121, caput",
+      "artigo": "^Art\\. 121, caput(?=$|,| )",
       "condicional": true,
       "nota": "só quando praticado em atividade típica de grupo de extermínio — circunstância do caso, não do tipo"
     },
     {
       "fundamento": "Lei 8.072, art. 1º, I",
       "lei": "^CP$",
-      "artigo": "^Art\\. 121, §2º",
-      "nota": "homicídio qualificado — desde a Lei 15.159/2025 o inciso remete ao §2º inteiro"
+      "artigo": "^Art\\. 121, § ?2º(-[BC])?(?=$|,| )",
+      "nota": "homicidio qualificado. Alcanca tambem os §§ 2º-B e 2º-C, que sao causas de aumento sobre o proprio § 2º — largura que ate 23/09/2026 vinha por acidente do prefixo, e agora e explicita. A pergunta de fundo esta em `pendentes`."
     },
     {
       "fundamento": "Lei 8.072, art. 1º, I",
       "lei": "^CP$",
-      "artigo": "^Art\\. 121, §2º-D",
+      "artigo": "^Art\\. 121, §2º-D(?=$|,| )",
       "condicional": true,
       "nota": "o rol remete ao §2º; o §2º-D é parágrafo próprio, criado depois. Alcance a definir"
     },
     {
       "fundamento": "Lei 8.072, art. 1º, I-A",
       "lei": "^CP$",
-      "artigo": "^Art\\. 129, §[23]º",
+      "artigo": "^Art\\. 129, §[23]º(?=$|,| )",
       "condicional": true,
       "nota": "lesão gravíssima e seguida de morte, só nas hipóteses das alíneas a, b e c (vítima qualificada ou dependências de instituição de ensino)"
     },
     {
       "fundamento": "Lei 8.072, art. 1º, I-B",
       "lei": "^CP$",
-      "artigo": "^Art\\. 121-A"
+      "artigo": "^Art\\. 121-A(?=$|,| )"
     },
     {
       "fundamento": "Lei 8.072, art. 1º, I-C",
       "lei": "^CP$",
-      "artigo": "^Art\\. 121-B"
+      "artigo": "^Art\\. 121-B(?=$|,| )"
     },
     {
       "fundamento": "Lei 8.072, art. 1º, II, a",
       "lei": "^CP$",
-      "artigo": "^Art\\. 157, §2º, V"
+      "artigo": "^Art\\. 157, §2º, V(?=$|,| )"
     },
     {
       "fundamento": "Lei 8.072, art. 1º, II, b",
       "lei": "^CP$",
-      "artigo": "^Art\\. 157, §2º-A, I"
+      "artigo": "^Art\\. 157, §2º-A, I(?=$|,| )"
     },
     {
       "fundamento": "Lei 8.072, art. 1º, II, b",
       "lei": "^CP$",
-      "artigo": "^Art\\. 157, §2º-B"
+      "artigo": "^Art\\. 157, §2º-B(?=$|,| )"
     },
     {
       "fundamento": "Lei 8.072, art. 1º, II, c",
       "lei": "^CP$",
-      "artigo": "^Art\\. 157, §3º"
+      "artigo": "^Art\\. 157, §3º(?=$|,| )"
     },
     {
       "fundamento": "Lei 8.072, art. 1º, II, c (por identidade)",
       "lei": "^CP$",
-      "artigo": "^Art\\. 157, §5º",
+      "artigo": "^Art\\. 157, §5º(?=$|,| )",
       "condicional": true,
       "nota": "latrocínio praticado por organização ultraviolenta: parágrafo criado depois do rol, que cita o §3º"
     },
     {
       "fundamento": "Lei 8.072, art. 1º, III",
       "lei": "^CP$",
-      "artigo": "^Art\\. 158, §3º"
+      "artigo": "^Art\\. 158, §3º(?=$|,| )"
     },
     {
       "fundamento": "Lei 8.072, art. 1º, III (por remissão)",
       "lei": "^CP$",
-      "artigo": "^Art\\. 158, §2º",
+      "artigo": "^Art\\. 158, §2º(?=$|,| )",
       "condicional": true,
       "nota": "o §2º manda aplicar as penas do art. 157, §3º, que é hediondo; o rol, porém, cita o §3º do 158"
     },
     {
       "fundamento": "Lei 8.072, art. 1º, IV",
       "lei": "^CP$",
-      "artigo": "^Art\\. 159"
+      "artigo": "^Art\\. 159(?=$|,| )"
     },
     {
       "fundamento": "Lei 8.072, art. 1º, IX",
       "lei": "^CP$",
-      "artigo": "^Art\\. 155, §4º-A"
+      "artigo": "^Art\\. 155, §4º-A(?=$|,| )"
     },
     {
       "fundamento": "Lei 8.072, art. 1º, V",
       "lei": "^CP$",
-      "artigo": "^Art\\. 213"
+      "artigo": "^Art\\. 213(?=$|,| )"
     },
     {
       "fundamento": "Lei 8.072, art. 1º, VI",
       "lei": "^CP$",
-      "artigo": "^Art\\. 217-A"
+      "artigo": "^Art\\. 217-A(?=$|,| )"
     },
     {
       "fundamento": "Lei 8.072, art. 1º, VII",
       "lei": "^CP$",
-      "artigo": "^Art\\. 267, §1º"
+      "artigo": "^Art\\. 267, §1º(?=$|,| )"
     },
     {
       "fundamento": "Lei 8.072, art. 1º, VII-B",
       "lei": "^CP$",
-      "artigo": "^Art\\. 273(?!, §2º)",
+      "artigo": "^Art\\. 273(?!, §2º)(?=$|,| )",
       "nota": "o rol não alcança a forma culposa do §2º"
     },
     {
       "fundamento": "Lei 8.072, art. 1º, VIII",
       "lei": "^CP$",
-      "artigo": "^Art\\. 218-B"
+      "artigo": "^Art\\. 218-B(?=$|,| )"
     },
     {
       "fundamento": "Lei 8.072, art. 1º, X",
@@ -187,60 +189,60 @@
     {
       "fundamento": "Lei 8.072, art. 1º, XI",
       "lei": "^CP$",
-      "artigo": "^Art\\. 148, §1º, IV"
+      "artigo": "^Art\\. 148, §1º, IV(?=$|,| )"
     },
     {
       "fundamento": "Lei 8.072, art. 1º, XII",
       "lei": "^CP$",
-      "artigo": "^Art\\. 149-A",
+      "artigo": "^Art\\. 149-A(?=$|,| )",
       "condicional": true,
       "nota": "hediondo apenas quando cometido contra criança ou adolescente (art. 1º, XII) — o tipo, sozinho, não decide"
     },
     {
       "fundamento": "Lei 8.072, art. 1º, § único, I",
       "lei": "Lei 2\\.889",
-      "artigo": "^Art\\. [123]"
+      "artigo": "^Art\\. [123]º(?=$|,| )"
     },
     {
       "fundamento": "Lei 8.072, art. 1º, § único, II",
       "lei": "Lei 10\\.826",
-      "artigo": "^Art\\. 16"
+      "artigo": "^Art\\. 16(?=$|,| )"
     },
     {
       "fundamento": "Lei 8.072, art. 1º, § único, III",
       "lei": "Lei 10\\.826",
-      "artigo": "^Art\\. 17"
+      "artigo": "^Art\\. 17(?=$|,| )"
     },
     {
       "fundamento": "Lei 8.072, art. 1º, § único, IV",
       "lei": "Lei 10\\.826",
-      "artigo": "^Art\\. 18"
+      "artigo": "^Art\\. 18(?=$|,| )"
     },
     {
       "fundamento": "Lei 8.072, art. 1º, § único, V",
       "lei": "Lei 12\\.850",
-      "artigo": "^Art\\. 2º?(,|$)",
+      "artigo": "^Art\\. 2º(?=$|,| )",
       "condicional": true,
       "nota": "só quando a organização é direcionada à prática de crime hediondo ou equiparado — circunstância do caso"
     },
     {
       "fundamento": "Lei 8.072, art. 1º, § único, VI (identidade com o CPM)",
       "lei": "^CPM",
-      "artigo": "^Art\\. 205, §2º",
+      "artigo": "^Art\\. 205, §2º(?=$|,| )",
       "condicional": true,
       "nota": "homicídio qualificado militar. Os incisos I a V e VII têm correspondente direto no art. 121, §2º do CP; o inciso VI (prevalecendo-se o agente da situação de serviço) NÃO tem — é hipótese própria do CPM, e nela não há o que projetar. Como o catálogo tem um registro só para o §2º inteiro, a identidade depende do inciso do caso"
     },
     {
       "fundamento": "Lei 8.072, art. 1º, § único, VI (identidade com o CPM)",
       "lei": "^CPM",
-      "artigo": "^Art\\. 232",
+      "artigo": "^Art\\. 232(?=$|,| )",
       "nota": "estupro militar na redação unificada da Lei 14.688/2023 — conduta e bem jurídico idênticos ao art. 213 do CP, que o inciso V do art. 1º arrola no caput e nos §§ 1º e 2º. Alcança o caput e os §§ 1º, 2º e 3º; o §3º corresponde ao art. 217-A (inciso VI) e está fora de vigência desde a ADI 7555, mas segue regendo fato anterior"
     },
     {
       "fundamento": "Lei 8.072, art. 1º, § único, VI (identidade com o CPM)",
       "lei": "^CPM",
-      "artigo": "^Art\\. 244, caput",
-      "nota": "extorsão mediante sequestro — o inciso IV do art. 1º abrange o art. 159 do CP em todas as formas, de modo que a figura simples do CPM tem correspondente na figura simples arrolada. A pena militar (6 a 15 anos) é menor que a do art. 159 (8 a 15): assimetria da mesma natureza da que fundamentou a ADI 7555, sem ação julgada"
+      "artigo": "^Art\\. 244(?=$|,| )",
+      "nota": "extorsão mediante sequestro — o inciso IV do art. 1º abrange o art. 159 do CP em todas as formas, de modo que a figura simples do CPM tem correspondente na figura simples arrolada. A pena militar (6 a 15 anos) é menor que a do art. 159 (8 a 15): assimetria da mesma natureza da que fundamentou a ADI 7555, sem ação julgada Ampliada em 23/09/2026 aos §§ 1º e 2º (decisão 29)."
     },
     {
       "fundamento": "Lei 8.072, art. 1º, § único, VII",
@@ -251,13 +253,13 @@
     {
       "fundamento": "Lei 8.072, art. 1º, § único, VII",
       "lei": "^ECA$",
-      "artigo": "^Art\\. 240, §1º",
+      "artigo": "^Art\\. 240, §1º(?=$|,| )",
       "nota": "redação dada pela Lei 15.487/2026 — § 1º (incisos I e II)"
     },
     {
       "fundamento": "Lei 8.072, art. 1º, § único, VII",
       "lei": "^ECA$",
-      "artigo": "^Art\\. 240, §2º",
+      "artigo": "^Art\\. 240, §2º(?=$|,| )",
       "nota": "redação dada pela Lei 15.487/2026 — § 2º"
     },
     {
@@ -269,7 +271,7 @@
     {
       "fundamento": "Lei 8.072, art. 1º, § único, VII",
       "lei": "^ECA$",
-      "artigo": "^Art\\. 241, par",
+      "artigo": "^Art\\. 241, par(?=$|,| )",
       "nota": "redação dada pela Lei 15.487/2026 — parágrafo único"
     },
     {
@@ -281,13 +283,13 @@
     {
       "fundamento": "Lei 8.072, art. 1º, § único, VII",
       "lei": "^ECA$",
-      "artigo": "^Art\\. 241-A, §1º",
+      "artigo": "^Art\\. 241-A, §1º(?=$|,| )",
       "nota": "redação dada pela Lei 15.487/2026 — § 1º"
     },
     {
       "fundamento": "Lei 8.072, art. 1º, § único, VII",
       "lei": "^ECA$",
-      "artigo": "^Art\\. 241-A, §3º",
+      "artigo": "^Art\\. 241-A, §3º(?=$|,| )",
       "nota": "redação dada pela Lei 15.487/2026 — § 3º"
     },
     {
@@ -305,13 +307,13 @@
     {
       "fundamento": "Lei 8.072, art. 1º, § único, VII",
       "lei": "^ECA$",
-      "artigo": "^Art\\. 241-D, §1º",
+      "artigo": "^Art\\. 241-D, §1º(?=$|,| )",
       "nota": "redação dada pela Lei 15.487/2026 — § 1º"
     },
     {
       "fundamento": "Lei 8.072, art. 1º, § único, VII",
       "lei": "^ECA$",
-      "artigo": "^Art\\. 241-D, §2º",
+      "artigo": "^Art\\. 241-D, §2º(?=$|,| )",
       "nota": "redação dada pela Lei 15.487/2026 — § 2º"
     },
     {
@@ -323,19 +325,19 @@
     {
       "fundamento": "Lei 8.072, art. 1º, § único, VII",
       "lei": "^ECA$",
-      "artigo": "^Art\\. 244-A, §1º",
+      "artigo": "^Art\\. 244-A, §1º(?=$|,| )",
       "nota": "redação dada pela Lei 15.487/2026 — § 1º"
     },
     {
       "fundamento": "Lei 8.072, art. 1º, § único, VIII",
       "lei": "Lei 15\\.358",
-      "artigo": "^Art\\. 2º, caput",
+      "artigo": "^Art\\. 2º, caput(?=$|,| )",
       "nota": "domínio social estruturado. O inciso declara hediondos 'o caput e os §§ 1º e 3º do art. 2º': o §1º é causa de aumento sobre este caput e o §3º foi VETADO — ver `pendentes`"
     },
     {
       "fundamento": "Lei 8.072, art. 1º, § único, VIII",
       "lei": "Lei 15\\.358",
-      "artigo": "^Art\\. 3º",
+      "artigo": "^Art\\. 3º(?=$|,| )",
       "nota": "favorecimento ao domínio social estruturado"
     },
     {
@@ -380,30 +382,189 @@
       "artigo": "^Art\\. 242, §2º, I$",
       "condicional": true,
       "nota": "roubo militar com emprego de arma: o CPM diz 'arma', e o rol só alcança a arma DE FOGO. A identidade depende da arma do caso — decisão do mantenedor em 19/09/2026"
+    },
+    {
+      "lei": "^CPM",
+      "artigo": "^Art\\. 208, caput(?=$|,| )",
+      "fundamento": "Lei 8.072/90, art. 1º, parágrafo único, VI (identidade com o genocídio dos arts. 1º a 3º da Lei 2.889/56 — rol, art. 1º, parágrafo único)",
+      "nota": "genocídio militar (decisão 29)"
+    },
+    {
+      "lei": "^CPM",
+      "artigo": "^Art\\. 401(?=$|,| )",
+      "fundamento": "Lei 8.072/90, art. 1º, parágrafo único, VI (identidade com o genocídio dos arts. 1º a 3º da Lei 2.889/56 — rol, art. 1º, parágrafo único)",
+      "nota": "genocídio em zona militarmente ocupada (decisão 29)"
+    },
+    {
+      "lei": "^CPM",
+      "artigo": "^Art\\. 408(?=$|,| )",
+      "fundamento": "Lei 8.072/90, art. 1º, parágrafo único, VI (identidade com o estupro do art. 213 do CP — rol, art. 1º, V)",
+      "nota": "violência carnal militar, todas as formas (decisão 29)"
+    },
+    {
+      "lei": "^CPM",
+      "artigo": "^Art\\. 405 c/c art\\. 244(?=$|,| )",
+      "fundamento": "Lei 8.072/90, art. 1º, parágrafo único, VI (identidade com a extorsão mediante sequestro do art. 159 do CP — rol, art. 1º, IV)",
+      "nota": "extorsão mediante sequestro em tempo de guerra, todas as formas (decisão 29)"
+    },
+    {
+      "lei": "^CPM",
+      "artigo": "^Art\\. 400, III(?=$|,| )",
+      "fundamento": "Lei 8.072/90, art. 1º, parágrafo único, VI (identidade com o homicídio qualificado do art. 121, § 2º, do CP — rol, art. 1º, I)",
+      "nota": "homicídio qualificado em presença do inimigo (decisão 29)"
+    },
+    {
+      "lei": "^CPM",
+      "artigo": "^Art\\. 242, § ?2º, V(?=$|,| )",
+      "fundamento": "Lei 8.072/90, art. 1º, parágrafo único, VI (identidade com o art. 157, § 2º, V, do CP — rol, art. 1º, II, a)",
+      "nota": "roubo militar com restrição da liberdade (decisão 29)"
+    },
+    {
+      "lei": "^CPM",
+      "artigo": "^Art\\. 242, § ?2º, VI(?=$|,| )",
+      "fundamento": "Lei 8.072/90, art. 1º, parágrafo único, VI (identidade com o art. 157, § 2º, V, do CP — rol, art. 1º, II, a)",
+      "nota": "roubo militar qualificado (decisão 29)"
+    },
+    {
+      "lei": "^CPM",
+      "artigo": "^Art\\. 243, § ?1º c/c art\\. 242, § ?2º, V(?=$|,| )",
+      "fundamento": "Lei 8.072/90, art. 1º, parágrafo único, VI (identidade com o art. 158, § 3º, do CP — rol, art. 1º, III)",
+      "nota": "extorsão militar com restrição da liberdade (decisão 29)"
+    },
+    {
+      "lei": "^CPM",
+      "artigo": "^Art\\. 292, § ?1º(?=$|,| )",
+      "fundamento": "Lei 8.072/90, art. 1º, parágrafo único, VI (identidade com o art. 267, § 1º, do CP — rol, art. 1º, VII)",
+      "nota": "epidemia com resultado morte, em tempo de guerra (decisão 29)"
+    },
+    {
+      "lei": "^CP$",
+      "artigo": "^Art\\. 129, § ?3º-A(?=$|,| )",
+      "condicional": true,
+      "fundamento": "Lei 8.072, art. 1º, I-A",
+      "nota": "lesão seguida de morte por integrante de organização criminosa ultraviolenta; hediondo só contra os agentes do rol (decisão 28)"
+    },
+    {
+      "lei": "^CPM",
+      "artigo": "^Art\\. 225, § ?1º(?=$|,| )",
+      "condicional": true,
+      "fundamento": "Lei 8.072/90, art. 1º, parágrafo único, VI (identidade com o art. 148, § 1º, IV, do CP — rol, art. 1º, IV)",
+      "nota": "sequestro militar; hediondo só quando a vítima é menor de 18 (decisão 29)"
+    },
+    {
+      "lei": "^CPM",
+      "artigo": "^Art\\. 208, par(?=$|,| )",
+      "condicional": true,
+      "fundamento": "Lei 8.072/90, art. 1º, parágrafo único, VI (identidade com o genocídio dos arts. 1º a 3º da Lei 2.889/56 — rol, art. 1º, parágrafo único)",
+      "nota": "casos assimilados; hediondo nos incisos I, II, IV e V (decisão 29)"
+    },
+    {
+      "lei": "^CPM",
+      "artigo": "^Art\\. 402(?=$|,| )",
+      "condicional": true,
+      "fundamento": "Lei 8.072/90, art. 1º, parágrafo único, VI (identidade com o genocídio dos arts. 1º a 3º da Lei 2.889/56 — rol, art. 1º, parágrafo único)",
+      "nota": "casos assimilados em tempo de guerra (decisão 29)"
+    },
+    {
+      "lei": "^CPM",
+      "artigo": "^Art\\. 205, caput(?=$|,| )",
+      "condicional": true,
+      "fundamento": "Lei 8.072/90, art. 1º, parágrafo único, VI (identidade com o homicídio do art. 121 do CP — rol, art. 1º, I)",
+      "nota": "hediondo só em atividade típica de grupo de extermínio (decisão 29)"
+    },
+    {
+      "lei": "^CPM",
+      "artigo": "^Art\\. 400, I(?=$|,| )",
+      "condicional": true,
+      "fundamento": "Lei 8.072/90, art. 1º, parágrafo único, VI (identidade com o homicídio do art. 121 do CP — rol, art. 1º, I)",
+      "nota": "hediondo só em atividade típica de grupo de extermínio (decisão 29)"
+    },
+    {
+      "lei": "^CPM",
+      "artigo": "^Art\\. 209, § ?2º(?=$|,| )",
+      "condicional": true,
+      "fundamento": "Lei 8.072/90, art. 1º, parágrafo único, VI (identidade com o art. 129, § 2º, do CP — rol, art. 1º, I-A)",
+      "nota": "lesão gravíssima militar; hediondo só contra os agentes do rol (decisão 29)"
+    },
+    {
+      "lei": "^CPM",
+      "artigo": "^Art\\. 209, § ?3º-A(?=$|,| )",
+      "condicional": true,
+      "fundamento": "Lei 8.072/90, art. 1º, parágrafo único, VI (identidade com o art. 129, § 3º, do CP — rol, art. 1º, I-A)",
+      "nota": "lesão seguida de morte militar; hediondo só contra os agentes do rol (decisão 29)"
+    },
+    {
+      "lei": "^CPM",
+      "artigo": "^Art\\. 403, § ?2º(?=$|,| )",
+      "condicional": true,
+      "fundamento": "Lei 8.072/90, art. 1º, parágrafo único, VI (identidade com o art. 129, § 2º, do CP — rol, art. 1º, I-A)",
+      "nota": "lesão gravíssima em tempo de guerra (decisão 29)"
+    },
+    {
+      "lei": "^CPM",
+      "artigo": "^Art\\. 403, § ?3º \\(no caso de morte\\)$",
+      "condicional": true,
+      "fundamento": "Lei 8.072/90, art. 1º, parágrafo único, VI (identidade com o art. 129, § 3º, do CP — rol, art. 1º, I-A)",
+      "nota": "lesão seguida de morte em tempo de guerra (decisão 29)"
+    },
+    {
+      "lei": "^CPM",
+      "artigo": "^Art\\. 242, § ?2º(?=$|,| )",
+      "condicional": true,
+      "fundamento": "Lei 8.072/90, art. 1º, parágrafo único, VI (identidade com o art. 157, § 2º e § 2º-A, do CP — rol, art. 1º, II, a e b)",
+      "nota": "agregador do roubo militar: hediondo nos incisos I (arma de fogo), V, VI e VIII (decisão 29)"
+    },
+    {
+      "lei": "^CPM",
+      "artigo": "^Art\\. 243, § ?1º(?=$|,| )",
+      "condicional": true,
+      "fundamento": "Lei 8.072/90, art. 1º, parágrafo único, VI (identidade com o art. 158, § 3º, do CP — rol, art. 1º, III)",
+      "nota": "agregador da extorsão militar (decisão 29)"
+    },
+    {
+      "lei": "^CPM",
+      "artigo": "^Art\\. 405 c/c art\\. 242, § ?2º(?=$|,| )",
+      "condicional": true,
+      "fundamento": "Lei 8.072/90, art. 1º, parágrafo único, VI (identidade com o art. 157, § 2º e § 2º-A, do CP — rol, art. 1º, II, a e b)",
+      "nota": "agregador do roubo em tempo de guerra (decisão 29)"
+    },
+    {
+      "lei": "^CPM",
+      "artigo": "^Art\\. 405 c/c art\\. 243, § ?1º(?=$|,| )",
+      "condicional": true,
+      "fundamento": "Lei 8.072/90, art. 1º, parágrafo único, VI (identidade com o art. 158, § 3º, do CP — rol, art. 1º, III)",
+      "nota": "agregador da extorsão em tempo de guerra (decisão 29)"
+    },
+    {
+      "lei": "^CPM",
+      "artigo": "^Art\\. 405, caput(?=$|,| )",
+      "condicional": true,
+      "fundamento": "Lei 8.072/90, art. 1º, parágrafo único, VI (identidade com o roubo e a extorsão dos arts. 157 e 158 do CP — rol, art. 1º, II e III)",
+      "nota": "roubo ou extorsão em tempo de guerra, forma simples (decisão 29)"
     }
   ],
   "excecoes": [
     {
       "lei": "Lei 11\\.343",
-      "artigo": "^Art\\. 33, §4º",
+      "artigo": "^Art\\. 33, § ?4º(?=$|,| )",
       "hediondo": "Não",
       "fundamento": "STF, HC 118.533/MS (Pleno, 2016): o tráfico privilegiado não é equiparado a hediondo. Súmula 512 do STJ cancelada."
     },
     {
       "lei": "Lei 11\\.343",
-      "artigo": "^Art\\. 35",
+      "artigo": "^Art\\. 35(?=$|,| )",
       "hediondo": "Não",
       "fundamento": "STJ, jurisprudência consolidada: a associação para o tráfico não consta do rol e não é equiparada; a Lei 8.072 alcança o tráfico, não o crime autônomo de associação."
     },
     {
       "lei": "^CP$",
-      "artigo": "^Art\\. 121, §1º",
+      "artigo": "^Art\\. 121, §1º(?=$|,| )",
       "hediondo": "Não",
       "fundamento": "Homicídio privilegiado não está no rol; a hediondez alcança o qualificado (§2º)."
     },
     {
       "lei": "^CPM",
-      "artigo": "^Art\\. 290, §5º",
+      "artigo": "^Art\\. 290, §5º(?=$|,| )",
       "hediondo": "Não",
       "fundamento": "Lei 8.072, art. 1º, § único, VI, a contrario: o inciso projeta sobre o CPM apenas os crimes 'previstos no art. 1º desta Lei', e o tráfico não está no art. 1º — é EQUIPARADO pelo art. 2º, dispositivo diverso. Não há identidade possível com uma hipótese que o rol não contém."
     },
@@ -412,18 +573,44 @@
       "artigo": "^Art\\. 243, §1º c/c art\\. 242, §2º, I$",
       "hediondo": "Não",
       "fundamento": "O rol não alcança a extorsão pelo emprego de arma, de fogo ou não: o art. 1º, III, da Lei 8.072/90 só torna hedionda a extorsão qualificada pela restrição da liberdade, pela lesão corporal ou pela morte (CP, art. 158, §3º). Sem figura correspondente no direito comum, não há identidade a declarar pelo parágrafo único, VI. Decisão do mantenedor em 19/09/2026."
+    },
+    {
+      "lei": "^CPM",
+      "artigo": "^Art\\. 205, § ?2º, VI(?=$|,| )",
+      "hediondo": "Não",
+      "fundamento": "A hediondez do CPM vem da identidade com o crime comum (Lei 8.072, art. 1º, parágrafo único, VI), e esta é a única qualificadora do art. 205, § 2º sem correspondência no art. 121, § 2º, do CP: prevalecer-se o agente da situação de serviço não figura entre as qualificadoras comuns.",
+      "nota": "explicitado em 23/09/2026; o próprio registro já dizia, no `obs`, que foi separado do § 2º por ser a única hipótese sem correspondência no CP"
+    },
+    {
+      "lei": "^CP$",
+      "artigo": "^Art\\. 121, § ?2º-D(?=$|,| )",
+      "hediondo": "Não",
+      "fundamento": "O rol (Lei 8.072, art. 1º, I) alcança o homicídio qualificado do § 2º; o § 2º-D, incluído pela Lei 15.358/2026, é parágrafo autônomo e não foi acrescentado ao rol.",
+      "nota": "decisão 28"
     }
   ],
   "pendentes": [
     {
       "fundamento": "Lei 8.072, art. 1º, § único, VI",
-      "descricao": "Os sete registros militares que o catálogo marcava foram julgados na revisão de 02/08/2026 e constam das `regras` e `excecoes` acima. O inverso — varrer o Livro II do CPM contra os doze incisos do art. 1º para achar o que DEVERIA estar marcado e não está — foi feito na revisão de 05-06/08/2026: os candidatos levantados (roubo e extorsão qualificados pelo resultado, sequestro de menor) viraram os registros do art. 242, §§ 2º e 3º, e do art. 243, §§ 1º e 2º, com a hediondez desdobrada por inciso onde ela varia dentro do parágrafo. Em 19/09/2026, ao derivar `hediondo_especie` da tabela, apareceu que os OITO registros de roubo e extorsão militares afirmavam hediondez sem regra escrita aqui. Seis ganharam regra, com o inciso do rol a que correspondem. O roubo com emprego de arma (art. 242, §2º, I) virou regra CONDICIONAL: o rol alcança a arma de fogo, e o CPM diz apenas 'arma'. A extorsão com emprego de arma (art. 243, §1º c/c art. 242, §2º, I) virou exceção: não há figura correspondente no rol, e o registro deixou de ser hediondo.",
+      "descricao": "Os sete registros militares que o catálogo marcava foram julgados na revisão de 02/08/2026 e constam das `regras` e `excecoes` acima. O inverso — varrer o Livro II do CPM contra os doze incisos do art. 1º para achar o que DEVERIA estar marcado e não está — foi feito na revisão de 05-06/08/2026: os candidatos levantados (roubo e extorsão qualificados pelo resultado, sequestro de menor) viraram os registros do art. 242, §§ 2º e 3º, e do art. 243, §§ 1º e 2º, com a hediondez desdobrada por inciso onde ela varia dentro do parágrafo. Em 19/09/2026, ao derivar `hediondo_especie` da tabela, apareceu que os OITO registros de roubo e extorsão militares afirmavam hediondez sem regra escrita aqui. Seis ganharam regra, com o inciso do rol a que correspondem. O roubo com emprego de arma (art. 242, §2º, I) virou regra CONDICIONAL: o rol alcança a arma de fogo, e o CPM diz apenas 'arma'. A extorsão com emprego de arma (art. 243, §1º c/c art. 242, §2º, I) virou exceção: não há figura correspondente no rol, e o registro deixou de ser hediondo. FECHADO em 23/09/2026 pela decisão 29: a varredura do Livro II do CPM contra os doze incisos do art. 1º foi concluída, e o que ela achou virou regra aqui (incondicional ou condicional) e registro novo no catálogo.",
       "acao": "nenhuma — a varredura foi feita; reabrir só se o rol do art. 1º mudar (a impressão do texto vigia isso)"
     },
     {
       "fundamento": "Lei 8.072, art. 1º, § único, VIII",
       "descricao": "O diploma é a Lei 15.358/2026 (Marco Legal do Combate ao Crime Organizado), já em data/fontes.json, e os dois tipos estão no catálogo. Resta um defeito da lei: o inciso VIII — e o art. 4º da própria Lei 15.358, de redação idêntica — declara hediondos 'o caput e os §§ 1º e 3º do art. 2º', mas o §3º foi VETADO (VEP-216/26) e não existe no texto sancionado. A remissão é INÓCUA: não há dispositivo a cadastrar. O §1º, por sua vez, é causa de aumento sobre o caput, que já é hediondo — declará-lo hediondo em separado é redundante, e a hediondez fica registrada no caput.",
       "acao": "nenhuma no catálogo: está anotado para que a conferência não volte a procurar um §3º inexistente. Reabrir só se lei posterior ajustar a remissão ou restaurar o parágrafo vetado."
+    },
+    {
+      "fundamento": "Lei 8.072, art. 1º, I",
+      "descricao": "CP, art. 121, §§ 2º-B e 2º-C: os cinco registros (1301 a 1305) afirmam hediondez, e até 23/09/2026 a afirmação se apoiava em casamento por acidente — a regra do § 2º, sem âncora de fim, alcançava '§2º-B' e '§2º-C'. Ancorada a regra (C15), a largura passou a ser declarada, e com ela a pergunta: os §§ 2º-B e 2º-C são causas de AUMENTO sobre o homicídio qualificado do § 2º, que está no rol — herdam a hediondez do tipo-base? A decisão 28 respondeu o caso vizinho em sentido contrário para o § 2º-D ('parágrafo autônomo, não acrescentado ao rol'), mas o § 2º-D cria qualificadora nova, e os §§ 2º-B e 2º-C não criam tipo: majoram o do § 2º. Nenhum valor do catálogo foi alterado: os cinco continuam 'Sim', como estavam. Decisão do mantenedor pendente.",
+      "acao": "decisão do mantenedor: os §§ 2º-B e 2º-C herdam a hediondez do § 2º, que majoram, ou seguem o § 2º-D e ficam fora do rol? Enquanto não vier, a regra declara a largura e os cinco registros continuam como estão",
+      "ids": [
+        1301,
+        1302,
+        1303,
+        1304,
+        1305
+      ]
     }
   ],
   "fora_de_alcance": [

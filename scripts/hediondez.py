@@ -32,8 +32,63 @@ HEDIONDOS = RAIZ / "data" / "hediondos.json"
 _EQUIPARADO = re.compile(r"art\.\s*5º,\s*XLIII", re.I)
 
 
+# Uma alternativa da expressão de `artigo` termina de três formas legítimas:
+# em `$`, na âncora de fim padrão, ou num grupo que já a contém.
+_ANCORA = r"(?=$|,| )"
+
+
+def _partes(expressao: str) -> list[str]:
+    """As alternativas de topo de `a|b(c|d)`: `a` e `b(c|d)`."""
+    partes, nivel, atual = [], 0, ""
+    for c in expressao:
+        if c == "(":
+            nivel += 1
+        elif c == ")":
+            nivel -= 1
+        if c == "|" and nivel == 0:
+            partes.append(atual)
+            atual = ""
+        else:
+            atual += c
+    return partes + [atual]
+
+
+def validar(tabela: dict) -> list[str]:
+    """Toda regra ancorada em `^` tem de dizer onde termina.
+
+    É a trava da decisão C15, e existe porque a C12 nasceu do silêncio oposto:
+    `^Art\\. 157, §2º, V` sem fim casava `VI`, `VII` e `VIII`, e quatro formas do
+    roubo passaram a afirmar hediondez que o rol não dá. Corrigir as expressões
+    resolvia aquelas quatro; conferir no carregamento é o que impede a próxima
+    de nascer torta.
+
+    Regra que alcança o diploma inteiro é legítima — e então declara
+    `aberta: true`, para que a largura seja escolha, e não descuido.
+    """
+    problemas = []
+    for secao in ("regras", "excecoes"):
+        for i, r in enumerate(tabela.get(secao, [])):
+            if r.get("aberta"):
+                continue
+            for p in _partes(r["artigo"]):
+                if p.endswith("$") or p.endswith(_ANCORA):
+                    continue
+                problemas.append(
+                    f"hediondos.json: {secao}[{i}] ({r['lei']}) — a alternativa {p!r} não "
+                    f"diz onde termina. Acrescente {_ANCORA!r} ou '$', ou declare "
+                    f"\"aberta\": true se ela deve alcançar o diploma inteiro.")
+    return problemas
+
+
+class TabelaInvalida(ValueError):
+    pass
+
+
 def carregar(caminho: Path | None = None) -> dict:
-    return json.loads((caminho or HEDIONDOS).read_text(encoding="utf-8"))
+    tabela = json.loads((caminho or HEDIONDOS).read_text(encoding="utf-8"))
+    if problemas := validar(tabela):
+        raise TabelaInvalida("\n".join(problemas))
+    return tabela
 
 
 def casa(regra: dict, registro: dict) -> bool:

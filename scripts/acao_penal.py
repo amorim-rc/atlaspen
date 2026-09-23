@@ -80,6 +80,15 @@ _NESTE_CAPITULO = re.compile(r'(neste|deste) capitulo|nos crimes previstos neste
 _NESTA_SECAO = re.compile(r'(nesta|desta) secao', re.I)
 _NESTE_TITULO = re.compile(r'(neste|deste) titulo|capitulos i e ii deste titulo', re.I)
 _ARTIGOS_CITADOS = re.compile(r'art(?:igo)?s?\.?\s*(\d+(?:-[a-z])?)', re.I)
+
+# A própria regra exclui artigos do seu alcance: "Nos crimes previstos nesta
+# Seção, somente se procede mediante representação […], com exceção do crime
+# previsto no art. 169 desta Lei, em que a ação é pública incondicionada"
+# (Lei 14.597, art. 172). Sem ler a exceção, a regra contradizia o artigo que
+# ela mesma ressalva.
+_EXCETO = re.compile(
+    r'(?:com excecao|excetuad[oa]s?|salvo|ressalvad[oa]s?)[^.]{0,80}?'
+    r'art(?:igo)?s?\.?\s*(\d+(?:-[a-z])?(?:\s*(?:,|e)\s*\d+(?:-[a-z])?)*)', re.I)
 _CAPITULOS_CITADOS = re.compile(r'capitulos? ([ivx]+(?: e [ivx]+)?) deste titulo', re.I)
 
 
@@ -94,9 +103,19 @@ class RegraAcao:
 
 
 def topografia(bruto: str) -> list[tuple[int, str, str]]:
-    """Marcadores de TÍTULO, CAPÍTULO e SEÇÃO, com a posição em que aparecem."""
+    """Marcadores de TÍTULO, CAPÍTULO e SEÇÃO, com a posição em que aparecem.
+
+    Sem distinguir caixa, de propósito. O Planalto escreve os títulos e capítulos
+    em versais e as seções em caixa alta e baixa — "CAPÍTULO VI" e, logo abaixo,
+    "Seção I". Lendo só as versais, a seção desaparecia da topografia, e uma
+    regra dita "nesta Seção" caía para o capítulo inteiro: o art. 172 da Lei
+    14.597 passava a condicionar à representação os sete crimes do Capítulo VI,
+    quando alcança só os da sua própria Seção.
+    """
     return [(m.start(), m.group(1).upper(), m.group(2).upper())
-            for m in re.finditer(r'(T[ÍI]TULO|CAP[ÍI]TULO|SE[ÇC][ÃA]O)\s+([IVXL]+(?:-[A-Z])?)', bruto)]
+            for m in re.finditer(
+                r'\b(T[ÍI]TULO|CAP[ÍI]TULO|SE[ÇC][ÃA]O)\s+([IVXL]+(?:-[A-Z])?)\b',
+                bruto, re.I)]
 
 
 def posicoes_dos_artigos(bruto: str) -> dict[str, int]:
@@ -113,7 +132,13 @@ def posicoes_dos_artigos(bruto: str) -> dict[str, int]:
 
 
 def onde_esta(artigo: str, marcadores: list, posicoes: dict[str, int], secao: bool = False) -> dict:
-    """{'titulo': 'VI', 'capitulo': 'I-A'} do artigo, pela posição no texto."""
+    """{'titulo': 'VI', 'capitulo': 'I-A', 'secao': 'II'} do artigo, pela posição.
+
+    Os três são guardados SEPARADOS e sempre comparados em cadeia. "Capítulo V"
+    não identifica nada sozinho: o Código Penal tem um em cada Título, e foi por
+    isso que a regra do art. 145 ("neste Capítulo", nos crimes contra a honra)
+    alcançava os Capítulos V dos Títulos II, VI e X — a C1 da revisão fina.
+    """
     p = posicoes.get(artigo)
     if p is None:
         return {}
@@ -127,7 +152,7 @@ def onde_esta(artigo: str, marcadores: list, posicoes: dict[str, int], secao: bo
             lugar['capitulo'] = numero
             lugar.pop('secao', None)
         elif tipo.startswith('S'):
-            lugar['secao'] = f"{lugar.get('capitulo', '?')}/{numero}"
+            lugar['secao'] = numero
     return lugar
 
 
@@ -178,11 +203,16 @@ def achar_regras(dispositivos: dict, bruto: str) -> list[RegraAcao]:
             if _NESTA_SECAO.search(texto):
                 # A Lei 14.597/2023 (Lei Geral do Esporte) define a ação penal
                 # por SEÇÃO, e não por capítulo: "nos crimes previstos nesta
-                # Seção, somente se procede mediante representação".
-                alcance = {'secao': onde_esta(artigo, marcadores, posicoes, secao=True).get('secao')}
+                # Seção, somente se procede mediante representação". A cadeia
+                # inteira vai junto: "Seção II" se repete diploma afora.
+                lugar = onde_esta(artigo, marcadores, posicoes, secao=True)
+                alcance = {k: lugar.get(k) for k in ('titulo', 'capitulo', 'secao')
+                           if lugar.get(k)}
             elif _NESTE_CAPITULO.search(texto):
-                alcance = {k: v for k, v in onde_esta(artigo, marcadores, posicoes).items()}
-                alcance.pop('titulo', None) if 'capitulo' in alcance else None
+                # A cadeia inteira, e não só o capítulo (C1). Descartar o título
+                # fazia "neste Capítulo" valer para todo Capítulo V do diploma.
+                lugar = onde_esta(artigo, marcadores, posicoes)
+                alcance = {k: lugar.get(k) for k in ('titulo', 'capitulo') if lugar.get(k)}
             elif _NESTE_TITULO.search(texto):
                 lugar = onde_esta(artigo, marcadores, posicoes)
                 caps = _CAPITULOS_CITADOS.search(texto)
@@ -192,6 +222,13 @@ def achar_regras(dispositivos: dict, bruto: str) -> list[RegraAcao]:
             else:
                 citados = [a for a in _ARTIGOS_CITADOS.findall(texto) if a != artigo]
                 alcance = {'artigos': citados} if citados else {'artigos': [artigo]}
+            # A exceção escrita na própria regra sai do alcance dela. É leitura
+            # do texto, não juízo: o art. 172 da Lei 14.597 diz, com todas as
+            # letras, que o art. 169 fica de fora.
+            if excecao := _EXCETO.search(texto):
+                fora = _ARTIGOS_CITADOS.findall(excecao.group(0))
+                if fora:
+                    alcance['exceto'] = fora
             regras.append(RegraAcao(
                 especie=especie, formula=formula,
                 dispositivo=f"Art. {artigo}" + ('' if chave.endswith('caput') else f", {chave.split('|')[1]}"),
@@ -204,6 +241,10 @@ def achar_regras(dispositivos: dict, bruto: str) -> list[RegraAcao]:
 
 def alcanca(regra: RegraAcao, artigo: str, lugar: dict, marcador: str = 'caput') -> bool:
     a = regra.alcance
+    # O que a própria regra exclui não é alcançado por ela, venha o alcance de
+    # artigo citado ou de referência relativa.
+    if artigo.upper() in [x.upper() for x in a.get('exceto', [])]:
+        return False
     if a.get('artigos'):
         # Sem reduzir o sufixo: o art. 147-B (violência psicológica) NÃO é o
         # art. 147, e a regra de representação do §2º do 147 não o alcança.
@@ -214,10 +255,14 @@ def alcanca(regra: RegraAcao, artigo: str, lugar: dict, marcador: str = 'caput')
         if a.get('marcadores'):
             return marcador in a['marcadores']
         return True
+    # Referência relativa: a cadeia inteira tem de bater, do título para baixo.
+    # "Nesta Seção" é Seção X do Capítulo Y do Título Z, e não toda Seção X do
+    # diploma; "neste Capítulo", idem. Comparar só o degrau mais fundo foi a C1.
     if a.get('secao'):
-        return lugar.get('secao') == a['secao']
+        return all(lugar.get(k) == a.get(k) for k in ('titulo', 'capitulo', 'secao')
+                   if a.get(k))
     if a.get('capitulo'):
-        return lugar.get('capitulo') == a['capitulo']
+        return all(lugar.get(k) == a.get(k) for k in ('titulo', 'capitulo') if a.get(k))
     if a.get('titulo'):
         if lugar.get('titulo') != a['titulo']:
             return False
@@ -283,3 +328,49 @@ def regra_externa(registro: dict) -> Classificacao | None:
         if lei.search(registro.get('lei') or '') and artigo.search(registro.get('artigo') or ''):
             return Classificacao(especie, fundamento, 'lei-externa')
     return None
+
+
+# ── Fundamentos de fora do diploma, que NÃO mudam a espécie ─────────────────
+# Decisão 18, de 23/09/2026. Há regra de fora que não altera a espécie derivada
+# e mesmo assim é o que a sustenta: dizer "regra geral, CP, art. 100" num crime
+# militar seria citar o dispositivo errado, porque quem manda ali é o art. 121
+# do CPM. O campo `acao_fundamento` passa a dizer de onde vem cada resposta, e
+# estes casos existem para que ele não minta por omissão.
+FUNDAMENTOS_EXTERNOS: list[tuple[re.Pattern, re.Pattern, str, str]] = [
+    (re.compile(r'^CPM'), re.compile(r'.'), 'Pública Incondicionada',
+     'lei externa: CPM, art. 121 — a ação penal militar é sempre pública, promovida '
+     'por denúncia do Ministério Público Militar'),
+    (re.compile(r'^CP$'), re.compile(r'^Art\. 129, § ?(9º|13)'), 'Pública Incondicionada',
+     'jurisprudência: STF, ADI 4424, e STJ, Súmula 542 — a ação penal da lesão corporal '
+     'praticada com violência doméstica e familiar contra a mulher é pública '
+     'incondicionada (Lei 11.340/06, art. 41)'),
+]
+
+
+def fundamento_externo(registro: dict) -> tuple[str, str] | None:
+    """(espécie esperada, fundamento) de fora do diploma, sem mudar a espécie."""
+    for lei, artigo, especie, fundamento in FUNDAMENTOS_EXTERNOS:
+        if lei.search(registro.get('lei') or '') and artigo.search(registro.get('artigo') or ''):
+            return especie, fundamento
+    return None
+
+
+# ── O fundamento publicado (decisão 18) ─────────────────────────────────────
+def fundamento_de(registro: dict, c: Classificacao) -> str:
+    """O texto de `acao_fundamento`: de onde vem a espécie deste registro.
+
+    Cinco formas, e só elas: regra do diploma, regra geral, lei externa,
+    jurisprudência e intertemporal. Um registro cuja ação penal varia no tempo
+    (o estelionato, decisão 33) aponta para `acao_condicao`, porque a resposta
+    não cabe numa linha e depende da data do fato.
+    """
+    if registro.get('acao_condicao') and 'Fatos até' in (registro.get('acao_condicao') or ''):
+        return 'intertemporal: ver `acao_condicao`'
+    if ext := fundamento_externo(registro):
+        return ext[1]
+    if c.regra == 'lei-externa':
+        return f'lei externa: {c.fundamento}'
+    if c.regra == 'silencio-do-diploma':
+        return ('regra geral: CP, art. 100, c/c art. 12 — nenhuma regra de ação penal do '
+                'diploma alcança o dispositivo')
+    return f'regra do diploma: {c.fundamento}'

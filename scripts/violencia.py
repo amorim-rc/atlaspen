@@ -9,11 +9,19 @@ falam em violência *à pessoa*, e o furto qualificado por rompimento de obstác
 admite ANPP. Crime culposo não conta: a violência que veda substituição é dolosa.
 `grave_ameaca: "Sim"` é a grave ameaça como meio do tipo.
 
+**A terceira resposta, desde 23/09/2026.** Muita coisa que saía como `indeciso`
+não era dúvida da lei: era tipo em que a violência é UM dos meios, ou em que ela
+pode ou não estar presente. Para esses a resposta passou a ser "Não" com
+**condição declarada** (`violencia_condicao`), na mesma forma de `acao_condicao`
+e `hediondo_condicao`. "Não" porque o tipo se consuma sem violência — e negar
+isso retiraria ANPP e substituição de quem tem direito a elas; condição porque a
+hipótese violenta existe e o leitor precisa vê-la. O texto da condição é do
+catálogo, registro a registro; aqui se decide QUE há condição, e de que família.
+
 **Por que derivar em vez de digitar.** Os dois campos vinham de herança do caput
 (`criar.py`), sem critério escrito e sem fundamento: ninguém conseguia dizer, de
 um registro, POR QUE ele era violento. Aqui cada resposta vem com a regra que a
-produziu e o trecho da lei que a sustenta — e o que as regras não alcançam sai
-como `indeciso`, que é uma resposta honesta e contável, não um "Não" disfarçado.
+produziu e o trecho da lei que a sustenta.
 
 **Este módulo não escreve no catálogo.** Ele classifica; o Auditor compara com o
 publicado e abre as listas. Quem decide assina.
@@ -22,7 +30,7 @@ from __future__ import annotations
 
 import re
 import unicodedata
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 
 
 def normalizar(texto: str) -> str:
@@ -32,14 +40,26 @@ def normalizar(texto: str) -> str:
 
 
 @dataclass
+class Classificacao:
+    valor: str | None                 # "Sim" | "Não" | None (indeciso)
+    regra: str | None
+    fundamento: str | None            # o trecho da lei que decidiu
+    origem: str                       # "propria" | "caput" | "elemento" | "indecisa" | "silencio"
+    alerta: str | None = None
+    # Quando existe, o registro tem de declarar `violencia_condicao`. O texto é
+    # do catálogo; aqui vai o MODELO, que diz que hipótese a condição descreve.
+    condicao: str | None = None
+    # Remissão a outro dispositivo: o Auditor resolve e herda a classificação.
+    remissao: str | None = None
+
+
+@dataclass
 class Regra:
     id: str
     campo: str                 # "violencia" | "grave_ameaca"
     valor: str                 # "Sim" | "Não"
     padrao: re.Pattern
     nota: str
-    # Quando casa, a regra encerra a classificação daquele campo.
-    excludente: bool = False
 
 
 # ── Violência contra a COISA: casa antes das demais e não marca violência ────
@@ -50,27 +70,82 @@ _COISA = re.compile(
     r'romp(imento|er|endo) de obstaculo|violencia contra a coisa'
     r'|destruicao ou rompimento de obstaculo', re.I)
 
-# Palavras de violência em sentido que a regra não decide sozinha. Não são
-# "não": são "alguém precisa ler". A violência psicológica do art. 147-B é o
-# caso-limite — o tipo se chama violência e a conduta não é física.
-_AMBIGUO = re.compile(
-    r'violencia fisica ou psicologica|violencia psicologica ou fisica'
-    r'|violencia psicologica|violencia moral|violencia patrimonial'
+# Violência que a lei dirige INDIFERENTEMENTE à pessoa ou à coisa (CP, art. 200:
+# "violência contra pessoa ou coisa"). Decisão 8/f: "Não", com condição — só a
+# dirigida à pessoa conta para o art. 44, I, do CP.
+_PESSOA_OU_COISA = re.compile(
+    r'violencia (contra|a) (a )?pessoa ou (contra )?(a )?coisa'
+    r'|violencia (contra|a) (a )?coisa ou (contra )?(a )?pessoa', re.I)
+
+# "Violência" em sentido próprio, não físico. Decisão 11: psicológica,
+# institucional, política e obstétrica são "Não" — não são a violência do art.
+# 44, I, do CP, que a doutrina e o CPP leem como violência à pessoa.
+_SENTIDO_PROPRIO = re.compile(
+    r'violencia psicologica|violencia moral|violencia patrimonial'
     r'|violencia institucional|violencia obstetrica|violencia politica', re.I)
 
-# Tipos de PERIGO à pessoa: expõem a vida ou a saúde sem descrever violência
-# (maus-tratos, abandono, perigo de contágio). Chamá-los de não violentos por
-# silêncio esconde a pergunta; chamá-los de violentos afirma o que a lei não diz.
+# "Física OU psicológica": o tipo se consuma só com a psicológica, então é meio
+# alternativo (CP, art. 146-A, o bullying) — decisão 11, remetendo à 8.
+_FISICA_OU_PSICOLOGICA = re.compile(
+    r'violencia fisica ou psicologica|violencia psicologica ou fisica', re.I)
+
+# Tipos de PERIGO à pessoa. Decisão 10: "Não" — a lei não descreve violência.
 _PERIGO = re.compile(
-    r'expor a perigo a vida ou a saude|abusando de meios de correcao'
+    r'expor a perigo a vida ou a saude'
     r'|privando-a de alimentacao|sujeitando-a a trabalho excessivo'
     r'|abandonar pessoa que esta sob (seu|sua) (cuidado|guarda)', re.I)
 
-# "Ameaça" sem o qualificativo "grave". O art. 147 do CP resolve sozinho, porque
-# diz "mal injusto e grave"; os demais — a cobrança vexatória do art. 71 do CDC,
-# o assédio do art. 326-B do Código Eleitoral — pedem juízo: nem toda ameaça
-# típica é a GRAVE ameaça que veda ANPP e substituição.
+# Dentro dos tipos de perigo, os que podem ser executados com agressão física
+# ganham condição (decisão 10): maus-tratos e abuso de meios de correção.
+_PERIGO_COM_CONDICAO = re.compile(
+    r'abusando de meios de correcao|maus-tratos|meios de correcao ou disciplina', re.I)
+
+# Privação da liberdade. Decisão 1a: "Não" + condição — sequestrar não descreve
+# violência; a privação pode ser obtida por fraude, engano ou aproveitamento.
+_PRIVACAO_LIBERDADE = re.compile(
+    r'privar alguem de sua liberdade|sequestrar|seqüestrar|carcere privado'
+    r'|privacao da liberdade', re.I)
+
+# Extorsão mediante sequestro. Decisão 1b: violência "Não" + condição, e grave
+# ameaça "Sim" — exigir resgate com a vítima em poder do agente é grave ameaça.
+_EXTORSAO_SEQUESTRO = re.compile(
+    r'como condicao ou preco do resgate'
+    r'|extorquir[^.]{0,40}mediante seq(u|ü)estro', re.I)
+
+# Remoção de tecido "de pessoa ou cadáver" (Lei 9.434, art. 14). Decisão 3.
+_REMOCAO = re.compile(r'remover (tecidos|orgaos|partes do corpo)|remocao de (tecidos|orgaos)', re.I)
+_PESSOA_OU_CADAVER = re.compile(r'pessoa ou cadaver', re.I)
+_EM_PESSOA_VIVA = re.compile(r'em pessoa viva', re.I)
+
+# Vítima animal. Decisão 7/l: o art. 44, I, do CP fala em violência À PESSOA.
+_ANIMAL = re.compile(
+    r'especimes? da fauna|animais silvestres|animais domesticos'
+    r'|animal (silvestre|domestico|nativo|exotico)|maus-tratos a animais', re.I)
+
+# Tipo associativo. Decisão 7/n: associar-se é a conduta; o meio de execução do
+# crime-fim não entra no tipo da associação, nem a arma que o majora.
+_ASSOCIATIVO = re.compile(
+    r'associar(em)?-se|constituir organizacao criminosa|promover, constituir, financiar'
+    r'|integrar(em)?, pessoalmente ou por interposta pessoa, organizacao criminosa'
+    r'|reunirem-se em (quadrilha|bando)|associacao criminosa', re.I)
+
+# Associação e incitação COM PENA POR REMISSÃO (Lei 2.889, arts. 2º e 3º).
+# Decisão 6/d: a conduta é associar-se ou incitar, e a remissão não importa o
+# meio de execução do crime remetido.
+_INCITACAO = re.compile(r'incitar (publica|diretamente)|incitacao', re.I)
+
+# Rixa. Decisão 7/o: participar de rixa pressupõe vias de fato.
+_RIXA = re.compile(r'participar de rixa', re.I)
+
+# "Ameaça" sem o qualificativo "grave". Decisão 9: "Não" + condição.
 _AMEACA_SIMPLES = re.compile(r'\bamea[czç]\w*', re.I)
+
+# Exceções da decisão 9: o mal ameaçado já é, no próprio texto, necessariamente
+# grave — CPM 242 (ameaça de violência à pessoa) e CPM 245 (ameaça de revelar
+# fato que lesa a reputação).
+_AMEACA_GRAVE_NO_TEXTO = re.compile(
+    r'ameaca de (emprego de )?violencia (a|contra) (a )?pessoa'
+    r'|ameaca de revelar fato|ameaca de causar-lhe mal', re.I)
 
 REGRAS: list[Regra] = [
     # ── Meio ────────────────────────────────────────────────────────────────
@@ -81,6 +156,10 @@ REGRAS: list[Regra] = [
         r'|empreg\w* (de )?violencia'
         r'|violencia (a|contra a) pessoa'
         r'|vias de fato'
+        # Decisão C6/a: a violência dita com todas as letras, nas formas em que
+        # o compilado a escreve e que nenhuma fórmula de meio alcançava.
+        r'|pratic\w* violencia|praticando violencia|ato de violencia'
+        r'|consiste em violencia|violencia ou grave ameaca'
         r'|reduzid[oa] a impossibilidade de resistencia', re.I),
         'A lei descreve a violência à pessoa como MEIO da conduta.'),
     # "Mediante ameaça", sem o qualificativo, NÃO entra aqui: o art. 147-B pune
@@ -116,13 +195,31 @@ REGRAS: list[Regra] = [
 
 # Violência ou grave ameaça como MEIO ALTERNATIVO, ao lado de meios que não são
 # violentos: "por meio de violência, grave ameaça, fraude ou oferecimento de
-# vantagem" (CP, art. 358). O tipo se consuma sem violência nenhuma, e responder
-# "Sim" bloquearia ANPP e substituição em condutas que as admitem; responder
-# "Não" esconderia a hipótese violenta. A decisão é do mantenedor, tipo a tipo.
+# vantagem" (CP, art. 358). Decisão 8: "Não" + condição. O tipo se consuma sem
+# violência nenhuma — responder "Sim" bloquearia ANPP e substituição em condutas
+# que as admitem; a condição preserva a hipótese violenta à vista.
 _ALTERNATIVO = re.compile(
     r'(violencia|grave ameaca)[^.]{0,80}\b(fraude|fraudulent\w+|artificio|ardil'
     r'|oferecimento de vantagem|suborno|qualquer outro meio|meio fraudulento)\b'
-    r'|\b(fraude|artificio|ardil|qualquer outro meio)\b[^.]{0,80}(violencia|grave ameaca)', re.I)
+    r'|\b(fraude|artificio|ardil|qualquer outro meio)\b[^.]{0,80}(violencia|grave ameaca)'
+    # Decisão 8/e: "violência OU ameaça", sem o "grave", também é meio
+    # alternativo (CP 329, CPM 177, CPM 358, Lei 1.579, art. 4º, I).
+    #
+    # Os dois olhares são o que separa esta hipótese do roubo. "Mediante GRAVE
+    # ameaça ou violência à pessoa" (CP 157) tem a mesma forma — dois meios
+    # ligados por "ou" — e não é meio alternativo: os dois são violentos. O que
+    # faz a diferença é o qualificativo, e só ele.
+    r'|violencia ou (?!grave )amea[czç]a'
+    r'|(?<!grave )\bamea[czç]a ou violencia', re.I)
+
+# Remissão a outro dispositivo: o registro herda a classificação do remetido.
+# Decisão C6/c. A regra REGISTRA a remissão; quem a resolve é o Auditor, que tem
+# o texto dos dois dispositivos.
+_REMISSAO = re.compile(
+    r'definidos? nos? arts?\.\s*([\d\-ºA-Za-z,\s e]+)'
+    r'|nas penas do art\.\s*([\d\-ºA-Za-z]+)'
+    r'|qualquer dos crimes definidos no art\.\s*([\d\-ºA-Za-z]+)'
+    r'|nas penas cominadas ao art\.\s*([\d\-ºA-Za-z]+)', re.I)
 
 # Cláusulas de RESULTADO. O que vem depois delas qualifica o crime pelo que dele
 # decorre, e não descreve a conduta: o abandono de incapaz "se resulta lesão
@@ -133,21 +230,70 @@ _RESULTADO = re.compile(
     r'|\bsobrevem\b|se da violencia resulta', re.I)
 
 
-@dataclass
-class Classificacao:
-    valor: str | None                 # "Sim" | "Não" | None (indeciso)
-    regra: str | None
-    fundamento: str | None            # o trecho da lei que decidiu
-    origem: str                       # "propria" | "caput" | "elemento" | "indecisa"
-    alerta: str | None = None
-
-
 def _casa(regra: Regra, texto: str) -> str | None:
     m = regra.padrao.search(texto)
     if not m:
         return None
     ini = max(0, m.start() - 40)
     return texto[ini:m.end() + 40].strip()
+
+
+def _trecho(m: re.Match, texto: str) -> str:
+    ini = max(0, m.start() - 40)
+    return texto[ini:m.end() + 40].strip()
+
+
+def _cond(regra: str, modelo: str, trecho: str, origem: str) -> Classificacao:
+    return Classificacao('Não', regra, trecho, origem, condicao=modelo)
+
+
+def _violencia_por_familia(texto: str, origem: str, bruto: str) -> Classificacao | None:
+    """As famílias do campo `violencia`, na ordem em que a decisão as resolve."""
+    if m := _ANIMAL.search(texto):
+        return Classificacao(
+            'Não', 'vitima-animal', _trecho(m, texto), origem,
+            'A vítima é animal; o art. 44, I, do CP exige violência À PESSOA.')
+    if m := _RIXA.search(texto):
+        return Classificacao('Sim', 'rixa', _trecho(m, texto), origem,
+                             'Participar de rixa pressupõe vias de fato.')
+    if (m := _INCITACAO.search(texto)) or (m := _ASSOCIATIVO.search(texto)):
+        return Classificacao(
+            'Não', 'tipo-associativo', _trecho(m, texto), origem,
+            'A conduta é associar-se, integrar ou incitar; o meio de execução do '
+            'crime-fim não entra neste tipo.')
+    if m := _EXTORSAO_SEQUESTRO.search(texto):
+        return _cond('extorsao-mediante-sequestro',
+                     'Sim quando a privação da liberdade é executada ou mantida '
+                     'mediante violência à pessoa ({disp}).', _trecho(m, texto), origem)
+    if m := _PRIVACAO_LIBERDADE.search(texto):
+        return _cond('privacao-da-liberdade',
+                     'Sim quando a privação da liberdade é executada ou mantida '
+                     'mediante violência à pessoa ou grave ameaça ({disp}).',
+                     _trecho(m, texto), origem)
+    if _REMOCAO.search(texto):
+        # Lei 9.434, art. 14. A vítima decide: em cadáver não há violência a
+        # pessoa nenhuma, e o tipo abrange as duas hipóteses num texto só.
+        if m := _EM_PESSOA_VIVA.search(texto):
+            return Classificacao('Sim', 'remocao-em-pessoa-viva', _trecho(m, texto), origem,
+                                 'A remoção é feita em pessoa viva.')
+        if m := _PESSOA_OU_CADAVER.search(texto):
+            return _cond('pessoa-ou-cadaver',
+                         'Sim quando a remoção é feita em pessoa viva ({disp}).',
+                         _trecho(m, texto), origem)
+    if m := _PESSOA_OU_COISA.search(texto):
+        return _cond('violencia-a-pessoa-ou-a-coisa',
+                     'Sim somente quando a violência é praticada contra a pessoa ({disp}).',
+                     _trecho(m, texto), origem)
+    if m := _FISICA_OU_PSICOLOGICA.search(texto):
+        return _cond('meio-alternativo',
+                     'Sim quando o meio empregado for violência à pessoa ({disp}).',
+                     _trecho(m, texto), origem)
+    if m := _SENTIDO_PROPRIO.search(texto):
+        return Classificacao(
+            'Não', 'violencia-em-sentido-proprio', _trecho(m, texto), origem,
+            'A lei usa "violência" em sentido não físico; não é a violência do '
+            'art. 44, I, do CP.')
+    return None
 
 
 def classificar(registro: dict, texto_proprio: str, texto_caput: str = '') -> dict:
@@ -167,8 +313,9 @@ def classificar(registro: dict, texto_proprio: str, texto_caput: str = '') -> di
 
     for campo in ('violencia', 'grave_ameaca'):
         if culposo:
-            # Regra de elemento, e não de texto: a violência que veda a
-            # substituição (CP, art. 44, I) e a ANPP (CPP, art. 28-A) é dolosa.
+            # Regra de elemento, e não de texto, e ela vence as de núcleo: a
+            # violência que veda a substituição (CP, art. 44, I) e a ANPP (CPP,
+            # art. 28-A) é dolosa. Era o caso do art. 206 do CPM (id 695).
             saida[campo] = Classificacao(
                 'Não', 'culposo-nao-e-violento', None, 'elemento',
                 'Crime culposo: a violência do art. 44, I, do CP é dolosa.')
@@ -177,6 +324,12 @@ def classificar(registro: dict, texto_proprio: str, texto_caput: str = '') -> di
         for origem, texto in (('propria', proprio), ('caput', caput)):
             if not texto:
                 continue
+            if campo == 'violencia':
+                fam = _violencia_por_familia(texto, origem, texto_proprio)
+                if fam is not None:
+                    saida[campo] = fam
+                    decidido = True
+                    break
             # A violência contra a coisa só responde quando NENHUM texto — nem o
             # do dispositivo, nem o do caput — descreve violência à pessoa. O
             # roubo majorado por destruição de obstáculo (CP, art. 157, §2º-A, II)
@@ -191,27 +344,15 @@ def classificar(registro: dict, texto_proprio: str, texto_caput: str = '') -> di
                     'exige violência à pessoa.')
                 decidido = True
                 break
-            ambiguo = _AMBIGUO.search(texto)
-            if campo == 'violencia' and ambiguo:
-                # Também antes das regras: "mediante violência física ou
-                # psicológica" (CP, art. 146-A, o bullying) casa com a fórmula de
-                # meio e sairia como violento, quando a conduta se consuma só com
-                # a psicológica. Quem decide se aquilo é a violência do art. 28-A
-                # do CPP é uma pessoa.
-                saida[campo] = Classificacao(
-                    None, 'violencia-em-sentido-proprio', ambiguo.group(0), 'indecisa',
-                    'A lei usa "violência" em sentido que a regra não resolve.')
-                decidido = True
-                break
-            alternativo = _ALTERNATIVO.search(texto)
-            if alternativo:
+            if m := _ALTERNATIVO.search(texto):
                 # Antes das regras, e não depois: "por meio de violência, grave
                 # ameaça, fraude ou oferecimento de vantagem" nem sempre casa
                 # com uma fórmula de meio, e o tipo cairia no silêncio como se
                 # violência não houvesse.
-                saida[campo] = Classificacao(
-                    None, 'meio-alternativo', alternativo.group(0)[:120], 'indecisa',
-                    'A violência é um meio ENTRE OUTROS, e o tipo se consuma sem ela.')
+                saida[campo] = _cond(
+                    'meio-alternativo',
+                    'Sim quando o meio empregado for violência à pessoa ou grave '
+                    'ameaça ({disp}).', _trecho(m, texto), origem)
                 decidido = True
                 break
             for regra in REGRAS:
@@ -226,28 +367,53 @@ def classificar(registro: dict, texto_proprio: str, texto_caput: str = '') -> di
             if decidido:
                 break
         if not decidido:
+            juntos = proprio or caput
             if not proprio and not caput:
                 # Sem texto não há leitura: o dispositivo não foi baixado, ou o
                 # registro é de um artigo que o parser não estrutura.
                 saida[campo] = Classificacao(None, None, None, 'indecisa',
                                              'Sem texto do dispositivo para ler.')
+            elif m := _REMISSAO.search(juntos):
+                # Decisão C6/c: o registro herda do dispositivo remetido. Quem
+                # resolve é o Auditor, que tem os dois textos.
+                saida[campo] = Classificacao(
+                    None, 'remissao', _trecho(m, juntos), 'indecisa',
+                    'A pena vem por remissão: a classificação é a do tipo remetido.',
+                    remissao=next(g for g in m.groups() if g))
             elif campo == 'violencia' and (_PERIGO.search(proprio) or _PERIGO.search(caput)):
+                achado = _PERIGO.search(proprio) or _PERIGO.search(caput)
+                # Decisão 10: tipo de perigo é "Não". Quando a execução admite
+                # agressão física — maus-tratos, abuso de meios de correção —,
+                # a hipótese violenta fica declarada em condição.
+                if _PERIGO_COM_CONDICAO.search(juntos):
+                    saida[campo] = _cond(
+                        'perigo-a-pessoa',
+                        'Sim quando o abuso dos meios de correção ou disciplina, ou os '
+                        'maus-tratos, envolvem violência física ({disp}).',
+                        achado.group(0), 'propria')
+                else:
+                    saida[campo] = Classificacao(
+                        'Não', 'perigo-a-pessoa', achado.group(0), 'propria',
+                        'Tipo de perigo à pessoa: a lei não descreve violência.')
+            elif campo == 'grave_ameaca' and (_AMEACA_SIMPLES.search(proprio)
+                                              or _AMEACA_SIMPLES.search(caput)):
+                achado = _AMEACA_SIMPLES.search(proprio) or _AMEACA_SIMPLES.search(caput)
+                if m := _AMEACA_GRAVE_NO_TEXTO.search(juntos):
+                    # Decisão 9, exceções: o mal ameaçado já é, no texto,
+                    # necessariamente grave (CPM 242 e 245).
+                    saida[campo] = Classificacao(
+                        'Sim', 'ameaca-de-mal-necessariamente-grave', _trecho(m, juntos),
+                        'propria', 'O próprio tipo descreve o mal ameaçado como grave.')
+                else:
+                    saida[campo] = _cond(
+                        'ameaca-sem-qualificativo',
+                        'Sim quando a ameaça empregada for grave ({disp}).',
+                        achado.group(0), 'propria')
+            elif _SENTIDO_PROPRIO.search(juntos):
+                m = _SENTIDO_PROPRIO.search(juntos)
                 saida[campo] = Classificacao(
-                    None, 'perigo-a-pessoa', (_PERIGO.search(proprio) or _PERIGO.search(caput)).group(0),
-                    'indecisa', 'Tipo de perigo à pessoa: a lei não descreve violência.')
-            elif campo == 'grave_ameaca' and (_AMEACA_SIMPLES.search(proprio) or _AMEACA_SIMPLES.search(caput)):
-                saida[campo] = Classificacao(
-                    None, 'ameaca-sem-qualificativo',
-                    (_AMEACA_SIMPLES.search(proprio) or _AMEACA_SIMPLES.search(caput)).group(0),
-                    'indecisa', 'A lei fala em ameaça sem dizer que é grave.')
-            elif _AMBIGUO.search(proprio) or _AMBIGUO.search(caput):
-                # A lei usa palavra de violência em sentido que a regra não
-                # resolve — "violência psicológica" (CP, art. 147-B) é violência
-                # para o art. 44, I? Isso é juízo, e vai para a fila.
-                achado = _AMBIGUO.search(proprio) or _AMBIGUO.search(caput)
-                saida[campo] = Classificacao(
-                    None, 'violencia-em-sentido-proprio', achado.group(0), 'indecisa',
-                    'A lei usa a palavra em sentido que a regra não resolve.')
+                    'Não', 'violencia-em-sentido-proprio', _trecho(m, juntos), 'propria',
+                    'A lei usa "violência" em sentido não físico.')
             else:
                 # Silêncio da lei: o tipo não descreve violência nem grave ameaça,
                 # e por isso não as pressupõe. É leitura, não suposição — a mesma

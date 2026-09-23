@@ -97,3 +97,85 @@ def test_a_regra_do_proprio_artigo_vence_a_do_capitulo():
     capitulo = ap.RegraAcao('Ação Penal Privada', 'queixa', 'Art. 145', '', False, {'capitulo': 'V'})
     c = ap.classificar({'lei': 'CP', 'artigo': 'Art. 130'}, [capitulo, proprio], {'capitulo': 'V'})
     assert c.especie == 'Pública Condicionada à Representação'
+
+
+# -- C1: referencia relativa se compara em CADEIA --------------------------
+
+def test_capitulo_v_de_titulos_diferentes_nao_se_confundem():
+    """A C1 da revisao fina. "Neste Capitulo", no art. 145, alcanca o Capitulo V
+    do Titulo I -- e nao os Capitulos V dos Titulos II, VI e X, que existem e
+    tratam de outra coisa."""
+    regra = ap.RegraAcao(
+        especie='Ação Penal Privada', formula='somente-se-procede-mediante-queixa',
+        dispositivo='Art. 145', texto='Nos crimes previstos neste Capítulo, somente se '
+                                      'procede mediante queixa',
+        ressalva=False, alcance={'titulo': 'I', 'capitulo': 'V'})
+    assert ap.alcanca(regra, '138', {'titulo': 'I', 'capitulo': 'V'})
+    for titulo in ('II', 'VI', 'X'):
+        assert not ap.alcanca(regra, '155', {'titulo': titulo, 'capitulo': 'V'}), titulo
+
+
+def test_secao_se_compara_com_titulo_e_capitulo_junto():
+    regra = ap.RegraAcao(
+        especie='Pública Condicionada à Representação', formula='somente-se-procede',
+        dispositivo='Art. 172', texto='Nos crimes previstos nesta Seção',
+        ressalva=False, alcance={'titulo': 'II', 'capitulo': 'VI', 'secao': 'III'})
+    assert ap.alcanca(regra, '168', {'titulo': 'II', 'capitulo': 'VI', 'secao': 'III'})
+    # mesma Secao III, outro Capitulo: nao alcanca
+    assert not ap.alcanca(regra, '99', {'titulo': 'II', 'capitulo': 'V', 'secao': 'III'})
+    # mesmo Capitulo VI, outra Secao
+    assert not ap.alcanca(regra, '165', {'titulo': 'II', 'capitulo': 'VI', 'secao': 'I'})
+
+
+def test_topografia_le_secao_em_caixa_alta_e_baixa():
+    """O Planalto escreve "CAPITULO VI" em versais e "Secao I" logo abaixo em
+    caixa alta e baixa. Lendo so as versais, a secao sumia da topografia."""
+    bruto = 'CAPÍTULO VI DOS CRIMES Seção I Do Crime de Corrupção Art. 165. Exigir'
+    tipos = [t for _, t, _ in ap.topografia(bruto)]
+    assert 'CAPÍTULO' in tipos
+    assert 'SEÇÃO' in tipos
+
+
+def test_a_excecao_escrita_na_regra_sai_do_alcance_dela():
+    """Lei 14.597, art. 172: representacao "com excecao do crime previsto no
+    art. 169 desta Lei, em que a acao e publica incondicionada"."""
+    regra = ap.RegraAcao(
+        especie='Pública Condicionada à Representação', formula='somente-se-procede',
+        dispositivo='Art. 172', texto='...', ressalva=False,
+        alcance={'titulo': 'II', 'capitulo': 'VI', 'secao': 'III', 'exceto': ['169']})
+    lugar = {'titulo': 'II', 'capitulo': 'VI', 'secao': 'III'}
+    assert ap.alcanca(regra, '168', lugar)
+    assert not ap.alcanca(regra, '169', lugar)
+
+
+# -- Decisao 18: o fundamento publicado -------------------------------------
+
+def test_fundamento_do_crime_militar_cita_o_cpm_e_nao_o_cp():
+    """Dizer "regra geral, CP, art. 100" num crime militar seria citar o
+    dispositivo errado: quem manda ali e o art. 121 do CPM."""
+    reg = {'lei': 'CPM (DL 1.001/69)', 'artigo': 'Art. 205, caput'}
+    f = ap.fundamento_de(reg, ap.REGRA_GERAL)
+    assert 'CPM, art. 121' in f
+    assert f.startswith('lei externa:')
+
+
+def test_fundamento_da_lesao_em_violencia_domestica_e_jurisprudencial():
+    reg = {'lei': 'CP', 'artigo': 'Art. 129, §9º'}
+    f = ap.fundamento_de(reg, ap.REGRA_GERAL)
+    assert 'Súmula 542' in f and 'ADI 4424' in f
+    assert f.startswith('jurisprudência:')
+
+
+def test_fundamento_do_silencio_cita_a_regra_geral():
+    reg = {'lei': 'Lei 8.137/90', 'artigo': 'Art. 1º'}
+    f = ap.fundamento_de(reg, ap.REGRA_GERAL)
+    assert f.startswith('regra geral:')
+    assert 'art. 100' in f
+
+
+def test_fundamento_intertemporal_aponta_para_a_condicao():
+    """O estelionato (decisao 33) nao cabe numa linha: depende da data do fato."""
+    reg = {'lei': 'CP', 'artigo': 'Art. 171, caput',
+           'acao_condicao': 'Fatos até 03/05/2026: condicionada à representação...'}
+    f = ap.fundamento_de(reg, ap.REGRA_GERAL)
+    assert f == 'intertemporal: ver `acao_condicao`'
