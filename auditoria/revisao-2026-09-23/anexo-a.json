@@ -1,0 +1,2912 @@
+{
+ "textos": {
+  "T01": "Condicionada à representação se o crime é cometido em prejuízo de cônjuge desquitado ou judicialmente separado, de irmão, ou de tio ou sobrinho com quem o agente coabita (CP, art. 182); a regra não se aplica ao estranho que participa do crime nem quando a vítima tem 60 anos ou mais (CP, art. 183, II e III).",
+  "T02": "Fatos até 03/05/2026: condicionada à representação (CP, art. 171, § 5º, redação da Lei 13.964/2019, vigente desde 23/01/2020), salvo se a vítima for a Administração Pública, direta ou indireta; criança ou adolescente; pessoa com deficiência mental (pessoa com deficiência, a partir de 03/10/2025 — Lei 15.229/2025); maior de 70 anos ou incapaz. A exigência alcança fatos anteriores a 23/01/2020 em processos sem trânsito em julgado (STF, HC 208.817 AgR, Plenário, 2023). Fatos a partir de 04/05/2026: incondicionada (Lei 15.397/2026, art. 3º). Em qualquer data: condicionada à representação se o crime é cometido em prejuízo de cônjuge desquitado ou judicialmente separado, de irmão, ou de tio ou sobrinho com quem o agente coabita (CP, art. 182); a regra não se aplica ao estranho que participa do crime nem quando a vítima tem 60 anos ou mais (CP, art. 183, II e III).",
+  "T03": "Mediante requisição do Ministro da Justiça se o crime é cometido contra o Presidente da República ou chefe de governo estrangeiro (CP, art. 141, I, c/c art. 145, parágrafo único); mediante representação se contra funcionário público em razão de suas funções ou contra os Presidentes do Senado Federal, da Câmara dos Deputados ou do Supremo Tribunal Federal (art. 141, II, c/c art. 145, parágrafo único), com legitimidade concorrente do ofendido mediante queixa (STF, Súmula 714).",
+  "T04": "Hediondo somente quando praticada a lesão gravíssima (a) contra autoridade ou agente descrito nos arts. 142 e 144 da Constituição, integrante do sistema prisional ou da Força Nacional de Segurança Pública, no exercício da função ou em decorrência dela, ou contra seu cônjuge, companheiro ou parente consanguíneo até o terceiro grau, em razão dessa condição; (b) contra membro do Poder Judiciário, do Ministério Público, da Defensoria Pública ou da Advocacia Pública, ou oficial de justiça, nas mesmas condições; ou (c) nas dependências de instituição de ensino. Fundamento: Lei 8.072, art. 1º, I-A.",
+  "T05": "Hediondo somente quando cometido contra criança ou adolescente. Fundamento: Lei 8.072, art. 1º, XII.",
+  "T06": "Hediondo somente quando praticada contra autoridade ou agente descrito nos arts. 142 e 144 da Constituição, integrante do sistema prisional ou da Força Nacional de Segurança Pública, no exercício da função ou em decorrência dela, ou contra seu cônjuge, companheiro ou parente consanguíneo até o terceiro grau, em razão dessa condição. Fundamento: Lei 8.072, art. 1º, I-A, a, c/c parágrafo único, VI.",
+  "T07": "Pública incondicionada quando praticado em prejuízo de entidade de direito público, autarquia, empresa pública, sociedade de economia mista ou fundação instituída pelo poder público (Lei 9.609/98, art. 12, § 3º, I), ou quando resultar sonegação fiscal, perda de arrecadação tributária ou crime contra a ordem tributária ou contra as relações de consumo (§ 3º, II).",
+  "T08": "Sim nas hipóteses do art. 1º, I e II (emprego de violência ou grave ameaça); Não no § 1º e no inciso III (Lei 9.455/97, art. 1º, § 3º).",
+  "T09": "REVOGADO TACITAMENTE pelo art. 40 da Lei 6.538/78 (caput e § 1º), que regula inteiramente a matéria (LINDB, art. 2º, § 1º). Lei 6.538 em vigor na data da publicação (art. 49; DOU 23/06/1978).",
+  "T10": "Hediondo somente nos incisos I (quando a arma empregada é de fogo), V, VI e VIII do § 2º do art. 242 do CPM. Fundamento: Lei 8.072, art. 1º, parágrafo único, VI, c/c art. 1º, II, a, b e c.",
+  "T11": "Hediondo somente quando incide o inciso V, VI ou VIII do § 2º do art. 242 do CPM (lesão grave dolosa, morte ou restrição da liberdade). Fundamento: Lei 8.072, art. 1º, parágrafo único, VI, c/c art. 1º, III.",
+  "T12": "Hediondo somente quando praticado em atividade típica de grupo de extermínio, ainda que por um só agente. Fundamento: Lei 8.072, art. 1º, I, c/c parágrafo único, VI.",
+  "T13": "Hediondo somente quando realizado por meio da rede de computadores, de rede social ou transmitido em tempo real. Fundamento: Lei 8.072, art. 1º, X.",
+  "T14": "Hediondo somente quando praticada a lesão corporal seguida de morte (a) contra autoridade ou agente descrito nos arts. 142 e 144 da Constituição, integrante do sistema prisional ou da Força Nacional de Segurança Pública, no exercício da função ou em decorrência dela, ou contra seu cônjuge, companheiro ou parente consanguíneo até o terceiro grau, em razão dessa condição; (b) contra membro do Poder Judiciário, do Ministério Público, da Defensoria Pública ou da Advocacia Pública, ou oficial de justiça, nas mesmas condições; ou (c) nas dependências de instituição de ensino. Fundamento: Lei 8.072, art. 1º, I-A.",
+  "T15": "Hediondo somente quando a organização criminosa é direcionada à prática de crime hediondo ou equiparado. Fundamento: Lei 8.072, art. 1º, parágrafo único, V."
+ },
+ "mudancas": [
+  {
+   "id": 1425,
+   "campo": "acao",
+   "de": "Pública Incondicionada",
+   "para": "Ação Penal Privada",
+   "decisao": "C3"
+  },
+  {
+   "id": 1426,
+   "campo": "acao",
+   "de": "Pública Incondicionada",
+   "para": "Ação Penal Privada",
+   "decisao": "C3"
+  },
+  {
+   "id": 604,
+   "campo": "acao",
+   "de": "Pública Incondicionada",
+   "para": "Ação Penal Privada",
+   "decisao": "C4"
+  },
+  {
+   "id": 120,
+   "campo": "acao_condicao",
+   "de": null,
+   "para": "Ação penal privada (queixa) na hipótese do inciso IV — motivo egoístico ou prejuízo considerável para a vítima (CP, art. 167).",
+   "decisao": "C4/16"
+  },
+  {
+   "id": 80,
+   "campo": "acao",
+   "de": "Pública Incondicionada",
+   "para": "Pública Condicionada à Representação",
+   "decisao": "C5"
+  },
+  {
+   "id": 80,
+   "campo": "acao_condicao",
+   "de": "Incondicionada quando resulta prejuízo para a Administração Pública (CP, art. 153, §2º); nas demais hipóteses, condicionada a representaç…",
+   "para": "Incondicionada quando resultar prejuízo para a Administração Pública (CP, art. 153, § 2º).",
+   "decisao": "C5"
+  },
+  {
+   "id": 495,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "C7"
+  },
+  {
+   "id": 311,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "C7"
+  },
+  {
+   "id": 221,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "C7"
+  },
+  {
+   "id": 495,
+   "campo": "grave_ameaca",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "C7"
+  },
+  {
+   "id": 311,
+   "campo": "grave_ameaca",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "C7"
+  },
+  {
+   "id": 221,
+   "campo": "grave_ameaca",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "C7"
+  },
+  {
+   "id": 253,
+   "campo": "grave_ameaca",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "C7"
+  },
+  {
+   "id": 695,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "C7"
+  },
+  {
+   "id": 695,
+   "campo": "elemento",
+   "de": "Doloso",
+   "para": "Culposo",
+   "decisao": "C7"
+  },
+  {
+   "id": 695,
+   "campo": "tentativa",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "C7 (decorre: culposo)"
+  },
+  {
+   "id": 100,
+   "campo": "hediondo",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "C12"
+  },
+  {
+   "id": 101,
+   "campo": "hediondo",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "C12"
+  },
+  {
+   "id": 812,
+   "campo": "hediondo",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "C12"
+  },
+  {
+   "id": 588,
+   "campo": "hediondo",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "C12"
+  },
+  {
+   "id": 69,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "1a"
+  },
+  {
+   "id": 69,
+   "campo": "grave_ameaca",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "1a"
+  },
+  {
+   "id": 69,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando a privação da liberdade é executada ou mantida mediante violência à pessoa ou grave ameaça (CP, Art. 148, caput).",
+   "decisao": "1a"
+  },
+  {
+   "id": 70,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "1a"
+  },
+  {
+   "id": 70,
+   "campo": "grave_ameaca",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "1a"
+  },
+  {
+   "id": 70,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando a privação da liberdade é executada ou mantida mediante violência à pessoa ou grave ameaça (CP, Art. 148, §1º).",
+   "decisao": "1a"
+  },
+  {
+   "id": 71,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "1a"
+  },
+  {
+   "id": 71,
+   "campo": "grave_ameaca",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "1a"
+  },
+  {
+   "id": 71,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando a privação da liberdade é executada ou mantida mediante violência à pessoa ou grave ameaça (CP, Art. 148, §2º).",
+   "decisao": "1a"
+  },
+  {
+   "id": 1315,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "1a"
+  },
+  {
+   "id": 1315,
+   "campo": "grave_ameaca",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "1a"
+  },
+  {
+   "id": 1315,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando a privação da liberdade é executada ou mantida mediante violência à pessoa ou grave ameaça (CP, Art. 148, §3º).",
+   "decisao": "1a"
+  },
+  {
+   "id": 621,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "1a"
+  },
+  {
+   "id": 621,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando a privação da liberdade é executada ou mantida mediante violência à pessoa ou grave ameaça (CP, Art. 148, §1º, I).",
+   "decisao": "1a"
+  },
+  {
+   "id": 622,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "1a"
+  },
+  {
+   "id": 622,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando a privação da liberdade é executada ou mantida mediante violência à pessoa ou grave ameaça (CP, Art. 148, §1º, II).",
+   "decisao": "1a"
+  },
+  {
+   "id": 623,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "1a"
+  },
+  {
+   "id": 623,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando a privação da liberdade é executada ou mantida mediante violência à pessoa ou grave ameaça (CP, Art. 148, §1º, III).",
+   "decisao": "1a"
+  },
+  {
+   "id": 624,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "1a"
+  },
+  {
+   "id": 624,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando a privação da liberdade é executada ou mantida mediante violência à pessoa ou grave ameaça (CP, Art. 148, §1º, IV).",
+   "decisao": "1a"
+  },
+  {
+   "id": 625,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "1a"
+  },
+  {
+   "id": 625,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando a privação da liberdade é executada ou mantida mediante violência à pessoa ou grave ameaça (CP, Art. 148, §1º, V).",
+   "decisao": "1a"
+  },
+  {
+   "id": 750,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando a privação da liberdade é executada ou mantida mediante violência à pessoa ou grave ameaça (CPM, Art. 225, caput).",
+   "decisao": "1a"
+  },
+  {
+   "id": 1095,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "1a"
+  },
+  {
+   "id": 1095,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando a privação da liberdade é executada ou mantida mediante violência à pessoa ou grave ameaça (CPM, Art. 225, §2º).",
+   "decisao": "1a"
+  },
+  {
+   "id": 1096,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando a privação da liberdade é executada ou mantida mediante violência à pessoa ou grave ameaça (CPM, Art. 225, §3º).",
+   "decisao": "1a"
+  },
+  {
+   "id": 110,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "1b"
+  },
+  {
+   "id": 110,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando a privação da liberdade é executada ou mantida mediante violência à pessoa (CP, Art. 159, caput).",
+   "decisao": "1b"
+  },
+  {
+   "id": 111,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "1b"
+  },
+  {
+   "id": 111,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando a privação da liberdade é executada ou mantida mediante violência à pessoa (CP, Art. 159, §1º).",
+   "decisao": "1b"
+  },
+  {
+   "id": 112,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "1b"
+  },
+  {
+   "id": 112,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando a privação da liberdade é executada ou mantida mediante violência à pessoa (CP, Art. 159, §2º).",
+   "decisao": "1b"
+  },
+  {
+   "id": 113,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "1b"
+  },
+  {
+   "id": 113,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando a privação da liberdade é executada ou mantida mediante violência à pessoa (CP, Art. 159, §3º).",
+   "decisao": "1b"
+  },
+  {
+   "id": 114,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "1b"
+  },
+  {
+   "id": 114,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando a privação da liberdade é executada ou mantida mediante violência à pessoa (CP, Art. 159, §4º).",
+   "decisao": "1b"
+  },
+  {
+   "id": 1483,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "1b"
+  },
+  {
+   "id": 1483,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando a privação da liberdade é executada ou mantida mediante violência à pessoa (CP, Art. 159, §4º c/c §1º).",
+   "decisao": "1b"
+  },
+  {
+   "id": 1484,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "1b"
+  },
+  {
+   "id": 1484,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando a privação da liberdade é executada ou mantida mediante violência à pessoa (CP, Art. 159, §4º c/c §2º).",
+   "decisao": "1b"
+  },
+  {
+   "id": 1485,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "1b"
+  },
+  {
+   "id": 1485,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando a privação da liberdade é executada ou mantida mediante violência à pessoa (CP, Art. 159, §4º c/c §3º).",
+   "decisao": "1b"
+  },
+  {
+   "id": 1116,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando a privação da liberdade é executada ou mantida mediante violência à pessoa (CPM, Art. 244, caput).",
+   "decisao": "1b"
+  },
+  {
+   "id": 1447,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "1b"
+  },
+  {
+   "id": 1447,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando a privação da liberdade é executada ou mantida mediante violência à pessoa (CPM, Art. 405 c/c art. 244, caput).",
+   "decisao": "1b"
+  },
+  {
+   "id": 1448,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "1b"
+  },
+  {
+   "id": 1448,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando a privação da liberdade é executada ou mantida mediante violência à pessoa (CPM, Art. 405 c/c art. 244, §1º).",
+   "decisao": "1b"
+  },
+  {
+   "id": 1449,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "1b"
+  },
+  {
+   "id": 1449,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando a privação da liberdade é executada ou mantida mediante violência à pessoa (CPM, Art. 405 c/c art. 244, §2º).",
+   "decisao": "1b"
+  },
+  {
+   "id": 561,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "3"
+  },
+  {
+   "id": 562,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "3"
+  },
+  {
+   "id": 561,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando a remoção é feita em pessoa viva (Lei 9.434/97, art. 14).",
+   "decisao": "3"
+  },
+  {
+   "id": 562,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando a remoção é feita em pessoa viva (Lei 9.434/97, art. 14).",
+   "decisao": "3"
+  },
+  {
+   "id": 989,
+   "campo": "violencia",
+   "de": "Não",
+   "para": "Sim",
+   "decisao": "3"
+  },
+  {
+   "id": 722,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "5"
+  },
+  {
+   "id": 723,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "5"
+  },
+  {
+   "id": 724,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "5"
+  },
+  {
+   "id": 1462,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "6"
+  },
+  {
+   "id": 1463,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "6"
+  },
+  {
+   "id": 1472,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "6"
+  },
+  {
+   "id": 1473,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "6"
+  },
+  {
+   "id": 1461,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "6"
+  },
+  {
+   "id": 1461,
+   "campo": "grave_ameaca",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "6"
+  },
+  {
+   "id": 65,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "8"
+  },
+  {
+   "id": 65,
+   "campo": "grave_ameaca",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "8"
+  },
+  {
+   "id": 65,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando o meio empregado for violência à pessoa ou grave ameaça (CP, Art. 146).",
+   "decisao": "8"
+  },
+  {
+   "id": 73,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "8"
+  },
+  {
+   "id": 73,
+   "campo": "grave_ameaca",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "8"
+  },
+  {
+   "id": 73,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando o meio empregado for violência à pessoa ou grave ameaça (CP, Art. 149-A).",
+   "decisao": "8"
+  },
+  {
+   "id": 635,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "8"
+  },
+  {
+   "id": 635,
+   "campo": "grave_ameaca",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "8"
+  },
+  {
+   "id": 635,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando o meio empregado for violência à pessoa ou grave ameaça (CP, Art. 149-A, I).",
+   "decisao": "8"
+  },
+  {
+   "id": 636,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "8"
+  },
+  {
+   "id": 636,
+   "campo": "grave_ameaca",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "8"
+  },
+  {
+   "id": 636,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando o meio empregado for violência à pessoa ou grave ameaça (CP, Art. 149-A, II).",
+   "decisao": "8"
+  },
+  {
+   "id": 637,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "8"
+  },
+  {
+   "id": 637,
+   "campo": "grave_ameaca",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "8"
+  },
+  {
+   "id": 637,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando o meio empregado for violência à pessoa ou grave ameaça (CP, Art. 149-A, III).",
+   "decisao": "8"
+  },
+  {
+   "id": 638,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando o meio empregado for violência à pessoa ou grave ameaça (CP, Art. 149-A, IV).",
+   "decisao": "8"
+  },
+  {
+   "id": 639,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando o meio empregado for violência à pessoa ou grave ameaça (CP, Art. 149-A, V).",
+   "decisao": "8"
+  },
+  {
+   "id": 734,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "8"
+  },
+  {
+   "id": 734,
+   "campo": "grave_ameaca",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "8"
+  },
+  {
+   "id": 734,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando o meio empregado for violência à pessoa ou grave ameaça (CP, Art. 146, §1º).",
+   "decisao": "8"
+  },
+  {
+   "id": 747,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "8"
+  },
+  {
+   "id": 747,
+   "campo": "grave_ameaca",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "8"
+  },
+  {
+   "id": 747,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando o meio empregado for violência à pessoa ou grave ameaça (CPM, Art. 222, caput).",
+   "decisao": "8"
+  },
+  {
+   "id": 277,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "8"
+  },
+  {
+   "id": 277,
+   "campo": "grave_ameaca",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "8"
+  },
+  {
+   "id": 277,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando o meio empregado for violência à pessoa ou grave ameaça (CP, Art. 335).",
+   "decisao": "8"
+  },
+  {
+   "id": 312,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "8"
+  },
+  {
+   "id": 312,
+   "campo": "grave_ameaca",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "8"
+  },
+  {
+   "id": 312,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando o meio empregado for violência à pessoa ou grave ameaça (CP, Art. 359-P).",
+   "decisao": "8"
+  },
+  {
+   "id": 790,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "8"
+  },
+  {
+   "id": 790,
+   "campo": "grave_ameaca",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "8"
+  },
+  {
+   "id": 790,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim nas hipóteses do art. 2º, § 1º, V, e quando os atos dos incisos I e IV forem praticados com violência à pessoa ou grave ameaça (Lei 13.260/16, art. 2º, § 1º).",
+   "decisao": "8"
+  },
+  {
+   "id": 386,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "8"
+  },
+  {
+   "id": 386,
+   "campo": "grave_ameaca",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "8"
+  },
+  {
+   "id": 386,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para_texto": "T08",
+   "decisao": "8"
+  },
+  {
+   "id": 387,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "8"
+  },
+  {
+   "id": 387,
+   "campo": "grave_ameaca",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "8"
+  },
+  {
+   "id": 387,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para_texto": "T08",
+   "decisao": "8"
+  },
+  {
+   "id": 75,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "8"
+  },
+  {
+   "id": 75,
+   "campo": "grave_ameaca",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "8"
+  },
+  {
+   "id": 75,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando há emprego de violência (CP, art. 150, § 1º).",
+   "decisao": "8"
+  },
+  {
+   "id": 283,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "8"
+  },
+  {
+   "id": 283,
+   "campo": "grave_ameaca",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "8"
+  },
+  {
+   "id": 283,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando há emprego de violência (CP, art. 345, parágrafo único).",
+   "decisao": "8"
+  },
+  {
+   "id": 1234,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "8"
+  },
+  {
+   "id": 1234,
+   "campo": "grave_ameaca",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "8"
+  },
+  {
+   "id": 1234,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando o meio empregado for violência à pessoa ou grave ameaça (CPM, Art. 358, caput).",
+   "decisao": "8"
+  },
+  {
+   "id": 547,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "8"
+  },
+  {
+   "id": 547,
+   "campo": "grave_ameaca",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "8"
+  },
+  {
+   "id": 547,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando o meio empregado for violência à pessoa ou grave ameaça (Lei 1.579/52, Art. 4º, I).",
+   "decisao": "8"
+  },
+  {
+   "id": 1053,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "8"
+  },
+  {
+   "id": 1053,
+   "campo": "grave_ameaca",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "8"
+  },
+  {
+   "id": 1053,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando o meio empregado for violência à pessoa ou grave ameaça (CPM, Art. 177, caput).",
+   "decisao": "8"
+  },
+  {
+   "id": 1054,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "8"
+  },
+  {
+   "id": 1054,
+   "campo": "grave_ameaca",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "8"
+  },
+  {
+   "id": 1054,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando o meio empregado for violência à pessoa ou grave ameaça (CPM, Art. 177, §1º).",
+   "decisao": "8"
+  },
+  {
+   "id": 1055,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "8"
+  },
+  {
+   "id": 1055,
+   "campo": "grave_ameaca",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "8"
+  },
+  {
+   "id": 1055,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando o meio empregado for violência à pessoa ou grave ameaça (CPM, Art. 177, §1º-A).",
+   "decisao": "8"
+  },
+  {
+   "id": 154,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "8"
+  },
+  {
+   "id": 154,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim somente quando a violência é praticada contra a pessoa, e não contra a coisa (CP, art. 200).",
+   "decisao": "8"
+  },
+  {
+   "id": 120,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "8"
+  },
+  {
+   "id": 120,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim no inciso I — violência à pessoa ou grave ameaça (CP, art. 163, parágrafo único, I).",
+   "decisao": "8"
+  },
+  {
+   "id": 157,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando o meio empregado for violência à pessoa ou grave ameaça (CP, Art. 203).",
+   "decisao": "8"
+  },
+  {
+   "id": 158,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando o meio empregado for violência à pessoa ou grave ameaça (CP, Art. 204).",
+   "decisao": "8"
+  },
+  {
+   "id": 296,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando o meio empregado for violência à pessoa ou grave ameaça (CP, Art. 358).",
+   "decisao": "8"
+  },
+  {
+   "id": 496,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando o meio empregado for violência à pessoa ou grave ameaça (CP, Art. 337-K).",
+   "decisao": "8"
+  },
+  {
+   "id": 1343,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando o meio empregado for violência à pessoa ou grave ameaça (CP, Art. 227, § 2º).",
+   "decisao": "8"
+  },
+  {
+   "id": 1345,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando o meio empregado for violência à pessoa ou grave ameaça (CP, Art. 228, § 2º).",
+   "decisao": "8"
+  },
+  {
+   "id": 1347,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando o meio empregado for violência à pessoa ou grave ameaça (CP, Art. 230, § 2º).",
+   "decisao": "8"
+  },
+  {
+   "id": 1397,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando o meio empregado for violência à pessoa ou grave ameaça (ECA, Art. 239, parágrafo único).",
+   "decisao": "8"
+  },
+  {
+   "id": 479,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando o meio empregado for violência à pessoa ou grave ameaça (Lei 14.811/24, Art. 146-A, caput (CP)).",
+   "decisao": "8"
+  },
+  {
+   "id": 480,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando o meio empregado for violência à pessoa ou grave ameaça (Lei 14.811/24, Art. 146-A, §único (CP)).",
+   "decisao": "8"
+  },
+  {
+   "id": 72,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "8"
+  },
+  {
+   "id": 72,
+   "campo": "grave_ameaca",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "8"
+  },
+  {
+   "id": 72,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando a redução à condição análoga à de escravo é executada ou mantida mediante violência à pessoa ou grave ameaça (CP, art. 149).",
+   "decisao": "8"
+  },
+  {
+   "id": 871,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "8"
+  },
+  {
+   "id": 871,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando o meio empregado for violência à pessoa ou grave ameaça (Lei 14.597/23, Art. 201).",
+   "decisao": "8"
+  },
+  {
+   "id": 1402,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "8"
+  },
+  {
+   "id": 1402,
+   "campo": "grave_ameaca",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "8"
+  },
+  {
+   "id": 1402,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando o meio empregado for violência à pessoa ou grave ameaça (Lei 15.358/26, Art. 2º, caput).",
+   "decisao": "8"
+  },
+  {
+   "id": 267,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "8"
+  },
+  {
+   "id": 267,
+   "campo": "grave_ameaca",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "8"
+  },
+  {
+   "id": 267,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando o meio empregado for violência à pessoa ou grave ameaça (CP, Art. 329).",
+   "decisao": "8"
+  },
+  {
+   "id": 1374,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "8"
+  },
+  {
+   "id": 1374,
+   "campo": "grave_ameaca",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "8"
+  },
+  {
+   "id": 1374,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando o meio empregado for violência à pessoa ou grave ameaça (CP, Art. 329, § 1º).",
+   "decisao": "8"
+  },
+  {
+   "id": 513,
+   "campo": "grave_ameaca",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "9"
+  },
+  {
+   "id": 513,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando a ameaça empregada for grave (CDC, Art. 71).",
+   "decisao": "9"
+  },
+  {
+   "id": 1508,
+   "campo": "grave_ameaca",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "9"
+  },
+  {
+   "id": 1508,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando a ameaça empregada for grave (CE, Art. 326-B).",
+   "decisao": "9"
+  },
+  {
+   "id": 67,
+   "campo": "grave_ameaca",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "9"
+  },
+  {
+   "id": 67,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando a ameaça empregada for grave (CP, Art. 147-A).",
+   "decisao": "9"
+  },
+  {
+   "id": 578,
+   "campo": "grave_ameaca",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "9"
+  },
+  {
+   "id": 578,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando a ameaça empregada for grave (CP, Art. 147-A, §1º, III).",
+   "decisao": "9"
+  },
+  {
+   "id": 428,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando a ameaça empregada for grave (Lei 13.869/19, Art. 15).",
+   "decisao": "9"
+  },
+  {
+   "id": 156,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "7"
+  },
+  {
+   "id": 292,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "7"
+  },
+  {
+   "id": 351,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "7"
+  },
+  {
+   "id": 579,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "7"
+  },
+  {
+   "id": 1327,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "7"
+  },
+  {
+   "id": 768,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "7"
+  },
+  {
+   "id": 906,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "7"
+  },
+  {
+   "id": 1455,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "7"
+  },
+  {
+   "id": 671,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "7"
+  },
+  {
+   "id": 1455,
+   "campo": "grave_ameaca",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "7"
+  },
+  {
+   "id": 671,
+   "campo": "grave_ameaca",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "7"
+  },
+  {
+   "id": 291,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "7"
+  },
+  {
+   "id": 291,
+   "campo": "grave_ameaca",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "7"
+  },
+  {
+   "id": 291,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando o arrebatamento é executado mediante violência à pessoa ou grave ameaça (CP, art. 353).",
+   "decisao": "7"
+  },
+  {
+   "id": 1118,
+   "campo": "grave_ameaca",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "7"
+  },
+  {
+   "id": 1267,
+   "campo": "grave_ameaca",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "7"
+  },
+  {
+   "id": 1267,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando a coação é exercida mediante violência à pessoa ou grave ameaça (CPM, art. 388).",
+   "decisao": "7"
+  },
+  {
+   "id": 475,
+   "campo": "grave_ameaca",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "7"
+  },
+  {
+   "id": 475,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando a coação é exercida mediante violência à pessoa ou grave ameaça (Lei 10.741/03, art. 107).",
+   "decisao": "7"
+  },
+  {
+   "id": 1479,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "10"
+  },
+  {
+   "id": 1480,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "10"
+  },
+  {
+   "id": 54,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "10"
+  },
+  {
+   "id": 54,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando o abuso dos meios de correção ou disciplina, ou os maus-tratos, envolvem violência física (CP, Art. 136, caput).",
+   "decisao": "10"
+  },
+  {
+   "id": 55,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "10"
+  },
+  {
+   "id": 55,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando o abuso dos meios de correção ou disciplina, ou os maus-tratos, envolvem violência física (CP, Art. 136, §1º).",
+   "decisao": "10"
+  },
+  {
+   "id": 56,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "10"
+  },
+  {
+   "id": 56,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando o abuso dos meios de correção ou disciplina, ou os maus-tratos, envolvem violência física (CP, Art. 136, §2º).",
+   "decisao": "10"
+  },
+  {
+   "id": 57,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "10"
+  },
+  {
+   "id": 57,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando o abuso dos meios de correção ou disciplina, ou os maus-tratos, envolvem violência física (CP, Art. 136, §3º).",
+   "decisao": "10"
+  },
+  {
+   "id": 1481,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "10"
+  },
+  {
+   "id": 1481,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando o abuso dos meios de correção ou disciplina, ou os maus-tratos, envolvem violência física (CP, Art. 136, §3º c/c §1º).",
+   "decisao": "10"
+  },
+  {
+   "id": 1482,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "10"
+  },
+  {
+   "id": 1482,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando o abuso dos meios de correção ou disciplina, ou os maus-tratos, envolvem violência física (CP, Art. 136, §3º c/c §2º).",
+   "decisao": "10"
+  },
+  {
+   "id": 1089,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "10"
+  },
+  {
+   "id": 1089,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando o abuso dos meios de correção ou disciplina, ou os maus-tratos, envolvem violência física (CPM, Art. 213, caput).",
+   "decisao": "10"
+  },
+  {
+   "id": 1090,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "10"
+  },
+  {
+   "id": 1090,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando o abuso dos meios de correção ou disciplina, ou os maus-tratos, envolvem violência física (CPM, Art. 213, §1º).",
+   "decisao": "10"
+  },
+  {
+   "id": 1091,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "10"
+  },
+  {
+   "id": 1091,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando o abuso dos meios de correção ou disciplina, ou os maus-tratos, envolvem violência física (CPM, Art. 213, §2º).",
+   "decisao": "10"
+  },
+  {
+   "id": 1080,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "10"
+  },
+  {
+   "id": 1080,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando o abuso dos meios de correção ou disciplina, ou os maus-tratos, envolvem violência física (CPM, Art. 207, §2º).",
+   "decisao": "10"
+  },
+  {
+   "id": 68,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando o meio empregado for ameaça grave (CP, art. 147-B).",
+   "decisao": "11"
+  },
+  {
+   "id": 1332,
+   "campo": "violencia",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "11"
+  },
+  {
+   "id": 1332,
+   "campo": "violencia_condicao",
+   "de": null,
+   "para": "Sim quando o sofrimento físico é infligido mediante agressão (Lei 9.455/97, art. 1º, III).",
+   "decisao": "11"
+  },
+  {
+   "id": 86,
+   "campo": "acao_condicao",
+   "de": null,
+   "para_texto": "T01",
+   "decisao": "12"
+  },
+  {
+   "id": 87,
+   "campo": "acao_condicao",
+   "de": null,
+   "para_texto": "T01",
+   "decisao": "12"
+  },
+  {
+   "id": 88,
+   "campo": "acao_condicao",
+   "de": null,
+   "para_texto": "T01",
+   "decisao": "12"
+  },
+  {
+   "id": 89,
+   "campo": "acao_condicao",
+   "de": null,
+   "para_texto": "T01",
+   "decisao": "12"
+  },
+  {
+   "id": 90,
+   "campo": "acao_condicao",
+   "de": null,
+   "para_texto": "T01",
+   "decisao": "12"
+  },
+  {
+   "id": 91,
+   "campo": "acao_condicao",
+   "de": null,
+   "para_texto": "T01",
+   "decisao": "12"
+  },
+  {
+   "id": 92,
+   "campo": "acao_condicao",
+   "de": null,
+   "para_texto": "T01",
+   "decisao": "12"
+  },
+  {
+   "id": 93,
+   "campo": "acao_condicao",
+   "de": null,
+   "para_texto": "T01",
+   "decisao": "12"
+  },
+  {
+   "id": 122,
+   "campo": "acao_condicao",
+   "de": null,
+   "para_texto": "T01",
+   "decisao": "12"
+  },
+  {
+   "id": 123,
+   "campo": "acao_condicao",
+   "de": null,
+   "para_texto": "T01",
+   "decisao": "12"
+  },
+  {
+   "id": 129,
+   "campo": "acao_condicao",
+   "de": null,
+   "para_texto": "T01",
+   "decisao": "12"
+  },
+  {
+   "id": 130,
+   "campo": "acao_condicao",
+   "de": null,
+   "para_texto": "T01",
+   "decisao": "12"
+  },
+  {
+   "id": 131,
+   "campo": "acao_condicao",
+   "de": null,
+   "para_texto": "T01",
+   "decisao": "12"
+  },
+  {
+   "id": 132,
+   "campo": "acao_condicao",
+   "de": null,
+   "para_texto": "T01",
+   "decisao": "12"
+  },
+  {
+   "id": 576,
+   "campo": "acao_condicao",
+   "de": null,
+   "para_texto": "T01",
+   "decisao": "12"
+  },
+  {
+   "id": 582,
+   "campo": "acao_condicao",
+   "de": null,
+   "para_texto": "T01",
+   "decisao": "12"
+  },
+  {
+   "id": 583,
+   "campo": "acao_condicao",
+   "de": null,
+   "para_texto": "T01",
+   "decisao": "12"
+  },
+  {
+   "id": 584,
+   "campo": "acao_condicao",
+   "de": null,
+   "para_texto": "T01",
+   "decisao": "12"
+  },
+  {
+   "id": 585,
+   "campo": "acao_condicao",
+   "de": null,
+   "para_texto": "T01",
+   "decisao": "12"
+  },
+  {
+   "id": 586,
+   "campo": "acao_condicao",
+   "de": null,
+   "para_texto": "T01",
+   "decisao": "12"
+  },
+  {
+   "id": 587,
+   "campo": "acao_condicao",
+   "de": null,
+   "para_texto": "T01",
+   "decisao": "12"
+  },
+  {
+   "id": 815,
+   "campo": "acao_condicao",
+   "de": null,
+   "para_texto": "T01",
+   "decisao": "12"
+  },
+  {
+   "id": 816,
+   "campo": "acao_condicao",
+   "de": null,
+   "para_texto": "T01",
+   "decisao": "12"
+  },
+  {
+   "id": 820,
+   "campo": "acao_condicao",
+   "de": null,
+   "para_texto": "T01",
+   "decisao": "12"
+  },
+  {
+   "id": 994,
+   "campo": "acao_condicao",
+   "de": null,
+   "para_texto": "T01",
+   "decisao": "12"
+  },
+  {
+   "id": 995,
+   "campo": "acao_condicao",
+   "de": null,
+   "para_texto": "T01",
+   "decisao": "12"
+  },
+  {
+   "id": 996,
+   "campo": "acao_condicao",
+   "de": null,
+   "para_texto": "T01",
+   "decisao": "12"
+  },
+  {
+   "id": 997,
+   "campo": "acao_condicao",
+   "de": null,
+   "para_texto": "T01",
+   "decisao": "12"
+  },
+  {
+   "id": 998,
+   "campo": "acao_condicao",
+   "de": null,
+   "para_texto": "T01",
+   "decisao": "12"
+  },
+  {
+   "id": 999,
+   "campo": "acao_condicao",
+   "de": null,
+   "para_texto": "T01",
+   "decisao": "12"
+  },
+  {
+   "id": 1000,
+   "campo": "acao_condicao",
+   "de": null,
+   "para_texto": "T01",
+   "decisao": "12"
+  },
+  {
+   "id": 1316,
+   "campo": "acao_condicao",
+   "de": null,
+   "para_texto": "T01",
+   "decisao": "12"
+  },
+  {
+   "id": 1341,
+   "campo": "acao_condicao",
+   "de": null,
+   "para_texto": "T01",
+   "decisao": "12"
+  },
+  {
+   "id": 127,
+   "campo": "acao_condicao",
+   "de": null,
+   "para_texto": "T02",
+   "decisao": "12+33"
+  },
+  {
+   "id": 128,
+   "campo": "acao_condicao",
+   "de": null,
+   "para_texto": "T02",
+   "decisao": "12+33"
+  },
+  {
+   "id": 580,
+   "campo": "acao_condicao",
+   "de": null,
+   "para_texto": "T02",
+   "decisao": "12+33"
+  },
+  {
+   "id": 589,
+   "campo": "acao_condicao",
+   "de": null,
+   "para_texto": "T02",
+   "decisao": "12+33"
+  },
+  {
+   "id": 590,
+   "campo": "acao_condicao",
+   "de": null,
+   "para_texto": "T02",
+   "decisao": "12+33"
+  },
+  {
+   "id": 591,
+   "campo": "acao_condicao",
+   "de": null,
+   "para_texto": "T02",
+   "decisao": "12+33"
+  },
+  {
+   "id": 592,
+   "campo": "acao_condicao",
+   "de": null,
+   "para_texto": "T02",
+   "decisao": "12+33"
+  },
+  {
+   "id": 593,
+   "campo": "acao_condicao",
+   "de": null,
+   "para_texto": "T02",
+   "decisao": "12+33"
+  },
+  {
+   "id": 594,
+   "campo": "acao_condicao",
+   "de": null,
+   "para_texto": "T02",
+   "decisao": "12+33"
+  },
+  {
+   "id": 595,
+   "campo": "acao_condicao",
+   "de": null,
+   "para": "Fatos até 03/05/2026: condicionada à representação quando a vítima é instituto de economia popular, assistência social ou beneficência (CP, art. 171, §§ 3º e 5º, redação da Lei 13.964/2019); incondicionada quando é entidade de direito público. Fatos a partir de 04/05/2026: incondicionada (Lei 15.397/2026).",
+   "decisao": "33"
+  },
+  {
+   "id": 58,
+   "campo": "acao_condicao",
+   "de": null,
+   "para_texto": "T03",
+   "decisao": "13/15"
+  },
+  {
+   "id": 59,
+   "campo": "acao_condicao",
+   "de": null,
+   "para_texto": "T03",
+   "decisao": "13/15"
+  },
+  {
+   "id": 730,
+   "campo": "acao_condicao",
+   "de": null,
+   "para_texto": "T03",
+   "decisao": "13/15"
+  },
+  {
+   "id": 60,
+   "campo": "acao_condicao",
+   "de": null,
+   "para_texto": "T03",
+   "decisao": "13/15"
+  },
+  {
+   "id": 63,
+   "campo": "acao_condicao",
+   "de": null,
+   "para_texto": "T03",
+   "decisao": "13/15"
+  },
+  {
+   "id": 64,
+   "campo": "acao_condicao",
+   "de": null,
+   "para_texto": "T03",
+   "decisao": "13/15"
+  },
+  {
+   "id": 1504,
+   "campo": "acao_condicao",
+   "de": null,
+   "para_texto": "T03",
+   "decisao": "13/15"
+  },
+  {
+   "id": 1505,
+   "campo": "acao_condicao",
+   "de": null,
+   "para_texto": "T03",
+   "decisao": "13/15"
+  },
+  {
+   "id": 61,
+   "campo": "acao_condicao",
+   "de": "Pública incondicionada quando da violência resulta lesão corporal (CP, art. 145, caput); nas demais hipóteses, privada.",
+   "para": "Pública quando da violência resulta lesão corporal (CP, art. 145, caput): condicionada à representação se a lesão é leve (Lei 9.099/95, art. 88) e incondicionada se grave ou gravíssima. Nas demais hipóteses: mediante requisição do Ministro da Justiça se o crime é cometido contra o Presidente da República ou chefe de governo estrangeiro (CP, art. 141, I, c/c art. 145, parágrafo único); mediante representação se contra funcionário público em razão de suas funções ou contra os Presidentes do Senado Federal, da Câmara dos Deputados ou do Supremo Tribunal Federal (art. 141, II, c/c art. 145, parágrafo único), com legitimidade concorrente do ofendido mediante queixa (STF, Súmula 714).",
+   "decisao": "15"
+  },
+  {
+   "id": 539,
+   "campo": "acao_condicao",
+   "de": null,
+   "para_texto": "T07",
+   "decisao": "17"
+  },
+  {
+   "id": 540,
+   "campo": "acao_condicao",
+   "de": "Privada, salvo quando praticado em prejuízo de entidade de direito público, empresa pública, sociedade de economia mista ou fundação (Lei…",
+   "para_texto": "T07",
+   "decisao": "17"
+  },
+  {
+   "id": 541,
+   "campo": "acao_condicao",
+   "de": "Privada, salvo quando praticado em prejuízo de entidade de direito público, empresa pública, sociedade de economia mista ou fundação (Lei…",
+   "para_texto": "T07",
+   "decisao": "17"
+  },
+  {
+   "id": 76,
+   "campo": "vigencia_ate",
+   "de": null,
+   "para": "1978-06-23",
+   "decisao": "34"
+  },
+  {
+   "id": 77,
+   "campo": "vigencia_ate",
+   "de": null,
+   "para": "1978-06-23",
+   "decisao": "34"
+  },
+  {
+   "id": 76,
+   "campo": "vigencia_nota",
+   "de": null,
+   "para_texto": "T09",
+   "decisao": "34"
+  },
+  {
+   "id": 77,
+   "campo": "vigencia_nota",
+   "de": null,
+   "para_texto": "T09",
+   "decisao": "34"
+  },
+  {
+   "id": 1494,
+   "campo": "elemento",
+   "de": "Doloso",
+   "para": "Preterdoloso",
+   "decisao": "31 (A/B)"
+  },
+  {
+   "id": 1496,
+   "campo": "elemento",
+   "de": "Doloso",
+   "para": "Preterdoloso",
+   "decisao": "31 (A/B)"
+  },
+  {
+   "id": 1499,
+   "campo": "elemento",
+   "de": "Doloso",
+   "para": "Preterdoloso",
+   "decisao": "31 (A/B)"
+  },
+  {
+   "id": 1503,
+   "campo": "elemento",
+   "de": "Doloso",
+   "para": "Preterdoloso",
+   "decisao": "31 (A/B)"
+  },
+  {
+   "id": 1314,
+   "campo": "elemento",
+   "de": "Doloso",
+   "para": "Preterdoloso",
+   "decisao": "31 (A/B)"
+  },
+  {
+   "id": 1083,
+   "campo": "elemento",
+   "de": "Doloso",
+   "para": "Preterdoloso",
+   "decisao": "31 (A/B)"
+  },
+  {
+   "id": 1082,
+   "campo": "elemento",
+   "de": "Culposo",
+   "para": "Preterdoloso",
+   "decisao": "31 (A/B)"
+  },
+  {
+   "id": 1287,
+   "campo": "elemento",
+   "de": "Doloso",
+   "para": "Preterdoloso",
+   "decisao": "31 (A/B)"
+  },
+  {
+   "id": 1389,
+   "campo": "elemento",
+   "de": "Doloso",
+   "para": "Preterdoloso",
+   "decisao": "31 (A/B)"
+  },
+  {
+   "id": 30,
+   "campo": "elemento",
+   "de": "Doloso",
+   "para": "Preterdoloso",
+   "decisao": "31 (A/B)"
+  },
+  {
+   "id": 31,
+   "campo": "elemento",
+   "de": "Doloso",
+   "para": "Preterdoloso",
+   "decisao": "31 (A/B)"
+  },
+  {
+   "id": 1488,
+   "campo": "elemento",
+   "de": "Doloso",
+   "para": "Preterdoloso",
+   "decisao": "31 (A/B)"
+  },
+  {
+   "id": 1489,
+   "campo": "elemento",
+   "de": "Doloso",
+   "para": "Preterdoloso",
+   "decisao": "31 (A/B)"
+  },
+  {
+   "id": 1479,
+   "campo": "elemento",
+   "de": "Doloso",
+   "para": "Preterdoloso",
+   "decisao": "31 (A/B)"
+  },
+  {
+   "id": 1480,
+   "campo": "elemento",
+   "de": "Doloso",
+   "para": "Preterdoloso",
+   "decisao": "31 (A/B)"
+  },
+  {
+   "id": 1481,
+   "campo": "elemento",
+   "de": "Doloso",
+   "para": "Preterdoloso",
+   "decisao": "31 (A/B)"
+  },
+  {
+   "id": 1482,
+   "campo": "elemento",
+   "de": "Doloso",
+   "para": "Preterdoloso",
+   "decisao": "31 (A/B)"
+  },
+  {
+   "id": 1338,
+   "campo": "elemento",
+   "de": "Doloso",
+   "para": "Preterdoloso",
+   "decisao": "31 (A/B)"
+  },
+  {
+   "id": 1339,
+   "campo": "elemento",
+   "de": "Doloso",
+   "para": "Preterdoloso",
+   "decisao": "31 (A/B)"
+  },
+  {
+   "id": 1087,
+   "campo": "elemento",
+   "de": "Doloso",
+   "para": "Preterdoloso",
+   "decisao": "31 (A/B)"
+  },
+  {
+   "id": 1088,
+   "campo": "elemento",
+   "de": "Doloso",
+   "para": "Preterdoloso",
+   "decisao": "31 (A/B)"
+  },
+  {
+   "id": 1090,
+   "campo": "elemento",
+   "de": "Doloso",
+   "para": "Preterdoloso",
+   "decisao": "31 (A/B)"
+  },
+  {
+   "id": 1091,
+   "campo": "elemento",
+   "de": "Doloso",
+   "para": "Preterdoloso",
+   "decisao": "31 (A/B)"
+  },
+  {
+   "id": 982,
+   "campo": "elemento",
+   "de": "Doloso",
+   "para": "Preterdoloso",
+   "decisao": "31 (A/B)"
+  },
+  {
+   "id": 983,
+   "campo": "elemento",
+   "de": "Doloso",
+   "para": "Preterdoloso",
+   "decisao": "31 (A/B)"
+  },
+  {
+   "id": 985,
+   "campo": "elemento",
+   "de": "Doloso",
+   "para": "Preterdoloso",
+   "decisao": "31 (A/B)"
+  },
+  {
+   "id": 986,
+   "campo": "elemento",
+   "de": "Doloso",
+   "para": "Preterdoloso",
+   "decisao": "31 (A/B)"
+  },
+  {
+   "id": 989,
+   "campo": "elemento",
+   "de": "Doloso",
+   "para": "Preterdoloso",
+   "decisao": "31 (A/B)"
+  },
+  {
+   "id": 1494,
+   "campo": "tentativa",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "20"
+  },
+  {
+   "id": 1496,
+   "campo": "tentativa",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "20"
+  },
+  {
+   "id": 1499,
+   "campo": "tentativa",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "20"
+  },
+  {
+   "id": 1503,
+   "campo": "tentativa",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "20"
+  },
+  {
+   "id": 1083,
+   "campo": "tentativa",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "20"
+  },
+  {
+   "id": 1287,
+   "campo": "tentativa",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "20"
+  },
+  {
+   "id": 1389,
+   "campo": "tentativa",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "20"
+  },
+  {
+   "id": 30,
+   "campo": "tentativa",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "20"
+  },
+  {
+   "id": 31,
+   "campo": "tentativa",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "20"
+  },
+  {
+   "id": 1488,
+   "campo": "tentativa",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "20"
+  },
+  {
+   "id": 1489,
+   "campo": "tentativa",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "20"
+  },
+  {
+   "id": 1479,
+   "campo": "tentativa",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "20"
+  },
+  {
+   "id": 1480,
+   "campo": "tentativa",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "20"
+  },
+  {
+   "id": 1481,
+   "campo": "tentativa",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "20"
+  },
+  {
+   "id": 1482,
+   "campo": "tentativa",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "20"
+  },
+  {
+   "id": 1338,
+   "campo": "tentativa",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "20"
+  },
+  {
+   "id": 1339,
+   "campo": "tentativa",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "20"
+  },
+  {
+   "id": 1087,
+   "campo": "tentativa",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "20"
+  },
+  {
+   "id": 1088,
+   "campo": "tentativa",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "20"
+  },
+  {
+   "id": 1090,
+   "campo": "tentativa",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "20"
+  },
+  {
+   "id": 1091,
+   "campo": "tentativa",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "20"
+  },
+  {
+   "id": 104,
+   "campo": "elemento",
+   "de": "Preterdoloso",
+   "para": "Qualificado pelo resultado",
+   "decisao": "31 (C)"
+  },
+  {
+   "id": 105,
+   "campo": "elemento",
+   "de": "Preterdoloso",
+   "para": "Qualificado pelo resultado",
+   "decisao": "31 (C)"
+  },
+  {
+   "id": 108,
+   "campo": "elemento",
+   "de": "Preterdoloso",
+   "para": "Qualificado pelo resultado",
+   "decisao": "31 (C)"
+  },
+  {
+   "id": 112,
+   "campo": "elemento",
+   "de": "Preterdoloso",
+   "para": "Qualificado pelo resultado",
+   "decisao": "31 (C)"
+  },
+  {
+   "id": 113,
+   "campo": "elemento",
+   "de": "Preterdoloso",
+   "para": "Qualificado pelo resultado",
+   "decisao": "31 (C)"
+  },
+  {
+   "id": 1317,
+   "campo": "elemento",
+   "de": "Doloso",
+   "para": "Qualificado pelo resultado",
+   "decisao": "31 (C)"
+  },
+  {
+   "id": 817,
+   "campo": "elemento",
+   "de": "Doloso",
+   "para": "Qualificado pelo resultado",
+   "decisao": "31 (C)"
+  },
+  {
+   "id": 818,
+   "campo": "elemento",
+   "de": "Doloso",
+   "para": "Qualificado pelo resultado",
+   "decisao": "31 (C)"
+  },
+  {
+   "id": 1490,
+   "campo": "elemento",
+   "de": "Doloso",
+   "para": "Qualificado pelo resultado",
+   "decisao": "31 (C)"
+  },
+  {
+   "id": 1484,
+   "campo": "elemento",
+   "de": "Doloso",
+   "para": "Qualificado pelo resultado",
+   "decisao": "31 (C)"
+  },
+  {
+   "id": 1485,
+   "campo": "elemento",
+   "de": "Doloso",
+   "para": "Qualificado pelo resultado",
+   "decisao": "31 (C)"
+  },
+  {
+   "id": 1452,
+   "campo": "elemento",
+   "de": "Doloso",
+   "para": "Qualificado pelo resultado",
+   "decisao": "31 (C)"
+  },
+  {
+   "id": 1443,
+   "campo": "elemento",
+   "de": "Doloso",
+   "para": "Qualificado pelo resultado",
+   "decisao": "31 (C)"
+  },
+  {
+   "id": 1454,
+   "campo": "elemento",
+   "de": "Doloso",
+   "para": "Qualificado pelo resultado",
+   "decisao": "31 (C)"
+  },
+  {
+   "id": 1446,
+   "campo": "elemento",
+   "de": "Doloso",
+   "para": "Qualificado pelo resultado",
+   "decisao": "31 (C)"
+  },
+  {
+   "id": 1317,
+   "campo": "tentativa",
+   "de": "Não",
+   "para": "Sim",
+   "decisao": "20"
+  },
+  {
+   "id": 134,
+   "campo": "elemento",
+   "de": "Preterdoloso",
+   "para": "Qualificado pelo resultado",
+   "decisao": "31-D"
+  },
+  {
+   "id": 609,
+   "campo": "elemento",
+   "de": "Doloso",
+   "para": "Qualificado pelo resultado",
+   "decisao": "31-D"
+  },
+  {
+   "id": 135,
+   "campo": "elemento",
+   "de": "Preterdoloso",
+   "para": "Qualificado pelo resultado",
+   "decisao": "31-D"
+  },
+  {
+   "id": 141,
+   "campo": "elemento",
+   "de": "Preterdoloso",
+   "para": "Qualificado pelo resultado",
+   "decisao": "31-D"
+  },
+  {
+   "id": 142,
+   "campo": "elemento",
+   "de": "Preterdoloso",
+   "para": "Qualificado pelo resultado",
+   "decisao": "31-D"
+  },
+  {
+   "id": 1104,
+   "campo": "elemento",
+   "de": "Doloso",
+   "para": "Qualificado pelo resultado",
+   "decisao": "31-D"
+  },
+  {
+   "id": 1105,
+   "campo": "elemento",
+   "de": "Doloso",
+   "para": "Qualificado pelo resultado",
+   "decisao": "31-D"
+  },
+  {
+   "id": 1295,
+   "campo": "elemento",
+   "de": "Doloso",
+   "para": "Qualificado pelo resultado",
+   "decisao": "31-D"
+  },
+  {
+   "id": 1296,
+   "campo": "elemento",
+   "de": "Doloso",
+   "para": "Qualificado pelo resultado",
+   "decisao": "31-D"
+  },
+  {
+   "id": 1292,
+   "campo": "elemento",
+   "de": "Doloso",
+   "para": "Qualificado pelo resultado",
+   "decisao": "31-D2"
+  },
+  {
+   "id": 1293,
+   "campo": "elemento",
+   "de": "Doloso",
+   "para": "Qualificado pelo resultado",
+   "decisao": "31-D2"
+  },
+  {
+   "id": 1038,
+   "campo": "elemento",
+   "de": "Doloso",
+   "para": "Qualificado pelo resultado",
+   "decisao": "31-D2"
+  },
+  {
+   "id": 1040,
+   "campo": "elemento",
+   "de": "Doloso",
+   "para": "Qualificado pelo resultado",
+   "decisao": "31-D2"
+  },
+  {
+   "id": 1055,
+   "campo": "elemento",
+   "de": "Doloso",
+   "para": "Qualificado pelo resultado",
+   "decisao": "31-D2"
+  },
+  {
+   "id": 1095,
+   "campo": "elemento",
+   "de": "Doloso",
+   "para": "Qualificado pelo resultado",
+   "decisao": "31-D2"
+  },
+  {
+   "id": 1096,
+   "campo": "elemento",
+   "de": "Doloso",
+   "para": "Qualificado pelo resultado",
+   "decisao": "31-D2"
+  },
+  {
+   "id": 1081,
+   "campo": "hediondo",
+   "de": "Não",
+   "para": "Sim",
+   "decisao": "29"
+  },
+  {
+   "id": 1282,
+   "campo": "hediondo",
+   "de": "Não",
+   "para": "Sim",
+   "decisao": "29"
+  },
+  {
+   "id": 1294,
+   "campo": "hediondo",
+   "de": "Não",
+   "para": "Sim",
+   "decisao": "29"
+  },
+  {
+   "id": 1295,
+   "campo": "hediondo",
+   "de": "Não",
+   "para": "Sim",
+   "decisao": "29"
+  },
+  {
+   "id": 1296,
+   "campo": "hediondo",
+   "de": "Não",
+   "para": "Sim",
+   "decisao": "29"
+  },
+  {
+   "id": 1447,
+   "campo": "hediondo",
+   "de": "Não",
+   "para": "Sim",
+   "decisao": "29"
+  },
+  {
+   "id": 1448,
+   "campo": "hediondo",
+   "de": "Não",
+   "para": "Sim",
+   "decisao": "29"
+  },
+  {
+   "id": 1449,
+   "campo": "hediondo",
+   "de": "Não",
+   "para": "Sim",
+   "decisao": "29"
+  },
+  {
+   "id": 1281,
+   "campo": "hediondo",
+   "de": "Não",
+   "para": "Sim",
+   "decisao": "29"
+  },
+  {
+   "id": 1451,
+   "campo": "hediondo_condicao",
+   "de": null,
+   "para_texto": "T10",
+   "decisao": "29"
+  },
+  {
+   "id": 1442,
+   "campo": "hediondo_condicao",
+   "de": null,
+   "para_texto": "T10",
+   "decisao": "29"
+  },
+  {
+   "id": 1453,
+   "campo": "hediondo_condicao",
+   "de": null,
+   "para_texto": "T11",
+   "decisao": "29"
+  },
+  {
+   "id": 1445,
+   "campo": "hediondo_condicao",
+   "de": null,
+   "para_texto": "T11",
+   "decisao": "29"
+  },
+  {
+   "id": 1289,
+   "campo": "hediondo_condicao",
+   "de": null,
+   "para": "Hediondo nas formas que correspondem às hediondas do tempo de paz: roubo com arma de fogo, lesão grave dolosa, morte ou restrição da liberdade; extorsão com lesão grave, morte ou restrição da liberdade; extorsão mediante sequestro. Fundamento: Lei 8.072, art. 1º, parágrafo único, VI, c/c art. 1º, II, III e IV.",
+   "decisao": "29"
+  },
+  {
+   "id": 1283,
+   "campo": "hediondo_condicao",
+   "de": null,
+   "para": "Hediondo nas hipóteses dos incisos I, II, IV e V do parágrafo único do art. 208 do CPM; não no inciso III (dispersão do grupo), sem correspondente na Lei 2.889/56. Fundamento: Lei 8.072, art. 1º, parágrafo único, I e VI.",
+   "decisao": "29"
+  },
+  {
+   "id": 692,
+   "campo": "hediondo_condicao",
+   "de": null,
+   "para_texto": "T12",
+   "decisao": "29"
+  },
+  {
+   "id": 1280,
+   "campo": "hediondo_condicao",
+   "de": null,
+   "para_texto": "T12",
+   "decisao": "29"
+  },
+  {
+   "id": 699,
+   "campo": "hediondo_condicao",
+   "de": null,
+   "para_texto": "T06",
+   "decisao": "29"
+  },
+  {
+   "id": 1083,
+   "campo": "hediondo_condicao",
+   "de": null,
+   "para_texto": "T06",
+   "decisao": "29"
+  },
+  {
+   "id": 1286,
+   "campo": "hediondo_condicao",
+   "de": null,
+   "para_texto": "T06",
+   "decisao": "29"
+  },
+  {
+   "id": 1389,
+   "campo": "hediondo_condicao",
+   "de": null,
+   "para_texto": "T06",
+   "decisao": "29"
+  },
+  {
+   "id": 1,
+   "campo": "hediondo_condicao",
+   "de": "Só quando praticado em atividade típica de grupo de extermínio. Fundamento: Lei 8.072, art. 1º, I.",
+   "para": "Hediondo somente quando praticado em atividade típica de grupo de extermínio, ainda que por um só agente. Fundamento: Lei 8.072, art. 1º, I.",
+   "decisao": "28"
+  },
+  {
+   "id": 20,
+   "campo": "hediondo_condicao",
+   "de": "Só na modalidade praticada por rede de computadores ou transmissão em tempo real. Fundamento: Lei 8.072, art. 1º, X.",
+   "para_texto": "T13",
+   "decisao": "28"
+  },
+  {
+   "id": 24,
+   "campo": "hediondo_condicao",
+   "de": "Só na modalidade praticada por rede de computadores ou transmissão em tempo real. Fundamento: Lei 8.072, art. 1º, X.",
+   "para_texto": "T13",
+   "decisao": "28"
+  },
+  {
+   "id": 34,
+   "campo": "hediondo_condicao",
+   "de": "Lesão gravíssima e seguida de morte, só nas hipóteses das alíneas a, b e c (vítima qualificada ou dependências de instituição de ensino).…",
+   "para_texto": "T04",
+   "decisao": "28"
+  },
+  {
+   "id": 630,
+   "campo": "hediondo_condicao",
+   "de": "Lesão gravíssima e seguida de morte, só nas hipóteses das alíneas a, b e c (vítima qualificada ou dependências de instituição de ensino).…",
+   "para_texto": "T04",
+   "decisao": "28"
+  },
+  {
+   "id": 631,
+   "campo": "hediondo_condicao",
+   "de": "Lesão gravíssima e seguida de morte, só nas hipóteses das alíneas a, b e c (vítima qualificada ou dependências de instituição de ensino).…",
+   "para_texto": "T04",
+   "decisao": "28"
+  },
+  {
+   "id": 632,
+   "campo": "hediondo_condicao",
+   "de": "Lesão gravíssima e seguida de morte, só nas hipóteses das alíneas a, b e c (vítima qualificada ou dependências de instituição de ensino).…",
+   "para_texto": "T04",
+   "decisao": "28"
+  },
+  {
+   "id": 633,
+   "campo": "hediondo_condicao",
+   "de": "Lesão gravíssima e seguida de morte, só nas hipóteses das alíneas a, b e c (vítima qualificada ou dependências de instituição de ensino).…",
+   "para_texto": "T04",
+   "decisao": "28"
+  },
+  {
+   "id": 634,
+   "campo": "hediondo_condicao",
+   "de": "Lesão gravíssima e seguida de morte, só nas hipóteses das alíneas a, b e c (vítima qualificada ou dependências de instituição de ensino).…",
+   "para_texto": "T04",
+   "decisao": "28"
+  },
+  {
+   "id": 35,
+   "campo": "hediondo_condicao",
+   "de": "Lesão gravíssima e seguida de morte, só nas hipóteses das alíneas a, b e c (vítima qualificada ou dependências de instituição de ensino).…",
+   "para_texto": "T14",
+   "decisao": "28"
+  },
+  {
+   "id": 1314,
+   "campo": "hediondo_condicao",
+   "de": "Lesão gravíssima e seguida de morte, só nas hipóteses das alíneas a, b e c (vítima qualificada ou dependências de instituição de ensino).…",
+   "para_texto": "T14",
+   "decisao": "28"
+  },
+  {
+   "id": 73,
+   "campo": "hediondo_condicao",
+   "de": "Hediondo apenas quando cometido contra criança ou adolescente (art. 1º, XII), pois o tipo, sozinho, não decide. Fundamento: Lei 8.072, ar…",
+   "para_texto": "T05",
+   "decisao": "28"
+  },
+  {
+   "id": 635,
+   "campo": "hediondo_condicao",
+   "de": "Hediondo apenas quando cometido contra criança ou adolescente (art. 1º, XII), pois o tipo, sozinho, não decide. Fundamento: Lei 8.072, ar…",
+   "para_texto": "T05",
+   "decisao": "28"
+  },
+  {
+   "id": 636,
+   "campo": "hediondo_condicao",
+   "de": "Hediondo apenas quando cometido contra criança ou adolescente (art. 1º, XII), pois o tipo, sozinho, não decide. Fundamento: Lei 8.072, ar…",
+   "para_texto": "T05",
+   "decisao": "28"
+  },
+  {
+   "id": 637,
+   "campo": "hediondo_condicao",
+   "de": "Hediondo apenas quando cometido contra criança ou adolescente (art. 1º, XII), pois o tipo, sozinho, não decide. Fundamento: Lei 8.072, ar…",
+   "para_texto": "T05",
+   "decisao": "28"
+  },
+  {
+   "id": 638,
+   "campo": "hediondo_condicao",
+   "de": "Hediondo apenas quando cometido contra criança ou adolescente (art. 1º, XII), pois o tipo, sozinho, não decide. Fundamento: Lei 8.072, ar…",
+   "para_texto": "T05",
+   "decisao": "28"
+  },
+  {
+   "id": 639,
+   "campo": "hediondo_condicao",
+   "de": "Hediondo apenas quando cometido contra criança ou adolescente (art. 1º, XII), pois o tipo, sozinho, não decide. Fundamento: Lei 8.072, ar…",
+   "para_texto": "T05",
+   "decisao": "28"
+  },
+  {
+   "id": 388,
+   "campo": "hediondo_condicao",
+   "de": "Só quando a organização é direcionada à prática de crime hediondo ou equiparado, circunstância do caso. Fundamento: Lei 8.072, art. 1º, §…",
+   "para_texto": "T15",
+   "decisao": "28"
+  },
+  {
+   "id": 671,
+   "campo": "hediondo_condicao",
+   "de": "Só quando a organização é direcionada à prática de crime hediondo ou equiparado, circunstância do caso. Fundamento: Lei 8.072, art. 1º, §…",
+   "para_texto": "T15",
+   "decisao": "28"
+  },
+  {
+   "id": 1457,
+   "campo": "hediondo_condicao",
+   "de": "Somente quando a arma empregada é de fogo: o rol (Lei 8.072/90, art. 1º, II, b) alcança o roubo pelo emprego de arma de fogo, e o art. 24…",
+   "para": "Hediondo somente quando a arma empregada é de fogo. Fundamento: Lei 8.072, art. 1º, parágrafo único, VI, c/c art. 1º, II, b.",
+   "decisao": "28"
+  },
+  {
+   "id": 320,
+   "campo": "hediondo_condicao",
+   "de": "Maquinário: o STJ tem decisões nos dois sentidos sobre a equiparação, e a classificação é escolha do projeto, não leitura de texto. Funda…",
+   "para": null,
+   "decisao": "28 (sai da condição)"
+  },
+  {
+   "id": 323,
+   "campo": "hediondo_condicao",
+   "de": "Informante/colaborador: a equiparação é reconhecida por parte da jurisprudência e negada por outra, e a classificação é decisão do projet…",
+   "para": null,
+   "decisao": "28 (sai da condição)"
+  },
+  {
+   "id": 385,
+   "campo": "hediondo_condicao",
+   "de": "Omissão perante a tortura: pena própria de detenção, e a doutrina diverge sobre estender a equiparação. Fundamento: CF, art. 5º, XLIII (e…",
+   "para": null,
+   "decisao": "28 (sai da condição)"
+  },
+  {
+   "id": 320,
+   "campo": "hediondo_nota",
+   "de": null,
+   "para": "Divergência jurisprudencial sobre a equiparação do art. 34 da Lei 11.343/06 a crime hediondo (CF, art. 5º, XLIII). O catálogo publica 'Não' até precedente vinculante.",
+   "decisao": "28"
+  },
+  {
+   "id": 323,
+   "campo": "hediondo_nota",
+   "de": null,
+   "para": "Divergência jurisprudencial sobre a equiparação do art. 37 da Lei 11.343/06 a crime hediondo (CF, art. 5º, XLIII). O catálogo publica 'Não' até precedente vinculante.",
+   "decisao": "28"
+  },
+  {
+   "id": 385,
+   "campo": "hediondo_nota",
+   "de": null,
+   "para": "Divergência doutrinária sobre estender a equiparação da tortura (CF, art. 5º, XLIII) à omissão do § 2º, que tem pena própria de detenção. O catálogo publica 'Não'.",
+   "decisao": "28"
+  },
+  {
+   "id": 1306,
+   "campo": "hediondo_condicao",
+   "de": "O rol remete ao §2º; o §2º-D é parágrafo próprio, criado depois. Alcance a definir. Fundamento: Lei 8.072, art. 1º, I.",
+   "para": null,
+   "decisao": "28"
+  },
+  {
+   "id": 1306,
+   "campo": "hediondo_nota",
+   "de": null,
+   "para": "O rol (Lei 8.072, art. 1º, I) alcança o homicídio qualificado do § 2º; o § 2º-D, incluído pela Lei 15.358/2026, é parágrafo autônomo e não foi acrescentado ao rol.",
+   "decisao": "28"
+  },
+  {
+   "id": 559,
+   "campo": "(aposentar)",
+   "de": null,
+   "para": "→ 1508",
+   "decisao": "C13"
+  }
+ ]
+}
