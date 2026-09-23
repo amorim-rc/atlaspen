@@ -1,6 +1,6 @@
 name: Deploy (GitHub Pages)
 
-# Publica em https://amorim-rc.github.io/sispenas/ (config em astro.config.mjs).
+# Publica em https://amorim-rc.github.io/atlaspen/ (config em astro.config.mjs).
 # Requer, no repositório: Settings > Pages > Source = GitHub Actions.
 
 on:

@@ -148,6 +148,11 @@ As 41 ocorrências de "sispenas" em arquivos versionados (fora de `node_modules`
 **O ganho de B não é cosmético.** Pagar a dívida da terceira linha transforma a futura troca de
 endereço de "reescrever nota publicada" em "mudar uma constante".
 
+> **Superado em 23/09/2026.** O mantenedor decidiu renomear tudo agora, sem esperar o domínio,
+> assumindo que `amorim-rc.github.io/sispenas/` morre sem redirecionamento — cabe porque o
+> endereço nunca foi divulgado. O parágrafo abaixo fica como registro do que se decidiu em
+> 17/09. O estado atual está na frente 3 do `backlog.md`.
+
 **Por que o repositório não é renomeado agora.** A documentação do GitHub é explícita: ao renomear um
 repositório, tudo é redirecionado **exceto as URLs de project site**. Renomear `sispenas` para
 `atlaspen` moveria o Pages para `amorim-rc.github.io/atlaspen/` e o endereço antigo passaria a dar

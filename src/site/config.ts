@@ -18,10 +18,28 @@ export const DESCRITOR = 'catálogo aberto de tipos e atributos penais';
 /** O titular do código e da base (LICENSE), e quem se cita. Decisão de 20/09/2026. */
 export const TITULAR = 'Luccas de Amorim e contribuidores';
 
-export const REPOSITORIO = 'https://github.com/amorim-rc/sispenas';
+export const REPOSITORIO = 'https://github.com/amorim-rc/atlaspen';
 
 /**
- * Endereço público. NÃO muda com o nome: o domínio é decisão do grupo (frente 3
- * do backlog), e quando vier, a troca é um PR próprio.
+ * Endereço público. Renomeado em 23/09/2026, por decisão do mantenedor, junto
+ * com o repositório: `amorim-rc.github.io/sispenas/` **deixou de responder** —
+ * o GitHub redireciona tudo ao renomear um repositório, menos a URL de project
+ * site. O endereço antigo nunca foi divulgado, que é por que a troca cabia aqui.
+ *
+ * Quando o domínio próprio existir, é esta constante que muda, e só ela: nada
+ * mais no repositório escreve o endereço à mão. Junto com ela mudam o `base` do
+ * `astro.config.mjs` (para `/`) e um arquivo `CNAME` em `static/`.
  */
-export const SITE_URL = 'https://amorim-rc.github.io/sispenas/';
+export const SITE_URL = 'https://amorim-rc.github.io/atlaspen/';
+
+/**
+ * Endereço absoluto de uma rota do site: `urlPublica('/tipos/477')`.
+ *
+ * Existe para que nota do changelog e mensagem de robô não escrevam o endereço
+ * à mão. Era a dívida apontada no desenho do revamp (sub-projeto B): trinta e
+ * poucas URLs literais nas notas já publicadas fariam de toda troca de endereço
+ * uma reescrita de texto publicado. Agora é uma constante.
+ */
+export function urlPublica(rota: string): string {
+  return SITE_URL.replace(/\/$/, '') + '/' + rota.replace(/^\/+/, '');
+}

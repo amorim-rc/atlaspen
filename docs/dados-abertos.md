@@ -8,8 +8,8 @@ sidebar_position: 4
 
 O catálogo completo é publicado como dado aberto em formato JSON:
 
-- **Arquivo:** [`/data/crimes.json`](pathname:///sispenas/data/crimes.json)
-- **Atributos penais:** [`/data/atributos.json`](pathname:///sispenas/data/atributos.json)
+- **Arquivo:** [`/data/crimes.json`](pathname:///atlaspen/data/crimes.json)
+- **Atributos penais:** [`/data/atributos.json`](pathname:///atlaspen/data/atributos.json)
   (ver [Atributos penais](#atributos-penais), abaixo)
 - **Licença:** MIT com atribuição — cite como **AMORIM, Luccas de. AtlasPen** (ver [Como citar](#como-citar)).
 
@@ -113,7 +113,7 @@ os dados saber o que pode mudar sem quebrar uma conta.
 
 Os 22 atributos penais também são dado aberto:
 
-- [`/data/atributos.json`](pathname:///sispenas/data/atributos.json) é o **derivado**,
+- [`/data/atributos.json`](pathname:///atlaspen/data/atributos.json) é o **derivado**,
   gerado por `scripts/derivar_atributos.ts`: a base dos atributos mais o que dela se calcula;
 - `data/atributos.json` e `data/historico-legislativo.json`, no repositório, são as
   **fontes**.
@@ -216,7 +216,7 @@ página oficial contra a qual ele é conferido), `conferido_em` (a data) e
 virou achado).
 
 A trilha é produzida pela rodada semanal e vive em
-[`/data/conferencia.json`](pathname:///sispenas/data/conferencia.json), fora do catálogo
+[`/data/conferencia.json`](pathname:///atlaspen/data/conferencia.json), fora do catálogo
 editado à mão. Registro recém-criado, ainda não alcançado por uma rodada, tem os três
 campos nulos — o que também é uma informação.
 
@@ -239,7 +239,7 @@ Honestidade sobre o alcance, para quem for citar:
 
 ## Relatório de qualidade
 
-Cada regeneração emite [`/data/qualidade.json`](pathname:///sispenas/data/qualidade.json)
+Cada regeneração emite [`/data/qualidade.json`](pathname:///atlaspen/data/qualidade.json)
 com o estado do catálogo — contagens (inclusive `total_atributos`), lacunas conhecidas e
 a lista completa das contradições, com os `id` envolvidos. Use-o para saber o que é confiável antes de citar.
 
@@ -286,12 +286,12 @@ semver, a versão 0 é desenvolvimento inicial: dados e URLs podem mudar sem avi
 versões de 1.0.0 a 2.0.6 que aparecem no histórico do repositório foram a numeração do
 protótipo; a v1.0.0 será o lançamento oficial, com domínio próprio, e é a partir dela que
 esta regra vale. Os próximos passos estão no
-[backlog](https://github.com/amorim-rc/sispenas/blob/main/backlog.md).
+[backlog](https://github.com/amorim-rc/atlaspen/blob/main/backlog.md).
 
 ## Como citar
 
 > AMORIM, Luccas de. *AtlasPen — Atlas Penal Brasileiro dos Tipos, Atributos e Impacto
-> Legislativo*. 2026. Disponível em: https://github.com/amorim-rc/sispenas. Acesso em: [data].
+> Legislativo*. 2026. Disponível em: https://github.com/amorim-rc/atlaspen. Acesso em: [data].
 
 A pesquisa de 2008, que é o antecedente do AtlasPen, cita-se à parte:
 

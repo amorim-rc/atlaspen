@@ -69,8 +69,10 @@ vai riscado.
 
 - **Transferir o repositório para uma organização**, com três pessoas de início: o
   mantenedor e mais duas, que ainda vão criar conta no GitHub. Na transferência:
-  - o endereço `amorim-rc.github.io/sispenas` deixa de responder. Como o site não é
-    consumido e será reconstruído, isso só afeta os links passados à equipe;
+  - o endereço `amorim-rc.github.io/atlaspen` deixa de responder, e passa a ser
+    `<organizacao>.github.io/atlaspen`. Como o site não é consumido e será reconstruído,
+    isso só afeta os links passados à equipe — e, desde 23/09/2026, é uma constante só
+    (`SITE_URL`, em `src/site/config.ts`) que muda;
   - o app de automação é instalado por conta. Depois da transferência, precisa ser
     instalado na organização; se for app privado, o próprio app tem de ser transferido.
     Sem isso, `regen-data`, `release` e o carimbo do conferidor param de empurrar;
@@ -139,17 +141,29 @@ ids vão mudar, o momento de mudar é antes da v1.0.0, numa virada só.
 **Objetivo.** Renomear o projeto. Pode incluir rebranding. Está na fase 1 porque o
 lançamento sai com domínio próprio, e nome e domínio devem mudar juntos.
 
-**O que já se sabe.**
+**Feito em 23/09/2026 — a renomeação, por decisão do mantenedor.** O desenho do revamp
+(`docs/superpowers/specs/2026-09-17-revamp-atlaspen-design.md`, seção 4) tinha adiado a
+troca do repositório para quando o domínio existisse. O mantenedor decidiu o contrário:
+renomear tudo agora, e deixar o domínio para depois. O que mudou:
 
-- O nome aparece no repositório (`amorim-rc/sispenas`), no `baseUrl` do site
-  (`/sispenas/`), no `package.json`, no `CITATION.cff`, no logo, no favicon, no social
-  card, no rodapé, na página inicial e em toda a documentação. O nome expandido é, desde
-  10/09/2026, "Sistema de Pesquisa de Tipos e Atributos Penais".
-- O nome atual homenageia a pesquisa de origem (Machado & Machado, 2008). O novo nome
-  deve manter essa linhagem explícita na seção Origem e na citação.
-- O endereço `github.io` do Pages **não** redireciona quando o repositório é renomeado ou
-  transferido. Com o site ainda sem uso público, isso não pesa agora; pesa no lançamento,
-  quando as URLs viram contrato.
+- repositório `amorim-rc/sispenas` → **`amorim-rc/atlaspen`**;
+- `base` do site `/sispenas/` → **`/atlaspen/`**, e `SITE_URL` junto;
+- robôs `sispenas-automacao` e `sispenas-bot` → `atlaspen-automacao` e `atlaspen-bot`;
+- a dívida das 34 URLs literais das notas publicadas foi paga: todas passam por
+  `urlPublica()` de `src/site/config.ts`. **A próxima troca de endereço é uma constante.**
+
+**O preço, assumido.** `amorim-rc.github.io/sispenas/` deixou de responder, sem
+redirecionamento — o GitHub redireciona tudo ao renomear, menos a URL de project site.
+Cabia porque o endereço nunca foi divulgado. Depois da v1.0.0 não caberia mais.
+
+**O que continua sendo SISPENAS**, e não se renomeia nunca: a pesquisa de 2008 de Machado
+& Machado, no `CITATION.cff`, no README, em `textos/creditos.md` e no PDF de
+`static/artigos/`. É a linhagem que o projeto credita.
+
+**O que falta, e depende do domínio.**
+
+- O nome expandido é, desde 10/09/2026, "Sistema de Pesquisa de Tipos e Atributos Penais".
+- Comprar **atlaspen.org.br**, apontar o DNS e trocar `SITE_URL` + `base` + `CNAME`.
 
 **Passo a passo do domínio, já levantado (30/07/2026).**
 
@@ -365,7 +379,7 @@ merge que o mantenedor declarar.
   `pena_por_remissao`, `vigencia_ate`).
 - **Tamanho** e critério de suficiência.
 - **Quem valida e como:** dupla codificação, concordância entre avaliadores. A planilha
-  `docs/sispenas-revisao.xlsx` pode servir de instrumento.
+  `docs/atlaspen-revisao.xlsx` pode servir de instrumento.
 - **O que conta como erro**, com as mesmas categorias da conferência.
 
 **Condições.** Reprodutível: semente e script no repositório. E presa a um estado fixo do
@@ -517,10 +531,11 @@ declarada e passam a ser entrega.
 
 ### Nome, endereço e robôs
 
-- A URL do site (`amorim-rc.github.io/sispenas`), o nome do repositório e os robôs
-  (`sispenas-automacao`, `sispenas-bot`) mudam quando o nome for validado pela equipe
-  inteira e o domínio **atlaspen.org.br** for comprado. Um PR só, com a camada de
-  redirecionamento de `src/site/redirecionamentos.ts`.
+- ~~A URL do site, o nome do repositório e os robôs mudam quando o domínio for comprado.~~
+  Feito em 23/09/2026, por decisão do mantenedor, **sem esperar o domínio**: repositório
+  `amorim-rc/atlaspen`, base `/atlaspen/`, robôs `atlaspen-automacao` e `atlaspen-bot`.
+  Ver a frente 3. Falta só comprar **atlaspen.org.br** e trocar `SITE_URL`, o `base` e o
+  `CNAME` — que agora é uma constante, e não uma varredura.
 - ~~"Equipe AtlasPen" permanece, por enquanto, como titular na LICENSE e no CITATION.~~
   Decidido em 20/09/2026: o titular é Luccas de Amorim, com os contribuidores, na LICENSE,
   no CITATION, no README, no rodapé e na página /projeto/creditos. O SISPENAS (2008) fica

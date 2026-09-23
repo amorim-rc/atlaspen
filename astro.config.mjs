@@ -2,10 +2,14 @@
 // Configuração do site em Astro. Substitui o docusaurus.config.ts ao fim da
 // migração (design_handoff_atlaspen, commit 11).
 //
+// `base` é `/atlaspen/` desde a renomeação de 23/09/2026, quando o repositório
+// passou a se chamar `atlaspen`. O endereço antigo (`/sispenas/`) NÃO
+// redireciona — o GitHub não redireciona URL de project site ao renomear — e
+// por isso a troca só cabia antes da divulgação. Quando o domínio próprio
+// existir, `base` vira `/`, entra um `CNAME` em `static/`, e `SITE_URL` em
+// `src/site/config.ts` acompanha; nada mais escreve o endereço à mão.
+//
 // O que NÃO muda aqui, de propósito:
-//   - `site` e `base`: o endereço continua amorim-rc.github.io/sispenas/ até o
-//     grupo decidir o domínio (frente 3 do backlog). Quando decidir, a troca é
-//     um PR próprio, e a camada de redirecionamento absorve o movimento.
 //   - `publicDir` aponta para `static/`, e não para `public/`: é lá que o
 //     pipeline de dados grava o derivado (scripts/transform_data.py,
 //     scripts/derivar_atributos.ts) e é esse caminho que a CI, o regen-data e o
@@ -22,7 +26,7 @@ import {remarkAdmonicoes} from './src/site/markdown/admonicoes.ts';
 import {remarkComentarios} from './src/site/markdown/comentarios.ts';
 import {remarkLinks} from './src/site/markdown/links.ts';
 
-const BASE = '/sispenas/';
+const BASE = '/atlaspen/';
 
 /**
  * As FONTES de data/*.json importadas pelo código viram módulo virtual.

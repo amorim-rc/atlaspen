@@ -83,7 +83,7 @@ lado dos textos do grupo (`textos/`). O pipeline de conferência tem documentaç
 O AtlasPen foi concebido e é desenvolvido por **Luccas de Amorim**. O projeto nasceu em junho
 de 2026, com o nome de trabalho *algo-pen*, como uma base com cobertura completa dos tipos
 penais brasileiros, em código e dados abertos. Os créditos completos estão em
-[Autoria e créditos](https://amorim-rc.github.io/sispenas/projeto/creditos).
+[Autoria e créditos](https://amorim-rc.github.io/atlaspen/projeto/creditos).
 
 Na busca por um número de referência de tipos penais existentes, o projeto encontrou o
 SISPENAS, concebido em 2008 pelas professoras **Maíra Rocha Machado** e **Marta Rodriguez de

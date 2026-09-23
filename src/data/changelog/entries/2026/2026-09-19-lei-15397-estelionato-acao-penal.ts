@@ -1,4 +1,5 @@
 import type {ChangelogEntry} from '../../types';
+import {urlPublica} from '../../../../site/config.ts';
 
 const entrada: ChangelogEntry = {
   id: '2026-09-19-lei-15397-estelionato-acao-penal',
@@ -16,8 +17,8 @@ const entrada: ChangelogEntry = {
   version: 'v0.0.2',
   links: [
     {label: 'Lei nº 15.397, de 2026, no Planalto', href: 'https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15397.htm'},
-    {label: 'Estelionato (CP, art. 171, caput)', href: 'https://amorim-rc.github.io/sispenas/tipos/127'},
-    {label: 'Fraude no pagamento por meio de cheque (CP, art. 171, §2º, VI)', href: 'https://amorim-rc.github.io/sispenas/tipos/594'},
+    {label: 'Estelionato (CP, art. 171, caput)', href: urlPublica('/tipos/127')},
+    {label: 'Fraude no pagamento por meio de cheque (CP, art. 171, §2º, VI)', href: urlPublica('/tipos/594')},
   ],
 };
 

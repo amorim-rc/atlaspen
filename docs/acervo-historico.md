@@ -8,7 +8,7 @@ sidebar_position: 3
 
 # Acervo histórico
 
-Reunir **o que já foi crime no Brasil** — os tipos penais revogados, alterados e não recepcionados — é a [frente 12 do backlog](https://github.com/amorim-rc/sispenas/blob/main/backlog.md), a ser executada **após** a completude dos tipos vigentes. A pergunta "o que deixou de ser crime, e quando?" é tão relevante para a pesquisa quanto "o que é crime hoje", e hoje nenhuma ferramenta a responde de forma estruturada.
+Reunir **o que já foi crime no Brasil** — os tipos penais revogados, alterados e não recepcionados — é a [frente 12 do backlog](https://github.com/amorim-rc/atlaspen/blob/main/backlog.md), a ser executada **após** a completude dos tipos vigentes. A pergunta "o que deixou de ser crime, e quando?" é tão relevante para a pesquisa quanto "o que é crime hoje", e hoje nenhuma ferramenta a responde de forma estruturada.
 
 A entrega será uma aba de pesquisa própria, separada da busca vigente para que nenhum tipo revogado contamine estatística de direito vigente, com uma tela por tipo mostrando o **texto original**, o que houve com ele (alteração, revogação ou não recepção), **quando** e por **qual dispositivo**.
 

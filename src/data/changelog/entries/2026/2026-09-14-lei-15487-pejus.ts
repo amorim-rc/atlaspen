@@ -1,4 +1,5 @@
 import type {ChangelogEntry} from '../../types';
+import {urlPublica} from '../../../../site/config.ts';
 
 const entrada: ChangelogEntry = {
   id: '2026-09-14-lei-15487-pejus',
@@ -15,12 +16,12 @@ const entrada: ChangelogEntry = {
   version: 'v0.0.1',
   links: [
     {label: 'Lei nº 15.487, de 2026, no Planalto', href: 'https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15487.htm'},
-    {label: 'ECA, art. 240', href: 'https://amorim-rc.github.io/sispenas/tipos/455'},
-    {label: 'ECA, art. 241', href: 'https://amorim-rc.github.io/sispenas/tipos/456'},
-    {label: 'ECA, art. 241-A', href: 'https://amorim-rc.github.io/sispenas/tipos/457'},
-    {label: 'ECA, art. 241-B', href: 'https://amorim-rc.github.io/sispenas/tipos/458'},
-    {label: 'ECA, art. 241-D', href: 'https://amorim-rc.github.io/sispenas/tipos/460'},
-    {label: 'ECA, art. 244-A', href: 'https://amorim-rc.github.io/sispenas/tipos/464'},
+    {label: 'ECA, art. 240', href: urlPublica('/tipos/455')},
+    {label: 'ECA, art. 241', href: urlPublica('/tipos/456')},
+    {label: 'ECA, art. 241-A', href: urlPublica('/tipos/457')},
+    {label: 'ECA, art. 241-B', href: urlPublica('/tipos/458')},
+    {label: 'ECA, art. 241-D', href: urlPublica('/tipos/460')},
+    {label: 'ECA, art. 244-A', href: urlPublica('/tipos/464')},
   ],
 };
 

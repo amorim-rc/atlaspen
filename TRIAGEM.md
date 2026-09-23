@@ -58,7 +58,7 @@ PR próprio.
 
 ## 3. Um pull request — é aqui que você decide
 
-Um por rodada, um aberto por vez, autor `sispenas-automacao[bot]`, rótulo `conferidor`.
+Um por rodada, um aberto por vez, autor `atlaspen-automacao[bot]`, rótulo `conferidor`.
 Quando alguma mudança vem de **lei recente**, ele escreve a nota de atualização e sobe o
 patch da versão (em `0.0.x` até o lançamento; o merge não publica release antes da v1.0.0).
 **Confira a natureza** de cada nota (*incriminadora*, *in pejus*, *in mellius*) na seção

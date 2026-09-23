@@ -1,4 +1,5 @@
 import type {ChangelogEntry} from '../../types';
+import {urlPublica} from '../../../../site/config.ts';
 
 const entrada: ChangelogEntry = {
   id: '2026-09-14-lei-15397-dispositivos-incluidos',
@@ -16,12 +17,12 @@ const entrada: ChangelogEntry = {
   version: 'v0.0.1',
   links: [
     {label: 'Lei nº 15.397, de 2026, no Planalto', href: 'https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15397.htm'},
-    {label: 'CP, art. 155, §4º, V', href: 'https://amorim-rc.github.io/sispenas/tipos/815'},
-    {label: 'CP, art. 155, §8º', href: 'https://amorim-rc.github.io/sispenas/tipos/816'},
-    {label: 'CP, art. 157, §1º-A', href: 'https://amorim-rc.github.io/sispenas/tipos/811'},
-    {label: 'CP, art. 157, §2º, IX', href: 'https://amorim-rc.github.io/sispenas/tipos/813'},
-    {label: 'CP, art. 157, §2º, X', href: 'https://amorim-rc.github.io/sispenas/tipos/814'},
-    {label: 'CP, art. 171, §2º, VII', href: 'https://amorim-rc.github.io/sispenas/tipos/820'},
+    {label: 'CP, art. 155, §4º, V', href: urlPublica('/tipos/815')},
+    {label: 'CP, art. 155, §8º', href: urlPublica('/tipos/816')},
+    {label: 'CP, art. 157, §1º-A', href: urlPublica('/tipos/811')},
+    {label: 'CP, art. 157, §2º, IX', href: urlPublica('/tipos/813')},
+    {label: 'CP, art. 157, §2º, X', href: urlPublica('/tipos/814')},
+    {label: 'CP, art. 171, §2º, VII', href: urlPublica('/tipos/820')},
   ],
 };
 

@@ -1,4 +1,5 @@
 import type {ChangelogEntry} from '../../types';
+import {urlPublica} from '../../../../site/config.ts';
 
 const entrada: ChangelogEntry = {
   id: '2026-09-14-lei-15355-incriminadora',
@@ -15,7 +16,7 @@ const entrada: ChangelogEntry = {
   version: 'v0.0.1',
   links: [
     {label: 'Lei nº 15.355, de 2026, no Planalto', href: 'https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15355.htm'},
-    {label: 'Lei 9.605/98, art. 32, §1º-C', href: 'https://amorim-rc.github.io/sispenas/tipos/1328'},
+    {label: 'Lei 9.605/98, art. 32, §1º-C', href: urlPublica('/tipos/1328')},
   ],
 };
 

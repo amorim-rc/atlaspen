@@ -386,8 +386,8 @@ jobs:
           python3 scripts/robos/vigia/conferir.py --carimbar > /dev/null || true
           python3 scripts/transform_data.py --estrito --max-contradicoes=0
           if [ -n "$(git status --porcelain data/conferencia.json static/data/crimes.json)" ]; then
-            git config user.name "${SLUG:-sispenas-automacao}[bot]"
-            git config user.email "${SLUG:-sispenas-automacao}[bot]@users.noreply.github.com"
+            git config user.name "${SLUG:-atlaspen-automacao}[bot]"
+            git config user.email "${SLUG:-atlaspen-automacao}[bot]@users.noreply.github.com"
             git add data/conferencia.json static/data/crimes.json
             git commit -m "chore(catalogo): carimbo da conferência semanal [skip ci]"
             git push
@@ -445,8 +445,8 @@ jobs:
           CORRECOES: ${{ steps.propor.outputs.correcoes }}
           SLUG: ${{ steps.app.outputs.app-slug }}
         run: |
-          git config user.name "${SLUG:-sispenas-automacao}[bot]"
-          git config user.email "${SLUG:-sispenas-automacao}[bot]@users.noreply.github.com"
+          git config user.name "${SLUG:-atlaspen-automacao}[bot]"
+          git config user.email "${SLUG:-atlaspen-automacao}[bot]@users.noreply.github.com"
           git checkout -b "$RAMO"
           git add -A
           git commit -F - <<EOF

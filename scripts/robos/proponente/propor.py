@@ -67,7 +67,7 @@ PACKAGE = RAIZ / "package.json"
 LOCK = RAIZ / "package-lock.json"
 CITATION = RAIZ / "CITATION.cff"
 ENTRADAS = RAIZ / "src" / "data" / "changelog" / "entries"
-SITE = "https://amorim-rc.github.io/sispenas"
+SITE = "https://amorim-rc.github.io/atlaspen"
 
 
 # ── Versão ──────────────────────────────────────────────────────────────────

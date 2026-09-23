@@ -2,7 +2,7 @@
 //
 // Os .md continuam escritos para o GitHub e para o site antigo: `./metodologia.md`,
 // `/docs/completude`, `/pesquisa/tipos?tipo=1`, e o escape do Docusaurus para
-// arquivo estático, `pathname:///sispenas/data/crimes.json`. Em vez de reescrever
+// arquivo estático, `pathname:///atlaspen/data/crimes.json`. Em vez de reescrever
 // os arquivos — o que quebraria os links no GitHub —, o build traduz cada link
 // pela mesma tabela dos redirecionamentos e acrescenta o base do site.
 
@@ -12,8 +12,13 @@ import {visit} from 'unist-util-visit';
 // resolve import relativo sem extensão.
 import {rotaAtual, rotaDoDocumento} from '../redirecionamentos.ts';
 
-/** O base que o site antigo embutia em alguns links absolutos. */
-const BASE_ANTIGO = '/sispenas/';
+/**
+ * Os bases que algum documento já embutiu em link absoluto. São dois desde a
+ * renomeação de 23/09/2026: os `.md` foram reescritos para `/atlaspen/`, mas
+ * `/sispenas/` continua aqui porque documento antigo — e link que alguém
+ * copiou de uma versão anterior — tem de resolver do mesmo jeito.
+ */
+const BASES_EMBUTIDAS = ['/atlaspen/', '/sispenas/'];
 
 export function reescreverLink(url: string, base: string): string {
   let alvo = url.startsWith('pathname://') ? url.slice('pathname://'.length) : url;
@@ -26,7 +31,8 @@ export function reescreverLink(url: string, base: string): string {
   if (relativo) return base + rotaDoDocumento(relativo[1]).replace(/^\//, '') + (relativo[2] ?? '');
 
   if (!alvo.startsWith('/')) return alvo;
-  if (alvo.startsWith(BASE_ANTIGO)) alvo = alvo.slice(BASE_ANTIGO.length - 1);
+  const embutido = BASES_EMBUTIDAS.find((b) => alvo.startsWith(b));
+  if (embutido) alvo = alvo.slice(embutido.length - 1);
   return base + rotaAtual(alvo).replace(/^\//, '');
 }
 

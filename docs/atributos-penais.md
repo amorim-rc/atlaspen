@@ -12,7 +12,7 @@ O AtlasPen modela os **22 atributos** abaixo. Todos os valores de pena são trat
 ## Como o catálogo é modelado
 
 Cada atributo é um **registro de dados**, em
-[`data/atributos.json`](https://github.com/amorim-rc/sispenas/blob/main/data/atributos.json),
+[`data/atributos.json`](https://github.com/amorim-rc/atlaspen/blob/main/data/atributos.json),
 e não uma regra embutida no código. O registro reúne:
 
 - **metadados** — número (estável, como o id dos tipos penais), nome, fundamento legal,
@@ -29,7 +29,7 @@ patamar recalcula o catálogo inteiro de tipos penais sem tocar no código.
 A vida de cada dispositivo — criação, alterações e revogação, com a lei e o link para o
 artigo dela no Planalto — fica em `data/historico-legislativo.json`, extraída do texto
 compilado. Dela saem, no arquivo público
-[`/data/atributos.json`](pathname:///sispenas/data/atributos.json), a **última alteração
+[`/data/atributos.json`](pathname:///atlaspen/data/atributos.json), a **última alteração
 legislativa** de cada atributo e de cada parâmetro, e o **alcance** de cada atributo sobre
 o catálogo de tipos penais (ver [Dados abertos](./dados-abertos.md)).
 

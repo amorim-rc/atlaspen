@@ -17,7 +17,7 @@ A concepção, a arquitetura, o código, o modelo de dados, o catálogo de tipos
 de atributos, os robôs de conferência e a documentação são obra do autor, com o apoio de
 agentes de inteligência artificial usados como ferramenta de desenvolvimento. O histórico
 completo de cada alteração, com autor e data, está no
-[repositório](https://github.com/amorim-rc/sispenas).
+[repositório](https://github.com/amorim-rc/atlaspen).
 
 ## O antecedente: o SISPENAS (2008)
 

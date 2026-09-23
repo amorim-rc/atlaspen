@@ -1,4 +1,5 @@
 import type {ChangelogEntry} from '../../types';
+import {urlPublica} from '../../../../site/config.ts';
 
 const entrada: ChangelogEntry = {
   id: '2026-09-14-lei-15384-vicaricidio',
@@ -14,10 +15,10 @@ const entrada: ChangelogEntry = {
   version: 'v0.0.1',
   links: [
     {label: 'Lei nº 15.384, de 2026, no Planalto', href: 'https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15384.htm'},
-    {label: 'Vicaricídio (CP, art. 121-B)', href: 'https://amorim-rc.github.io/sispenas/tipos/1308'},
-    {label: 'CP, art. 121-B, parágrafo único, I', href: 'https://amorim-rc.github.io/sispenas/tipos/1309'},
-    {label: 'CP, art. 121-B, parágrafo único, II', href: 'https://amorim-rc.github.io/sispenas/tipos/1310'},
-    {label: 'CP, art. 121-B, parágrafo único, III', href: 'https://amorim-rc.github.io/sispenas/tipos/1311'},
+    {label: 'Vicaricídio (CP, art. 121-B)', href: urlPublica('/tipos/1308')},
+    {label: 'CP, art. 121-B, parágrafo único, I', href: urlPublica('/tipos/1309')},
+    {label: 'CP, art. 121-B, parágrafo único, II', href: urlPublica('/tipos/1310')},
+    {label: 'CP, art. 121-B, parágrafo único, III', href: urlPublica('/tipos/1311')},
   ],
 };
 

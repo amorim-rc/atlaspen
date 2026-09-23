@@ -19,7 +19,7 @@ import {RAIZ_LEGADA, REDIRECIONAMENTOS, destinoDe} from '../src/site/redireciona
 
 const RAIZ = process.cwd();
 const DIST = join(RAIZ, 'dist');
-const BASE = '/sispenas/';
+const BASE = '/atlaspen/';
 
 let falhas = 0;
 let conferidas = 0;

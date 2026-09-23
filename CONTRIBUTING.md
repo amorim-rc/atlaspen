@@ -34,7 +34,7 @@ determinístico, sem IA, descrito em [`scripts/robos/README.md`](scripts/robos/R
    compilado dos diplomas de `data/fontes.json`, compara pena a pena com o catálogo e olha
    os atos normativos da Seção 1 do Diário Oficial da semana.
 2. **O que diverge vira issue.** Cada achado é uma pergunta, não uma conclusão.
-3. **O que é leitura direta vira PR**, aberto pelo próprio robô (`sispenas-automacao[bot]`):
+3. **O que é leitura direta vira PR**, aberto pelo próprio robô (`atlaspen-automacao[bot]`):
    moldura ou espécie de pena de um registro que já existe divergindo do que a lei comina.
    Um diploma por rodada, um PR aberto por vez, evidência ao lado de cada mudança.
 4. **O que exige juízo continua humano:** criar registro, remover registro, decidir se um

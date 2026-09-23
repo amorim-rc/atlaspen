@@ -12,7 +12,7 @@ from pathlib import Path
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
 
-BASE = "https://amorim-rc.github.io/sispenas"
+BASE = "https://amorim-rc.github.io/atlaspen"
 RAIZ = Path(__file__).resolve().parent.parent / "src" / "data" / "changelog" / "entries"
 
 # (id, date, title, summary, [body...], tipo, [areas...], version, [links...])

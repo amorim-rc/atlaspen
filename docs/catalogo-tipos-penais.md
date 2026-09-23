@@ -149,7 +149,7 @@ e a CI o valida antes de qualquer publicação.
 
 Os números vivos ficam em duas páginas geradas, para não envelhecerem aqui:
 [Completude](/docs/completude) (quantos tipos, por diploma) e
-[`/data/qualidade.json`](pathname:///sispenas/data/qualidade.json) (o relatório completo,
+[`/data/qualidade.json`](pathname:///atlaspen/data/qualidade.json) (o relatório completo,
 com os `id` de cada pendência). O que esta página fixa são os **invariantes**:
 
 | Invariante | Estado |

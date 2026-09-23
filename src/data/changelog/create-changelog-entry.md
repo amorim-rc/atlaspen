@@ -23,6 +23,7 @@ arquivos.
 
    ```ts
    import type {ChangelogEntry} from '../../types';
+   import {urlPublica} from '../../../../site/config.ts';
 
    const entrada: ChangelogEntry = {
      id: '2027-03-02-progressao-nova-fracao',
@@ -37,7 +38,7 @@ arquivos.
      areas: ['Atributos'],
      version: 'v1.1.0',
      links: [
-       {label: 'Ver o atributo de progressão de regime', href: 'https://amorim-rc.github.io/sispenas/atributos/progressao'},
+       {label: 'Ver o atributo de progressão de regime', href: urlPublica('/atributos/progressao')},
      ],
    };
 

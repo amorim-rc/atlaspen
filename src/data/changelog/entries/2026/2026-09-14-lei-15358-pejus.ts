@@ -1,4 +1,5 @@
 import type {ChangelogEntry} from '../../types';
+import {urlPublica} from '../../../../site/config.ts';
 
 const entrada: ChangelogEntry = {
   id: '2026-09-14-lei-15358-pejus',
@@ -15,8 +16,8 @@ const entrada: ChangelogEntry = {
   version: 'v0.0.1',
   links: [
     {label: 'Lei nº 15.358, de 2026, no Planalto', href: 'https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15358.htm#art35'},
-    {label: 'Progressão de regime', href: 'https://amorim-rc.github.io/sispenas/atributos/progressao'},
-    {label: 'Livramento condicional', href: 'https://amorim-rc.github.io/sispenas/atributos/livramento'},
+    {label: 'Progressão de regime', href: urlPublica('/atributos/progressao')},
+    {label: 'Livramento condicional', href: urlPublica('/atributos/livramento')},
   ],
 };
 

@@ -1,4 +1,5 @@
 import type {ChangelogEntry} from '../../types';
+import {urlPublica} from '../../../../site/config.ts';
 
 const entrada: ChangelogEntry = {
   id: '2026-09-14-lei-15402-pejus',
@@ -15,7 +16,7 @@ const entrada: ChangelogEntry = {
   version: 'v0.0.1',
   links: [
     {label: 'Lei nº 15.402, de 2026, no Planalto', href: 'https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15402.htm#art1'},
-    {label: 'Progressão de regime', href: 'https://amorim-rc.github.io/sispenas/atributos/progressao'},
+    {label: 'Progressão de regime', href: urlPublica('/atributos/progressao')},
   ],
 };
 

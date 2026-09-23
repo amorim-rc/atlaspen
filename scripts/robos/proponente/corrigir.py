@@ -147,7 +147,7 @@ def resumo(fonte_id: str, propostas: list[dict], humanos: list[dict]) -> str:
             f"- **Antes:** {a['pena_min']}–{a['pena_max']} meses, {a['tipo_pena']}",
             f"- **Depois:** {d['pena_min']}–{d['pena_max']} meses, {d['tipo_pena']}",
             f"- **obs:** `{d['obs'][:150]}`",
-            f"- Conferir: <https://amorim-rc.github.io/sispenas/pesquisa/tipos?tipo={a['id']}>",
+            f"- Conferir: <https://amorim-rc.github.io/atlaspen/pesquisa/tipos?tipo={a['id']}>",
             "",
         ]
     if humanos:
