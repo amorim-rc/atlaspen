@@ -406,6 +406,11 @@ o site novo ir ao ar. Sem número de frente, para não renumerar o resto.
 
 ### Simulação legislativa: o que a primeira versão não faz
 
+**Decisão do mantenedor em 22/09/2026: a simulação entra na v1.0.0.** Não vira módulo — o
+que falta abaixo é trabalho da fase pré-v1, e se trabalha nela o quanto for necessário para
+funcionar. Isso muda o peso das quatro pendências seguintes: elas deixam de ser limitação
+declarada e passam a ser entrega.
+
 - **Campos livres do tipo.** Espécie de pena (reclusão ou detenção) e ação penal ficaram de
   fora porque o motor não os lê. Entram quando algum atributo passar a lê-los; o regime
   inicial do art. 33 do CP depende da espécie e é o primeiro candidato.

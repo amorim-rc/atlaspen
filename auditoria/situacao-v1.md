@@ -66,11 +66,10 @@ Decisão da equipe em 10/09/2026: lançar enxuto.
 
 ## O revamp, antes do merge
 
-- **A2, segunda parte** — a simulação legislativa ainda não aceita atributo novo com mais de
-  um limiar, não edita nome nem dispositivo do tipo, não classifica o sentido da mudança que
-  só altera valor, e não tem teste de interface. **Decisão sua: entra na v1 ou vira módulo?**
-  A estratégia de 10/09 ("o que for difícil vira módulo") sugere módulo, com as limitações
-  declaradas na tela, como já estão.
+- **A2, segunda parte — entra na v1** (decisão de 22/09/2026). A simulação legislativa ainda
+  não aceita atributo novo com mais de um limiar, não edita nome nem dispositivo do tipo, não
+  classifica o sentido da mudança que só altera valor, e não tem teste de interface. As quatro
+  deixam de ser limitação declarada e viram entrega da pré-v1.
 - **Revisão dos textos do site** — leitura sua.
 - **História do projeto** (`textos/historia.md`) — em edição por você, fora dos commits.
 - **O merge** — 57 commits, com a bateria verde.

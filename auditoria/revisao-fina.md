@@ -24,6 +24,70 @@ O `id` é o id público (`/tipos/<id>`). "Publicado" é o que o site mostra hoje
 | C | A regra de ação penal com ressalva vira condição no registro? | 149 registros |
 | D | Pontos abertos fora desses dois campos | 10 assuntos |
 
+## As decisões, numeradas
+
+Responda na ordem, uma linha por item: **"1 ok"** aceita a recomendação; **"1 não: …"** a
+recusa e diz o que fica. Onde a recomendação é "manter", manter significa que o valor
+publicado continua e **ganha uma regra escrita** no derivador, para que o próximo tipo da
+mesma família já nasça decidido — hoje o valor está lá sem nada que o sustente.
+
+### Violência e grave ameaça (blocos A e B)
+
+| # | Decisão | Alcance | Recomendação |
+|---|---|---|---:|
+| 1 | Privação de liberdade é violência à pessoa? (sequestro e cárcere privado, CP 148; extorsão mediante sequestro, CP 159) | 29 | manter "Sim" |
+| 2 | Roubo e extorsão militares em zona de operações (CPM 405), que remetem aos arts. 242 e 243 | 20 | manter "Sim" |
+| 3 | Tipos cujo núcleo é matar ou ofender o corpo: lesão militar (CPM 403), homicídio militar (CPM 400), violência contra superior (CPM 157), resistência (CPM 177), violência carnal (CPM 408), vicaricídio (CP 121-B), tortura (Lei 9.455), remoção de órgãos (Lei 9.434, art. 14) | 27 | manter "Sim" |
+| 4 | Estupro de vulnerável (CP 217-A): a violência é presumida, e o tipo não a descreve | 4 | manter "Sim" |
+| 5 | Crimes de perigo comum (incêndio com intuito de lucro, CP 250, e semelhantes): expõem a coletividade, e não descrevem violência contra pessoa | 3 | passar a "Não" |
+| 6 | Genocídio (Lei 2.889/56) e terrorismo (Lei 13.260/16): a violência está nas condutas-meio, que o tipo lista | 10 | manter "Sim" |
+| 7 | Os 63 avulsos do bloco A, um a um (a lista traz cada um) | 63 | decidir na lista |
+| 8 | Meio alternativo: "por meio de violência, grave ameaça, fraude ou oferecimento de vantagem" — o tipo se consuma sem violência | 36 | criar `violencia_condicao` e publicar "Não" com a condição |
+| 9 | Ameaça sem o qualificativo "grave" (cobrança vexatória do CDC, assédio à candidata) | 20 | passar a "Não", com a condição em texto |
+| 10 | Tipos de perigo à pessoa (maus-tratos, abandono de incapaz, perigo de contágio) | 18 | manter "Sim" nos de maus-tratos e abandono; decidir o contágio |
+| 11 | "Violência" em sentido próprio: psicológica, política, institucional e "física ou psicológica" (bullying) | 9 | manter "Não" e declarar a condição |
+
+### Ação penal (bloco C)
+
+| # | Decisão | Alcance | Recomendação |
+|---|---|---|---:|
+| 12 | Art. 182 do CP: representação quando o crime patrimonial é contra cônjuge, irmão ou tio/sobrinho que coabita | 78 | manter "Pública Incondicionada" e escrever a condição em `acao_condicao` |
+| 13 | Art. 145 do CP: queixa nos crimes contra a honra, salvo injúria real com lesão | 23 | manter "Ação Penal Privada" e declarar a ressalva |
+| 14 | Art. 199 da Lei 9.279/96 (propriedade industrial): queixa, salvo o art. 191 | 14 | manter "Ação Penal Privada" e declarar a ressalva |
+| 15 | Art. 145, parágrafo único: requisição do Ministro da Justiça (crime contra o Presidente) e representação (contra funcionário público) | 7 | criar os dois valores nos registros alcançados |
+| 16 | Art. 167 do CP: queixa no dano simples e no inciso IV; os demais incisos são de ação pública | 7 | manter como está e declarar |
+| 17 | Arts. 151, §4º, 154-B, 161, §3º, 345, parágrafo único, e Lei 9.609, art. 12, §3º | 20 | manter e declarar a condição |
+| 18 | O campo de fundamento da ação penal, que o derivador já entrega para 1.363 registros | 1.512 | entra agora, com o dispositivo que decidiu cada um |
+
+### Tentativa (bloco E)
+
+| # | Decisão | Alcance | Recomendação |
+|---|---|---|---:|
+| 19 | Crimes de atentado ("evadir-se ou tentar evadir-se", "votar ou tentar votar") | 15 | passar a "Não" |
+| 20 | Crimes preterdolosos | 9 | passar a "Não" |
+
+### Leituras já aplicadas, que pedem a sua assinatura
+
+| # | Decisão | Alcance | Recomendação |
+|---|---|---|---:|
+| 21 | Progressão do reincidente genérico em crime comum: 20% sem violência e 30% com violência (LEP, art. 112, II e III, redação da Lei 15.402/2026) | todos | confirmar |
+| 22 | Hediondez do roubo militar com arma condicionada à arma de fogo, e extorsão militar com arma não hedionda | 2 | confirmar |
+| 23 | Ação penal do art. 184, §3º (representação) e dos arts. 239, 248 e 249 (incondicionada) | 4 | confirmar |
+
+### As demais perguntas do bloco D
+
+| # | Decisão | Alcance | Recomendação |
+|---|---|---|---:|
+| 24 | Mínimo legal na Lei 6.538/78, que a lei não fixa | 7 | declarar o limite e manter zero |
+| 25 | ANPP no crime militar: o art. 90-A da Lei 9.099 alcança o art. 28-A do CPP? | 394 | decidir |
+| 26 | Atributos não calculados em tipo sem pena privativa (desistência, arrependimento eficaz, perdão judicial) | 35 | decidir se se aplicam |
+| 27 | Progressão no Título XII do CP para o reincidente: 1/6 pelo caput ou 20% pelo inciso III | — | decidir |
+| 28 | Hediondez condicional: padronizar as 24 condições e citar o dispositivo de cada uma | 24 | eu escrevo, você confere |
+| 29 | Varredura do Livro II do CPM contra o rol de hediondos | 374 | fazer depois da v1, salvo se você quiser antes |
+| 30 | Nome do tipo: *nomen iuris*, descrição da conduta, ou os dois? | 12 | decidir a régua |
+| 31 | Elemento subjetivo: a régua entre preterdolo e qualificação pelo resultado | 1.512 | eu proponho, você decide |
+| 32 | Datas de publicação das oito leis de 2026 que geraram notas | 8 leis | eu busco no DOU |
+
 ## Bloco A — Violência afirmada que a lei não descreve
 
 **O ponto exato.** O registro afirma violência ou grave ameaça, e o texto do dispositivo — o próprio e o do caput — não traz fórmula de violência à pessoa. O valor veio de herança do caput, sem critério escrito.
