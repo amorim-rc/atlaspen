@@ -37,3 +37,7 @@ __pycache__/
 /estudos/materiais-sispenas-originais.md
 /estudos/contribuicoes-pesquisa.md
 estudos/autoria-proposta.md
+
+# Codigo de terceiro trazido so para estudo. A leitura dele esta versionada
+# em estudos/licoes-do-jurisbot.md; o pacote em si nao entra no repositorio.
+/estudos/bot para estudo/
