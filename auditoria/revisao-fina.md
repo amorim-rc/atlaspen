@@ -618,3 +618,44 @@ Uma regra de ação penal alcança estes registros, mas vale só em certas hipó
 | Progressão no Título XII do CP | arts. 359-A a 359-T | Os incisos I e II do art. 112 da LEP ressalvam o Título XII. Para o reincidente, 1/6 pelo caput ou 20% pelo inciso III? O motor mostra a dúvida em vez de escondê-la. |
 | Progressão do reincidente genérico | crimes comuns | Aplicado em 19/09/2026 (20% sem violência, 30% com violência — LEP, art. 112, II e III, redação da Lei 15.402/2026). **Falta a sua confirmação da leitura.** |
 
+## Bloco E — Tentativa: duas famílias que a lei não decide sozinha
+
+Acrescentado em 22/09/2026. A regra que a **lei** decide já entrou: as 13 contravenções que constavam como admitindo tentativa passaram a "Não" (LCP, art. 4º). Estas duas famílias são doutrina, e ficam com você.
+
+### Crimes de atentado — 15
+
+O núcleo do tipo já contém o "tentar" ("evadir-se ou tentar evadir-se", "votar ou tentar votar", "tentar desmembrar parte do território"). Para a doutrina majoritária, nesses crimes a tentativa é a própria consumação, e por isso não se pune tentativa de tentativa. **O ponto exato:** o campo passa a "Não" nestes registros?
+
+| id | diploma | dispositivo | tipo penal |
+|---|---|---|---|
+| 290 | CP | Art. 352 | Evasão mediante violência contra a pessoa |
+| 309 | CP | Art. 359-L | Abolição violenta do Estado Democrático de Direito |
+| 310 | CP | Art. 359-M | Tentativa de deposição do governo legitimamente constituído |
+| 496 | CP | Art. 337-K | Afastamento de licitante |
+| 529 | CE (Lei 4.737/65) | Art. 309 | Votar ou tentar votar mais de uma vez, ou em lugar de outrem |
+| 678 | CPM (DL 1.001/69) | Art. 142, caput | Tentativa contra a soberania do Brasil |
+| 716 | CPM (DL 1.001/69) | Art. 356, caput | Favor ao inimigo |
+| 720 | CPM (DL 1.001/69) | Art. 383, caput | Dano especial |
+| 783 | CE (Lei 4.737/65) | Art. 312 | Violar ou tentar violar o sigilo do voto |
+| 1016 | CPM (DL 1.001/69) | Art. 140, caput | Entendimento para empenhar o Brasil à neutralidade ou à guerra |
+| 1060 | CPM (DL 1.001/69) | Art. 180, caput | Evasão de prêso ou internado |
+| 1116 | CPM (DL 1.001/69) | Art. 244, caput | Extorsão mediante seqüestro (tempo de paz) |
+| 1117 | CPM (DL 1.001/69) | Art. 245, caput | Chantagem |
+| 1135 | CPM (DL 1.001/69) | Art. 269, caput | Explosão |
+| 1239 | CPM (DL 1.001/69) | Art. 363, caput | Cobardia |
+
+### Crimes preterdolosos — 9
+
+No preterdolo o resultado agravador é culposo, e a doutrina majoritária nega a tentativa. Os 12 preterdolosos restantes do catálogo já constam como não admitindo. **O ponto exato:** a régua vale para todos, ou há exceção a preservar?
+
+| id | diploma | dispositivo | tipo penal |
+|---|---|---|---|
+| 104 | CP | Art. 157, §3º, I | Roubo qualificado pela lesão corporal grave |
+| 105 | CP | Art. 157, §3º, II | Latrocínio — roubo qualificado pelo resultado morte |
+| 108 | CP | Art. 158, §2º | Extorsão qualificada pela lesão grave |
+| 112 | CP | Art. 159, §2º | Extorsão mediante sequestro — resultado lesão corporal grave |
+| 113 | CP | Art. 159, §3º | Extorsão mediante sequestro — resultado morte |
+| 134 | CP | Art. 213, §1º | Estupro com resultado lesão corporal grave ou contra menor de 18 / mai |
+| 135 | CP | Art. 213, §2º | Estupro com resultado morte |
+| 141 | CP | Art. 217-A, §3º | Estupro de vulnerável com resultado lesão grave |
+| 142 | CP | Art. 217-A, §4º | Estupro de vulnerável com resultado morte |
