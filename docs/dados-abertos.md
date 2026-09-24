@@ -72,7 +72,7 @@ os dados saber o que pode mudar sem quebrar uma conta.
 
 | Campo | Onde é usado |
 |---|---|
-| `id` | Endereço público do tipo (`/pesquisa/tipos?tipo=N`), citado em pareceres e trabalhos. **Nunca é reatribuído**: um id aposentado não volta a ser usado por outro crime. A numeração foi reiniciada duas vezes — v1.4.0 e v2.0.0 —, e é por isso que essas versões são MAIORES: quem tenha guardado um endereço anterior precisa refazê-lo. |
+| `id` | Endereço público do tipo (`/tipos/N`), citado em pareceres e trabalhos. **Nunca é reatribuído**: um id aposentado não volta a ser usado por outro crime. A numeração foi reiniciada duas vezes — v1.4.0 e v2.0.0 —, e é por isso que essas versões são MAIORES: quem tenha guardado um endereço anterior precisa refazê-lo. |
 | `lei`, `artigo` | Identificam o dispositivo. Juntos formam a `chave_dispositivo`, que detecta registro repetido, e ligam a linha ao texto oficial conferido toda semana pelo conferidor. |
 | `crime` | Nome exibido na busca. Também é dele — **e não do `obs`** — que se deduz o `resultado_morte`. |
 | `pena_min`, `pena_max` | **A moldura.** Alimentam toda a dosimetria e todos os atributos com limiar de pena (transação penal, ANPP, sursis, regime inicial, prescrição). Desde a v1.2.17 são a autoridade; antes disso a moldura era extraída do texto do `obs`, e uma frase secundária podia mudar a pena publicada. |

@@ -23,7 +23,7 @@ segura, o achado vira pergunta na issue em vez de virar dado.
 | `revogacao.py` | Revogação total de diploma (banner no topo da página). |
 | `corrigir.py` | Correção mecânica de linha existente: moldura e espécie de pena. |
 | `criar.py` | Linha nova. **Não roda no automático** — ver "o que o robô não faz". |
-| `propor.py` | Escolhe o diploma da rodada, aplica e monta o corpo do PR. Quando a mudança vem de lei recente (redação dada, ou dispositivo incluído, por lei deste ano ou do anterior, lido da anotação do compilado), escreve a nota com a natureza em termos penais e sobe o patch da versão; correção de dado não vira nota. |
+| `propor.py` | Escolhe o diploma da rodada, aplica e monta o corpo do PR. Quando a mudança vem de lei recente (redação dada, ou dispositivo incluído, por lei deste ano ou do anterior, lido da anotação do compilado), escreve a nota — declarando o `alcance` (`tipo`, `atributo` ou os dois) e dizendo em português a direção da mudança — e sobe o patch da versão; correção de dado não vira nota. |
 | `auditar.py` | Audita os campos que a conferência de penas não alcança: hediondez (contra `data/hediondos.json`), ação penal, causas de aumento ausentes e nomes — inclusive o nome que descreve MELHOR outro artigo do mesmo diploma, ponto cego da conferência de molduras. |
 | `dou_watcher.py` | Filtro semanal da Seção 1 do DOU, para achar lei penal **nova e autônoma**. Só lei ordinária e lei complementar, pela reserva legal — MP, lei delegada, decreto-lei e emenda não criam tipo penal. Baixa o texto INTEGRAL de cada uma — não há mais pré-filtro por vocabulário — e tria em três níveis pelo preceito secundário, que inclui a pena por remissão ("nas mesmas penas", "metade da pena"). O descartado sai nomeado, não some, e o integral fica no JSON da rodada para permitir retriagem quando o critério mudar. |
 | `leis_do_ano.py` | A defesa contra o falso NEGATIVO. Uma vez por mês, confronta a lista de leis sancionadas do ano (no Planalto, que é a FONTE) com o que o watcher examinou. O que sobra é a lista de leis que ninguém olhou. Não classifica: só aponta. Se a lista não puder ser lida, não afirma nada — reportar zero sem ter lido seria o silêncio que ele existe para quebrar. |
@@ -58,7 +58,7 @@ O workflow também roda sob demanda: aba **Actions** → "Conferidor semanal" �
 **Faz**, sozinho, em PR: corrigir moldura ou espécie de pena de linha que já
 existe, quando o compilado diz outra coisa. Um diploma por rodada, um PR aberto
 por vez, evidência por mudança. Se alguma mudança vem de lei recente, o PR escreve a nota
-(uma por lei e por natureza: *incriminadora*, *in pejus*, *in mellius*) e fecha uma versão,
+(uma por lei e por direção da mudança, que é como ele as agrupa) e fecha uma versão,
 em `0.0.x` até o lançamento; se tudo é correção de dado, não escreve nota nem sobe versão,
 e o corpo do PR diz por quê.
 

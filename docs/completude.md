@@ -92,5 +92,5 @@ conferência do catálogo) e de
 | Discriminação de pessoas com HIV/aids | 1 | concluído ❓ |
 | Estatuto da Advocacia (crime do art. 7º-B) | 1 | concluído ❓ |
 
-A lista completa dos tipos já reunidos, com o texto de cada um, está na [busca por tipo penal](/pesquisa/tipos).
+A lista completa dos tipos já reunidos, com o texto de cada um, está na [busca por tipo penal](/tipos).
 

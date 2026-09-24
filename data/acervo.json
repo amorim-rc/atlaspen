@@ -13,7 +13,7 @@
       "normas": "a norma ou decisão que tirou o dispositivo de vigência (ou o vetou), e o ano DELA — que se lê da própria designação da norma. Não é a data de vigência da revogação",
       "caso": "true: identificado durante a conferência (seção Casos de docs/acervo-historico.md)",
       "retirado": "quando constava do catálogo vigente e saiu dele por revogação: a versão e a nota",
-      "data_revogacao": "AAAA-MM-DD da perda de vigência. null = ainda não conferida contra o Planalto (frente 12 do backlog)",
+      "data_revogacao": "AAAA-MM-DD da perda de vigência. null = ainda não conferida contra o Planalto (ver 'O que falta' no README)",
       "texto_original": "o texto do dispositivo antes de sair de vigência. null = ainda não transcrito e conferido"
     }
   },

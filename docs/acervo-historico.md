@@ -64,7 +64,7 @@ Estes eram crime, deixaram de ser, e ainda constavam entre os tipos vigentes —
 | Lei 4.595/64, art. 44, §7º (operação de instituição financeira sem autorização do Banco Central) | v1.4.0 | Revogado pela Lei 13.506/2017. A MP 784/2017 já o revogara, mas perdeu a vigência sem ser convertida. |
 
 :::caution[As URLs desses registros deixaram de responder]
-`id` é endereço público (`/pesquisa/tipos?tipo=N`), e esses saíram do ar com a remoção. Enquanto o acervo não tem página própria, esta tabela é o destino de quem chegar por um link antigo — e a v2.2.0 fará a rota apontar para o registro histórico, em vez de terminar em erro.
+`id` é endereço público (`/tipos/N`), e esses saíram do ar com a remoção. Enquanto o acervo não tem página própria, esta tabela é o destino de quem chegar por um link antigo — e a v2.2.0 fará a rota apontar para o registro histórico, em vez de terminar em erro.
 :::
 
 :::note[Registro retirado por ERRO não entra no acervo]

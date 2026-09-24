@@ -8,17 +8,20 @@ A rodada automática acontece **toda segunda-feira, 05:00 de Brasília**
 semanal* ▸ **Run workflow**. Ela produz, no máximo, **três coisas**: um commit, uma issue
 e um pull request.
 
-São **quatro robôs**, e desde 10/08/2026 cada um é um job com nome próprio — o log diz
-qual falhou sem que você precise abrir o passo. Três correm em paralelo; só o auditor
-espera, porque lê as páginas que o vigia baixou.
+São **seis robôs**, e desde 10/08/2026 cada um é um job com nome próprio — o log diz
+qual falhou sem que você precise abrir o passo. Quatro conferem, e desses três correm
+em paralelo: só o auditor espera, porque lê as páginas que o vigia baixou. Os dois
+últimos entregam — a triagem abre a issue, o proponente abre o PR.
 
 | Job | O que vigia | Falha dele derruba a rodada? |
 |---|---|---|
 | **vigia** | A moldura de cada tipo contra o texto compilado do Planalto | Sim — é o único de que os outros dependem |
 | **sentinela** | O DOU da semana, atrás de lei penal nova e autônoma | Não: o in.gov.br fora do ar não pode calar o relatório do catálogo |
+| **recenseador** | Uma vez por mês, todas as leis sancionadas no ano — a defesa contra o falso negativo | Não: roda dentro do job da sentinela |
 | **auditor** | Hediondez, ação penal, causas de aumento e nome do tipo | Não |
 | **arquivista** | Saúde da prosa: documento vencido ou cuja dependência mudou | Não |
-| **triagem** | Junta os quatro e abre a issue | — |
+| **triagem** | Junta os relatórios e abre a issue | — |
+| **proponente** | Transforma em PR o que é leitura direta, e escreve a nota quando a lei é recente | Não: só roda se houver o que propor |
 
 Na **primeira semana de cada mês**, a sentinela roda também a conferência contra a
 lista de leis sancionadas do ano. É a defesa contra o falso negativo: ela não diz se
@@ -102,9 +105,9 @@ Registrado aqui para não se perder entre uma semana e outra. Ao resolver, tire 
 |---|---|---|
 | Hediondez dos crimes do **CPM** | `data/hediondos.json`, campo `fora_de_alcance` | O inciso VI do § único da Lei 8.072 declara hediondos os crimes militares "que apresentem identidade" com os do rol. Identidade é juízo de correspondência entre tipos; a tabela não resolve, e o catálogo hoje marca 7 tipos militares como hediondos |
 | **Domínio social estruturado** (Lei 15.358/2026) | `data/hediondos.json`, campo `pendentes` | O inciso VIII remete ao "marco legal do combate ao crime organizado". Falta identificar o diploma, ver se o catálogo o registra e acrescentá-lo a `data/fontes.json` |
-| **109 causas de aumento** presentes na lei e ausentes de `modificadores.json` | relatório de auditoria | Modelar exige decidir o escopo — sobre quais tipos o aumento incide —, e isso não se lê do dispositivo isolado |
-| **13 nomes suspeitos** | relatório de auditoria | A heurística compara palavras; a decisão de renomear é de conteúdo. Pelo menos seis parecem erro real (o art. 338 do CP está com o nome da sonegação previdenciária, que é o art. 337-A) |
-| Auditoria de **`tentativa`, `violencia` e `grave_ameaca`** | ainda não existe | Não há fonte textual que os declare: são qualificações doutrinárias do tipo. Precisaria de tabela curada, como a da hediondez |
+| **109 causas de aumento** presentes na lei e ausentes de `modificadores.json` | `auditar.py`, em `crawler/relatorios/` | Modelar exige decidir o escopo — sobre quais tipos o aumento incide —, e isso não se lê do dispositivo isolado |
+| **13 nomes suspeitos** | `auditar.py`, em `crawler/relatorios/` | A heurística compara palavras; a decisão de renomear é de conteúdo. Pelo menos seis parecem erro real (o art. 338 do CP está com o nome da sonegação previdenciária, que é o art. 337-A) |
+| Auditoria de **`tentativa`** | ainda não existe | Não há fonte textual que a declare: é qualificação doutrinária do tipo, derivada do `elemento`. Precisaria de tabela curada, como a da hediondez. `violencia`, `grave_ameaca` e `acao` deixaram de estar nesta linha em 23/09/2026, quando ganharam derivadores próprios (`conferir_violencia.py` e `conferir_acao_penal.py`), que leem o texto do dispositivo e separam o que confere, o que diverge e o que pede juízo |
 
 ## Quando algo falha
 

@@ -37,7 +37,8 @@ CONTRIBUTING.md traz as convenções C1 a C8 do catálogo.
       pelo `transform_data.py`, nunca à mão.
 - [ ] Nenhum `id` foi reatribuído, renumerado ou reaproveitado.
 - [ ] Se criei entrada de changelog, ela registra alteração de LEI (não correção de dado),
-      com a natureza do contrato, e subi o patch da versão (ver `AGENTS.md`).
+      declara o `alcance` (`tipo`, `atributo` ou os dois) e subi o patch da versão
+      (ver `AGENTS.md`).
 - [ ] Se mudei algo de que um documento fala, reli o documento. O Arquivista acusa o que
       venceu: `python scripts/robos/arquivista/verificar_documentacao.py`.
 - [ ] A verificação passa:

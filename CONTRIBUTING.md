@@ -80,12 +80,13 @@ correção de dado do catálogo não vira nota.
 
 1. **Cada alteração dessas vira uma entrada** em
    `src/data/changelog/entries/<ano>/<id>.ts`, um arquivo por mudança, texto puro, com
-   `tipo`, `areas` e `version`. O passo a passo está em
+   `alcance` (`tipo`, `atributo` ou os dois) e `version`. O passo a passo está em
    [`src/data/changelog/create-changelog-entry.md`](src/data/changelog/create-changelog-entry.md).
 2. **A versão segue a [regra de versionamento](docs/dados-abertos.md#estabilidade-e-versionamento):**
    correção sobe o último número; funcionalidade nova compatível, o do meio; quebra de
    contrato, o primeiro.
-3. **O PR que fecha a versão sobe `version` em `package.json` e `CITATION.cff`.** Ao mergear
+3. **O PR que fecha a versão sobe `version` em `package.json` e no lockfile.** O
+   `CITATION.cff` não tem campo de versão: até a v1.0.0 cita-se pela data. Ao mergear
    na `main`, o `release.yml` monta o corpo com as entradas da versão, **cria a tag `vX.Y.Z`
    e publica a Release**. **Não faça `git push` de tag manual.**
 
@@ -197,7 +198,7 @@ que falta dado.
 
 ### C3. `id` é append-only ⛔ imposta
 
-O `id` é a **URL pública** de cada tipo (`/pesquisa/tipos?tipo=N`) e o site está publicado.
+O `id` é a **URL pública** de cada tipo (`/tipos/N`) e o site está publicado.
 
 - Id novo = `max(id em uso, id aposentado) + 1`. Nunca no meio, nunca renumerando.
 - Id removido vira **buraco permanente** e entra em `data/ids-aposentados.json`; jamais é
@@ -294,13 +295,12 @@ elemento culposo.
 | `lei` | texto | diploma (ex.: "CP", "Lei 11.343/06") |
 | `artigo` | texto | ex.: "Art. 155, caput"; com inciso quando houver (C4) |
 | `crime` | texto | nome do tipo — **alimenta `resultado_morte`** (C5) |
-| `pena_min` | inteiro | **em meses** (compat.; a unidade real é derivada de `obs`) |
-| `pena_max` | inteiro | **em meses** (compat.; a unidade real é derivada de `obs`) |
+| `pena_min` | inteiro | **em meses**; é a autoridade da moldura (C7) ⛔ imposta |
+| `pena_max` | inteiro | **em meses**; é a autoridade da moldura (C7) ⛔ imposta |
 | `sancoes_nao_privativas` | lista | só quando não há pena privativa (C2) |
 | `pena_por_remissao` | objeto | opcional; `{dispositivo_fonte, lei_fonte, artigos_fonte, operador, fracao}` quando a moldura é a de outro dispositivo (C2). Incompatível com `pena_min`/`pena_max` |
 | `tipo_pena` | texto | Reclusão / Detenção / Prisão simples / Multa / Morte / Outras penas / — |
-| `acao` | texto | ação penal |
-| `acao` | vocabulário fechado | Pública Incondicionada; Pública Condicionada à Representação; Pública Condicionada à Requisição; Ação Penal Privada; Ação Penal Privada Personalíssima ⛔ imposta |
+| `acao` | vocabulário fechado | a espécie da ação penal: Pública Incondicionada; Pública Condicionada à Representação; Pública Condicionada à Requisição; Ação Penal Privada; Ação Penal Privada Personalíssima ⛔ imposta |
 | `hediondo` | Sim / Não | inclui equiparados; a espécie e o fundamento são derivados da tabela (C6) |
 | `hediondo_condicao` | texto | opcional. A hediondez depende de circunstância do CASO; com ela, `hediondo` fica "Não" ⛔ imposta |
 | `hediondo_nota` | texto | opcional. Divergência de **jurisprudência ou doutrina** sobre a hediondez. Não é condição do fato: o tipo não muda com o caso, muda com quem julga |
@@ -312,7 +312,7 @@ elemento culposo.
 | `violencia_condicao` | texto | opcional. O tipo se consuma SEM violência mas comporta a hipótese violenta — sequestrar pode ser obtido por fraude. Com ela, `violencia` fica "Não", e o motor mostra os atributos nas duas hipóteses ⛔ imposta |
 | `vigencia_ate` | data | opcional (AAAA-MM-DD). Desde quando o dispositivo NÃO vigora mais |
 | `vigencia_nota` | texto | **obrigatória** com `vigencia_ate`: o que houve e qual dispositivo passa a reger a conduta |
-| `obs` | texto | descrição / notas. **A faixa de pena é lida daqui** (ex.: "15 dias a 6 meses", "1-5 anos") |
+| `obs` | texto | descrição / notas. Escreva nele a faixa na unidade natural ("15 dias a 6 meses", "1-5 anos") para quem lê — mas **ele não define pena** (C7) |
 
 Campos derivados (não escreva à mão): `pena_privativa`, `tem_multa`, `multa_regime`,
 `pena_*_meses`, `pena_*_rotulo`, `pena_faixa_rotulo`, `infracao_menor_potencial`,
@@ -321,20 +321,22 @@ Campos derivados (não escreva à mão): `pena_privativa`, `tem_multa`, `multa_r
 
 ### Unidades de pena (dias / meses / anos)
 
-O transformador extrai a faixa de pena do texto de `obs` e converte tudo para uma
-unidade canônica em **meses** (`pena_min_meses`/`pena_max_meses`, contando o mês como
-30 dias — Art. 11 do CP), preservando a unidade natural para exibição
+A moldura canônica é **em meses** (`pena_min_meses`/`pena_max_meses`, contando o mês
+como 30 dias — Art. 11 do CP) e sai de `pena_min`/`pena_max`. O transformador lê o
+`obs` apenas para saber em que **unidade** a lei escreveu — dias, meses ou anos —, e
+com isso monta os rótulos de exibição
 (`pena_min_rotulo`/`pena_max_rotulo`/`pena_faixa_rotulo`). Assim "15 dias a 6 meses"
-aparece corretamente e é calculado sem inverter mínimo/máximo.
+aparece na unidade em que foi cominada e é calculado sem inverter mínimo e máximo.
 
-> Regra de consistência: `pena_min_meses <= pena_max_meses`. Se a faixa não puder ser lida
-> de `obs`, o transformador cai para `pena_min`/`pena_max` (em meses) como fallback.
+> Regra de consistência, verificada a cada build: `pena_min_meses <= pena_max_meses`.
+> Texto no `obs` que discorde dos dois campos não muda a pena publicada — foi o
+> contrário até a v1.2.16, e o preço está contado na C7.
 
 ## Desenvolvimento
 
 ```bash
 npm install
-npm run start       # dev server
+npm run dev         # dev server
 npm run typecheck
 npm run verificar   # motor de atributos × catálogo real
 npm run build
