@@ -398,7 +398,11 @@ def _frase_correcoes(correcoes: list[dict]) -> str:
 # legislativa. A divergência sob redação antiga é correção de dado e fica fora
 # do feed; o corpo do PR diz o porquê de cada uma.
 ANOS_DE_LEI_RECENTE = 1
-# Espelha ROTULO_TIPO de src/data/changelog/types.ts.
+# A direção da mudança, em prosa. NÃO é mais o campo `tipo` da entrada — o
+# contrato do changelog foi simplificado em 24/09/2026 e a entrada declara só o
+# `alcance`. A direção continua servindo para DOIS fins aqui: agrupar as
+# correções por sentido (uma entrada por lei e por direção) e escrever o título
+# em português ("pena agravada", "pena abrandada"), que é onde o leitor a lê.
 ROTULO_NATUREZA = {
     "incriminadora": "novatio legis incriminadora",
     "pejus": "novatio legis in pejus",
@@ -464,8 +468,21 @@ def _faixa(linha: dict) -> str:
 
 
 def _links_ts(links: list[dict]) -> str:
-    return "\n".join(f"    {{label: {json.dumps(l['label'], ensure_ascii=False)}, "
-                     f"href: {json.dumps(l['href'], ensure_ascii=False)}}}," for l in links)
+    """O link externo sai como literal; o interno, por `urlPublica`.
+
+    Desde 23/09/2026 o endereço do site é uma constante só, e nota publicada com
+    URL escrita à mão faria de cada mudança de endereço uma reescrita de texto
+    publicado. O robô escreve como a mão escreve.
+    """
+    linhas = []
+    for l in links:
+        rotulo = json.dumps(l["label"], ensure_ascii=False)
+        if "interno" in l:
+            alvo = f"urlPublica({json.dumps(l['interno'], ensure_ascii=False)})"
+        else:
+            alvo = json.dumps(l["href"], ensure_ascii=False)
+        linhas.append(f"    {{label: {rotulo}, href: {alvo}}},")
+    return "\n".join(linhas)
 
 
 def entradas_changelog(escolha: dict, legais: list[dict], versao: str,
@@ -510,10 +527,14 @@ def entradas_changelog(escolha: dict, legais: list[dict], versao: str,
         links = []
         if itens[0]["anotacao"].get("url"):
             links.append({"label": f"{lei}, no Planalto", "href": itens[0]["anotacao"]["url"]})
+        # O link interno sai por `urlPublica`, e não como URL literal: desde
+        # 23/09/2026 o endereço do site é uma constante só, e nota publicada com
+        # URL escrita à mão faria de cada mudança de endereço uma reescrita.
         links += [{"label": _artigo_em_prosa(m["depois"]["artigo"]),
-                   "href": f"{SITE}/tipos/{m['id']}"} for m in itens[:5]]
+                   "interno": f"/tipos/{m['id']}"} for m in itens[:5]]
 
         ts = f"""import type {{ChangelogEntry}} from '../../types';
+import {{urlPublica}} from '../../../../site/config.ts';
 
 const entrada: ChangelogEntry = {{
   id: '{ident}',
@@ -524,8 +545,7 @@ const entrada: ChangelogEntry = {{
   body: [
 {chr(10).join('    ' + json.dumps(p, ensure_ascii=False) + ',' for p in corpo)}
   ],
-  tipo: '{natureza}',
-  areas: ['Tipos penais'],
+  alcance: ['tipo'],
   version: 'v{versao}',
   links: [
 {_links_ts(links)}

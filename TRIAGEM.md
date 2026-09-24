@@ -61,7 +61,7 @@ PR próprio.
 Um por rodada, um aberto por vez, autor `atlaspen-automacao[bot]`, rótulo `conferidor`.
 Quando alguma mudança vem de **lei recente**, ele escreve a nota de atualização e sobe o
 patch da versão (em `0.0.x` até o lançamento; o merge não publica release antes da v1.0.0).
-**Confira a natureza** de cada nota (*incriminadora*, *in pejus*, *in mellius*) na seção
+**Confira o alcance** de cada nota (`tipo` ou `atributo`) e a direção que o título afirma — pena agravada ou abrandada — na seção
 "Notas de atualização" do corpo. Correção de dado não vira nota, e o corpo diz o motivo.
 
 Dois tipos, nesta ordem de prioridade:

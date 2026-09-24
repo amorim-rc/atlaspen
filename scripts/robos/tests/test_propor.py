@@ -164,10 +164,19 @@ class TestEntradaDeChangelog:
         assert nomes == ["2026-09-14-lei-15397-incriminadora.ts", "2026-09-14-lei-15397-pejus.ts"]
         por_nome = {d.name: ts for d, ts in saida}
         pejus = por_nome["2026-09-14-lei-15397-pejus.ts"]
-        assert "tipo: 'pejus'" in pejus and "version: 'v0.0.2'" in pejus
+        # O contrato mudou em 24/09/2026: a entrada declara `alcance`, e não
+        # mais a natureza em latim. A direção continua no TÍTULO, em português —
+        # é lá que o leitor a lê —, e continua agrupando as correções: uma
+        # entrada por lei e por sentido.
+        assert "alcance: ['tipo']" in pejus and "version: 'v0.0.2'" in pejus
+        assert "penas agravadas" in pejus or "pena agravada" in pejus
         assert "de 2 a 8 anos de reclusão para 2 a 10 anos de reclusão" in pejus
-        assert "https://exemplo/l15397.htm#art1" in pejus and "/tipos/42" in pejus
-        assert "tipo: 'incriminadora'" in por_nome["2026-09-14-lei-15397-incriminadora.ts"]
+        # O link externo sai literal; o interno, por `urlPublica`.
+        assert "https://exemplo/l15397.htm#art1" in pejus
+        assert 'urlPublica("/tipos/42")' in pejus
+        incrim = por_nome["2026-09-14-lei-15397-incriminadora.ts"]
+        assert "alcance: ['tipo']" in incrim
+        assert "incluído" in incrim or "incluídos" in incrim
         # body é texto puro: sem markdown, sem backtick (contrato do ChangelogEntry)
         corpo = pejus.split("body: [")[1].split("],")[0]
         assert "`" not in corpo and "**" not in corpo
