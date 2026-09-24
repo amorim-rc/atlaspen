@@ -1,5 +1,96 @@
 [
   {
+    "id": "2026-09-24-lei-15517-combustiveis",
+    "date": "2026-09-24",
+    "title": "Lei nº 15.517, de 2026: furto, roubo e receptação de combustíveis",
+    "summary": "A lei criou sete tipos penais em torno do combustível desviado de instalação de produção, armazenamento ou transporte: três no furto (CP, art. 155, §§ 10 a 12), dois no roubo (art. 157, § 2º, XI, e § 2º-A, III) e dois na Lei 8.176/91 (arts. 1º-A e 1º-B). Em vigor desde 23 de setembro de 2026.",
+    "body": [
+      "No furto, o § 10 do art. 155 pune com reclusão de 4 a 10 anos a subtração de combustível de instalação de produção, armazenamento ou transporte. Os §§ 11 e 12 elevam a pena quando há concurso de pessoas ou emprego de explosivo.",
+      "No roubo, o inciso XI do § 2º e o inciso III do § 2º-A do art. 157 tratam da mesma matéria com as penas próprias do tipo, que já pressupõe violência ou grave ameaça.",
+      "Na Lei 8.176/91, o art. 1º-A pune a conduta dolosa e o art. 1º-B a culposa. Nenhum dos sete é hediondo: o rol do art. 1º da Lei 8.072/90 não os alcança.",
+      "A natureza da mudança é novatio legis in pejus, e não incriminadora: a conduta já era punível como furto, roubo ou receptação. O que a lei fez foi destacá-la com moldura própria e mais severa."
+    ],
+    "tipo": "pejus",
+    "areas": [
+      "Tipos penais",
+      "Dosimetria"
+    ],
+    "version": "v0.0.3",
+    "links": [
+      {
+        "label": "Lei nº 15.517, de 2026, no Planalto",
+        "href": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15517.htm"
+      },
+      {
+        "label": "CP, art. 155, § 10",
+        "href": "https://amorim-rc.github.io/atlaspen/tipos/1513"
+      },
+      {
+        "label": "CP, art. 157, § 2º, XI",
+        "href": "https://amorim-rc.github.io/atlaspen/tipos/1516"
+      },
+      {
+        "label": "Lei 8.176/91, art. 1º-A",
+        "href": "https://amorim-rc.github.io/atlaspen/tipos/1518"
+      }
+    ]
+  },
+  {
+    "id": "2026-09-24-lei-15348-abolitio-parcial",
+    "date": "2026-09-24",
+    "title": "Lei nº 15.348, de 2026: parte do crime de combustíveis deixou de existir",
+    "summary": "A lei restringiu o inciso II do art. 1º da Lei 8.176/91 ao uso de GLP para fins automotivos. As hipóteses de motores de qualquer espécie não automotivos, saunas, caldeiras e aquecimento de piscinas deixaram de ser típicas. É abolitio criminis parcial, com vigência desde 13 de fevereiro de 2026.",
+    "body": [
+      "O tipo continua existindo no que restou do inciso, e por isso o registro mantém o mesmo identificador e a mesma moldura de pena. O que mudou foi o alcance: condutas que eram crime deixaram de ser.",
+      "A distinção importa. Não se trata de novatio legis in mellius, em que a conduta segue punível com tratamento mais favorável: quem usava GLP em sauna ou caldeira não passou a responder mais brandamente, deixou de responder. A consequência é a do art. 2º do Código Penal — a lei retroage — e a do art. 107, III, que extingue a punibilidade.",
+      "Fica a ressalva de que a conduta pode, conforme o caso, subsumir-se ao art. 56 da Lei 9.605/98, que trata do produto ou substância tóxica em desacordo com as exigências legais.",
+      "Esta é a primeira nota publicada sob a quarta natureza do feed, criada em 23 de setembro de 2026: abolitio criminis parcial, ao lado de incriminadora, in pejus e in mellius."
+    ],
+    "tipo": "abolitio-parcial",
+    "areas": [
+      "Tipos penais"
+    ],
+    "version": "v0.0.3",
+    "links": [
+      {
+        "label": "Lei nº 15.348, de 2026, no Planalto",
+        "href": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15348.htm"
+      },
+      {
+        "label": "Lei 8.176/91, art. 1º",
+        "href": "https://amorim-rc.github.io/atlaspen/tipos/543"
+      }
+    ]
+  },
+  {
+    "id": "2026-09-24-estelionato-acao-no-tempo",
+    "date": "2026-09-24",
+    "title": "A ação penal do estelionato passa a variar com a data do fato",
+    "summary": "A Lei 15.397/2026 revogou o § 5º do art. 171 do Código Penal, e o estelionato voltou a ser de ação penal pública incondicionada para fatos a partir de 4 de maio de 2026. Para os anteriores continua valendo a exigência de representação, e a ficha do tipo passa a dizer qual regra se aplica conforme a data.",
+    "body": [
+      "A exigência de representação nasceu com o Pacote Anticrime, em vigor desde 23 de janeiro de 2020, e alcançava também fatos anteriores em processos sem trânsito em julgado — é o que o Supremo Tribunal Federal decidiu no HC 208.817 AgR, em 2023.",
+      "Entre 23 de janeiro de 2020 e 3 de maio de 2026 a ação dependia de representação, salvo quando a vítima fosse a Administração Pública, criança ou adolescente, pessoa com deficiência mental, maior de 70 anos ou incapaz. A Lei 15.229/2025 ampliou essa última hipótese: desde 3 de outubro de 2025 basta ser pessoa com deficiência.",
+      "Para fatos a partir de 4 de maio de 2026 a ação é incondicionada. Em qualquer data continua valendo o art. 182 do Código Penal, que condiciona a representação quando o crime é cometido em prejuízo de cônjuge desquitado ou judicialmente separado, de irmão, ou de tio ou sobrinho com quem o agente coabita.",
+      "A ficha do tipo penal ganhou um campo de data do fato. Ele escolhe a regra aplicável aqui e também nos percentuais de progressão de regime, que mudaram duas vezes em 2026, em datas diferentes."
+    ],
+    "tipo": "mellius",
+    "areas": [
+      "Tipos penais",
+      "Interface"
+    ],
+    "version": "v0.0.3",
+    "links": [
+      {
+        "label": "Estelionato (CP, art. 171, caput)",
+        "href": "https://amorim-rc.github.io/atlaspen/tipos/127"
+      },
+      {
+        "label": "Lei nº 15.397, de 2026, no Planalto",
+        "href": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15397.htm"
+      }
+    ]
+  },
+  {
     "id": "2026-09-19-lei-15397-estelionato-acao-penal",
     "date": "2026-09-19",
     "title": "Lei nº 15.397, de 2026: o estelionato volta a ser de ação penal pública incondicionada",
