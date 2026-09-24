@@ -4,13 +4,16 @@ title: "AtlasPen — Atlas Penal Brasileiro dos Tipos, Atributos e Impacto Legis
 abstract: >-
   Base aberta de todos os tipos penais brasileiros e dos atributos penais que os
   alcançam, com motor de cálculo e simulação legislativa, para pesquisa de
-  políticas públicas. Concebida e desenvolvida por Luccas de Amorim a partir de
+  políticas públicas. Desenvolvida pela Equipe AtlasPen a partir de
   2026. Tem como antecedente de pesquisa o SISPENAS, sistema da pesquisa coordenada
   por Maíra Rocha Machado e Marta Rodriguez de Assis Machado (Direito GV/FGV, 2008).
 type: software
 authors:
-  - given-names: "Luccas"
-    family-names: "de Amorim"
+  # Coletivo por decisão de 24/09/2026. Quem faz o quê está em /projeto/creditos:
+  # Luccas de Amorim Rêgo Cavicchioli (concepção, arquitetura, código e dados),
+  # Profa. Dra. Maíra Rocha Machado e Profa. Dra. Luisa Moraes Abreu Ferreira
+  # (colaboração acadêmica).
+  - name: "Equipe AtlasPen"
 # Até a v1.0.0 não há versão publicada: cite pela data.
 date-released: "2026-09-11"
 license: MIT

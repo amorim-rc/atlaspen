@@ -80,7 +80,8 @@ lado dos textos do grupo (`textos/`). O pipeline de conferência tem documentaç
 
 ## Autoria e origem
 
-O AtlasPen foi concebido e é desenvolvido por **Luccas de Amorim**. O projeto nasceu em junho
+O AtlasPen é desenvolvido pela **Equipe AtlasPen**. Quem faz o quê está em
+[Autoria e créditos](https://amorim-rc.github.io/atlaspen/projeto/creditos). O projeto nasceu em junho
 de 2026, com o nome de trabalho *algo-pen*, como uma base com cobertura completa dos tipos
 penais brasileiros, em código e dados abertos. Os créditos completos estão em
 [Autoria e créditos](https://amorim-rc.github.io/atlaspen/projeto/creditos).
@@ -226,4 +227,4 @@ automaticamente do texto legal e será revisada individualmente.
 
 ## Licença
 
-**MIT com atribuição** — *AtlasPen, de Luccas de Amorim e contribuidores*. Veja [`LICENSE`](./LICENSE).
+**MIT com atribuição** — *AtlasPen, da Equipe AtlasPen*. Veja [`LICENSE`](./LICENSE).

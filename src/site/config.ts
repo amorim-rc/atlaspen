@@ -15,8 +15,15 @@ export const NOME_EXTENSO = 'Atlas Penal Brasileiro dos Tipos, Atributos e Impac
 /** Descritor curto, quando precisar de um. */
 export const DESCRITOR = 'catálogo aberto de tipos e atributos penais';
 
-/** O titular do código e da base (LICENSE), e quem se cita. Decisão de 20/09/2026. */
-export const TITULAR = 'Luccas de Amorim e contribuidores';
+/**
+ * Quem assina o código e a base: a LICENSE, o rodapé e "Como citar".
+ *
+ * Coletivo por decisão de 24/09/2026. A assinatura curta nomeava uma pessoa só
+ * num projeto que é colaborativo, e isso soava mal ao lado das professoras que
+ * colaboram com ele. Quem faz o quê fica em /projeto/creditos, que nomeia mais
+ * do que a assinatura nomeava.
+ */
+export const TITULAR = 'Equipe AtlasPen';
 
 export const REPOSITORIO = 'https://github.com/amorim-rc/atlaspen';
 
