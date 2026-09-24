@@ -4,7 +4,7 @@
 de pesquisa de políticas públicas para estudar o **impacto dos atributos penais** sobre os
 tipos penais brasileiros.
 
-Construído em **Astro + React + TypeScript**. Catálogo de **1.507 tipos penais** de 61
+Construído em **Astro + React + TypeScript**. Catálogo de **1.529 tipos penais** de 66
 diplomas, conferido toda semana contra o texto compilado do `planalto.gov.br`.
 
 ## Recursos

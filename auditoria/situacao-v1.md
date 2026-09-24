@@ -1,14 +1,16 @@
 # Onde estamos e o que falta para a v1.0.0
 
-Situação em 22/09/2026, na branch `revamp/atlaspen`, que está 66 commits à frente da `main`,
+Situação em 24/09/2026, na branch `revamp/atlaspen`, que está 85 commits à frente da `main`,
 sem push. O prompt para retomar o trabalho em outra sessão está em `auditoria/retomada.md`. O backlog completo está em `backlog.md`; este documento é o recorte do que decide o
 lançamento.
 
 ## Em uma frase
 
-A base está conferida e o motor está testado. O que separa a v1 de hoje é: decisões jurídicas
-de revisão fina que só você pode assinar, o merge do revamp, o nome e o domínio, e a auditoria
-por amostra — que só roda depois de todo o resto.
+A revisão fina de 23/09/2026 foi aplicada por inteiro — as nove etapas do pacote, 416 mudanças
+de dado, 18 tipos novos e 1.681 vereditos movidos. O que separa a v1 de hoje é: a segunda parte
+da simulação, o merge do revamp, o domínio, e a auditoria por amostra — que só roda depois de
+todo o resto. As decisões jurídicas que dependiam de você estão feitas; o que sobrou está
+listado em `auditoria/material/08-o-que-sobrou.md`, e nada ali é bloqueio.
 
 ## O marco da virada
 
@@ -31,14 +33,16 @@ Decisão da equipe em 10/09/2026: lançar enxuto.
 
 | | |
 |---|---|
-| Tipos penais | 1.512 (1.479 com pena privativa) |
+| Tipos penais | **1.529** (1.496 com pena privativa), depois dos 18 novos e de uma duplicata aposentada |
 | Conferência da moldura | 1.244 conferidos, 265 com moldura derivada de conta, 3 dispensados, 0 divergentes |
-| Hediondez | 114 por natureza, 17 equiparados, 24 condicionais — cada um com o dispositivo que o sustenta |
-| Ação penal | 1.363 conferem com a regra do diploma, 0 divergem, 149 pedem juízo |
-| Violência e grave ameaça | 2.792 respostas conferem com o texto da lei, 149 divergem, 83 pedem juízo |
-| Motor | 22 atributos; 47 casos-padrão; congelamento de 22 × 1.479 × 4 cenários |
-| Testes | 276 dos robôs, mais as seis baterias de `npm run verificar` |
-| Versão | 0.0.2, com 11 notas no feed |
+| Hediondez | **124 por natureza**, 17 equiparados, **34 condicionais** — cada um com o dispositivo que o sustenta |
+| Ação penal | **1.390 conferem**, 13 conferem com ressalva, **0 divergem**, 126 pedem juízo |
+| Violência e grave ameaça | **2.878 conferem**, 88 conferem com ressalva, 33 divergem, 59 pedem juízo |
+| Condições declaradas | 88 de violência (campo novo), 70 de ação penal, 34 de hediondez |
+| Avisos sobre a norma | 424 registros: ADIs contra a Lei 15.402, ANPP no crime militar, Tema 506 |
+| Motor | 22 atributos; 47 casos-padrão; congelamento de 22 × 1.496 × 4 cenários; **data do fato** como entrada |
+| Testes | **347** dos robôs, mais as seis baterias de `npm run verificar` |
+| Versão | **0.0.3**, com 14 notas no feed |
 
 ## Cobertura: o que "todos os tipos" ainda não garante
 
@@ -57,12 +61,12 @@ Decisão da equipe em 10/09/2026: lançar enxuto.
 | 1. Repositório para trabalho em grupo | parcial; **em espera** desde 20/09/2026, sem prazo | transferir para uma organização; credencial do Codex; convenção de branch e commit para três pessoas e dois agentes; conferir o ruleset de tags `v*` | você |
 | 2. Versionamento | concluída | — | — |
 | 3. Nome e identidade | **renomeação completa em 23/09/2026**: repositório `amorim-rc/atlaspen`, base `/atlaspen/`, robôs `atlaspen-automacao` e `atlaspen-bot`, e as 34 URLs literais das notas derivadas de `SITE_URL`. O SISPENAS (2008) segue creditado como antecedente | comprar atlaspen.org.br e trocar `SITE_URL`, `base` e `CNAME` — agora uma constante, não uma varredura | você |
-| 4. Histórico: a última alteração de cada registro | **feita em 20/09/2026**: todo tipo diz a lei que por último lhe deu texto (1.113 na redação original, 391 alterados, 8 sem data no compilado) | a data exata de publicação e vigência de cada lei alteradora, que o compilado não dá | eu |
+| 4. Histórico: a última alteração de cada registro | **concluída**. Em 20/09 todo tipo passou a dizer a lei que por último lhe deu texto; em 23/09 vieram as datas: 220 eventos de 15 normas com publicação e vigência conferidas no DOU (decisão 32), mais os 12 eventos que nenhum compilado traz | a LC 225/2026 tem vigência escalonada e segue a conferir | você |
 | 5. Atributos em dados | concluída | — | — |
-| 6. Ação penal | vocabulário fechado, derivador pronto, 66 registros conferidos à mão | os 149 com ressalva (revisão fina, bloco C); decidir o campo de fundamento, que o derivador já tem pronto para 1.363 registros | você |
+| 6. Ação penal | **concluída**. Vocabulário fechado, derivador com a C1 corrigida, `acao_fundamento` em todos os registros (decisão 18), 70 condições declaradas e **zero divergências** | os 126 que pedem juízo por ressalva do próprio diploma — não são erro, são hipótese do caso | você, quando quiser |
 | 7. Amostra de validação | protocolo registrado (`auditoria/protocolo.md`) | o sorteio, só na versão amadurecida; uma segunda pessoa para a dupla conferência | tudo o resto, e uma pessoa |
 | 8. Pena cominada × pena concreta | **concluída** (20/09/2026): três abas na ficha — cominada, concreta e histórico | — | — |
-| 17. Hediondo × equiparado | primeira parte feita | condição em texto livre (24); varredura do CPM contra o rol (374) | você e eu |
+| 17. Hediondo × equiparado | **concluída**. Varredura do Livro II do CPM contra o rol (decisão 29), 34 condições em formato único (decisão 28), e a âncora de fim em toda regra, com trava no carregamento (C15) | — | — |
 
 ## O revamp, antes do merge
 
@@ -76,13 +80,18 @@ Decisão da equipe em 10/09/2026: lançar enxuto.
 
 ## Qualidade dos dados, antes de declarar a versão madura
 
-1. **Revisão fina** (`auditoria/revisao-fina.md`): violência (149 heranças e 83 juízos), ação
-   penal com ressalva (149), e dez assuntos avulsos.
-2. **Critério escrito para tentativa e elemento subjetivo**, os dois campos que ainda não têm
-   régua nem derivador.
-3. **Confirmar três leituras que já estão aplicadas**: a progressão do reincidente genérico
-   (20% e 30%), a ANPP no crime militar e os atributos não calculados em tipo sem pena
-   privativa.
+1. ~~**Revisão fina**~~ — **aplicada em 23-24/09/2026**, nas nove etapas do pacote. O que
+   sobrou está em `auditoria/material/08-o-que-sobrou.md`: 33 divergências de violência (quatro
+   delas o art. 217-A, que a decisão 4 mandou manter), 59 juízos de violência e 126 de ação
+   penal. Nenhum é bloqueio para a v1.
+2. ~~**Critério escrito para tentativa e elemento subjetivo**~~ — **escrito** (decisões 20 e
+   31), com o valor novo "Qualificado pelo resultado" e trava no `transform_data`.
+3. ~~**Confirmar três leituras**~~ — **confirmadas**: a progressão do reincidente genérico, a
+   ANPP no crime militar (com aviso de divergência) e os atributos em tipo sem pena privativa,
+   que passaram de quatro a sete.
+4. **Falta a decisão 19** (crimes de atentado, tentativa "Não" em 15 registros), que ficou fora
+   por falta de doutrina nomeada com obra, edição e página. E os itens do capítulo 10 do pacote,
+   que dependem de conferência em portal de tribunal.
 
 ## Autoria e citação
 
@@ -105,9 +114,9 @@ lugar de "A retomada" e ainda assina "Equipe AtlasPen". Decisão do mantenedor e
 
 | # | Passo | Quem | Pode correr em paralelo com |
 |---|---|---|---|
-| 1 | Decisões da revisão fina, por família | você | 2, 3 |
-| 2 | Cada decisão vira regra escrita no derivador, e o dado é corrigido | eu | 1 |
-| 3 | Frente 4 (histórico) e frente 8 (conferir) | eu | 1 |
+| 1 | ~~Decisões da revisão fina~~ — feitas em 23/09/2026 | — | — |
+| 2 | ~~Cada decisão vira regra escrita, e o dado é corrigido~~ — feito em 23-24/09 | — | — |
+| 3 | ~~Frente 4 (histórico) e frente 8 (conferir)~~ — feitas | — | — |
 | 4 | A segunda parte da simulação (A2), que entra na v1 | eu | 1 |
 | 5 | ~~Autoria e citação~~ — feita em 20/09/2026 | — | — |
 | 6 | Merge do revamp na `main` | você autoriza | — |

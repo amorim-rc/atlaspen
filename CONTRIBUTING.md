@@ -302,10 +302,14 @@ elemento culposo.
 | `acao` | texto | ação penal |
 | `acao` | vocabulário fechado | Pública Incondicionada; Pública Condicionada à Representação; Pública Condicionada à Requisição; Ação Penal Privada; Ação Penal Privada Personalíssima ⛔ imposta |
 | `hediondo` | Sim / Não | inclui equiparados; a espécie e o fundamento são derivados da tabela (C6) |
-| `elemento` | texto | Doloso / Culposo / Preterdoloso |
-| `tentativa` | Sim / Não / — | pressuposto do art. 15 do CP |
-| `violencia` | Sim / Não / — | |
-| `grave_ameaca` | Sim / Não / — | |
+| `hediondo_condicao` | texto | opcional. A hediondez depende de circunstância do CASO; com ela, `hediondo` fica "Não" ⛔ imposta |
+| `hediondo_nota` | texto | opcional. Divergência de **jurisprudência ou doutrina** sobre a hediondez. Não é condição do fato: o tipo não muda com o caso, muda com quem julga |
+| `acao_condicao` | texto | opcional. A espécie da ação penal depende do caso (art. 182 do CP, art. 161, §3º) |
+| `elemento` | vocabulário fechado | Doloso / Culposo / Preterdoloso / **Qualificado pelo resultado**. A régua está no `AGENTS.md`, e ela decide a tentativa (decisões 20 e 31) ⛔ imposta |
+| `tentativa` | Sim / Não / — | pressuposto do art. 15 do CP. Preterdoloso e culposo não a admitem; "Qualificado pelo resultado" admite ⛔ imposta |
+| `violencia` | Sim / Não / — | violência **dolosa contra pessoa**, como meio ou como núcleo. Contra a coisa não conta (CP, art. 44, I) |
+| `grave_ameaca` | Sim / Não / — | a grave ameaça como meio do tipo |
+| `violencia_condicao` | texto | opcional. O tipo se consuma SEM violência mas comporta a hipótese violenta — sequestrar pode ser obtido por fraude. Com ela, `violencia` fica "Não", e o motor mostra os atributos nas duas hipóteses ⛔ imposta |
 | `vigencia_ate` | data | opcional (AAAA-MM-DD). Desde quando o dispositivo NÃO vigora mais |
 | `vigencia_nota` | texto | **obrigatória** com `vigencia_ate`: o que houve e qual dispositivo passa a reger a conduta |
 | `obs` | texto | descrição / notas. **A faixa de pena é lida daqui** (ex.: "15 dias a 6 meses", "1-5 anos") |
