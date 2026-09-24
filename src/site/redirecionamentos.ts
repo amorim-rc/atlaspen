@@ -72,6 +72,12 @@ export const REDIRECIONAMENTOS: Redirecionamento[] = [
   // lcp-60-61: desmembrado em lcp-60 e lcp-61; a lista mostra os dois.
   {de: '/acervo/lei9807-19', para: '/acervo'},
   {de: '/acervo/lcp-60-61', para: '/acervo'},
+  // Tipo penal aposentado (data/ids-aposentados.json). O 559 e o 1508 eram o
+  // MESMO art. 326-B do Código Eleitoral: o 559 estava rotulado pela lei que o
+  // criou (Lei 14.192/21) e não pelo diploma em que o crime vive, e por isso a
+  // duplicata não colidiu. Decisão C13 de 23/09/2026. O id já foi URL pública,
+  // então não some: aponta para o registro que ficou.
+  {de: '/tipos/559', para: '/tipos/1508'},
 ];
 
 /**

@@ -4,5 +4,15 @@
     "regra": "id novo = max(id em uso, id aposentado) + 1. Imposto por scripts/transform_data.py (validar_ids) e usado por scripts/robos/proponente/criar.py.",
     "reinicio": "A numeração foi REINICIADA duas vezes. A primeira em 31/07/2026 (v1.4.0), de 1 a 1412. A segunda em 06/08/2026 (v2.0.0), de 1 a 1505, ao fim da revisão que fechou a conferência da base: 9 registros saíram do catálogo e 96 entraram, e manter os buracos da numeração antiga só preservaria o rastro de um estado que a revisão substituiu por inteiro. A lista abaixo recomeça vazia de propósito — os ids anteriores a essa data não valem como referência, e as notas de atualização já publicadas tiveram os links ?tipo=N remapeados. DAQUI EM DIANTE a regra volta a valer sem exceção: id retirado entra nesta lista e nunca é reatribuído."
   },
-  "aposentados": []
+  "aposentados": [
+    {
+      "data": "2026-09-23",
+      "ids": [
+        559
+      ],
+      "motivo": "Duplicata do art. 326-B do Código Eleitoral. O registro estava rotulado pela lei que criou o dispositivo (Lei 14.192/21) e não pelo diploma em que ele vive, e por isso não colidiu com o id 1508, que traz o mesmo artigo sob o rótulo do CE. É a armadilha 5 do README dos robôs. Decisão C13 da revisão fina de 23/09/2026.",
+      "destino": 1508,
+      "redirecionamento": "/tipos/559 -> /tipos/1508"
+    }
+  ]
 }
