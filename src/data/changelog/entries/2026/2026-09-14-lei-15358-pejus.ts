@@ -11,8 +11,7 @@ const entrada: ChangelogEntry = {
     'Para o condenado por crime hediondo ou equiparado, a progressão passa a exigir 70% da pena (inciso V, antes 40%), 75% (inciso VI, antes 50%), 80% (inciso VII, antes 60%) e 85% (inciso VIII, antes 70%).',
     'O inciso VI alcança, com 75%, o comando de organização criminosa ultraviolenta (alínea "b") e a constituição de milícia privada, ao primário e ao reincidente (alínea "c"). A alínea "d", incluída, exige 75% do primário condenado por feminicídio e veda a ele o livramento condicional.',
   ],
-  tipo: 'pejus',
-  areas: ['Atributos'],
+  alcance: ['atributo'],
   version: 'v0.0.1',
   links: [
     {label: 'Lei nº 15.358, de 2026, no Planalto', href: 'https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15358.htm#art35'},

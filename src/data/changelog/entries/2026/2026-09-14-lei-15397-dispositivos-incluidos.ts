@@ -12,8 +12,7 @@ const entrada: ChangelogEntry = {
     'Roubo de bens que comprometam serviços públicos ou de relevância pública (art. 157, §1º-A), 6 a 12 anos; roubo com subtração de celular, computador ou dispositivo eletrônico, e de arma de fogo (art. 157, §2º, IX e X), causas de aumento que levam a moldura a 8 a 15 anos.',
     'Cessão de conta bancária para financiar ou ocultar atividade criminosa (art. 171, §2º, VII), nas penas do caput do estelionato, 1 a 5 anos.',
   ],
-  tipo: 'pejus',
-  areas: ['Tipos penais'],
+  alcance: ['tipo'],
   version: 'v0.0.1',
   links: [
     {label: 'Lei nº 15.397, de 2026, no Planalto', href: 'https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15397.htm'},

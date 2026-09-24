@@ -13,8 +13,7 @@ const entrada: ChangelogEntry = {
     'Para fatos a partir de 4 de maio de 2026 a ação é incondicionada. Em qualquer data continua valendo o art. 182 do Código Penal, que condiciona a representação quando o crime é cometido em prejuízo de cônjuge desquitado ou judicialmente separado, de irmão, ou de tio ou sobrinho com quem o agente coabita.',
     'A ficha do tipo penal ganhou um campo de data do fato. Ele escolhe a regra aplicável aqui e também nos percentuais de progressão de regime, que mudaram duas vezes em 2026, em datas diferentes.',
   ],
-  tipo: 'mellius',
-  areas: ['Tipos penais', 'Interface'],
+  alcance: ['tipo'],
   version: 'v0.0.3',
   links: [
     {label: 'Estelionato (CP, art. 171, caput)', href: urlPublica('/tipos/127')},

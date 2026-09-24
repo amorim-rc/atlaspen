@@ -1,20 +1,25 @@
 // O feed das notas de atualizações, depois da v1.0.0 (Notas e projeto.dc.html,
 // 6b).
 //
-// Uma entrada por mudança, mais recentes primeiro. Filtro por natureza e por
-// área na URL (?tipo=&area=), como em toda busca do sistema; cada entrada tem
-// âncora pelo id do arquivo, e o detalhe abre no lugar. A tela não inventa
-// campo: tudo vem de ChangelogEntry.
+// Uma entrada por mudança, mais recentes primeiro. Dois filtros na URL
+// (?alcance=&periodo=), como em toda busca do sistema; cada entrada tem âncora
+// pelo id do arquivo, e o detalhe abre no lugar. A tela não inventa campo: tudo
+// vem de ChangelogEntry.
+//
+// Os filtros eram três antes de 24/09/2026 — natureza em latim, área e nada de
+// tempo. A natureza saiu porque classificar custava mais do que entregava; as
+// seis áreas viraram dois alcances; e entrou o período, que é o que falta numa
+// base que recebe lei quase toda semana.
 
 import {useEffect, useState} from 'react';
 import {dataCurta} from '../../site/datas';
 import {
-  AREAS_CHANGELOG,
-  ROTULO_TIPO,
-  TIPOS_CHANGELOG,
-  type ChangelogArea,
+  ALCANCES,
+  ROTULO_ALCANCE,
+  rotuloSemestre,
+  semestreDe,
+  type ChangelogAlcance,
   type ChangelogEntry,
-  type ChangelogTipo,
 } from '../../data/changelog/types';
 import s from './notas.module.css';
 
@@ -23,17 +28,17 @@ interface Props {
 }
 
 export default function FeedNotas({entradas}: Props) {
-  const [tipo, setTipo] = useState<ChangelogTipo | ''>('');
-  const [area, setArea] = useState<ChangelogArea | ''>('');
+  const [alcance, setAlcance] = useState<ChangelogAlcance | ''>('');
+  const [periodo, setPeriodo] = useState<string>('');
   const [aberta, setAberta] = useState<string | null>(entradas[0]?.id ?? null);
   const [montado, setMontado] = useState(false);
 
   useEffect(() => {
     const p = new URLSearchParams(window.location.search);
-    const t = p.get('tipo') as ChangelogTipo | null;
-    if (t && TIPOS_CHANGELOG.includes(t)) setTipo(t);
-    const a = p.get('area') as ChangelogArea | null;
-    if (a && AREAS_CHANGELOG.includes(a)) setArea(a);
+    const a = p.get('alcance') as ChangelogAlcance | null;
+    if (a && ALCANCES.includes(a)) setAlcance(a);
+    const s = p.get('periodo');
+    if (s && entradas.some((e) => semestreDe(e.date) === s)) setPeriodo(s);
     const alvo = window.location.hash.slice(1);
     if (alvo && entradas.some((e) => e.id === alvo)) setAberta(alvo);
     setMontado(true);
@@ -42,11 +47,11 @@ export default function FeedNotas({entradas}: Props) {
   useEffect(() => {
     if (!montado) return;
     const p = new URLSearchParams();
-    if (tipo) p.set('tipo', tipo);
-    if (area) p.set('area', area);
+    if (alcance) p.set('alcance', alcance);
+    if (periodo) p.set('periodo', periodo);
     const q = p.toString();
     window.history.replaceState(null, '', window.location.pathname + (q ? `?${q}` : '') + window.location.hash);
-  }, [tipo, area, montado]);
+  }, [alcance, periodo, montado]);
 
   // O título abre e fecha o detalhe no lugar; o endereço ganha a âncora da nota
   // (para citar), sem a página saltar até ela.
@@ -55,44 +60,58 @@ export default function FeedNotas({entradas}: Props) {
     window.history.replaceState(null, '', window.location.pathname + window.location.search + (estaAberta ? '' : `#${id}`));
   };
 
-  const areas = AREAS_CHANGELOG.filter((a) => entradas.some((e) => e.areas.includes(a)));
-  const visiveis = entradas.filter((e) => (!tipo || e.tipo === tipo) && (!area || e.areas.includes(area)));
+  const alcances = ALCANCES.filter((a) => entradas.some((e) => e.alcance.includes(a)));
+  // Do mais recente para o mais antigo, como o próprio feed.
+  const periodos = [...new Set(entradas.map((e) => semestreDe(e.date)))].sort().reverse();
+  const visiveis = entradas.filter(
+    (e) => (!alcance || e.alcance.includes(alcance)) && (!periodo || semestreDe(e.date) === periodo),
+  );
   const versoes = new Set(visiveis.map((e) => e.version).filter(Boolean)).size;
 
   return (
     <div className={s.feed}>
       <div className={s.filtros}>
-        <div className={s.linhaFiltro} role="group" aria-label="Natureza">
-          <span className={s.rotuloFiltro}>Natureza</span>
-          <button type="button" aria-pressed={!tipo} className={`${s.chip} ${!tipo ? s.chipAtivo : ''}`} onClick={() => setTipo('')}>
-            todas
+        <div className={s.linhaFiltro} role="group" aria-label="O que mudou">
+          <span className={s.rotuloFiltro}>O que mudou</span>
+          <button
+            type="button"
+            aria-pressed={!alcance}
+            className={`${s.chip} ${!alcance ? s.chipAtivo : ''}`}
+            onClick={() => setAlcance('')}
+          >
+            tudo
           </button>
-          {TIPOS_CHANGELOG.map((t) => (
-            <button
-              key={t}
-              type="button"
-              aria-pressed={tipo === t}
-              className={`${s.chip} ${s.latim} ${tipo === t ? s.chipAtivo : ''}`}
-              onClick={() => setTipo(tipo === t ? '' : t)}
-            >
-              {ROTULO_TIPO[t]}
-            </button>
-          ))}
-        </div>
-        <div className={s.linhaFiltro} role="group" aria-label="Área">
-          <span className={s.rotuloFiltro}>Área</span>
-          <button type="button" aria-pressed={!area} className={`${s.chip} ${!area ? s.chipAtivo : ''}`} onClick={() => setArea('')}>
-            todas
-          </button>
-          {areas.map((a) => (
+          {alcances.map((a) => (
             <button
               key={a}
               type="button"
-              aria-pressed={area === a}
-              className={`${s.chip} ${area === a ? s.chipAtivo : ''}`}
-              onClick={() => setArea(area === a ? '' : a)}
+              aria-pressed={alcance === a}
+              className={`${s.chip} ${alcance === a ? s.chipAtivo : ''}`}
+              onClick={() => setAlcance(alcance === a ? '' : a)}
             >
-              {a}
+              {ROTULO_ALCANCE[a]}
+            </button>
+          ))}
+        </div>
+        <div className={s.linhaFiltro} role="group" aria-label="Quando">
+          <span className={s.rotuloFiltro}>Quando</span>
+          <button
+            type="button"
+            aria-pressed={!periodo}
+            className={`${s.chip} ${!periodo ? s.chipAtivo : ''}`}
+            onClick={() => setPeriodo('')}
+          >
+            sempre
+          </button>
+          {periodos.map((sem) => (
+            <button
+              key={sem}
+              type="button"
+              aria-pressed={periodo === sem}
+              className={`${s.chip} ${periodo === sem ? s.chipAtivo : ''}`}
+              onClick={() => setPeriodo(periodo === sem ? '' : sem)}
+            >
+              {rotuloSemestre(sem)}
             </button>
           ))}
         </div>
@@ -106,7 +125,7 @@ export default function FeedNotas({entradas}: Props) {
       </div>
 
       {visiveis.length === 0 ? (
-        <p className={s.vazio}>Nenhuma entrada com essa natureza nessa área.</p>
+        <p className={s.vazio}>Nenhuma entrada com esse recorte.</p>
       ) : (
         <ol className={s.entradas}>
           {visiveis.map((e) => {
@@ -120,10 +139,9 @@ export default function FeedNotas({entradas}: Props) {
                 </div>
                 <div className={s.corpo}>
                   <div className={s.etiquetas}>
-                    <span className={`${s.natureza} ${s[`natureza_${e.tipo}`]}`}>{ROTULO_TIPO[e.tipo]}</span>
-                    {e.areas.map((a) => (
+                    {e.alcance.map((a) => (
                       <span key={a} className={s.area}>
-                        {a}
+                        {ROTULO_ALCANCE[a]}
                       </span>
                     ))}
                   </div>

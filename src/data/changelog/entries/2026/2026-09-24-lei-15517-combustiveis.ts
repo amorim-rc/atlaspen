@@ -13,8 +13,7 @@ const entrada: ChangelogEntry = {
     'Na Lei 8.176/91, o art. 1º-A pune a conduta dolosa e o art. 1º-B a culposa. Nenhum dos sete é hediondo: o rol do art. 1º da Lei 8.072/90 não os alcança.',
     'A natureza da mudança é novatio legis in pejus, e não incriminadora: a conduta já era punível como furto, roubo ou receptação. O que a lei fez foi destacá-la com moldura própria e mais severa.',
   ],
-  tipo: 'pejus',
-  areas: ['Tipos penais', 'Dosimetria'],
+  alcance: ['tipo'],
   version: 'v0.0.3',
   links: [
     {

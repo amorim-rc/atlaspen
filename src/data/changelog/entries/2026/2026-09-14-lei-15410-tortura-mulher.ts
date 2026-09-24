@@ -10,8 +10,7 @@ const entrada: ChangelogEntry = {
   body: [
     'A pena é de reclusão de 2 a 8 anos, sem prejuízo das penas de outras infrações. Como forma de tortura, o crime é equiparado a hediondo (CF, art. 5º, XLIII).',
   ],
-  tipo: 'pejus',
-  areas: ['Tipos penais'],
+  alcance: ['tipo'],
   version: 'v0.0.1',
   links: [
     {label: 'Lei nº 15.410, de 2026, no Planalto', href: 'https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15410.htm'},

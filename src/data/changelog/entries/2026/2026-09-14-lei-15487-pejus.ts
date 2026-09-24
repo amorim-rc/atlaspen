@@ -11,8 +11,7 @@ const entrada: ChangelogEntry = {
     'Entram no rol, no catálogo, os caputs dos arts. 240, 241, 241-A, 241-D e 244-A do ECA, e o caput do art. 241-B. O art. 241-C, simulação da participação de criança ou adolescente em cena de sexo explícito, ficou de fora.',
     'A hediondez muda os atributos penais que a leem, como a progressão de regime e o livramento condicional.',
   ],
-  tipo: 'pejus',
-  areas: ['Tipos penais', 'Atributos'],
+  alcance: ['tipo', 'atributo'],
   version: 'v0.0.1',
   links: [
     {label: 'Lei nº 15.487, de 2026, no Planalto', href: 'https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15487.htm'},

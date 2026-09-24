@@ -142,5 +142,21 @@ export interface Resultado {
   atributosQueMudam: number;
 }
 
-/** A etiqueta das notas de atualização, e "proposta" para o atributo sem norma. */
+/**
+ * A direção que a mudança simulada toma, em termos penais.
+ *
+ * Era o vocabulário do feed de notas até 24/09/2026, quando o feed foi
+ * simplificado e passou a dizer só o que a lei alcança (tipo ou atributo). Aqui
+ * a distinção permanece, e por uma razão: na simulação ela não é rótulo de
+ * notícia, é o RESULTADO — a pergunta "que direção esta proposta toma?" é a que
+ * a ferramenta existe para responder. As duas coisas compartilhavam o mesmo
+ * vocabulário por acidente, e o acidente acabou.
+ */
 export type Etiqueta = 'incriminadora' | 'pejus' | 'mellius' | 'abolitio' | 'proposta';
+
+export const ROTULO_ETIQUETA_BASE: Record<Exclude<Etiqueta, 'proposta'>, string> = {
+  incriminadora: 'novatio legis incriminadora',
+  pejus: 'novatio legis in pejus',
+  mellius: 'novatio legis in mellius',
+  abolitio: 'abolitio criminis',
+};

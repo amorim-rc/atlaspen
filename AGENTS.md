@@ -18,14 +18,14 @@ Decisões de 10/09/2026 e de 14/09/2026:
   LEI que criem, modifiquem ou extingam tipos penais ou atributos penais. Correção de dado
   do catálogo (o erro antigo que a conferência achou) **não** vira nota.
 - Cada entrada (`src/data/changelog/entries/<ano>/<id>.ts`, um arquivo por mudança; passo
-  a passo em `src/data/changelog/create-changelog-entry.md`) declara a natureza em termos
-  penais: `incriminadora`, `pejus`, `mellius`, `abolitio` ou `abolitio-parcial`, pela
-  régua doutrinária (decisões de 18/09/2026 e 37, de 23/09/2026): `incriminadora` é só
-  a conduta antes atípica; a forma nova de conduta já punível é `pejus`; e
-  **`abolitio-parcial` é a conduta que DEIXA de ser típica — a que segue punível com
-  tratamento mais favorável é `mellius`**. A distinção não é de rótulo: decide
-  retroatividade e extinção da punibilidade (CP, arts. 2º e 107, III). O
-  `scripts/validar-changelog.mjs` reprova natureza fora do contrato e versão que não existe.
+  a passo em `src/data/changelog/create-changelog-entry.md`) declara só o **alcance**:
+  `tipo`, `atributo`, ou os dois. **Simplificado em 24/09/2026**: antes eram uma natureza
+  em latim e seis áreas, e as duas classificações custavam mais a quem escreve do que
+  entregavam a quem lê. A direção da mudança — mais severa, mais branda, deixou de ser
+  crime — continua no feed, dita em português no `summary` e no `body`, onde cabe a
+  ressalva que um rótulo não comporta. A distinção em latim sobrevive na SIMULAÇÃO
+  (`src/lib/simulacao/tipos.ts`), onde é resultado e não etiqueta. O
+  `scripts/validar-changelog.mjs` reprova alcance fora do contrato e versão que não existe.
 - O PR que traz nota sobe o patch em `package.json` e no lockfile. O Proponente faz isso
   sozinho quando a rodada tem alteração de lei recente: redação dada, ou dispositivo
   incluído, por lei deste ano ou do anterior, lido da anotação do compilado.

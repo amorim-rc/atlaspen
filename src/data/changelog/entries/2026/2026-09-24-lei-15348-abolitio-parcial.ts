@@ -11,10 +11,8 @@ const entrada: ChangelogEntry = {
     'O tipo continua existindo no que restou do inciso, e por isso o registro mantém o mesmo identificador e a mesma moldura de pena. O que mudou foi o alcance: condutas que eram crime deixaram de ser.',
     'A distinção importa. Não se trata de novatio legis in mellius, em que a conduta segue punível com tratamento mais favorável: quem usava GLP em sauna ou caldeira não passou a responder mais brandamente, deixou de responder. A consequência é a do art. 2º do Código Penal — a lei retroage — e a do art. 107, III, que extingue a punibilidade.',
     'Fica a ressalva de que a conduta pode, conforme o caso, subsumir-se ao art. 56 da Lei 9.605/98, que trata do produto ou substância tóxica em desacordo com as exigências legais.',
-    'Esta é a primeira nota publicada sob a quarta natureza do feed, criada em 23 de setembro de 2026: abolitio criminis parcial, ao lado de incriminadora, in pejus e in mellius.',
   ],
-  tipo: 'abolitio-parcial',
-  areas: ['Tipos penais'],
+  alcance: ['tipo'],
   version: 'v0.0.3',
   links: [
     {

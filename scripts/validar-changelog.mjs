@@ -22,7 +22,7 @@
 import {readFileSync} from 'node:fs';
 
 import {lerEntradas} from './_ler-changelog.mjs';
-import {AREAS_CHANGELOG, TIPOS_CHANGELOG} from '../src/data/changelog/types.ts';
+import {ALCANCES} from '../src/data/changelog/types.ts';
 
 /** Compara "v1.2.10" com "v1.3.0" por número, não por texto. */
 function comparar(a, b) {
@@ -38,8 +38,8 @@ const atual = `v${JSON.parse(readFileSync('package.json', 'utf8')).version}`;
 const entradas = await lerEntradas();
 
 const fora = entradas.flatMap((e) => [
-  ...(TIPOS_CHANGELOG.includes(e.tipo) ? [] : [`${e.id}: natureza "${e.tipo}" fora do contrato`]),
-  ...(e.areas ?? []).filter((a) => !AREAS_CHANGELOG.includes(a)).map((a) => `${e.id}: área "${a}" fora do contrato`),
+  ...((e.alcance ?? []).length ? [] : [`${e.id}: sem \`alcance\` — diga se a lei mudou tipo, atributo, ou os dois`]),
+  ...(e.alcance ?? []).filter((a) => !ALCANCES.includes(a)).map((a) => `${e.id}: alcance "${a}" fora do contrato`),
 ]);
 if (fora.length) {
   console.error(`✗ ${fora.length} problema(s) de contrato no changelog:`);

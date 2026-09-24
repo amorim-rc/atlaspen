@@ -7,67 +7,52 @@
 //   - não há lista central: cada entrada é um arquivo próprio em
 //     entries/<ano>/<id>.ts, e index.ts agrega tudo por import.meta.glob.
 //
-// Adaptado da abordagem do EBANX à realidade do projeto: no lugar de
-// status/domain/countries/paymentMethods, os dois eixos que definimos —
-// `tipo` (a natureza da mudança) e `areas` (a parte do sistema).
+// Adaptado da abordagem do EBANX à realidade do projeto.
 
 /**
- * A natureza da mudança, em termos penais (design_handoff_atlaspen/09, item 3).
- * O feed só publica o que cria, modifica ou extingue tipo ou atributo penal; a
- * natureza diz em que direção a lei andou. Na interface, o rótulo em latim vai
- * em itálico (ROTULO_TIPO).
+ * O que a mudança da lei alcança: o tipo penal, o atributo penal, ou os dois.
+ *
+ * **Simplificado em 24/09/2026, por decisão do mantenedor.** Até então cada
+ * entrada declarava uma "natureza" em latim — *incriminadora*, *in pejus*, *in
+ * mellius*, *abolitio* e *abolitio parcial* — e uma lista de seis "áreas". As
+ * duas classificações custavam caro a quem escreve a nota: a régua que separa
+ * *abolitio* parcial de *in mellius* precisou de um parágrafo inteiro de
+ * doutrina para ficar de pé, e errar nela é fácil. O custo não se pagava.
+ *
+ * O que o leitor do feed precisa é mais simples: mudou tipo penal ou mudou
+ * atributo? E quando? A direção da mudança — se a lei ficou mais severa ou mais
+ * branda — continua no feed, dita em português no `summary` e no `body`, onde
+ * cabe a ressalva que um rótulo nunca comporta.
+ *
+ * A distinção em latim NÃO morreu: ela vive onde é ferramenta de análise, e não
+ * rótulo de notícia — em `src/lib/simulacao/tipos.ts`, para etiquetar a hipótese
+ * que alguém simula. Lá ela responde "que direção esta proposta toma?", que é a
+ * pergunta da simulação. As duas coisas usavam o mesmo vocabulário por acidente.
  */
-export type ChangelogTipo =
-  | 'incriminadora' // cria tipo penal
-  | 'pejus' // altera para pior
-  | 'mellius' // altera para melhor
-  | 'abolitio' // deixa de ser crime
-  | 'abolitio-parcial'; // PARTE da conduta deixa de ser crime
+export type ChangelogAlcance = 'tipo' | 'atributo';
 
-export const TIPOS_CHANGELOG: ChangelogTipo[] = [
-  'incriminadora',
-  'pejus',
-  'mellius',
-  'abolitio',
-  'abolitio-parcial',
-];
+export const ALCANCES: ChangelogAlcance[] = ['tipo', 'atributo'];
 
-/**
- * A régua que separa `abolitio-parcial` de `mellius`, escrita em 23/09/2026
- * (decisão 37): *in mellius* é a conduta que SEGUE punível, com tratamento mais
- * favorável; abolitio (parcial) é a conduta que deixa de ser típica. A Lei
- * 15.348/2026 suprimiu do art. 1º, II, da Lei 8.176/91 as hipóteses de motores
- * não automotivos, saunas, caldeiras e aquecimento de piscinas: quem as
- * praticava não passou a responder mais brandamente — deixou de responder. A
- * distinção não é de rótulo: decide retroatividade e extinção da punibilidade
- * (CP, arts. 2º e 107, III).
- */
-/** O rótulo exibido. Espelhado em scripts/montar-nota-release.mjs. */
-export const ROTULO_TIPO: Record<ChangelogTipo, string> = {
-  incriminadora: 'novatio legis incriminadora',
-  pejus: 'novatio legis in pejus',
-  mellius: 'novatio legis in mellius',
-  abolitio: 'abolitio criminis',
-  'abolitio-parcial': 'abolitio criminis (parcial)',
+export const ROTULO_ALCANCE: Record<ChangelogAlcance, string> = {
+  tipo: 'Tipos penais',
+  atributo: 'Atributos penais',
 };
 
-/** A parte do sistema afetada. */
-export type ChangelogArea =
-  | 'Tipos penais'
-  | 'Atributos'
-  | 'Dosimetria'
-  | 'Acervo histórico'
-  | 'Interface'
-  | 'Documentação';
+/**
+ * O semestre de uma data ISO: "2026-1". É o recorte do filtro de período.
+ *
+ * Semestre, e não mês nem ano: mês daria dezenas de fatias quase vazias, e ano
+ * é grosso demais para uma base que recebe lei quase toda semana.
+ */
+export function semestreDe(dataISO: string): string {
+  const mes = Number(dataISO.slice(5, 7));
+  return `${dataISO.slice(0, 4)}-${mes <= 6 ? 1 : 2}`;
+}
 
-export const AREAS_CHANGELOG: ChangelogArea[] = [
-  'Tipos penais',
-  'Atributos',
-  'Dosimetria',
-  'Acervo histórico',
-  'Interface',
-  'Documentação',
-];
+export function rotuloSemestre(semestre: string): string {
+  const [ano, s] = semestre.split('-');
+  return `${s}º semestre de ${ano}`;
+}
 
 /** "Onde a mudança aparece" — o link para o local exato. */
 export interface ChangelogLink {
@@ -85,8 +70,8 @@ export interface ChangelogEntry {
   summary: string;
   /** Parágrafos em texto puro, renderizados as-is (sem markdown). */
   body: string[];
-  tipo: ChangelogTipo;
-  areas: ChangelogArea[];
+  /** O que a lei alcançou: tipo penal, atributo penal, ou os dois. */
+  alcance: ChangelogAlcance[];
   /** Ex.: "v1.2.0". Ausente em entradas não atreladas a uma versão. */
   version?: string;
   links?: ChangelogLink[];

@@ -10,8 +10,7 @@ const entrada: ChangelogEntry = {
   body: [
     'O aumento vale quando o descumprimento decorre da violação de área de exclusão monitorada eletronicamente, ou da remoção ou alteração do dispositivo de monitoração. Entra como causa de aumento na dosimetria da ficha do tipo.',
   ],
-  tipo: 'pejus',
-  areas: ['Tipos penais', 'Dosimetria'],
+  alcance: ['tipo'],
   version: 'v0.0.1',
   links: [
     {label: 'Lei nº 15.383, de 2026, no Planalto', href: 'https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15383.htm'},

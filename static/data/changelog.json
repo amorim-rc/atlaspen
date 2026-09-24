@@ -10,10 +10,8 @@
       "Na Lei 8.176/91, o art. 1º-A pune a conduta dolosa e o art. 1º-B a culposa. Nenhum dos sete é hediondo: o rol do art. 1º da Lei 8.072/90 não os alcança.",
       "A natureza da mudança é novatio legis in pejus, e não incriminadora: a conduta já era punível como furto, roubo ou receptação. O que a lei fez foi destacá-la com moldura própria e mais severa."
     ],
-    "tipo": "pejus",
-    "areas": [
-      "Tipos penais",
-      "Dosimetria"
+    "alcance": [
+      "tipo"
     ],
     "version": "v0.0.3",
     "links": [
@@ -43,12 +41,10 @@
     "body": [
       "O tipo continua existindo no que restou do inciso, e por isso o registro mantém o mesmo identificador e a mesma moldura de pena. O que mudou foi o alcance: condutas que eram crime deixaram de ser.",
       "A distinção importa. Não se trata de novatio legis in mellius, em que a conduta segue punível com tratamento mais favorável: quem usava GLP em sauna ou caldeira não passou a responder mais brandamente, deixou de responder. A consequência é a do art. 2º do Código Penal — a lei retroage — e a do art. 107, III, que extingue a punibilidade.",
-      "Fica a ressalva de que a conduta pode, conforme o caso, subsumir-se ao art. 56 da Lei 9.605/98, que trata do produto ou substância tóxica em desacordo com as exigências legais.",
-      "Esta é a primeira nota publicada sob a quarta natureza do feed, criada em 23 de setembro de 2026: abolitio criminis parcial, ao lado de incriminadora, in pejus e in mellius."
+      "Fica a ressalva de que a conduta pode, conforme o caso, subsumir-se ao art. 56 da Lei 9.605/98, que trata do produto ou substância tóxica em desacordo com as exigências legais."
     ],
-    "tipo": "abolitio-parcial",
-    "areas": [
-      "Tipos penais"
+    "alcance": [
+      "tipo"
     ],
     "version": "v0.0.3",
     "links": [
@@ -73,10 +69,8 @@
       "Para fatos a partir de 4 de maio de 2026 a ação é incondicionada. Em qualquer data continua valendo o art. 182 do Código Penal, que condiciona a representação quando o crime é cometido em prejuízo de cônjuge desquitado ou judicialmente separado, de irmão, ou de tio ou sobrinho com quem o agente coabita.",
       "A ficha do tipo penal ganhou um campo de data do fato. Ele escolhe a regra aplicável aqui e também nos percentuais de progressão de regime, que mudaram duas vezes em 2026, em datas diferentes."
     ],
-    "tipo": "mellius",
-    "areas": [
-      "Tipos penais",
-      "Interface"
+    "alcance": [
+      "tipo"
     ],
     "version": "v0.0.3",
     "links": [
@@ -100,9 +94,8 @@
       "No catálogo, a mudança alcança oito registros: o caput do art. 171 e as sete figuras do §2º — disposição de coisa alheia como própria, alienação ou oneração fraudulenta de coisa própria, defraudação de penhor, fraude na entrega de coisa, fraude para recebimento de seguro, fraude no pagamento por meio de cheque e cessão de conta bancária para atividade ilícita.",
       "A alteração é in pejus: a persecução deixa de depender da iniciativa do ofendido, e o prazo decadencial de seis meses para representar, que podia extinguir a punibilidade, não se aplica mais."
     ],
-    "tipo": "pejus",
-    "areas": [
-      "Tipos penais"
+    "alcance": [
+      "tipo"
     ],
     "version": "v0.0.2",
     "links": [
@@ -129,10 +122,9 @@
       "Entram no rol, no catálogo, os caputs dos arts. 240, 241, 241-A, 241-D e 244-A do ECA, e o caput do art. 241-B. O art. 241-C, simulação da participação de criança ou adolescente em cena de sexo explícito, ficou de fora.",
       "A hediondez muda os atributos penais que a leem, como a progressão de regime e o livramento condicional."
     ],
-    "tipo": "pejus",
-    "areas": [
-      "Tipos penais",
-      "Atributos"
+    "alcance": [
+      "tipo",
+      "atributo"
     ],
     "version": "v0.0.1",
     "links": [
@@ -174,9 +166,8 @@
     "body": [
       "A pena é de reclusão de 2 a 8 anos, sem prejuízo das penas de outras infrações. Como forma de tortura, o crime é equiparado a hediondo (CF, art. 5º, XLIII)."
     ],
-    "tipo": "pejus",
-    "areas": [
-      "Tipos penais"
+    "alcance": [
+      "tipo"
     ],
     "version": "v0.0.1",
     "links": [
@@ -199,9 +190,8 @@
       "A regra geral do caput passa a um sexto da pena, o que é mais gravoso que os 16% antes exigidos do primário condenado por crime sem violência ou grave ameaça.",
       "Os percentuais de 25% (primário, com violência ou grave ameaça), 30% (reincidente, com violência ou grave ameaça) e 20% (reincidente, sem violência ou grave ameaça) mudam de inciso, não de valor. A lei incluiu ainda o §9º do art. 126, na remição."
     ],
-    "tipo": "pejus",
-    "areas": [
-      "Atributos"
+    "alcance": [
+      "atributo"
     ],
     "version": "v0.0.1",
     "links": [
@@ -225,9 +215,8 @@
       "Roubo (CP, art. 157): o caput passa de 4 a 10 para 6 a 10 anos; o latrocínio (§3º, II), de 20 a 30 para 24 a 30 anos.",
       "Receptação (CP, art. 180, caput): de 1 a 4 para 2 a 6 anos. Receptação de animal (art. 180-A): de 2 a 5 para 3 a 8 anos. Interrupção ou perturbação de serviço telegráfico, telefônico, informático, telemático ou de informação de utilidade pública (art. 266): de 1 a 3 para 2 a 4 anos."
     ],
-    "tipo": "pejus",
-    "areas": [
-      "Tipos penais"
+    "alcance": [
+      "tipo"
     ],
     "version": "v0.0.1",
     "links": [
@@ -263,9 +252,8 @@
       "Roubo de bens que comprometam serviços públicos ou de relevância pública (art. 157, §1º-A), 6 a 12 anos; roubo com subtração de celular, computador ou dispositivo eletrônico, e de arma de fogo (art. 157, §2º, IX e X), causas de aumento que levam a moldura a 8 a 15 anos.",
       "Cessão de conta bancária para financiar ou ocultar atividade criminosa (art. 171, §2º, VII), nas penas do caput do estelionato, 1 a 5 anos."
     ],
-    "tipo": "pejus",
-    "areas": [
-      "Tipos penais"
+    "alcance": [
+      "tipo"
     ],
     "version": "v0.0.1",
     "links": [
@@ -308,9 +296,8 @@
       "O vicaricídio é crime hediondo (art. 1º, I-C, da Lei 8.072/90).",
       "O parágrafo único aumenta a pena de um terço até a metade quando o crime é praticado na presença da mulher a quem se pretende causar sofrimento, punição ou controle; contra criança, adolescente, pessoa idosa ou pessoa com deficiência; ou em descumprimento de medida protetiva de urgência. O catálogo registra cada hipótese de aumento com a sua moldura, de 26 anos e 8 meses a 60 anos."
     ],
-    "tipo": "pejus",
-    "areas": [
-      "Tipos penais"
+    "alcance": [
+      "tipo"
     ],
     "version": "v0.0.1",
     "links": [
@@ -344,10 +331,8 @@
     "body": [
       "O aumento vale quando o descumprimento decorre da violação de área de exclusão monitorada eletronicamente, ou da remoção ou alteração do dispositivo de monitoração. Entra como causa de aumento na dosimetria da ficha do tipo."
     ],
-    "tipo": "pejus",
-    "areas": [
-      "Tipos penais",
-      "Dosimetria"
+    "alcance": [
+      "tipo"
     ],
     "version": "v0.0.1",
     "links": [
@@ -370,9 +355,8 @@
       "Para o condenado por crime hediondo ou equiparado, a progressão passa a exigir 70% da pena (inciso V, antes 40%), 75% (inciso VI, antes 50%), 80% (inciso VII, antes 60%) e 85% (inciso VIII, antes 70%).",
       "O inciso VI alcança, com 75%, o comando de organização criminosa ultraviolenta (alínea \"b\") e a constituição de milícia privada, ao primário e ao reincidente (alínea \"c\"). A alínea \"d\", incluída, exige 75% do primário condenado por feminicídio e veda a ele o livramento condicional."
     ],
-    "tipo": "pejus",
-    "areas": [
-      "Atributos"
+    "alcance": [
+      "atributo"
     ],
     "version": "v0.0.1",
     "links": [
@@ -400,9 +384,8 @@
       "Ameaça no contexto de organização criminosa ultraviolenta (art. 147-C), 1 a 3 anos.",
       "O §2º-D do art. 121 não consta do rol da Lei 8.072/90, que remete ao §2º. A ficha o registra como não hediondo, e a hediondez fica a rever se o rol mudar."
     ],
-    "tipo": "pejus",
-    "areas": [
-      "Tipos penais"
+    "alcance": [
+      "tipo"
     ],
     "version": "v0.0.1",
     "links": [
@@ -445,9 +428,8 @@
       "A pena é a do caput do art. 32: detenção de 3 meses a 1 ano, e multa.",
       "O art. 54 da mesma lei já punia, com reclusão de 1 a 4 anos, a poluição que provoque a mortandade de animais."
     ],
-    "tipo": "incriminadora",
-    "areas": [
-      "Tipos penais"
+    "alcance": [
+      "tipo"
     ],
     "version": "v0.0.1",
     "links": [

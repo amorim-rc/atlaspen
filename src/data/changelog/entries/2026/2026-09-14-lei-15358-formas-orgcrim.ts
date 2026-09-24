@@ -12,8 +12,7 @@ const entrada: ChangelogEntry = {
     'Ameaça no contexto de organização criminosa ultraviolenta (art. 147-C), 1 a 3 anos.',
     'O §2º-D do art. 121 não consta do rol da Lei 8.072/90, que remete ao §2º. A ficha o registra como não hediondo, e a hediondez fica a rever se o rol mudar.',
   ],
-  tipo: 'pejus',
-  areas: ['Tipos penais'],
+  alcance: ['tipo'],
   version: 'v0.0.1',
   links: [
     {label: 'Lei nº 15.358, de 2026, no Planalto', href: 'https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15358.htm'},

@@ -9,16 +9,20 @@
 
 import type {EstadoCatalogo} from '../../lib/simulacao/motor';
 import {ROTULO_INCIDENCIA, ROTULO_REQUISITO, ROTULO_VEDACAO, camposDoTipo} from '../../lib/simulacao/motor';
+import {ROTULO_ETIQUETA_BASE} from '../../lib/simulacao/tipos';
 import type {AlcanceAtributo, Etiqueta, Mudanca, Par, Resultado, Unidades} from '../../lib/simulacao/tipos';
 import type {AtributoResultado} from '../../lib/atributos/types';
 import {diasDeMeses, formatDias, formatFaixa} from '../../lib/pena';
 import {circunstanciasPorExtenso, type CenarioReverso} from '../../lib/atributos/reverso';
-import {ROTULO_TIPO} from '../../data/changelog/types';
+
 import {NOME, NOME_EXTENSO} from '../../site/config';
 import {dataAbnt, dataCurta} from '../../site/datas';
 import {rotuloValor} from '../atributo/estado';
 
-export const ROTULO_ETIQUETA: Record<Etiqueta, string> = {...ROTULO_TIPO, proposta: 'proposta, sem norma'};
+export const ROTULO_ETIQUETA: Record<Etiqueta, string> = {
+  ...ROTULO_ETIQUETA_BASE,
+  proposta: 'proposta, sem norma',
+};
 
 const fmt = (n: number) => n.toLocaleString('pt-BR');
 const juntar = (l: string[]) => (l.length <= 1 ? (l[0] ?? '') : `${l.slice(0, -1).join(', ')} e ${l.at(-1)}`);

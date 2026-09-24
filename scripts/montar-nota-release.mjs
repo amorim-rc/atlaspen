@@ -6,16 +6,11 @@
 
 import {lerEntradas} from './_ler-changelog.mjs';
 
-// Espelha ROTULO_TIPO de src/data/changelog/types.ts. As etiquetas saem em
-// itálico (a linha abaixo embrulha as tags em *...*), como na interface.
-const TIPO_ROTULO = {
-  incriminadora: 'novatio legis incriminadora',
-  pejus: 'novatio legis in pejus',
-  mellius: 'novatio legis in mellius',
-  abolitio: 'abolitio criminis',
-  // Quarta natureza, de 23/09/2026 (decisão 37). Espelha ROTULO_TIPO em
-  // src/data/changelog/types.ts, onde está a régua que a separa de `mellius`.
-  'abolitio-parcial': 'abolitio criminis (parcial)',
+// O alcance da mudança: tipo penal, atributo penal, ou os dois. Espelha
+// ROTULO_ALCANCE de src/data/changelog/types.ts.
+const ALCANCE_ROTULO = {
+  tipo: 'Tipos penais',
+  atributo: 'Atributos penais',
 };
 
 const versao = process.argv[2];
@@ -35,7 +30,7 @@ if (daVersao.length === 0) {
 
 const partes = [];
 for (const e of daVersao) {
-  const tags = [TIPO_ROTULO[e.tipo] || e.tipo, ...(e.areas || [])].join(' · ');
+  const tags = (e.alcance || []).map((a) => ALCANCE_ROTULO[a] || a).join(' · ');
   partes.push(`## ${e.title}`);
   partes.push(`*${tags}*`);
   partes.push(e.summary);

@@ -1,6 +1,9 @@
 /*
- * O feed das notas de atualizações (Notas e projeto.dc.html, 6b). A natureza
- * em latim, em itálico; a cor só reforça o rótulo.
+ * O feed das notas de atualizações (Notas e projeto.dc.html, 6b).
+ *
+ * As classes de natureza em latim saíram em 24/09/2026, com a simplificação do
+ * contrato: a entrada declara só o alcance (tipo ou atributo), e a direção da
+ * mudança é dita em prosa.
  */
 
 .feed {
@@ -44,10 +47,6 @@
   font-family: var(--fonte-mono);
   font-size: var(--fs-rotulo);
   cursor: pointer;
-}
-
-.latim {
-  font-style: italic;
 }
 
 .chipAtivo {
@@ -123,36 +122,6 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 0.4rem;
-}
-
-.natureza {
-  padding: 0.15rem 0.45rem;
-  border-radius: 2px;
-  font-family: var(--fonte-mono);
-  font-size: 0.6875rem;
-  font-style: italic;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-}
-
-.natureza_incriminadora {
-  background: var(--cor-cabivel-fundo);
-  color: var(--cor-cabivel);
-}
-
-.natureza_pejus {
-  background: var(--cor-simulacao-fundo);
-  color: var(--cor-simulacao);
-}
-
-.natureza_mellius {
-  background: var(--cor-origem-fundo);
-  color: var(--cor-origem);
-}
-
-.natureza_abolitio {
-  background: var(--cor-incabivel-fundo);
-  color: var(--cor-acento);
 }
 
 .area {

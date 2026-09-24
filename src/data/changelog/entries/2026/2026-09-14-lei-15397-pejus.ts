@@ -12,8 +12,7 @@ const entrada: ChangelogEntry = {
     'Roubo (CP, art. 157): o caput passa de 4 a 10 para 6 a 10 anos; o latrocínio (§3º, II), de 20 a 30 para 24 a 30 anos.',
     'Receptação (CP, art. 180, caput): de 1 a 4 para 2 a 6 anos. Receptação de animal (art. 180-A): de 2 a 5 para 3 a 8 anos. Interrupção ou perturbação de serviço telegráfico, telefônico, informático, telemático ou de informação de utilidade pública (art. 266): de 1 a 3 para 2 a 4 anos.',
   ],
-  tipo: 'pejus',
-  areas: ['Tipos penais'],
+  alcance: ['tipo'],
   version: 'v0.0.1',
   links: [
     {label: 'Lei nº 15.397, de 2026, no Planalto', href: 'https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15397.htm'},
