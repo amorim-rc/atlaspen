@@ -17,6 +17,7 @@ import type {Avaliacao, Parametros} from './types';
 import {num, bool} from './types';
 import {formatPena, formatFracao} from '../format';
 import {ehReincidente, reincidenteEmDoloso, reincidenteEspecifico} from './reincidencia';
+import {regimeComumAnterior, regimeHediondoAnterior} from '../tempo';
 
 const ANO = 12;
 
@@ -369,10 +370,18 @@ export const AVALIADORES: Record<string, (c: Cenario, p: Parametros) => Avaliaca
   },
   progressao: (c, p) => {
     const comViolencia = c.violencia || c.graveAmeaca;
+    // Os dois regimes do art. 112 mudaram em datas DIFERENTES: a tabela dos
+    // hediondos em 25/03/2026 (Lei 15.358) e a dos comuns em 08/05/2026 (Lei
+    // 15.402). Um fato entre as duas cai na tabela nova dos hediondos e na
+    // antiga dos comuns — era o que o antigo booleano único não representava.
+    const hediondoAnterior = regimeHediondoAnterior(c.dataDoFato);
+    const comumAnterior = regimeComumAnterior(c.dataDoFato);
     let fracao: number;
     let inciso: string;
     if (c.hediondo && c.resultadoMorte && reincidenteEspecifico(c)) {
-      fracao = num(p, 'fracaoReincidenteHediondoMorte');
+      fracao = hediondoAnterior
+        ? num(p, 'fracaoReincidenteHediondoMorteAnterior')
+        : num(p, 'fracaoReincidenteHediondoMorte');
       inciso = 'VIII — reincidente específico, hediondo com resultado morte (livramento vedado)';
     } else if (c.comandoOrgcrimUltraviolenta && c.hediondo) {
       // Alínea "b" antes da "a": o comando de facção ultraviolenta não depende do
@@ -384,16 +393,31 @@ export const AVALIADORES: Record<string, (c: Cenario, p: Parametros) => Avaliaca
         'VI, "b" — comando de organização criminosa ultraviolenta estruturada para crime ' +
         'hediondo (livramento vedado)';
     } else if (c.feminicidio && !reincidenteEspecifico(c)) {
-      fracao = num(p, 'fracaoFeminicidioPrimario');
-      inciso = 'VI, "d" — primário, feminicídio (livramento vedado)';
+      // A partir daqui, os HEDIONDOS. A tabela deles mudou em 25/03/2026 (Lei
+      // 15.358) e a dos comuns em 08/05/2026 (Lei 15.402): são marcos
+      // diferentes, e um fato entre as duas datas cai na tabela nova dos
+      // hediondos e na antiga dos comuns. Por isso a escolha é pela data do
+      // fato, e não por um "fato anterior" só.
+      fracao = hediondoAnterior
+        ? num(p, 'fracaoFeminicidioPrimarioAnterior')
+        : num(p, 'fracaoFeminicidioPrimario');
+      inciso = hediondoAnterior
+        ? 'VI-A — primário, feminicídio (redação da Lei 14.994/2024; livramento vedado)'
+        : 'VI, "d" — primário, feminicídio (livramento vedado)';
     } else if (c.hediondo && c.resultadoMorte) {
-      fracao = num(p, 'fracaoPrimarioHediondoMorte');
+      fracao = hediondoAnterior
+        ? num(p, 'fracaoPrimarioHediondoMorteAnterior')
+        : num(p, 'fracaoPrimarioHediondoMorte');
       inciso = 'VI, "a" — primário, hediondo com resultado morte (livramento vedado)';
     } else if (c.hediondo && reincidenteEspecifico(c)) {
-      fracao = num(p, 'fracaoReincidenteHediondo');
+      fracao = hediondoAnterior
+        ? num(p, 'fracaoReincidenteHediondoAnterior')
+        : num(p, 'fracaoReincidenteHediondo');
       inciso = 'VII — reincidente, hediondo';
     } else if (c.hediondo) {
-      fracao = num(p, 'fracaoPrimarioHediondo');
+      fracao = hediondoAnterior
+        ? num(p, 'fracaoPrimarioHediondoAnterior')
+        : num(p, 'fracaoPrimarioHediondo');
       inciso = 'V — primário, hediondo/equiparado';
     } else if (c.miliciaPrivada) {
       // Alínea "c" do inciso VI. A constituição de milícia privada (art. 288-A do
@@ -405,7 +429,7 @@ export const AVALIADORES: Record<string, (c: Cenario, p: Parametros) => Avaliaca
       // limitação dos hediondos (estudos/modelo-atributos.md, achado C).
       fracao = num(p, 'fracaoMiliciaPrivada');
       inciso = 'VI, "c" — constituição de milícia privada';
-    } else if (c.fatoAnteriorA15402) {
+    } else if (comumAnterior) {
       // Tabela do Pacote Anticrime, para fato até 07/05/2026. Ela não é "a
       // antiga": continua sendo a lei do caso, porque a Lei 15.402/2026 é mais
       // gravosa para o primário sem violência (16% viraram 16,67%) e lei mais
@@ -467,7 +491,7 @@ export const AVALIADORES: Record<string, (c: Cenario, p: Parametros) => Avaliaca
           'calculado acima; nas seguintes, a base é o remanescente.',
       );
     }
-    if (!c.fatoAnteriorA15402 && !c.hediondo && !c.miliciaPrivada) {
+    if (!comumAnterior && !c.hediondo && !c.miliciaPrivada) {
       detalhes.push(
         'Redação da Lei 15.402/2026, em vigor desde 08/05/2026. Para fato anterior, ' +
           'marque a circunstância correspondente: para o primário em crime sem ' +

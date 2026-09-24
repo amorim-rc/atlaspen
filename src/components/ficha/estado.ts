@@ -25,11 +25,15 @@ export interface EstadoFicha {
   concreta: number | null;
   reincidencia: Reincidencia;
   comando: boolean;
-  /** Fato anterior a 08/05/2026, vigência da Lei 15.402/2026. */
-  anterior: boolean;
   /** A hipótese de hediondez do caso, quando o tipo a condiciona. */
   hediondo: boolean;
-  /** Reservado: a data do fato. */
+  /**
+   * A DATA DO FATO (ISO), `null` = hoje. Decisão 35, de 23/09/2026: o campo
+   * estava reservado desde o desenho da ficha e passou a ser usado. Ele
+   * substitui a antiga caixa "fato anterior a 08/05/2026", que só dava conta
+   * de uma lei — e já são duas com marcos diferentes (Lei 15.358, de 25/03, nos
+   * hediondos; Lei 15.402, de 08/05, nos comuns).
+   */
   em: string | null;
 }
 
@@ -41,7 +45,6 @@ export const ESTADO_LEGAL: EstadoFicha = {
   concreta: null,
   reincidencia: 'primario',
   comando: false,
-  anterior: false,
   hediondo: false,
   em: null,
 };
@@ -136,9 +139,11 @@ export function lerEstado(search: string, modos: Modo[]): EstadoFicha {
         ? 'especifico'
         : 'primario',
     comando: sim(q.get('comando')),
-    anterior: sim(q.get('anterior')),
     hediondo: sim(q.get('hediondo')),
-    em: em && /^\d{4}-\d{2}-\d{2}$/.test(em) ? em : null,
+    // `anterior=sim` é a chave de antes de 23/09/2026, quando a data do fato
+    // era uma caixa de seleção só. Vira a véspera da Lei 15.402 para que link
+    // antigo continue calculando o que calculava.
+    em: em && /^\d{4}-\d{2}-\d{2}$/.test(em) ? em : sim(q.get('anterior')) ? '2026-05-07' : null,
   };
 }
 
@@ -160,7 +165,6 @@ export function escreverEstado(
   if (e.concreta !== null && e.concreta !== legal.concreta) q.set('concreta', String(e.concreta));
   if (e.reincidencia !== 'primario') q.set('reu', e.reincidencia);
   if (e.comando) q.set('comando', 'sim');
-  if (e.anterior) q.set('anterior', 'sim');
   if (e.hediondo) q.set('hediondo', 'sim');
   if (e.em) q.set('em', e.em);
   // A vírgula e os dois-pontos da lista de modificadores ficam legíveis na URL.

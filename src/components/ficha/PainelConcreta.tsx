@@ -6,14 +6,20 @@
 // lista (design_handoff_atlaspen/09, item 1).
 //
 // O perfil tem o que o motor distingue, e nada além: a reincidência em quatro
-// estados (primário, em crime culposo, em crime doloso, específico), o comando de facção ultraviolenta (art. 112, VI, "b", LEP), o fato
-// anterior à Lei 15.402/2026 e, quando o tipo a condiciona, a hediondez do caso.
+// estados (primário, em crime culposo, em crime doloso, específico), o comando
+// de facção ultraviolenta (art. 112, VI, "b", LEP), a DATA DO FATO e, quando o
+// tipo a condiciona, a hediondez do caso.
+//
+// A data do fato entrou em 23/09/2026 (decisão 35) no lugar da caixa "fato
+// anterior a 08/05/2026". Uma caixa dava conta de uma lei; já são duas, com
+// marcos diferentes, e a próxima não caberia sem uma terceira caixa.
 
 import {useMemo, type MouseEvent} from 'react';
 import type {Crime} from '../../lib/types';
 import {CATALOGO, calcularAtributos} from '../../lib/atributos';
 import {contarVereditos, daNatureza} from '../../lib/atributos/veredito';
 import {cenarioFromCrime} from '../../lib/cenario';
+import {hojeISO} from '../../lib/tempo';
 import {DIAS_POR_ANO, PENA_MAXIMA_ENTRADA, formatContagemDias, formatDias, mesesDeDias} from '../../lib/pena';
 import {REINCIDENCIAS, ROTULO_REINCIDENCIA} from '../../lib/atributos/reincidencia';
 import {caminho} from '../../site/url';
@@ -43,10 +49,10 @@ export default function PainelConcreta({crime, estado: e, atualizar, pena, legal
         penaConcreta: mesesDeDias(pena),
         reincidencia: e.reincidencia,
         comandoOrgcrimUltraviolenta: e.comando,
-        fatoAnteriorA15402: e.anterior,
+        dataDoFato: e.em ?? hojeISO(),
         hediondo: hediondoNoCaso,
       }),
-    [crime, pena, e.reincidencia, e.comando, e.anterior, hediondoNoCaso],
+    [crime, pena, e.reincidencia, e.comando, e.em, hediondoNoCaso],
   );
   const concretos = daNatureza(todos, 'concreto');
   const incondicionados = daNatureza(todos, 'incondicionado');
@@ -133,11 +139,17 @@ export default function PainelConcreta({crime, estado: e, atualizar, pena, legal
             </span>
           </label>
           <label className={s.circunstancia}>
-            <input type="checkbox" checked={e.anterior} onChange={(ev) => atualizar({anterior: ev.target.checked})} />
+            <input
+              type="date"
+              value={e.em ?? hojeISO()}
+              max={hojeISO()}
+              onChange={(ev) => atualizar({em: ev.target.value || null})}
+            />
             <span>
-              Fato anterior a 08/05/2026
+              Data do fato
               <span className={s.norma}>
-                vigência da Lei 15.402/2026 no art. 112 da LEP; lei mais gravosa não retroage
+                a lei do tempo do fato: Lei 15.358/2026 nos hediondos (desde 25/03) e Lei
+                15.402/2026 nos comuns (desde 08/05). Lei mais gravosa não retroage.
               </span>
             </span>
           </label>

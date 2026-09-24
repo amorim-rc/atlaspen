@@ -254,12 +254,19 @@ export interface Cenario {
    */
   miliciaPrivada: boolean;
   /**
-   * O fato é ANTERIOR a 08/05/2026, data em que a Lei 15.402/2026 entrou em
-   * vigor. Circunstância do CASO, e das mais consequentes: para o primário
-   * condenado por crime sem violência a lei nova é mais GRAVOSA (16% viraram
-   * 1/6 = 16,67%), e lei mais gravosa não retroage.
+   * A DATA DO FATO, em ISO (`AAAA-MM-DD`). Padrão: hoje.
+   *
+   * Circunstância do CASO, e das mais consequentes. Decisão do mantenedor em
+   * 23/09/2026 (decisão 35): substitui o antigo booleano `fatoAnteriorA15402`,
+   * porque as leis que mexem no art. 112 da LEP têm marcos DIFERENTES — a Lei
+   * 15.358/2026 entrou em 25/03 e reescreveu os hediondos; a Lei 15.402/2026
+   * entrou em 08/05 e reescreveu os comuns. Um fato entre as duas datas cai na
+   * tabela nova dos hediondos e na antiga dos comuns, e nenhum booleano único
+   * representava isso.
+   *
+   * Os marcos e as perguntas que a data responde estão em `src/lib/tempo.ts`.
    */
-  fatoAnteriorA15402: boolean;
+  dataDoFato: string;
   violencia: boolean;
   graveAmeaca: boolean;
   confessou: boolean;

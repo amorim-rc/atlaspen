@@ -2,6 +2,7 @@
 
 import type {Cenario, TipoDoMotor} from './types';
 import {ehTituloXII} from './dosimetria/aplicaveis';
+import {hojeISO} from './tempo';
 
 /**
  * Cenário inicial de um tipo penal: penas cominadas + características objetivas
@@ -37,8 +38,10 @@ export function cenarioFromCrime(c: TipoDoMotor): Cenario {
     // constituição de milícia. A mesma detecção de CP do Título XII (CPM fora).
     miliciaPrivada:
       /^CP(?![A-Z])/.test(c.lei ?? '') && /^Art\.?\s*288\s*-\s*A\b/i.test(c.artigo ?? ''),
-    // Parte-se da lei vigente. Quem simula fato anterior marca na simulação.
-    fatoAnteriorA15402: false,
+    // Parte-se do fato de HOJE, e portanto da lei vigente. Quem consulta um
+    // fato anterior muda a data na simulação, e o motor escolhe sozinho a
+    // redação de cada lei que incide (src/lib/tempo.ts).
+    dataDoFato: hojeISO(),
     violencia: c.violencia === 'Sim',
     graveAmeaca: c.grave_ameaca === 'Sim',
     confessou: false,

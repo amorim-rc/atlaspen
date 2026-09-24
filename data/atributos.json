@@ -1164,6 +1164,101 @@
               "fundamento": "Art. 112, VIII, LEP (redação da Lei 15.358/2026)"
             }
           ]
+        },
+        {
+          "id": "fracaoPrimarioHediondoAnterior",
+          "rotulo": "Primário, hediondo/equiparado (fato até 24/03/2026)",
+          "tipo": "fracao",
+          "padrao": 0.4,
+          "min": 0,
+          "max": 1,
+          "passo": 0.01,
+          "ajuda": "40% da pena ao primário condenado por crime hediondo ou equiparado. Redação do Pacote Anticrime, aplicável a FATO ANTERIOR a 25/03/2026: a Lei 15.358/2026 levou o percentual a 70%, e por ser mais gravosa não retroage.",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivo": "lep|art. 112, v"
+              },
+              "norma": "Lei nº 13.964",
+              "fundamento": "Art. 112, V, LEP (redação da Lei 13.964/2019)"
+            }
+          ]
+        },
+        {
+          "id": "fracaoPrimarioHediondoMorteAnterior",
+          "rotulo": "Primário, hediondo com resultado morte (fato até 24/03/2026)",
+          "tipo": "fracao",
+          "padrao": 0.5,
+          "min": 0,
+          "max": 1,
+          "passo": 0.01,
+          "ajuda": "50% da pena ao primário condenado por crime hediondo ou equiparado com resultado morte, vedado o livramento condicional. Aplicável a FATO ANTERIOR a 25/03/2026; a Lei 15.358/2026 levou o percentual a 75%.",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivo": "lep|art. 112, vi"
+              },
+              "norma": "Lei nº 13.964",
+              "fundamento": "Art. 112, VI, \"a\", LEP (redação da Lei 13.964/2019)"
+            }
+          ]
+        },
+        {
+          "id": "fracaoFeminicidioPrimarioAnterior",
+          "rotulo": "Primário, feminicídio (fato até 24/03/2026)",
+          "tipo": "fracao",
+          "padrao": 0.55,
+          "min": 0,
+          "max": 1,
+          "passo": 0.01,
+          "ajuda": "55% da pena ao primário condenado por feminicídio, vedado o livramento condicional. Era o inciso VI-A, incluído pela Lei 14.994/2024 e REVOGADO pela Lei 15.358/2026, que levou a hipótese para o inciso VI, alínea \"d\", com 75%. Aplicável a FATO ANTERIOR a 25/03/2026. A vigência da Lei 14.994/2024 ainda não foi conferida no DOU (pendência declarada na decisão 35 do pacote de 23/09/2026).",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivo": "lep|art. 112, vi-a"
+              },
+              "norma": "Lei nº 14.994",
+              "fundamento": "Art. 112, VI-A, LEP (incluído pela Lei 14.994/2024, revogado pela Lei 15.358/2026)"
+            }
+          ]
+        },
+        {
+          "id": "fracaoReincidenteHediondoAnterior",
+          "rotulo": "Reincidente, hediondo/equiparado (fato até 24/03/2026)",
+          "tipo": "fracao",
+          "padrao": 0.6,
+          "min": 0,
+          "max": 1,
+          "passo": 0.01,
+          "ajuda": "60% da pena ao reincidente em crime hediondo ou equiparado. Aplicável a FATO ANTERIOR a 25/03/2026; a Lei 15.358/2026 levou o percentual a 80%.",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivo": "lep|art. 112, vii"
+              },
+              "norma": "Lei nº 13.964",
+              "fundamento": "Art. 112, VII, LEP (redação da Lei 13.964/2019)"
+            }
+          ]
+        },
+        {
+          "id": "fracaoReincidenteHediondoMorteAnterior",
+          "rotulo": "Reincidente, hediondo com resultado morte (fato até 24/03/2026)",
+          "tipo": "fracao",
+          "padrao": 0.7,
+          "min": 0,
+          "max": 1,
+          "passo": 0.01,
+          "ajuda": "70% da pena ao reincidente em crime hediondo ou equiparado com resultado morte, vedado o livramento condicional. Aplicável a FATO ANTERIOR a 25/03/2026; a Lei 15.358/2026 levou o percentual a 85%.",
+          "redacoes": [
+            {
+              "fonte": {
+                "dispositivo": "lep|art. 112, viii"
+              },
+              "norma": "Lei nº 13.964",
+              "fundamento": "Art. 112, VIII, LEP (redação da Lei 13.964/2019)"
+            }
+          ]
         }
       ],
       "alcanca_sem_pena_privativa": false

@@ -22,6 +22,16 @@ import {
 import {escreverPremissa, lerPremissa, premissaIgualAoPadrao} from '../src/lib/atributos/premissa-url';
 import {escreverEstado, lerEstado} from '../src/components/atributo/estado';
 import {cenarioFromCrime} from '../src/lib/cenario';
+import {VIGENCIA} from '../src/lib/tempo';
+
+/**
+ * Uma data anterior aos DOIS marcos do art. 112 da LEP: antes da Lei 15.358
+ * (25/03/2026, hediondos) e antes da Lei 15.402 (08/05/2026, comuns). Serve
+ * para exercitar as duas tabelas antigas de uma vez.
+ */
+const ANTES_DAS_DUAS = '2026-01-15';
+/** Entre os dois marcos: tabela NOVA dos hediondos, ANTIGA dos comuns. */
+const ENTRE_OS_MARCOS = '2026-04-10';
 import {avaliarTipo} from '../src/lib/atributos/remissao';
 import {calcularConcurso, calcularDosimetria} from '../src/lib/dosimetria';
 
@@ -206,8 +216,8 @@ console.log('1. Integridade do registro de atributos');
     });
     for (const c of crimes) {
       const base = cenarioFromCrime(c);
-      for (const extra of [{}, {reincidencia: 'especifico' as const}, {fatoAnteriorA15402: true},
-        {reincidencia: 'especifico' as const, fatoAnteriorA15402: true}]) {
+      for (const extra of [{}, {reincidencia: 'especifico' as const}, {dataDoFato: ANTES_DAS_DUAS},
+        {reincidencia: 'especifico' as const, dataDoFato: ANTES_DAS_DUAS}]) {
         b.avaliar({...base, ...extra}, espiao);
       }
     }
@@ -592,7 +602,7 @@ console.log('\n3. Casos-âncora de direito penal');
     // retroatividade se apura por situação concreta, não em bloco: por isso são
     // duas tabelas, não uma substituição.
     if (furto) {
-      const antes = avaliar(progressaoDef, furto, {fatoAnteriorA15402: true});
+      const antes = avaliar(progressaoDef, furto, {dataDoFato: ANTES_DAS_DUAS});
       const depois = avaliar(progressaoDef, furto, {});
       ok(/16%/.test(antes.resumo),
         `furto, primário, fato até 07/05/2026: 16% — inciso I de 2019 (obtido "${antes.resumo}")`);
@@ -600,7 +610,7 @@ console.log('\n3. Casos-âncora de direito penal');
         `furto, primário, fato desde 08/05/2026: 1/6 pelo caput (obtido "${depois.resumo}")`);
       // Reincidente sem violência: 20% nas duas, mas por dispositivos diferentes
       // — o inciso II de 2019 e o inciso III da redação nova.
-      const rAntes = avaliar(progressaoDef, furto, {fatoAnteriorA15402: true, reincidencia: 'especifico' as const});
+      const rAntes = avaliar(progressaoDef, furto, {dataDoFato: ANTES_DAS_DUAS, reincidencia: 'especifico' as const});
       const rDepois = avaliar(progressaoDef, furto, {reincidencia: 'especifico' as const});
       ok(/20%/.test(rAntes.resumo) && /20%/.test(rDepois.resumo),
         'furto, reincidente: 20% antes e depois — muda o fundamento, não o percentual');
@@ -609,6 +619,30 @@ console.log('\n3. Casos-âncora de direito penal');
           rDepois.detalhes.some((d) => d.includes('III —')),
         'furto, reincidente: o inciso citado acompanha a redação aplicável',
       );
+      // OS DOIS MARCOS SÃO INDEPENDENTES, e é por isso que a data substituiu o
+      // booleano. A Lei 15.358 mudou os HEDIONDOS em 25/03/2026 e a Lei 15.402
+      // mudou os COMUNS em 08/05/2026: um fato de abril cai na tabela NOVA dos
+      // hediondos e na ANTIGA dos comuns. Com uma caixa "fato anterior" só,
+      // este caso era irrepresentável — ou se errava o hediondo, ou o comum.
+      const meio = avaliar(progressaoDef, furto, {dataDoFato: ENTRE_OS_MARCOS});
+      ok(/16%/.test(meio.resumo),
+        `furto (comum), fato de abril/2026: ainda 16% da redação de 2019 (obtido "${meio.resumo}")`);
+    }
+
+    // A tabela dos HEDIONDOS, pelo mesmo corte e no outro marco.
+    {
+      const hediondo = crimes.find((c) => c.hediondo === 'Sim' && !c.resultado_morte);
+      if (hediondo) {
+        const antes = avaliar(progressaoDef, hediondo, {dataDoFato: ANTES_DAS_DUAS});
+        const meio = avaliar(progressaoDef, hediondo, {dataDoFato: ENTRE_OS_MARCOS});
+        const hoje = avaliar(progressaoDef, hediondo, {});
+        ok(/40%/.test(antes.resumo),
+          `hediondo, primário, fato até 24/03/2026: 40% (obtido "${antes.resumo}")`);
+        ok(/70%/.test(meio.resumo),
+          `hediondo, primário, fato de abril/2026: já 70% da Lei 15.358 (obtido "${meio.resumo}")`);
+        ok(/70%/.test(hoje.resumo),
+          `hediondo, primário, hoje: 70% (obtido "${hoje.resumo}")`);
+      }
     }
 
     // Título XII — a ressalva é TOPOGRÁFICA: não pergunta se houve violência.
