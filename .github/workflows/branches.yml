@@ -1,0 +1,184 @@
+name: Faxina de branches
+
+# Uma branch parada não é lixo por si — é trabalho que alguém deixou pela
+# metade. Por isso a faxina avisa antes de apagar, e deixa por escrito o SHA da
+# ponta de tudo o que apagou: com o SHA, `git fetch origin <sha>` traz o
+# trabalho de volta enquanto o GitHub o mantiver alcançável.
+#
+# A régua, contada a partir do ÚLTIMO COMMIT da branch:
+#
+#   mergeada na main ....... apaga na próxima rodada, sem espera
+#   7 dias sem commit ...... marcada como parada
+#   14 dias sem commit ..... apagada
+#
+# A marca não se escreve em lugar nenhum, e é de propósito: ela é a própria
+# idade do último commit. Um push zera o relógio, e na rodada seguinte a branch
+# some da lista sozinha — que é o "a marca cai quando há atualização" sem o
+# estado que se dessincroniza. Onde existe PR aberto, a marca também vira o
+# rótulo `stale` nele, porque aí há onde pendurá-la.
+#
+# NUNCA apaga: a branch padrão, branch protegida por ruleset, branch com PR
+# aberto (apagar fecharia o PR) e as que casarem com PRESERVAR.
+#
+# A branch de um PR MERGEADO não precisa esperar esta rodada: o GitHub a apaga
+# no instante do merge, se a opção do repositório estiver ligada. É uma
+# configuração, não um workflow, e liga-se uma vez:
+#
+#     gh api --method PATCH repos/amorim-rc/atlaspen -f delete_branch_on_merge=true
+#
+# Com ela ligada, o que sobra para esta faxina são as branches que nunca
+# viraram PR — as de trabalho local empurradas para o remoto — e as mergeadas
+# fora de PR.
+
+on:
+  schedule:
+    # Segunda, 06:00 de Brasília — logo depois do conferidor, para que a issue
+    # da semana e a faxina cheguem juntas.
+    - cron: '0 9 * * 1'
+  workflow_dispatch:
+    inputs:
+      ensaio:
+        description: 'Só relatar: não apaga nada'
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+concurrency:
+  group: faxina-branches
+  cancel-in-progress: false
+
+jobs:
+  faxina:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v8
+        env:
+          ENSAIO: ${{ inputs.ensaio }}
+        with:
+          script: |
+            const ENSAIO = process.env.ENSAIO === 'true';
+            const DIAS_PARADA = 7;
+            const DIAS_APAGA = 14;
+
+            // Branches que a faxina não toca, por mais paradas que fiquem.
+            // A `main` já está aqui por ser a padrão; estas são as outras.
+            const PRESERVAR = [/^backup\//, /^release\//];
+
+            const {owner, repo} = context.repo;
+            const rep = (await github.rest.repos.get({owner, repo})).data;
+            const padrao = rep.default_branch;
+
+            // Rótulo que não existe faz a chamada devolver 422, e a faxina
+            // morreria por causa de uma etiqueta. Criar antes, ignorando o
+            // "já existe", sai mais barato que descobrir isso na segunda-feira.
+            const garantirRotulo = (name, color, description) =>
+              github.rest.issues.createLabel({owner, repo, name, color, description})
+                .catch(() => {});
+            await garantirRotulo('stale', 'BFBFBF',
+              'Sem commit há mais de uma semana. Um push tira o rótulo.');
+            await garantirRotulo('faxina', 'BFBFBF',
+              'Relatório da faxina automática de branches.');
+
+            const branches = await github.paginate(github.rest.repos.listBranches,
+              {owner, repo, per_page: 100});
+
+            // Um PR aberto é o dono da branch: apagá-la fecharia o PR e perderia
+            // a discussão. Estas só são marcadas.
+            const prs = await github.paginate(github.rest.pulls.list,
+              {owner, repo, state: 'open', per_page: 100});
+            const comPR = new Map(prs.map((p) => [p.head.ref, p]));
+
+            const agora = Date.now();
+            const dias = (iso) => Math.floor((agora - new Date(iso)) / 86400000);
+
+            const apagadas = [], paradas = [], mergeadas = [];
+
+            for (const b of branches) {
+              if (b.name === padrao) continue;
+              if (b.protected) continue;
+              if (PRESERVAR.some((re) => re.test(b.name))) continue;
+
+              const commit = (await github.rest.repos.getCommit(
+                {owner, repo, ref: b.commit.sha})).data;
+              const parada = dias(commit.commit.committer.date);
+
+              // `compare` diz se a ponta da branch já é ancestral da padrão.
+              // "behind" e "identical" significam que não há nada aqui que a
+              // main não tenha: o trabalho chegou, a branch sobrou.
+              const cmp = (await github.rest.repos.compareCommitsWithBasehead({
+                owner, repo, basehead: `${padrao}...${b.name}`})).data;
+              const jaEsta = cmp.ahead_by === 0;
+
+              const pr = comPR.get(b.name);
+              const registro = {nome: b.name, sha: b.commit.sha.slice(0, 12), parada};
+
+              if (jaEsta && !pr) {
+                mergeadas.push(registro);
+                if (!ENSAIO) await github.rest.git.deleteRef(
+                  {owner, repo, ref: `heads/${b.name}`});
+                continue;
+              }
+              if (parada < DIAS_PARADA) {
+                if (pr) await github.rest.issues.removeLabel({
+                  owner, repo, issue_number: pr.number, name: 'stale'}).catch(() => {});
+                continue;
+              }
+              if (pr || parada < DIAS_APAGA) {
+                paradas.push({...registro, pr: pr ? pr.number : null});
+                if (pr && !ENSAIO) await github.rest.issues.addLabels({
+                  owner, repo, issue_number: pr.number, labels: ['stale']}).catch(() => {});
+                continue;
+              }
+              apagadas.push(registro);
+              if (!ENSAIO) await github.rest.git.deleteRef(
+                {owner, repo, ref: `heads/${b.name}`});
+            }
+
+            // O relatório. Ele é a recuperação: enquanto o GitHub mantiver o
+            // objeto alcançável, `git fetch origin <sha>` traz a ponta de volta.
+            const L = [];
+            const linha = (r) => `- \`${r.nome}\` — ponta \`${r.sha}\`, ${r.parada} dias sem commit`;
+            if (mergeadas.length) {
+              L.push(`### Apagadas por já estarem na \`${padrao}\``, '',
+                'Nada nelas que a branch padrão não tenha.', '',
+                ...mergeadas.map(linha), '');
+            }
+            if (apagadas.length) {
+              L.push('### Apagadas por abandono', '',
+                `Mais de ${DIAS_APAGA} dias sem commit, e com trabalho que a \`${padrao}\` não tem.`,
+                'Para recuperar qualquer uma:', '',
+                '```bash', ...apagadas.map((r) =>
+                  `git fetch origin ${r.sha} && git branch ${r.nome} ${r.sha}`),
+                '```', '');
+            }
+            if (paradas.length) {
+              L.push('### Paradas — apaga na rodada em que passarem de '
+                + `${DIAS_APAGA} dias`, '',
+                'Um commit zera o relógio e tira a branch desta lista.', '',
+                ...paradas.map((r) => linha(r) + (r.pr ? ` (PR #${r.pr}, rotulado \`stale\`)` : '')),
+                '');
+            }
+
+            if (!L.length) {
+              core.info('Nenhuma branch a tratar.');
+              return;
+            }
+            const corpo = [
+              `Rodada de ${new Date().toISOString().slice(0, 10)}`
+              + (ENSAIO ? ' — **ensaio, nada foi apagado**' : ''), '',
+              ...L,
+              '---', '',
+              'A régua está em `.github/workflows/branches.yml`. '
+              + 'Para rodar sem apagar: Actions ▸ Faxina de branches ▸ Run workflow.',
+            ].join('\n');
+
+            core.summary.addRaw(corpo).write();
+            if (!ENSAIO && (apagadas.length || paradas.length)) {
+              await github.rest.issues.create({owner, repo,
+                title: `Faxina de branches: ${new Date().toISOString().slice(0, 10)}`,
+                body: corpo, labels: ['faxina']});
+            }
