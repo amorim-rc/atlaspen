@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "descricao": "Acervo histórico, fonte: os dispositivos penais que saíram de vigência (revogados, vetados, não recepcionados), encontrados durante a conferência do catálogo. Os diplomas inteiros fora de vigência ficam em data/diplomas.json (situacao != vigente) e o site os soma a estes. Lido por scripts/gerar_completude.py (docs/acervo-historico.md) e pelo site (/acervo, /acervo/{id}, /acervo/linha-do-tempo).",
+    "descricao": "Acervo histórico, fonte: os dispositivos penais que saíram de vigência (revogados, vetados, não recepcionados), encontrados durante a conferência do catálogo. Os diplomas inteiros fora de vigência ficam em data/diplomas.json (situacao != vigente) e o site os soma a estes. Lido pelo site (/acervo, /acervo/{id}, /acervo/linha-do-tempo).",
     "regra": "Só entra o que a LEI (ou decisão em controle de constitucionalidade) tirou de vigência. Registro que saiu do catálogo porque estava errado — duplicata, infração administrativa tomada por crime, texto de outro diploma — não é acervo: vai para a nota da versão em que saiu.",
     "campos": {
       "id": "estável: é a URL pública (/acervo/{id}); nunca se reatribui",
@@ -11,7 +11,7 @@
       "categoria": "revogado | nao_recepcionado | vetado",
       "o_que_houve": "texto puro, como foi conferido",
       "normas": "a norma ou decisão que tirou o dispositivo de vigência (ou o vetou), e o ano DELA — que se lê da própria designação da norma. Não é a data de vigência da revogação",
-      "caso": "true: identificado durante a conferência (seção Casos de docs/acervo-historico.md)",
+      "caso": "true: identificado durante a conferência do catálogo, e não por varredura de diploma inteiro",
       "retirado": "quando constava do catálogo vigente e saiu dele por revogação: a versão e a nota",
       "data_revogacao": "AAAA-MM-DD da perda de vigência. null = ainda não conferida contra o Planalto (ver 'O que falta' no README)",
       "texto_original": "o texto do dispositivo antes de sair de vigência. null = ainda não transcrito e conferido"

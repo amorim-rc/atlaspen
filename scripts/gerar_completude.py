@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Gera docs/completude.md e docs/acervo-historico.md.
+"""Gera docs/completude.md.
 
 Ambas são DERIVADAS de ``data/diplomas.json`` (denominador da Fase 1) e de
 ``data/crimes.json`` (o catálogo). ``completude.md`` traz o índice de diplomas
@@ -44,8 +44,13 @@ INCOMPLETOS: set[str] = set()
 CATEGORIAS_ACERVO = {"revogado": "revogado", "nao_recepcionado": "não recepcionado", "vetado": "vetado"}
 
 
-def _carregar_acervo() -> list[dict]:
-    """Os registros de data/acervo.json, com os campos que a tabela exige."""
+def validar_acervo() -> None:
+    """A única trava de `data/acervo.json`: campo obrigatório, categoria e id.
+
+    Nasceu servindo à tabela de `docs/acervo-historico.md`, que saiu na v2.2.0
+    quando o acervo ganhou página própria. A tabela foi embora; a validação
+    fica, porque continua sendo a única — o site lê o arquivo, não o confere.
+    """
     dados = json.loads((RAIZ / "data" / "acervo.json").read_text(encoding="utf-8"))
     registros = dados["registros"]
     ids: set[str] = set()
@@ -58,15 +63,10 @@ def _carregar_acervo() -> list[dict]:
         if r["id"] in ids:
             raise SystemExit(f"data/acervo.json: id repetido: {r['id']!r}")
         ids.add(r["id"])
-    return registros
-
-
-def _rotulo(r: dict) -> str:
-    """ "CP, art. 240 (adultério)": o dispositivo e o nome, como a tabela os cita."""
-    return f"{r['dispositivo']} ({r['nome'][0].lower()}{r['nome'][1:]})"
 
 
 def main() -> int:
+    validar_acervo()
     inventario = json.loads((RAIZ / "data" / "diplomas.json").read_text(encoding="utf-8"))
     catalogo = json.loads((RAIZ / "data" / "crimes.json").read_text(encoding="utf-8"))
 
@@ -127,7 +127,7 @@ def main() -> int:
     p(f"| Tipos penais catalogados | **{len(catalogo)}** |")
     p(f"| Diplomas com tipo penal vigente | {len(indice)} |")
     p(f"| — com coleta iniciada | {len(com_coleta)} |")
-    p(f"| Diplomas revogados/não recepcionados | [{len(historicos)}](/docs/acervo-historico) |")
+    p(f"| Diplomas revogados/não recepcionados | [{len(historicos)}](/acervo) |")
     p("")
 
     # ------------------------------------------------------------------ índice
@@ -152,7 +152,7 @@ def main() -> int:
         p(f"| {d['nome']} | {n} | {situacao(d)} |")
     p("")
     p("A lista completa dos tipos já reunidos, com o texto de cada um, está na "
-      "[busca por tipo penal](/pesquisa/tipos).")
+      "[busca por tipo penal](/tipos).")
     p("")
 
     destino = RAIZ / "docs" / "completude.md"
@@ -161,98 +161,7 @@ def main() -> int:
         fh.write("\n")
     print(f"escrito {destino} ({len(L)} linhas)")
 
-    _gerar_acervo(historicos)
     return 0
-
-
-def _gerar_acervo(historicos: list[dict]) -> None:
-    """docs/acervo-historico.md — os diplomas revogados/não recepcionados já
-    inventariados, e a meta da v1.3.0 (reunir os tipos históricos)."""
-    L: list[str] = []
-    p = L.append
-    p("---")
-    p("id: acervo-historico")
-    p("title: Acervo histórico")
-    p("sidebar_position: 3")
-    p("---")
-    p("")
-    p("{/* GERADO AUTOMATICAMENTE por scripts/gerar_completude.py — não edite à mão. */}")
-    p("")
-    p("# Acervo histórico")
-    p("")
-    p("Reunir **o que já foi crime no Brasil** — os tipos penais revogados, "
-      "alterados e não recepcionados — é a "
-      "[um dos módulos planejados](https://github.com/amorim-rc/atlaspen/blob/main/"
-      "README.md#o-que-falta--e-onde-você-pode-ajudar), "
-      "a ser executada **após** a completude dos tipos vigentes. A pergunta \"o "
-      "que deixou de ser crime, e quando?\" é tão relevante para a pesquisa "
-      "quanto \"o que é crime hoje\", e hoje nenhuma ferramenta a responde de "
-      "forma estruturada.")
-    p("")
-    p("A entrega será uma aba de pesquisa própria, separada da busca vigente para "
-      "que nenhum tipo revogado contamine estatística de direito vigente, com "
-      "uma tela por tipo mostrando o **texto original**, o que houve com ele "
-      "(alteração, revogação ou não recepção), **quando** e por **qual "
-      "dispositivo**.")
-    p("")
-    p("## Diplomas revogados e não recepcionados já inventariados")
-    p("")
-    p("Ponto de partida do acervo: os diplomas inteiros que saíram de vigência, "
-      "registrados na [Fase 1](/docs/completude). Faltam ainda os tipos "
-      "**revogados dentro de diplomas vigentes** (ex.: adultério, sedução, rapto "
-      "no CP) e as **redações anteriores** alteradas.")
-    p("")
-    p("| Diploma | Norma | O que houve |")
-    p("|---|---|---|")
-    for d in historicos:
-        rotulo = "não recepcionado" if d["situacao"] == "nao_recepcionado" else "revogado"
-        p(f"| {d['nome']} | {d['norma']} | {rotulo} — {d['norma_revogadora']} |")
-    p("")
-    p("## Casos já identificados para o acervo")
-    p("")
-    p("Dispositivos que saíram de vigência, foram alterados ou nunca vigoraram, "
-      "encontrados durante a conferência do catálogo. São a semente do acervo — "
-      "cada um receberá, na v2.2.0, uma entrada com o texto original e o histórico.")
-    p("")
-    registros = _carregar_acervo()
-    p("| Dispositivo | Categoria | O que houve |")
-    p("|---|---|---|")
-    for r in registros:
-        if r.get("caso"):
-            p(f"| {_rotulo(r)} | {CATEGORIAS_ACERVO[r['categoria']]} | {r['o_que_houve']} |")
-    p("")
-    p("## Tipos retirados do catálogo por revogação")
-    p("")
-    p("Estes eram crime, deixaram de ser, e ainda constavam entre os tipos "
-      "vigentes — a conferência semanal contra o texto compilado os encontrou. "
-      "Ficam aqui até que o acervo tenha estrutura própria (v2.2.0).")
-    p("")
-    p("| Registro | Saiu em | Revogado por |")
-    p("|---|---|---|")
-    for r in registros:
-        if r.get("retirado"):
-            p(f"| {_rotulo(r)} | {r['retirado']['versao']} | {r['retirado']['nota']} |")
-    p("")
-    p(":::caution[As URLs desses registros deixaram de responder]")
-    p("`id` é endereço público (`/pesquisa/tipos?tipo=N`), e esses saíram do ar "
-      "com a remoção. Enquanto o acervo não tem página própria, esta tabela é o "
-      "destino de quem chegar por um link antigo — e a v2.2.0 fará a rota apontar "
-      "para o registro histórico, em vez de terminar em erro.")
-    p(":::")
-    p("")
-    p(":::note[Registro retirado por ERRO não entra no acervo]")
-    p("O acervo reúne o que já foi crime no Brasil — é material de pesquisa "
-      "sobre a lei, não a lista dos nossos enganos. Registro que saiu porque "
-      "estava errado (duplicata, infração administrativa tomada por crime, texto "
-      "de outro diploma transcrito) é descrito nas "
-      "[notas da versão](/release-notes) em que saiu, e não aqui.")
-    p(":::")
-    p("")
-    destino = RAIZ / "docs" / "acervo-historico.md"
-    with open(destino, "w", encoding="utf-8", newline="\n") as fh:
-        fh.write("\n".join(L))
-        fh.write("\n")
-    print(f"escrito {destino} ({len(L)} linhas)")
 
 
 if __name__ == "__main__":

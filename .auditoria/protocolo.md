@@ -41,7 +41,7 @@ repetitivo, ADI) e é conferida contra o acórdão ou o enunciado.
 | P4 | Modificadores (`data/modificadores.json`) | 187 | amostra, 59 | 2 |
 | P5 | Eventos do histórico legislativo | 227 | amostra, 59 | 2 |
 | P6 | Vereditos do motor (tipo × atributo) | ~32 mil | 10 por atributo, estratificados por veredito, conferidos à mão contra a lei; **não substitui** a bateria de testes do motor, que é pré-requisito do sorteio | 2 |
-| P7 | Afirmações verificáveis da prosa (`docs/`, `textos/`, textos do site) | a extrair | censo | 2 |
+| P7 | Afirmações verificáveis da prosa (`docs/`, textos do site) | a extrair | censo | 2 |
 
 Censo onde a população é pequena e o erro mudaria veredito publicado; amostra onde não é.
 

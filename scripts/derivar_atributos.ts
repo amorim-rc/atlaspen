@@ -133,7 +133,7 @@ const meta = {
   descricao:
     'Derivado de data/atributos.json por scripts/derivar_atributos.ts: não edite à mão. ' +
     'Fonte mais a última alteração legislativa e o alcance de cada atributo ' +
-    '(docs/superpowers/specs/2026-09-10-modelo-atributos.md, seção 4.6).',
+    '(.superpowers/specs/2026-09-10-modelo-atributos.md, seção 4.6).',
   ultima_alteracao:
     'O evento legislativo mais recente nos dispositivos citados, lido de ' +
     'data/historico-legislativo.json; `alteracoes_legislativas` conta os eventos ' +

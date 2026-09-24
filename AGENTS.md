@@ -59,6 +59,14 @@ ignoradas:
   `:::note[...]`); use `write_bytes` ou confira o EOL.
 - Admonitions: `:::note[Título]`, não `:::note Título` — é a sintaxe que
   `src/site/markdown/admonicoes.ts` lê.
+- **`docs/` é o que vai ao ar, e nada mais** (decisão de 24/09/2026). A árvore
+  espelha a do site: `docs/*.md` é o grupo *Documentação* de `/projeto`,
+  `docs/textos/*.md` é o grupo *Textos*. Documento que existe só no
+  repositório NÃO entra em `docs/` — o pré-registro da auditoria mora em
+  `.auditoria/`, os planos e specs em `.superpowers/`. Documento novo em
+  `docs/` precisa entrar em `data/documentacao.json` e na lista
+  `DOCUMENTOS_DO_PROJETO`, senão fica no repositório sem página, que foi como
+  `docs/acervo-historico.md` passou meses sendo gerado sem que nada o lesse.
 
 ## Verificação antes de concluir
 

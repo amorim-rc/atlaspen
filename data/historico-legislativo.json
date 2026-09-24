@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "descricao": "Histórico legislativo dos artigos de todos os tipos penais do catálogo e dos dispositivos citados pelos atributos penais: uma linha por acontecimento na vida de cada dispositivo, em ordem cronológica (docs/superpowers/specs/2026-09-10-modelo-atributos.md, seção 4.5). A chave estrangeira é `dispositivo`, a chave canônica de data/fontes.json, que o catálogo publica em `dispositivo_canonico`.",
+    "descricao": "Histórico legislativo dos artigos de todos os tipos penais do catálogo e dos dispositivos citados pelos atributos penais: uma linha por acontecimento na vida de cada dispositivo, em ordem cronológica (.superpowers/specs/2026-09-10-modelo-atributos.md, seção 4.5). A chave estrangeira é `dispositivo`, a chave canônica de data/fontes.json, que o catálogo publica em `dispositivo_canonico`.",
     "eventos": {
       "criacao": "nasceu, no texto original ou incluído por lei posterior",
       "alteracao": "uma lei lhe deu texto novo",

@@ -20,8 +20,3 @@ export function caminho(rota: string): string {
   return BASE + rota.replace(/^\/+/, '');
 }
 
-/** O caminho de uma URL sem o prefixo do site: `/atlaspen/tipos/1` → `/tipos/1`. */
-export function semBase(pathname: string): string {
-  const semPrefixo = pathname.startsWith(BASE) ? pathname.slice(BASE.length - 1) : pathname;
-  return semPrefixo === '' ? '/' : semPrefixo;
-}

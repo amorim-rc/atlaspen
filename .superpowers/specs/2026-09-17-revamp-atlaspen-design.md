@@ -122,7 +122,7 @@ mesma natureza, e parte delas não se fecha por esforço de implementação.
 
 **A7 — depende do grupo**
 
-- Os nomes da equipe de 2008 e as "três pessoas de início" em `textos/historia.md`.
+- Os nomes da equipe de 2008 e as "três pessoas de início" em `docs/textos/historia.md`.
 - **Já resolvido nesta sessão:** o primeiro commit é `ad30273`, de **22/06/2026**. A data que o
   backlog mandava conferir está correta.
 
@@ -140,7 +140,7 @@ As 41 ocorrências de "sispenas" em arquivos versionados (fora de `node_modules`
 
 | Classe | Onde | Ação |
 |---|---|---|
-| **Procedência** | `README.md:83,87,90`; `CITATION.cff` (`references`); `src/lib/atributos/reverso.ts:192`; `src/site/projeto.ts:71`; `estudos/materiais-sispenas-originais.md`; `textos/historia.md`; o PDF em `static/artigos/` | **Não muda.** "SISPENAS" nomeia o projeto de 2008 das Profas. Machado, que o AtlasPen retoma. Trocar apagaria a linhagem que o próprio `CITATION.cff` credita. |
+| **Procedência** | `README.md:83,87,90`; `CITATION.cff` (`references`); `src/lib/atributos/reverso.ts:192`; `src/site/projeto.ts:71`; `estudos/materiais-sispenas-originais.md`; `docs/textos/historia.md`; o PDF em `static/artigos/` | **Não muda.** "SISPENAS" nomeia o projeto de 2008 das Profas. Machado, que o AtlasPen retoma. Trocar apagaria a linhagem que o próprio `CITATION.cff` credita. |
 | **Endereço** | `astro.config.mjs` (`BASE`); `src/site/config.ts` (`SITE_URL`, `REPOSITORIO`); `src/site/url.ts`; `src/site/markdown/links.ts` (`BASE_ANTIGO`); `.github/workflows/deploy.yml` | PR escrito, testado e **não disparado**. |
 | **Dívida a pagar agora** | 30+ URLs absolutas em `src/data/changelog/entries/2026/*.ts` e em `static/data/changelog.json`, do tipo `https://amorim-rc.github.io/sispenas/tipos/95` | Derivar de `SITE_URL` em vez de literal. |
 | **Renomeável agora** | `sispenas-automacao` e `sispenas-bot` (`conferidor.yml:389,390,448,449`; `regen-data.yml:79,80`); `.github/ISSUE_TEMPLATE/`; `TRIAGEM.md:61`; `CONTRIBUTING.md:37`; `scripts/bootstrap_changelog_entries.py`; `scripts/gerar_completude.py`; `scripts/verificar_rotas.mjs` | Troca direta. |

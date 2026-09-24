@@ -23,13 +23,6 @@ export function todosOsTipos(): Crime[] {
   return cache;
 }
 
-let indice: Map<number, Crime> | null = null;
-
-export function tipoPorId(id: number): Crime | undefined {
-  if (!indice) indice = new Map(todosOsTipos().map((c) => [c.id, c]));
-  return indice.get(id);
-}
-
 /** O artigo-base de um registro: "Art. 121, §2º, I" → "121"; "Art. 359-M" → "359-m". */
 function artigoBase(artigo: string): string | null {
   const m = /art\.?\s*(\d+(?:-[A-Za-z])?)/i.exec(artigo || '');

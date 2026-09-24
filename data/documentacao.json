@@ -98,7 +98,7 @@
       ]
     },
     {
-      "arquivo": "docs/superpowers/specs/2026-09-10-modelo-atributos.md",
+      "arquivo": ".superpowers/specs/2026-09-10-modelo-atributos.md",
       "sobre": "Estudo do modelo de dados dos atributos penais (frente 5): achados conferidos no compilado, esquema de atributos.json e do histórico legislativo, os três pilotos e o plano do PR da migração.",
       "conferido_em": "2026-09-24",
       "depende_de": [
@@ -155,7 +155,7 @@
       ]
     },
     {
-      "arquivo": "textos/historia.md",
+      "arquivo": "docs/textos/historia.md",
       "sobre": "A história do projeto, da pesquisa de 2008 à retomada e ao lançamento. É a página que /projeto abre por padrão; cita decisões datadas do backlog.",
       "conferido_em": "2026-09-18",
       "depende_de": [
@@ -164,7 +164,7 @@
       ]
     },
     {
-      "arquivo": "textos/creditos.md",
+      "arquivo": "docs/textos/creditos.md",
       "sobre": "Autoria e créditos: quem constrói o AtlasPen, quem faz a pesquisa que o sustenta (o mantenedor e as duas professoras) e o antecedente de pesquisa (SISPENAS, 2008). Diz o mesmo que a LICENSE e o CITATION.cff, e tem de mudar junto com eles.",
       "conferido_em": "2026-09-24",
       "depende_de": [
@@ -173,7 +173,7 @@
       ]
     },
     {
-      "arquivo": "docs/protocolo-auditoria.md",
+      "arquivo": ".auditoria/protocolo.md",
       "sobre": "O metodo da auditoria por amostra, registrado ANTES do sorteio: estratos, tamanho, semente, dupla conferencia e o que conta como erro. E pre-registro, e por isso e publico e datado -- o valor dele esta em ter sido escrito antes de olhar o resultado. Muda so se o desenho da amostra mudar, e a mudanca tem de ser datada.",
       "conferido_em": "2026-09-24",
       "depende_de": [

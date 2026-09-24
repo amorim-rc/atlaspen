@@ -8,7 +8,7 @@
 
 **Tech Stack:** TypeScript (motor e site, Astro 7 + React), Python (pipeline de dados e robôs). Testes são scripts TS com `ok(cond, msg)`, rodados por `npm run verificar`; o pipeline tem validadores Python.
 
-**Spec:** `docs/superpowers/specs/2026-09-19-a2-motor-reincidencia-remissao-multa-design.md`
+**Spec:** `.superpowers/specs/2026-09-19-a2-motor-reincidencia-remissao-multa-design.md`
 
 ## Global Constraints
 
@@ -17,7 +17,7 @@
 - **Parâmetro, nunca constante.** Todo patamar legal lido por avaliador é parâmetro em `data/atributos.json`, com `redacoes` ligadas ao histórico legislativo.
 - **`data/atributos.json` reserializa sem diferença** com `json.dumps(d, ensure_ascii=False, indent=2) + '\n'`, e está em CRLF na cópia de trabalho: carregar, alterar, gravar e devolver o CRLF.
 - **Preservar o EOL** de todo arquivo editado (`AGENTS.md`); conferir `LF solto: 0` nos que estavam em CRLF.
-- **`docs/dados-abertos.md` e `textos/historia.md` têm modificações do mantenedor, não commitadas.** Em `docs/dados-abertos.md`, editar só as linhas deste plano e commitar com `git add -p`, só os hunks próprios. Não tocar em `textos/historia.md`.
+- **`docs/dados-abertos.md` e `docs/textos/historia.md` têm modificações do mantenedor, não commitadas.** Em `docs/dados-abertos.md`, editar só as linhas deste plano e commitar com `git add -p`, só os hunks próprios. Não tocar em `docs/textos/historia.md`.
 - **Não fazer push nem abrir PR.** Commits locais na branch `revamp/atlaspen`.
 - **Bateria do `AGENTS.md`** ao fim de cada tarefa que mexe em dado ou motor:
   ```
@@ -1620,7 +1620,7 @@ Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>"
 
 **Files:**
 - Modify: `scripts/equivalencia/atributos.json` (regravado)
-- Modify: `backlog.md`, `docs/superpowers/specs/2026-09-17-revamp-atlaspen-design.md`
+- Modify: `backlog.md`, `.superpowers/specs/2026-09-17-revamp-atlaspen-design.md`
 
 - [ ] **Step 1: A equivalência acusa, e cada acusação se explica**
 
@@ -1676,7 +1676,7 @@ Confira o EOL (`LF solto: 0`) nos dois e rode o Arquivista.
 - [ ] **Step 5: Commit**
 
 ```bash
-git add scripts/equivalencia/atributos.json backlog.md docs/superpowers/specs/2026-09-17-revamp-atlaspen-design.md data/documentacao.json
+git add scripts/equivalencia/atributos.json backlog.md .superpowers/specs/2026-09-17-revamp-atlaspen-design.md data/documentacao.json
 git commit -m "docs: a primeira parte do A2 fechada, e o congelamento regravado
 
 Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>"

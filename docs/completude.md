@@ -20,7 +20,7 @@ conferência do catálogo) e de
 | Tipos penais catalogados | **1529** |
 | Diplomas com tipo penal vigente | 61 |
 | — com coleta iniciada | 61 |
-| Diplomas revogados/não recepcionados | [11](/docs/acervo-historico) |
+| Diplomas revogados/não recepcionados | [11](/acervo) |
 
 ## Índice por diploma
 

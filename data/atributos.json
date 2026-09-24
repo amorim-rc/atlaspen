@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "descricao": "Catálogo dos atributos penais: a fonte. O derivado, com a última alteração legislativa e o alcance de cada atributo, é static/data/atributos.json. Modelo em docs/superpowers/specs/2026-09-10-modelo-atributos.md, seção 4.3.",
+    "descricao": "Catálogo dos atributos penais: a fonte. O derivado, com a última alteração legislativa e o alcance de cada atributo, é static/data/atributos.json. Modelo em .superpowers/specs/2026-09-10-modelo-atributos.md, seção 4.3.",
     "id": "Número inteiro, estável e append-only, como o dos tipos penais: atributo retirado vai para `aposentados`, e o número nunca volta.",
     "slug": "O identificador de texto usado nas URLs do site (?atributo=…).",
     "dispositivos": "Chaves canônicas (<id em data/fontes.json>|<dispositivo>) em que o atributo se funda. Chave sem vírgula é o artigo inteiro.",

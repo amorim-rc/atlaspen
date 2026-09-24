@@ -45,10 +45,6 @@ export function calcularAtributos(
   return calcularSobre(catalogo, c, overrides);
 }
 
-export function getAtributo(id: string): AtributoDef | undefined {
-  return POR_ID[id];
-}
-
 export const CATEGORIA_LABEL: Record<Categoria, string> = {
   processual: 'Atributos processuais (pena em abstrato)',
   aplicacao: 'Aplicação da pena (pena concreta)',

@@ -440,7 +440,7 @@ export const AVALIADORES: Record<string, (c: Cenario, p: Parametros) => Avaliaca
       // lei manda 75% ao primário e ao reincidente. Fica antes do ramo da redação
       // de 2019 porque a alínea já existia nela (com 50%); o caso concreto só
       // distingue a Lei 15.402, e a fração aqui é a da Lei 15.358 — a mesma
-      // limitação dos hediondos (docs/superpowers/specs/2026-09-10-modelo-atributos.md, achado C).
+      // limitação dos hediondos (.superpowers/specs/2026-09-10-modelo-atributos.md, achado C).
       fracao = num(p, 'fracaoMiliciaPrivada');
       inciso = 'VI, "c" — constituição de milícia privada';
     } else if (comumAnterior) {

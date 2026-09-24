@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "descricao": "Derivado de data/atributos.json por scripts/derivar_atributos.ts: não edite à mão. Fonte mais a última alteração legislativa e o alcance de cada atributo (docs/superpowers/specs/2026-09-10-modelo-atributos.md, seção 4.6).",
+    "descricao": "Derivado de data/atributos.json por scripts/derivar_atributos.ts: não edite à mão. Fonte mais a última alteração legislativa e o alcance de cada atributo (.superpowers/specs/2026-09-10-modelo-atributos.md, seção 4.6).",
     "ultima_alteracao": "O evento legislativo mais recente nos dispositivos citados, lido de data/historico-legislativo.json; `alteracoes_legislativas` conta os eventos posteriores ao texto original. null é \"não se sabe\": no parâmetro, sem dispositivo (súmula, decisão), sem fonte legal, ou com redação que o compilado não data; no atributo, nenhuma alteração conhecida e algum dispositivo não datado.",
     "alcance": "Ids dos tipos penais com pena privativa em que o atributo é cabível e condicional, com os parâmetros no padrão (lei vigente) e sob o cenário de referência. Incabível é o resto.",
     "cenario_referencia": {

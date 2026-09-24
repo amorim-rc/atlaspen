@@ -1,5 +1,5 @@
 ---
-// Um texto de textos/ em coluna de leitura: gênero, título, data, assinatura e o
+// Um texto de docs/textos/ em coluna de leitura: gênero, título, data, assinatura e o
 // corpo. É o que /projeto (a história) e /projeto/creditos (a autoria) mostram, e
 // por isso mora aqui, e não duplicado em cada página.
 import {getEntry, render} from 'astro:content';
@@ -7,12 +7,12 @@ import {dataExtenso} from '../../site/datas';
 import '../../styles/prosa.css';
 
 interface Props {
-  /** O nome do arquivo em textos/, sem a extensão. */
+  /** O nome do arquivo em docs/textos/, sem a extensão. */
   id: string;
 }
 const {id} = Astro.props;
 const texto = await getEntry('textos', id);
-if (!texto) throw new Error(`textos/${id}.md não encontrado`);
+if (!texto) throw new Error(`docs/textos/${id}.md não encontrado`);
 const {Content} = await render(texto);
 const t = texto.data;
 ---

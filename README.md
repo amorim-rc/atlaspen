@@ -176,7 +176,13 @@ texto da lei diz. É contribuição das mais úteis.
 
 Publicada no próprio site, em [`/projeto`](https://amorim-rc.github.io/atlaspen/projeto):
 Metodologia, Catálogo de tipos penais, Atributos penais, Completude, Dados abertos e Os
-robôs. A fonte fica em `docs/`, ao lado dos textos do grupo, em `textos/`.
+robôs.
+
+A árvore de `docs/` **espelha a do site**, e `docs/` é, sem exceção, o que vai ao ar:
+`docs/*.md` é o grupo *Documentação* da barra lateral, `docs/textos/` é o grupo *Textos*.
+O que existe só no repositório fica fora dele — o pré-registro da auditoria em
+`.auditoria/`, os planos e specs de desenvolvimento em `.superpowers/`. Os dois continuam
+versionados; o ponto só os tira do caminho de quem navega o código.
 
 ## Autoria
 

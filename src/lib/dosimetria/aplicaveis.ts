@@ -151,10 +151,3 @@ export function modificadoresAplicaveis(
     .filter((m) => !jaEmbutida(m, crime));
 }
 
-/** Agrupa por fase, preservando a ordem 1 → 2 → 3 (a ordem do art. 68). */
-export function porFase(mods: Modificador[]): {fase: 1 | 2 | 3; itens: Modificador[]}[] {
-  return ([1, 2, 3] as const).map((fase) => ({
-    fase,
-    itens: mods.filter((m) => m.fase === fase),
-  }));
-}

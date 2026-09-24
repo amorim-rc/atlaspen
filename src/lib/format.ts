@@ -24,17 +24,6 @@ export function formatPena(meses: number | null | undefined): string {
   return `${partes.slice(0, -1).join(', ')} e ${partes[partes.length - 1]}`;
 }
 
-export function formatPenaCurta(meses: number | null | undefined): string {
-  if (meses === null || meses === undefined || Number.isNaN(meses)) return '—';
-  if (meses <= 0) return '—';
-  if (meses < 1) return `${Math.round(meses * 30)}d`;
-  const m = Math.round(meses);
-  const anos = Math.floor(m / 12);
-  const rem = m % 12;
-  if (anos === 0) return `${rem}m`;
-  if (rem === 0) return `${anos}a`;
-  return `${anos}a${rem}m`;
-}
 
 const FRACOES: Record<string, string> = {
   '0.167': '1/6',

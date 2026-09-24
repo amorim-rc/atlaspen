@@ -83,8 +83,10 @@ def test_registro_real_do_projeto_e_coerente():
     declarados = {d["arquivo"] for d in registro_real["documentos"]}
     for arquivo in declarados:
         assert (RAIZ / arquivo).exists(), f"{arquivo} está no registro e não existe"
-    # docs/ publicados: os gerados (completude, acervo) não entram, porque quem
-    # os mantém é o gerador, não a prosa.
-    gerados = {"docs/completude.md", "docs/acervo-historico.md"}
+    # Tudo o que está em docs/ vai ao ar — a raiz é o grupo "Documentação" da
+    # barra lateral, docs/textos/ é o grupo "Textos". O gerado não entra, porque
+    # quem o mantém é o gerador, e não a prosa.
+    gerados = {"docs/completude.md"}
     publicados = {f"docs/{p.name}" for p in (RAIZ / "docs").glob("*.md")}
+    publicados |= {f"docs/textos/{p.name}" for p in (RAIZ / "docs" / "textos").glob("*.md")}
     assert not (publicados - gerados - declarados), "documento publicado fora do registro"

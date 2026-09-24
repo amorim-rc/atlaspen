@@ -12,9 +12,6 @@ export const NOME = 'AtlasPen';
 /** Por extenso: na primeira menção e em capa de documento. */
 export const NOME_EXTENSO = 'Atlas Penal Brasileiro dos Tipos, Atributos e Impacto Legislativo';
 
-/** Descritor curto, quando precisar de um. */
-export const DESCRITOR = 'catálogo aberto de tipos e atributos penais';
-
 /**
  * Quem assina o código e a base: a LICENSE, o rodapé e "Como citar".
  *
