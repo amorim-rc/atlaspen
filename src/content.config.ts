@@ -2,8 +2,8 @@
 //
 // A árvore de `docs/` espelha a de `/projeto`, por decisão de 24/09/2026 — e
 // `docs/` é, sem exceção, o que vai ao ar. O que existe só no repositório mora
-// fora dele: o pré-registro da auditoria em `.auditoria/`, os planos e specs em
-// `.superpowers/`. Antes a distinção morava apenas aqui e na lista
+// fora dele: os documentos de operação na raiz, os planos e specs do
+// desenvolvimento em `.superpowers/`. Antes a distinção morava apenas aqui e na lista
 // DOCUMENTOS_DO_PROJETO, e foi assim que `docs/acervo-historico.md` passou
 // meses sendo gerado sem que nada o renderizasse.
 //

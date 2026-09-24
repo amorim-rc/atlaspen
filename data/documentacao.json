@@ -173,7 +173,7 @@
       ]
     },
     {
-      "arquivo": ".auditoria/protocolo.md",
+      "arquivo": "AUDITORIA.md",
       "sobre": "O metodo da auditoria por amostra, registrado ANTES do sorteio: estratos, tamanho, semente, dupla conferencia e o que conta como erro. E pre-registro, e por isso e publico e datado -- o valor dele esta em ter sido escrito antes de olhar o resultado. Muda so se o desenho da amostra mudar, e a mudanca tem de ser datada.",
       "conferido_em": "2026-09-24",
       "depende_de": [

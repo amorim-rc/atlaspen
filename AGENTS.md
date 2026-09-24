@@ -62,8 +62,9 @@ ignoradas:
 - **`docs/` é o que vai ao ar, e nada mais** (decisão de 24/09/2026). A árvore
   espelha a do site: `docs/*.md` é o grupo *Documentação* de `/projeto`,
   `docs/textos/*.md` é o grupo *Textos*. Documento que existe só no
-  repositório NÃO entra em `docs/` — o pré-registro da auditoria mora em
-  `.auditoria/`, os planos e specs em `.superpowers/`. Documento novo em
+  repositório NÃO entra em `docs/`: o pré-registro da auditoria é o
+  `AUDITORIA.md` da raiz, ao lado do `TRIAGEM.md`, e os planos e specs do
+  desenvolvimento ficam em `.superpowers/`. Documento novo em
   `docs/` precisa entrar em `data/documentacao.json` e na lista
   `DOCUMENTOS_DO_PROJETO`, senão fica no repositório sem página, que foi como
   `docs/acervo-historico.md` passou meses sendo gerado sem que nada o lesse.

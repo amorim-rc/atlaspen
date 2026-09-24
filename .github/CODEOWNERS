@@ -55,9 +55,9 @@
 /static/artigos/                @amorim-rc
 
 # Fora do site, e versionado                               (mantido no mantenedor)
-# .auditoria/ é o pré-registro da auditoria: alterá-lo depois do sorteio destrói a
-# garantia que ele existe para dar. .superpowers/ são os planos e specs datados.
-/.auditoria/                    @amorim-rc
+# AUDITORIA.md é o pré-registro: alterá-lo depois do sorteio destrói a garantia que
+# ele existe para dar. .superpowers/ são os planos e specs datados do desenvolvimento.
+/AUDITORIA.md                   @amorim-rc
 /.superpowers/                  @amorim-rc
 
 # Regras do projeto e instruções para agentes               (mantido no mantenedor)
