@@ -2,4 +2,4 @@ blank_issues_enabled: true
 contact_links:
   - name: Documentação do AtlasPen
     url: https://amorim-rc.github.io/atlaspen/projeto/metodologia
-    about: Consulte a metodologia, os atributos penais e o backlog antes de abrir uma issue.
+    about: Consulte a metodologia, os atributos penais e o que já está planejado antes de abrir uma issue.

@@ -182,7 +182,8 @@ def _gerar_acervo(historicos: list[dict]) -> None:
     p("")
     p("Reunir **o que já foi crime no Brasil** — os tipos penais revogados, "
       "alterados e não recepcionados — é a "
-      "[frente 12 do backlog](https://github.com/amorim-rc/atlaspen/blob/main/backlog.md), "
+      "[um dos módulos planejados](https://github.com/amorim-rc/atlaspen/blob/main/"
+      "README.md#o-que-falta--e-onde-você-pode-ajudar), "
       "a ser executada **após** a completude dos tipos vigentes. A pergunta \"o "
       "que deixou de ser crime, e quando?\" é tão relevante para a pesquisa "
       "quanto \"o que é crime hoje\", e hoje nenhuma ferramenta a responde de "

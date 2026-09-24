@@ -6,7 +6,7 @@ conferência contra o **texto compilado** oficial do `planalto.gov.br`.
 
 Este arquivo é lido pelo Codex e demais agentes pelo nome; o Claude Code o lê via
 `CLAUDE.md`, que só o importa. Regra nova entra **aqui**. Os próximos passos possíveis do
-projeto estão em `backlog.md`.
+projeto estão na seção "O que falta" do `README.md`.
 
 ## Versão e notas: o feed já registra, a Release espera a v1.0.0
 

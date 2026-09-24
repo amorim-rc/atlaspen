@@ -286,7 +286,7 @@ semver, a versão 0 é desenvolvimento inicial: dados e URLs podem mudar sem avi
 versões de 1.0.0 a 2.0.6 que aparecem no histórico do repositório foram a numeração do
 protótipo; a v1.0.0 será o lançamento oficial, com domínio próprio, e é a partir dela que
 esta regra vale. Os próximos passos estão no
-[backlog](https://github.com/amorim-rc/atlaspen/blob/main/backlog.md).
+[README](https://github.com/amorim-rc/atlaspen/blob/main/README.md#o-que-falta--e-onde-você-pode-ajudar).
 
 ## Como citar
 

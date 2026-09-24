@@ -76,7 +76,7 @@ O acervo histórico fica em `data/acervo.json`, e os marcos da linha do tempo, e
 A documentação (Metodologia, Catálogo de tipos penais, Atributos penais, Completude,
 Dados abertos, Os robôs) fica em `docs/` e é publicada no próprio site, em `/projeto`, ao
 lado dos textos do grupo (`textos/`). O pipeline de conferência tem documentação própria em
-`scripts/robos/README.md`. Os próximos passos possíveis estão em [`backlog.md`](backlog.md).
+`scripts/robos/README.md`. Os próximos passos possíveis estão [abaixo](#o-que-falta--e-onde-você-pode-ajudar).
 
 ## Autoria e origem
 
@@ -127,15 +127,96 @@ benefícios, permitindo simular alterações legislativas) e a **atualiza**. Com
 - **Conjunto de atributos atualizado:** o artigo é de 2008 e antecede a **ANPP** e outras
   mudanças (ex.: limite de cumprimento hoje é de 40 anos). O motor foi reescrito para a
   legislação atual. Um instituto do original, a composição civil dos danos, ainda não tem
-  card próprio: está na frente 10 do [backlog](backlog.md), com os atributos mapeados.
+  card próprio: está entre os módulos, [abaixo](#o-que-falta--e-onde-você-pode-ajudar).
 - **Simulação efêmera:** para uso exploratório imediato, a simulação acontece na tela sem
   necessidade de gravar "tipos simulados", como fazia o sistema original voltado ao
   Ministério da Justiça.
 
 ### Lacunas conhecidas em relação ao original
 
-- Cobertura do catálogo (1.507 vs 1.529) e geração de "tipos mistos" (majorantes/minorantes).
+- ~~Cobertura do catálogo~~ — fechada em 24/09/2026: são 1.529 tipos, o mesmo número do
+  original de 2008. Falta a geração de "tipos mistos" (majorantes/minorantes).
 - Instituto ainda sem card: a composição civil dos danos.
+
+## O que falta — e onde você pode ajudar
+
+Esta seção substituiu o `backlog.md` em 24/09/2026. A razão é deliberada: um backlog em
+arquivo separado é documento interno, e quem clona o repositório não o lê. Aqui é convite.
+Vários destes itens têm solução mais elegante do que a nossa, e quem chegar de fora pode
+enxergá-la melhor do que quem já olhou demais.
+
+Se um deles te interessar, [abra uma issue](https://github.com/amorim-rc/atlaspen/issues)
+antes de escrever código — alguns carregam decisões jurídicas que precisam ser combinadas.
+
+### Antes do lançamento (v1.0.0)
+
+A v1.0.0 é o lançamento com endereço próprio: domínio `atlaspen.org.br` no ar e o
+repositório renomeado. Até lá, tudo o que puder entrar entra, para que a primeira versão
+pública já saia madura.
+
+| | o que falta |
+|---|---|
+| **Repositório em grupo** | Transferir para uma organização, com times e `CODEOWNERS` por área. O app de automação precisa ser reinstalado na organização, ou `regen-data`, `release` e o carimbo do conferidor param de empurrar. |
+| **Endereço próprio** | Comprar o domínio e trocar `SITE_URL` em `src/site/config.ts`, o `base` do `astro.config.mjs` e um `CNAME`. Hoje é uma constante, não uma varredura. |
+| **Datas de vigência** | 220 eventos do histórico já têm publicação e vigência conferidas no DOU. Falta a LC 225/2026, que tem vigência escalonada. |
+| **Amostra de validação** | O protocolo está registrado e a semente é o hash do commit da versão madura. Falta o sorteio e uma segunda pessoa para a dupla conferência (κ de Cohen). |
+
+### Depois do lançamento: módulos
+
+Cada um com plano, financiamento e pessoas próprias. A ordem é de exequibilidade.
+
+| | o que é |
+|---|---|
+| **Quantas vezes cada registro mudou** | Um contador de atualizações por tipo e por atributo, para medir a instabilidade de cada área da lei penal. |
+| **22 atributos mapeados e não integrados** | Estão levantados e fora do catálogo. Os fáceis entram juntos; a **prescrição completa** é empreitada do porte de um mestrado — as regras não são simples e há modulação no tempo. |
+| **A cadeia completa do histórico** | Hoje cada tipo diz a *última* lei que lhe deu texto. O módulo completa: todas as redações, em ordem, para responder "o que este artigo dizia em 2014?". É o que falta para a data do fato escolher também o TEXTO, e não só o cálculo. |
+| **Acervo histórico** | O que já foi crime no Brasil: revogados, alterados e não recepcionados. A pergunta "o que deixou de ser crime, e quando?" não tem hoje ferramenta que a responda de forma estruturada. |
+| **Robô dos tribunais** | Vigiar decisão de tribunal superior que muda o catálogo — ADI que retira tipo do ordenamento, tese de repercussão geral, súmula cancelada. Ver o débito técnico abaixo: metade do caminho está andada. |
+| **Usabilidade, processo penal, plataforma de pesquisa** | Ganhos de uso, extensão ao que rege os atributos na prática, e exportação para pesquisa empírica. |
+
+### Débito técnico
+
+Coisas que sabemos que estão erradas ou incompletas, e ainda não consertamos. Estão aqui
+porque dívida não declarada vira surpresa.
+
+**1. O snapshot ruim ocupa o lugar do bom.** `scripts/robos/nucleo/baixar.py` valida a
+*sentinela* — a string que prova que a página baixada é a versão fresca e íntegra — e
+**grava o arquivo mesmo quando ela falha**. O `sentinela_ok` só vai para o `meta.json`, e
+nenhum consumidor o lê: `vigia/conferir.py`, os dois auditores e `nucleo/dispositivo.py`
+varrem os `.html` por `glob`. Quem roda `baixar.py --todas` recebe código de saída 2, mas o
+snapshot ruim já está no caminho canônico. Hoje só o encadeamento do `conferidor.yml`
+protege; rodando à mão, não protege.
+**A correção:** gravar em `.part` e só promover quando a sentinela passar, como faz
+`baixar_com_cache` do `decidendo-ghoul`. Snapshot no caminho canônico passaria a significar
+"conferido", por construção.
+
+**2. A derivação não confere o próprio fundamento.** `scripts/violencia.py` e
+`scripts/acao_penal.py` devolvem `{regra, fundamento}` — mas não verificam que o trecho que
+o fundamento cita existe mesmo no texto do dispositivo. É barato: o texto já está carregado
+no auditor.
+**A correção:** um campo `fundamento_verificado`, com a regra "sem lastro, a derivação não
+vale". É o mesmo mecanismo que o `decidendo-ghoul` usa para tornar confiável uma LLM de 7B:
+a nota que cita um trecho inexistente é zerada, e o relatório mostra que ela foi zerada.
+
+**3. Meio caminho do Robô dos tribunais já existe.** O `decidendo-ghoul`, lido em
+24/09/2026, traz um cliente da API pública do CNJ (DataJud) com paginação por `search_after`
+e cache por página, e um leitor dos espelhos do STJ que já resolve o formato hostil do campo
+`jurisprudenciaCitada`. Quando a frente abrir, começar dali em vez do zero.
+**A ressalva, que é dele:** o STF bloqueia acesso automatizado por WAF, e o DataJud não tem
+texto — só metadados. Para acompanhar ADI, é o DataJud por número CNJ; para súmula e
+precedente, os espelhos do STJ.
+
+**4. A grafia do dispositivo é frágil.** O campo `artigo` é texto livre, e regra que casa
+nele erra em silêncio quando a grafia varia. Em 23/09/2026 isso escondeu um erro jurídico
+por meses: 37 registros escreviam `§ 2º` com espaço contra 375 sem, e a exclusão que tirava
+a forma culposa do art. 273 do CP do rol de hediondos nunca funcionou. A grafia foi
+normalizada, mas a fragilidade continua: o campo não tem forma canônica imposta.
+**A correção:** validar a grafia de `artigo` na entrada, com a mesma régua de
+`scripts/dispositivo_canonico.py`.
+
+**5. Um tipo criado na simulação não pode ser modificado por outra mudança do mesmo
+pacote.** E a definição genérica de atributo novo só compara pena com limiar — fração,
+prazo e valor calculado (progressão, prescrição, regime) seguem fora.
 
 ## Aviso
 

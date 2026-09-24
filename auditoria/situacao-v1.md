@@ -1,7 +1,7 @@
 # Onde estamos e o que falta para a v1.0.0
 
 Situação em 24/09/2026, na branch `revamp/atlaspen`, que está 85 commits à frente da `main`,
-sem push. O prompt para retomar o trabalho em outra sessão está em `auditoria/retomada.md`. O backlog completo está em `backlog.md`; este documento é o recorte do que decide o
+sem push. O prompt para retomar o trabalho em outra sessão está em `auditoria/retomada.md`. O que falta a longo prazo está na seção "O que falta" do `README.md`; este documento é o recorte do que decide o
 lançamento.
 
 ## Em uma frase
@@ -74,7 +74,7 @@ Decisão da equipe em 10/09/2026: lançar enxuto.
   com faixa (dois limiares), edita nome, diploma, dispositivo e elemento do tipo modificado,
   classifica o sentido da mudança que só altera valor — os 82 parâmetros declaram se
   aumentar favorece o réu — e tem dezesseis verificações novas, mais a conferência no
-  navegador. O que sobra está declarado como limite no `backlog.md`, não como pendência.
+  navegador. O que sobra está declarado como limite no `README.md`, não como pendência.
 - **Revisão dos textos do site** — leitura sua.
 - **História do projeto** (`textos/historia.md`) — em edição por você, fora dos commits.
 - **O merge** — 57 commits, com a bateria verde.

@@ -17,7 +17,7 @@ conferência do catálogo) e de
 
 | Indicador | Valor |
 |---|---|
-| Tipos penais catalogados | **1512** |
+| Tipos penais catalogados | **1529** |
 | Diplomas com tipo penal vigente | 61 |
 | — com coleta iniciada | 61 |
 | Diplomas revogados/não recepcionados | [11](/docs/acervo-historico) |
@@ -30,9 +30,9 @@ conferência do catálogo) e de
 
 | Diploma | Tipos coletados | Situação |
 |---|---:|---|
-| Código Penal — Parte Especial | 531 | concluído ❓ |
-| Código Penal Militar — Parte Especial | 394 | concluído ❓ |
-| Código Eleitoral | 66 | concluído ❓ |
+| Código Penal — Parte Especial | 536 | concluído ❓ |
+| Código Penal Militar — Parte Especial | 404 | concluído ❓ |
+| Código Eleitoral | 65 | concluído ❓ |
 | Crimes contra o meio ambiente | 60 | concluído ❓ |
 | Lei das Contravenções Penais | 52 | concluído ❓ |
 | Estatuto da Criança e do Adolescente (crimes) | 30 | concluído ❓ |
@@ -55,7 +55,7 @@ conferência do catálogo) e de
 | Estatuto da Pessoa com Deficiência (crimes) | 8 | concluído ❓ |
 | Atividades nucleares (crimes) | 8 | concluído ❓ |
 | Organizações criminosas | 8 | concluído ❓ |
-| Serviços postais (crimes) | 7 | concluído ❓ |
+| Serviços postais (crimes) | 8 | concluído ❓ |
 | Contravenções de preconceito | 7 | concluído ❓ |
 | Lei de Biossegurança (crimes) | 6 | concluído ❓ |
 | Tortura | 6 | concluído ❓ |
@@ -65,13 +65,13 @@ conferência do catálogo) e de
 | Crimes contra a economia popular | 5 | concluído ❓ |
 | Planejamento familiar (crimes) | 4 | concluído ❓ |
 | Parcelamento do solo urbano (crimes) | 4 | concluído ❓ |
+| Crimes contra a ordem econômica (combustíveis) | 4 | concluído ❓ |
 | Lavagem de dinheiro | 4 | concluído ❓ |
 | Práticas discriminatórias no trabalho | 4 | concluído ❓ |
 | Mercado de valores mobiliários (crimes) | 3 | concluído ❓ |
 | Estatuto do Índio (crimes) | 3 | concluído ❓ |
 | Programas de computador (crimes) | 3 | concluído ❓ |
 | Marco Legal do Combate ao Crime Organizado (Lei Antifacção) | 2 | concluído ❓ |
-| Crimes contra a ordem econômica (combustíveis) | 2 | concluído ❓ |
 | Comissões Parlamentares de Inquérito (crimes) | 2 | concluído ❓ |
 | Lei Henry Borel | 2 | concluído ❓ |
 | Agrotóxicos (crimes) | 2 | concluído ❓ |
