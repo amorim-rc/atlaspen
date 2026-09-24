@@ -18,6 +18,8 @@ export interface ParametroFonte {
   id: string;
   rotulo: string;
   tipo: ParamTipo;
+  aumentar_favorece?: boolean;
+  aumentar_porque?: string;
   padrao: number | boolean;
   min?: number;
   max?: number;
@@ -62,6 +64,8 @@ function parametro(p: ParametroFonte): ParametroDef {
     ...(p.passo !== undefined ? {passo: p.passo} : {}),
     ajuda: p.ajuda,
     ...(vigente ? {fundamento: vigente.fundamento} : {}),
+    ...(p.aumentar_favorece !== undefined ? {aumentarFavorece: p.aumentar_favorece} : {}),
+    ...(p.aumentar_porque !== undefined ? {aumentarPorque: p.aumentar_porque} : {}),
   };
 }
 

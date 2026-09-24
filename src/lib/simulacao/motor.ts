@@ -16,6 +16,7 @@ import {valoresPadrao} from '../atributos/types';
 import {avaliarTipo} from '../atributos/remissao';
 import {cenarioParaCrime, chaveDispositivo, type CenarioReverso} from '../atributos/reverso';
 import {diasDeMeses, formatDias, formatFaixa, mesesDeDias} from '../pena';
+import {admiteTentativa} from './tipos';
 import type {
   AlcanceAtributo,
   CamposTipo,
@@ -47,7 +48,7 @@ export const CAMPOS_TIPO_PADRAO: CamposTipo = {
   hediondo: false,
   violencia: false,
   graveAmeaca: false,
-  culposo: false,
+  elemento: 'Doloso',
   contravencao: false,
 };
 
@@ -95,7 +96,7 @@ export function camposDoTipo(t: TipoDoMotor): CamposTipo {
     hediondo: t.hediondo === 'Sim',
     violencia: t.violencia === 'Sim',
     graveAmeaca: t.grave_ameaca === 'Sim',
-    culposo: t.elemento === 'Culposo',
+    elemento: (t.elemento as CamposTipo['elemento']) ?? 'Doloso',
     contravencao: t.contravencao === true,
   };
 }
@@ -118,16 +119,22 @@ function montarTipo(id: number, c: CamposTipo, base?: TipoDoMotor): TipoDoMotor 
     pena_max_meses: mesesDeDias(c.penaMaxDias),
     pena_faixa_rotulo: penaMudou ? formatFaixa(c.penaMinDias, c.penaMaxDias) : base!.pena_faixa_rotulo,
     hediondo: base && b!.hediondo === c.hediondo ? base.hediondo : sn(c.hediondo),
-    resultado_morte: base ? base.resultado_morte : RESULTADO_MORTE.test(c.nome),
+    // O resultado morte deriva do NOME, como no catálogo (convenção C5). Desde
+    // que o nome passou a ser editável (24/09/2026), rederivar quando ele muda
+    // deixou de ser opcional: renomear "lesão corporal" para "lesão corporal
+    // seguida de morte" e manter o campo antigo publicaria uma contradição.
+    resultado_morte: base && b!.nome === c.nome ? base.resultado_morte : RESULTADO_MORTE.test(c.nome),
     violencia: base && b!.violencia === c.violencia ? base.violencia : sn(c.violencia),
     grave_ameaca: base && b!.graveAmeaca === c.graveAmeaca ? base.grave_ameaca : sn(c.graveAmeaca),
-    elemento: base && b!.culposo === c.culposo ? base.elemento : c.culposo ? 'Culposo' : 'Doloso',
-    // Crime culposo não admite tentativa, e a tentativa de contravenção não é
-    // punível (art. 4º da LCP).
+    elemento: c.elemento,
+    // A régua das decisões 20 e 31: o elemento decide a tentativa, e a
+    // contravenção nunca a admite (LCP, art. 4º). Mantém-se o valor do
+    // catálogo quando nada que a governa mudou — há tipo doloso com tentativa
+    // "Não" por razão própria, e a simulação não a apaga sem motivo.
     tentativa:
-      base && b!.culposo === c.culposo && b!.contravencao === c.contravencao
+      base && b!.elemento === c.elemento && b!.contravencao === c.contravencao
         ? base.tentativa
-        : sn(!c.culposo && !c.contravencao),
+        : sn(admiteTentativa(c.elemento, c.contravencao)),
     perdao_judicial_previsto: base?.perdao_judicial_previsto ?? false,
     contravencao: c.contravencao,
     tem_pena_privativa: c.penaMaxDias > 0 || c.penaMinDias > 0,
@@ -139,7 +146,12 @@ function montarTipo(id: number, c: CamposTipo, base?: TipoDoMotor): TipoDoMotor 
 // ── O atributo novo, genérico ─────────────────────────────────────────────
 
 export function atributoNovo(d: DefinicaoAtributo, id: string): AtributoDef {
-  const limiar = `${d.comparacao === 'ate' ? 'até' : 'acima de'} ${formatDias(d.limiarDias)}`;
+  const limiar =
+    d.comparacao === 'ate'
+      ? `até ${formatDias(d.limiarDias)}`
+      : d.comparacao === 'acima'
+        ? `acima de ${formatDias(d.limiarDias)}`
+        : `acima de ${formatDias(d.limiarDias)} e até ${formatDias(d.limiarSuperiorDias ?? 0)}`;
   return {
     id,
     nome: d.nome.trim() || 'Atributo novo',
@@ -165,7 +177,13 @@ export function atributoNovo(d: DefinicaoAtributo, id: string): AtributoDef {
       const vedada = d.vedacoes.find((v) => tem[v]);
       if (vedada) return {status: 'incabivel', resumo: `Vedado: ${ROTULO_VEDACAO[vedada]}.`, detalhes: []};
       const lim = mesesDeDias(d.limiarDias);
-      const dentro = d.comparacao === 'ate' ? pena <= lim + 1e-9 : pena > lim + 1e-9;
+      const teto = mesesDeDias(d.limiarSuperiorDias ?? 0);
+      const dentro =
+        d.comparacao === 'ate'
+          ? pena <= lim + 1e-9
+          : d.comparacao === 'acima'
+            ? pena > lim + 1e-9
+            : pena > lim + 1e-9 && pena <= teto + 1e-9;
       if (!dentro) {
         return {
           status: 'incabivel',
@@ -216,6 +234,11 @@ export function problemaDa(m: Mudanca, legal: EstadoCatalogo): string | null {
   if (m.op === 'criar') {
     if (!m.def.nome.trim()) return 'Dê um nome ao atributo novo.';
     if (m.def.comparacao === 'ate' && m.def.limiarDias <= 0) return 'Informe o limiar de pena.';
+    if (m.def.comparacao === 'entre') {
+      const teto = m.def.limiarSuperiorDias ?? 0;
+      if (teto <= 0) return 'Informe o teto da faixa.';
+      if (teto <= m.def.limiarDias) return 'O teto da faixa não passa do piso.';
+    }
     return null;
   }
   if (!m.atributo || !legal.atributos.some((a) => a.def.id === m.atributo)) return 'Escolha o atributo penal.';
@@ -413,5 +436,37 @@ export function etiquetasDa(m: Mudanca, legal: EstadoCatalogo, rev: CenarioRever
   if (!a) return [];
   if (a.entra > 0 && a.sai === 0) return ['mellius'];
   if (a.sai > 0 && a.entra === 0) return ['pejus'];
-  return [];
+  if (a.entra > 0 && a.sai > 0) return [];
+  // NINGUÉM ENTRA NEM SAI, e ainda assim algo mudou: é mudança de VALOR —
+  // prazo, fração, regime. Até 24/09/2026 a etiqueta ficava em branco aqui, e
+  // a tela dizia "sentido não classificado". Mas o sentido existe e é
+  // determinado: cada parâmetro declara, em `data/atributos.json`, se aumentar
+  // o valor favorece o réu. Subir um teto de pena faz caber em mais tipos;
+  // subir a fração da pena a cumprir faz cumprir mais.
+  //
+  // Quando o pacote mexe em vários parâmetros e eles apontam para lados
+  // opostos, saem as DUAS etiquetas — como já acontece no tipo modificado cuja
+  // pena mínima sobe e a máxima desce.
+  return etiquetasPorValor(m, legal);
+}
+
+/** O sentido de uma mudança que só altera valores, pela direção de cada parâmetro. */
+function etiquetasPorValor(m: Mudanca, legal: EstadoCatalogo): Etiqueta[] {
+  if (m.sentido !== 'atributo' || m.op !== 'modificar') return [];
+  const alvo = legal.atributos.find((x) => x.def.id === m.atributo);
+  if (!alvo) return [];
+  let melhora = false;
+  let piora = false;
+  for (const [id, novo] of Object.entries(m.params)) {
+    const def = alvo.def.parametros.find((x) => x.id === id);
+    if (!def || def.aumentarFavorece === undefined) continue;
+    const antes = Number(def.padrao);
+    const depois = Number(novo);
+    if (!Number.isFinite(antes) || !Number.isFinite(depois) || antes === depois) continue;
+    // Booleano: `true` é 1 e `false` é 0, e a comparação vale igual.
+    const subiu = depois > antes;
+    if (subiu === def.aumentarFavorece) melhora = true;
+    else piora = true;
+  }
+  return [...(piora ? (['pejus'] as const) : []), ...(melhora ? (['mellius'] as const) : [])];
 }

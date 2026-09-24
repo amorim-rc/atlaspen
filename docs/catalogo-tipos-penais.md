@@ -184,7 +184,7 @@ entrar**. O catálogo não pode regredir.
   clemência e execução, nos quatro estados de reincidência. Tipo não encontrado é FALHA, e
   não caso pulado: uma tabela que se desliga sozinha não verifica nada. Foi ela que, em
   19/09/2026, mostrou que o reincidente genérico recebia a fração de progressão do primário.
-- **Congelamento dos vereditos** (`npm run equivalencia`): 22 atributos × 1.479 tipos × 4
+- **Congelamento dos vereditos** (`npm run equivalencia`): 22 atributos × 1.496 tipos × 4
   cenários (página do tipo, busca por atributo, reincidente em crime doloso e reincidente
   específico). Refatorar o motor sem mudar resposta nenhuma é o resultado esperado; mudança
   de veredito só passa se alguém regravar o congelamento e disser por quê.

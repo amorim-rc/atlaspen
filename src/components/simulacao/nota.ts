@@ -70,7 +70,7 @@ export function descrever(m: Mudanca, legal: EstadoCatalogo): string {
       const c = m.campos;
       const marcas = [
         c.contravencao && 'contravenção penal',
-        c.culposo && 'culposo',
+        c.elemento !== 'Doloso' && c.elemento.toLowerCase(),
         c.hediondo && 'hediondo',
         c.violencia && 'com violência',
         c.graveAmeaca && 'com grave ameaça',
@@ -92,10 +92,12 @@ export function descrever(m: Mudanca, legal: EstadoCatalogo): string {
       ['hediondo', 'hediondo'],
       ['violencia', 'com violência'],
       ['graveAmeaca', 'com grave ameaça'],
-      ['culposo', 'culposo'],
       ['contravencao', 'contravenção penal'],
     ];
     for (const [k, r] of flags) if (d[k] !== a[k]) partes.push(`${d[k] ? 'passa a ser' : 'deixa de ser'} ${r}`);
+    if (d.elemento !== a.elemento) partes.push(`elemento de ${a.elemento.toLowerCase()} para ${d.elemento.toLowerCase()}`);
+    if (d.nome !== a.nome) partes.push(`nome de "${a.nome}" para "${d.nome}"`);
+    if (d.lei !== a.lei || d.artigo !== a.artigo) partes.push(`dispositivo de ${a.lei}, ${a.artigo} para ${d.lei}, ${d.artigo}`);
     return `${rotuloTipo(t)}: ${partes.length ? juntar(partes) : 'nenhum campo alterado ainda'}.`;
   }
   if (m.op === 'criar') {
@@ -104,9 +106,15 @@ export function descrever(m: Mudanca, legal: EstadoCatalogo): string {
       d.vedacoes.length ? `vedado a ${juntar(d.vedacoes.map((v) => ROTULO_VEDACAO[v]))}` : '',
       d.requisitos.length ? `dependente de ${juntar(d.requisitos.map((r) => ROTULO_REQUISITO[r]))}` : '',
     ].filter(Boolean);
-    return `Atributo novo: ${d.nome.trim() || 'sem nome'}, cabível quando a ${ROTULO_INCIDENCIA[d.incidencia]} for ${
-      d.comparacao === 'ate' ? 'até' : 'acima de'
-    } ${formatDias(d.limiarDias)}${extras.length ? `; ${extras.join('; ')}` : ''}.`;
+    const faixa =
+      d.comparacao === 'ate'
+        ? `até ${formatDias(d.limiarDias)}`
+        : d.comparacao === 'acima'
+          ? `acima de ${formatDias(d.limiarDias)}`
+          : `acima de ${formatDias(d.limiarDias)} e até ${formatDias(d.limiarSuperiorDias ?? 0)}`;
+    return `Atributo novo: ${d.nome.trim() || 'sem nome'}, cabível quando a ${ROTULO_INCIDENCIA[d.incidencia]} for ${faixa}${
+      extras.length ? `; ${extras.join('; ')}` : ''
+    }.`;
   }
   const a = m.atributo ? legal.atributos.find((x) => x.def.id === m.atributo) : undefined;
   if (!a) return 'Atributo penal ainda não escolhido.';

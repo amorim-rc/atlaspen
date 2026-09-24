@@ -73,6 +73,8 @@
               "fundamento": "Art. 61, Lei 9.099/95"
             }
           ],
+          "aumentar_favorece": true,
+          "aumentar_porque": "teto de pena que delimita o alcance: subir faz caber em mais tipos",
           "ultima_alteracao": {
             "norma": "Lei nº 11.313",
             "ano": 2006,
@@ -97,6 +99,8 @@
               "fundamento": "Súmula 536, STJ"
             }
           ],
+          "aumentar_favorece": false,
+          "aumentar_porque": "requisito ou vedação: ligar restringe o alcance",
           "ultima_alteracao": null,
           "alteracoes_legislativas": null
         }
@@ -149,6 +153,8 @@
               "fundamento": "Art. 89, caput, Lei 9.099/95"
             }
           ],
+          "aumentar_favorece": true,
+          "aumentar_porque": "teto de pena que delimita o alcance: subir faz caber em mais tipos",
           "ultima_alteracao": null,
           "alteracoes_legislativas": 0
         },
@@ -170,6 +176,8 @@
               "fundamento": "Art. 89, caput, Lei 9.099/95"
             }
           ],
+          "aumentar_favorece": false,
+          "aumentar_porque": "prazo de ônus para o réu: subir prolonga o ônus",
           "ultima_alteracao": null,
           "alteracoes_legislativas": 0
         },
@@ -191,6 +199,8 @@
               "fundamento": "Art. 89, caput, Lei 9.099/95"
             }
           ],
+          "aumentar_favorece": false,
+          "aumentar_porque": "prazo de ônus para o réu: subir prolonga o ônus",
           "ultima_alteracao": null,
           "alteracoes_legislativas": 0
         },
@@ -209,6 +219,8 @@
               "fundamento": "Súmula 536, STJ"
             }
           ],
+          "aumentar_favorece": false,
+          "aumentar_porque": "requisito ou vedação: ligar restringe o alcance",
           "ultima_alteracao": null,
           "alteracoes_legislativas": null
         }
@@ -271,6 +283,8 @@
               "fundamento": "Art. 28-A, caput, CPP"
             }
           ],
+          "aumentar_favorece": true,
+          "aumentar_porque": "teto de pena que delimita o alcance: subir faz caber em mais tipos",
           "ultima_alteracao": {
             "norma": "Lei nº 13.964",
             "ano": 2019,
@@ -296,6 +310,8 @@
               "fundamento": "Art. 28-A, caput, CPP"
             }
           ],
+          "aumentar_favorece": false,
+          "aumentar_porque": "requisito ou vedação: ligar restringe o alcance",
           "ultima_alteracao": {
             "norma": "Lei nº 13.964",
             "ano": 2019,
@@ -321,6 +337,8 @@
               "fundamento": "Art. 28-A, caput, CPP"
             }
           ],
+          "aumentar_favorece": false,
+          "aumentar_porque": "requisito ou vedação: ligar restringe o alcance",
           "ultima_alteracao": {
             "norma": "Lei nº 13.964",
             "ano": 2019,
@@ -346,6 +364,8 @@
               "fundamento": "Art. 28-A, §2º, II, CPP"
             }
           ],
+          "aumentar_favorece": false,
+          "aumentar_porque": "requisito ou vedação: ligar restringe o alcance",
           "ultima_alteracao": {
             "norma": "Lei nº 13.964",
             "ano": 2019,
@@ -371,6 +391,8 @@
               "fundamento": "Art. 28-A, §2º, I, CPP"
             }
           ],
+          "aumentar_favorece": false,
+          "aumentar_porque": "requisito ou vedação: ligar restringe o alcance",
           "ultima_alteracao": {
             "norma": "Lei nº 13.964",
             "ano": 2019,
@@ -407,6 +429,8 @@
               "fundamento": "Art. 61, Lei 9.099/95"
             }
           ],
+          "aumentar_favorece": true,
+          "aumentar_porque": "teto de pena que delimita o alcance: subir faz caber em mais tipos",
           "ultima_alteracao": {
             "norma": "Lei nº 11.313",
             "ano": 2006,
@@ -472,6 +496,8 @@
               "fundamento": "Art. 4º, caput, Lei 12.850/13"
             }
           ],
+          "aumentar_favorece": true,
+          "aumentar_porque": "fração de redução da pena: subir reduz mais",
           "ultima_alteracao": null,
           "alteracoes_legislativas": 0
         },
@@ -493,6 +519,8 @@
               "fundamento": "Art. 4º, §5º, Lei 12.850/13"
             }
           ],
+          "aumentar_favorece": true,
+          "aumentar_porque": "fração de redução da pena: subir reduz mais",
           "ultima_alteracao": null,
           "alteracoes_legislativas": 0
         },
@@ -514,6 +542,8 @@
               "fundamento": "Art. 4º, caput e §2º, Lei 12.850/13"
             }
           ],
+          "aumentar_favorece": true,
+          "aumentar_porque": "faculdade ou dispensa: ligar amplia o alcance",
           "ultima_alteracao": null,
           "alteracoes_legislativas": 0
         }
@@ -571,6 +601,8 @@
               "fundamento": "Art. 44, I, CP"
             }
           ],
+          "aumentar_favorece": true,
+          "aumentar_porque": "teto de pena que delimita o alcance: subir faz caber em mais tipos",
           "ultima_alteracao": {
             "norma": "Lei nº 9.714",
             "ano": 1998,
@@ -595,6 +627,8 @@
               "fundamento": "Art. 44, I, CP"
             }
           ],
+          "aumentar_favorece": false,
+          "aumentar_porque": "requisito ou vedação: ligar restringe o alcance",
           "ultima_alteracao": {
             "norma": "Lei nº 9.714",
             "ano": 1998,
@@ -619,6 +653,8 @@
               "fundamento": "Art. 44, I, parte final, CP"
             }
           ],
+          "aumentar_favorece": true,
+          "aumentar_porque": "faculdade ou dispensa: ligar amplia o alcance",
           "ultima_alteracao": {
             "norma": "Lei nº 9.714",
             "ano": 1998,
@@ -643,6 +679,8 @@
               "fundamento": "Art. 44, §3º, CP"
             }
           ],
+          "aumentar_favorece": false,
+          "aumentar_porque": "requisito ou vedação: ligar restringe o alcance",
           "ultima_alteracao": {
             "norma": "Lei nº 9.714",
             "ano": 1998,
@@ -706,6 +744,8 @@
               "fundamento": "Art. 77, caput, CP"
             }
           ],
+          "aumentar_favorece": true,
+          "aumentar_porque": "teto de pena que delimita o alcance: subir faz caber em mais tipos",
           "ultima_alteracao": {
             "norma": "Lei nº 7.209",
             "ano": 1984,
@@ -733,6 +773,8 @@
               "fundamento": "Art. 77, §2º, CP"
             }
           ],
+          "aumentar_favorece": true,
+          "aumentar_porque": "teto de pena que delimita o alcance: subir faz caber em mais tipos",
           "ultima_alteracao": {
             "norma": "Lei nº 9.714",
             "ano": 1998,
@@ -760,6 +802,8 @@
               "fundamento": "Art. 77, I e §1º, CP"
             }
           ],
+          "aumentar_favorece": false,
+          "aumentar_porque": "requisito ou vedação: ligar restringe o alcance",
           "ultima_alteracao": {
             "norma": "Lei nº 7.209",
             "ano": 1984,
@@ -825,6 +869,8 @@
               "fundamento": "Art. 33, §2º, \"a\", CP"
             }
           ],
+          "aumentar_favorece": true,
+          "aumentar_porque": "teto de pena que delimita o alcance: subir faz caber em mais tipos",
           "ultima_alteracao": null,
           "alteracoes_legislativas": null
         },
@@ -846,6 +892,8 @@
               "fundamento": "Art. 33, §2º, \"b\", CP"
             }
           ],
+          "aumentar_favorece": true,
+          "aumentar_porque": "teto de pena que delimita o alcance: subir faz caber em mais tipos",
           "ultima_alteracao": null,
           "alteracoes_legislativas": null
         },
@@ -864,6 +912,8 @@
               "fundamento": "HC 111.840/ES, STF"
             }
           ],
+          "aumentar_favorece": false,
+          "aumentar_porque": "requisito ou vedação: ligar restringe o alcance",
           "ultima_alteracao": null,
           "alteracoes_legislativas": null
         }
@@ -911,6 +961,8 @@
               "fundamento": "Art. 107, IX, CP"
             }
           ],
+          "aumentar_favorece": false,
+          "aumentar_porque": "requisito ou vedação: ligar restringe o alcance",
           "ultima_alteracao": null,
           "alteracoes_legislativas": null
         }
@@ -970,6 +1022,8 @@
               "fundamento": "Art. 16, CP"
             }
           ],
+          "aumentar_favorece": true,
+          "aumentar_porque": "fração de redução da pena: subir reduz mais",
           "ultima_alteracao": {
             "norma": "Lei nº 7.209",
             "ano": 1984,
@@ -997,6 +1051,8 @@
               "fundamento": "Art. 16, CP"
             }
           ],
+          "aumentar_favorece": true,
+          "aumentar_porque": "fração de redução da pena: subir reduz mais",
           "ultima_alteracao": {
             "norma": "Lei nº 7.209",
             "ano": 1984,
@@ -1021,6 +1077,8 @@
               "fundamento": "Art. 16, CP"
             }
           ],
+          "aumentar_favorece": false,
+          "aumentar_porque": "requisito ou vedação: ligar restringe o alcance",
           "ultima_alteracao": {
             "norma": "Lei nº 7.209",
             "ano": 1984,
@@ -1045,6 +1103,8 @@
               "fundamento": "Art. 16, CP"
             }
           ],
+          "aumentar_favorece": false,
+          "aumentar_porque": "requisito ou vedação: ligar restringe o alcance",
           "ultima_alteracao": {
             "norma": "Lei nº 7.209",
             "ano": 1984,
@@ -1109,6 +1169,8 @@
               "fundamento": "Art. 14, II c/c art. 15, CP"
             }
           ],
+          "aumentar_favorece": false,
+          "aumentar_porque": "requisito ou vedação: ligar restringe o alcance",
           "ultima_alteracao": {
             "norma": "Lei nº 7.209",
             "ano": 1984,
@@ -1174,6 +1236,8 @@
               "fundamento": "Art. 112, I, LEP (redação da Lei 13.964/2019)"
             }
           ],
+          "aumentar_favorece": false,
+          "aumentar_porque": "fração da pena a cumprir: subir faz cumprir mais tempo",
           "ultima_alteracao": {
             "norma": "Lei nº 15.402",
             "ano": 2026,
@@ -1202,6 +1266,8 @@
               "fundamento": "Art. 112, caput, LEP (redação da Lei 15.402/2026)"
             }
           ],
+          "aumentar_favorece": false,
+          "aumentar_porque": "fração da pena a cumprir: subir faz cumprir mais tempo",
           "ultima_alteracao": {
             "norma": "Lei nº 15.402",
             "ano": 2026,
@@ -1237,6 +1303,8 @@
               "fundamento": "Art. 112, III, LEP (redação da Lei 15.402/2026)"
             }
           ],
+          "aumentar_favorece": false,
+          "aumentar_porque": "fração da pena a cumprir: subir faz cumprir mais tempo",
           "ultima_alteracao": {
             "norma": "Lei nº 15.402",
             "ano": 2026,
@@ -1272,6 +1340,8 @@
               "fundamento": "Art. 112, I, LEP (redação da Lei 15.402/2026)"
             }
           ],
+          "aumentar_favorece": false,
+          "aumentar_porque": "fração da pena a cumprir: subir faz cumprir mais tempo",
           "ultima_alteracao": {
             "norma": "Lei nº 15.402",
             "ano": 2026,
@@ -1307,6 +1377,8 @@
               "fundamento": "Art. 112, II, LEP (redação da Lei 15.402/2026)"
             }
           ],
+          "aumentar_favorece": false,
+          "aumentar_porque": "fração da pena a cumprir: subir faz cumprir mais tempo",
           "ultima_alteracao": {
             "norma": "Lei nº 15.402",
             "ano": 2026,
@@ -1343,6 +1415,8 @@
               "fundamento": "Art. 112, V, LEP (redação da Lei 15.358/2026)"
             }
           ],
+          "aumentar_favorece": false,
+          "aumentar_porque": "fração da pena a cumprir: subir faz cumprir mais tempo",
           "ultima_alteracao": {
             "norma": "Lei nº 15.358",
             "ano": 2026,
@@ -1385,6 +1459,8 @@
               "fundamento": "Art. 112, VI, \"a\", LEP (redação da Lei 15.358/2026)"
             }
           ],
+          "aumentar_favorece": false,
+          "aumentar_porque": "fração da pena a cumprir: subir faz cumprir mais tempo",
           "ultima_alteracao": {
             "norma": "Lei nº 15.358",
             "ano": 2026,
@@ -1427,6 +1503,8 @@
               "fundamento": "Art. 112, VI, \"b\", LEP (redação da Lei 15.358/2026)"
             }
           ],
+          "aumentar_favorece": false,
+          "aumentar_porque": "fração da pena a cumprir: subir faz cumprir mais tempo",
           "ultima_alteracao": {
             "norma": "Lei nº 15.358",
             "ano": 2026,
@@ -1469,6 +1547,8 @@
               "fundamento": "Art. 112, VI, \"c\", LEP (inciso VI na redação da Lei 15.358/2026)"
             }
           ],
+          "aumentar_favorece": false,
+          "aumentar_porque": "fração da pena a cumprir: subir faz cumprir mais tempo",
           "ultima_alteracao": {
             "norma": "Lei nº 15.358",
             "ano": 2026,
@@ -1500,6 +1580,8 @@
               "fundamento": "Art. 112, VI, \"d\", LEP (incluída pela Lei 15.358/2026)"
             }
           ],
+          "aumentar_favorece": false,
+          "aumentar_porque": "fração da pena a cumprir: subir faz cumprir mais tempo",
           "ultima_alteracao": {
             "norma": "Lei nº 15.358",
             "ano": 2026,
@@ -1536,6 +1618,8 @@
               "fundamento": "Art. 112, VII, LEP (redação da Lei 15.358/2026)"
             }
           ],
+          "aumentar_favorece": false,
+          "aumentar_porque": "fração da pena a cumprir: subir faz cumprir mais tempo",
           "ultima_alteracao": {
             "norma": "Lei nº 15.358",
             "ano": 2026,
@@ -1572,6 +1656,8 @@
               "fundamento": "Art. 112, VIII, LEP (redação da Lei 15.358/2026)"
             }
           ],
+          "aumentar_favorece": false,
+          "aumentar_porque": "fração da pena a cumprir: subir faz cumprir mais tempo",
           "ultima_alteracao": {
             "norma": "Lei nº 15.358",
             "ano": 2026,
@@ -1600,6 +1686,8 @@
               "fundamento": "Art. 112, V, LEP (redação da Lei 13.964/2019)"
             }
           ],
+          "aumentar_favorece": false,
+          "aumentar_porque": "fração da pena a cumprir: subir faz cumprir mais tempo",
           "ultima_alteracao": {
             "norma": "Lei nº 15.358",
             "ano": 2026,
@@ -1628,6 +1716,8 @@
               "fundamento": "Art. 112, VI, \"a\", LEP (redação da Lei 13.964/2019)"
             }
           ],
+          "aumentar_favorece": false,
+          "aumentar_porque": "fração da pena a cumprir: subir faz cumprir mais tempo",
           "ultima_alteracao": {
             "norma": "Lei nº 15.358",
             "ano": 2026,
@@ -1656,6 +1746,8 @@
               "fundamento": "Art. 112, VI-A, LEP (incluído pela Lei 14.994/2024, revogado pela Lei 15.358/2026)"
             }
           ],
+          "aumentar_favorece": false,
+          "aumentar_porque": "fração da pena a cumprir: subir faz cumprir mais tempo",
           "ultima_alteracao": {
             "norma": "Lei nº 15.358",
             "ano": 2026,
@@ -1684,6 +1776,8 @@
               "fundamento": "Art. 112, VII, LEP (redação da Lei 13.964/2019)"
             }
           ],
+          "aumentar_favorece": false,
+          "aumentar_porque": "fração da pena a cumprir: subir faz cumprir mais tempo",
           "ultima_alteracao": {
             "norma": "Lei nº 15.358",
             "ano": 2026,
@@ -1712,6 +1806,8 @@
               "fundamento": "Art. 112, VIII, LEP (redação da Lei 13.964/2019)"
             }
           ],
+          "aumentar_favorece": false,
+          "aumentar_porque": "fração da pena a cumprir: subir faz cumprir mais tempo",
           "ultima_alteracao": {
             "norma": "Lei nº 15.358",
             "ano": 2026,
@@ -1783,6 +1879,8 @@
               "fundamento": "Art. 83, caput, CP"
             }
           ],
+          "aumentar_favorece": false,
+          "aumentar_porque": "prazo de ônus para o réu: subir prolonga o ônus",
           "ultima_alteracao": {
             "norma": "Lei nº 7.209",
             "ano": 1984,
@@ -1810,6 +1908,8 @@
               "fundamento": "Art. 83, I, CP"
             }
           ],
+          "aumentar_favorece": false,
+          "aumentar_porque": "fração da pena a cumprir: subir faz cumprir mais tempo",
           "ultima_alteracao": {
             "norma": "Lei nº 7.209",
             "ano": 1984,
@@ -1837,6 +1937,8 @@
               "fundamento": "Art. 83, II, CP"
             }
           ],
+          "aumentar_favorece": false,
+          "aumentar_porque": "fração da pena a cumprir: subir faz cumprir mais tempo",
           "ultima_alteracao": {
             "norma": "Lei nº 7.209",
             "ano": 1984,
@@ -1864,6 +1966,8 @@
               "fundamento": "Art. 83, V, CP"
             }
           ],
+          "aumentar_favorece": false,
+          "aumentar_porque": "fração da pena a cumprir: subir faz cumprir mais tempo",
           "ultima_alteracao": {
             "norma": "Lei nº 13.344",
             "ano": 2016,
@@ -1888,6 +1992,8 @@
               "fundamento": "Art. 83, V, CP"
             }
           ],
+          "aumentar_favorece": false,
+          "aumentar_porque": "requisito ou vedação: ligar restringe o alcance",
           "ultima_alteracao": {
             "norma": "Lei nº 13.344",
             "ano": 2016,
@@ -1918,6 +2024,8 @@
               "fundamento": "Art. 112, VI, \"a\", \"b\" e \"d\", e VIII, LEP"
             }
           ],
+          "aumentar_favorece": false,
+          "aumentar_porque": "requisito ou vedação: ligar restringe o alcance",
           "ultima_alteracao": {
             "norma": "Lei nº 15.358",
             "ano": 2026,
@@ -1984,6 +2092,8 @@
               "fundamento": "Art. 109, I, CP"
             }
           ],
+          "aumentar_favorece": false,
+          "aumentar_porque": "prazo de prescrição: subir adia a extinção da punibilidade",
           "ultima_alteracao": null,
           "alteracoes_legislativas": null
         },
@@ -2005,6 +2115,8 @@
               "fundamento": "Art. 109, II, CP"
             }
           ],
+          "aumentar_favorece": false,
+          "aumentar_porque": "prazo de prescrição: subir adia a extinção da punibilidade",
           "ultima_alteracao": null,
           "alteracoes_legislativas": null
         },
@@ -2026,6 +2138,8 @@
               "fundamento": "Art. 109, III, CP"
             }
           ],
+          "aumentar_favorece": false,
+          "aumentar_porque": "prazo de prescrição: subir adia a extinção da punibilidade",
           "ultima_alteracao": null,
           "alteracoes_legislativas": null
         },
@@ -2047,6 +2161,8 @@
               "fundamento": "Art. 109, IV, CP"
             }
           ],
+          "aumentar_favorece": false,
+          "aumentar_porque": "prazo de prescrição: subir adia a extinção da punibilidade",
           "ultima_alteracao": null,
           "alteracoes_legislativas": null
         },
@@ -2068,6 +2184,8 @@
               "fundamento": "Art. 109, V, CP"
             }
           ],
+          "aumentar_favorece": false,
+          "aumentar_porque": "prazo de prescrição: subir adia a extinção da punibilidade",
           "ultima_alteracao": null,
           "alteracoes_legislativas": null
         },
@@ -2089,6 +2207,8 @@
               "fundamento": "Art. 109, VI, CP"
             }
           ],
+          "aumentar_favorece": false,
+          "aumentar_porque": "prazo de prescrição: subir adia a extinção da punibilidade",
           "ultima_alteracao": {
             "norma": "Lei nº 12.234",
             "ano": 2010,
@@ -2113,6 +2233,8 @@
               "fundamento": "Art. 115, CP"
             }
           ],
+          "aumentar_favorece": true,
+          "aumentar_porque": "faculdade ou dispensa: ligar amplia o alcance",
           "ultima_alteracao": {
             "norma": "Lei nº 15.160",
             "ano": 2025,
@@ -2140,6 +2262,8 @@
               "fundamento": "Art. 110, caput, CP"
             }
           ],
+          "aumentar_favorece": false,
+          "aumentar_porque": "aumento do prazo de prescrição ao reincidente: subir adia a extinção",
           "ultima_alteracao": {
             "norma": "Lei nº 7.209",
             "ano": 1984,
@@ -2167,6 +2291,8 @@
               "fundamento": "Art. 114, I, CP"
             }
           ],
+          "aumentar_favorece": false,
+          "aumentar_porque": "prazo de prescrição: subir adia a extinção da punibilidade",
           "ultima_alteracao": {
             "norma": "Lei nº 9.268",
             "ano": 1996,
@@ -2232,6 +2358,8 @@
               "fundamento": "Art. 123, II, LEP"
             }
           ],
+          "aumentar_favorece": false,
+          "aumentar_porque": "fração da pena a cumprir: subir faz cumprir mais tempo",
           "ultima_alteracao": null,
           "alteracoes_legislativas": 0
         },
@@ -2253,6 +2381,8 @@
               "fundamento": "Art. 123, II, LEP"
             }
           ],
+          "aumentar_favorece": false,
+          "aumentar_porque": "fração da pena a cumprir: subir faz cumprir mais tempo",
           "ultima_alteracao": null,
           "alteracoes_legislativas": 0
         },
@@ -2278,6 +2408,8 @@
               "fundamento": "Art. 122, §2º, LEP (redação da Lei 14.843/2024)"
             }
           ],
+          "aumentar_favorece": false,
+          "aumentar_porque": "requisito ou vedação: ligar restringe o alcance",
           "ultima_alteracao": {
             "norma": "Lei nº 14.843",
             "ano": 2024,
@@ -2302,6 +2434,8 @@
               "fundamento": "Art. 122, §2º, LEP (redação da Lei 14.843/2024)"
             }
           ],
+          "aumentar_favorece": false,
+          "aumentar_porque": "requisito ou vedação: ligar restringe o alcance",
           "ultima_alteracao": {
             "norma": "Lei nº 14.843",
             "ano": 2024,
@@ -2360,6 +2494,8 @@
               "fundamento": "Art. 42, CP"
             }
           ],
+          "aumentar_favorece": true,
+          "aumentar_porque": "faculdade ou dispensa: ligar amplia o alcance",
           "ultima_alteracao": {
             "norma": "Lei nº 7.209",
             "ano": 1984,
@@ -2423,6 +2559,8 @@
               "fundamento": "Art. 126, §1º, II, LEP"
             }
           ],
+          "aumentar_favorece": false,
+          "aumentar_porque": "dias de trabalho por dia remido: subir exige trabalhar mais pelo mesmo dia",
           "ultima_alteracao": {
             "norma": "Lei nº 12.433",
             "ano": 2011,
@@ -2450,6 +2588,8 @@
               "fundamento": "Art. 126, §1º, I, LEP"
             }
           ],
+          "aumentar_favorece": false,
+          "aumentar_porque": "horas de estudo por dia remido: subir exige estudar mais pelo mesmo dia",
           "ultima_alteracao": {
             "norma": "Lei nº 12.433",
             "ano": 2011,
@@ -2477,6 +2617,8 @@
               "fundamento": "Art. 126, §5º, LEP"
             }
           ],
+          "aumentar_favorece": true,
+          "aumentar_porque": "fração de redução da pena: subir reduz mais",
           "ultima_alteracao": {
             "norma": "Lei nº 12.433",
             "ano": 2011,
@@ -2537,6 +2679,8 @@
               "fundamento": "Art. 117, LEP; Súmula Vinculante 56, STF"
             }
           ],
+          "aumentar_favorece": false,
+          "aumentar_porque": "requisito ou vedação: ligar restringe o alcance",
           "ultima_alteracao": null,
           "alteracoes_legislativas": 0
         },
@@ -2555,6 +2699,8 @@
               "fundamento": "HC 143.641/SP, STF"
             }
           ],
+          "aumentar_favorece": false,
+          "aumentar_porque": "requisito ou vedação: ligar restringe o alcance",
           "ultima_alteracao": null,
           "alteracoes_legislativas": null
         }
@@ -2609,6 +2755,8 @@
               "fundamento": "Art. 319, IX, CPP"
             }
           ],
+          "aumentar_favorece": true,
+          "aumentar_porque": "faculdade ou dispensa: ligar amplia o alcance",
           "ultima_alteracao": {
             "norma": "Lei nº 12.403",
             "ano": 2011,
@@ -2625,6 +2773,8 @@
           "padrao": false,
           "ajuda": "Não há vedação legal por hediondez. O parâmetro existe para simular propostas legislativas que a introduzam.",
           "sem_fonte_legal": "Não há vedação legal de monitoração por hediondez: o parâmetro existe para simular propostas legislativas que a introduzam.",
+          "aumentar_favorece": false,
+          "aumentar_porque": "requisito ou vedação: ligar restringe o alcance",
           "ultima_alteracao": null,
           "alteracoes_legislativas": null
         }
@@ -2674,6 +2824,8 @@
               "fundamento": "Art. 5º, XLIII, CF"
             }
           ],
+          "aumentar_favorece": false,
+          "aumentar_porque": "requisito ou vedação: ligar restringe o alcance",
           "ultima_alteracao": null,
           "alteracoes_legislativas": 0
         },
@@ -2687,6 +2839,8 @@
           "passo": 0.041666666666666664,
           "ajuda": "Os decretos variam a cada ano; 1/3 para primários é a fração historicamente mais comum. Não há patamar legal fixo.",
           "sem_fonte_legal": "A fração vem do decreto de indulto de cada ano: não há patamar legal fixo.",
+          "aumentar_favorece": false,
+          "aumentar_porque": "fração da pena a cumprir: subir faz cumprir mais tempo",
           "ultima_alteracao": null,
           "alteracoes_legislativas": null
         }
@@ -2735,6 +2889,8 @@
               "fundamento": "Art. 5º, XLIII, CF"
             }
           ],
+          "aumentar_favorece": false,
+          "aumentar_porque": "requisito ou vedação: ligar restringe o alcance",
           "ultima_alteracao": null,
           "alteracoes_legislativas": 0
         },
@@ -2748,6 +2904,8 @@
           "passo": 0.041666666666666664,
           "ajuda": "Percentual de redução típico dos decretos de comutação. Varia a cada ano.",
           "sem_fonte_legal": "A fração vem do decreto de comutação de cada ano: não há patamar legal fixo.",
+          "aumentar_favorece": true,
+          "aumentar_porque": "fração de redução da pena: subir reduz mais",
           "ultima_alteracao": null,
           "alteracoes_legislativas": null
         }
@@ -2800,6 +2958,8 @@
               "fundamento": "Art. 5º, XLIII, CF; art. 2º, I, Lei 8.072/90"
             }
           ],
+          "aumentar_favorece": false,
+          "aumentar_porque": "requisito ou vedação: ligar restringe o alcance",
           "ultima_alteracao": null,
           "alteracoes_legislativas": 0
         }
@@ -2857,6 +3017,8 @@
               "fundamento": "Art. 75, caput, CP (Lei 13.964/2019)"
             }
           ],
+          "aumentar_favorece": true,
+          "aumentar_porque": "teto de pena que delimita o alcance: subir faz caber em mais tipos",
           "ultima_alteracao": {
             "norma": "Lei nº 13.964",
             "ano": 2019,
@@ -2882,6 +3044,8 @@
               "fundamento": "Súmula 715, STF"
             }
           ],
+          "aumentar_favorece": false,
+          "aumentar_porque": "requisito ou vedação: ligar restringe o alcance",
           "ultima_alteracao": null,
           "alteracoes_legislativas": null
         }

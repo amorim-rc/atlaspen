@@ -65,7 +65,7 @@
     {
       "arquivo": "docs/catalogo-tipos-penais.md",
       "sobre": "Como o catálogo é estruturado, derivado e garantido — fonte × derivado, campos, invariantes.",
-      "conferido_em": "2026-09-13",
+      "conferido_em": "2026-09-24",
       "depende_de": [
         "scripts/transform_data.py",
         "src/lib/types.ts",

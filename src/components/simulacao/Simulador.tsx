@@ -9,6 +9,7 @@
 // Regra dura: nenhum número de alcance sem o denominador e sem o recorte.
 
 import {useEffect, useMemo, useState} from 'react';
+import {ELEMENTOS} from '../../lib/simulacao/tipos';
 import type {TipoDoMotor} from '../../lib/types';
 import {CATALOGO, POR_ID} from '../../lib/atributos';
 import {cenarioReversoPadrao, type CenarioReverso} from '../../lib/atributos/reverso';
@@ -111,11 +112,13 @@ const CLASSE_SINAL: Record<Par['sinal'], string> = {'+': 'sinalMais', '−': 'si
 const NOME_SINAL: Record<Par['sinal'], string> = {'+': 'entra', '−': 'sai', '~': 'muda de valor', '=': 'não muda'};
 const ORDEM_SINAL: Record<Par['sinal'], number> = {'+': 0, '−': 1, '~': 2, '=': 3};
 
+// Só os campos BOOLEANOS do tipo. O elemento subjetivo saiu daqui em
+// 24/09/2026: deixou de ser um "culposo: sim/não" e passou a ter quatro
+// valores, que a tela mostra por extenso.
 const MARCAS: [keyof CamposTipo, string][] = [
   ['hediondo', 'hediondo'],
   ['violencia', 'com violência à pessoa'],
   ['graveAmeaca', 'com grave ameaça'],
-  ['culposo', 'culposo'],
   ['contravencao', 'contravenção penal'],
 ];
 
@@ -150,6 +153,40 @@ function Marcas({atual, antes, onChange}: {atual: CamposTipo; antes?: CamposTipo
         </label>
       ))}
     </fieldset>
+  );
+}
+
+
+/**
+ * O elemento subjetivo, nos quatro valores do catálogo. Era uma caixa
+ * "culposo: sim/não" até 24/09/2026; com a decisão 31 passaram a ser quatro, e
+ * a diferença entre preterdoloso e qualificado pelo resultado decide a
+ * tentativa — que por sua vez decide desistência e arrependimento eficaz.
+ */
+function SeletorElemento({
+  atual,
+  antes,
+  onChange,
+}: {
+  atual: CamposTipo['elemento'];
+  antes?: CamposTipo['elemento'];
+  onChange: (e: CamposTipo['elemento']) => void;
+}) {
+  return (
+    <label className={s.campo}>
+      <span className="rotulo">elemento subjetivo</span>
+      <select value={atual} onChange={(e) => onChange(e.target.value as CamposTipo['elemento'])}>
+        {ELEMENTOS.map((e) => (
+          <option key={e} value={e}>
+            {e}
+          </option>
+        ))}
+      </select>
+      <span className={s.ajudaCampo}>
+        decide a tentativa: culposo e preterdoloso não a admitem; qualificado pelo resultado, sim
+        {antes && atual !== antes ? ` · na lei: ${antes.toLowerCase()}` : ''}
+      </span>
+    </label>
   );
 }
 
@@ -218,9 +255,36 @@ function FormTipoAlterado({tipo, campos, onChange}: {tipo: TipoDoMotor; campos: 
   };
   return (
     <div className={s.campos}>
+      {/* Nome e dispositivo entraram em 24/09/2026. Faltavam para simular o que
+          a lei faz com frequência: renomear o tipo, transferi-lo de artigo ou
+          movê-lo de diploma. O resultado morte é derivado do nome, e acompanha. */}
+      <label className={s.campo}>
+        <span className="rotulo">nome do tipo</span>
+        <input value={atual.nome} onChange={(e) => mudar({nome: e.target.value})} />
+        {atual.nome !== antes.nome && <span className={s.naLei}>na lei: {antes.nome}</span>}
+      </label>
+      <div className={s.dupla}>
+        <label className={s.campo}>
+          <span className="rotulo">diploma</span>
+          <input value={atual.lei} onChange={(e) => mudar({lei: e.target.value})} />
+          {atual.lei !== antes.lei && <span className={s.naLei}>na lei: {antes.lei}</span>}
+        </label>
+        <label className={s.campo}>
+          <span className="rotulo">dispositivo</span>
+          <input value={atual.artigo} onChange={(e) => mudar({artigo: e.target.value})} />
+          {atual.artigo !== antes.artigo && <span className={s.naLei}>na lei: {antes.artigo}</span>}
+        </label>
+      </div>
       <CampoPena rotulo="pena mínima" dias={atual.penaMinDias} legal={antes.penaMinDias} zero="sem mínimo" onChange={(d) => mudar({penaMinDias: d})} />
       <CampoPena rotulo="pena máxima" dias={atual.penaMaxDias} legal={antes.penaMaxDias} onChange={(d) => mudar({penaMaxDias: d})} />
+      <SeletorElemento atual={atual.elemento} antes={antes.elemento} onChange={(e) => mudar({elemento: e})} />
       <Marcas atual={atual} antes={antes} onChange={mudar} />
+      {atual.nome !== antes.nome && RESULTADO_MORTE.test(atual.nome) !== RESULTADO_MORTE.test(antes.nome) && (
+        <p className={s.ajudaCampo}>
+          O resultado morte deriva do nome, e muda com ele: passa a{' '}
+          {RESULTADO_MORTE.test(atual.nome) ? 'sim' : 'não'}.
+        </p>
+      )}
     </div>
   );
 }
@@ -245,6 +309,7 @@ function FormTipoNovo({campos, onChange}: {campos: CamposTipo; onChange: (c: Cam
       </div>
       <CampoPena rotulo="pena mínima" dias={campos.penaMinDias} zero="sem mínimo" onChange={(d) => mudar({penaMinDias: d})} />
       <CampoPena rotulo="pena máxima" dias={campos.penaMaxDias} onChange={(d) => mudar({penaMaxDias: d})} />
+      <SeletorElemento atual={campos.elemento} onChange={(e) => mudar({elemento: e})} />
       <Marcas atual={campos} onChange={mudar} />
       <p className={s.notaBloco}>
         Derivado, nunca pedido: resultado morte — {RESULTADO_MORTE.test(campos.nome) ? 'sim' : 'não'}, pela leitura do nome, como no
@@ -276,13 +341,31 @@ function FormAtributoNovo({def, onChange}: {def: DefinicaoAtributo; onChange: (d
         </label>
         <label className={s.campo}>
           <span>Cabe quando a pena for</span>
-          <select value={def.comparacao} onChange={(e) => mudar({comparacao: e.target.value === 'acima' ? 'acima' : 'ate'})}>
+          <select
+            value={def.comparacao}
+            onChange={(e) => mudar({comparacao: e.target.value as DefinicaoAtributo['comparacao']})}
+          >
             <option value="ate">até o limiar</option>
             <option value="acima">acima do limiar</option>
+            <option value="entre">entre dois limiares</option>
           </select>
         </label>
       </div>
-      <CampoPena rotulo="limiar" dias={def.limiarDias} onChange={(d) => mudar({limiarDias: d})} />
+      {/* A faixa entrou em 24/09/2026: a lei trabalha com ela tanto quanto com
+          o limiar único — o sursis vai até dois anos, o semiaberto de quatro a
+          oito. O piso é exclusivo e o teto inclusivo, como nos institutos. */}
+      <CampoPena
+        rotulo={def.comparacao === 'entre' ? 'piso da faixa' : 'limiar'}
+        dias={def.limiarDias}
+        onChange={(d) => mudar({limiarDias: d})}
+      />
+      {def.comparacao === 'entre' && (
+        <CampoPena
+          rotulo="teto da faixa"
+          dias={def.limiarSuperiorDias ?? 0}
+          onChange={(d) => mudar({limiarSuperiorDias: d})}
+        />
+      )}
       {def.incidencia === 'aplicada' && (
         <p className={s.notaBloco}>A pena aplicada não é campo do tipo penal: presume-se a pena da premissa da varredura, no bloco de impacto.</p>
       )}
@@ -745,7 +828,7 @@ export default function Simulador({versao, conferidoEm}: Props) {
                       ) : (
                         <span
                           className={s.etiquetaNeutra}
-                          title="A mudança só altera valores — prazo, fração, regime —, e o sentido depende do valor."
+                          title="O pacote move o alcance nos dois sentidos ao mesmo tempo, ou mexe em parâmetro cujo sentido não está declarado."
                         >
                           sentido não classificado
                         </span>

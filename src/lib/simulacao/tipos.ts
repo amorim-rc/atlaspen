@@ -25,14 +25,51 @@ export interface CamposTipo {
   hediondo: boolean;
   violencia: boolean;
   graveAmeaca: boolean;
-  culposo: boolean;
+  /**
+   * O elemento subjetivo, nos quatro valores do catálogo. Era um booleano
+   * `culposo` até 24/09/2026, o que impedia simular a diferença que a decisão
+   * 31 criou: preterdoloso e qualificado pelo resultado separam-se justamente
+   * pela tentativa, e um booleano não os representava.
+   */
+  elemento: ElementoTipo;
   contravencao: boolean;
+}
+
+/** Os quatro valores do campo `elemento`, como o catálogo os fecha. */
+export type ElementoTipo = 'Doloso' | 'Culposo' | 'Preterdoloso' | 'Qualificado pelo resultado';
+
+export const ELEMENTOS: ElementoTipo[] = [
+  'Doloso',
+  'Culposo',
+  'Preterdoloso',
+  'Qualificado pelo resultado',
+];
+
+/**
+ * A régua das decisões 20 e 31, em código: o elemento decide a tentativa.
+ * Culposo e preterdoloso não a admitem — não se tenta o resultado que a lei não
+ * quer doloso. "Qualificado pelo resultado" a admite, porque o tipo abriga
+ * resultado doloso. A contravenção nunca a admite (LCP, art. 4º).
+ *
+ * É a mesma régua que `scripts/transform_data.py` impõe ao catálogo. Estar nos
+ * dois lugares é de propósito: o catálogo a exige do dado, e a simulação a
+ * aplica ao tipo que ainda não existe.
+ */
+export function admiteTentativa(elemento: ElementoTipo, contravencao: boolean): boolean {
+  if (contravencao) return false;
+  return elemento === 'Doloso' || elemento === 'Qualificado pelo resultado';
 }
 
 /** De qual pena o atributo novo depende. */
 export type Incidencia = 'cominada_minima' | 'cominada_maxima' | 'aplicada';
-/** "até" o limiar (a maioria dos institutos) ou "acima" dele. */
-export type Comparacao = 'ate' | 'acima';
+/**
+ * Como a pena se compara ao limiar. "Até" e "acima" bastam para a maioria dos
+ * institutos; **"entre"** existe desde 24/09/2026 porque a lei também trabalha
+ * com FAIXA — o sursis da pena vai de mais de nada até dois anos, e o regime
+ * semiaberto começa em quatro e termina em oito. Com um limiar só, essas
+ * hipóteses não se simulavam: ou se perdia o piso, ou se perdia o teto.
+ */
+export type Comparacao = 'ate' | 'acima' | 'entre';
 export type VedacaoNova = 'violencia' | 'graveAmeaca' | 'hediondo' | 'resultadoMorte' | 'culposo' | 'contravencao';
 export type RequisitoReu = 'primario' | 'confissao' | 'reparacao';
 
@@ -41,7 +78,10 @@ export interface DefinicaoAtributo {
   nome: string;
   incidencia: Incidencia;
   comparacao: Comparacao;
+  /** O limiar; em `entre`, é o PISO (exclusivo: a pena tem de passar dele). */
   limiarDias: number;
+  /** Só em `entre`: o TETO, inclusivo. */
+  limiarSuperiorDias?: number;
   vedacoes: VedacaoNova[];
   requisitos: RequisitoReu[];
 }

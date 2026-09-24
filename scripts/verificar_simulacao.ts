@@ -20,11 +20,14 @@ import {
   aplicarPacote,
   avaliarEstado,
   comparar,
+  atributoNovo,
   estadoLegal,
   etiquetasDa,
   problemaDa,
 } from '../src/lib/simulacao/motor';
 import type {Mudanca} from '../src/lib/simulacao/tipos';
+import {cenarioFromCrime} from '../src/lib/cenario';
+import {CATALOGO} from '../src/lib/atributos';
 import {escreverPacote, lerPacote} from '../src/components/simulacao/estado';
 import {RECORTE_PADRAO, recorte} from '../src/components/simulacao/nota';
 
@@ -289,6 +292,108 @@ console.log('\nO recorte da nota acompanha a premissa');
 
   const confesso = recorte({...padrao, confessou: true});
   ok(confesso.includes('com confissão formal'), 'a circunstância usa o mesmo vocabulário da ficha');
+}
+
+// ── A2, de 24/09/2026: as quatro pendências da simulação ──────────────────
+
+console.log('\nAtributo novo com FAIXA (mais de um limiar)');
+{
+  // O limiar único não representava o que a lei faz com frequência: o sursis
+  // vai até dois anos, o semiaberto de quatro a oito. Com `entre`, o piso é
+  // exclusivo e o teto inclusivo, como nos institutos.
+  const faixa = atributoNovo(
+    {nome: 'Faixa fictícia', incidencia: 'cominada_maxima', comparacao: 'entre',
+     limiarDias: 24 * 30, limiarSuperiorDias: 60 * 30, vedacoes: [], requisitos: []},
+    'faixa',
+  );
+  const av = (t: TipoDoMotor) => faixa.avaliar(cenarioFromCrime(t), {}).status;
+  ok(av(T1) === 'incabivel', `pena máxima 24m não passa do piso de 24m (obtido ${av(T1)})`);
+  ok(av(T2) === 'cabivel', `pena máxima 36m está na faixa (obtido ${av(T2)})`);
+  ok(av(T3) === 'incabivel', `pena máxima 120m passa do teto de 60m (obtido ${av(T3)})`);
+  ok(faixa.descricao.includes('acima de') && faixa.descricao.includes('e até'),
+    `a descrição diz os dois limiares (obtido "${faixa.descricao}")`);
+  // E a validação cobra o teto.
+  const semTeto: Mudanca = {sentido: 'atributo', op: 'criar',
+    def: {nome: 'x', incidencia: 'cominada_maxima', comparacao: 'entre', limiarDias: 720,
+          vedacoes: [], requisitos: []}};
+  ok(problemaDa(semTeto, legal) === 'Informe o teto da faixa.',
+    'faixa sem teto não entra no cálculo');
+  const tetoBaixo: Mudanca = {sentido: 'atributo', op: 'criar',
+    def: {nome: 'x', incidencia: 'cominada_maxima', comparacao: 'entre', limiarDias: 720,
+          limiarSuperiorDias: 360, vedacoes: [], requisitos: []}};
+  ok(problemaDa(tetoBaixo, legal) === 'O teto da faixa não passa do piso.',
+    'faixa invertida não entra no cálculo');
+}
+
+console.log('\nTipo modificado: nome, dispositivo e elemento');
+{
+  // Os três faltavam. Renomear importa porque o resultado morte deriva do nome.
+  const m: Mudanca = {sentido: 'tipo', op: 'modificar', id: 1,
+    campos: {nome: 'Furto fictício seguido de morte', lei: 'LX', artigo: 'Art. 9º'}};
+  const {sim} = simular([m]);
+  const t = sim.tipos.find((x) => x.id === 1)!;
+  ok(t.crime === 'Furto fictício seguido de morte', 'o nome muda');
+  ok(t.lei === 'LX' && t.artigo === 'Art. 9º', 'o dispositivo muda');
+  ok(t.resultado_morte === true,
+    'o resultado morte RE-DERIVA do nome novo — manter o antigo publicaria contradição');
+
+  // O elemento decide a tentativa, pela régua das decisões 20 e 31.
+  const paraPreterdoloso: Mudanca = {sentido: 'tipo', op: 'modificar', id: 1,
+    campos: {elemento: 'Preterdoloso'}};
+  const t2 = aplicarPacote(legal, [paraPreterdoloso]).tipos.find((x) => x.id === 1)!;
+  ok(t2.elemento === 'Preterdoloso' && t2.tentativa === 'Não',
+    `preterdoloso não admite tentativa (obtido ${t2.elemento}/${t2.tentativa})`);
+  const paraQualificado: Mudanca = {sentido: 'tipo', op: 'modificar', id: 1,
+    campos: {elemento: 'Qualificado pelo resultado'}};
+  const t3 = aplicarPacote(legal, [paraQualificado]).tipos.find((x) => x.id === 1)!;
+  ok(t3.tentativa === 'Sim',
+    `qualificado pelo resultado admite tentativa (obtido ${t3.tentativa})`);
+  // E o tipo que nada disso toca mantém o valor do catálogo.
+  const soPena: Mudanca = {sentido: 'tipo', op: 'modificar', id: 1, campos: {penaMaxDias: 900}};
+  const t4 = aplicarPacote(legal, [soPena]).tipos.find((x) => x.id === 1)!;
+  ok(t4.tentativa === T1.tentativa && t4.crime === T1.crime,
+    'mexer só na pena não reescreve nome nem tentativa');
+}
+
+console.log('\nEtiqueta da mudança que só altera VALOR');
+{
+  // Até 24/09/2026 a tela dizia "sentido não classificado" aqui. O sentido
+  // existe: cada parâmetro declara se aumentar favorece o réu.
+  const comSentido: AtributoDef = {
+    ...base,
+    id: 'com-sentido',
+    nome: 'Prazo com sentido',
+    fundamento: 'Lei inventada, art. 4º',
+    parametros: [{id: 'fator', rotulo: 'Fator', tipo: 'inteiro', padrao: 2, min: 1, max: 10,
+                  passo: 1, ajuda: '', aumentarFavorece: false,
+                  aumentarPorque: 'prazo de ônus: subir prolonga'}],
+    avaliar: (c, p) => ({status: 'cabivel', resumo: '', detalhes: [],
+                         valor: `${Math.round(c.penaMax * num(p, 'fator'))} meses`}),
+  };
+  const comLegal = estadoLegal([T1, T2, T3, T4], [comSentido]);
+  const comAv = avaliarEstado(comLegal, REV);
+  const sobe: Mudanca = {sentido: 'atributo', op: 'modificar', atributo: 'com-sentido',
+    params: {fator: 4}};
+  const desce: Mudanca = {sentido: 'atributo', op: 'modificar', atributo: 'com-sentido',
+    params: {fator: 1}};
+  ok(etiquetasDa(sobe, comLegal, REV, comAv).join() === 'pejus',
+    `fator para cima, num parâmetro que desfavorece: in pejus (obtido "${etiquetasDa(sobe, comLegal, REV, comAv).join()}")`);
+  ok(etiquetasDa(desce, comLegal, REV, comAv).join() === 'mellius',
+    `fator para baixo: in mellius (obtido "${etiquetasDa(desce, comLegal, REV, comAv).join()}")`);
+  // Sem a anotação, continua sem etiqueta: a tela não adivinha.
+  const semSentido: Mudanca = {sentido: 'atributo', op: 'modificar', atributo: 'prazo',
+    params: {fator: 4}};
+  ok(etiquetasDa(semSentido, legal, REV, avLegal).length === 0,
+    'parâmetro sem sentido declarado continua sem etiqueta');
+}
+
+console.log('\nA base real declara o sentido de todo parâmetro');
+{
+  const semSentido = CATALOGO.flatMap((a) =>
+    a.parametros.filter((p) => p.aumentarFavorece === undefined).map((p) => `${a.id}/${p.id}`),
+  );
+  ok(semSentido.length === 0,
+    `todo parâmetro dos 22 atributos diz se aumentar favorece (faltam: ${semSentido.join(', ') || 'nenhum'})`);
 }
 
 console.log(falhas === 0 ? '\n✓ Simulação legislativa verificada.\n' : `\n✗ ${falhas} falha(s) na simulação.\n`);

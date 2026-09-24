@@ -242,6 +242,25 @@
   accent-color: var(--cor-acento);
 }
 
+.dupla {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+}
+
+@media (max-width: 30rem) {
+  .dupla {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* A linha de ajuda de um campo: diz o que o valor governa. */
+.ajudaCampo {
+  font-size: var(--fs-rotulo);
+  color: var(--cor-tinta-fraca, var(--cor-tinta-corpo));
+  line-height: 1.35;
+}
+
 .naLei {
   font-family: var(--fonte-mono);
   font-size: var(--fs-rotulo);

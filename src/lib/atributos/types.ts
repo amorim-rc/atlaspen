@@ -43,6 +43,18 @@ export interface ParametroDef {
   ajuda: string;
   /** Dispositivo legal de onde o valor padrão foi extraído. */
   fundamento?: string;
+  /**
+   * AUMENTAR o valor favorece o réu?
+   *
+   * Não é interpretação: é aritmética sobre a definição do próprio instituto.
+   * Teto de pena que sobe faz caber em mais tipos; fração da pena a cumprir que
+   * sobe faz cumprir mais; vedação que liga restringe. Existe porque a etiqueta
+   * da simulação precisava dela — quando a mudança só altera VALOR e ninguém
+   * entra nem sai do alcance, o sentido não se mede contando.
+   */
+  aumentarFavorece?: boolean;
+  /** Em uma frase, por que aumentar favorece (ou não). */
+  aumentarPorque?: string;
 }
 
 /** Valores correntes dos parâmetros de um atributo, por `ParametroDef.id`. */

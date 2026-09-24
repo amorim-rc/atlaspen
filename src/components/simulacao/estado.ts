@@ -47,8 +47,18 @@ const CHAVE_BOOL: [keyof CamposTipo, string][] = [
   ['hediondo', 'h'],
   ['violencia', 'v'],
   ['graveAmeaca', 'g'],
-  ['culposo', 'c'],
   ['contravencao', 'k'],
+];
+/**
+ * O elemento subjetivo na URL, por inicial. Era a chave booleana `c`
+ * (culposo/não) até 24/09/2026; com quatro valores, virou uma letra por valor.
+ * O `c` antigo continua sendo lido, e vale "Culposo".
+ */
+const CHAVE_ELEMENTO: [CamposTipo['elemento'], string][] = [
+  ['Doloso', 'd'],
+  ['Culposo', 'c'],
+  ['Preterdoloso', 'p'],
+  ['Qualificado pelo resultado', 'q'],
 ];
 const VEDACOES: [VedacaoNova, string][] = [
   ['violencia', 'v'],
@@ -81,6 +91,13 @@ function camposTipo(c: Partial<CamposTipo>, completos: boolean): string[] {
     // No tipo novo só se grava o que está marcado; no modificado, também o que foi desmarcado.
     if (v === true || (v === false && !completos)) out.push(`${s}=${v ? 1 : 0}`);
   }
+  // O elemento só entra quando não é o padrão, para não encompridar a URL do
+  // caso comum. No tipo MODIFICADO entra sempre que foi tocado, porque ali o
+  // padrão não é "Doloso": é o que o tipo já era.
+  if (c.elemento !== undefined && (!completos || c.elemento !== 'Doloso')) {
+    const sigla = CHAVE_ELEMENTO.find(([e]) => e === c.elemento)?.[1];
+    if (sigla) out.push(`e=${sigla}`);
+  }
   return out;
 }
 
@@ -96,6 +113,7 @@ export function escreverMudanca(m: Mudanca, porId: Record<string, AtributoDef>):
     out.push(`inc=${INCIDENCIAS.find(([k]) => k === d.incidencia)![1]}`);
     if (d.comparacao !== 'ate') out.push(`cmp=${d.comparacao}`);
     out.push(`lim=${escreverDuracao(d.limiarDias)}`);
+    if (d.comparacao === 'entre') out.push(`lim2=${escreverDuracao(d.limiarSuperiorDias ?? 0)}`);
     if (d.vedacoes.length) out.push(`ved=${VEDACOES.filter(([k]) => d.vedacoes.includes(k)).map(([, s]) => s).join('.')}`);
     if (d.requisitos.length) out.push(`req=${REQUISITOS.filter(([k]) => d.requisitos.includes(k)).map(([, s]) => s).join('.')}`);
     return out.join(';');
@@ -129,6 +147,13 @@ function lerCamposTipo(c: Map<string, string>): Partial<CamposTipo> {
   const max = c.has('max') ? lerDuracao(c.get('max')!) : null;
   if (max !== null) out.penaMaxDias = max;
   for (const [k, s] of CHAVE_BOOL) if (c.has(s)) (out as Record<string, unknown>)[k] = c.get(s) === '1';
+  if (c.has('e')) {
+    const achado = CHAVE_ELEMENTO.find(([, s]) => s === c.get('e'));
+    if (achado) out.elemento = achado[0];
+  } else if (c.get('c') === '1') {
+    // Link antigo, de antes de 24/09/2026: `c=1` era "culposo: sim".
+    out.elemento = 'Culposo';
+  }
   return out;
 }
 
@@ -144,6 +169,7 @@ export function lerMudanca(texto: string, porId: Record<string, AtributoDef>): M
       const c = lerCamposTipo(kv(resto));
       const campos: CamposTipo = {...CAMPOS_TIPO_PADRAO, ...c};
       for (const [k] of CHAVE_BOOL) if (c[k] === undefined) (campos as unknown as Record<string, boolean>)[k] = false;
+      if (c.elemento === undefined) campos.elemento = 'Doloso';
       return {sentido: 'tipo', op: 'criar', campos};
     }
     case 'tm':
@@ -157,8 +183,9 @@ export function lerMudanca(texto: string, porId: Record<string, AtributoDef>): M
       const def: DefinicaoAtributo = {
         nome: c.get('n') ?? '',
         incidencia: inc,
-        comparacao: (c.get('cmp') === 'acima' ? 'acima' : 'ate') as Comparacao,
+        comparacao: (['acima', 'entre'].includes(c.get('cmp') ?? '') ? c.get('cmp') : 'ate') as Comparacao,
         limiarDias: lim ?? DEFINICAO_PADRAO.limiarDias,
+        limiarSuperiorDias: c.has('lim2') ? (lerDuracao(c.get('lim2')!) ?? undefined) : undefined,
         vedacoes: VEDACOES.filter(([, s]) => (c.get('ved') ?? '').split('.').includes(s)).map(([k]) => k),
         requisitos: REQUISITOS.filter(([, s]) => (c.get('req') ?? '').split('.').includes(s)).map(([k]) => k),
       };

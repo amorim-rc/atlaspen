@@ -413,6 +413,43 @@ antigo e fica como registro.
 
 ---
 
+## Saneamento antes da v1.0.0 — decidido em 24/09/2026
+
+Seis itens que o mantenedor listou depois de a revisão fina de 23/09 ser aplicada. Eles
+fecham a preparação da base para a auditoria por amostra, que é o que decide o lançamento.
+
+1. **Repassar o material que sobrou sem decisão.** O mantenedor traz tudo de uma vez, e se
+   tratam todos: as 33 divergências de violência, os 59 juízos de violência e os 126 de ação
+   penal listados em `auditoria/material/08-o-que-sobrou.md`, mais a decisão 19 (crimes de
+   atentado), que ficou fora por falta de doutrina nomeada.
+2. **Excluir os diretórios obsoletos.** `auditoria/`, `estudos/` e o que mais tiver cumprido
+   a função. Eles existiram para conduzir a revisão; conduzida a revisão, viram ruído no
+   repositório que alguém vai clonar.
+3. **Levar as limitações do jurisbot para o README, como débito técnico.** Hoje estão em
+   `estudos/licoes-do-jurisbot.md`, que sai no item 2. O que sobrevive é a lista do que
+   falta: a trava de âncora no carregamento já foi feita, mas o `fundamento_verificado` nos
+   derivadores e o `.part` no `baixar.py` não.
+4. **Repensar como a autoria é declarada.** "Luccas de Amorim e contribuidores" soa agressivo
+   perto das professoras. Hipótese do mantenedor: voltar a "Equipe AtlasPen" e criar uma
+   página que nomeie a equipe, com o papel de cada pessoa. Mexe em `CITATION.cff`, `LICENSE`,
+   README, `src/site/config.ts` e `/projeto/creditos`.
+5. **Repensar as etiquetas do changelog.** As naturezas em latim — *incriminadora*, *in
+   pejus*, *in mellius*, *abolitio*, *abolitio parcial* — trazem uma dificuldade de
+   classificação que pode não valer o que entregam ao leitor. Hipótese: separar só entre
+   alteração de TIPO e alteração de ATRIBUTO, com filtro por período (semestre). Enxuto.
+   Decidir antes da v1, porque muda o contrato de `ChangelogEntry` e as 14 notas já escritas.
+6. **Revisão geral de saneamento, arquitetura e qualidade de código.** Varredura do
+   repositório inteiro, não de um arquivo.
+7. **Este backlog vai para o README, e o arquivo some.** Decidido em 24/09/2026. Rever o
+   que sobrou, limar o que já não vale e transportar o resto — enxuto — para o README,
+   onde quem clona o repositório o encontra. A razão é deliberada: um contribuidor
+   externo, que não conhece a história do projeto, pode ter para um destes itens uma
+   solução mais elegante do que a nossa. Backlog em arquivo separado é documento interno;
+   no README é convite.
+
+Feito isso, a base está em posição de ser auditada por amostra (frente 7) para o lançamento
+da v1.0.0.
+
 ## Pendências do revamp AtlasPen, antes de ir ao ar
 
 Registradas em 14/09/2026, na branch `revamp/atlaspen`. O mantenedor trata todas antes de
