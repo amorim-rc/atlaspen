@@ -26,6 +26,7 @@ Os dados são abertos e estáveis. Você não precisa clonar nada.
 | [`/data/atributos.json`](https://amorim-rc.github.io/atlaspen/data/atributos.json) | os 22 atributos, com parâmetros, fundamento e o alcance sobre o catálogo |
 | [`/data/qualidade.json`](https://amorim-rc.github.io/atlaspen/data/qualidade.json) | o relatório de qualidade de cada geração |
 | [`/data/changelog.json`](https://amorim-rc.github.io/atlaspen/data/changelog.json) | o que mudou na lei, entrada a entrada |
+| [`/data/atlaspen-base.xlsx`](https://amorim-rc.github.io/atlaspen/data/atlaspen-base.xlsx) | a base inteira em planilha, assinada e datada: Leia-me, Tipos penais, Atributos e a matriz de alcance |
 
 O contrato dos campos, a política de versionamento e a forma de citar estão em
 [Dados abertos](https://amorim-rc.github.io/atlaspen/projeto/dados-abertos).
@@ -180,9 +181,10 @@ robôs.
 
 A árvore de `docs/` **espelha a do site**, e `docs/` é, sem exceção, o que vai ao ar:
 `docs/*.md` é o grupo *Documentação* da barra lateral, `docs/textos/` é o grupo *Textos*.
-O que existe só no repositório fica fora dele — o pré-registro da auditoria em
-`.auditoria/`, os planos e specs de desenvolvimento em `.superpowers/`. Os dois continuam
-versionados; o ponto só os tira do caminho de quem navega o código.
+O que existe só no repositório fica fora dele: os documentos de operação ficam na raiz
+([`AGENTS.md`](AGENTS.md), [`TRIAGEM.md`](TRIAGEM.md), [`AUDITORIA.md`](AUDITORIA.md)) e os
+planos e specs do desenvolvimento em `.superpowers/`, que é diretório de ferramenta, como
+`.github/`.
 
 ## Autoria
 

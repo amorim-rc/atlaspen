@@ -31,11 +31,26 @@ jobs:
           node-version: 24
           cache: npm
 
+      - name: Setup Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+
       - name: Instalar dependências
         run: npm ci
 
       - name: Build
         run: npm run build
+
+      # A planilha da base é gerada DENTRO do dist, e nunca commitada. Um binário
+      # que se regenera a cada build encheria o histórico de diffs ilegíveis, e a
+      # cópia commitada envelheceria em relação ao catálogo — que é o defeito que
+      # ela existe para não ter. O caminho é fixo: cada publicação substitui a
+      # anterior, e nunca há duas no ar.
+      - name: Gerar a planilha da base
+        run: |
+          python3 -m pip install --quiet openpyxl
+          python3 scripts/gerar_planilha.py
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5
