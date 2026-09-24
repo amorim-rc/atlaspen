@@ -180,7 +180,15 @@ REGRAS: list[Regra] = [
         # "Matar" só conta com vítima PESSOA: o art. 29 da Lei 9.605 pune
         # "matar, perseguir, caçar […] espécimes da fauna silvestre", e o verbo
         # sozinho transformava crime ambiental em crime violento.
-        r'\bmatar (alguem|outrem|mulher|o militar|superior|inferior)\b'
+        #
+        # A lista de complementos era estreita demais e deixava de fora três
+        # famílias que a decisão 3 manda afirmar: o infanticídio ("matar […] o
+        # próprio filho"), o vicaricídio ("matar descendente, ascendente,
+        # dependente, enteado") e o genocídio militar ("matar membros de um
+        # grupo nacional, étnico, religioso"). Desde 23/09/2026 o verbo vale
+        # sozinho — a vítima animal é interceptada ANTES, pela família própria,
+        # e não depende mais de o complemento estar nesta lista.
+        r'\bmatar\b'
         r'|ofender a integridade corporal|ofensa a integridade corporal'
         r'|praticar tortura|submeter\w* alguem[^.]{0,60}sofrimento fisico'
         r'|constranger\w*[^.]{0,40}(violencia|forca)', re.I),
@@ -296,6 +304,28 @@ def _violencia_por_familia(texto: str, origem: str, bruto: str) -> Classificacao
     return None
 
 
+def _grave_ameaca_por_familia(texto: str, origem: str) -> Classificacao | None:
+    """As famílias que decidem o campo `grave_ameaca` antes das regras gerais."""
+    if m := _EXTORSAO_SEQUESTRO.search(texto):
+        # Decisão 1b. Aqui os dois campos se separam: a violência é condicional
+        # — a privação pode ter sido obtida por engano —, mas a grave ameaça é
+        # do tipo. Exigir resgate tendo a vítima em poder do agente É a ameaça,
+        # e ela não depende de como o sequestro começou.
+        return Classificacao(
+            'Sim', 'extorsao-mediante-sequestro', _trecho(m, texto), origem,
+            'A exigência de resgate com a vítima em poder do agente é a grave ameaça.')
+    if m := _ANIMAL.search(texto):
+        return Classificacao(
+            'Não', 'vitima-animal', _trecho(m, texto), origem,
+            'A vítima é animal; não há pessoa a quem ameaçar.')
+    if (m := _INCITACAO.search(texto)) or (m := _ASSOCIATIVO.search(texto)):
+        return Classificacao(
+            'Não', 'tipo-associativo', _trecho(m, texto), origem,
+            'A conduta é associar-se, integrar ou incitar; o meio de execução do '
+            'crime-fim não entra neste tipo.')
+    return None
+
+
 def classificar(registro: dict, texto_proprio: str, texto_caput: str = '') -> dict:
     """{'violencia': Classificacao, 'grave_ameaca': Classificacao}.
 
@@ -324,12 +354,12 @@ def classificar(registro: dict, texto_proprio: str, texto_caput: str = '') -> di
         for origem, texto in (('propria', proprio), ('caput', caput)):
             if not texto:
                 continue
-            if campo == 'violencia':
-                fam = _violencia_por_familia(texto, origem, texto_proprio)
-                if fam is not None:
-                    saida[campo] = fam
-                    decidido = True
-                    break
+            fam = (_violencia_por_familia(texto, origem, texto_proprio)
+                   if campo == 'violencia' else _grave_ameaca_por_familia(texto, origem))
+            if fam is not None:
+                saida[campo] = fam
+                decidido = True
+                break
             # A violência contra a coisa só responde quando NENHUM texto — nem o
             # do dispositivo, nem o do caput — descreve violência à pessoa. O
             # roubo majorado por destruição de obstáculo (CP, art. 157, §2º-A, II)

@@ -48,7 +48,7 @@ def textos_do_registro(registro: dict, disp: dict, chave: str) -> tuple[str, str
 
 
 def rodar() -> dict[str, list[dict]]:
-    listas: dict[str, list[dict]] = {"confere": [], "diverge": [], "juizo": []}
+    listas: dict[str, list[dict]] = {"confere": [], "ressalva": [], "diverge": [], "juizo": []}
     for fonte, por_chave in indexar_catalogo().items():
         disp = dispositivos_de(fonte)
         for chave, linhas in por_chave.items():
@@ -62,13 +62,28 @@ def rodar() -> dict[str, list[dict]]:
                         "crime": registro["crime"], "campo": campo, "catalogo": registro[campo],
                         "derivado": c.valor, "regra": c.regra, "origem": c.origem,
                         "fundamento": c.fundamento, "alerta": c.alerta,
+                        "condicao": c.condicao,
+                        "condicao_no_catalogo": registro.get("violencia_condicao"),
                     }
                     if c.valor is None:
                         listas["juizo"].append(item)
-                    elif c.valor == registro[campo]:
-                        listas["confere"].append(item)
-                    else:
+                    elif c.valor != registro[campo]:
                         listas["diverge"].append(item)
+                    elif c.condicao and registro.get("violencia_condicao"):
+                        # CONFERE COM RESSALVA (item 1.3 da revisão de 23/09/2026).
+                        # A regra diz "Não, mas depende" e o catálogo declara a
+                        # condição: os dois dizem a mesma coisa, e contá-los como
+                        # simples conferência esconderia justamente o que a
+                        # decisão 8 criou. Divergência isto não é.
+                        listas["ressalva"].append(item)
+                    elif c.condicao:
+                        # A regra vê condição e o catálogo não a declara: falta
+                        # o texto, e é pergunta, não erro de valor.
+                        item["alerta"] = ("a regra reconhece hipótese condicional e o registro "
+                                          "não declara `violencia_condicao`")
+                        listas["juizo"].append(item)
+                    else:
+                        listas["confere"].append(item)
     return listas
 
 
@@ -85,9 +100,10 @@ def markdown(listas: dict[str, list[dict]]) -> str:
     L = [
         "# Violência e grave ameaça: catálogo × texto da lei",
         "",
-        f"Gerado por `scripts/robos/auditor/conferir_violencia.py`. {total} respostas conferidas "
-        f"({len(listas['confere'])} conferem, {len(listas['diverge'])} divergem, "
-        f"{len(listas['juizo'])} pedem juízo).",
+        f"Gerado por `scripts/robos/auditor/conferir_violencia.py`. {total} respostas conferidas: "
+        f"**{len(listas['confere'])} conferem**, **{len(listas['ressalva'])} conferem com "
+        f"ressalva** (o catálogo declara a condição que a regra reconhece), "
+        f"**{len(listas['diverge'])} divergem** e **{len(listas['juizo'])} pedem juízo**.",
         "",
         "O critério está em `scripts/violencia.py`: `violencia` afirma violência **dolosa** "
         "contra **pessoa**, como meio ou como núcleo do tipo. Violência contra a coisa não "
@@ -104,6 +120,12 @@ def markdown(listas: dict[str, list[dict]]) -> str:
           "As regras não decidem: a violência é meio alternativo a outros não violentos, ou a "
           "palavra está em sentido que a regra não resolve.", "", cab]
     L += [linha(i) for i in sorted(listas["juizo"], key=lambda x: (x["lei"], x["id"]))]
+    L += ["", "## Conferem com ressalva", "",
+          "A regra reconhece que o tipo se consuma SEM violência mas comporta a hipótese "
+          "violenta, e o catálogo declara essa hipótese em `violencia_condicao`. Os dois "
+          "dizem a mesma coisa: não é divergência. A lista existe para que a condição seja "
+          "revisável como texto — foi o que a decisão 8 criou, em 23/09/2026.", "", cab]
+    L += [linha(i) for i in sorted(listas["ressalva"], key=lambda x: (x["lei"], x["id"]))]
     L += ["", "## Por regra aplicada", "",
           "| regra | respostas |", "|---|---:|"]
     contagem = collections.Counter(
@@ -120,8 +142,8 @@ def main() -> int:
     if args.md:
         Path(args.md).write_bytes(markdown(listas).encode("utf-8"))
         print(f"relatório em {args.md}")
-    print(f"confere {len(listas['confere'])} | diverge {len(listas['diverge'])} | "
-          f"pede juízo {len(listas['juizo'])}")
+    print(f"confere {len(listas['confere'])} | com ressalva {len(listas['ressalva'])} | "
+          f"diverge {len(listas['diverge'])} | pede juízo {len(listas['juizo'])}")
     for i in listas["diverge"][:10]:
         print(f"  ~ id {i['id']} ({i['lei']} {i['artigo']}) {i['campo']}: "
               f"catálogo {i['catalogo']}, lei {i['derivado']} ({i['regra']})")

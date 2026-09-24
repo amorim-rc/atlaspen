@@ -47,7 +47,7 @@ def texto_bruto(fonte: str) -> str:
 
 
 def rodar() -> dict[str, list[dict]]:
-    listas: dict[str, list[dict]] = {"confere": [], "diverge": [], "juizo": []}
+    listas: dict[str, list[dict]] = {"confere": [], "ressalva": [], "diverge": [], "juizo": []}
     for fonte, por_chave in indexar_catalogo().items():
         disp = dispositivos_de(fonte)
         bruto = texto_bruto(fonte)
@@ -64,8 +64,16 @@ def rodar() -> dict[str, list[dict]]:
                     "derivado": c.especie, "regra": c.regra, "fundamento": c.fundamento,
                     "condicao_no_registro": bool(registro.get("acao_condicao")),
                 }
+                item["fundamento_publicado"] = ap.fundamento_de(registro, c)
                 atual = COMPATIVEL.get(registro["acao"], registro["acao"])
-                if c.ressalva or registro.get("acao_condicao"):
+                if registro.get("acao_condicao") and c.especie == atual:
+                    # CONFERE COM RESSALVA (item 1.3 da revisão de 23/09/2026).
+                    # A espécie bate E o registro declara a condição: os dois
+                    # dizem a mesma coisa. Mandá-lo para "pede juízo" era cobrar
+                    # do mantenedor uma decisão que ele já tinha tomado — foi o
+                    # que inflou a lista a 149 entradas.
+                    listas["ressalva"].append(item)
+                elif c.ressalva or registro.get("acao_condicao"):
                     listas["juizo"].append(item)
                 elif c.especie == atual:
                     listas["confere"].append(item)
@@ -88,8 +96,9 @@ def markdown(listas: dict[str, list[dict]]) -> str:
         "# Ação penal: catálogo × regras do diploma",
         "",
         f"Gerado por `scripts/robos/auditor/conferir_acao_penal.py`. {total} registros "
-        f"({len(listas['confere'])} conferem, {len(listas['diverge'])} divergem, "
-        f"{len(listas['juizo'])} pedem juízo).",
+        f"**{len(listas['confere'])} conferem**, **{len(listas['ressalva'])} conferem com "
+        f"ressalva** (a espécie bate e o registro declara a condição), "
+        f"**{len(listas['diverge'])} divergem** e **{len(listas['juizo'])} pedem juízo**.",
         "",
         "O método está em `scripts/acao_penal.py`: a espécie vem do dispositivo que a define, "
         "e onde nenhuma regra do diploma alcança o artigo vale a regra geral do art. 100 do CP "
@@ -103,6 +112,11 @@ def markdown(listas: dict[str, list[dict]]) -> str:
           "prejuízo de cônjuge'), ou o próprio registro já declara a condição em "
           "`acao_condicao`. A espécie depende do caso, e não do tipo.", "", cab]
     L += [linha(i) for i in sorted(listas["juizo"], key=lambda x: (x["lei"], x["id"]))]
+    L += ["", "## Conferem com ressalva", "",
+          "A espécie derivada bate com a publicada E o registro declara a condição em "
+          "`acao_condicao`. Não é pergunta: é resposta completa, com a hipótese à vista.", "",
+          cab]
+    L += [linha(i) for i in sorted(listas["ressalva"], key=lambda x: (x["lei"], x["id"]))]
     L += ["", "## Por regra aplicada", "", "| regra | registros |", "|---|---:|"]
     contagem = collections.Counter(i["regra"] or "—" for v in listas.values() for i in v)
     L += [f"| {k} | {v} |" for k, v in contagem.most_common()]
@@ -117,8 +131,8 @@ def main() -> int:
     if args.md:
         Path(args.md).write_bytes(markdown(listas).encode("utf-8"))
         print(f"relatório em {args.md}")
-    print(f"confere {len(listas['confere'])} | diverge {len(listas['diverge'])} | "
-          f"pede juízo {len(listas['juizo'])}")
+    print(f"confere {len(listas['confere'])} | com ressalva {len(listas['ressalva'])} | "
+          f"diverge {len(listas['diverge'])} | pede juízo {len(listas['juizo'])}")
     for i in listas["diverge"][:10]:
         print(f"  ~ id {i['id']} ({i['lei']} {i['artigo']}): catálogo {i['catalogo']}, "
               f"lei {i['derivado']} — {i['fundamento'][:80]}")

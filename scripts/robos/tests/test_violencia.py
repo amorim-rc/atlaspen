@@ -269,3 +269,34 @@ def test_remissao_e_registrada_para_o_auditor_resolver():  # C6/c
     r = classificar('Aplicar-se as penas dos crimes definidos nos arts. 242 e 243:')
     assert r['violencia'].regra == 'remissao'
     assert r['violencia'].remissao is not None
+
+
+def test_matar_vale_com_qualquer_vitima_humana():  # decisao 3
+    """A lista de complementos era estreita e deixava de fora tres familias que
+    a decisao 3 manda afirmar."""
+    for texto in ('Matar, sob a influência do estado puerperal, o próprio filho:',
+                  'Matar descendente, ascendente, dependente, enteado ou pessoa sob guarda:',
+                  'Matar membros de um grupo nacional, étnico, religioso:'):
+        r = classificar(texto)
+        assert r['violencia'].valor == 'Sim', texto
+        assert r['violencia'].regra == 'violencia-nucleo', texto
+
+
+def test_mas_a_fauna_nao_vira_crime_violento():
+    """O art. 29 da Lei 9.605 pune "matar, perseguir, cacar [...] especimes da
+    fauna silvestre". A familia da vitima animal intercepta ANTES do nucleo, e e
+    o que permite ao verbo valer sozinho."""
+    r = classificar('Matar, perseguir, caçar, apanhar, utilizar espécimes da fauna silvestre:')
+    assert r['violencia'].valor == 'Não'
+    assert r['violencia'].regra == 'vitima-animal'
+
+
+def test_extorsao_mediante_sequestro_tem_grave_ameaca_propria():  # decisao 1b
+    """Os dois campos se separam: a violencia e condicional -- a privacao pode
+    ter comecado por engano --, mas a grave ameaca e do tipo."""
+    r = classificar('Sequestrar pessoa com o fim de obter vantagem, como condição '
+                    'ou preço do resgate:')
+    assert r['grave_ameaca'].valor == 'Sim'
+    assert r['grave_ameaca'].regra == 'extorsao-mediante-sequestro'
+    assert r['violencia'].valor == 'Não'
+    assert r['violencia'].condicao is not None
