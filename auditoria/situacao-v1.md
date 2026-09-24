@@ -70,10 +70,11 @@ Decisão da equipe em 10/09/2026: lançar enxuto.
 
 ## O revamp, antes do merge
 
-- **A2, segunda parte — entra na v1** (decisão de 22/09/2026). A simulação legislativa ainda
-  não aceita atributo novo com mais de um limiar, não edita nome nem dispositivo do tipo, não
-  classifica o sentido da mudança que só altera valor, e não tem teste de interface. As quatro
-  deixam de ser limitação declarada e viram entrega da pré-v1.
+- ~~**A2, segunda parte**~~ — **entregue em 24/09/2026**. A simulação aceita atributo novo
+  com faixa (dois limiares), edita nome, diploma, dispositivo e elemento do tipo modificado,
+  classifica o sentido da mudança que só altera valor — os 82 parâmetros declaram se
+  aumentar favorece o réu — e tem dezesseis verificações novas, mais a conferência no
+  navegador. O que sobra está declarado como limite no `backlog.md`, não como pendência.
 - **Revisão dos textos do site** — leitura sua.
 - **História do projeto** (`textos/historia.md`) — em edição por você, fora dos commits.
 - **O merge** — 57 commits, com a bateria verde.
@@ -117,7 +118,7 @@ lugar de "A retomada" e ainda assina "Equipe AtlasPen". Decisão do mantenedor e
 | 1 | ~~Decisões da revisão fina~~ — feitas em 23/09/2026 | — | — |
 | 2 | ~~Cada decisão vira regra escrita, e o dado é corrigido~~ — feito em 23-24/09 | — | — |
 | 3 | ~~Frente 4 (histórico) e frente 8 (conferir)~~ — feitas | — | — |
-| 4 | A segunda parte da simulação (A2), que entra na v1 | eu | 1 |
+| 4 | ~~A segunda parte da simulação (A2)~~ — feita em 24/09/2026 | — | — |
 | 5 | ~~Autoria e citação~~ — feita em 20/09/2026 | — | — |
 | 6 | Merge do revamp na `main` | você autoriza | — |
 | 7 | Nome, domínio e organização do repositório (frentes 1 e 3), num PR de endereço | você e a equipe | — |

@@ -465,15 +465,19 @@ declarada e passam a ser entrega.
 - **Campos livres do tipo.** Espécie de pena (reclusão ou detenção) e ação penal ficaram de
   fora porque o motor não os lê. Entram quando algum atributo passar a lê-los; o regime
   inicial do art. 33 do CP depende da espécie e é o primeiro candidato.
-- **Tipo modificado.** Nome e dispositivo não se editam, e o elemento subjetivo só alterna
-  entre doloso e culposo. Um tipo criado no pacote não pode ser modificado por outra
-  mudança do mesmo pacote.
-- **Atributo novo.** A definição genérica tem um limiar só (até ou acima dele), sobre uma
-  pena. Não cobre frações, prazos nem valores calculados (progressão, prescrição, regime),
-  nem mais de um limiar.
-- **Etiqueta das mudanças em atributo.** Só aparece quando a mudança só alarga ou só
-  estreita o alcance. A que só altera valores (prazo, fração, regime) fica "sentido não
-  classificado".
+- ~~**Tipo modificado.**~~ **Feito em 24/09/2026.** Nome, diploma e dispositivo passaram a
+  ser editáveis, e o elemento subjetivo foi dos dois valores para os quatro do catálogo —
+  a distinção que a decisão 31 criou entre preterdoloso e qualificado pelo resultado não
+  cabia num booleano. A régua das decisões 20 e 31 vale na simulação, e o resultado morte
+  volta a ser derivado quando o nome muda. **Continua pendente**: um tipo criado no pacote
+  não pode ser modificado por outra mudança do mesmo pacote.
+- ~~**Atributo novo com mais de um limiar.**~~ **Feito em 24/09/2026**: entrou a comparação
+  "entre", com piso exclusivo e teto inclusivo. **Continua pendente**: frações, prazos e
+  valores calculados (progressão, prescrição, regime) — a definição genérica só compara
+  pena com limiar.
+- ~~**Etiqueta das mudanças em atributo.**~~ **Feito em 24/09/2026.** Cada um dos 82
+  parâmetros declara se aumentar o valor favorece o réu, e a etiqueta sai também quando a
+  mudança só altera valores. Parâmetro sem sentido declarado continua sem etiqueta.
 - ~~**Regime inicial** não entra na extinção de atributo.~~ Não é pendência: é decisão, e
   certa. Toda pena privativa começa em algum regime, e extinguir o regime inicial não tem
   sentido (`EXTINGUIVEIS`, em `src/components/simulacao/Simulador.tsx`). Reclassificada em
