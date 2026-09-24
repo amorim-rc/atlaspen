@@ -21,16 +21,34 @@ export type ChangelogTipo =
   | 'incriminadora' // cria tipo penal
   | 'pejus' // altera para pior
   | 'mellius' // altera para melhor
-  | 'abolitio'; // deixa de ser crime
+  | 'abolitio' // deixa de ser crime
+  | 'abolitio-parcial'; // PARTE da conduta deixa de ser crime
 
-export const TIPOS_CHANGELOG: ChangelogTipo[] = ['incriminadora', 'pejus', 'mellius', 'abolitio'];
+export const TIPOS_CHANGELOG: ChangelogTipo[] = [
+  'incriminadora',
+  'pejus',
+  'mellius',
+  'abolitio',
+  'abolitio-parcial',
+];
 
+/**
+ * A régua que separa `abolitio-parcial` de `mellius`, escrita em 23/09/2026
+ * (decisão 37): *in mellius* é a conduta que SEGUE punível, com tratamento mais
+ * favorável; abolitio (parcial) é a conduta que deixa de ser típica. A Lei
+ * 15.348/2026 suprimiu do art. 1º, II, da Lei 8.176/91 as hipóteses de motores
+ * não automotivos, saunas, caldeiras e aquecimento de piscinas: quem as
+ * praticava não passou a responder mais brandamente — deixou de responder. A
+ * distinção não é de rótulo: decide retroatividade e extinção da punibilidade
+ * (CP, arts. 2º e 107, III).
+ */
 /** O rótulo exibido. Espelhado em scripts/montar-nota-release.mjs. */
 export const ROTULO_TIPO: Record<ChangelogTipo, string> = {
   incriminadora: 'novatio legis incriminadora',
   pejus: 'novatio legis in pejus',
   mellius: 'novatio legis in mellius',
   abolitio: 'abolitio criminis',
+  'abolitio-parcial': 'abolitio criminis (parcial)',
 };
 
 /** A parte do sistema afetada. */

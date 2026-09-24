@@ -54,13 +54,23 @@ arquivos.
      antes era atípica;
    - `pejus` — *novatio legis in pejus*: altera para pior;
    - `mellius` — *novatio legis in mellius*: altera para melhor;
-   - `abolitio` — *abolitio criminis*: deixa de ser crime.
+   - `abolitio` — *abolitio criminis*: deixa de ser crime;
+   - `abolitio-parcial` — *abolitio criminis* (parcial): PARTE da conduta
+     deixa de ser típica, e o tipo continua existindo no que restou.
 
    A régua é a doutrinária (decisão de 18/09/2026). Forma qualificada, causa de
    aumento com moldura própria, ou tipo novo para conduta que já era punível é
    `pejus`, mesmo quando entra no catálogo como registro novo: o vicaricídio
    (CP, art. 121-B) é `pejus`, porque a conduta já era homicídio. Quando só parte
    da conduta era atípica, vale o núcleo, e a nota diz o que já era punível.
+   **`abolitio-parcial` e `mellius` se confundem, e não devem** (decisão 37, de
+   23/09/2026): *in mellius* é a conduta que SEGUE punível, com tratamento mais
+   favorável; `abolitio-parcial` é a que deixa de ser típica. A Lei 15.348/2026
+   suprimiu do art. 1º, II, da Lei 8.176/91 as hipóteses de motores não
+   automotivos, saunas, caldeiras e aquecimento de piscinas: quem as praticava
+   não passou a responder mais brandamente — deixou de responder. A diferença
+   decide retroatividade e extinção da punibilidade (CP, arts. 2º e 107, III).
+
    O Proponente propõe pela régua mecânica (dispositivo novo = `incriminadora`);
    quem revisa confirma ou corrige.
 

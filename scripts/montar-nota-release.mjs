@@ -13,6 +13,9 @@ const TIPO_ROTULO = {
   pejus: 'novatio legis in pejus',
   mellius: 'novatio legis in mellius',
   abolitio: 'abolitio criminis',
+  // Quarta natureza, de 23/09/2026 (decisão 37). Espelha ROTULO_TIPO em
+  // src/data/changelog/types.ts, onde está a régua que a separa de `mellius`.
+  'abolitio-parcial': 'abolitio criminis (parcial)',
 };
 
 const versao = process.argv[2];

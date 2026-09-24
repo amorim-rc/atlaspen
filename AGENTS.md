@@ -19,9 +19,12 @@ Decisões de 10/09/2026 e de 14/09/2026:
   do catálogo (o erro antigo que a conferência achou) **não** vira nota.
 - Cada entrada (`src/data/changelog/entries/<ano>/<id>.ts`, um arquivo por mudança; passo
   a passo em `src/data/changelog/create-changelog-entry.md`) declara a natureza em termos
-  penais: `incriminadora`, `pejus`, `mellius` ou `abolitio`, pela régua doutrinária
-  (decisão de 18/09/2026): `incriminadora` é só a conduta antes atípica; a forma nova
-  de conduta já punível é `pejus`. O
+  penais: `incriminadora`, `pejus`, `mellius`, `abolitio` ou `abolitio-parcial`, pela
+  régua doutrinária (decisões de 18/09/2026 e 37, de 23/09/2026): `incriminadora` é só
+  a conduta antes atípica; a forma nova de conduta já punível é `pejus`; e
+  **`abolitio-parcial` é a conduta que DEIXA de ser típica — a que segue punível com
+  tratamento mais favorável é `mellius`**. A distinção não é de rótulo: decide
+  retroatividade e extinção da punibilidade (CP, arts. 2º e 107, III). O
   `scripts/validar-changelog.mjs` reprova natureza fora do contrato e versão que não existe.
 - O PR que traz nota sobe o patch em `package.json` e no lockfile. O Proponente faz isso
   sozinho quando a rodada tem alteração de lei recente: redação dada, ou dispositivo

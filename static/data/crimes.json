@@ -464,7 +464,8 @@
    "ano": 2019,
    "evento": "criacao",
    "dispositivo": "cp|art. 121, §2º, viii",
-   "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art2"
+   "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art2",
+   "vigencia": "2020-01-23"
   },
   "alteracoes_legislativas": 1,
   "hediondo_condicional": false,
@@ -2130,7 +2131,8 @@
    "ano": 2026,
    "evento": "alteracao",
    "dispositivo": "cp|art. 129, §9º",
-   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15455.htm#art4"
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15455.htm#art4",
+   "vigencia": "2026-07-02"
   },
   "alteracoes_legislativas": 2,
   "hediondo_condicional": false,
@@ -3520,7 +3522,8 @@
    "ano": 2019,
    "evento": "criacao",
    "dispositivo": "cp|art. 141, §2º",
-   "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art2"
+   "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art2",
+   "vigencia": "2020-01-23"
   },
   "alteracoes_legislativas": 1,
   "hediondo_condicional": false,
@@ -4172,8 +4175,15 @@
   "perdao_judicial_previsto": false,
   "chave_dispositivo": "cp|art. 151",
   "dispositivo_canonico": "cp|art. 151, caput",
-  "ultima_alteracao": null,
-  "alteracoes_legislativas": 0,
+  "ultima_alteracao": {
+   "norma": "Lei nº 6.538",
+   "ano": 1978,
+   "evento": "revogacao",
+   "dispositivo": "cp|art. 151, caput",
+   "url": null,
+   "vigencia": "1978-06-23"
+  },
+  "alteracoes_legislativas": 1,
   "hediondo_condicional": false,
   "acao_condicional": false,
   "violencia_condicional": false,
@@ -4226,8 +4236,15 @@
   "perdao_judicial_previsto": false,
   "chave_dispositivo": "cp|art. 151, §1º, i",
   "dispositivo_canonico": "cp|art. 151, §1º, i",
-  "ultima_alteracao": null,
-  "alteracoes_legislativas": 0,
+  "ultima_alteracao": {
+   "norma": "Lei nº 6.538",
+   "ano": 1978,
+   "evento": "revogacao",
+   "dispositivo": "cp|art. 151, §1º, i",
+   "url": null,
+   "vigencia": "1978-06-23"
+  },
+  "alteracoes_legislativas": 1,
   "hediondo_condicional": false,
   "acao_condicional": false,
   "violencia_condicional": false,
@@ -4735,7 +4752,8 @@
    "ano": 2026,
    "evento": "alteracao",
    "dispositivo": "cp|art. 155, caput",
-   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15397.htm#art2"
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15397.htm#art2",
+   "vigencia": "2026-05-04"
   },
   "alteracoes_legislativas": 1,
   "hediondo_condicional": false,
@@ -4794,7 +4812,8 @@
    "ano": 2026,
    "evento": "alteracao",
    "dispositivo": "cp|art. 155, §1º",
-   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15397.htm#art2"
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15397.htm#art2",
+   "vigencia": "2026-05-04"
   },
   "alteracoes_legislativas": 1,
   "hediondo_condicional": false,
@@ -4959,7 +4978,8 @@
    "ano": 2026,
    "evento": "alteracao",
    "dispositivo": "cp|art. 155, §4º",
-   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15397.htm#art2"
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15397.htm#art2",
+   "vigencia": "2026-05-04"
   },
   "alteracoes_legislativas": 1,
   "hediondo_condicional": false,
@@ -5077,7 +5097,8 @@
    "ano": 2026,
    "evento": "alteracao",
    "dispositivo": "cp|art. 155, §4º-b",
-   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15397.htm#art2"
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15397.htm#art2",
+   "vigencia": "2026-05-04"
   },
   "alteracoes_legislativas": 1,
   "hediondo_condicional": false,
@@ -5136,7 +5157,8 @@
    "ano": 2026,
    "evento": "alteracao",
    "dispositivo": "cp|art. 155, §5º",
-   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15397.htm#art2"
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15397.htm#art2",
+   "vigencia": "2026-05-04"
   },
   "alteracoes_legislativas": 1,
   "hediondo_condicional": false,
@@ -5246,7 +5268,8 @@
    "ano": 2026,
    "evento": "alteracao",
    "dispositivo": "cp|art. 157, caput",
-   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15397.htm#art2"
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15397.htm#art2",
+   "vigencia": "2026-05-04"
   },
   "alteracoes_legislativas": 1,
   "hediondo_condicional": false,
@@ -5582,7 +5605,8 @@
    "ano": 2019,
    "evento": "criacao",
    "dispositivo": "cp|art. 157, §2º, vii",
-   "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art2"
+   "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art2",
+   "vigencia": "2020-01-23"
   },
   "alteracoes_legislativas": 1,
   "hediondo_condicional": false,
@@ -5698,7 +5722,8 @@
    "ano": 2019,
    "evento": "criacao",
    "dispositivo": "cp|art. 157, §2º-b",
-   "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art2"
+   "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art2",
+   "vigencia": "2020-01-23"
   },
   "alteracoes_legislativas": 1,
   "hediondo_condicional": false,
@@ -5814,7 +5839,8 @@
    "ano": 2026,
    "evento": "alteracao",
    "dispositivo": "cp|art. 157, §3º, ii",
-   "url": "mailto:../_ato2023-2026/2026/lei/l15397.htm#art2"
+   "url": "mailto:../_ato2023-2026/2026/lei/l15397.htm#art2",
+   "vigencia": "2026-05-04"
   },
   "alteracoes_legislativas": 1,
   "hediondo_condicional": false,
@@ -7013,7 +7039,8 @@
    "ano": 2026,
    "evento": "alteracao",
    "dispositivo": "cp|art. 171, caput",
-   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15397.htm#art2"
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15397.htm#art2",
+   "vigencia": "2026-05-04"
   },
   "alteracoes_legislativas": 1,
   "hediondo_condicional": false,
@@ -7072,7 +7099,8 @@
    "ano": 2026,
    "evento": "alteracao",
    "dispositivo": "cp|art. 171, §2º-a",
-   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15397.htm#art2"
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15397.htm#art2",
+   "vigencia": "2026-05-04"
   },
   "alteracoes_legislativas": 1,
   "hediondo_condicional": false,
@@ -7131,7 +7159,8 @@
    "ano": 2026,
    "evento": "alteracao",
    "dispositivo": "cp|art. 180, caput",
-   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15397.htm#art2"
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15397.htm#art2",
+   "vigencia": "2026-05-04"
   },
   "alteracoes_legislativas": 2,
   "hediondo_condicional": false,
@@ -7308,7 +7337,8 @@
    "ano": 2026,
    "evento": "alteracao",
    "dispositivo": "cp|art. 180-a, caput",
-   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15397.htm#art2"
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15397.htm#art2",
+   "vigencia": "2026-05-04"
   },
   "alteracoes_legislativas": 1,
   "hediondo_condicional": false,
@@ -7772,7 +7802,8 @@
    "ano": 2025,
    "evento": "alteracao",
    "dispositivo": "cp|art. 217-a, caput",
-   "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2025/Lei/L15280.htm#art1"
+   "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2025/Lei/L15280.htm#art1",
+   "vigencia": "2025-12-08"
   },
   "alteracoes_legislativas": 2,
   "hediondo_condicional": false,
@@ -7830,7 +7861,8 @@
    "ano": 2025,
    "evento": "alteracao",
    "dispositivo": "cp|art. 217-a, §3º",
-   "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2025/Lei/L15280.htm#art1"
+   "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2025/Lei/L15280.htm#art1",
+   "vigencia": "2025-12-08"
   },
   "alteracoes_legislativas": 2,
   "hediondo_condicional": false,
@@ -7888,7 +7920,8 @@
    "ano": 2025,
    "evento": "alteracao",
    "dispositivo": "cp|art. 217-a, §4º",
-   "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2025/Lei/L15280.htm#art1"
+   "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2025/Lei/L15280.htm#art1",
+   "vigencia": "2025-12-08"
   },
   "alteracoes_legislativas": 2,
   "hediondo_condicional": false,
@@ -7946,7 +7979,8 @@
    "ano": 2025,
    "evento": "alteracao",
    "dispositivo": "cp|art. 218, caput",
-   "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2025/Lei/L15280.htm#art1"
+   "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2025/Lei/L15280.htm#art1",
+   "vigencia": "2025-12-08"
   },
   "alteracoes_legislativas": 2,
   "hediondo_condicional": false,
@@ -8004,7 +8038,8 @@
    "ano": 2025,
    "evento": "alteracao",
    "dispositivo": "cp|art. 218-a, caput",
-   "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2025/Lei/L15280.htm#art1"
+   "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2025/Lei/L15280.htm#art1",
+   "vigencia": "2025-12-08"
   },
   "alteracoes_legislativas": 2,
   "hediondo_condicional": false,
@@ -8062,7 +8097,8 @@
    "ano": 2025,
    "evento": "alteracao",
    "dispositivo": "cp|art. 218-b, caput",
-   "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2025/Lei/L15280.htm#art1"
+   "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2025/Lei/L15280.htm#art1",
+   "vigencia": "2025-12-08"
   },
   "alteracoes_legislativas": 2,
   "hediondo_condicional": false,
@@ -8120,7 +8156,8 @@
    "ano": 2025,
    "evento": "alteracao",
    "dispositivo": "cp|art. 218-c, caput",
-   "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2025/Lei/L15280.htm#art1"
+   "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2025/Lei/L15280.htm#art1",
+   "vigencia": "2025-12-08"
   },
   "alteracoes_legislativas": 2,
   "hediondo_condicional": false,
@@ -11007,7 +11044,8 @@
    "ano": 2026,
    "evento": "alteracao",
    "dispositivo": "cp|art. 266, caput",
-   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15397.htm#art2"
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15397.htm#art2",
+   "vigencia": "2026-05-04"
   },
   "alteracoes_legislativas": 1,
   "hediondo_condicional": false,
@@ -11841,7 +11879,8 @@
    "ano": 2026,
    "evento": "alteracao",
    "dispositivo": "cp|art. 282, caput",
-   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15425.htm#art2"
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15425.htm#art2",
+   "vigencia": "2026-06-08"
   },
   "alteracoes_legislativas": 1,
   "hediondo_condicional": false,
@@ -13878,7 +13917,8 @@
    "ano": 2019,
    "evento": "alteracao",
    "dispositivo": "cp|art. 316, caput",
-   "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art2"
+   "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art2",
+   "vigencia": "2020-01-23"
   },
   "alteracoes_legislativas": 1,
   "hediondo_condicional": false,
@@ -18231,7 +18271,8 @@
    "ano": 2019,
    "evento": "alteracao",
    "dispositivo": "desarmamento-10826|art. 16, caput",
-   "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art9"
+   "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art9",
+   "vigencia": "2020-01-23"
   },
   "alteracoes_legislativas": 1,
   "hediondo_condicional": false,
@@ -18289,7 +18330,8 @@
    "ano": 2019,
    "evento": "alteracao",
    "dispositivo": "desarmamento-10826|art. 16, §1º",
-   "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art9"
+   "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art9",
+   "vigencia": "2020-01-23"
   },
   "alteracoes_legislativas": 1,
   "hediondo_condicional": false,
@@ -18347,7 +18389,8 @@
    "ano": 2019,
    "evento": "alteracao",
    "dispositivo": "desarmamento-10826|art. 17, caput",
-   "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art9"
+   "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art9",
+   "vigencia": "2020-01-23"
   },
   "alteracoes_legislativas": 1,
   "hediondo_condicional": false,
@@ -18405,7 +18448,8 @@
    "ano": 2019,
    "evento": "alteracao",
    "dispositivo": "desarmamento-10826|art. 18, caput",
-   "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art9"
+   "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art9",
+   "vigencia": "2020-01-23"
   },
   "alteracoes_legislativas": 1,
   "hediondo_condicional": false,
@@ -24871,7 +24915,8 @@
    "ano": 2026,
    "evento": "alteracao",
    "dispositivo": "eca|art. 240, caput",
-   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15487.htm#art2"
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15487.htm#art2",
+   "vigencia": "2026-08-07"
   },
   "alteracoes_legislativas": 1,
   "hediondo_condicional": false,
@@ -24929,7 +24974,8 @@
    "ano": 2026,
    "evento": "alteracao",
    "dispositivo": "eca|art. 241, caput",
-   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15487.htm#art2"
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15487.htm#art2",
+   "vigencia": "2026-08-07"
   },
   "alteracoes_legislativas": 1,
   "hediondo_condicional": false,
@@ -24987,7 +25033,8 @@
    "ano": 2026,
    "evento": "alteracao",
    "dispositivo": "eca|art. 241-a, caput",
-   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15487.htm#art2"
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15487.htm#art2",
+   "vigencia": "2026-08-07"
   },
   "alteracoes_legislativas": 1,
   "hediondo_condicional": false,
@@ -25045,7 +25092,8 @@
    "ano": 2026,
    "evento": "alteracao",
    "dispositivo": "eca|art. 241-b, caput",
-   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15487.htm#art2"
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15487.htm#art2",
+   "vigencia": "2026-08-07"
   },
   "alteracoes_legislativas": 1,
   "hediondo_condicional": false,
@@ -25103,7 +25151,8 @@
    "ano": 2026,
    "evento": "alteracao",
    "dispositivo": "eca|art. 241-c, caput",
-   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15487.htm#art2"
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15487.htm#art2",
+   "vigencia": "2026-08-07"
   },
   "alteracoes_legislativas": 1,
   "hediondo_condicional": false,
@@ -25161,7 +25210,8 @@
    "ano": 2026,
    "evento": "alteracao",
    "dispositivo": "eca|art. 241-d, caput",
-   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15487.htm#art2"
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15487.htm#art2",
+   "vigencia": "2026-08-07"
   },
   "alteracoes_legislativas": 1,
   "hediondo_condicional": false,
@@ -25387,7 +25437,8 @@
    "ano": 2026,
    "evento": "alteracao",
    "dispositivo": "eca|art. 244-a, caput",
-   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15487.htm#art2"
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15487.htm#art2",
+   "vigencia": "2026-08-07"
   },
   "alteracoes_legislativas": 2,
   "hediondo_condicional": false,
@@ -29615,7 +29666,7 @@
   "tentativa": "Sim",
   "violencia": "Não",
   "grave_ameaca": "Não",
-  "obs": "1-5 anos detenção. Crime contra a ordem econômica. A Lei 15.348/2026 restringiu o inciso II ao uso de GLP para fins automotivos. O registro anterior descrevia adulteração de combustível, que não é a figura do art. 1º",
+  "obs": "1-5 anos detenção. Crime contra a ordem econômica. A Lei 15.348/2026 restringiu o inciso II ao uso de GLP para fins automotivos. O registro anterior descrevia adulteração de combustível, que não é a figura do art. 1º. A supressão alcançou as hipóteses de motores de qualquer espécie não automotivos, saunas, caldeiras e aquecimento de piscinas, que deixaram de ser típicas (abolitio criminis parcial, vigência em 13/02/2026); pode haver subsunção ao art. 56 da Lei 9.605/98. O id e a moldura não mudam: o tipo continua existindo no que restou do inciso. Decisão 37 da revisão de 23/09/2026.",
   "pena_privativa": "Detenção",
   "tem_multa": false,
   "multa_regime": "nenhuma",
@@ -31886,7 +31937,8 @@
    "ano": 2026,
    "evento": "alteracao",
    "dispositivo": "cp|art. 155, §6º",
-   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15397.htm#art2"
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15397.htm#art2",
+   "vigencia": "2026-05-04"
   },
   "alteracoes_legislativas": 1,
   "hediondo_condicional": false,
@@ -31945,7 +31997,8 @@
    "ano": 2026,
    "evento": "alteracao",
    "dispositivo": "cp|art. 155, §7º",
-   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15397.htm#art2"
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15397.htm#art2",
+   "vigencia": "2026-05-04"
   },
   "alteracoes_legislativas": 1,
   "hediondo_condicional": false,
@@ -44500,7 +44553,8 @@
    "ano": 2026,
    "evento": "alteracao",
    "dispositivo": "cp|art. 157, §1º-a",
-   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15397.htm#art2"
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15397.htm#art2",
+   "vigencia": "2026-05-04"
   },
   "alteracoes_legislativas": 1,
   "hediondo_condicional": false,
@@ -44616,7 +44670,8 @@
    "ano": 2026,
    "evento": "criacao",
    "dispositivo": "cp|art. 157, §2º, ix",
-   "url": "mailto:../_ato2023-2026/2026/lei/l15397.htm#art2"
+   "url": "mailto:../_ato2023-2026/2026/lei/l15397.htm#art2",
+   "vigencia": "2026-05-04"
   },
   "alteracoes_legislativas": 1,
   "hediondo_condicional": false,
@@ -44674,7 +44729,8 @@
    "ano": 2026,
    "evento": "criacao",
    "dispositivo": "cp|art. 157, §2º, x",
-   "url": "mailto:../_ato2023-2026/2026/lei/l15397.htm#art2"
+   "url": "mailto:../_ato2023-2026/2026/lei/l15397.htm#art2",
+   "vigencia": "2026-05-04"
   },
   "alteracoes_legislativas": 1,
   "hediondo_condicional": false,
@@ -44733,7 +44789,8 @@
    "ano": 2026,
    "evento": "alteracao",
    "dispositivo": "cp|art. 155, §4º, v",
-   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15397.htm#art2"
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15397.htm#art2",
+   "vigencia": "2026-05-04"
   },
   "alteracoes_legislativas": 1,
   "hediondo_condicional": false,
@@ -44792,7 +44849,8 @@
    "ano": 2026,
    "evento": "alteracao",
    "dispositivo": "cp|art. 155, §8º",
-   "url": "mailto:../_ato2023-2026/2026/lei/l15397.htm#art2"
+   "url": "mailto:../_ato2023-2026/2026/lei/l15397.htm#art2",
+   "vigencia": "2026-05-04"
   },
   "alteracoes_legislativas": 1,
   "hediondo_condicional": false,
@@ -45019,7 +45077,8 @@
    "ano": 2026,
    "evento": "criacao",
    "dispositivo": "cp|art. 171, §2º, vii",
-   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15397.htm#art2"
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15397.htm#art2",
+   "vigencia": "2026-05-04"
   },
   "alteracoes_legislativas": 1,
   "hediondo_condicional": false,
@@ -53976,7 +54035,8 @@
    "ano": 2019,
    "evento": "criacao",
    "dispositivo": "interceptacao-9296|art. 10-a, caput",
-   "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art7"
+   "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art7",
+   "vigencia": "2020-01-23"
   },
   "alteracoes_legislativas": 1,
   "hediondo_condicional": false,
@@ -73258,7 +73318,8 @@
    "ano": 2026,
    "evento": "criacao",
    "dispositivo": "cp|art. 121, §2º-d",
-   "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2026/Lei/L15358.htm#art33"
+   "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2026/Lei/L15358.htm#art33",
+   "vigencia": "2026-03-25"
   },
   "alteracoes_legislativas": 1,
   "hediondo_condicional": false,
@@ -73374,7 +73435,8 @@
    "ano": 2026,
    "evento": "criacao",
    "dispositivo": "cp|art. 121-b, caput",
-   "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2026/Lei/L15384.htm#art3"
+   "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2026/Lei/L15384.htm#art3",
+   "vigencia": "2026-04-10"
   },
   "alteracoes_legislativas": 1,
   "hediondo_condicional": false,
@@ -73433,7 +73495,8 @@
    "ano": 2026,
    "evento": "criacao",
    "dispositivo": "cp|art. 121-b, parágrafo único, i",
-   "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2026/Lei/L15384.htm#art3"
+   "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2026/Lei/L15384.htm#art3",
+   "vigencia": "2026-04-10"
   },
   "alteracoes_legislativas": 1,
   "hediondo_condicional": false,
@@ -73492,7 +73555,8 @@
    "ano": 2026,
    "evento": "criacao",
    "dispositivo": "cp|art. 121-b, parágrafo único, ii",
-   "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2026/Lei/L15384.htm#art3"
+   "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2026/Lei/L15384.htm#art3",
+   "vigencia": "2026-04-10"
   },
   "alteracoes_legislativas": 1,
   "hediondo_condicional": false,
@@ -73551,7 +73615,8 @@
    "ano": 2026,
    "evento": "criacao",
    "dispositivo": "cp|art. 121-b, parágrafo único, iii",
-   "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2026/Lei/L15384.htm#art3"
+   "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2026/Lei/L15384.htm#art3",
+   "vigencia": "2026-04-10"
   },
   "alteracoes_legislativas": 1,
   "hediondo_condicional": false,
@@ -73609,7 +73674,8 @@
    "ano": 2026,
    "evento": "criacao",
    "dispositivo": "cp|art. 147-c, caput",
-   "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2026/Lei/L15358.htm#art33"
+   "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2026/Lei/L15358.htm#art33",
+   "vigencia": "2026-03-25"
   },
   "alteracoes_legislativas": 1,
   "hediondo_condicional": false,
@@ -73667,7 +73733,8 @@
    "ano": 2025,
    "evento": "criacao",
    "dispositivo": "cp|art. 338-a, caput",
-   "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2025/Lei/L15280.htm#art1"
+   "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2025/Lei/L15280.htm#art1",
+   "vigencia": "2025-12-08"
   },
   "alteracoes_legislativas": 1,
   "hediondo_condicional": false,
@@ -73726,7 +73793,8 @@
    "ano": 2026,
    "evento": "criacao",
    "dispositivo": "cp|art. 129, §3º-a",
-   "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2026/Lei/L15358.htm#art33"
+   "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2026/Lei/L15358.htm#art33",
+   "vigencia": "2026-03-25"
   },
   "alteracoes_legislativas": 1,
   "hediondo_condicional": true,
@@ -73785,7 +73853,8 @@
    "ano": 2026,
    "evento": "criacao",
    "dispositivo": "cp|art. 148, §3º",
-   "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2026/Lei/L15358.htm#art33"
+   "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2026/Lei/L15358.htm#art33",
+   "vigencia": "2026-03-25"
   },
   "alteracoes_legislativas": 1,
   "hediondo_condicional": false,
@@ -73843,7 +73912,8 @@
    "ano": 2026,
    "evento": "criacao",
    "dispositivo": "cp|art. 155, §9º",
-   "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2026/Lei/L15358.htm#art33"
+   "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2026/Lei/L15358.htm#art33",
+   "vigencia": "2026-03-25"
   },
   "alteracoes_legislativas": 1,
   "hediondo_condicional": false,
@@ -73901,7 +73971,8 @@
    "ano": 2026,
    "evento": "criacao",
    "dispositivo": "cp|art. 157, §5º",
-   "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2026/Lei/L15358.htm#art33"
+   "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2026/Lei/L15358.htm#art33",
+   "vigencia": "2026-03-25"
   },
   "alteracoes_legislativas": 1,
   "hediondo_condicional": false,
@@ -74075,7 +74146,8 @@
    "ano": 2026,
    "evento": "alteracao",
    "dispositivo": "eca|art. 240, §1º, i",
-   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15487.htm#art2"
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15487.htm#art2",
+   "vigencia": "2026-08-07"
   },
   "alteracoes_legislativas": 1,
   "hediondo_condicional": false,
@@ -74133,7 +74205,8 @@
    "ano": 2026,
    "evento": "alteracao",
    "dispositivo": "eca|art. 240, §1º, ii",
-   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15487.htm#art2"
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15487.htm#art2",
+   "vigencia": "2026-08-07"
   },
   "alteracoes_legislativas": 1,
   "hediondo_condicional": false,
@@ -74539,7 +74612,8 @@
    "ano": 2026,
    "evento": "criacao",
    "dispositivo": "ambiental-9605|art. 32, §1º-c",
-   "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2026/Lei/L15355.htm#art18"
+   "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2026/Lei/L15355.htm#art18",
+   "vigencia": "2026-03-12"
   },
   "alteracoes_legislativas": 1,
   "hediondo_condicional": false,
@@ -74772,7 +74846,8 @@
    "ano": 2026,
    "evento": "criacao",
    "dispositivo": "tortura-9455|art. 1, iii",
-   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15410.htm#art3"
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15410.htm#art3",
+   "vigencia": "2026-05-21"
   },
   "alteracoes_legislativas": 1,
   "hediondo_condicional": false,
@@ -84384,7 +84459,8 @@
    "ano": 2019,
    "evento": "criacao",
    "dispositivo": "cp|art. 141, §2º",
-   "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art2"
+   "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art2",
+   "vigencia": "2020-01-23"
   },
   "alteracoes_legislativas": 1,
   "hediondo_condicional": false,
@@ -84443,7 +84519,8 @@
    "ano": 2019,
    "evento": "criacao",
    "dispositivo": "cp|art. 141, §2º",
-   "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art2"
+   "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art2",
+   "vigencia": "2020-01-23"
   },
   "alteracoes_legislativas": 1,
   "hediondo_condicional": false,
@@ -85040,8 +85117,15 @@
   "perdao_judicial_previsto": false,
   "chave_dispositivo": "cp|art. 157, §2º, xi",
   "dispositivo_canonico": "cp|art. 157, §2º, xi",
-  "ultima_alteracao": null,
-  "alteracoes_legislativas": null,
+  "ultima_alteracao": {
+   "norma": "Lei nº 15.517",
+   "ano": 2026,
+   "evento": "criacao",
+   "dispositivo": "cp|art. 157, §2º, xi",
+   "url": null,
+   "vigencia": "2026-09-23"
+  },
+  "alteracoes_legislativas": 1,
   "hediondo_condicional": false,
   "acao_condicional": false,
   "violencia_condicional": false,
@@ -85094,8 +85178,15 @@
   "perdao_judicial_previsto": false,
   "chave_dispositivo": "cp|art. 157, §2º-a, iii",
   "dispositivo_canonico": "cp|art. 157, §2º-a, iii",
-  "ultima_alteracao": null,
-  "alteracoes_legislativas": null,
+  "ultima_alteracao": {
+   "norma": "Lei nº 15.517",
+   "ano": 2026,
+   "evento": "criacao",
+   "dispositivo": "cp|art. 157, §2º-a, iii",
+   "url": null,
+   "vigencia": "2026-09-23"
+  },
+  "alteracoes_legislativas": 1,
   "hediondo_condicional": false,
   "acao_condicional": false,
   "violencia_condicional": false,

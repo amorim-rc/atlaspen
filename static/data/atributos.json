@@ -248,7 +248,8 @@
         "ano": 2019,
         "evento": "criacao",
         "dispositivo": "cpp|art. 28-a, §14º",
-        "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art3"
+        "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art3",
+        "vigencia": "2020-01-23"
       },
       "alteracoes_legislativas": 2,
       "parametros": [
@@ -275,7 +276,8 @@
             "ano": 2019,
             "evento": "criacao",
             "dispositivo": "cpp|art. 28-a, caput",
-            "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art3"
+            "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art3",
+            "vigencia": "2020-01-23"
           },
           "alteracoes_legislativas": 1
         },
@@ -299,7 +301,8 @@
             "ano": 2019,
             "evento": "criacao",
             "dispositivo": "cpp|art. 28-a, caput",
-            "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art3"
+            "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art3",
+            "vigencia": "2020-01-23"
           },
           "alteracoes_legislativas": 1
         },
@@ -323,7 +326,8 @@
             "ano": 2019,
             "evento": "criacao",
             "dispositivo": "cpp|art. 28-a, caput",
-            "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art3"
+            "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art3",
+            "vigencia": "2020-01-23"
           },
           "alteracoes_legislativas": 1
         },
@@ -347,7 +351,8 @@
             "ano": 2019,
             "evento": "criacao",
             "dispositivo": "cpp|art. 28-a, §2º, ii",
-            "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art3"
+            "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art3",
+            "vigencia": "2020-01-23"
           },
           "alteracoes_legislativas": 1
         },
@@ -371,7 +376,8 @@
             "ano": 2019,
             "evento": "criacao",
             "dispositivo": "cpp|art. 28-a, §2º, i",
-            "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art3"
+            "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art3",
+            "vigencia": "2020-01-23"
           },
           "alteracoes_legislativas": 1
         },
@@ -443,7 +449,8 @@
         "ano": 2019,
         "evento": "criacao",
         "dispositivo": "orgcrim-12850|art. 4, §18º",
-        "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art14"
+        "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art14",
+        "vigencia": "2020-01-23"
       },
       "alteracoes_legislativas": 1,
       "parametros": [
@@ -1144,7 +1151,8 @@
         "ano": 2026,
         "evento": "alteracao",
         "dispositivo": "lep|art. 112, viii",
-        "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2026/Lei/L15358.htm#art35"
+        "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2026/Lei/L15358.htm#art35",
+        "vigencia": "2026-03-25"
       },
       "alteracoes_legislativas": 7,
       "parametros": [
@@ -1171,7 +1179,8 @@
             "ano": 2026,
             "evento": "alteracao",
             "dispositivo": "lep|art. 112, i",
-            "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15402.htm#art1"
+            "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15402.htm#art1",
+            "vigencia": "2026-05-08"
           },
           "alteracoes_legislativas": 2
         },
@@ -1198,7 +1207,8 @@
             "ano": 2026,
             "evento": "alteracao",
             "dispositivo": "lep|art. 112, caput",
-            "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15402.htm#art1"
+            "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15402.htm#art1",
+            "vigencia": "2026-05-08"
           },
           "alteracoes_legislativas": 3
         },
@@ -1232,7 +1242,8 @@
             "ano": 2026,
             "evento": "alteracao",
             "dispositivo": "lep|art. 112, iii",
-            "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15402.htm#art1"
+            "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15402.htm#art1",
+            "vigencia": "2026-05-08"
           },
           "alteracoes_legislativas": 2
         },
@@ -1266,7 +1277,8 @@
             "ano": 2026,
             "evento": "alteracao",
             "dispositivo": "lep|art. 112, iii",
-            "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15402.htm#art1"
+            "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15402.htm#art1",
+            "vigencia": "2026-05-08"
           },
           "alteracoes_legislativas": 2
         },
@@ -1300,7 +1312,8 @@
             "ano": 2026,
             "evento": "alteracao",
             "dispositivo": "lep|art. 112, ii",
-            "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15402.htm#art1"
+            "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15402.htm#art1",
+            "vigencia": "2026-05-08"
           },
           "alteracoes_legislativas": 2
         },
@@ -1335,7 +1348,8 @@
             "ano": 2026,
             "evento": "alteracao",
             "dispositivo": "lep|art. 112, v",
-            "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2026/Lei/L15358.htm#art35"
+            "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2026/Lei/L15358.htm#art35",
+            "vigencia": "2026-03-25"
           },
           "alteracoes_legislativas": 2
         },
@@ -1376,7 +1390,8 @@
             "ano": 2026,
             "evento": "alteracao",
             "dispositivo": "lep|art. 112, vi",
-            "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2026/Lei/L15358.htm#art35"
+            "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2026/Lei/L15358.htm#art35",
+            "vigencia": "2026-03-25"
           },
           "alteracoes_legislativas": 2
         },
@@ -1417,7 +1432,8 @@
             "ano": 2026,
             "evento": "alteracao",
             "dispositivo": "lep|art. 112, vi, b",
-            "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2026/Lei/L15358.htm#art35"
+            "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2026/Lei/L15358.htm#art35",
+            "vigencia": "2026-03-25"
           },
           "alteracoes_legislativas": 2
         },
@@ -1458,7 +1474,8 @@
             "ano": 2026,
             "evento": "alteracao",
             "dispositivo": "lep|art. 112, vi",
-            "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2026/Lei/L15358.htm#art35"
+            "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2026/Lei/L15358.htm#art35",
+            "vigencia": "2026-03-25"
           },
           "alteracoes_legislativas": 2
         },
@@ -1488,7 +1505,8 @@
             "ano": 2026,
             "evento": "criacao",
             "dispositivo": "lep|art. 112, vi, d",
-            "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2026/Lei/L15358.htm#art35"
+            "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2026/Lei/L15358.htm#art35",
+            "vigencia": "2026-03-25"
           },
           "alteracoes_legislativas": 2
         },
@@ -1523,7 +1541,8 @@
             "ano": 2026,
             "evento": "alteracao",
             "dispositivo": "lep|art. 112, vii",
-            "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2026/Lei/L15358.htm#art35"
+            "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2026/Lei/L15358.htm#art35",
+            "vigencia": "2026-03-25"
           },
           "alteracoes_legislativas": 2
         },
@@ -1558,7 +1577,8 @@
             "ano": 2026,
             "evento": "alteracao",
             "dispositivo": "lep|art. 112, viii",
-            "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2026/Lei/L15358.htm#art35"
+            "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2026/Lei/L15358.htm#art35",
+            "vigencia": "2026-03-25"
           },
           "alteracoes_legislativas": 2
         },
@@ -1585,7 +1605,8 @@
             "ano": 2026,
             "evento": "alteracao",
             "dispositivo": "lep|art. 112, v",
-            "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2026/Lei/L15358.htm#art35"
+            "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2026/Lei/L15358.htm#art35",
+            "vigencia": "2026-03-25"
           },
           "alteracoes_legislativas": 2
         },
@@ -1612,7 +1633,8 @@
             "ano": 2026,
             "evento": "alteracao",
             "dispositivo": "lep|art. 112, vi",
-            "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2026/Lei/L15358.htm#art35"
+            "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2026/Lei/L15358.htm#art35",
+            "vigencia": "2026-03-25"
           },
           "alteracoes_legislativas": 2
         },
@@ -1639,7 +1661,8 @@
             "ano": 2026,
             "evento": "revogacao",
             "dispositivo": "lep|art. 112, vi-a",
-            "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2026/Lei/L15358.htm#art35"
+            "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2026/Lei/L15358.htm#art35",
+            "vigencia": "2026-03-25"
           },
           "alteracoes_legislativas": 2
         },
@@ -1666,7 +1689,8 @@
             "ano": 2026,
             "evento": "alteracao",
             "dispositivo": "lep|art. 112, vii",
-            "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2026/Lei/L15358.htm#art35"
+            "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2026/Lei/L15358.htm#art35",
+            "vigencia": "2026-03-25"
           },
           "alteracoes_legislativas": 2
         },
@@ -1693,7 +1717,8 @@
             "ano": 2026,
             "evento": "alteracao",
             "dispositivo": "lep|art. 112, viii",
-            "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2026/Lei/L15358.htm#art35"
+            "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2026/Lei/L15358.htm#art35",
+            "vigencia": "2026-03-25"
           },
           "alteracoes_legislativas": 2
         }
@@ -1735,7 +1760,8 @@
         "ano": 2026,
         "evento": "alteracao",
         "dispositivo": "lep|art. 112, viii",
-        "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2026/Lei/L15358.htm#art35"
+        "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2026/Lei/L15358.htm#art35",
+        "vigencia": "2026-03-25"
       },
       "alteracoes_legislativas": 4,
       "parametros": [
@@ -1897,7 +1923,8 @@
             "ano": 2026,
             "evento": "alteracao",
             "dispositivo": "lep|art. 112, viii",
-            "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2026/Lei/L15358.htm#art35"
+            "url": "https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2026/Lei/L15358.htm#art35",
+            "vigencia": "2026-03-25"
           },
           "alteracoes_legislativas": 2
         }
@@ -2373,7 +2400,8 @@
         "ano": 2026,
         "evento": "criacao",
         "dispositivo": "lep|art. 126, §9º",
-        "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15402.htm#art1"
+        "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15402.htm#art1",
+        "vigencia": "2026-05-08"
       },
       "alteracoes_legislativas": 2,
       "parametros": [
@@ -2806,7 +2834,8 @@
         "ano": 2019,
         "evento": "alteracao",
         "dispositivo": "cp|art. 75, §1º",
-        "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art2"
+        "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art2",
+        "vigencia": "2020-01-23"
       },
       "alteracoes_legislativas": 2,
       "parametros": [
@@ -2833,7 +2862,8 @@
             "ano": 2019,
             "evento": "alteracao",
             "dispositivo": "cp|art. 75, caput",
-            "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art2"
+            "url": "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Lei/L13964.htm#art2",
+            "vigencia": "2020-01-23"
           },
           "alteracoes_legislativas": 1
         },
