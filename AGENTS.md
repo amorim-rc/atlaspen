@@ -84,8 +84,8 @@ campo publicado com o texto do dispositivo e abrem três listas — confere, div
 juízo:
 
 ```
-python scripts/robos/auditor/conferir_violencia.py --md auditoria/violencia-e-grave-ameaca.md
-python scripts/robos/auditor/conferir_acao_penal.py --md auditoria/acao-penal.md
+python scripts/robos/auditor/conferir_violencia.py --md crawler/relatorios/violencia-e-grave-ameaca.md
+python scripts/robos/auditor/conferir_acao_penal.py --md crawler/relatorios/acao-penal.md
 ```
 
 Eles NÃO escrevem no catálogo. O que a regra não decide sai marcado como juízo, e juízo é da

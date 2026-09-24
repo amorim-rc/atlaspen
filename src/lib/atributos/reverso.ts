@@ -54,7 +54,7 @@ export const BASE_AJUDA: Record<BasePenaConcreta, string> = {
  *
  * Também não entra a data do fato: a varredura simula em abstrato, pela lei
  * vigente. A marcação "fato anterior" fica só no caso concreto, na página do
- * tipo penal (decisão de 10/09/2026; estudos/modelo-atributos.md, 4.4).
+ * tipo penal (decisão de 10/09/2026; docs/superpowers/specs/2026-09-10-modelo-atributos.md, 4.4).
  */
 export interface CenarioReverso {
   base: BasePenaConcreta;

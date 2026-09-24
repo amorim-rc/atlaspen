@@ -6,7 +6,7 @@ original, sem anotação, e cada redação posterior logo abaixo da anterior, co
 anotação da lei que a deu — "(Redação dada pela Lei nº 15.402, de 2026)" — e o
 link para o artigo da lei alteradora. Este módulo lê essa sequência e a devolve
 como eventos, uma linha por acontecimento, no formato de
-`data/historico-legislativo.json` (estudos/modelo-atributos.md, seção 4.5).
+`data/historico-legislativo.json` (docs/superpowers/specs/2026-09-10-modelo-atributos.md, seção 4.5).
 
 Diferente de `parsear`, que consolida o dispositivo na redação vigente para o
 Vigia conferir a pena, aqui nada se consolida: toda versão conta, e a unidade
@@ -96,7 +96,7 @@ META = {
     "descricao": (
         "Histórico legislativo dos artigos de todos os tipos penais do catálogo e dos "
         "dispositivos citados pelos atributos penais: uma linha por acontecimento na "
-        "vida de cada dispositivo, em ordem cronológica (estudos/modelo-atributos.md, "
+        "vida de cada dispositivo, em ordem cronológica (docs/superpowers/specs/2026-09-10-modelo-atributos.md, "
         "seção 4.5). A chave estrangeira é `dispositivo`, a chave canônica de "
         "data/fontes.json, que o catálogo publica em `dispositivo_canonico`."),
     "eventos": {

@@ -29,15 +29,13 @@ yarn-debug.log*
 yarn-error.log*
 __pycache__/
 
-# Material de pesquisa cedido ao grupo, ainda nao liberado para publicacao.
-# Os cinco documentos do SISPENAS original sao ineditos e confidenciais
-# (estudos/materiais-sispenas-originais.md, secao 0). O estudo que os le e o
-# registro de contribuicoes ficam FORA do versionamento ate o mantenedor
-# decidir a forma de publicacao. Ver docs/superpowers/specs/2026-09-17-*.md, 6.1.
-/estudos/materiais-sispenas-originais.md
-/estudos/contribuicoes-pesquisa.md
-estudos/autoria-proposta.md
-
-# Codigo de terceiro trazido so para estudo. A leitura dele esta versionada
-# em estudos/licoes-do-jurisbot.md; o pacote em si nao entra no repositorio.
-/estudos/bot para estudo/
+# O diretorio estudos/ saiu do repositorio em 24/09/2026, com a auditoria: o
+# que tinha funcao mudou de lugar (o modelo dos atributos foi para docs/, e as
+# licoes do jurisbot viraram o debito tecnico do README). O que sobrava era
+# material de trabalho de uma revisao ja aplicada.
+#
+# As linhas abaixo ficam porque o diretorio continua sendo usado LOCALMENTE: os
+# cinco documentos de pesquisa cedidos pela Dra. Luisa sao ineditos, e nao
+# entram no versionamento enquanto ela nao decidir a forma de publicacao. Nem o
+# codigo de terceiro trazido para estudo.
+/estudos/
