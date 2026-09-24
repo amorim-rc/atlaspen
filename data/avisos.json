@@ -1,0 +1,39 @@
+{
+  "_meta": {
+    "descricao": "Avisos que acompanham a ficha do tipo penal e o cálculo de um atributo: controle concentrado em curso, repercussão geral julgada e divergência jurisprudencial declarada. Criado em 23/09/2026 pelas decisões 25, 36 e C16 da revisão fina.",
+    "por_que_e_dado": "Porque envelhece. Uma ADI é julgada, uma súmula é cancelada, um tema tem a tese publicada — e um aviso escrito dentro do código não tem data de consulta nem quem o revise. Aqui cada um diz QUANDO foi conferido e em que fonte, e a revisão periódica passa a ser possível: basta ordenar por `consultado_em`.",
+    "o_que_nao_entra": "Aviso não é condição do caso. `hediondo_condicao`, `acao_condicao` e `violencia_condicao` descrevem hipóteses em que o próprio tipo muda de resposta; o aviso descreve incerteza sobre a NORMA — quem julga pode decidir de outro modo. Foi a distinção que a decisão 28 fez ao tirar três registros da condição e pô-los em `hediondo_nota`.",
+    "revisao": "Reconferir no portal do tribunal a cada release, e sempre antes de declarar uma versão madura."
+  },
+  "avisos": [
+    {
+      "id": "adis-lei-15402",
+      "titulo": "A Lei 15.402/2026 está sob controle concentrado",
+      "texto": "A Lei 15.402/2026 é objeto das ADIs 7966, 7967, 7968 e 7969 (rel. min. Alexandre de Moraes), em rito do art. 10 da Lei 9.868/99. Não há medida cautelar: em 23/09/2026 os autos estavam conclusos ao relator desde 08/07/2026, com manifestações da AGU e da PGR. A ADI 7985 teve seguimento negado em 17/07/2026, com agravo regimental pendente. A decisão de 09/05/2026 foi proferida nas execuções penais do 8 de janeiro em curso no STF, e não nas ADIs.",
+      "fonte": "STF, andamentos das ADIs 7966, 7967, 7968, 7969 e 7985",
+      "consultado_em": "2026-09-23",
+      "decisao": "36",
+      "alcance": {"tituloXII": true, "atributo": "progressao"}
+    },
+    {
+      "id": "anpp-crime-militar",
+      "titulo": "O ANPP no crime militar é controvertido",
+      "texto": "Cabível em tese, com divergência declarada. O acordo é calculado pelos critérios do art. 28-A do CPP, inclusive o § 1º (causas de aumento e de diminuição). A favor: STF, 2ª T., HC 232.254/PE (sessão virtual de 19 a 26/04/2024, unânime; trânsito em 11/06/2024); STF, RE 1.613.372 (decisão monocrática do min. Dias Toffoli, 29/07/2026; trânsito em 13/08/2026); STJ, 5ª T., HC 993.294/MG (05/08/2025, DJEN de 14/08/2025). Contra: STM, Súmula 18 (DJe 140, de 22/08/2022).",
+      "fonte": "CPP, art. 28-A; CPPM, art. 3º, a; Lei 9.099/95, art. 90-A; precedentes citados",
+      "consultado_em": "2026-09-23",
+      "decisao": "25",
+      "pendencia": "O IRDR 7000457-17.2023.7.00.0000 do STM não foi conferido, e por isso não é citado.",
+      "alcance": {"lei": "^CPM", "atributo": "anpp"}
+    },
+    {
+      "id": "tema-506-cannabis",
+      "titulo": "Porte de cannabis para consumo pessoal: Tema 506 do STF",
+      "texto": "Não constitui infração penal a conduta com cannabis sativa para consumo pessoal; presunção relativa de usuário até 40 g ou seis plantas-fêmeas; as sanções dos incisos I e III são aplicadas em procedimento não penal (STF, RE 635.659, Tema 506). Para as demais drogas o tipo permanece.",
+      "fonte": "STF, RE 635.659, Tema 506",
+      "consultado_em": "2026-09-23",
+      "decisao": "C16",
+      "pendencia": "A data do julgamento ainda não foi conferida no portal do STF.",
+      "alcance": {"ids": [314]}
+    }
+  ]
+}

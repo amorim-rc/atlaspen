@@ -453,11 +453,20 @@ export const AVALIADORES: Record<string, (c: Cenario, p: Parametros) => Avaliaca
       // ressalva é TOPOGRÁFICA: não pergunta se houve violência. Para o
       // primário sobra o caput, e isso é leitura literal. Para o REINCIDENTE o
       // texto comporta duas saídas — ver o resumo devolvido abaixo.
+      // Decisão 27, de 23/09/2026: para o REINCIDENTE o resultado é condicional,
+      // e a alternativa depende de ter havido violência. Sem ela, a disputa é
+      // entre 1/6 (caput) e 20% (inciso III); com ela, entre 1/6 e 30% (inciso
+      // IV, que a Lei 15.402 não tocou). Nos dois casos o motor calcula pela
+      // leitura MAIS FAVORÁVEL — 1/6 — e mostra a outra, porque escolher em
+      // silêncio a mais gravosa seria decidir contra o réu sem dizer.
       fracao = num(p, 'fracaoCaputRegimeAnterior');
-      inciso = ehReincidente(c)
-        ? 'caput — crime do Título XII, reincidente (LEITURA EM DISPUTA: 1/6 pelo ' +
-          'caput, ou 20% pelo inciso III)'
-        : 'caput — crime do Título XII, primário (os incisos I e II o ressalvam)';
+      inciso = !ehReincidente(c)
+        ? 'caput — crime do Título XII, primário (os incisos I e II o ressalvam)'
+        : comViolencia
+          ? 'caput — crime do Título XII, reincidente com violência (LEITURA EM ' +
+            'DISPUTA: 1/6 pelo caput, ou 30% pelo inciso IV)'
+          : 'caput — crime do Título XII, reincidente (LEITURA EM DISPUTA: 1/6 pelo ' +
+            'caput, ou 20% pelo inciso III)';
     } else if (comViolencia && ehReincidente(c)) {
       // "Reincidente", nos incisos dos crimes COMUNS, é a reincidência genérica:
       // o texto não a qualifica. A exigência de reincidência ESPECÍFICA vale nos
@@ -498,20 +507,29 @@ export const AVALIADORES: Record<string, (c: Cenario, p: Parametros) => Avaliaca
           'violência a lei nova é mais gravosa (16% → 16,67%) e não retroage.',
       );
     }
-    if (c.tituloXII && reincidenteEspecifico(c)) {
+    if (c.tituloXII && ehReincidente(c)) {
       detalhes.push(
-        'DUAS LEITURAS SUSTENTÁVEIS, e a diferença é de 3,33 pontos. Pelo inciso III ' +
-          '(20%): ele alcança o "reincidente em crime diverso dos referidos nos incisos ' +
-          'I e II", e os do Título XII estão expressamente fora do alcance de I e II. ' +
-          'Pelo caput (1/6): "crimes referidos nos incisos I e II" significaria crimes ' +
-          'com violência ou grave ameaça, categoria a que os do Título XII pertencem ' +
-          'materialmente — não sendo diversos, restariam no caput. Está calculado pelo ' +
-          'caput, que é o resultado mais favorável; a questão é dos tribunais de execução.',
+        comViolencia
+          ? 'DUAS LEITURAS SUSTENTÁVEIS, e a diferença é de 13,33 pontos. Pelo inciso IV ' +
+            '(30%): ele alcança o "reincidente em crime cometido com violência à pessoa ' +
+            'ou grave ameaça" e a Lei 15.402/2026 não o tocou, de modo que continuaria ' +
+            'valendo. Pelo caput (1/6): a ressalva que a lei nova pôs nos incisos I e II ' +
+            'retirou os crimes do Título XII da tabela por inteiro, e o inciso IV, ' +
+            'remanescente de uma redação cuja lógica foi substituída, estaria derrogado. ' +
+            'Está calculado pelo caput, que é o resultado mais favorável; a questão é dos ' +
+            'tribunais de execução.'
+          : 'DUAS LEITURAS SUSTENTÁVEIS, e a diferença é de 3,33 pontos. Pelo inciso III ' +
+            '(20%): ele alcança o "reincidente em crime diverso dos referidos nos incisos ' +
+            'I e II", e os do Título XII estão expressamente fora do alcance de I e II. ' +
+            'Pelo caput (1/6): "crimes referidos nos incisos I e II" significaria crimes ' +
+            'com violência ou grave ameaça, categoria a que os do Título XII pertencem ' +
+            'materialmente — não sendo diversos, restariam no caput. Está calculado pelo ' +
+            'caput, que é o resultado mais favorável; a questão é dos tribunais de execução.',
       );
     }
     const percentual = `${(fracao * 100).toFixed(2).replace(/\.?0+$/, '')}%`;
     return {
-      status: c.tituloXII && reincidenteEspecifico(c) ? 'condicional' : 'cabivel',
+      status: c.tituloXII && ehReincidente(c) ? 'condicional' : 'cabivel',
       resumo: `Fração de ${percentual} → ${formatPena(tempo)} de cumprimento.`,
       detalhes,
       valor: `${percentual} — ${formatPena(tempo)}`,

@@ -577,6 +577,84 @@ def validar_condicionais(crimes: list) -> list:
     return problemas
 
 
+AVISOS = ROOT / "data" / "avisos.json"
+
+
+def carregar_avisos() -> list:
+    if not AVISOS.exists():
+        return []
+    return json.loads(AVISOS.read_text(encoding="utf-8"))["avisos"]
+
+
+def _ehTituloXII(c: dict) -> bool:
+    """Arts. 359-A a 359-T do CP. Mesmo critério de `src/lib/dosimetria/aplicaveis`."""
+    if not re.match(r"^CP(?![A-Za-z])", c.get("lei") or ""):
+        return False
+    m = re.match(r"^Art\.?\s*359-([A-T])\b", c.get("artigo") or "", re.I)
+    return bool(m)
+
+
+def derivar_avisos(c: dict, avisos: list) -> None:
+    """Os avisos que alcançam este registro (decisões 25, 36 e C16).
+
+    O aviso não muda o cálculo: ele diz que a NORMA está em disputa — ADI em
+    curso, tese de repercussão geral, divergência entre tribunais. A ficha o
+    exibe ao lado do atributo que ele qualifica, ou no cabeçalho quando vale
+    para o tipo inteiro.
+    """
+    do_registro = []
+    for a in avisos:
+        alcance = a.get("alcance") or {}
+        if "ids" in alcance and c["id"] in alcance["ids"]:
+            pass
+        elif alcance.get("tituloXII") and _ehTituloXII(c):
+            pass
+        elif alcance.get("lei") and re.search(alcance["lei"], c.get("lei") or ""):
+            pass
+        else:
+            continue
+        do_registro.append({
+            "id": a["id"], "titulo": a["titulo"], "texto": a["texto"],
+            "fonte": a["fonte"], "consultado_em": a["consultado_em"],
+            "atributo": alcance.get("atributo"),
+        })
+    c["avisos"] = do_registro or None
+
+
+def validar_elemento_e_tentativa(crimes: list) -> list:
+    """A régua do elemento subjetivo decide a tentativa (decisões 20 e 31).
+
+    Escrita em 23/09/2026, depois de o campo passar anos sem critério:
+
+    - **Preterdoloso** — a lei exclui o dolo no resultado (CP 129, §3º; CPM 209,
+      §3º-A), ou o resultado doloso configura outro crime, tratado em concurso.
+      Não admite tentativa: não se tenta o que só se produz culposamente.
+    - **Qualificado pelo resultado** — o tipo abriga resultado doloso OU culposo,
+      num crime só (latrocínio, STF Súmula 610; estupro com resultado, NUCCI,
+      22. ed., p. 665-666). Admite tentativa.
+    - **Culposo** — não admite tentativa (CP, art. 14, II).
+    - **Doloso** — a régua não decide; o campo é lido do tipo.
+
+    É trava, e não convenção, porque a distinção entre as duas primeiras foi o
+    trabalho da decisão 31: deixá-la só no texto seria perdê-la no primeiro
+    registro novo.
+    """
+    problemas = []
+    for c in crimes:
+        elemento, tentativa = c.get("elemento"), c.get("tentativa")
+        if elemento in ("Preterdoloso", "Culposo") and tentativa == "Sim":
+            problemas.append(
+                f"id {c['id']} ({c.get('lei')} {c.get('artigo')}): elemento "
+                f"{elemento!r} com `tentativa: Sim` — não se tenta o resultado "
+                "que a lei não quer doloso (decisões 20 e 31)")
+        if elemento == "Qualificado pelo resultado" and tentativa == "Não":
+            problemas.append(
+                f"id {c['id']} ({c.get('lei')} {c.get('artigo')}): elemento "
+                "'Qualificado pelo resultado' com `tentativa: Não` — o tipo "
+                "abriga resultado doloso, e o dolo se tenta (decisões 20 e 31)")
+    return problemas
+
+
 def validar_ids(crimes: list) -> list:
     """Invariantes DUROS do identificador. Nunca são débito tolerável.
 
@@ -819,12 +897,14 @@ def main():
 
     # Invariantes estruturais: falham sempre, independentemente de --estrito.
     tabela_hediondez = _hediondez.carregar()
+    avisos = carregar_avisos()
     historico = carregar_historico()
     rotulos_fonte = _dc.rotulos_para_fonte()
     problemas = (validar_ids(crimes) + validar_tipos_penais(crimes)
                  + validar_vocabulario(crimes)
                  + validar_hediondez(crimes, tabela_hediondez)
                  + validar_moldura(crimes) + validar_condicionais(crimes)
+                 + validar_elemento_e_tentativa(crimes)
                  + validar_vigencia(crimes)
                  + validar_pena_por_remissao(crimes))
     if problemas:
@@ -869,6 +949,7 @@ def main():
         c["tem_pena_privativa"] = bool(pmax or c["pena_min_meses"] or remissao_conta)
         c["contravencao"], c["infracao_menor_potencial"] = menor_potencial(c)
         derivar_hediondez(c, tabela_hediondez)
+        derivar_avisos(c, avisos)
         c.setdefault("sancoes_nao_privativas", [])
         c.setdefault("pena_por_remissao", None)
         if c["pena_por_remissao"]:

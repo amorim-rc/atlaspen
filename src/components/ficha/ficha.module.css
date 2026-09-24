@@ -11,6 +11,22 @@
   background: var(--cor-papel);
 }
 
+.avisoNorma {
+  margin: 0;
+  padding: 0.8rem 1.25rem;
+  border-bottom: 1px solid var(--cor-borda);
+  border-left: 3px solid var(--cor-atencao, var(--cor-borda));
+  background: var(--cor-simulacao-fundo);
+  font-size: var(--fs-pequeno);
+  color: var(--cor-tinta-corpo);
+}
+
+.avisoFonte {
+  display: block;
+  margin-top: 0.35rem;
+  color: var(--cor-tinta-fraca, var(--cor-tinta-corpo));
+}
+
 .avisoReservado {
   margin: 0;
   padding: 0.8rem 1.25rem;
@@ -400,6 +416,21 @@
   width: 1.1rem;
   height: 1.1rem;
   accent-color: var(--cor-acento);
+}
+
+/* A data do fato divide o grupo com as caixas de seleção, e não cabe na
+   medida de uma: precisa da largura do campo e da altura do controle. */
+.circunstancia input[type='date'] {
+  width: auto;
+  min-height: 2.25rem;
+  height: auto;
+  padding: 0 0.5rem;
+  border: 1px solid var(--cor-borda-controle);
+  border-radius: var(--raio);
+  background: var(--cor-papel);
+  font-family: var(--fonte-mono);
+  font-size: var(--fs-meta);
+  color: inherit;
 }
 
 .fracao select {

@@ -48,6 +48,22 @@ export interface UltimaAlteracao {
   vigencia?: string;
 }
 
+/**
+ * Um aviso sobre a norma, derivado de `data/avisos.json` (decisões 25, 36 e
+ * C16, de 23/09/2026). Não altera o cálculo: declara que a resposta pode mudar
+ * por decisão de tribunal, e diz quando a fonte foi consultada pela última vez.
+ */
+export interface AvisoDaNorma {
+  id: string;
+  titulo: string;
+  texto: string;
+  fonte: string;
+  /** ISO. É o que permite revisar os avisos por idade. */
+  consultado_em: string;
+  /** Slug do atributo que o aviso qualifica; `null` = vale para o tipo inteiro. */
+  atributo: string | null;
+}
+
 export interface Crime {
   id: number;
   lei: string;
@@ -69,6 +85,28 @@ export interface Crime {
   hediondo_condicao?: string;
   /** Mesma ideia para a ação penal (art. 161, §3º: privada se a propriedade é particular). */
   acao_condicao?: string;
+  /**
+   * Mesma ideia para a violência e a grave ameaça (decisão 8, de 23/09/2026):
+   * o tipo se consuma SEM violência — sequestrar pode ser obtido por fraude —,
+   * e a hipótese violenta fica escrita aqui em vez de virar um "Sim" que
+   * retiraria ANPP e substituição de quem tem direito a elas.
+   */
+  violencia_condicao?: string;
+  /** Derivado: há `violencia_condicao`. */
+  violencia_condicional?: boolean;
+  /**
+   * Divergência de jurisprudência ou de doutrina sobre a hediondez (decisão
+   * 28). NÃO é condição do fato: o tipo não muda conforme o caso, muda conforme
+   * quem julga — foi a distinção que tirou três registros de
+   * `hediondo_condicao` e os trouxe para cá.
+   */
+  hediondo_nota?: string;
+  /**
+   * Avisos sobre a NORMA, e não sobre o caso: ADI em curso, tese de repercussão
+   * geral, divergência entre tribunais. Derivados de `data/avisos.json`, cada um
+   * com a fonte e a data em que ela foi consultada — porque envelhecem.
+   */
+  avisos?: AvisoDaNorma[] | null;
   /**
    * Data em que o dispositivo deixou de vigorar (AAAA-MM-DD) — declaração de
    * inconstitucionalidade com eficácia ex nunc, revogação. O registro NÃO sai do

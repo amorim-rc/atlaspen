@@ -17,6 +17,7 @@ import {indexarModificadores} from '../../lib/dosimetria/motor';
 import {moverMoldura} from '../../lib/dosimetria/moldura';
 import {cenarioFromCrime} from '../../lib/cenario';
 import {diasDeMeses, formatDias, formatFaixa} from '../../lib/pena';
+import {dataCurta} from '../../site/datas';
 import {ESTADO_LEGAL, escreverEstado, lerEstado, type EstadoFicha, type Modo} from './estado';
 import PainelCominada from './PainelCominada';
 import PainelConcreta from './PainelConcreta';
@@ -125,12 +126,25 @@ export default function FichaTipo({crime, modificadores, patamares, historico}: 
     <div className={s.fichaInterativa}>
       {e.em && (
         <p className={s.avisoReservado}>
-          O endereço traz <code>em={e.em}</code>, a data do fato. O parâmetro está reservado ao eixo
-          temporal e ainda não altera a ficha: a redação de cada dispositivo em cada data entra com a
-          cadeia completa do histórico legislativo (frente 11 do backlog). O que se lê abaixo é a lei
-          vigente.
+          Fato de <strong>{e.em}</strong>. A data escolhe a redação das leis que mudaram o cálculo —
+          hoje o art. 112 da LEP, pela Lei 15.358/2026 nos crimes hediondos e pela Lei 15.402/2026
+          nos demais. O <em>texto</em> dos dispositivos abaixo continua sendo o vigente: a redação de
+          cada artigo em cada data depende da cadeia completa do histórico legislativo (frente 11 do
+          backlog).
         </p>
       )}
+
+      {/* Controle concentrado em curso, repercussão geral julgada, divergência
+          entre tribunais. Não muda o cálculo: diz que a NORMA está em disputa,
+          e traz a data em que a fonte foi consultada (data/avisos.json). */}
+      {crime.avisos?.map((a) => (
+        <p key={a.id} className={s.avisoNorma}>
+          <strong>{a.titulo}.</strong> {a.texto}{' '}
+          <span className={s.avisoFonte}>
+            {a.fonte} — consultado em {dataCurta(a.consultado_em)}.
+          </span>
+        </p>
+      ))}
 
       <div className={`${s.abas} nao-imprimir`}>
         <div role="tablist" aria-label="Modos da ficha" className={s.listaAbas}>

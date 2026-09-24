@@ -22,6 +22,7 @@ import {
 import {escreverPremissa, lerPremissa, premissaIgualAoPadrao} from '../src/lib/atributos/premissa-url';
 import {escreverEstado, lerEstado} from '../src/components/atributo/estado';
 import {cenarioFromCrime} from '../src/lib/cenario';
+import {ehTituloXII} from '../src/lib/dosimetria/aplicaveis';
 import {VIGENCIA} from '../src/lib/tempo';
 
 /**
@@ -660,6 +661,31 @@ console.log('\n3. Casos-âncora de direito penal');
         rein.detalhes.some((d) => d.includes('DUAS LEITURAS')),
         'Título XII, reincidente: as duas leituras aparecem no resultado, nenhuma escolhida em silêncio',
       );
+
+      // Decisão 27: a alternativa depende de ter havido VIOLÊNCIA. Sem ela, a
+      // disputa é 1/6 (caput) contra 20% (inciso III); com ela, 1/6 contra 30%
+      // (inciso IV, que a Lei 15.402 não tocou). Nos dois casos o motor calcula
+      // pela mais favorável e mostra a outra.
+      const violento = crimes.find((c) => ehTituloXII(c.lei ?? '', c.artigo ?? '') && c.violencia === 'Sim');
+      if (violento) {
+        const r = avaliar(progressaoDef, violento, {reincidencia: 'doloso' as const});
+        ok(r.status === 'condicional',
+          `Título XII com violência, reincidente: condicional (obtido "${r.status}")`);
+        ok(r.detalhes.some((d) => d.includes('30%') && d.includes('inciso IV')),
+          'Título XII com violência: a leitura dos 30% pelo inciso IV aparece');
+        ok(/16\.67%|16,67%/.test(r.resumo),
+          `Título XII com violência: calculado pela mais favorável, 1/6 (obtido "${r.resumo}")`);
+      }
+      // A reincidência do Título XII é a GENÉRICA, como nos incisos dos crimes
+      // comuns (decisão 21). Antes de 23/09/2026 o rótulo dizia "leitura em
+      // disputa" ao reincidente genérico e o status dizia "cabível": o texto e
+      // o número discordavam.
+      const semViolencia = crimes.find((c) => ehTituloXII(c.lei ?? '', c.artigo ?? '') && c.violencia !== 'Sim');
+      if (semViolencia) {
+        const g = avaliar(progressaoDef, semViolencia, {reincidencia: 'doloso' as const});
+        ok(g.status === 'condicional',
+          `Título XII, reincidente GENÉRICO: condicional (obtido "${g.status}")`);
+      }
       // E o aumento dos crimes funcionais (art. 327, §2º, Título XI) não pode
       // alcançá-lo: `numeroArtigo("Art. 359-M")` é 359, que caía na faixa do XI.
       ok(golpe.artigo.startsWith('Art. 359-M'), 'golpe de Estado localizado pelo artigo com sufixo');
