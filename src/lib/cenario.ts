@@ -44,6 +44,7 @@ export function cenarioFromCrime(c: TipoDoMotor): Cenario {
     dataDoFato: hojeISO(),
     violencia: c.violencia === 'Sim',
     graveAmeaca: c.grave_ameaca === 'Sim',
+    violenciaCondicao: c.violencia_condicao ?? undefined,
     confessou: false,
     reparouDano: false,
     bonsAntecedentes: true,

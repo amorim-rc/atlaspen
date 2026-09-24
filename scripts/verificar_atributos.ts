@@ -476,8 +476,21 @@ console.log('\n3. Casos-âncora de direito penal');
       if (bullying) {
         const c = cenarioFromCrime(bullying);
         ok(c.semPenaPrivativa === true && c.multaIsolada === true, 'o cenário sabe que o tipo é só multa');
+        // O que este teste sempre afirmou — que o tipo só de multa passa no teto
+        // do art. 61 — continua valendo, e é isto que se mede sem a condição.
+        const semCond = avaliarAtributo(def('transacao'), {...c, violenciaCondicao: undefined},
+          valoresPadrao(def('transacao')));
+        ok(semCond.status === 'cabivel', 'bullying: transação cabível (Lei 9.099/95, art. 61, "cumulada ou não com multa")');
+        // Desde 23/09/2026 há uma segunda hipótese: o art. 146-A pune a
+        // intimidação por violência FÍSICA ou psicológica, e o catálogo declara
+        // a condição (decisão 11, remetendo à 8). Na hipótese física entra a
+        // ressalva da Súmula 536, e por isso o veredito publicado é condicional
+        // — com as duas respostas à vista, em vez de uma escolhida em silêncio.
         const t = avaliarAtributo(def('transacao'), c, valoresPadrao(def('transacao')));
-        ok(t.status === 'cabivel', 'bullying: transação cabível (Lei 9.099/95, art. 61, "cumulada ou não com multa")');
+        ok(t.status === 'condicional',
+          `bullying: com a condição de violência declarada, a transação sai condicional (obtido "${t.status}")`);
+        ok(t.detalhes.some((d) => d.includes('DEPENDE DA HIPÓTESE')),
+          'bullying: a hipótese de violência física aparece no resultado');
         const p = avaliarAtributo(def('prescricao'), c, valoresPadrao(def('prescricao')));
         ok(p.valor === formatPena(24), `bullying: prescrição da multa isolada em 2 anos (CP, art. 114, I) — obtido ${p.valor}`);
         const a = avaliarAtributo(def('anpp'), c, valoresPadrao(def('anpp')));
@@ -643,6 +656,46 @@ console.log('\n3. Casos-âncora de direito penal');
           `hediondo, primário, fato de abril/2026: já 70% da Lei 15.358 (obtido "${meio.resumo}")`);
         ok(/70%/.test(hoje.resumo),
           `hediondo, primário, hoje: 70% (obtido "${hoje.resumo}")`);
+      }
+    }
+
+    // ── As DUAS HIPÓTESES da violência condicionada (decisão 8, item 6.e) ──
+    // O tipo com `violencia_condicao` se consuma SEM violência, e o campo
+    // publicado é "Não". Calcular só essa hipótese diria "cabe ANPP" sem
+    // ressalva num tipo em que o ANPP some se houve violência. O motor avalia
+    // o mesmo atributo duas vezes e, onde as respostas divergem, devolve
+    // condicional com as duas à vista.
+    {
+      const comCondicao = crimes.find((c) => c.violencia_condicao && c.violencia !== 'Sim');
+      ok(!!comCondicao, 'há tipo com `violencia_condicao` no catálogo para exercitar a regra');
+      if (comCondicao) {
+        const anpp = CATALOGO.find((a) => a.id === 'anpp')!;
+        const base = cenarioFromCrime(comCondicao);
+        const r = avaliarAtributo(anpp, base);
+        const semCondicao = avaliarAtributo(anpp, {...base, violenciaCondicao: undefined});
+        const naHipotese = avaliarAtributo(anpp, {
+          ...base, violenciaCondicao: undefined, violencia: true, graveAmeaca: true,
+        });
+        if (semCondicao.status !== naHipotese.status) {
+          ok(r.status === 'condicional',
+            `id ${comCondicao.id}: com condição de violência, o ANPP sai condicional ` +
+            `(obtido "${r.status}")`);
+          ok(r.detalhes.some((d) => d.includes('DEPENDE DA HIPÓTESE')),
+            `id ${comCondicao.id}: a ficha mostra a hipótese violenta, não a esconde`);
+          ok(r.detalhes.some((d) => d.includes(comCondicao.violencia_condicao!.slice(0, 30))),
+            `id ${comCondicao.id}: a condição do catálogo aparece escrita no resultado`);
+        }
+      }
+      // O tipo que JÁ afirma violência não ganha a segunda hipótese: não há
+      // duas, há uma.
+      const violento = crimes.find((c) => c.violencia === 'Sim');
+      if (violento) {
+        const anpp = CATALOGO.find((a) => a.id === 'anpp')!;
+        const r = avaliarAtributo(anpp, {
+          ...cenarioFromCrime(violento), violenciaCondicao: 'texto qualquer',
+        });
+        ok(!r.detalhes.some((d) => d.includes('DEPENDE DA HIPÓTESE')),
+          'tipo que já afirma violência não recebe a segunda hipótese');
       }
     }
 

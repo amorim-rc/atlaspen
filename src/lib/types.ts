@@ -235,6 +235,10 @@ export type TipoDoMotor = Pick<
   | 'resultado_morte'
   | 'violencia'
   | 'grave_ameaca'
+  // A condição da violência entra no motor porque é ela que manda avaliar as
+  // duas hipóteses (decisão 8). Sem ela, um tipo que se consuma sem violência
+  // diria "cabe ANPP" sem ressalva, calando a hipótese em que não cabe.
+  | 'violencia_condicao'
   | 'elemento'
   | 'tentativa'
   | 'perdao_judicial_previsto'
@@ -307,6 +311,13 @@ export interface Cenario {
   dataDoFato: string;
   violencia: boolean;
   graveAmeaca: boolean;
+  /**
+   * O texto de `violencia_condicao` do tipo, quando existe (decisão 8). Não é
+   * circunstância do caso: é a declaração de que o tipo COMPORTA a hipótese
+   * violenta sem pressupô-la. O motor a usa para avaliar o catálogo nas duas
+   * hipóteses e marcar como condicional o que muda entre elas.
+   */
+  violenciaCondicao?: string;
   confessou: boolean;
   reparouDano: boolean;
   bonsAntecedentes: boolean;
