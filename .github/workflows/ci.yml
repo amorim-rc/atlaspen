@@ -69,10 +69,22 @@ jobs:
       - name: Typecheck
         run: npm run typecheck
 
+      # A base dos modificadores da dosimetria: vocabulário, fase, fração e o
+      # dispositivo de cada um.
+      - name: Validar modificadores da dosimetria
+        run: python3 scripts/validar_modificadores.py
+
       # Invariantes do motor de atributos + casos-âncora de direito penal,
       # avaliados contra o catálogo real de tipos penais.
       - name: Verificar motor de atributos
         run: npm run verificar
+
+      # O congelamento: 22 atributos × 1.496 tipos × 4 cenários. Veredito que
+      # muda só passa se tiver sido regravado de propósito, e o commit diz por
+      # quê. É a trava mais forte do projeto, e até 24/09/2026 ela não rodava
+      # aqui — o README já a anunciava como trava de build, e não era.
+      - name: Congelamento dos vereditos
+        run: npm run equivalencia
 
       - name: Build
         run: npm run build

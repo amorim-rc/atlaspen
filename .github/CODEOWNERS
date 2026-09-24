@@ -1,15 +1,21 @@
 # CODEOWNERS do AtlasPen
 #
-# Quando um PR altera um caminho abaixo, o dono correspondente é chamado para revisar, e
-# o ruleset da `main` exige a aprovação dele. Vale a ÚLTIMA regra que casa o arquivo: por
-# isso as regras vão do geral para o específico.
+# Quando um PR altera um caminho abaixo, o dono correspondente é chamado para revisar.
+# Vale a ÚLTIMA regra que casa o arquivo: por isso as regras vão do geral para o
+# específico.
+#
+# A EXIGÊNCIA de aprovação do code owner está escrita, e DESLIGADA, em
+# .github/rulesets/main-colaboracao.json — ela liga quando entrar um colaborador com
+# permissão de escrita. Hoje o ruleset ativo (main-base.json) só impede force push e
+# deleção da `main`. Enquanto isso, este arquivo serve para chamar quem precisa olhar.
 #
 # Hoje tudo é de @amorim-rc. Quando o repositório for para a organização, troque cada
 # linha pelo time indicado no comentário (ex.: @<org>/juridico). Code Owner precisa ter
 # permissão de escrita no repositório; sem ela, a regra é ignorada.
 #
-# O GitHub não deixa ninguém aprovar o próprio PR. Os PRs do mantenedor entram por bypass
-# de admin (decisão de 10/09/2026).
+# O GitHub não deixa ninguém aprovar o próprio PR. Por isso o nível de colaboração traz
+# bypass de admin: sem ele, ligar a exigência trancaria o repositório no dono (decisão de
+# 10/09/2026, revista em 24/09/2026).
 
 # Tudo o que não casar com regra abaixo                     (futuro: @<org>/manutencao)
 *                               @amorim-rc
@@ -43,9 +49,16 @@
 # Notas de atualizações                                     (futuro: @<org>/conteudo)
 /src/data/changelog/            @amorim-rc
 
-# Documentação do site                                      (futuro: @<org>/conteudo)
+# Documentação do site — docs/ é, sem exceção, o       (futuro: @<org>/conteudo)
+# que vai ao ar, e docs/textos/ são os textos do grupo.
 /docs/                          @amorim-rc
 /static/artigos/                @amorim-rc
+
+# Fora do site, e versionado                               (mantido no mantenedor)
+# .auditoria/ é o pré-registro da auditoria: alterá-lo depois do sorteio destrói a
+# garantia que ele existe para dar. .superpowers/ são os planos e specs datados.
+/.auditoria/                    @amorim-rc
+/.superpowers/                  @amorim-rc
 
 # Regras do projeto e instruções para agentes               (mantido no mantenedor)
 /AGENTS.md                      @amorim-rc

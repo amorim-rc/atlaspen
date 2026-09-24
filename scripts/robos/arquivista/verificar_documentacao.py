@@ -47,18 +47,49 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 REGISTRO = RAIZ / "data" / "documentacao.json"
 
 
+# Separador de commits no `git log`, para não confundir com o texto de nenhuma
+# linha de status. É o `%x01` do formato, escrito aqui uma vez só.
+_SEP = chr(1)
+
+
 def commit_mais_recente(caminho: str) -> date | None:
-    """Data do último commit que tocou o caminho (arquivo ou diretório)."""
+    """Data do último commit que MUDOU o caminho (arquivo ou diretório).
+
+    **Mudar de lugar não é mudar.** O `git mv` toca o caminho sem que ninguém
+    releia uma linha, e a regra "editar é conferir" tomava isso por leitura. Na
+    reorganização de 24/09/2026, que levou `textos/` para dentro de `docs/`, o
+    movimento sozinho limpou a marca que o Arquivista mantinha sobre a história
+    do projeto: o documento continuava esperando reescrita, e o relatório passou
+    a dizer que estava em dia. Falha silenciosa, que é a que mais dói.
+
+    Renomeação COM edição (`R097` e afins) continua contando — ali houve
+    leitura. Só o `R100`, o mesmo conteúdo noutro lugar, é ignorado.
+
+    Em diretório a ressalva não se aplica: `--follow` exige um arquivo, e mover
+    algo para dentro de um diretório é, de fato, mudá-lo.
+    """
+    e_arquivo = (RAIZ / caminho).is_file()
+    cmd = ["git", "log", f"--format=%x01%cI"]
+    cmd += ["--follow", "--name-status"] if e_arquivo else ["-1"]
     try:
-        saida = subprocess.run(
-            ["git", "log", "-1", "--format=%cI", "--", caminho],
-            cwd=RAIZ, capture_output=True, text=True, timeout=30)
+        saida = subprocess.run(cmd + ["--", caminho],
+                               cwd=RAIZ, capture_output=True, text=True, timeout=30)
     except (OSError, subprocess.SubprocessError):
         return None
-    bruto = saida.stdout.strip()
-    if not bruto:
-        return None
-    return datetime.fromisoformat(bruto).date()
+
+    if not e_arquivo:
+        bruto = saida.stdout.replace(_SEP, "").strip()
+        return datetime.fromisoformat(bruto).date() if bruto else None
+
+    for bloco in saida.stdout.split(_SEP)[1:]:
+        linhas = [l for l in bloco.splitlines() if l.strip()]
+        if not linhas:
+            continue
+        estados = [l.split("\t")[0] for l in linhas[1:]]
+        if estados and all(e == "R100" for e in estados):
+            continue
+        return datetime.fromisoformat(linhas[0].strip()).date()
+    return None
 
 
 def avaliar(registro: dict, hoje: date | None = None) -> list[dict]:

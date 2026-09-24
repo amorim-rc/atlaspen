@@ -156,7 +156,7 @@
     },
     {
       "arquivo": "docs/textos/historia.md",
-      "sobre": "A história do projeto, da pesquisa de 2008 à retomada e ao lançamento. É a página que /projeto abre por padrão; cita decisões datadas do backlog.",
+      "sobre": "A história do projeto, da pesquisa de 2008 à retomada e ao lançamento. É a página que /projeto abre por padrão; cita decisões datadas do projeto.",
       "conferido_em": "2026-09-18",
       "depende_de": [
         "CITATION.cff",

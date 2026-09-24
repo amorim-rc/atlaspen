@@ -1,0 +1,7 @@
+# O repositório é mantido no Windows, com `core.autocrlf=true`: a cópia de
+# trabalho fica em CRLF e o índice, em LF. Para quase tudo isso é indiferente.
+#
+# Para script de shell, não é. O `bash` lê o `\r` final do shebang como parte do
+# caminho do interpretador e recusa o arquivo com um erro que não diz o que
+# houve. Estes ficam em LF dos dois lados.
+*.sh text eol=lf
