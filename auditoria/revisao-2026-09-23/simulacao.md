@@ -1,10 +1,10 @@
 # Revisão fina de 23/09/2026 — simulação da aplicação
 
-Anexo A: **413 mudanças** declaradas, em 251 registros.
+Anexo A: **416 mudanças** declaradas, em 254 registros.
 
 | resultado | mudanças |
 |---|---:|
-| aplicáveis (o valor de origem confere) | 412 |
+| aplicáveis (o valor de origem confere) | 415 |
 | já estavam no valor decidido | 0 |
 | **recusadas** (o catálogo mudou desde 23/09) | **0** |
 | id inexistente no catálogo | 0 |
@@ -22,7 +22,7 @@ Anexo A: **413 mudanças** declaradas, em 251 registros.
 | `hediondo_condicao` | 36 |
 | `tentativa` | 23 |
 | `hediondo` | 13 |
-| `acao` | 4 |
+| `acao` | 7 |
 | `hediondo_nota` | 4 |
 | `vigencia_ate` | 2 |
 | `vigencia_nota` | 2 |
@@ -56,6 +56,7 @@ Anexo A: **413 mudanças** declaradas, em 251 registros.
 | 11 | 3 |
 | 17 | 3 |
 | 28 (sai da condição) | 3 |
+| C17 | 3 |
 | C3 | 2 |
 | C5 | 2 |
 | C4 | 1 |
@@ -218,9 +219,9 @@ Anexo A: **413 mudanças** declaradas, em 251 registros.
 | 158 | CP Art. 204 | `violencia_condicao` | — | `Sim quando o meio empregado for violência à p` | 8 |
 | 296 | CP Art. 358 | `violencia_condicao` | — | `Sim quando o meio empregado for violência à p` | 8 |
 | 496 | CP Art. 337-K | `violencia_condicao` | — | `Sim quando o meio empregado for violência à p` | 8 |
-| 1343 | CP Art. 227, § 2º | `violencia_condicao` | — | `Sim quando o meio empregado for violência à p` | 8 |
-| 1345 | CP Art. 228, § 2º | `violencia_condicao` | — | `Sim quando o meio empregado for violência à p` | 8 |
-| 1347 | CP Art. 230, § 2º | `violencia_condicao` | — | `Sim quando o meio empregado for violência à p` | 8 |
+| 1343 | CP Art. 227, §2º | `violencia_condicao` | — | `Sim quando o meio empregado for violência à p` | 8 |
+| 1345 | CP Art. 228, §2º | `violencia_condicao` | — | `Sim quando o meio empregado for violência à p` | 8 |
+| 1347 | CP Art. 230, §2º | `violencia_condicao` | — | `Sim quando o meio empregado for violência à p` | 8 |
 | 1397 | ECA Art. 239, parágrafo único | `violencia_condicao` | — | `Sim quando o meio empregado for violência à p` | 8 |
 | 479 | Lei 14.811/24 Art. 146-A, caput (CP) | `violencia_condicao` | — | `Sim quando o meio empregado for violência à p` | 8 |
 | 480 | Lei 14.811/24 Art. 146-A, §único (CP) | `violencia_condicao` | — | `Sim quando o meio empregado for violência à p` | 8 |
@@ -235,9 +236,9 @@ Anexo A: **413 mudanças** declaradas, em 251 registros.
 | 267 | CP Art. 329 | `violencia` | `Sim` | `Não` | 8 |
 | 267 | CP Art. 329 | `grave_ameaca` | `Sim` | `Não` | 8 |
 | 267 | CP Art. 329 | `violencia_condicao` | — | `Sim quando o meio empregado for violência à p` | 8 |
-| 1374 | CP Art. 329, § 1º | `violencia` | `Sim` | `Não` | 8 |
-| 1374 | CP Art. 329, § 1º | `grave_ameaca` | `Sim` | `Não` | 8 |
-| 1374 | CP Art. 329, § 1º | `violencia_condicao` | — | `Sim quando o meio empregado for violência à p` | 8 |
+| 1374 | CP Art. 329, §1º | `violencia` | `Sim` | `Não` | 8 |
+| 1374 | CP Art. 329, §1º | `grave_ameaca` | `Sim` | `Não` | 8 |
+| 1374 | CP Art. 329, §1º | `violencia_condicao` | — | `Sim quando o meio empregado for violência à p` | 8 |
 | 513 | CDC (Lei 8.078/9 Art. 71 | `grave_ameaca` | `Sim` | `Não` | 9 |
 | 513 | CDC (Lei 8.078/9 Art. 71 | `violencia_condicao` | — | `Sim quando a ameaça empregada for grave (CDC,` | 9 |
 | 1508 | CE (Lei 4.737/65 Art. 326-B | `grave_ameaca` | `Sim` | `Não` | 9 |
@@ -323,7 +324,7 @@ Anexo A: **413 mudanças** declaradas, em 251 registros.
 | 999 | CP Art. 177, caput | `acao_condicao` | — | `Condicionada à representação se o crime é com` | 12 |
 | 1000 | CP Art. 178, caput | `acao_condicao` | — | `Condicionada à representação se o crime é com` | 12 |
 | 1316 | CP Art. 155, §9º | `acao_condicao` | — | `Condicionada à representação se o crime é com` | 12 |
-| 1341 | CP Art. 175, § 1º | `acao_condicao` | — | `Condicionada à representação se o crime é com` | 12 |
+| 1341 | CP Art. 175, §1º | `acao_condicao` | — | `Condicionada à representação se o crime é com` | 12 |
 | 127 | CP Art. 171, caput | `acao_condicao` | — | `Fatos até 03/05/2026: condicionada à represen` | 12+33 |
 | 128 | CP Art. 171, §2º-A | `acao_condicao` | — | `Fatos até 03/05/2026: condicionada à represen` | 12+33 |
 | 580 | CP (atualiz.) Art. 171, §4º | `acao_condicao` | — | `Fatos até 03/05/2026: condicionada à represen` | 12+33 |
@@ -358,7 +359,7 @@ Anexo A: **413 mudanças** declaradas, em 251 registros.
 | 1083 | CPM (DL 1.001/69 Art. 209, §3º-A | `elemento` | `Doloso` | `Preterdoloso` | 31 (A/B) |
 | 1082 | CPM (DL 1.001/69 Art. 209, §3º | `elemento` | `Culposo` | `Preterdoloso` | 31 (A/B) |
 | 1287 | CPM (DL 1.001/69 Art. 403, §3º | `elemento` | `Doloso` | `Preterdoloso` | 31 (A/B) |
-| 1389 | CPM (DL 1.001/69 Art. 403, § 3º (no caso de | `elemento` | `Doloso` | `Preterdoloso` | 31 (A/B) |
+| 1389 | CPM (DL 1.001/69 Art. 403, §3º (no caso de  | `elemento` | `Doloso` | `Preterdoloso` | 31 (A/B) |
 | 30 | CP Art. 127, 1ª parte | `elemento` | `Doloso` | `Preterdoloso` | 31 (A/B) |
 | 31 | CP Art. 127, 2ª parte | `elemento` | `Doloso` | `Preterdoloso` | 31 (A/B) |
 | 1488 | CP Art. 127, 1ª parte c/c art | `elemento` | `Doloso` | `Preterdoloso` | 31 (A/B) |
@@ -367,8 +368,8 @@ Anexo A: **413 mudanças** declaradas, em 251 registros.
 | 1480 | CP Art. 133, §3º c/c §2º | `elemento` | `Doloso` | `Preterdoloso` | 31 (A/B) |
 | 1481 | CP Art. 136, §3º c/c §1º | `elemento` | `Doloso` | `Preterdoloso` | 31 (A/B) |
 | 1482 | CP Art. 136, §3º c/c §2º | `elemento` | `Doloso` | `Preterdoloso` | 31 (A/B) |
-| 1338 | CP Art. 134, § 1º | `elemento` | `Doloso` | `Preterdoloso` | 31 (A/B) |
-| 1339 | CP Art. 134, § 2º | `elemento` | `Doloso` | `Preterdoloso` | 31 (A/B) |
+| 1338 | CP Art. 134, §1º | `elemento` | `Doloso` | `Preterdoloso` | 31 (A/B) |
+| 1339 | CP Art. 134, §2º | `elemento` | `Doloso` | `Preterdoloso` | 31 (A/B) |
 | 1087 | CPM (DL 1.001/69 Art. 212, §1º | `elemento` | `Doloso` | `Preterdoloso` | 31 (A/B) |
 | 1088 | CPM (DL 1.001/69 Art. 212, §2º | `elemento` | `Doloso` | `Preterdoloso` | 31 (A/B) |
 | 1090 | CPM (DL 1.001/69 Art. 213, §1º | `elemento` | `Doloso` | `Preterdoloso` | 31 (A/B) |
@@ -384,7 +385,7 @@ Anexo A: **413 mudanças** declaradas, em 251 registros.
 | 1503 | CP Art. 129, §12, II c/c §3º | `tentativa` | `Sim` | `Não` | 20 |
 | 1083 | CPM (DL 1.001/69 Art. 209, §3º-A | `tentativa` | `Sim` | `Não` | 20 |
 | 1287 | CPM (DL 1.001/69 Art. 403, §3º | `tentativa` | `Sim` | `Não` | 20 |
-| 1389 | CPM (DL 1.001/69 Art. 403, § 3º (no caso de | `tentativa` | `Sim` | `Não` | 20 |
+| 1389 | CPM (DL 1.001/69 Art. 403, §3º (no caso de  | `tentativa` | `Sim` | `Não` | 20 |
 | 30 | CP Art. 127, 1ª parte | `tentativa` | `Sim` | `Não` | 20 |
 | 31 | CP Art. 127, 2ª parte | `tentativa` | `Sim` | `Não` | 20 |
 | 1488 | CP Art. 127, 1ª parte c/c art | `tentativa` | `Sim` | `Não` | 20 |
@@ -393,8 +394,8 @@ Anexo A: **413 mudanças** declaradas, em 251 registros.
 | 1480 | CP Art. 133, §3º c/c §2º | `tentativa` | `Sim` | `Não` | 20 |
 | 1481 | CP Art. 136, §3º c/c §1º | `tentativa` | `Sim` | `Não` | 20 |
 | 1482 | CP Art. 136, §3º c/c §2º | `tentativa` | `Sim` | `Não` | 20 |
-| 1338 | CP Art. 134, § 1º | `tentativa` | `Sim` | `Não` | 20 |
-| 1339 | CP Art. 134, § 2º | `tentativa` | `Sim` | `Não` | 20 |
+| 1338 | CP Art. 134, §1º | `tentativa` | `Sim` | `Não` | 20 |
+| 1339 | CP Art. 134, §2º | `tentativa` | `Sim` | `Não` | 20 |
 | 1087 | CPM (DL 1.001/69 Art. 212, §1º | `tentativa` | `Sim` | `Não` | 20 |
 | 1088 | CPM (DL 1.001/69 Art. 212, §2º | `tentativa` | `Sim` | `Não` | 20 |
 | 1090 | CPM (DL 1.001/69 Art. 213, §1º | `tentativa` | `Sim` | `Não` | 20 |
@@ -451,7 +452,7 @@ Anexo A: **413 mudanças** declaradas, em 251 registros.
 | 699 | CPM (DL 1.001/69 Art. 209, §2º | `hediondo_condicao` | — | `Hediondo somente quando praticada contra auto` | 29 |
 | 1083 | CPM (DL 1.001/69 Art. 209, §3º-A | `hediondo_condicao` | — | `Hediondo somente quando praticada contra auto` | 29 |
 | 1286 | CPM (DL 1.001/69 Art. 403, §2º | `hediondo_condicao` | — | `Hediondo somente quando praticada contra auto` | 29 |
-| 1389 | CPM (DL 1.001/69 Art. 403, § 3º (no caso de | `hediondo_condicao` | — | `Hediondo somente quando praticada contra auto` | 29 |
+| 1389 | CPM (DL 1.001/69 Art. 403, §3º (no caso de  | `hediondo_condicao` | — | `Hediondo somente quando praticada contra auto` | 29 |
 | 1 | CP Art. 121, caput | `hediondo_condicao` | `Só quando praticado em atividade típica de gr` | `Hediondo somente quando praticado em atividad` | 28 |
 | 20 | CP Art. 122, caput | `hediondo_condicao` | `Só na modalidade praticada por rede de comput` | `Hediondo somente quando realizado por meio da` | 28 |
 | 24 | CP Art. 122, §4º | `hediondo_condicao` | `Só na modalidade praticada por rede de comput` | `Hediondo somente quando realizado por meio da` | 28 |
@@ -480,3 +481,6 @@ Anexo A: **413 mudanças** declaradas, em 251 registros.
 | 385 | Lei 9.455/97 Art. 1º, §2º | `hediondo_nota` | — | `Divergência doutrinária sobre estender a equi` | 28 |
 | 1306 | CP Art. 121, §2º-D | `hediondo_condicao` | `O rol remete ao §2º; o §2º-D é parágrafo próp` | *(esvaziado)* | 28 |
 | 1306 | CP Art. 121, §2º-D | `hediondo_nota` | — | `O rol (Lei 8.072, art. 1º, I) alcança o homic` | 28 |
+| 864 | Lei 14.597/23 Art. 168 | `acao` | `Pública Incondicionada` | `Pública Condicionada à Representação` | C17 |
+| 866 | Lei 14.597/23 Art. 170 | `acao` | `Pública Incondicionada` | `Pública Condicionada à Representação` | C17 |
+| 867 | Lei 14.597/23 Art. 171 | `acao` | `Pública Incondicionada` | `Pública Condicionada à Representação` | C17 |

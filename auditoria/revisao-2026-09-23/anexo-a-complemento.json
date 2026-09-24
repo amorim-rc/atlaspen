@@ -1,0 +1,41 @@
+{
+ "_meta": {
+  "origem": "Decisão do mantenedor em 23/09/2026, sobre achado que a correção da C1 produziu e que o pacote não previa.",
+  "fundamento": "Lei 14.597/2023, art. 172: \"Nos crimes previstos nesta Seção, somente se procede mediante representação da organização esportiva titular dos direitos violados, com exceção do crime previsto no art. 169 desta Lei, em que a ação é pública incondicionada.\" Os arts. 168 a 172 estão todos na Seção III do Capítulo VI (Dos Crimes contra a Propriedade Intelectual das Organizações Esportivas), conferido no compilado do Planalto baixado em 30/07/2026.",
+  "grau": "A",
+  "C18": "Decisão do mantenedor em 23/09/2026. CP, art. 273, §2º (forma culposa) afirmava hediondez sem base no rol: a Lei 8.072, art. 1º, VII-B, nomeia \"art. 273, caput e §1º, §1º-A e §1º-B\", e a própria tabela curada já anotava que o rol não alcança a forma culposa do §2º. A exclusão existia na regra e não funcionava, porque o registro grafava \"§ 2º\" com espaço e a regra, \"§2º\" sem. Normalizada a grafia (decisão 3 da mesma data), a exclusão passou a valer e o achado apareceu. Mesma família da C12."
+ },
+ "textos": {
+  "T20": "Condicionada à representação da organização esportiva titular dos direitos violados (Lei 14.597/2023, art. 172)."
+ },
+ "mudancas": [
+  {
+   "id": 864,
+   "campo": "acao",
+   "de": "Pública Incondicionada",
+   "para": "Pública Condicionada à Representação",
+   "decisao": "C17"
+  },
+  {
+   "id": 866,
+   "campo": "acao",
+   "de": "Pública Incondicionada",
+   "para": "Pública Condicionada à Representação",
+   "decisao": "C17"
+  },
+  {
+   "id": 867,
+   "campo": "acao",
+   "de": "Pública Incondicionada",
+   "para": "Pública Condicionada à Representação",
+   "decisao": "C17"
+  },
+  {
+   "id": 1360,
+   "campo": "hediondo",
+   "de": "Sim",
+   "para": "Não",
+   "decisao": "C18"
+  }
+ ]
+}

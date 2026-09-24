@@ -78,7 +78,7 @@
       "fundamento": "Lei 8.072, art. 1º, I",
       "lei": "^CP$",
       "artigo": "^Art\\. 121, § ?2º(-[BC])?(?=$|,| )",
-      "nota": "homicidio qualificado. Alcanca tambem os §§ 2º-B e 2º-C, que sao causas de aumento sobre o proprio § 2º — largura que ate 23/09/2026 vinha por acidente do prefixo, e agora e explicita. A pergunta de fundo esta em `pendentes`."
+      "nota": "homicídio qualificado. Alcança o § 2º e também os §§ 2º-B e 2º-C, que são causas de aumento sobre ele. Decisão do mantenedor em 23/09/2026: TODA configuração de homicídio qualificado é hedionda — a majorante não cria tipo novo, incide sobre o qualificado do § 2º, que o rol (Lei 8.072, art. 1º, I) alcança. Diferente do § 2º-D, que cria qualificadora nova e não foi acrescentado ao rol (decisão 28). Até 23/09/2026 esta largura vinha por acidente do prefixo sem âncora; agora é escolha, e está escrita."
     },
     {
       "fundamento": "Lei 8.072, art. 1º, I",
@@ -599,18 +599,6 @@
       "fundamento": "Lei 8.072, art. 1º, § único, VIII",
       "descricao": "O diploma é a Lei 15.358/2026 (Marco Legal do Combate ao Crime Organizado), já em data/fontes.json, e os dois tipos estão no catálogo. Resta um defeito da lei: o inciso VIII — e o art. 4º da própria Lei 15.358, de redação idêntica — declara hediondos 'o caput e os §§ 1º e 3º do art. 2º', mas o §3º foi VETADO (VEP-216/26) e não existe no texto sancionado. A remissão é INÓCUA: não há dispositivo a cadastrar. O §1º, por sua vez, é causa de aumento sobre o caput, que já é hediondo — declará-lo hediondo em separado é redundante, e a hediondez fica registrada no caput.",
       "acao": "nenhuma no catálogo: está anotado para que a conferência não volte a procurar um §3º inexistente. Reabrir só se lei posterior ajustar a remissão ou restaurar o parágrafo vetado."
-    },
-    {
-      "fundamento": "Lei 8.072, art. 1º, I",
-      "descricao": "CP, art. 121, §§ 2º-B e 2º-C: os cinco registros (1301 a 1305) afirmam hediondez, e até 23/09/2026 a afirmação se apoiava em casamento por acidente — a regra do § 2º, sem âncora de fim, alcançava '§2º-B' e '§2º-C'. Ancorada a regra (C15), a largura passou a ser declarada, e com ela a pergunta: os §§ 2º-B e 2º-C são causas de AUMENTO sobre o homicídio qualificado do § 2º, que está no rol — herdam a hediondez do tipo-base? A decisão 28 respondeu o caso vizinho em sentido contrário para o § 2º-D ('parágrafo autônomo, não acrescentado ao rol'), mas o § 2º-D cria qualificadora nova, e os §§ 2º-B e 2º-C não criam tipo: majoram o do § 2º. Nenhum valor do catálogo foi alterado: os cinco continuam 'Sim', como estavam. Decisão do mantenedor pendente.",
-      "acao": "decisão do mantenedor: os §§ 2º-B e 2º-C herdam a hediondez do § 2º, que majoram, ou seguem o § 2º-D e ficam fora do rol? Enquanto não vier, a regra declara a largura e os cinco registros continuam como estão",
-      "ids": [
-        1301,
-        1302,
-        1303,
-        1304,
-        1305
-      ]
     }
   ],
   "fora_de_alcance": [

@@ -32,7 +32,12 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="repla
 
 RAIZ = Path(__file__).resolve().parents[2]
 CATALOGO = RAIZ / "data" / "crimes.json"
-ANEXO = RAIZ / "auditoria" / "revisao-2026-09-23" / "anexo-a.json"
+PASTA = RAIZ / "auditoria" / "revisao-2026-09-23"
+ANEXO = PASTA / "anexo-a.json"
+# Decisão tomada DEPOIS do pacote, sobre achado que a correção da C1 produziu
+# (Lei 14.597, art. 172). Mesma forma, arquivo próprio: o Anexo A é o que o
+# mantenedor assinou em 23/09 e não se edita para caber decisão nova.
+COMPLEMENTO = PASTA / "anexo-a-complemento.json"
 
 # O pacote trunca o `de` longo com reticências; a comparação passa a ser por
 # prefixo. Reticências de três pontos e o caractere único, que o Word gera.
@@ -70,7 +75,11 @@ def main() -> int:
     args = p.parse_args()
 
     anexo = json.loads(ANEXO.read_text(encoding="utf-8"))
-    textos, mudancas = anexo["textos"], anexo["mudancas"]
+    textos, mudancas = dict(anexo["textos"]), list(anexo["mudancas"])
+    if COMPLEMENTO.exists():
+        extra = json.loads(COMPLEMENTO.read_text(encoding="utf-8"))
+        textos.update(extra.get("textos", {}))
+        mudancas += extra["mudancas"]
     crimes = json.loads(CATALOGO.read_text(encoding="utf-8"))
     porid = {c["id"]: c for c in crimes}
 
@@ -85,11 +94,15 @@ def main() -> int:
             ausentes.append(m)
             continue
         atual, novo = c.get(m["campo"]), valor_alvo(m, textos)
-        if not confere_origem(atual, m.get("de")):
-            recusadas.append((m, atual))
-            continue
+        # "Já está no valor decidido" vem ANTES de conferir a origem, e não
+        # depois: numa segunda passada o campo não tem mais o `de`, porque a
+        # primeira o mudou. Sem esta ordem, rodar de novo acusaria como recusa
+        # justamente o que deu certo.
         if atual == novo or (atual in (None, "") and novo in (None, "")):
             iguais.append(m)
+            continue
+        if not confere_origem(atual, m.get("de")):
+            recusadas.append((m, atual))
             continue
         aplicaveis.append((m, atual, novo))
 
