@@ -511,8 +511,22 @@ console.log('\n3. Casos-âncora de direito penal');
         const a = avaliar(def('anpp'), domicilio, {});
         ok(a.status === 'incabivel', `violação de domicílio (menor potencial): ANPP incabível, cabe transação (obtido ${a.status})`);
       }
+      // Decisão 26, de 23/09/2026: três atributos passaram a alcançar o tipo sem
+      // pena privativa. Nenhum deles depende da espécie de pena — dependem de
+      // haver tentativa punível (CP, art. 15), de previsão legal de perdão (art.
+      // 107, IX) e de ausência de violência com reparação (art. 16). Dizer "o
+      // motor não calcula" onde a lei não afasta era esconder a resposta.
       const alcancam = CATALOGO.filter((d) => d.alcancaSemPenaPrivativa).map((d) => d.id).sort().join(',');
-      ok(alcancam === 'anpp,prescricao,sursis-processual,transacao', `os quatro atributos que alcançam tipo sem pena privativa (obtido ${alcancam})`);
+      ok(alcancam === 'anpp,arrependimento-eficaz,arrependimento-posterior,perdao-judicial,prescricao,sursis-processual,transacao',
+        `os sete atributos que alcançam tipo sem pena privativa (obtido ${alcancam})`);
+      // A contravenção não admite tentativa punível (LCP, art. 4º), e sem ela
+      // não há do que desistir. É "não se aplica", e não "incabível no caso".
+      const contravencao = todos.find((c) => c.contravencao && !c.tem_pena_privativa);
+      if (contravencao) {
+        const r = avaliar(def('arrependimento-eficaz'), contravencao, {});
+        ok(r.status === 'incabivel' && /LCP, art\. 4º/.test(r.resumo),
+          `contravenção: desistência e arrependimento eficaz não se aplicam (obtido "${r.resumo}")`);
+      }
     }
 
     // Inciso V — hediondo primário, sem resultado morte: 70%, livramento aos 2/3.
@@ -656,6 +670,25 @@ console.log('\n3. Casos-âncora de direito penal');
           `hediondo, primário, fato de abril/2026: já 70% da Lei 15.358 (obtido "${meio.resumo}")`);
         ok(/70%/.test(hoje.resumo),
           `hediondo, primário, hoje: 70% (obtido "${hoje.resumo}")`);
+      }
+    }
+
+    // ── Mínimo NÃO COMINADO: um dia, nunca o máximo (decisão 24) ──────────
+    // Os arts. 36 a 42 da Lei 6.538/78 cominam só o teto: "detenção, até seis
+    // meses". O mínimo é o do art. 11 do CP — um dia. Presumir o máximo seria
+    // decidir contra o réu por causa de um silêncio da lei, e aplicar por
+    // analogia o art. 284 do CE ou o art. 58 do CPM seria integração in malam
+    // partem.
+    {
+      const semMinimo = todos.find((c) => c.pena_min_meses === 0 && c.pena_max_meses > 0 && c.tem_pena_privativa);
+      ok(!!semMinimo, 'há tipo sem mínimo cominado no catálogo (Lei 6.538, arts. 36 a 42)');
+      if (semMinimo) {
+        const cen = cenarioFromCrime(semMinimo);
+        ok(cen.penaConcreta < 1,
+          `id ${semMinimo.id} (${semMinimo.pena_faixa_rotulo}): a pena de partida é um dia, ` +
+          `e não o máximo (obtido ${cen.penaConcreta} meses)`);
+        ok(cen.penaConcreta !== semMinimo.pena_max_meses,
+          `id ${semMinimo.id}: a pena de partida NÃO é o máximo cominado`);
       }
     }
 

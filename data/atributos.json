@@ -685,7 +685,8 @@
           ]
         }
       ],
-      "alcanca_sem_pena_privativa": false
+      "alcanca_sem_pena_privativa": true,
+      "fundamento_sem_pena_privativa": "Decisão 26, de 23/09/2026: o perdão judicial (CP, art. 107, IX) extingue a punibilidade qualquer que seja a pena cominada. Calculado também no tipo sem pena privativa: a resposta é \"não previsto\", salvo previsão no próprio tipo ou no diploma."
     },
     {
       "id": 9,
@@ -780,7 +781,8 @@
           ]
         }
       ],
-      "alcanca_sem_pena_privativa": false
+      "alcanca_sem_pena_privativa": true,
+      "fundamento_sem_pena_privativa": "Decisão 26, de 23/09/2026: o arrependimento posterior (CP, art. 16) exige crime sem violência ou grave ameaça e reparação até o recebimento da denúncia — nada disso olha a espécie de pena. Calculado também no tipo sem pena privativa."
     },
     {
       "id": 10,
@@ -823,7 +825,8 @@
           ]
         }
       ],
-      "alcanca_sem_pena_privativa": false
+      "alcanca_sem_pena_privativa": true,
+      "fundamento_sem_pena_privativa": "Decisão 26, de 23/09/2026: a desistência voluntária e o arrependimento eficaz (CP, art. 15) não dependem da espécie de pena — dependem de haver tentativa punível. Calculados também no tipo sem pena privativa; nas contravenções, o art. 4º da LCP os afasta."
     },
     {
       "id": 11,

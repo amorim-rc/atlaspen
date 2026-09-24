@@ -353,6 +353,20 @@ export const AVALIADORES: Record<string, (c: Cenario, p: Parametros) => Avaliaca
     };
   },
   'arrependimento-eficaz': (c, p) => {
+    // Contravenção: o art. 4º da LCP diz que a tentativa não é punível, e sem
+    // tentativa punível não há de que desistir. A resposta não é "incabível
+    // neste caso" — é que o instituto não alcança a espécie. Decisão 26.
+    if (c.contravencao) {
+      return {
+        status: 'incabivel',
+        resumo: 'Não se aplica às contravenções: a tentativa não é punível (LCP, art. 4º).',
+        detalhes: [
+          'Art. 4º da Lei das Contravenções Penais: "Não é punível a tentativa de contravenção."',
+          'A desistência voluntária e o arrependimento eficaz excluem a tipicidade da ' +
+            'tentativa; onde a tentativa já não é punível, não há o que excluir.',
+        ],
+      };
+    }
     const exige = bool(p, 'exigeTentativaAdmitida');
     const compativel = !exige || c.admiteTentativa;
     return {

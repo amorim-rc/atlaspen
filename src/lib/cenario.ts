@@ -13,11 +13,34 @@ import {hojeISO} from './tempo';
  * caso concreto (primariedade, confissão, reparação) recebe um padrão neutro e
  * é ajustável na simulação.
  */
+/** Um dia, em meses — o mínimo legal da pena privativa (CP, art. 11). */
+const UM_DIA = 1 / 30;
+
+/**
+ * A pena de partida da aba concreta: a mínima cominada.
+ *
+ * **Quando a lei não comina mínimo** — os arts. 36 a 42 da Lei 6.538/78 dizem
+ * só "detenção, até seis meses" —, o mínimo é o do art. 11 do CP: UM DIA.
+ * Nunca o máximo, e nunca o mínimo de outro diploma.
+ *
+ * Decisão 24, de 23/09/2026, e ela corrigiu um erro que estava aqui: com
+ * `pena_min_meses` igual a zero, o `||` caía no máximo, e a ficha do art. 36
+ * abria com oito anos de pena aplicada. Presumir o teto contra o réu é o
+ * oposto do que a falta de mínimo significa. Aplicar por analogia o art. 284
+ * do Código Eleitoral ou o art. 58 do CPM seria o mesmo vício, com outra
+ * roupa: integração *in malam partem*.
+ */
+function penaConcretaPadrao(c: TipoDoMotor): number {
+  if (c.pena_min_meses > 0) return c.pena_min_meses;
+  if (c.pena_max_meses > 0) return UM_DIA;
+  return 12;
+}
+
 export function cenarioFromCrime(c: TipoDoMotor): Cenario {
   return {
     penaMin: c.pena_min_meses,
     penaMax: c.pena_max_meses,
-    penaConcreta: c.pena_min_meses || c.pena_max_meses || 12,
+    penaConcreta: penaConcretaPadrao(c),
     reincidencia: 'primario',
     hediondo: c.hediondo === 'Sim',
     resultadoMorte: c.resultado_morte === true,
