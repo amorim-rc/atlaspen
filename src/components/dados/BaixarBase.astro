@@ -1,0 +1,139 @@
+---
+// A base inteira em planilha: o caminho de download que faltava.
+//
+// A planilha existe desde que o deploy.yml passou a gerá-la dentro de dist/
+// (scripts/gerar_planilha.py), mas só a prosa de Dados abertos a linkava: quem
+// chegava à lista de tipos e queria a base inteira não tinha por onde. Este
+// cartão diz o que se baixa, de quando é e como citar — porque planilha baixada
+// é fotografia, e fotografia sem data é citação do que já mudou.
+//
+// O arquivo não é versionado nem existe em desenvolvimento: sai a cada
+// publicação, sempre no mesmo endereço, e a nova substitui a anterior.
+import {CONFERIDO_EM, VERSAO} from '../../site/servidor';
+import {caminho} from '../../site/url';
+import {dataCurta} from '../../site/datas';
+
+interface Props {
+  /** "cartao" (padrão): bloco com meta e nota; "linha": uma linha só, para rodapé de seção. */
+  variante?: 'cartao' | 'linha';
+}
+const {variante = 'cartao'} = Astro.props;
+const href = caminho('/data/atlaspen-base.xlsx');
+---
+
+{
+  variante === 'linha' ? (
+    <p class="linha sem-recuo">
+      <a href={href} download>Baixar a base em planilha (.xlsx)</a>
+      <span class="meta num">
+        v{VERSAO}
+        {CONFERIDO_EM && <> · dados conferidos em {dataCurta(CONFERIDO_EM)}</>}
+      </span>
+    </p>
+  ) : (
+    <aside class="cartao" aria-labelledby="baixar-base-titulo">
+      <div class="texto">
+        <p class="rotulo sem-recuo">Dados abertos</p>
+        <h2 id="baixar-base-titulo" class="titulo">A base inteira em planilha</h2>
+        <p class="descricao sem-recuo">
+          Quatro abas: Leia-me, Tipos penais, Atributos e a Matriz de alcance. A aba Leia-me traz a versão, a data,
+          o commit de origem e como citar. Os mesmos dados, em JSON, estão em{' '}
+          <a href={caminho('/projeto/dados-abertos')}>Dados abertos</a>.
+        </p>
+      </div>
+      <div class="acao">
+        <a class="botao" href={href} download>
+          Baixar <code>atlaspen-base.xlsx</code>
+        </a>
+        <p class="meta num sem-recuo">
+          v{VERSAO}
+          {CONFERIDO_EM && <> · dados conferidos em {dataCurta(CONFERIDO_EM)}</>}
+          {' · '}gerada a cada publicação
+        </p>
+      </div>
+    </aside>
+  )
+}
+
+<style>
+  .cartao {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 1rem 2rem;
+    align-items: center;
+    padding: 1rem 1.25rem;
+    border: 1px solid var(--cor-borda-forte);
+    border-left: 3px solid var(--cor-acento);
+    border-radius: var(--raio-cartao);
+    background: var(--cor-superficie);
+  }
+  .texto {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    min-width: 0;
+  }
+  .titulo {
+    font-family: var(--fonte-serifa);
+    font-size: var(--fs-titulo-3);
+    font-weight: 500;
+    line-height: 1.25;
+  }
+  .descricao {
+    font-size: var(--fs-pequeno);
+    line-height: 1.55;
+    color: var(--cor-tinta-corpo);
+  }
+  .acao {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.45rem;
+  }
+  .botao {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    min-height: var(--alvo-toque);
+    padding: 0 1rem;
+    border: 1px solid var(--cor-acento);
+    border-radius: var(--raio);
+    background: var(--cor-acento);
+    color: #fff;
+    font-size: var(--fs-pequeno);
+    font-weight: 500;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .botao code {
+    font-size: var(--fs-meta);
+    color: inherit;
+    background: transparent;
+    padding: 0;
+  }
+  .botao:hover {
+    filter: brightness(0.92);
+    text-decoration: underline;
+  }
+  .meta {
+    font-family: var(--fonte-mono);
+    font-size: var(--fs-rotulo);
+    color: var(--cor-tinta-fraca);
+  }
+  .linha {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.3rem 0.8rem;
+    font-size: var(--fs-pequeno);
+  }
+  @media (max-width: 720px) {
+    .cartao {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .botao {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>

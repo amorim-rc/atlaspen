@@ -6,6 +6,7 @@
 // e passa a filtrar, ordenar e paginar, com o estado na URL.
 import Base from '../../layouts/Base.astro';
 import ListaTipos from '../../components/tipos/ListaTipos';
+import BaixarBase from '../../components/dados/BaixarBase.astro';
 import {FILTROS_VAZIOS, POR_PAGINA, ordenar, paraLinha} from '../../components/tipos/filtros';
 import {todosOsTipos} from '../../site/catalogo-servidor';
 
@@ -26,6 +27,9 @@ const INTRO =
   <div class="pagina">
     <ListaTipos client:load total={tipos.length} leis={leis} acoes={acoes} inicial={linhas.slice(0, POR_PAGINA)} />
   </div>
+  <div class="pagina baixar">
+    <BaixarBase />
+  </div>
 </Base>
 
 <style>
@@ -37,5 +41,8 @@ const INTRO =
   }
   .intro {
     color: var(--cor-tinta-corpo);
+  }
+  .baixar {
+    margin-top: 2rem;
   }
 </style>

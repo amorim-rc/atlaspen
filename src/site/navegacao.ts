@@ -58,6 +58,7 @@ export const RODAPE: {titulo: string; itens: LinkRodape[]}[] = [
     titulo: 'Aberto',
     itens: [
       {rotulo: 'Dados em JSON', rota: '/projeto/dados-abertos'},
+      {rotulo: 'Planilha da base (.xlsx)', rota: '/data/atlaspen-base.xlsx'},
       {rotulo: 'Repositório', rota: REPOSITORIO},
       {rotulo: 'Notas de atualizações', rota: '/notas'},
       {rotulo: 'Como citar', rota: '/projeto/dados-abertos#como-citar'},
