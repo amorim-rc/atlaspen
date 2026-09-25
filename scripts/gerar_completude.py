@@ -15,8 +15,12 @@ from __future__ import annotations
 
 import json
 import re
+import subprocess
 import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent / "robos"))
+from nucleo.tempo import hoje  # noqa: E402
 
 RAIZ = Path(__file__).resolve().parent.parent
 
@@ -103,12 +107,30 @@ def main() -> int:
             return "🔶 em coleta"
         return "concluído ❓"
 
+    # Quando TODOS estão concluídos, a coluna Situação é uma coluna inteira da
+    # mesma palavra e "com coleta iniciada" repete a linha de cima. Aí o que
+    # informa é uma frase de resumo, e a linha redundante sai.
+    todos_concluidos = all(situacao(d) == "concluído ❓" for d in indice)
+
+    # A página diz quanto foi conferido; tem de dizer também QUANDO, e de que
+    # commit — o mesmo carimbo que a aba Leia-me da planilha já traz. Planilha
+    # e página são fotografias, e fotografia sem data é citação do que já mudou.
+    gerado_em = hoje().isoformat()
+    try:
+        commit = subprocess.run(["git", "rev-parse", "--short=12", "HEAD"], cwd=RAIZ,
+                                capture_output=True, text=True, timeout=10).stdout.strip() or None
+    except (OSError, subprocess.SubprocessError):
+        commit = None
+
     L: list[str] = []
     p = L.append
     p("---")
     p("id: completude")
     p("title: Completude do catálogo")
     p("sidebar_position: 2")
+    p(f"gerado_em: '{gerado_em}'")
+    # Entre aspas: um hash só de dígitos viraria número no YAML.
+    p(f"commit: {repr(commit) if commit else 'null'}")
     p("---")
     p("")
     p("{/* GERADO AUTOMATICAMENTE por scripts/gerar_completude.py — não edite à mão. */}")
@@ -118,7 +140,8 @@ def main() -> int:
     p(":::note[Página gerada]")
     p("Este acompanhamento é derivado de `data/diplomas.json` (o denominador da")
     p("conferência do catálogo) e de")
-    p("`data/crimes.json` (o catálogo). Para atualizá-lo:")
+    p(f"`data/crimes.json` (o catálogo), gerado em {gerado_em}"
+      + (f" a partir do commit `{commit}`" if commit else "") + ". Para atualizá-lo:")
     p("`python scripts/gerar_completude.py`.")
     p(":::")
     p("")
@@ -126,7 +149,8 @@ def main() -> int:
     p("|---|---|")
     p(f"| Tipos penais catalogados | **{len(catalogo)}** |")
     p(f"| Diplomas com tipo penal vigente | {len(indice)} |")
-    p(f"| — com coleta iniciada | {len(com_coleta)} |")
+    if not todos_concluidos:
+        p(f"| — com coleta iniciada | {len(com_coleta)} |")
     p(f"| Diplomas revogados/não recepcionados | [{len(historicos)}](/acervo) |")
     p("")
 
@@ -140,9 +164,14 @@ def main() -> int:
       "certeza, então este estado é **passível de erro** e pode voltar a "
       "\"em coleta\" se uma revisão futura encontrar algo. **em coleta** — há "
       "preceitos sabidamente faltando. **não iniciado** — nenhum tipo reunido "
-      "ainda.")
+      "ainda. A pergunta — quantos tipos penais existem — é a que abre a "
+      "[História do projeto](/projeto).")
     p(":::")
     p("")
+    if todos_concluidos:
+        p(f"Todos os {len(indice)} diplomas com tipo penal vigente estão concluídos: a "
+          "conferência dispositivo a dispositivo não localizou preceito faltante.")
+        p("")
     p("| Diploma | Tipos coletados | Situação |")
     p("|---|---:|---|")
     ordem = sorted(indice, key=lambda d: (-len(tipos_por_slug.get(d["id"], [])),
@@ -150,6 +179,9 @@ def main() -> int:
     for d in ordem:
         n = len(tipos_por_slug.get(d["id"], []))
         p(f"| {d['nome']} | {n} | {situacao(d)} |")
+    # `1 tipos` não existe: a pluralização mora em quem RENDERIZA a tabela
+    # (completude.astro); aqui a coluna é só o número, e o cabeçalho é plural
+    # porque a maioria das linhas o é.
     p("")
     p("A lista completa dos tipos já reunidos, com o texto de cada um, está na "
       "[busca por tipo penal](/tipos).")

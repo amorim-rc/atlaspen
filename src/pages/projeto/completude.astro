@@ -12,6 +12,7 @@ import Projeto from '../../layouts/Projeto.astro';
 import {todosOsTipos} from '../../site/catalogo-servidor';
 import {DIPLOMAS} from '../../site/diplomas-servidor';
 import {caminho} from '../../site/url';
+import {dataCurta} from '../../site/datas';
 
 const doc = await getEntry('docs', 'completude');
 if (!doc?.body) throw new Error('docs/completude.md não encontrado');
@@ -38,12 +39,20 @@ const maior = Math.max(...linhas.map((l) => l.tipos));
 const fmt = (n: number) => n.toLocaleString('pt-BR');
 const ROTULO: Record<Situacao, string> = {concluido: 'concluído', em_coleta: 'em coleta', nao_iniciado: 'não iniciado'};
 
+// Quando todos os diplomas estão concluídos, "com coleta iniciada" repete o
+// indicador anterior e a coluna Situação é uma coluna inteira da mesma palavra:
+// o que informa é a frase de resumo, e o indicador redundante sai.
+const todosConcluidos = linhas.every((l) => l.situacao === 'concluido');
 const indicadores = [
   {valor: total, rotulo: 'tipos penais catalogados', rota: '/tipos'},
   {valor: linhas.length, rotulo: 'diplomas com tipo penal vigente'},
-  {valor: linhas.filter((l) => l.tipos > 0).length, rotulo: 'com coleta iniciada'},
+  ...(todosConcluidos ? [] : [{valor: linhas.filter((l) => l.tipos > 0).length, rotulo: 'com coleta iniciada'}]),
   {valor: DIPLOMAS.filter((d) => d.situacao !== 'vigente').length, rotulo: 'diplomas fora de vigência', rota: '/acervo'},
 ];
+// O carimbo da geração vem do front matter que o gerador escreve: página e
+// planilha são fotografias, e fotografia sem data é citação do que já mudou.
+const geradoEm = typeof doc.data.gerado_em === 'string' ? doc.data.gerado_em : null;
+const commit = typeof doc.data.commit === 'string' ? doc.data.commit : null;
 ---
 
 <Projeto
@@ -55,8 +64,9 @@ const indicadores = [
     <header class="topo">
       <h1>Completude do catálogo</h1>
       <p class="fonte sem-recuo">
-        gerada por <code>scripts/gerar_completude.py</code> de <code>data/diplomas.json</code> e
-        <code>data/crimes.json</code>
+        gerada por <code>scripts/gerar_completude.py</code> de <code>data/diplomas.json</code> e <code>data/crimes.json</code>
+        {geradoEm && <> · em {dataCurta(geradoEm)}</>}
+        {commit && <> · commit <code>{commit}</code></>}
       </p>
     </header>
 
@@ -84,8 +94,18 @@ const indicadores = [
       <strong>O que quer dizer "concluído".</strong> A conferência dispositivo a dispositivo não localizou nenhum preceito
       faltante depois das revisões. Não é garantia: o denominador real — quantos tipos a lei comporta — não é conhecido com
       certeza, e o diploma pode voltar a "em coleta" se uma revisão futura encontrar algo. "Em coleta" é diploma com
-      preceito sabidamente faltando; "não iniciado", diploma sem nenhum tipo reunido ainda.
+      preceito sabidamente faltando; "não iniciado", diploma sem nenhum tipo reunido ainda. A pergunta — quantos tipos
+      penais existem — é a que abre a <a href={caminho('/projeto')}>História do projeto</a>.
     </div>
+
+    {
+      todosConcluidos && (
+        <p class="resumo sem-recuo">
+          Todos os {fmt(linhas.length)} diplomas com tipo penal vigente estão concluídos: a conferência dispositivo a
+          dispositivo não localizou preceito faltante.
+        </p>
+      )
+    }
 
     <div class="tabela">
       <div class="barra-filtro">
@@ -106,7 +126,7 @@ const indicadores = [
               <span class="nome">{l.nome}</span>
               <span class="tipos num">
                 {fmt(l.tipos)}
-                <span class="sr-only"> tipos</span>
+                <span class="sr-only"> {l.tipos === 1 ? 'tipo' : 'tipos'}</span>
               </span>
               <span class="peso" title={`${((l.tipos / total) * 100).toLocaleString('pt-BR', {maximumFractionDigits: 1})}% do catálogo`}>
                 <span style={`width: ${l.tipos ? Math.max(1.5, (l.tipos / maior) * 100) : 0}%`} />
@@ -215,6 +235,10 @@ const indicadores = [
   .aviso strong {
     font-weight: 600;
     color: var(--cor-tinta);
+  }
+  .resumo {
+    font-size: var(--fs-pequeno);
+    color: var(--cor-tinta-corpo);
   }
   .tabela {
     border: 1px solid var(--cor-borda-forte);

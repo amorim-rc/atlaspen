@@ -2,6 +2,8 @@
 id: completude
 title: Completude do catálogo
 sidebar_position: 2
+gerado_em: '2026-09-25'
+commit: '139122081982'
 ---
 
 {/* GERADO AUTOMATICAMENTE por scripts/gerar_completude.py — não edite à mão. */}
@@ -11,26 +13,27 @@ sidebar_position: 2
 :::note[Página gerada]
 Este acompanhamento é derivado de `data/diplomas.json` (o denominador da
 conferência do catálogo) e de
-`data/crimes.json` (o catálogo). Para atualizá-lo:
+`data/crimes.json` (o catálogo), gerado em 2026-09-25 a partir do commit `139122081982`. Para atualizá-lo:
 `python scripts/gerar_completude.py`.
 :::
 
 | Indicador | Valor |
 |---|---|
-| Tipos penais catalogados | **1529** |
+| Tipos penais catalogados | **1530** |
 | Diplomas com tipo penal vigente | 61 |
-| — com coleta iniciada | 61 |
 | Diplomas revogados/não recepcionados | [11](/acervo) |
 
 ## Índice por diploma
 
 :::note[O que significa a situação]
-**concluído ❓** — a conferência dispositivo a dispositivo não localizou nenhum preceito faltante após as revisões. Não é uma garantia: o denominador real (quantos tipos a lei comporta) não é conhecido com certeza, então este estado é **passível de erro** e pode voltar a "em coleta" se uma revisão futura encontrar algo. **em coleta** — há preceitos sabidamente faltando. **não iniciado** — nenhum tipo reunido ainda.
+**concluído ❓** — a conferência dispositivo a dispositivo não localizou nenhum preceito faltante após as revisões. Não é uma garantia: o denominador real (quantos tipos a lei comporta) não é conhecido com certeza, então este estado é **passível de erro** e pode voltar a "em coleta" se uma revisão futura encontrar algo. **em coleta** — há preceitos sabidamente faltando. **não iniciado** — nenhum tipo reunido ainda. A pergunta — quantos tipos penais existem — é a que abre a [História do projeto](/projeto).
 :::
+
+Todos os 61 diplomas com tipo penal vigente estão concluídos: a conferência dispositivo a dispositivo não localizou preceito faltante.
 
 | Diploma | Tipos coletados | Situação |
 |---|---:|---|
-| Código Penal — Parte Especial | 536 | concluído ❓ |
+| Código Penal — Parte Especial | 535 | concluído ❓ |
 | Código Penal Militar — Parte Especial | 404 | concluído ❓ |
 | Código Eleitoral | 65 | concluído ❓ |
 | Crimes contra o meio ambiente | 60 | concluído ❓ |
@@ -60,11 +63,11 @@ conferência do catálogo) e de
 | Lei de Biossegurança (crimes) | 6 | concluído ❓ |
 | Tortura | 6 | concluído ❓ |
 | Antiterrorismo | 6 | concluído ❓ |
+| Parcelamento do solo urbano (crimes) | 6 | concluído ❓ |
 | Lei do Inquilinato (disposições penais) | 6 | concluído ❓ |
 | Transporte de eleitores (crimes) | 5 | concluído ❓ |
 | Crimes contra a economia popular | 5 | concluído ❓ |
 | Planejamento familiar (crimes) | 4 | concluído ❓ |
-| Parcelamento do solo urbano (crimes) | 4 | concluído ❓ |
 | Crimes contra a ordem econômica (combustíveis) | 4 | concluído ❓ |
 | Lavagem de dinheiro | 4 | concluído ❓ |
 | Práticas discriminatórias no trabalho | 4 | concluído ❓ |
