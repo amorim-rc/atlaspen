@@ -3,6 +3,13 @@
 Documento interno de operação — não é publicado no site. Responde a uma pergunta:
 **o que chega para mim toda semana, e o que cada coisa exige.**
 
+Na **sexta-feira, 23:00**, um ensaio (`fontes.yml`) baixa os ~70 compilados
+exatamente como a segunda os baixará, e joga fora. Não é para deixar texto
+pronto — a segunda baixa o dela e sempre opera com o do dia. É para descobrir
+na sexta, e não na segunda de manhã, que uma fonte saiu do ar ou mudou de forma
+e perdeu a sentinela: quando isso acontece, o `vigia` cai e leva os outros três
+com ele. Falhou, abre issue com rótulo `fontes`; voltou, ela se fecha sozinha.
+
 A rodada automática acontece **toda segunda-feira, 05:00 de Brasília**
 (`.github/workflows/conferidor.yml`), e também sob demanda em Actions ▸ *Conferidor
 semanal* ▸ **Run workflow**. Ela produz, no máximo, **três coisas**: um commit, uma issue
@@ -46,7 +53,12 @@ numa semana, a rodada falhou: vale abrir o log em Actions.
 Título: `Conferidor: achados de AAAA-MM-DD`, rótulo `conferidor`.
 
 Ela só nasce quando há o que dizer, **é uma só** e **substitui a da semana
-passada**, que é fechada como superada. Achado de conferidor é foto de um
+passada** — mas só a que ninguém comentou. O conferidor é SEM ESTADO: re-deriva
+tudo a cada rodada, então achado que continua valendo reaparece sozinho na
+issue nova. O que não reaparece é o que uma pessoa escreveu. Issue com
+comentário deixou de ser foto da semana e virou conversa: ela fica aberta,
+ganha um ponteiro para a rodada nova, e só se fecha quando a discussão tiver
+destino — um commit, uma exceção julgada, ou uma issue própria. Achado de conferidor é foto de um
 momento: a issue de 21/09/2026 acusou como ausente um artigo do Código
 Eleitoral que já existia numa branch não mergeada, e continuou aberta dias
 depois de ter deixado de valer. O que sobreviver de verdade a uma rodada vira

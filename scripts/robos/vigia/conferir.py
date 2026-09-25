@@ -274,7 +274,6 @@ def conferir_fonte(fonte: dict, do_catalogo: dict[str, list[dict]],
                     achados.append({
                         "tipo": "DIVERGENTE-moldura", "gravidade": 2, "chave": k,
                         "ids": [linha["id"]],
-                    "anotacao": _anotacao(disp, fonte),
                         "anotacao": _anotacao(disp, fonte),
                         "detalhe": f"a lei comina só multa; o catálogo traz "
                                    f"{cmin:g}–{cmax:g} meses de {linha['tipo_pena']}",
@@ -401,7 +400,7 @@ _PENA_DERIVADA = re.compile(
     r"|ser[áã]o?\s+(?:aumentad|reduzid|diminu[íi]d)|aumenta(?:m)?-se|reduz-se"
     r"|diminui-se|poder[áãa]o?\s+ser\s+reduzid|pode\s+(?:ser\s+)?reduzi"
     r"|pode\s+diminuir|ter[áã]\s+.{0,30}pena\s+reduzid|reduz\s+de\s+metade|diminu[íi]-l[ao]|substituir\s+a\s+pena"
-    r"|penas?\s*[-–—:]\s*metade|pel[oa]\s+d[ôo]bro|n[oa]\s+d[ôo]bro|em\s+dobro|ao\s+dobro"
+    r"|penas?\s*[-–—:]\s*metade|pel[oa]\s+d[ôo]bro|n[oa]\s+d[ôo]bro|em\s+d[ôo]bro|ao\s+d[ôo]bro|aplicada\s+em\s+d[ôo]bro"
     r"|em\s+triplo|duplicad|de\s+um\s+ter[çc]o|[àa]\s+metade", re.IGNORECASE)
 
 # O dispositivo NÃO é preceito secundário: é norma explicativa ("Equipara-se à
@@ -680,8 +679,33 @@ def montar_contexto(total_catalogo: int) -> str:
 
     branch = git("rev-parse", "--abbrev-ref", "HEAD") or "?"
     sha = git("rev-parse", "--short=12", "HEAD") or "?"
-    return (f"Rodada de **{hoje().isoformat()}** sobre `{branch}` @ `{sha}` — "
-            f"{total_catalogo} registros no catálogo.")
+    L = [f"Rodada de **{hoje().isoformat()}** sobre `{branch}` @ `{sha}` — "
+         f"{total_catalogo} registros no catálogo."]
+
+    # E contra que texto. Na CI o download é do próprio job, então é sempre o de
+    # hoje; na máquina de quem desenvolve, não. Em 24/09/2026 rodei o conferidor
+    # com snapshots de 19/09 e levei três dispositivos "não localizados" a sério:
+    # os três tinham entrado no compilado depois, pela Lei 15.517. A idade do
+    # texto tinha de estar escrita no relatório, e não na memória de quem roda.
+    datas = sorted(p.stem for f in SNAPSHOTS.glob("*")
+                   if f.is_dir() for p in f.glob("*.html"))
+    if datas:
+        recente = datas[-1]
+        try:
+            idade = (hoje() - date.fromisoformat(recente)).days
+        except ValueError:
+            idade = None
+        if idade is None:
+            L.append(f"Textos compilados de `{recente}`.")
+        elif idade <= 1:
+            L.append(f"Textos compilados baixados em {recente}.")
+        else:
+            L.append(f"> ⚠️ **Os textos compilados são de {recente}, {idade} dias "
+                     "atrás.** Dispositivo criado depois disso aparece como "
+                     "*não localizado*, e moldura alterada depois disso não é "
+                     "vista. Rode `python scripts/robos/nucleo/baixar.py --todas` "
+                     "antes de levar este relatório a sério.")
+    return "\n\n".join(L)
 
 
 def montar_lacunas(res: dict) -> str:

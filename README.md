@@ -248,7 +248,21 @@ muito mais do que a regra.
 (`npm run equivalencia`) é exatamente a rede que torna esse refactor seguro: se um veredito
 se mexer, ele reprova. É uma boa primeira contribuição de quem quer entender o motor.
 
-**7. Não há ferramenta de código morto na verificação.** A varredura de 24/09/2026 achou
+**7. A segunda moldura de um preceito só é lida se repetir a espécie.**
+`ler_penas` fatia o preceito pelas marcas de espécie — reclusão, detenção,
+prisão simples, multa. Quando a segunda moldura vem introduzida por uma
+condicional e não repete a espécie (CPM, art. 292, §2º: "detenção, de um a dois
+anos, **ou, se resulta morte, de dois a quatro anos**"), ela fica no mesmo
+pedaço da primeira e não é lida. O catálogo desdobra os dois casos em registros
+próprios, e está certo; quem erra é o conferidor, que compara os dois com a
+única moldura que leu e acusa divergência falsa num deles.
+**A correção:** dentro de cada fatia, reconhecer intervalo novo aberto por
+condicional e emitir moldura própria, herdando a espécie. Mexe no
+`pena_parser`, que é compartilhado com o `transform_data` — o congelamento dos
+vereditos é a rede. Enquanto não fecha, o caso está em
+`scripts/robos/vigia/excecoes.json`, com o motivo escrito.
+
+**8. Não há ferramenta de código morto na verificação.** A varredura de 24/09/2026 achou
 seis exportações que ninguém importava, dois scripts de migração de julho e um documento
 gerado que nada renderizava. Foi tudo à mão, e à mão não se repete.
 **A correção:** `knip` ou `ts-prune` no `ci.yml`, com uma lista de exceções versionada. Sem

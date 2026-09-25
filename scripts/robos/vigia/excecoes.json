@@ -38,6 +38,15 @@
       ],
       "motivo": "O caput do art. 400 NAO comina pena: ele descreve a conduta (\"praticar crime de homicidio em presenca do inimigo\") e cada inciso traz a sua moldura — o I remete ao caput do art. 205 (12 a 30 anos), o II e minorante (8 a 25 anos) e o III comina morte. O parser le a primeira \"Pena\" depois do caput, que e a do inciso I, e o differ compara os tres incisos com ela. O registro do inciso I (id 1280) segue conferido normalmente contra essa moldura; o do inciso III (id 1281) tem moldura de morte e nao colide. So o inciso II precisa da dispensa. Nao e defasagem: e a granularidade do parser, que para no paragrafo.",
       "data": "2026-08-10"
+    },
+    {
+      "fonte": "cpm",
+      "chave": "Art. 292|§ 2º",
+      "ids": [
+        1529
+      ],
+      "motivo": "O § 2º comina DUAS molduras num texto só, e com uma palavra de espécie apenas: 'No caso de culpa, a pena é de detenção, de um a dois anos, ou, se resulta morte, de dois a quatro anos.' O catálogo as desdobra em duas linhas, 1528 (12-24) e 1529 (24-48), que é o que a lei diz. O `ler_penas` fatia o preceito pelas marcas de ESPÉCIE, e por isso vê uma moldura só — a primeira —, comparando-a com as duas linhas; a 1528 confere e a 1529 vira divergência falsa. Conferido contra o compilado de 24/09/2026: as duas linhas estão certas. A lacuna do parser está no débito técnico do README (segunda moldura introduzida por condicional, sem repetir a espécie). Quando ela fechar, esta exceção sai.",
+      "data": "2026-09-25"
     }
   ]
 }

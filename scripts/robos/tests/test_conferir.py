@@ -313,3 +313,38 @@ class TestCorpoDaIssue:
         from vigia.conferir import montar_relatorio
         texto = montar_relatorio({}, "Rodada sobre `revamp/atlaspen` @ `abc123`")
         assert "revamp/atlaspen" in texto and "abc123" in texto
+
+
+class TestIdadeDoTexto:
+    """O relatório diz de quando é o texto contra o qual comparou.
+
+    Em 24/09/2026 rodei o conferidor com snapshots de 19/09 e levei a sério três
+    dispositivos "não localizados": os três tinham entrado no compilado depois,
+    pela Lei 15.517. Na CI o download é do próprio job e isso nunca acontece; na
+    máquina de quem desenvolve, acontece.
+    """
+
+    def _com_snapshots(self, tmp_path, monkeypatch, datas, hoje_iso):
+        from datetime import date
+        from vigia import conferir
+        for d in datas:
+            pasta = tmp_path / "cp"
+            pasta.mkdir(exist_ok=True)
+            (pasta / f"{d}.html").write_text("", encoding="utf-8")
+        monkeypatch.setattr(conferir, "SNAPSHOTS", tmp_path)
+        monkeypatch.setattr(conferir, "hoje", lambda: date.fromisoformat(hoje_iso))
+        return conferir.montar_contexto(1529)
+
+    def test_texto_de_ontem_nao_avisa(self, tmp_path, monkeypatch):
+        texto = self._com_snapshots(tmp_path, monkeypatch, ["2026-09-24"], "2026-09-25")
+        assert "⚠️" not in texto and "2026-09-24" in texto
+
+    def test_texto_velho_avisa_e_diz_quantos_dias(self, tmp_path, monkeypatch):
+        texto = self._com_snapshots(tmp_path, monkeypatch, ["2026-09-19"], "2026-09-24")
+        assert "⚠️" in texto and "5 dias" in texto
+        assert "baixar.py --todas" in texto, "o aviso tem de dizer o que fazer"
+
+    def test_vale_o_snapshot_mais_novo(self, tmp_path, monkeypatch):
+        texto = self._com_snapshots(
+            tmp_path, monkeypatch, ["2026-07-30", "2026-09-24"], "2026-09-25")
+        assert "2026-09-24" in texto and "⚠️" not in texto

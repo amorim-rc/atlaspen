@@ -292,18 +292,26 @@ jobs:
             echo "_(relatório truncado — veja o artifact para a lista completa)_" >> corpo-curto.md
             mv corpo-curto.md corpo.md
           fi
-          # A rodada de hoje SUBSTITUI a da semana passada. Achado de
-          # conferidor e foto de um momento: a issue de 21/09/2026 acusou
-          # como ausente um artigo que ja existia numa branch, e ficou aberta
-          # dias depois de ter deixado de valer. Acumular fotos velhas ensina
-          # a ignorar a lista.
+          # A rodada de hoje SUBSTITUI a da semana passada -- mas so a que
+          # ninguem comentou. O conferidor e SEM ESTADO: ele re-deriva tudo a
+          # cada rodada, entao achado que continua valendo REAPARECE aqui
+          # sozinho. O que nao reaparece e o que uma pessoa escreveu: a
+          # leitura do dispositivo, a duvida, a decisao a meio caminho. Issue
+          # com comentario deixou de ser foto da semana e virou conversa, e
+          # conversa nao se fecha por automatismo -- ganha so um ponteiro
+          # para a rodada nova e fica aberta ate alguem decidir.
           REPO="${{ github.repository }}"
-          ANTERIORES="$(gh issue list --repo "$REPO" --label conferidor --state open --json number --jq '.[].number')"
+          ANTERIORES="$(gh issue list --repo "$REPO" --label conferidor --state open --json number,comments --jq '.[] | "\(.number):\(.comments | length)"')"
           NOVA="$(gh issue create --repo "$REPO" --title "Conferidor: achados de $HOJE" --label conferidor --body-file corpo.md)"
           echo "aberta: $NOVA"
-          MOTIVO="Superada pela rodada de $HOJE: $NOVA. Cada rodada e uma foto do momento; o que sobrar de verdade vira issue propria, com titulo que diga o que."
-          for N in $ANTERIORES; do
-            gh issue close "$N" --repo "$REPO" --reason "not planned" --comment "$MOTIVO" || true
+          for PAR in $ANTERIORES; do
+            N="${PAR%%:*}"; COMENTARIOS="${PAR##*:}"
+            if [ "$COMENTARIOS" -eq 0 ]; then
+              gh issue close "$N" --repo "$REPO" --reason "not planned" --comment "Superada pela rodada de $HOJE: $NOVA. Nada se perde: o conferidor re-deriva tudo a cada rodada, entao achado que continuar valendo reaparece la. Ninguem tinha comentado esta." || true
+            else
+              gh issue comment "$N" --repo "$REPO" --body "A rodada de $HOJE saiu: $NOVA. Esta fica ABERTA porque tem discussao -- os achados se re-derivam, o que foi escrito aqui nao. Feche quando a discussao tiver destino: um commit, uma excecao julgada, ou uma issue propria com titulo que diga o que." || true
+              echo "mantida aberta (tem $COMENTARIOS comentario(s)): #$N"
+            fi
           done
 
       - name: Registrar que não houve achado

@@ -1,0 +1,105 @@
+name: Fontes — ensaio de sexta
+
+# Sexta-feira, 23:00 de Brasília. Baixa os ~70 compilados do Planalto exatamente
+# como a rodada de segunda-feira os baixará, e não guarda nada: o que se testa é
+# se o download VAI FUNCIONAR, não o conteúdo.
+#
+# Por que não é "atualizar os compilados": o job `vigia` do conferidor já roda
+# `baixar.py --todas` toda segunda, antes de conferir. A rodada de segunda
+# SEMPRE opera com texto do dia — nunca houve material velho lá. Guardar uma
+# cópia na sexta não a deixaria mais fresca; deixaria menos.
+#
+# O que de fato quebra a segunda-feira é a fonte: o Planalto fora do ar, uma
+# página que mudou de forma e perdeu a sentinela, uma URL que virou 404 depois
+# de o diploma ser recompilado. Quando isso acontece, `baixar.py` sai com 2 e o
+# `vigia` derruba a rodada inteira — os outros três robôs dependem dele. Achar
+# isso na sexta à noite dá o fim de semana para consertar `data/fontes.json`;
+# achar na segunda é a semana sem conferência.
+#
+# A sentinela é a string que prova que a página veio inteira e fresca. Página
+# truncada ou servida de cache velho reprova aqui, em vez de deixar o differ
+# comparar o catálogo com lixo.
+
+on:
+  schedule:
+    # 02:00 UTC de sábado = 23:00 de sexta em Brasília (UTC-3).
+    - cron: '0 2 * * 6'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: ensaio-fontes
+  cancel-in-progress: false
+
+jobs:
+  ensaio:
+    name: Baixar todas as fontes, e só isso
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+
+      - name: Baixar os compilados
+        id: baixar
+        run: |
+          set +e
+          python3 scripts/robos/nucleo/baixar.py --todas 2>&1 | tee saida.txt
+          echo "codigo=${PIPESTATUS[0]}" >> "$GITHUB_OUTPUT"
+          set -e
+
+      # O snapshot NÃO é guardado. A segunda-feira baixa o seu, e um artifact de
+      # sexta só serviria para alguém, um dia, comparar o catálogo com um texto
+      # de três dias atrás sem perceber.
+      - name: Abrir issue se alguma fonte falhou
+        if: steps.baixar.outputs.codigo != '0'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          HOJE="$(TZ=America/Sao_Paulo date +%Y-%m-%d)"
+          TITULO="Fontes: falha no ensaio de $HOJE"
+          {
+            echo "O ensaio de sexta-feira não conseguiu baixar todas as fontes."
+            echo "**A rodada de segunda-feira vai falhar** se isto não for resolvido:"
+            echo "o \`vigia\` sai com erro e os outros três robôs dependem dele."
+            echo
+            echo "Cada linha \`✗\` abaixo é uma fonte de \`data/fontes.json\`."
+            echo "Se a página mudou de forma, o que mudou é a \`sentinela\`; se o"
+            echo "diploma foi recompilado noutra URL, o que mudou é a \`url\`."
+            echo
+            echo '```'
+            tail -n 40 saida.txt
+            echo '```'
+          } > corpo.md
+
+          # Uma issue por vez para este assunto: se a de semana passada ainda
+          # está aberta, a fonte continua quebrada e o lugar disso é um
+          # comentário, não uma issue nova toda sexta.
+          ABERTA="$(gh issue list --repo "$REPO" --label fontes --state open --json number --jq '.[0].number // empty')"
+          if [ -n "$ABERTA" ]; then
+            gh issue comment "$ABERTA" --repo "$REPO" --body-file corpo.md
+            echo "comentado em #$ABERTA"
+          else
+            gh label create fontes --repo "$REPO" --color BFBFBF \
+              --description "Uma fonte do Planalto deixou de responder ou mudou de forma." 2>/dev/null || true
+            gh issue create --repo "$REPO" --title "$TITULO" --label fontes --body-file corpo.md
+          fi
+
+      - name: Fechar a issue de fontes quando tudo voltar
+        if: steps.baixar.outputs.codigo == '0'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          HOJE="$(TZ=America/Sao_Paulo date +%Y-%m-%d)"
+          gh issue list --repo "$REPO" --label fontes --state open --json number --jq '.[].number' \
+          | while read -r N; do
+              gh issue close "$N" --repo "$REPO" \
+                --comment "Todas as fontes voltaram a responder no ensaio de $HOJE." || true
+            done
