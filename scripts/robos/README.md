@@ -18,7 +18,7 @@ segura, o achado vira pergunta na issue em vez de virar dado.
 | `baixar.py` | Fetch dos compilados. Detecta codificação (BOM → meta → UTF-8 → cp1252) e valida a **sentinela** de cada fonte: página sem ela reprova, em vez de deixar o differ comparar com texto velho. |
 | `parsear.py` | HTML → dispositivos (caput, §§, pena, situação, anotação). Fatia o HTML cru: a árvore do Word malformado desloca as fronteiras de parágrafo. |
 | `../pena_parser.py` | Lê a moldura. **Compartilhado com `transform_data.py`**, para que catálogo e conferidor leiam a mesma pena do mesmo jeito. |
-| `conferir.py` | O differ. Classifica cada achado e escreve `crawler/relatorios/AAAA-MM-DD.md`. Sai com 3 quando há achados. |
+| `conferir.py` | O differ. Classifica cada achado e escreve DOIS relatórios: `crawler/relatorios/AAAA-MM-DD.md`, completo, id por id, que vai no artifact; e `-resumo.md`, que vai no corpo da issue — lá os limites declarados de cobertura saem como contagem, porque o corpo tem teto de 65.536 caracteres e o despejo empurrava para fora justamente o que pede ação. Ambos abrem dizendo contra que branch e commit a rodada correu. Sai com 3 quando há achados. |
 | `vigencia.py` | Vacatio legis e produção de efeitos diferida: nunca propor mudança que ainda não vigora. |
 | `revogacao.py` | Revogação total de diploma (banner no topo da página). |
 | `corrigir.py` | Correção mecânica de linha existente: moldura e espécie de pena. |

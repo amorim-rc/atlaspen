@@ -258,3 +258,58 @@ class TestClassificacaoDoNaoConferido:
         from vigia.conferir import _por_referencia
         d = self._Disp(pena_texto="Pena - reclusão, de 1 a 4 anos")
         assert _por_referencia(d, {"tem_pena_privativa": False}) == "sancao_nao_privativa"
+
+
+class TestCorpoDaIssue:
+    """O que vai para a issue, e o que fica no artifact.
+
+    A issue de 21/09/2026 trazia UM achado real e ~400 linhas de corpo: 264
+    registros cuja lei simplesmente não comina moldura própria, listados um a
+    um, com a mesma tipografia do que pedia ação. O corpo da issue tem teto de
+    65.536 caracteres, e o despejo empurrava para fora justamente o achado.
+    """
+
+    def _medida(self):
+        return {
+            "conferido": [1] * 10, "divergente": [], "nao_localizado": [],
+            "dispensado": [], "sem_snapshot": [],
+            "sem_moldura_na_lei": [
+                ("cp", "Art. 121|§ 1º", 2, "pena_derivada"),
+                ("cp", "Art. 122|§ 3º", 23, "pena_derivada"),
+                ("ce", "Art. 349|caput", 1510, "pena_importada"),
+                ("loterias-6259", "Art. 49|caput", 914, "ilegivel"),
+            ],
+        }
+
+    def test_resumo_conta_os_limites_declarados_em_vez_de_listar(self, monkeypatch):
+        from vigia import conferir
+        monkeypatch.setattr(conferir, "conferir_limites", lambda _: ([], []))
+        resumo = conferir.montar_cobertura(self._medida(), 14, resumido=True)
+        assert "| `pena_derivada` | 2 |" in resumo
+        assert "Art. 121|§ 1º" not in resumo, "id a id é coisa do artifact"
+
+    def test_relatorio_completo_continua_com_id_a_id(self, monkeypatch):
+        from vigia import conferir
+        monkeypatch.setattr(conferir, "conferir_limites", lambda _: ([], []))
+        completo = conferir.montar_cobertura(self._medida(), 14)
+        assert "Art. 121|§ 1º" in completo and "id 2" in completo
+
+    def test_a_lacuna_do_parser_sai_da_cobertura_e_ganha_secao(self, monkeypatch):
+        """`ilegivel` é o único balde que pede ação NOSSA."""
+        from vigia import conferir
+        monkeypatch.setattr(conferir, "conferir_limites", lambda _: ([], []))
+        lacunas = conferir.montar_lacunas(self._medida())
+        assert "Art. 49|caput" in lacunas and "id 914" in lacunas
+        for corpo in (conferir.montar_cobertura(self._medida(), 14),
+                      conferir.montar_cobertura(self._medida(), 14, resumido=True)):
+            assert "ilegivel" not in corpo, "mora em seção própria, no alto"
+
+    def test_sem_lacuna_nao_ha_secao(self):
+        from vigia.conferir import montar_lacunas
+        assert montar_lacunas({"sem_moldura_na_lei": []}) == ""
+
+    def test_o_relatorio_diz_contra_o_que_rodou(self):
+        """A #28 acusou como ausente um artigo que existia em outra branch."""
+        from vigia.conferir import montar_relatorio
+        texto = montar_relatorio({}, "Rodada sobre `revamp/atlaspen` @ `abc123`")
+        assert "revamp/atlaspen" in texto and "abc123" in texto

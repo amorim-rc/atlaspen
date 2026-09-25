@@ -45,12 +45,28 @@ numa semana, a rodada falhou: vale abrir o log em Actions.
 
 Título: `Conferidor: achados de AAAA-MM-DD`, rótulo `conferidor`.
 
-Ela só nasce quando há o que dizer, e reúne estes blocos:
+Ela só nasce quando há o que dizer, **é uma só** e **substitui a da semana
+passada**, que é fechada como superada. Achado de conferidor é foto de um
+momento: a issue de 21/09/2026 acusou como ausente um artigo do Código
+Eleitoral que já existia numa branch não mergeada, e continuou aberta dias
+depois de ter deixado de valer. O que sobreviver de verdade a uma rodada vira
+issue própria, com título que diga o quê — não fica esperando dentro da foto.
+
+A primeira linha diz **contra o quê a rodada correu**: branch, commit e o
+tamanho do catálogo. Sem isso não há como distinguir "o catálogo não tem" de
+"a `main` ainda não recebeu".
+
+O corpo traz o **resumo**; o relatório completo, com id por id, vai no artifact
+da execução. Os dois saem do mesmo apuro — `conferir.py` escreve
+`AAAA-MM-DD.md` e `AAAA-MM-DD-resumo.md`.
+
+Os blocos, na ordem em que aparecem — o que pede ação primeiro:
 
 | Bloco | O que é | O que costuma exigir |
 |---|---|---|
 | **Achados de pena** | Moldura ou espécie de pena divergindo do compilado; dispositivo revogado; dispositivo com pena própria ausente do catálogo | Ler o artigo no Planalto. O que for mecânico já veio em PR (item 3); o resto é decisão de modelagem |
-| **Cobertura** | Quantos registros foram conferidos, quantos não têm moldura própria, quantos não foram localizados | Nada, em regra. Se "não localizado" subir, é sinal de rótulo errado no catálogo ou de mudança na página |
+| **A lei escreveu a pena e o parser não leu** | Os `ilegivel`: registros em que há moldura no compilado e o `pena_parser` não a extraiu | Ação NOSSA, e o único balde do "sem moldura" que pede alguma. Abrir o dispositivo e ver o que o parser não leu; o número tende a zero. Tem seção própria, no alto, desde 24/09/2026 — antes dividia a tela com 152 registros que estavam certos |
+| **Cobertura** | Quantos registros foram conferidos e, por motivo, quantos não têm moldura própria na lei | Nada, em regra: são limites DECLARADOS, a lei não deixou moldura ali. No corpo da issue vêm como contagem; id por id fica no artifact. Se "não localizado" subir, é sinal de rótulo errado no catálogo ou de mudança na página |
 | **Auditoria de classificação** | Hediondez, ação penal, causas de aumento ausentes e nomes — inclusive o nome que descreve MELHOR outro artigo do mesmo diploma | Juízo jurídico. Hediondez e ação penal já vêm propostas em PR; aumentos e nomes ficam só aqui. `NOME-DE-OUTRO-ARTIGO` pede reconferência da PENA junto com o nome: quando os dois artigos cominam a mesma moldura, a troca é invisível para a conferência |
 | **Já julgado** | Uma linha dizendo quantos achados foram omitidos por decisão anterior | Nada. Se o número subir sem motivo, abrir `scripts/robos/auditor/excecoes-auditoria.json` e conferir se alguma exceção está ampla demais |
 | **Saúde da documentação** | Documento que passou da cadência (90 dias) ou de que algum arquivo dependente mudou depois da última conferência | Reler. Se nada mudar, atualizar `conferido_em` em `data/documentacao.json`; se corrigir, o commit já responde |

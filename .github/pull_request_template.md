@@ -5,7 +5,17 @@ CONTRIBUTING.md traz as convenções C1 a C8 do catálogo.
 
 ## O que muda e por quê
 
-<!-- Uma ou duas frases. Se corrige dado, diga qual registro (`?tipo=N`) e o que estava errado. -->
+<!-- Uma ou duas frases. Se corrige dado, diga qual registro (`/tipos/N`) e o que estava errado. -->
+
+## Issues que isto fecha
+
+<!--
+Uma linha por issue, no formato `Closes #12` — é o que faz o GitHub fechá-la no
+merge. Escreva aqui mesmo quando a issue não tiver motivado o trabalho: a #27
+foi inteiramente resolvida em 13/09/2026 por um commit que não a citou, e ficou
+onze dias aberta depois de resolvida, esperando que alguém percebesse.
+Se não fecha nenhuma, escreva "nenhuma" e siga.
+-->
 
 ## Onde
 

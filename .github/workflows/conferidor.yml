@@ -260,7 +260,12 @@ jobs:
           # Data de BRASÍLIA, como o relatório: às 21h do dia 31 já é dia 1º em
           # UTC, e a issue saía datada de amanhã.
           HOJE="$(TZ=America/Sao_Paulo date +%Y-%m-%d)"
-          RELATORIO="crawler/relatorios/$HOJE.md"
+          # O RESUMO, e nao o relatorio completo: o corpo da issue tem teto
+          # de 65.536 caracteres, e o despejo dos registros que a lei nao
+          # comina empurrava para fora justamente o que pede acao. Id por id
+          # continua no artifact, que a primeira linha do corpo nomeia.
+          RELATORIO="crawler/relatorios/$HOJE-resumo.md"
+          [ -f "$RELATORIO" ] || RELATORIO="crawler/relatorios/$HOJE.md"
           DOU="crawler/relatorios/dou-$HOJE.md"
           {
             echo "Rodada automática do conferidor contra o texto compilado do Planalto."
@@ -287,8 +292,19 @@ jobs:
             echo "_(relatório truncado — veja o artifact para a lista completa)_" >> corpo-curto.md
             mv corpo-curto.md corpo.md
           fi
-          gh issue create --repo "${{ github.repository }}" \
-            --title "Conferidor: achados de $HOJE" --label conferidor --body-file corpo.md
+          # A rodada de hoje SUBSTITUI a da semana passada. Achado de
+          # conferidor e foto de um momento: a issue de 21/09/2026 acusou
+          # como ausente um artigo que ja existia numa branch, e ficou aberta
+          # dias depois de ter deixado de valer. Acumular fotos velhas ensina
+          # a ignorar a lista.
+          REPO="${{ github.repository }}"
+          ANTERIORES="$(gh issue list --repo "$REPO" --label conferidor --state open --json number --jq '.[].number')"
+          NOVA="$(gh issue create --repo "$REPO" --title "Conferidor: achados de $HOJE" --label conferidor --body-file corpo.md)"
+          echo "aberta: $NOVA"
+          MOTIVO="Superada pela rodada de $HOJE: $NOVA. Cada rodada e uma foto do momento; o que sobrar de verdade vira issue propria, com titulo que diga o que."
+          for N in $ANTERIORES; do
+            gh issue close "$N" --repo "$REPO" --reason "not planned" --comment "$MOTIVO" || true
+          done
 
       - name: Registrar que não houve achado
         if: >-

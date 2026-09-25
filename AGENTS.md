@@ -59,6 +59,10 @@ ignoradas:
   `:::note[...]`); use `write_bytes` ou confira o EOL.
 - Admonitions: `:::note[Título]`, não `:::note Título` — é a sintaxe que
   `src/site/markdown/admonicoes.ts` lê.
+- **Correção que resolve issue diz `Closes #N`** — no corpo do PR, ou no do
+  commit quando não houver PR. Sem isso a issue sobrevive ao próprio conserto:
+  a #27 ficou onze dias aberta depois de resolvida por inteiro, porque o commit
+  que a resolveu não a citou. O robô abre; fechar é de quem conserta.
 - **`docs/` é o que vai ao ar, e nada mais** (decisão de 24/09/2026). A árvore
   espelha a do site: `docs/*.md` é o grupo *Documentação* de `/projeto`,
   `docs/textos/*.md` é o grupo *Textos*. Documento que existe só no

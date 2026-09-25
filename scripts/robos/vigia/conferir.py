@@ -33,6 +33,7 @@ import argparse
 import io
 import json
 import re
+import subprocess
 import sys
 from datetime import date
 from pathlib import Path
@@ -661,8 +662,58 @@ def gravar_limites(contas: dict[str, int]) -> None:
                         .replace("\n", "\r\n").encode("utf-8"))
 
 
-def montar_cobertura(res: dict, total_catalogo: int) -> str:
-    """A seção de cobertura do relatório, em números redondos."""
+def montar_contexto(total_catalogo: int) -> str:
+    """Contra o QUÊ esta rodada correu.
+
+    Faltava, e custava. A issue de 21/09/2026 acusou o art. 349 do Código
+    Eleitoral como ausente do catálogo; ele existia havia dois dias, numa branch
+    que ainda não tinha sido mergeada. Quem leu a issue não tinha como saber
+    disso, porque ela não dizia contra que branch o conferidor havia rodado.
+    """
+    def git(*args: str) -> str:
+        try:
+            r = subprocess.run(["git", *args], cwd=RAIZ, capture_output=True,
+                               text=True, timeout=15)
+            return r.stdout.strip()
+        except (OSError, subprocess.SubprocessError):
+            return ""
+
+    branch = git("rev-parse", "--abbrev-ref", "HEAD") or "?"
+    sha = git("rev-parse", "--short=12", "HEAD") or "?"
+    return (f"Rodada de **{hoje().isoformat()}** sobre `{branch}` @ `{sha}` — "
+            f"{total_catalogo} registros no catálogo.")
+
+
+def montar_lacunas(res: dict) -> str:
+    """`ilegivel`: a lei escreveu a pena e o parser não leu.
+
+    Seção própria, e no alto, porque é a única do balde "sem moldura" que pede
+    ação NOSSA. As outras quatro descrevem o que a lei não deu — não há o que
+    fazer com elas a não ser contá-las. Enquanto as cinco moravam juntas, com a
+    mesma tipografia, três lacunas reais dividiam a tela com 152 registros que
+    estavam exatamente como deviam estar.
+    """
+    itens = sorted((f, k, i) for f, k, i, m in res["sem_moldura_na_lei"]
+                   if m == "ilegivel")
+    if not itens:
+        return ""
+    L = ["## ⚠️ A lei escreveu a pena e o parser não leu", "",
+         f"**{len(itens)}** — cada uma é uma lacuna com endereço, e o número "
+         "tende a zero. Abra o dispositivo no compilado e veja por que o "
+         "`pena_parser` não o leu.", ""]
+    L += [f"- `{fid}` `{k}` — id {ident}" for fid, k, ident in itens]
+    return "\n".join(L + [""])
+
+
+def montar_cobertura(res: dict, total_catalogo: int, resumido: bool = False) -> str:
+    """A seção de cobertura do relatório, em números redondos.
+
+    Com `resumido`, os limites DECLARADOS saem como contagem e a lista de ids
+    fica só no relatório completo, que vai como artifact. É a versão que vai
+    para a issue: o corpo dela tem teto de 65.536 caracteres, e o despejo de 264
+    registros que não pedem ação nenhuma empurrava para fora justamente o que
+    pedia. Nada se perde — o artifact continua trazendo id por id.
+    """
     n = {k: len(v) for k, v in res.items()}
     medido = sum(n.values())
     fora = total_catalogo - medido
@@ -707,21 +758,32 @@ def montar_cobertura(res: dict, total_catalogo: int) -> str:
     # Cada registro não conferido sai com id e motivo. Enquanto isto era só um
     # número, ninguém tinha como agir sobre ele — e três incisos do art. 151 do
     # CP passaram anos publicando seis vezes a pena da lei debaixo dele.
-    if res["sem_moldura_na_lei"]:
+    # O `ilegivel` saiu daqui para uma seção própria, no alto (montar_lacunas):
+    # é o único que pede ação nossa. Ficam os quatro limites DECLARADOS.
+    declarados = [(f, k, i, m) for f, k, i, m in res["sem_moldura_na_lei"]
+                  if m != "ilegivel"]
+    if declarados:
         L += ["### Sem moldura própria na lei — por que", ""]
         por_motivo: dict[str, list] = {}
-        for fid, k, ident, motivo in res["sem_moldura_na_lei"]:
+        for fid, k, ident, motivo in declarados:
             por_motivo.setdefault(motivo, []).append((fid, k, ident))
-        # O alarme primeiro; os limites declarados depois, do maior ao menor.
-        ordem = sorted(por_motivo, key=lambda m: (m != "ilegivel", -len(por_motivo[m])))
-        for motivo in ordem:
-            itens = sorted(por_motivo[motivo])
-            grito = "⚠️ " if motivo == "ilegivel" else ""
-            L += [f"<details><summary>{grito}<b>{motivo}</b> — {len(itens)}: "
-                  f"{MOTIVOS.get(motivo, '')}</summary>", ""]
-            for fid, k, ident in itens:
-                L.append(f"- `{fid}` `{k}` — id {ident}")
-            L += ["", "</details>", ""]
+        ordem = sorted(por_motivo, key=lambda m: -len(por_motivo[m]))
+        if resumido:
+            L += ["A lei não deixou moldura própria nestes registros — não há o "
+                  "que conferir, e não há o que fazer. Id por id no relatório "
+                  "completo, no artifact desta execução.", "",
+                  "| motivo | quantos | o que é |", "|---|---|---|"]
+            L += [f"| `{m}` | {len(por_motivo[m])} | {MOTIVOS.get(m, '')} |"
+                  for m in ordem]
+            L.append("")
+        else:
+            for motivo in ordem:
+                itens = sorted(por_motivo[motivo])
+                L += [f"<details><summary><b>{motivo}</b> — {len(itens)}: "
+                      f"{MOTIVOS.get(motivo, '')}</summary>", ""]
+                for fid, k, ident in itens:
+                    L.append(f"- `{fid}` `{k}` — id {ident}")
+                L += ["", "</details>", ""]
     if res["nao_localizado"]:
         L += ["<details><summary><b>Dispositivos não localizados no compilado</b> — "
               f"{len(res['nao_localizado'])}</summary>", ""]
@@ -731,9 +793,11 @@ def montar_cobertura(res: dict, total_catalogo: int) -> str:
     return "\n".join(L)
 
 
-def montar_relatorio(por_fonte: dict[str, list[dict]]) -> str:
+def montar_relatorio(por_fonte: dict[str, list[dict]], contexto: str = "") -> str:
     total = sum(len(v) for v in por_fonte.values())
     linhas = [f"# Conferidor — {hoje().isoformat()}", ""]
+    if contexto:
+        linhas += [contexto, ""]
     if not total:
         linhas.append("Nenhuma divergência entre o catálogo e o texto compilado.")
         return "\n".join(linhas) + "\n"
@@ -798,8 +862,14 @@ def main() -> int:
         print(f"limites de cobertura regravados em {LIMITES.name}: "
               + ", ".join(f"{k}={v}" for k, v in sorted(contas.items())))
 
-    cob = montar_cobertura(medida, total)
-    relatorio = montar_relatorio(por_fonte) + "\n" + cob
+    # Duas saídas do mesmo apuro. A completa vai como artifact e traz id por id;
+    # a resumida vai para o corpo da issue, que tem teto de 65.536 caracteres.
+    # Em ambas, na ordem: o que pede ação primeiro, o que só se conta depois.
+    contexto = montar_contexto(total)
+    achados_md = montar_relatorio(por_fonte, contexto)
+    lacunas = montar_lacunas(medida)
+    relatorio = achados_md + "\n" + lacunas + "\n" + montar_cobertura(medida, total)
+    resumo = achados_md + "\n" + lacunas + "\n" + montar_cobertura(medida, total, True)
     regressoes, _ = conferir_limites(contas)
 
     # A trilha só é reescrita numa rodada COMPLETA: carimbar depois de conferir um
@@ -810,6 +880,7 @@ def main() -> int:
     destino = Path(args.saida)
     destino.mkdir(parents=True, exist_ok=True)
     (destino / f"{hoje().isoformat()}.md").write_text(relatorio, encoding="utf-8")
+    (destino / f"{hoje().isoformat()}-resumo.md").write_text(resumo, encoding="utf-8")
     (destino / f"{hoje().isoformat()}.json").write_text(
         json.dumps(por_fonte, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
