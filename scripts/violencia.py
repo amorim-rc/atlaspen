@@ -190,6 +190,14 @@ REGRAS: list[Regra] = [
         # e não depende mais de o complemento estar nesta lista.
         r'\bmatar\b'
         r'|ofender a integridade corporal|ofensa a integridade corporal'
+        # Decisão A0/c: a alínea b do art. 1º da Lei 2.889 escreve o mesmo
+        # núcleo com outras palavras — "causar lesão grave à integridade
+        # física ou mental de membros do grupo". É genocídio, e é hediondo.
+        r'|lesao grave a integridade fisica'
+        # Decisão B1/e: o CPM de guerra remete por NOME, e não por número:
+        # "praticar homicídio, em presença do inimigo" (art. 400). O nome do
+        # crime é o próprio núcleo, e lê-lo não é resolver remissão nenhuma.
+        r'|praticar homicidio|praticar lesao corporal'
         r'|praticar tortura|submeter\w* alguem[^.]{0,60}sofrimento fisico'
         r'|constranger\w*[^.]{0,40}(violencia|forca)', re.I),
         'O NÚCLEO do tipo é a ofensa à vida ou à integridade corporal.'),
@@ -206,10 +214,18 @@ REGRAS: list[Regra] = [
 # vantagem" (CP, art. 358). Decisão 8: "Não" + condição. O tipo se consuma sem
 # violência nenhuma — responder "Sim" bloquearia ANPP e substituição em condutas
 # que as admitem; a condição preserva a hipótese violenta à vista.
+#
+# Decisão A0/a: a alternativa pacífica nem sempre é um meio de engano. Pode ser
+# uma CIRCUNSTÂNCIA — "com o emprego de violência ou de arma, ou por duas ou
+# mais pessoas" (CP 150, §1º) — ou um meio de tumulto sem agressão: "mediante
+# violência, ameaça ou assuadas" (Lei 1.579, art. 4º, I). Em ambos o tipo se
+# consuma sem encostar em ninguém, que é o que a decisão 8 pede.
 _ALTERNATIVO = re.compile(
     r'(violencia|grave ameaca)[^.]{0,80}\b(fraude|fraudulent\w+|artificio|ardil'
-    r'|oferecimento de vantagem|suborno|qualquer outro meio|meio fraudulento)\b'
+    r'|oferecimento de vantagem|suborno|qualquer outro meio|meio fraudulento'
+    r'|assuadas)\b'
     r'|\b(fraude|artificio|ardil|qualquer outro meio)\b[^.]{0,80}(violencia|grave ameaca)'
+    r'|violencia ou de arma'
     # Decisão 8/e: "violência OU ameaça", sem o "grave", também é meio
     # alternativo (CP 329, CPM 177, CPM 358, Lei 1.579, art. 4º, I).
     #
@@ -220,6 +236,23 @@ _ALTERNATIVO = re.compile(
     r'|violencia ou (?!grave )amea[czç]a'
     r'|(?<!grave )\bamea[czç]a ou violencia', re.I)
 
+# Decisão A0/b: causa de aumento que QUALIFICA o meio do tipo-base não é meio
+# alternativo, e vale mesmo quando o rótulo do registro não diz "c/c caput".
+# "Se a violência ou ameaça é exercida com emprego de arma de fogo" (CP 157,
+# §2º-A, I; CPM 242, §2º, I) não oferece à violência uma alternativa pacífica:
+# diz COMO ela foi exercida. Sem esta exclusão o roubo majorado pelo emprego de
+# arma saía não violento — a forma mais grave do tipo, menos violenta que o
+# caput. O registro herda o meio do tipo-base, que é o que o caput descreve.
+_MEIO_QUALIFICADO = re.compile(
+    r'(a )?violencia ou (a )?amea[czç]a (e|sao) exercid', re.I)
+
+# Decisão B1/g: privação da liberdade DECRETADA não é privação executada. O art.
+# 9º da Lei 13.869 pune o juiz que decreta prisão fora das hipóteses legais — o
+# agente não encosta em ninguém, e a condição "sim quando a privação é executada
+# mediante violência" não tem a quem se referir.
+_PRIVACAO_DECRETADA = re.compile(
+    r'decretar (medida de )?(privacao da liberdade|prisao)', re.I)
+
 # Remissão a outro dispositivo: o registro herda a classificação do remetido.
 # Decisão C6/c. A regra REGISTRA a remissão; quem a resolve é o Auditor, que tem
 # o texto dos dois dispositivos.
@@ -227,7 +260,11 @@ _REMISSAO = re.compile(
     r'definidos? nos? arts?\.\s*([\d\-ºA-Za-z,\s e]+)'
     r'|nas penas do art\.\s*([\d\-ºA-Za-z]+)'
     r'|qualquer dos crimes definidos no art\.\s*([\d\-ºA-Za-z]+)'
-    r'|nas penas cominadas ao art\.\s*([\d\-ºA-Za-z]+)', re.I)
+    r'|nas penas cominadas ao art\.\s*([\d\-ºA-Za-z]+)'
+    # Decisão B1/e: o CPM de guerra remete assim — 'No caso do § 1º do art.
+    # 209' (art. 403). Sem esta forma o parágrafo caía no silêncio da lei, e
+    # quatro formas da lesão corporal de guerra saíam sem violência nenhuma.
+    r'|no caso do §\s*\d+\s*[º°]?\s*do art\.\s*([\d\-ºA-Za-z]+)', re.I)
 
 # Cláusulas de RESULTADO. O que vem depois delas qualifica o crime pelo que dele
 # decorre, e não descreve a conduta: o abandono de incapaz "se resulta lesão
@@ -273,17 +310,23 @@ def _violencia_por_familia(texto: str, origem: str, bruto: str) -> Classificacao
         return _cond('extorsao-mediante-sequestro',
                      'Sim quando a privação da liberdade é executada ou mantida '
                      'mediante violência à pessoa ({disp}).', _trecho(m, texto), origem)
-    if m := _PRIVACAO_LIBERDADE.search(texto):
+    if (m := _PRIVACAO_LIBERDADE.search(texto)) and not _PRIVACAO_DECRETADA.search(texto):
         return _cond('privacao-da-liberdade',
                      'Sim quando a privação da liberdade é executada ou mantida '
                      'mediante violência à pessoa ou grave ameaça ({disp}).',
                      _trecho(m, texto), origem)
+    # Lei 9.434, art. 14. A vítima decide: em cadáver não há violência a pessoa
+    # nenhuma, e o caput abrange as duas hipóteses num texto só.
+    #
+    # Decisão A0/d: "em pessoa viva" responde SOZINHO, sem depender de o verbo
+    # da remoção estar no mesmo texto. Os §§ 2º a 4º dizem "se o crime é
+    # praticado em pessoa viva" e não repetem "remover tecidos"; o próprio ficava
+    # mudo e a resposta vinha do caput, que diz "pessoa ou cadáver" — e três
+    # registros que a lei restringe à pessoa viva saíam condicionais.
+    if m := _EM_PESSOA_VIVA.search(texto):
+        return Classificacao('Sim', 'remocao-em-pessoa-viva', _trecho(m, texto), origem,
+                             'A remoção é feita em pessoa viva.')
     if _REMOCAO.search(texto):
-        # Lei 9.434, art. 14. A vítima decide: em cadáver não há violência a
-        # pessoa nenhuma, e o tipo abrange as duas hipóteses num texto só.
-        if m := _EM_PESSOA_VIVA.search(texto):
-            return Classificacao('Sim', 'remocao-em-pessoa-viva', _trecho(m, texto), origem,
-                                 'A remoção é feita em pessoa viva.')
         if m := _PESSOA_OU_CADAVER.search(texto):
             return _cond('pessoa-ou-cadaver',
                          'Sim quando a remoção é feita em pessoa viva ({disp}).',
@@ -374,7 +417,7 @@ def classificar(registro: dict, texto_proprio: str, texto_caput: str = '') -> di
                     'exige violência à pessoa.')
                 decidido = True
                 break
-            if m := _ALTERNATIVO.search(texto):
+            if not _MEIO_QUALIFICADO.search(texto) and (m := _ALTERNATIVO.search(texto)):
                 # Antes das regras, e não depois: "por meio de violência, grave
                 # ameaça, fraude ou oferecimento de vantagem" nem sempre casa
                 # com uma fórmula de meio, e o tipo cairia no silêncio como se
@@ -428,11 +471,19 @@ def classificar(registro: dict, texto_proprio: str, texto_caput: str = '') -> di
             elif campo == 'grave_ameaca' and (_AMEACA_SIMPLES.search(proprio)
                                               or _AMEACA_SIMPLES.search(caput)):
                 achado = _AMEACA_SIMPLES.search(proprio) or _AMEACA_SIMPLES.search(caput)
-                if m := _AMEACA_GRAVE_NO_TEXTO.search(juntos):
+                # Decisão A0/f: a exceção se procura nos DOIS textos, e não em
+                # `juntos`, que é "o próprio OU o caput". Num § do roubo militar
+                # o próprio diz só "a pena aumenta-se de um têrço até metade", e
+                # a fórmula que salva a grave ameaça — "ameaça de emprego de
+                # violência contra pessoa" — está no caput do art. 242. Como o
+                # próprio não era vazio, o caput nunca chegava a ser lido, e
+                # cinco formas do roubo militar saíam sem grave ameaça.
+                ambos = ' '.join(filter(None, (proprio, caput)))
+                if m := _AMEACA_GRAVE_NO_TEXTO.search(ambos):
                     # Decisão 9, exceções: o mal ameaçado já é, no texto,
                     # necessariamente grave (CPM 242 e 245).
                     saida[campo] = Classificacao(
-                        'Sim', 'ameaca-de-mal-necessariamente-grave', _trecho(m, juntos),
+                        'Sim', 'ameaca-de-mal-necessariamente-grave', _trecho(m, ambos),
                         'propria', 'O próprio tipo descreve o mal ameaçado como grave.')
                 else:
                     saida[campo] = _cond(

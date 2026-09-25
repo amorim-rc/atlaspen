@@ -122,6 +122,18 @@
       ],
       "motivo": "Lei 14.597/23 (Lei Geral do Esporte), arts. 198 e 199. Os dois registros estao CERTOS, conferidos contra o compilado em 10/08/2026: o art. 198 pune \"solicitar ou aceitar vantagem... para alterar ou falsear o resultado de competicao esportiva\" (corrupcao passiva desportiva) e o art. 199 pune \"dar ou prometer vantagem\" com o mesmo fim (corrupcao ativa). A heuristica falha por construcao: o nomen juris e doutrinario e nao compartilha vocabulario com a descricao da conduta — o mesmo aconteceria com \"peculato\" contra \"apropriar-se de dinheiro\". Some-se que a Lei Geral do Esporte nao da epigrafe por artigo, so titulo de secao, e o comparador acaba lendo \"Dos Crimes contra a Incerteza do Resultado Esportivo\". Nao ha o que corrigir no dado.",
       "data": "2026-08-10"
+    },
+    {
+      "tipo": "VIOLENCIA-217A",
+      "campo": "violencia",
+      "ids": [
+        140,
+        141,
+        142,
+        611
+      ],
+      "motivo": "Decisão 4 (23/09/2026), grau B: 'Sim' mantido até haver jurisprudência sobre violência e atributos no estupro de vulnerável. O art. 217-A não escreve violência nem grave ameaça — a vulnerabilidade da vítima é que dispensa o meio —, e por isso a regra lê silêncio da lei. O catálogo afirma 'Sim' por decisão do mantenedor, e não por leitura do texto; enquanto a decisão for de grau B, a divergência é conhecida e não precisa voltar toda semana. Não é correção de dado: é juízo já tomado, com pendência declarada.",
+      "data": "2026-09-25"
     }
   ]
 }

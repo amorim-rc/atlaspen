@@ -300,3 +300,85 @@ def test_extorsao_mediante_sequestro_tem_grave_ameaca_propria():  # decisao 1b
     assert r['grave_ameaca'].regra == 'extorsao-mediante-sequestro'
     assert r['violencia'].valor == 'Não'
     assert r['violencia'].condicao is not None
+
+
+class TestDecisoesA0B1:
+    """As sete regras da sessão de 24/09/2026 (pacote, seção 1.1).
+
+    Nenhuma delas muda dado: todas fazem o derivador chegar ao que o catálogo já
+    publica por decisão de 23/09. Cada caso traz o texto do dispositivo como a
+    lei o escreve — inclusive a ortografia de 1969 do CPM.
+    """
+
+    def _v(self, proprio, caput=""):
+        # O helper do módulo, e não `violencia.classificar`: este arquivo já
+        # tem o seu, com a ordem (texto, caput, elemento).
+        return classificar(proprio, caput)
+
+    # a) violência dentro de uma enumeração de circunstâncias alternativas
+    def test_violencia_ou_de_arma_e_meio_alternativo(self):
+        """CP 150, §1º: o tipo se consuma de noite, sem encostar em ninguém."""
+        r = self._v("Se o crime é cometido durante a noite, ou em lugar ermo, ou "
+                    "com o emprego de violência ou de arma, ou por duas ou mais pessoas:")
+        assert r["violencia"].valor == "Não"
+        assert r["violencia"].regra == "meio-alternativo"
+        assert r["violencia"].condicao
+
+    def test_assuadas_e_alternativa_pacifica(self):
+        """Lei 1.579, art. 4º, I: assuada é vaia, não agressão."""
+        r = self._v("Impedir, ou tentar impedir, mediante violência, ameaça ou "
+                    "assuadas, o regular funcionamento de Comissão Parlamentar de Inquérito")
+        assert r["violencia"].valor == "Não" and r["violencia"].regra == "meio-alternativo"
+
+    # b) causa de aumento que qualifica o meio do tipo-base
+    def test_violencia_exercida_com_arma_nao_e_alternativa(self):
+        """CP 157, §2º-A, I. O roubo majorado não é menos violento que o caput."""
+        r = self._v("se a violência ou ameaça é exercida com emprego de arma de fogo;",
+                    "Subtrair coisa móvel alheia, para si ou para outrem, mediante "
+                    "grave ameaça ou violência a pessoa")
+        assert r["violencia"].valor == "Sim" and r["violencia"].condicao is None
+        assert r["grave_ameaca"].valor == "Sim"
+
+    # c) o núcleo do genocídio, escrito com outras palavras
+    def test_lesao_grave_a_integridade_fisica_e_nucleo(self):
+        """Lei 2.889, art. 1º, b."""
+        r = self._v("causar lesão grave à integridade física ou mental de membros do grupo;")
+        assert r["violencia"].valor == "Sim" and r["violencia"].regra == "violencia-nucleo"
+
+    def test_praticar_homicidio_e_nucleo(self):
+        """CPM 400: o de guerra remete por nome, não por número."""
+        r = self._v("Praticar homicídio, em presença do inimigo:")
+        assert r["violencia"].valor == "Sim" and r["violencia"].regra == "violencia-nucleo"
+
+    # d) "em pessoa viva" responde sozinho
+    def test_em_pessoa_viva_vence_pessoa_ou_cadaver_do_caput(self):
+        """Lei 9.434, art. 14, §4º: o § restringe o que o caput abre."""
+        r = self._v("Se o crime é praticado em pessoa viva e resulta morte:",
+                    "Remover tecidos, órgãos ou partes do corpo de pessoa ou cadáver, "
+                    "em desacordo com as disposições desta Lei:")
+        assert r["violencia"].valor == "Sim"
+        assert r["violencia"].regra == "remocao-em-pessoa-viva"
+
+    # f) a exceção do caput alcança os parágrafos
+    def test_ameaca_de_violencia_do_caput_salva_o_paragrafo(self):
+        """CPM 242, §2º: o § só diz que a pena aumenta."""
+        r = self._v("A pena aumenta-se de um têrço até metade:",
+                    "Subtrair coisa alheia móvel, para si ou para outrem, mediante "
+                    "emprêgo ou ameaça de emprêgo de violência contra pessoa, ou depois "
+                    "de havê-la, por qualquer modo, reduzido à impossibilidade de resistência:")
+        assert r["grave_ameaca"].valor == "Sim"
+        assert r["grave_ameaca"].regra == "ameaca-de-mal-necessariamente-grave"
+
+    # g) privação decretada não é privação executada
+    def test_decretar_prisao_ilegal_nao_e_privacao_executada(self):
+        """Lei 13.869, art. 9º: o juiz que decreta não encosta em ninguém."""
+        r = self._v("Decretar medida de privação da liberdade em manifesta "
+                    "desconformidade com as hipóteses legais:")
+        assert r["violencia"].regra != "privacao-da-liberdade"
+        assert r["violencia"].condicao is None
+
+    def test_sequestrar_continua_sendo_privacao_executada(self):
+        """A guarda de (g) não pode apagar a regra que ela excepciona."""
+        r = self._v("Privar alguém de sua liberdade, mediante sequestro ou cárcere privado:")
+        assert r["violencia"].regra == "privacao-da-liberdade"
+        assert r["violencia"].condicao
