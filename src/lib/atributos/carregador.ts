@@ -1,10 +1,10 @@
 // Montagem do catálogo de atributos penais — função pura.
 //
 // Recebe a base (o conteúdo de data/atributos.json, ou uma cópia editada dela)
-// e as funções de avaliação (avaliadores.ts), e devolve os `AtributoDef` que o
+// e as funções de avaliação (avaliadores/), e devolve os `AtributoDef` que o
 // motor usa. A ordem é a da base, e é ela a ordem de exibição dentro de cada
 // categoria. Para acrescentar um atributo: registro novo na base, com o próximo
-// id, e a função dele em avaliadores.ts.
+// id, e a função dele no módulo da categoria em avaliadores/.
 //
 // Este módulo não importa dado nenhum. Quem liga o catálogo real é catalogo.ts;
 // a simulação legislativa monta o seu a partir de uma cópia em memória, e os
