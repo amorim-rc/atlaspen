@@ -1,0 +1,32 @@
+// Código morto: o que ninguém importa, exporta sem uso ou depende sem listar.
+//
+// Débito técnico 8 do README, fechado em 25/09/2026: a varredura de 24/09 achou
+// seis exportações que ninguém importava, dois scripts de migração e um documento
+// gerado que nada renderizava — tudo à mão, e à mão não se repete. Roda na CI
+// (`npm run mortos`); o que falhar é morto de verdade ou entrada desta lista,
+// com o motivo ao lado.
+{
+  "$schema": "https://unpkg.com/knip@6/schema.json",
+  "entry": [
+    // Os scripts do `npm run verificar`, `equivalencia` e `atributos` compilam por
+    // scripts/tsconfig.verificar.json e rodam pelo Node, fora do grafo do Astro.
+    "scripts/*.ts",
+    "scripts/*.mjs",
+    "scripts/marca/gerar.mjs",
+    // Cada entrada do feed é um arquivo por mudança de lei, lido por varredura de
+    // diretório (src/data/changelog/index.ts e scripts/_ler-changelog.mjs), e não
+    // por import nomeado.
+    "src/data/changelog/entries/**/*.ts"
+  ],
+  "ignoreDependencies": [
+    // Só tipos (`import type {Root} from 'mdast'`), resolvidos por @types/mdast,
+    // que vem com o @astrojs/markdown-remark.
+    "mdast"
+  ],
+  // Tipos exportados e não importados são contrato público das bibliotecas de
+  // src/lib (o motor é consumido por ilhas E pelos scripts): não são código morto.
+  "ignoreExportsUsedInFile": true,
+  "rules": {
+    "types": "off"
+  }
+}
