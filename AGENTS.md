@@ -108,7 +108,11 @@ pessoa que assina.
 
 - **`scripts/robos/auditor/excecoes-auditoria.json`** — o achado da auditoria que já foi julgado
   e não precisa voltar. Casa por tipo de achado MAIS um alvo, nunca por tipo sozinho, e
-  declara motivo e data. Divergência real nunca vira exceção: vira correção no dado.
+  declara motivo e data. Nos derivadores de violência e ação penal, o alvo é `campo` mais
+  `ids`: o estupro de vulnerável tem juízo tomado sobre `violencia` (decisão 4, grau B) e
+  nada decidido sobre `grave_ameaca`, e exceção por id sozinho calaria o que ninguém julgou.
+  Divergência real nunca vira exceção: vira correção no dado. Exceção é juízo TOMADO, com
+  pendência declarada — e sai no dia em que a pendência fechar.
 - **A questão jurídica em aberto não vira dado.** Havia um `REVISAO-PENDENTE.md` na raiz
   para isso; ele saiu na v2.0.0, quando a revisão da base fechou as perguntas que ele
   guardava. Se a próxima aparecer, o lugar dela é o mesmo de sempre: **o registro diz o

@@ -33,7 +33,7 @@
     {
       "arquivo": "AGENTS.md",
       "sobre": "Instruções para agentes de IA (Codex, Claude Code — este via CLAUDE.md, que só o importa): fluxo de release, convenções que quebram em silêncio, verificação obrigatória.",
-      "conferido_em": "2026-09-19",
+      "conferido_em": "2026-09-25",
       "depende_de": [
         "CONTRIBUTING.md",
         "scripts/transform_data.py",
@@ -75,7 +75,7 @@
     {
       "arquivo": "docs/dados-abertos.md",
       "sobre": "Contrato dos dados publicados, campo a campo, e como cada registro é coletado e revisado.",
-      "conferido_em": "2026-09-13",
+      "conferido_em": "2026-09-25",
       "depende_de": [
         "scripts/transform_data.py",
         "src/lib/types.ts",
@@ -112,7 +112,7 @@
     {
       "arquivo": "scripts/robos/README.md",
       "sobre": "O pipeline de conferência: módulos, o que o robô faz e não faz, e as armadilhas com teste.",
-      "conferido_em": "2026-09-24",
+      "conferido_em": "2026-09-25",
       "depende_de": [
         "scripts/robos/vigia/conferir.py",
         "scripts/robos/proponente/propor.py",
@@ -143,7 +143,7 @@
     {
       "arquivo": "docs/os-robos.md",
       "sobre": "Como cada robo funciona, com que criterio corta, e o que nenhum deles alcanca. Vigia, Sentinela, Recenseador, Auditor e Arquivista. Pagina publica, para receber discordancia sobre os criterios.",
-      "conferido_em": "2026-09-11",
+      "conferido_em": "2026-09-25",
       "depende_de": [
         "scripts/robos/vigia/conferir.py",
         "scripts/robos/sentinela/dou_watcher.py",
@@ -175,7 +175,7 @@
     {
       "arquivo": "AUDITORIA.md",
       "sobre": "O metodo da auditoria por amostra, registrado ANTES do sorteio: estratos, tamanho, semente, dupla conferencia e o que conta como erro. E pre-registro, e por isso e publico e datado -- o valor dele esta em ter sido escrito antes de olhar o resultado. Muda so se o desenho da amostra mudar, e a mudanca tem de ser datada.",
-      "conferido_em": "2026-09-24",
+      "conferido_em": "2026-09-25",
       "depende_de": [
         "data/crimes.json",
         "data/conferencia.json"

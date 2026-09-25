@@ -289,8 +289,57 @@ def ler_penas(texto: str) -> list[dict]:
                 lida["tipo"] = " ou ".join(tipos)
             lida["contexto"] = trecho[:120]
             molduras.append(lida)
+            molduras += _molduras_condicionais(trecho, lida)
         i = j + 1
     return molduras
+
+
+# A segunda moldura de um preceito nem sempre repete a espécie. O § 2º do art.
+# 292 do CPM escreve as duas assim:
+#
+#     No caso de culpa, a pena é de detenção, de um a dois anos, ou, SE RESULTA
+#     MORTE, de dois a quatro anos.
+#
+# Como o fatiamento é por marca de ESPÉCIE, e "detenção" aparece uma vez só, a
+# segunda moldura ficava dentro do mesmo pedaço e não era lida. O catálogo
+# desdobra os dois casos em registros próprios — que é o certo —, e o conferidor
+# comparava os dois com a única moldura que tinha, acusando divergência falsa
+# num deles toda semana.
+#
+# O gatilho é a CONDICIONAL, e não qualquer "ou": "ou detenção de…" é espécie
+# alternativa da mesma moldura, e quem a resolve é o `_CONECTIVO` acima.
+_CONDICIONAL = re.compile(
+    r"(?:,\s*)?(?:ou\s*,?\s*)?se\s+(?:resulta|o crime|da[ \w]{0,12}resulta|houver)\b",
+    re.IGNORECASE)
+
+
+def _molduras_condicionais(trecho: str, primeira: dict) -> list[dict]:
+    """As molduras que uma condicional abre depois da primeira, no mesmo pedaço.
+
+    Herdam a espécie, que é o que a lei faz ao não repeti-la. Só contam as que
+    vierem DEPOIS do intervalo já lido: o mesmo intervalo relido seria a
+    primeira moldura de novo.
+    """
+    m = _CONDICIONAL.search(trecho)
+    if not m:
+        return []
+    resto = _extenso_para_numero(_limpar(trecho[m.end():]))
+    novas = []
+    for regex in (RANGE_2U, RANGE_1U):
+        for r in regex.finditer(resto):
+            lida = ler_pena(f"{primeira['tipo']} de {r.group(0)}")
+            if not lida or lida["so_multa"]:
+                continue
+            if (lida["min_meses"], lida["max_meses"]) == (primeira["min_meses"],
+                                                          primeira["max_meses"]):
+                continue
+            lida["tipos"] = list(primeira["tipos"])
+            lida["tipo"] = primeira["tipo"]
+            lida["contexto"] = trecho[m.start():m.start() + 120]
+            novas.append(lida)
+        if novas:
+            break
+    return novas
 
 
 def ler_pena(texto: str) -> dict | None:

@@ -188,6 +188,7 @@ Cada um com plano, financiamento e pessoas próprias. A ordem é de exequibilida
 
 | | o que é |
 |---|---|
+| **Extinção da punibilidade pelo pagamento** | Os arts. 168-A e 337-A do CP extinguem a punibilidade de quem paga o tributo, e a LC 225/2026 tirou dessa regra o devedor contumaz inscrito no Cadin. O catálogo registra a alteração no histórico legislativo, mas o instituto **não é atributo modelado**: o motor só o conhece de raspão, no perdão judicial. Enquanto não for, alteração de lei sobre ele não vira nota de atualização — e é por isso que a LC 225 não tem entrada no feed. |
 | **Quantas vezes cada registro mudou** | Um contador de atualizações por tipo e por atributo, para medir a instabilidade de cada área da lei penal. |
 | **22 atributos mapeados e não integrados** | Estão levantados e fora do catálogo. Os fáceis entram juntos; a **prescrição completa** é empreitada do porte de um mestrado — as regras não são simples e há modulação no tempo. |
 | **A cadeia completa do histórico** | Hoje cada tipo diz a *última* lei que lhe deu texto. O módulo completa: todas as redações, em ordem, para responder "o que este artigo dizia em 2014?". É o que falta para a data do fato escolher também o TEXTO, e não só o cálculo. |

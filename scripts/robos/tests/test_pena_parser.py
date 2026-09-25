@@ -11,7 +11,7 @@ from pathlib import Path
 import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))  # scripts/
-from pena_parser import ler_pena, parse_pena_range  # noqa: E402
+from pena_parser import ler_pena, ler_penas, parse_pena_range  # noqa: E402
 
 
 @pytest.mark.parametrize("texto, minimo, maximo", [
@@ -232,3 +232,45 @@ class TestFormulaDeGrausDoCPM:
         m, = ler_penas("Pena - reclusão, de doze a trinta anos;")
         assert m["piso_apenas"] is False
         assert (m["min_meses"], m["max_meses"]) == (144.0, 360.0)
+
+
+class TestSegundaMolduraPorCondicional:
+    """A segunda moldura de um preceito nem sempre repete a espécie.
+
+        CPM, art. 292, § 2º — No caso de culpa, a pena é de detenção, de um a
+        dois anos, ou, SE RESULTA MORTE, de dois a quatro anos.
+
+    O fatiamento de `ler_penas` é por marca de ESPÉCIE, e "detenção" aparece uma
+    vez só: a segunda moldura ficava dentro do mesmo pedaço e não era lida. O
+    catálogo desdobra os dois casos em registros próprios — que é o certo — e o
+    conferidor comparava os dois com a única moldura que tinha, acusando
+    divergência falsa num deles toda semana.
+    """
+
+    TEXTO = ("No caso de culpa, a pena é de detenção, de um a dois anos, ou, "
+             "se resulta morte, de dois a quatro anos.")
+
+    def test_le_as_duas(self):
+        m = ler_penas(self.TEXTO)
+        assert [(x["min_meses"], x["max_meses"]) for x in m] == [(12, 24), (24, 48)]
+
+    def test_a_segunda_herda_a_especie(self):
+        """A lei não a repete porque é a mesma."""
+        m = ler_penas(self.TEXTO)
+        assert m[1]["tipo"] == m[0]["tipo"] == "detenção"
+
+    def test_especie_alternativa_continua_sendo_UMA_moldura(self):
+        """'reclusão ou detenção, de um a três anos' não são duas penas."""
+        m = ler_penas("Pena - reclusão ou detenção, de um a três anos.")
+        assert len(m) == 1 and m[0]["tipo"] == "reclusão ou detenção"
+
+    def test_duas_especies_continuam_sendo_duas_molduras(self):
+        """CP 254: dolo e culpa no mesmo preceito, cada um com a sua."""
+        m = ler_penas("reclusão, de três a seis anos, e multa, no caso de dolo, ou "
+                      "detenção, de seis meses a dois anos, no caso de culpa")
+        assert [(x["tipo"], x["min_meses"], x["max_meses"]) for x in m] == [
+            ("reclusão", 36, 72), ("detenção", 6, 24)]
+
+    def test_sem_condicional_nao_inventa_moldura(self):
+        m = ler_penas("Pena - detenção, de um a dois anos, e multa.")
+        assert len(m) == 1

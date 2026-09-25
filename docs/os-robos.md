@@ -40,6 +40,17 @@ porque lê as páginas que o Vigia baixou. O Recenseador roda uma vez por mês, 
 primeira semana. Se algum tiver o que dizer, nasce **uma issue por rodada**. Se todos
 se calarem, a rodada deixa só o carimbo de que a conferência aconteceu.
 
+A issue da semana **substitui a da semana passada**, que é fechada como superada — mas só
+a que ninguém comentou. A conferência é sem estado: ela recalcula tudo a cada rodada, então
+achado que continua valendo reaparece sozinho na issue nova. O que não reaparece é o que
+uma pessoa escreveu. Issue com comentário deixou de ser a foto da semana e virou conversa:
+fica aberta, e só se fecha quando a discussão tiver destino.
+
+Na **sexta-feira anterior**, às 23h, um ensaio baixa os mesmos compilados e joga fora. Não
+é para adiantar trabalho — a segunda baixa os dela e sempre lê o texto do dia. É para
+descobrir com o fim de semana pela frente que uma fonte saiu do ar ou mudou de forma:
+quando isso acontece, o Vigia cai e leva os outros três com ele.
+
 ---
 
 ## Vigia — a moldura contra o compilado
