@@ -26,7 +26,10 @@ import {
   comparar,
   estadoLegal,
   etiquetasDa,
+  pacoteValido,
   problemaDa,
+  removerMudanca,
+  tiposCriadosAntes,
   type EstadoCatalogo,
 } from '../../lib/simulacao/motor';
 import type {
@@ -137,7 +140,18 @@ const mudou = (a: AlcanceAtributo) => a.entra + a.sai + a.muda > 0 || !a.antes |
 
 // ── O objeto da mudança ────────────────────────────────────────────────────
 
-function Marcas({atual, antes, onChange}: {atual: CamposTipo; antes?: CamposTipo; onChange: (p: Partial<CamposTipo>) => void}) {
+function Marcas({
+  atual,
+  antes,
+  ref_ = 'na lei',
+  onChange,
+}: {
+  atual: CamposTipo;
+  antes?: CamposTipo;
+  /** Como chamar o valor de referência: "na lei", ou "no tipo criado" quando o alvo é criação do pacote. */
+  ref_?: string;
+  onChange: (p: Partial<CamposTipo>) => void;
+}) {
   return (
     <fieldset className={s.marcas}>
       <legend className={s.legenda}>Qualificações do tipo</legend>
@@ -149,7 +163,7 @@ function Marcas({atual, antes, onChange}: {atual: CamposTipo; antes?: CamposTipo
             onChange={(e) => onChange({[k]: e.target.checked} as Partial<CamposTipo>)}
           />
           <span>{r}</span>
-          {antes && atual[k] !== antes[k] && <span className={s.naLei}>na lei: {antes[k] ? 'sim' : 'não'}</span>}
+          {antes && atual[k] !== antes[k] && <span className={s.naLei}>{ref_}: {antes[k] ? 'sim' : 'não'}</span>}
         </label>
       ))}
     </fieldset>
@@ -166,10 +180,12 @@ function Marcas({atual, antes, onChange}: {atual: CamposTipo; antes?: CamposTipo
 function SeletorElemento({
   atual,
   antes,
+  ref_ = 'na lei',
   onChange,
 }: {
   atual: CamposTipo['elemento'];
   antes?: CamposTipo['elemento'];
+  ref_?: string;
   onChange: (e: CamposTipo['elemento']) => void;
 }) {
   return (
@@ -184,18 +200,24 @@ function SeletorElemento({
       </select>
       <span className={s.ajudaCampo}>
         decide a tentativa: culposo e preterdoloso não a admitem; qualificado pelo resultado, sim
-        {antes && atual !== antes ? ` · na lei: ${antes.toLowerCase()}` : ''}
+        {antes && atual !== antes ? ` · ${ref_}: ${antes.toLowerCase()}` : ''}
       </span>
     </label>
   );
 }
 
+/** O selo do tipo que não está na lei: é criação de mudança anterior deste mesmo pacote. */
+const CRIADO_NESTE_PACOTE = 'criado neste pacote';
+
 function SeletorTipo({
   tipos,
+  criados = [],
   escolhido,
   onEscolher,
 }: {
   tipos: TipoDoMotor[];
+  /** Os tipos criados por mudanças anteriores do pacote, que também podem ser alvo (25/09/2026). */
+  criados?: TipoDoMotor[];
   escolhido: TipoDoMotor | null;
   onEscolher: (id: number) => void;
 }) {
@@ -203,18 +225,41 @@ function SeletorTipo({
   const achados = useMemo(() => {
     const t = normalizar(q.trim());
     if (t.length < 2) return [];
-    return tipos.filter((x) => normalizar(`${x.crime} ${x.lei} ${x.artigo}`).includes(t)).slice(0, 8);
-  }, [q, tipos]);
+    return [...criados, ...tipos].filter((x) => normalizar(`${x.crime} ${x.lei} ${x.artigo}`).includes(t)).slice(0, 8);
+  }, [q, tipos, criados]);
+  const linha = (x: TipoDoMotor) => (
+    <button
+      type="button"
+      onClick={() => {
+        onEscolher(x.id);
+        setQ('');
+      }}
+    >
+      <span>{x.crime}</span>
+      <span className={s.notaMono}>
+        {x.lei} · {x.artigo} · {x.pena_faixa_rotulo}
+        {x.id < 0 ? ` · ${CRIADO_NESTE_PACOTE}` : ''}
+      </span>
+    </button>
+  );
   return (
     <div className={s.seletor}>
       {escolhido && (
         <div className={s.escolhido}>
           <span className={s.normaObjeto}>
             {escolhido.lei} · {escolhido.artigo}
+            {escolhido.id < 0 ? ` · ${CRIADO_NESTE_PACOTE}` : ''}
           </span>
           <span className={s.nomeObjeto}>{escolhido.crime}</span>
           <span className={s.notaMono}>{escolhido.pena_faixa_rotulo}</span>
         </div>
+      )}
+      {/* O tipo criado neste pacote não precisa de busca: são poucos, e quem os
+          criou sabe que estão aqui. A lista some quando um deles é o escolhido. */}
+      {criados.some((x) => x.id !== escolhido?.id) && (
+        <ul className={s.achados} aria-label="Tipos criados neste pacote">
+          {criados.filter((x) => x.id !== escolhido?.id).map((x) => <li key={x.id}>{linha(x)}</li>)}
+        </ul>
       )}
       <label className={s.campo}>
         <span>{escolhido ? 'Trocar o tipo penal' : 'Buscar o tipo penal'}</span>
@@ -223,20 +268,7 @@ function SeletorTipo({
       {achados.length > 0 && (
         <ul className={s.achados}>
           {achados.map((x) => (
-            <li key={x.id}>
-              <button
-                type="button"
-                onClick={() => {
-                  onEscolher(x.id);
-                  setQ('');
-                }}
-              >
-                <span>{x.crime}</span>
-                <span className={s.notaMono}>
-                  {x.lei} · {x.artigo} · {x.pena_faixa_rotulo}
-                </span>
-              </button>
-            </li>
+            <li key={x.id}>{linha(x)}</li>
           ))}
         </ul>
       )}
@@ -248,6 +280,9 @@ function SeletorTipo({
 function FormTipoAlterado({tipo, campos, onChange}: {tipo: TipoDoMotor; campos: Partial<CamposTipo>; onChange: (c: Partial<CamposTipo>) => void}) {
   const antes = camposDoTipo(tipo);
   const atual = {...antes, ...campos};
+  // Sobre tipo criado neste pacote, "na lei" seria mentira: o valor de
+  // referência é o que a mudança anterior deu ao tipo.
+  const ref = tipo.id < 0 ? 'no tipo criado' : 'na lei';
   const mudar = (patch: Partial<CamposTipo>) => {
     const novo: Partial<CamposTipo> = {...campos, ...patch};
     for (const k of Object.keys(novo) as (keyof CamposTipo)[]) if (novo[k] === antes[k]) delete novo[k];
@@ -261,24 +296,24 @@ function FormTipoAlterado({tipo, campos, onChange}: {tipo: TipoDoMotor; campos: 
       <label className={s.campo}>
         <span className="rotulo">nome do tipo</span>
         <input value={atual.nome} onChange={(e) => mudar({nome: e.target.value})} />
-        {atual.nome !== antes.nome && <span className={s.naLei}>na lei: {antes.nome}</span>}
+        {atual.nome !== antes.nome && <span className={s.naLei}>{ref}: {antes.nome}</span>}
       </label>
       <div className={s.dupla}>
         <label className={s.campo}>
           <span className="rotulo">diploma</span>
           <input value={atual.lei} onChange={(e) => mudar({lei: e.target.value})} />
-          {atual.lei !== antes.lei && <span className={s.naLei}>na lei: {antes.lei}</span>}
+          {atual.lei !== antes.lei && <span className={s.naLei}>{ref}: {antes.lei}</span>}
         </label>
         <label className={s.campo}>
           <span className="rotulo">dispositivo</span>
           <input value={atual.artigo} onChange={(e) => mudar({artigo: e.target.value})} />
-          {atual.artigo !== antes.artigo && <span className={s.naLei}>na lei: {antes.artigo}</span>}
+          {atual.artigo !== antes.artigo && <span className={s.naLei}>{ref}: {antes.artigo}</span>}
         </label>
       </div>
       <CampoPena rotulo="pena mínima" dias={atual.penaMinDias} legal={antes.penaMinDias} zero="sem mínimo" onChange={(d) => mudar({penaMinDias: d})} />
       <CampoPena rotulo="pena máxima" dias={atual.penaMaxDias} legal={antes.penaMaxDias} onChange={(d) => mudar({penaMaxDias: d})} />
-      <SeletorElemento atual={atual.elemento} antes={antes.elemento} onChange={(e) => mudar({elemento: e})} />
-      <Marcas atual={atual} antes={antes} onChange={mudar} />
+      <SeletorElemento atual={atual.elemento} antes={antes.elemento} ref_={ref} onChange={(e) => mudar({elemento: e})} />
+      <Marcas atual={atual} antes={antes} ref_={ref} onChange={mudar} />
       {atual.nome !== antes.nome && RESULTADO_MORTE.test(atual.nome) !== RESULTADO_MORTE.test(antes.nome) && (
         <p className={s.ajudaCampo}>
           O resultado morte deriva do nome, e muda com ele: passa a{' '}
@@ -395,23 +430,43 @@ function FormAtributoNovo({def, onChange}: {def: DefinicaoAtributo; onChange: (d
   );
 }
 
-function Objeto({m, tipos, atualizar}: {m: Mudanca; tipos: TipoDoMotor[] | null; atualizar: (m: Mudanca) => void}) {
+function Objeto({
+  m,
+  tipos,
+  criados,
+  atualizar,
+}: {
+  m: Mudanca;
+  tipos: TipoDoMotor[] | null;
+  /** Os tipos criados pelas mudanças anteriores do pacote, ainda de pé nesta posição. */
+  criados: TipoDoMotor[];
+  atualizar: (m: Mudanca) => void;
+}) {
   if (m.sentido === 'tipo') {
     if (m.op === 'criar') return <FormTipoNovo campos={m.campos} onChange={(campos) => atualizar({...m, campos})} />;
     if (!tipos) return <p className={s.carregando}>carregando o catálogo…</p>;
-    const t = m.id !== null ? (tipos.find((x) => x.id === m.id) ?? null) : null;
+    // O id negativo é o do tipo criado neste pacote; `criados` já o traz como
+    // está logo antes desta mudança, com as modificações intermediárias.
+    const t = m.id === null ? null : m.id < 0 ? (criados.find((x) => x.id === m.id) ?? null) : (tipos.find((x) => x.id === m.id) ?? null);
     const comPena = tipos.filter((x) => x.tem_pena_privativa !== false);
     return (
       <>
         <SeletorTipo
           tipos={comPena}
+          criados={criados}
           escolhido={t}
           onEscolher={(id) => atualizar(m.op === 'modificar' ? {...m, id, campos: {}} : {...m, id})}
         />
         {t && m.op === 'modificar' && <FormTipoAlterado tipo={t} campos={m.campos} onChange={(campos) => atualizar({...m, campos})} />}
-        {t && m.op === 'extinguir' && (
+        {t && m.op === 'extinguir' && t.id >= 0 && (
           <p className={s.notaBloco}>
             Numa revogação real, o registro não some: passa ao acervo histórico, consultável para fato anterior.
+          </p>
+        )}
+        {t && m.op === 'extinguir' && t.id < 0 && (
+          <p className={s.notaBloco}>
+            Extinguir o tipo criado neste mesmo pacote desfaz a hipótese: ele não chega ao catálogo simulado, e o saldo das duas
+            mudanças é zero.
           </p>
         )}
       </>
@@ -702,15 +757,19 @@ export default function Simulador({versao, conferidoEm}: Props) {
 
   const legal = useMemo(() => (tipos ? estadoLegal(tipos, CATALOGO) : null), [tipos]);
   const avLegal = useMemo(() => (legal ? avaliarEstado(legal, rev) : null), [legal, rev]);
-  const problemas = useMemo(() => pacote.map((x) => (legal ? problemaDa(x, legal) : null)), [pacote, legal]);
-  const validas = useMemo(() => (legal ? pacote.filter((_, k) => problemas[k] === null) : []), [pacote, problemas, legal]);
+  // A posição no pacote é o contexto: a mudança que aponta para tipo criado por
+  // outra mudança só o encontra sabendo onde está (25/09/2026).
+  const problemas = useMemo(() => pacote.map((x, k) => (legal ? problemaDa(x, legal, {pacote, indice: k}) : null)), [pacote, legal]);
+  // O pacote reduzido ao que entra no cálculo, com os ids dos tipos criados
+  // remapeados para as posições novas — filtrar sem remapear quebraria a referência.
+  const validas = useMemo(() => (legal ? pacoteValido(pacote, legal) : []), [pacote, legal]);
   const simulado = useMemo(() => (legal ? aplicarPacote(legal, validas) : null), [legal, validas]);
   const resultado = useMemo(() => {
     if (!legal || !simulado || !avLegal) return null;
     return comparar(legal, simulado, avLegal, avaliarEstado(simulado, rev, {legal, avaliacoes: avLegal}));
   }, [legal, simulado, avLegal, rev]);
   const etiquetas: Etiqueta[][] = useMemo(
-    () => pacote.map((x) => (legal && avLegal ? etiquetasDa(x, legal, rev, avLegal) : [])),
+    () => pacote.map((x, k) => (legal && avLegal ? etiquetasDa(x, legal, rev, avLegal, {pacote, indice: k}) : [])),
     [pacote, legal, avLegal, rev],
   );
 
@@ -722,7 +781,8 @@ export default function Simulador({versao, conferidoEm}: Props) {
     setAtivo(pacote.length);
   };
   const remover = (k: number) => {
-    setPacote((p) => (p.length > 1 ? p.filter((_, j) => j !== k) : [mudancaPadrao('atributo', 'modificar')]));
+    // `removerMudanca` renumera as referências a tipo criado no pacote junto com as posições.
+    setPacote((p) => (p.length > 1 ? removerMudanca(p, k) : [mudancaPadrao('atributo', 'modificar')]));
     setAtivo((a) => (a > k ? a - 1 : a === k ? Math.max(0, k - 1) : a));
   };
   const copiar = (texto: string, rotulo: string) => {
@@ -799,7 +859,7 @@ export default function Simulador({versao, conferidoEm}: Props) {
             <h2 className={s.rotuloBloco} id="rotulo-objeto">
               3 · {OBJETO[m.sentido][m.op]}
             </h2>
-            <Objeto m={m} tipos={tipos} atualizar={atualizar} />
+            <Objeto m={m} tipos={tipos} criados={tiposCriadosAntes(pacote, i)} atualizar={atualizar} />
             {legal && problemas[i] && <p className={s.falta}>{problemas[i]}</p>}
           </section>
 
@@ -828,7 +888,7 @@ export default function Simulador({versao, conferidoEm}: Props) {
                       ) : (
                         <span
                           className={s.etiquetaNeutra}
-                          title="O pacote move o alcance nos dois sentidos ao mesmo tempo, ou mexe em parâmetro cujo sentido não está declarado."
+                          title="O pacote move o alcance nos dois sentidos ao mesmo tempo, mexe em parâmetro cujo sentido não está declarado, ou desfaz um tipo criado neste mesmo pacote."
                         >
                           sentido não classificado
                         </span>
@@ -845,7 +905,7 @@ export default function Simulador({versao, conferidoEm}: Props) {
                       </button>
                     </span>
                   </div>
-                  <p className={s.descricaoItem}>{legal ? descrever(it, legal) : '…'}</p>
+                  <p className={s.descricaoItem}>{legal ? descrever(it, legal, {pacote, indice: k}) : '…'}</p>
                 </li>
               ))}
             </ol>

@@ -73,6 +73,34 @@ export type Comparacao = 'ate' | 'acima' | 'entre';
 export type VedacaoNova = 'violencia' | 'graveAmeaca' | 'hediondo' | 'resultadoMorte' | 'culposo' | 'contravencao';
 export type RequisitoReu = 'primario' | 'confissao' | 'reparacao';
 
+/**
+ * O que o atributo novo DEVOLVE, além de caber ou não (25/09/2026, débito
+ * técnico 5). Até então a definição genérica só comparava pena com limiar, e
+ * os institutos que calculam um valor — progressão, saída temporária,
+ * prescrição, regime inicial — não se simulavam senão editando os que existem.
+ *
+ * - `veredito`: só cabível, incabível ou condicional. É o padrão e o de sempre.
+ * - `fracao`: o valor é a pena-base (a da `incidencia`) vezes uma fração — a
+ *   forma da progressão e da saída temporária.
+ * - `faixas`: o valor é lido de uma tabela por faixa de pena: até X, vale Y; a
+ *   última linha (`acimaDias`) vale acima do maior degrau — a forma da
+ *   prescrição (art. 109 do CP) e do regime inicial (art. 33, §2º).
+ *
+ * O veredito continua decidido por limiar, vedações e requisitos; o valor é
+ * ACRÉSCIMO, e sai em `Avaliacao.valor`, para que `sinalDe` marque "~" quando
+ * só ele muda. Em `faixas`, o valor de cada degrau é uma DURAÇÃO em dias, o que
+ * serve à prescrição e à progressão; rótulo livre por faixa (como "fechado",
+ * "semiaberto" para o regime) fica para uma rodada futura — exigiria um valor
+ * que não é tempo, e nada no motor compara rótulo com rótulo ainda.
+ */
+export type Devolucao = 'veredito' | 'fracao' | 'faixas';
+
+/** Um degrau da tabela por faixa: pena até `ateDias` → `valorDias`. */
+export interface FaixaValor {
+  ateDias: number;
+  valorDias: number;
+}
+
 /** A definição genérica de um atributo penal que ainda não existe. */
 export interface DefinicaoAtributo {
   nome: string;
@@ -84,8 +112,25 @@ export interface DefinicaoAtributo {
   limiarSuperiorDias?: number;
   vedacoes: VedacaoNova[];
   requisitos: RequisitoReu[];
+  /** O que o atributo devolve; ausente vale `veredito`. */
+  devolve?: Devolucao;
+  /** Só em `fracao`: a fração da pena-base, entre 0 (exclusivo) e 1. */
+  fracao?: number;
+  /** Só em `faixas`: os degraus, em ordem crescente de `ateDias`. */
+  faixas?: FaixaValor[];
+  /** Só em `faixas`: o valor acima do último degrau — "o último vale acima". */
+  acimaDias?: number;
 }
 
+/**
+ * Uma mudança que aponta para um tipo penal aponta por `id`. O id POSITIVO é o
+ * do catálogo (a URL pública `?tipo=N`). O id NEGATIVO é o de um tipo criado
+ * neste mesmo pacote: `-(k + 1)`, sendo `k` a posição da mudança `criar` no
+ * pacote. É determinístico, e por isso vai e volta pela URL (`tm;-1;max=8a`
+ * modifica o tipo criado pela primeira mudança). Uma mudança só alcança tipo
+ * criado ANTES dela; o motor reprova a referência ao que vem depois ou ao que
+ * já não está lá (25/09/2026, débito técnico 5).
+ */
 export type Mudanca =
   | {sentido: 'tipo'; op: 'criar'; campos: CamposTipo}
   | {sentido: 'tipo'; op: 'modificar'; id: number | null; campos: Partial<CamposTipo>}
@@ -93,6 +138,20 @@ export type Mudanca =
   | {sentido: 'atributo'; op: 'criar'; def: DefinicaoAtributo}
   | {sentido: 'atributo'; op: 'modificar'; atributo: string | null; params: Parametros}
   | {sentido: 'atributo'; op: 'extinguir'; atributo: string | null};
+
+/**
+ * Onde a mudança está no pacote: o que ela precisa saber para resolver um id
+ * negativo. Sem contexto, a referência a tipo criado no pacote é problema.
+ */
+export interface ContextoPacote {
+  pacote: Mudanca[];
+  indice: number;
+}
+
+/** O id provisório do tipo criado pela mudança na posição `k` do pacote. */
+export const idDeCriado = (k: number): number => -(k + 1);
+/** A posição, no pacote, da mudança `criar` que o id negativo aponta. */
+export const posicaoDeCriado = (id: number): number => -id - 1;
 
 /** + entra no alcance; − sai; ~ fica, mas muda o status ou o valor; = não se move. */
 export type Sinal = '+' | '−' | '~' | '=';

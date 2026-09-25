@@ -23,13 +23,17 @@ import {
   atributoNovo,
   estadoLegal,
   etiquetasDa,
+  pacoteValido,
   problemaDa,
+  removerMudanca,
+  tipoCriadoNoPacote,
+  tiposCriadosAntes,
 } from '../src/lib/simulacao/motor';
 import type {Mudanca} from '../src/lib/simulacao/tipos';
 import {cenarioFromCrime} from '../src/lib/cenario';
 import {CATALOGO} from '../src/lib/atributos';
 import {escreverPacote, lerPacote} from '../src/components/simulacao/estado';
-import {RECORTE_PADRAO, recorte} from '../src/components/simulacao/nota';
+import {RECORTE_PADRAO, descrever, recorte} from '../src/components/simulacao/nota';
 
 let falhas = 0;
 const ok = (cond: boolean, msg: string) => {
@@ -394,6 +398,112 @@ console.log('\nA base real declara o sentido de todo parâmetro');
   );
   ok(semSentido.length === 0,
     `todo parâmetro dos 22 atributos diz se aumentar favorece (faltam: ${semSentido.join(', ') || 'nenhum'})`);
+}
+
+// ── 25/09/2026: o débito técnico 5 ────────────────────────────────────────
+
+console.log('\nTipo criado no pacote, modificado por mudança posterior');
+{
+  // O tipo criado recebe o id -(k+1) da posição da sua mudança, e a mudança
+  // seguinte o alcança por esse id. Aqui: criado com máxima de 24 meses (entra
+  // no teto fictício, que vai até 24), depois levado a 48 (sai do teto).
+  const criar: Mudanca = {
+    sentido: 'tipo',
+    op: 'criar',
+    campos: {...CAMPOS_TIPO_PADRAO, nome: 'Tipo criado', lei: 'LF', artigo: 'Art. 20', penaMinDias: 360, penaMaxDias: 720},
+  };
+  const so = simular([criar]);
+  ok(so.r.pares.filter((p) => p.tipo.id === -1).length === 3, 'sozinho, o criado entra nos três atributos (teto, sem violência, prazo)');
+  const modificar: Mudanca = {sentido: 'tipo', op: 'modificar', id: -1, campos: {penaMaxDias: 1440}};
+  const {sim, r} = simular([criar, modificar]);
+  const criado = sim.tipos.find((t) => t.id === -1)!;
+  ok(criado !== undefined && criado.pena_max_meses === 48, `a modificação alcança o criado: máxima 48 meses (obtido ${criado?.pena_max_meses})`);
+  ok(sim.tipos.filter((t) => t.id < 0).length === 1, 'um só tipo novo no catálogo simulado, e não dois');
+  const teto1 = r.pares.find((p) => p.tipo.id === -1 && p.atributo.id === 'teto');
+  ok(teto1 === undefined && r.pares.filter((p) => p.tipo.id === -1).length === 2, 'com a máxima em 48, o criado já não entra no teto: o impacto mudou');
+  ok(problemaDa(modificar, legal, {pacote: [criar, modificar], indice: 1}) === null, 'a referência ao criar anterior é válida');
+  ok(etiquetasDa(modificar, legal, REV, avLegal, {pacote: [criar, modificar], indice: 1}).join() === 'pejus', 'pena para cima no criado: in pejus');
+  ok(
+    descrever(modificar, legal, {pacote: [criar, modificar], indice: 1}).startsWith('o tipo criado nesta simulação, Tipo criado (LF, art. 20): pena máxima de 2 anos para 4 anos'),
+    `a nota diz que o alvo é o tipo criado nesta simulação (obtido "${descrever(modificar, legal, {pacote: [criar, modificar], indice: 1})}")`,
+  );
+
+  // A segunda modificação parte do estado que a primeira deixou.
+  const segunda: Mudanca = {sentido: 'tipo', op: 'modificar', id: -1, campos: {hediondo: true}};
+  const pacote3 = [criar, modificar, segunda];
+  const visto = tipoCriadoNoPacote(-1, pacote3, 2)!;
+  ok(visto.pena_max_meses === 48, 'quem vem depois vê o criado já modificado');
+  const t3 = aplicarPacote(legal, pacote3).tipos.find((t) => t.id === -1)!;
+  ok(t3.pena_max_meses === 48 && t3.hediondo === 'Sim', 'as duas modificações se acumulam sobre o criado');
+  ok(tiposCriadosAntes(pacote3, 3).length === 1 && tiposCriadosAntes(pacote3, 0).length === 0, 'a lista dos criados respeita a posição');
+}
+
+console.log('\nTipo criado no pacote, extinto por mudança posterior');
+{
+  const criar: Mudanca = {sentido: 'tipo', op: 'criar', campos: {...CAMPOS_TIPO_PADRAO, nome: 'Efêmero', penaMaxDias: 720}};
+  const extinguir: Mudanca = {sentido: 'tipo', op: 'extinguir', id: -1};
+  const {sim, r} = simular([criar, extinguir]);
+  ok(r.pares.length === 0, 'criar e extinguir o criado anula: nenhum par muda');
+  ok(sim.tipos.length === legal.tipos.length && r.totalDepois.cenarios === r.totalAntes.cenarios, 'o catálogo simulado é o vigente');
+  ok(etiquetasDa(extinguir, legal, REV, avLegal, {pacote: [criar, extinguir], indice: 1}).length === 0, 'extinguir o criado não é abolitio criminis: sem etiqueta');
+  ok(descrever(extinguir, legal, {pacote: [criar, extinguir], indice: 1}).includes('retirado do pacote'), 'a nota diz que o criado não chega ao catálogo');
+  // Depois de extinto, ninguém mais o alcança.
+  const tarde: Mudanca = {sentido: 'tipo', op: 'modificar', id: -1, campos: {penaMaxDias: 900}};
+  const p = problemaDa(tarde, legal, {pacote: [criar, extinguir, tarde], indice: 2});
+  ok(p !== null && p.includes('extinto'), `modificar o criado depois de extinto é problema (obtido "${p}")`);
+}
+
+console.log('\nReferência a criar que vem depois, ou que já não está lá');
+{
+  const criar: Mudanca = {sentido: 'tipo', op: 'criar', campos: {...CAMPOS_TIPO_PADRAO, nome: 'Tardio', penaMaxDias: 720}};
+  const cedo: Mudanca = {sentido: 'tipo', op: 'modificar', id: -2, campos: {penaMaxDias: 900}};
+  const pacote = [cedo, criar];
+  const p1 = problemaDa(cedo, legal, {pacote, indice: 0});
+  ok(p1 !== null && p1.includes('vem depois'), `apontar para um criar posterior é problema (obtido "${p1}")`);
+  ok(aplicarPacote(legal, pacote).tipos.find((t) => t.id === -2)?.pena_max_meses === 24, 'e o criar posterior entra intacto');
+  ok(problemaDa(cedo, legal) !== null, 'sem o contexto do pacote, a referência não se resolve');
+  const trocado: Mudanca = {sentido: 'atributo', op: 'extinguir', atributo: 'teto'};
+  const p2 = problemaDa({...cedo, id: -1}, legal, {pacote: [trocado, {...cedo, id: -1}], indice: 1});
+  ok(p2 !== null && p2.includes('já não cria'), `apontar para posição que já não é um criar é problema (obtido "${p2}")`);
+  const semNome: Mudanca = {sentido: 'tipo', op: 'criar', campos: {...CAMPOS_TIPO_PADRAO, nome: '', penaMaxDias: 720}};
+  const p3 = problemaDa({...cedo, id: -1}, legal, {pacote: [semNome, {...cedo, id: -1}], indice: 1});
+  ok(p3 !== null && p3.includes('Complete primeiro'), `apontar para um criar incompleto é problema (obtido "${p3}")`);
+}
+
+console.log('\nO pacote válido remapeia os ids; remover uma mudança renumera');
+{
+  const semNome: Mudanca = {sentido: 'tipo', op: 'criar', campos: {...CAMPOS_TIPO_PADRAO, nome: '', penaMaxDias: 720}};
+  const criarA: Mudanca = {sentido: 'tipo', op: 'criar', campos: {...CAMPOS_TIPO_PADRAO, nome: 'A', penaMaxDias: 720}};
+  const criarB: Mudanca = {sentido: 'tipo', op: 'criar', campos: {...CAMPOS_TIPO_PADRAO, nome: 'B', penaMaxDias: 720}};
+  const modB: Mudanca = {sentido: 'tipo', op: 'modificar', id: -3, campos: {penaMaxDias: 900}};
+  const validas = pacoteValido([semNome, criarA, criarB, modB], legal);
+  ok(validas.length === 3, 'o criar sem nome fica de fora');
+  ok(validas[2].sentido === 'tipo' && validas[2].op === 'modificar' && validas[2].id === -2, `o -3 vira -2, porque o B passou à segunda posição (obtido ${(validas[2] as {id: number}).id})`);
+  const antes = aplicarPacote(legal, [semNome, criarA, criarB, modB]).tipos.find((t) => t.crime === 'B')!.pena_max_meses;
+  const depois = aplicarPacote(legal, validas).tipos.find((t) => t.crime === 'B')!.pena_max_meses;
+  ok(antes === 30 && depois === 30, 'aplicar o pacote inteiro ou só o válido dá o mesmo catálogo');
+
+  const semA = removerMudanca([criarA, criarB, {...modB, id: -2}], 0);
+  ok((semA[1] as {id: number}).id === -1, 'remover a primeira: quem apontava para a segunda passa a apontar para a primeira');
+  const semB = removerMudanca([criarA, criarB, {...modB, id: -2}], 1);
+  ok((semB[1] as {id: number | null}).id === null, 'remover o próprio alvo: a referência volta a "escolha o tipo"');
+  const semOutra = removerMudanca([criarA, {...modB, id: -1}, criarB], 2);
+  ok((semOutra[1] as {id: number}).id === -1, 'remover quem vem depois não mexe na referência');
+}
+
+console.log('\nO id negativo vai e volta pela URL');
+{
+  const porId = {teto, 'sem-violencia': semViolencia, prazo};
+  const pacote: Mudanca[] = [
+    {sentido: 'tipo', op: 'criar', campos: {...CAMPOS_TIPO_PADRAO, nome: 'Criado', penaMinDias: 360, penaMaxDias: 720}},
+    {sentido: 'tipo', op: 'modificar', id: -1, campos: {penaMaxDias: 1440}},
+    {sentido: 'tipo', op: 'extinguir', id: -1},
+  ];
+  const q = escreverPacote(pacote, 1, porId);
+  ok(q.includes('m=tm;-1;max=4a') && q.includes('m=tx;-1'), `o id negativo aparece como está: ${q}`);
+  const lido = lerPacote(q, porId);
+  ok(JSON.stringify(lido.pacote) === JSON.stringify(pacote), 'e volta igual, inclusive o alvo criado no pacote');
+  ok(lerPacote('?m=tm;0;max=4a', porId).pacote[0]?.sentido === 'tipo' && (lerPacote('?m=tm;0;max=4a', porId).pacote[0] as {id: number | null}).id === null, 'zero não é ninguém');
 }
 
 console.log(falhas === 0 ? '\n✓ Simulação legislativa verificada.\n' : `\n✗ ${falhas} falha(s) na simulação.\n`);
