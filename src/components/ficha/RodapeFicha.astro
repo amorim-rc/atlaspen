@@ -1,0 +1,102 @@
+---
+// O pé da ficha. À esquerda, o que o leitor precisa saber antes de confiar nos
+// vereditos: a hediondez e a ação penal quando são do tipo, e quando dependem
+// do caso; e como ler a ficha. À direita, a auditoria do registro e a citação.
+import type {Crime} from '../../lib/types';
+import {caminho} from '../../site/url';
+import AuditoriaRegistro from './AuditoriaRegistro.astro';
+
+interface Props {
+  crime: Crime;
+}
+const {crime} = Astro.props;
+---
+
+<footer class="pe">
+  <div class="bloco-pe">
+    {
+      crime.hediondo === 'Sim' && crime.hediondo_fundamento && (
+        <>
+          <span class="rotulo">
+            {crime.hediondo_especie === 'equiparado' ? 'Equiparado a hediondo' : 'Hediondo por natureza'}
+          </span>
+          <p>
+            {crime.hediondo_especie === 'equiparado'
+              ? 'A Constituição equipara tortura, tráfico e terrorismo ao hediondo quanto ao regime jurídico, sem torná-los hediondos. '
+              : 'O rol do art. 1º da Lei 8.072/90 é taxativo. '}
+            Fundamento: {crime.hediondo_fundamento}.
+          </p>
+        </>
+      )
+    }
+    {
+      crime.hediondo_condicional && (
+        <>
+          <span class="rotulo">Hediondez condicionada ao caso</span>
+          <p>
+            {crime.hediondo_condicao} A classificação depende de circunstância do caso, não do tipo: a ficha
+            mantém o padrão seguro, não hediondo, e mostra a hipótese. Marcar "hediondo neste caso" na aba de
+            pena concreta refaz as frações de progressão e de livramento.
+          </p>
+        </>
+      )
+    }
+    {
+      crime.acao_condicional && (
+        <>
+          <span class="rotulo">Ação penal condicionada ao caso</span>
+          <p>{crime.acao_condicao}</p>
+        </>
+      )
+    }
+    <span class="rotulo">Como ler esta ficha</span>
+    <p>
+      Ferramenta de pesquisa: os vereditos aplicam a lei vigente ao que o catálogo registra do tipo, com as
+      simplificações descritas na <a href={caminho('/projeto/metodologia')}>metodologia</a>. Não é
+      aconselhamento jurídico.
+    </p>
+  </div>
+  <div class="bloco-pe">
+    <AuditoriaRegistro crime={crime} />
+  </div>
+</footer>
+
+<style>
+  .pe {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(15rem, 19rem);
+    gap: 1.75rem;
+    padding: 1.1rem 1.25rem 1.25rem;
+    border-top: 1px solid var(--cor-borda-forte);
+    background: var(--cor-papel-alt);
+  }
+
+  .bloco-pe {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    min-width: 0;
+  }
+
+  .bloco-pe p {
+    font-size: var(--fs-pequeno);
+    line-height: 1.65;
+    color: var(--cor-tinta-corpo);
+  }
+
+  .bloco-pe p + .rotulo {
+    margin-top: 0.5rem;
+  }
+
+  @media (max-width: 760px) {
+    .pe {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .pe {
+      padding-inline: 1rem;
+    }
+  }
+</style>

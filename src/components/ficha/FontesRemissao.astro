@@ -1,0 +1,44 @@
+---
+// Os dispositivos de origem da pena, para o tipo cuja pena vem por remissão.
+// Bloco estático: ocupa o lugar da ilha de pena, que o tipo sem moldura própria
+// não tem.
+import type {Crime} from '../../lib/types';
+import ListaTipos from './ListaTipos.astro';
+
+interface Props {
+  fontes: Crime[];
+}
+const {fontes} = Astro.props;
+---
+
+<section class="sem-calculo">
+  <h2>Dispositivos de origem da pena</h2>
+  <ListaTipos itens={fontes} />
+</section>
+
+<style>
+  .sem-calculo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    padding: 1.1rem 1.25rem;
+    border-bottom: 1px solid var(--cor-borda);
+    background: var(--cor-superficie);
+  }
+
+  .sem-calculo h2 {
+    font-size: var(--fs-titulo-3);
+  }
+
+  .sem-calculo p {
+    max-width: 62ch;
+    font-size: 0.9375rem;
+    color: var(--cor-tinta-corpo);
+  }
+
+  @media (max-width: 640px) {
+    .sem-calculo {
+      padding-inline: 1rem;
+    }
+  }
+</style>

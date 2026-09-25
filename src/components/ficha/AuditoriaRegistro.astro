@@ -1,0 +1,109 @@
+---
+// A trilha de conferência do registro — id, fonte, data e resultado da
+// conferência — e o que faz a ficha citável: a citação, que o script da página
+// copia com o endereço e a data de acesso, e o registro em JSON.
+import type {Crime} from '../../lib/types';
+import {RESULTADOS_CONFERENCIA} from '../../site/servidor';
+import {dataCurta} from '../../site/datas';
+import {NOME, NOME_EXTENSO} from '../../site/config';
+
+interface Props {
+  crime: Crime;
+}
+const {crime} = Astro.props;
+
+// ── Auditoria e citação ───────────────────────────────────────────────────
+const resultado = crime.conferido_resultado
+  ? (RESULTADOS_CONFERENCIA[crime.conferido_resultado] ?? crime.conferido_resultado)
+  : null;
+const citacao =
+  `${NOME} — ${NOME_EXTENSO}. ${crime.crime} (${crime.lei}, ${crime.artigo}). ` +
+  'Disponível em: {url}. Acesso em: {acesso}.';
+---
+
+<span class="rotulo">Auditoria do registro</span>
+<dl class="auditoria">
+  <dt>id</dt>
+  <dd>{crime.id}</dd>
+  <dt>fonte</dt>
+  <dd>
+    {crime.fonte ? (
+      <a href={crime.fonte} rel="noopener" target="_blank">planalto.gov.br · texto compilado</a>
+    ) : (
+      'não conferido ainda'
+    )}
+  </dd>
+  <dt>conferido</dt>
+  <dd>{crime.conferido_em ? dataCurta(crime.conferido_em) : 'não conferido ainda'}</dd>
+  <dt>resultado</dt>
+  <dd>{resultado ?? 'não conferido ainda'}</dd>
+</dl>
+<div class="acoes-pe nao-imprimir">
+  <button type="button" class="botao-link" data-copiar-citacao data-citacao={citacao}>copiar citação</button>
+  <details class="json">
+    <summary>este registro em JSON</summary>
+    <pre><code>{JSON.stringify(crime, null, 2)}</code></pre>
+  </details>
+</div>
+
+<style>
+  .auditoria {
+    display: grid;
+    grid-template-columns: 5.5rem minmax(0, 1fr);
+    gap: 0.3rem 0.7rem;
+    margin: 0;
+  }
+
+  .auditoria dt {
+    font-family: var(--fonte-mono);
+    font-size: var(--fs-rotulo);
+    color: var(--cor-tinta-fraca);
+  }
+
+  .auditoria dd {
+    margin: 0;
+    font-family: var(--fonte-mono);
+    font-size: var(--fs-meta);
+    color: var(--cor-tinta-corpo);
+    overflow-wrap: anywhere;
+  }
+
+  .acoes-pe {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.3rem;
+    margin-top: 0.3rem;
+  }
+
+  .botao-link,
+  .json > summary {
+    min-height: 2rem;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--cor-acento);
+    font-family: var(--fonte-mono);
+    font-size: var(--fs-meta);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    cursor: pointer;
+  }
+
+  .json {
+    max-width: 100%;
+  }
+
+  .json pre {
+    max-height: 22rem;
+    overflow: auto;
+    margin: 0.4rem 0 0;
+    padding: 0.7rem;
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--raio);
+    background: var(--cor-superficie);
+    font-family: var(--fonte-mono);
+    font-size: 0.75rem;
+    line-height: 1.5;
+  }
+</style>
