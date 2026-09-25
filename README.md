@@ -173,6 +173,101 @@ Achou um erro no catálogo e não quer mexer em código?
 [Abra uma issue](https://github.com/amorim-rc/atlaspen/issues) com o dispositivo e o que o
 texto da lei diz. É contribuição das mais úteis.
 
+## O que falta — e onde você pode ajudar
+
+Esta seção substituiu o `backlog.md` em 24/09/2026. A razão é deliberada: um backlog em
+arquivo separado é documento interno, e quem clona o repositório não o lê. Aqui é convite.
+Vários destes itens têm solução mais elegante do que a nossa, e quem chegar de fora pode
+enxergá-la melhor do que quem já olhou demais.
+
+Se um deles te interessar, [abra uma issue](https://github.com/amorim-rc/atlaspen/issues)
+antes de escrever código — alguns carregam decisões jurídicas que precisam ser combinadas.
+
+### Antes do lançamento (v1.0.0)
+
+A v1.0.0 é o lançamento com endereço próprio: domínio `atlaspen.org.br` no ar e o
+repositório renomeado. Até lá, tudo o que puder entrar entra, para que a primeira versão
+pública já saia madura.
+
+| | o que falta |
+|---|---|
+| **Repositório em grupo** | Transferir para uma organização, com times e `CODEOWNERS` por área. O app de automação precisa ser reinstalado na organização, ou `regen-data`, `release` e o carimbo do conferidor param de empurrar. |
+| **Endereço próprio** | Comprar o domínio e trocar `SITE_URL` em `src/site/config.ts`, o `base` do `astro.config.mjs` e um `CNAME`. Hoje é uma constante, não uma varredura. |
+| **Datas de vigência** | 220 eventos do histórico já têm publicação e vigência conferidas no DOU. Falta a LC 225/2026, que tem vigência escalonada. |
+| **Amostra de validação** | O protocolo está registrado e a semente é o hash do commit da versão madura. Falta o sorteio e uma segunda pessoa para a dupla conferência (κ de Cohen). |
+
+### Depois do lançamento: módulos
+
+Cada um com plano, financiamento e pessoas próprias. A ordem é de exequibilidade.
+
+| | o que é |
+|---|---|
+| **Quantas vezes cada registro mudou** | Um contador de atualizações por tipo e por atributo, para medir a instabilidade de cada área da lei penal. |
+| **22 atributos mapeados e não integrados** | Estão levantados e fora do catálogo. Os fáceis entram juntos; a **prescrição completa** é empreitada do porte de um mestrado — as regras não são simples e há modulação no tempo. |
+| **A cadeia completa do histórico** | Hoje cada tipo diz a *última* lei que lhe deu texto. O módulo completa: todas as redações, em ordem, para responder "o que este artigo dizia em 2014?". É o que falta para a data do fato escolher também o TEXTO, e não só o cálculo. |
+| **Acervo histórico** | O que já foi crime no Brasil: revogados, alterados e não recepcionados. A pergunta "o que deixou de ser crime, e quando?" não tem hoje ferramenta que a responda de forma estruturada. |
+| **Robô dos tribunais** | Vigiar decisão de tribunal superior que muda o catálogo — ADI que retira tipo do ordenamento, tese de repercussão geral, súmula cancelada. Ver o débito técnico abaixo: metade do caminho está andada. |
+| **Usabilidade, processo penal, plataforma de pesquisa** | Ganhos de uso, extensão ao que rege os atributos na prática, e exportação para pesquisa empírica. |
+
+### Débito técnico
+
+Coisas que sabemos que estão erradas ou incompletas, e ainda não consertamos. Estão aqui
+porque dívida não declarada vira surpresa.
+
+**1. O snapshot ruim ocupa o lugar do bom.** `scripts/robos/nucleo/baixar.py` valida a
+*sentinela* — a string que prova que a página baixada é a versão fresca e íntegra — e
+**grava o arquivo mesmo quando ela falha**. O `sentinela_ok` só vai para o `meta.json`, e
+nenhum consumidor o lê: `vigia/conferir.py`, os dois auditores e `nucleo/dispositivo.py`
+varrem os `.html` por `glob`. Quem roda `baixar.py --todas` recebe código de saída 2, mas o
+snapshot ruim já está no caminho canônico. Hoje só o encadeamento do `conferidor.yml`
+protege; rodando à mão, não protege.
+**A correção:** gravar em `.part` e só promover quando a sentinela passar, como faz
+`baixar_com_cache` do `decidendo-ghoul`. Snapshot no caminho canônico passaria a significar
+"conferido", por construção.
+
+**2. A derivação não confere o próprio fundamento.** `scripts/violencia.py` e
+`scripts/acao_penal.py` devolvem `{regra, fundamento}` — mas não verificam que o trecho que
+o fundamento cita existe mesmo no texto do dispositivo. É barato: o texto já está carregado
+no auditor.
+**A correção:** um campo `fundamento_verificado`, com a regra "sem lastro, a derivação não
+vale". É o mesmo mecanismo que o `decidendo-ghoul` usa para tornar confiável uma LLM de 7B:
+a nota que cita um trecho inexistente é zerada, e o relatório mostra que ela foi zerada.
+
+**3. Meio caminho do Robô dos tribunais já existe.** O `decidendo-ghoul`, lido em
+24/09/2026, traz um cliente da API pública do CNJ (DataJud) com paginação por `search_after`
+e cache por página, e um leitor dos espelhos do STJ que já resolve o formato hostil do campo
+`jurisprudenciaCitada`. Quando a frente abrir, começar dali em vez do zero.
+**A ressalva, que é dele:** o STF bloqueia acesso automatizado por WAF, e o DataJud não tem
+texto — só metadados. Para acompanhar ADI, é o DataJud por número CNJ; para súmula e
+precedente, os espelhos do STJ.
+
+**4. A grafia do dispositivo é frágil.** O campo `artigo` é texto livre, e regra que casa
+nele erra em silêncio quando a grafia varia. Em 23/09/2026 isso escondeu um erro jurídico
+por meses: 37 registros escreviam `§ 2º` com espaço contra 375 sem, e a exclusão que tirava
+a forma culposa do art. 273 do CP do rol de hediondos nunca funcionou. A grafia foi
+normalizada, mas a fragilidade continua: o campo não tem forma canônica imposta.
+**A correção:** validar a grafia de `artigo` na entrada, com a mesma régua de
+`scripts/dispositivo_canonico.py`.
+
+**5. Um tipo criado na simulação não pode ser modificado por outra mudança do mesmo
+pacote.** E a definição genérica de atributo novo só compara pena com limiar — fração,
+prazo e valor calculado (progressão, prescrição, regime) seguem fora.
+
+**6. Quatro arquivos que cresceram além da conta.** `src/components/simulacao/Simulador.tsx`
+(997 linhas), `scripts/transform_data.py` (1.124), `src/pages/tipos/[id].astro` (906) e
+`src/lib/atributos/avaliadores.ts` (815). Nenhum deles está errado — todos estão testados e
+travados —, mas o tamanho já cobra pedágio de quem chega: para mudar uma regra é preciso ler
+muito mais do que a regra.
+**A correção:** modularizar por responsabilidade, sem mudar comportamento. O congelamento
+(`npm run equivalencia`) é exatamente a rede que torna esse refactor seguro: se um veredito
+se mexer, ele reprova. É uma boa primeira contribuição de quem quer entender o motor.
+
+**7. Não há ferramenta de código morto na verificação.** A varredura de 24/09/2026 achou
+seis exportações que ninguém importava, dois scripts de migração de julho e um documento
+gerado que nada renderizava. Foi tudo à mão, e à mão não se repete.
+**A correção:** `knip` ou `ts-prune` no `ci.yml`, com uma lista de exceções versionada. Sem
+isso, daqui a três meses o morto volta a acumular e ninguém percebe.
+
 ## Documentação
 
 Publicada no próprio site, em [`/projeto`](https://amorim-rc.github.io/atlaspen/projeto):
