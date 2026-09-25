@@ -120,7 +120,7 @@ def indexar_catalogo() -> dict[str, dict[str, list[dict]]]:
     return indice
 
 
-def molduras_de(disp) -> list[dict]:
+def molduras_de(disp, especie_do_caput: str | None = None) -> list[dict]:
     """As molduras de um dispositivo — descendo aos incisos quando preciso.
 
     Um parágrafo pode ser só CHAPEAU, com a pena de cada hipótese no inciso:
@@ -139,7 +139,7 @@ def molduras_de(disp) -> list[dict]:
     dos incisos entram como molduras do parágrafo — que é o que o casamento por
     proximidade já sabe consumir quando um preceito comina mais de uma pena.
     """
-    proprias = ler_penas(disp.pena_texto or disp.texto)
+    proprias = ler_penas(disp.pena_texto or disp.texto, especie_do_caput)
     if proprias:
         return proprias
     molduras: list[dict] = []
@@ -228,7 +228,16 @@ def conferir_fonte(fonte: dict, do_catalogo: dict[str, list[dict]],
             })
             continue
 
-        molduras = molduras_de(disp)
+        # A espécie do caput desce para o parágrafo que não a repete: "Se o
+        # crime é culposo, a pena é de três meses a um ano" (Lei 9.605, art. 68,
+        # parágrafo único) — a detenção está no caput, e sem ela o intervalo era
+        # lido e descartado, mandando o registro para o balde `ilegivel`.
+        base = da_lei.get(k.split("|")[0] + "|caput")
+        do_caput = None
+        if base is not None and base is not disp:
+            primeiras = ler_penas(base.pena_texto or base.texto or "")
+            do_caput = primeiras[0]["tipo"] if primeiras else None
+        molduras = molduras_de(disp, do_caput)
         if not molduras:
             continue
         # Um preceito pode cominar DUAS penas (dolosa e culposa, no mesmo
@@ -398,6 +407,12 @@ _PENA_DERIVADA = re.compile(
     r"[ée]\s+aumentad|[ée]\s+agravad|[ée]\s+majorad|[ée]\s+reduzid"
     r"|[ée]\s+diminu[íi]d|s[ãa]o\s+(?:aumentad|reduzid|diminu[íi]d)"
     r"|ser[áã]o?\s+(?:aumentad|reduzid|diminu[íi]d)|aumenta(?:m)?-se|reduz-se"
+    # Particípio solto, sem verbo de ligação: "a pena será a correspondente ao
+    # delito consumado, DIMINUÍDA DE um quarto até a metade" (Lei 13.260, art.
+    # 5º, os atos preparatórios de terrorismo). Caía no balde `ilegivel`, que é
+    # o alarme de lacuna do parser, sendo pena derivada como qualquer aumento.
+    r"|diminu[íi]da?\s+de\s+\w+|aumentada?\s+de\s+\w+"
+    r"|correspondente ao delito consumado"
     r"|diminui-se|poder[áãa]o?\s+ser\s+reduzid|pode\s+(?:ser\s+)?reduzi"
     r"|pode\s+diminuir|ter[áã]\s+.{0,30}pena\s+reduzid|reduz\s+de\s+metade|diminu[íi]-l[ao]|substituir\s+a\s+pena"
     r"|penas?\s*[-–—:]\s*metade|pel[oa]\s+d[ôo]bro|n[oa]\s+d[ôo]bro|em\s+d[ôo]bro|ao\s+d[ôo]bro|aplicada\s+em\s+d[ôo]bro"
@@ -515,7 +530,11 @@ def cobertura(fontes: list[dict], indice: dict[str, dict[str, list[dict]]],
             if disp is None:
                 resultado["nao_localizado"] += [(fonte["id"], k, x["id"]) for x in linhas]
                 continue
-            molduras = [m for m in molduras_de(disp) if not m["so_multa"]]
+            base = da_lei.get(k.split("|")[0] + "|caput")
+            primeiras = (ler_penas(base.pena_texto or base.texto or "")
+                         if base is not None and base is not disp else [])
+            do_caput = primeiras[0]["tipo"] if primeiras else None
+            molduras = [m for m in molduras_de(disp, do_caput) if not m["so_multa"]]
             for linha in linhas:
                 # Já julgado e decidido: não é conferido nem divergente — é
                 # dispensado, e o relatório precisa dizê-lo em vez de somar ao

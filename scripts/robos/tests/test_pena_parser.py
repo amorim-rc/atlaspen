@@ -274,3 +274,50 @@ class TestSegundaMolduraPorCondicional:
     def test_sem_condicional_nao_inventa_moldura(self):
         m = ler_penas("Pena - detenção, de um a dois anos, e multa.")
         assert len(m) == 1
+
+
+class TestEspecieHerdadaDoCaput:
+    """O parágrafo não repete a espécie porque o caput já a disse.
+
+        Lei 9.605, art. 68 — Pena: detenção, de um a três anos, e multa.
+        Parágrafo único. Se o crime é culposo, a pena é de três meses a um ano.
+
+    O intervalo é legível; o que falta é a palavra "detenção". Sem a herança,
+    `ler_pena` devolvia None e o registro entrava no balde `ilegivel` — o alarme
+    de lacuna do parser — como se a lei não tivesse escrito pena nenhuma.
+    """
+
+    TEXTO = "Se o crime é culposo, a pena é de três meses a um ano, sem prejuízo da multa."
+
+    def test_sem_a_especie_nao_le(self):
+        assert ler_penas(self.TEXTO) == []
+
+    def test_com_a_especie_do_caput_le(self):
+        m = ler_penas(self.TEXTO, "detenção")
+        assert [(x["tipo"], x["min_meses"], x["max_meses"]) for x in m] == [("detenção", 3, 12)]
+
+    def test_a_heranca_nao_inventa_pena_onde_nao_ha_intervalo(self):
+        assert ler_penas("Se o crime é culposo, aplica-se o disposto no art. 20.", "detenção") == []
+
+
+class TestParenteseQueCarregaOUnicoNumero:
+    """O compilado do DL 6.259 traz "de em (1) a quatro (4) meses".
+
+    "em" é erro de digitação de "um", e está assim no texto oficial. O parêntese
+    com dígito costuma só repetir o número escrito por extenso logo antes, e por
+    isso sai — mas aqui ele é o único número que existe, e apagá-lo apagava o
+    piso da moldura.
+    """
+
+    def test_le_o_digito_quando_nao_ha_numero_antes(self):
+        m = ler_penas("Penas: de em (1) a quatro (4) meses de prisão simples e multa.")
+        assert [(x["min_meses"], x["max_meses"]) for x in m] == [(1, 4)]
+
+    def test_continua_descartando_o_parentese_que_so_repete(self):
+        """"de 20 (vinte) a 40 (quarenta) anos" — o parêntese não acrescenta nada."""
+        m = ler_penas("Pena - reclusão, de 20 (vinte) a 40 (quarenta) anos.")
+        assert [(x["min_meses"], x["max_meses"]) for x in m] == [(240, 480)]
+
+    def test_extenso_seguido_de_digito_tambem(self):
+        m = ler_penas("Pena - reclusão, de dois (2) a cinco (5) anos.")
+        assert [(x["min_meses"], x["max_meses"]) for x in m] == [(24, 60)]

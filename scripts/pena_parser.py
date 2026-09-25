@@ -195,6 +195,16 @@ def _limpar(texto: str) -> str:
     def trata(m: re.Match) -> str:
         conteudo = m.group(1)
         if re.search(r"\d", conteudo):
+            # O parêntese com dígito repete o número escrito por extenso logo
+            # antes, e por isso sai. Mas quando não há número antes dele, o
+            # dígito é o ÚNICO que existe: o art. 49 do DL 6.259 está no
+            # compilado como "de em (1) a quatro (4) meses" — "em" é erro de
+            # digitação de "um", e apagar o parêntese apagava o piso da moldura.
+            antes = re.search(r"([A-Za-zÀ-ú]+|\d+)\s*$", t[:m.start()].rstrip())
+            so_digito = re.fullmatch(r"\s*(\d+)\s*", conteudo)
+            if so_digito and not (antes and (antes.group(1).isdigit()
+                                             or antes.group(1).lower() in _EXTENSO)):
+                return f" {so_digito.group(1)} "
             return " "
         resto = re.sub(r"\be\b", " ", _NUM_EXTENSO.sub("", conteudo), flags=re.I).strip()
         return f" {resto} " if resto else " "
@@ -228,7 +238,7 @@ _TIPO_RE = re.compile(r"(reclus[ãa]o|deten[çc][ãa]o|pris[ãa]o simples)", re.
 _CONECTIVO = re.compile(r"[\s,;]*(?:ou|e)?[\s,;]*")
 
 
-def ler_penas(texto: str) -> list[dict]:
+def ler_penas(texto: str, especie: str | None = None) -> list[dict]:
     """TODAS as molduras de um preceito secundário, na ordem em que aparecem.
 
     Um mesmo preceito às vezes comina duas penas — o art. 254 do CP traz
@@ -245,6 +255,13 @@ def ler_penas(texto: str) -> list[dict]:
     marcas = list(_TIPO_RE.finditer(bruto))
     if not marcas:
         lida = ler_pena(bruto)          # pode ser "só multa"
+        if lida is None and especie:
+            # O parágrafo não repete a espécie porque o caput já a disse: "Se o
+            # crime é culposo, a pena é de três meses a um ano" (Lei 9.605, art.
+            # 68, parágrafo único) — a detenção está no caput. Sem a herança, o
+            # intervalo é lido e jogado fora por falta de espécie, e o registro
+            # entra no balde `ilegivel` como se a lei não tivesse escrito pena.
+            lida = ler_pena(f"{especie} {bruto}")
         return [lida] if lida else []
 
     molduras: list[dict] = []
