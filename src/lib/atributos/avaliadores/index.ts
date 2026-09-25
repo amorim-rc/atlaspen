@@ -23,8 +23,6 @@ import {AVALIADORES_PROCESSUAL} from './processual';
 import {AVALIADORES_APLICACAO} from './aplicacao';
 import {AVALIADORES_EXECUCAO} from './execucao';
 
-export {vedacaoLivramentoArt112} from './comum';
-
 export const AVALIADORES: Record<string, (c: Cenario, p: Parametros) => Avaliacao> = {
   ...AVALIADORES_PROCESSUAL,
   ...AVALIADORES_APLICACAO,
