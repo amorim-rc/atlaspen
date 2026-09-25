@@ -4,10 +4,10 @@
  "total_atributos": 22,
  "com_pena_privativa": 1497,
  "sem_pena_privativa": 33,
- "dispositivos_distintos": 1529,
- "registros_duplicados": 2,
+ "dispositivos_distintos": 1530,
+ "registros_duplicados": 0,
  "duplicatas_divergentes": 0,
- "resultado_morte": 117,
+ "resultado_morte": 118,
  "perdao_judicial_previsto": 12,
  "multa_ambigua": 1,
  "perdao_judicial_sem_tipo": [

@@ -134,6 +134,15 @@
       ],
       "motivo": "Decisão 4 (23/09/2026), grau B: 'Sim' mantido até haver jurisprudência sobre violência e atributos no estupro de vulnerável. O art. 217-A não escreve violência nem grave ameaça — a vulnerabilidade da vítima é que dispensa o meio —, e por isso a regra lê silêncio da lei. O catálogo afirma 'Sim' por decisão do mantenedor, e não por leitura do texto; enquanto a decisão for de grau B, a divergência é conhecida e não precisa voltar toda semana. Não é correção de dado: é juízo já tomado, com pendência declarada.",
       "data": "2026-09-25"
+    },
+    {
+      "tipo": "VIOLENCIA-CPM-389-PU",
+      "campo": "violencia",
+      "ids": [
+        1269
+      ],
+      "motivo": "O parágrafo único do art. 389 do CPM descreve só a circunstância — 'se ao crime não é cominada, no máximo, reclusão de trinta anos, mas é praticado com arma e em presença do inimigo' — e não repete a conduta do caput nem remete a artigo nenhum. A regra lê silêncio da lei e responde 'Não'; o catálogo publica 'Sim', pela violência que dá nome ao artigo. Examinado pelo mantenedor em 25/09/2026: não é caso a resolver. A exceção existe para que a divergência conhecida não volte toda semana, e sai no dia em que alguém quiser reabri-la.",
+      "data": "2026-09-25"
     }
   ]
 }

@@ -84,6 +84,11 @@ export const REDIRECIONAMENTOS: Redirecionamento[] = [
   // está em lugar nenhum da lei. Decisão H8 de 24/09/2026; o conteúdo do § foi
   // para o `obs` do peculato culposo, que é para onde o endereço aponta.
   {de: '/tipos/608', para: '/tipos/248'},
+  // O art. 334, §1º, III é UM crime escrito com muitos verbos — adquirir,
+  // receber, ocultar, ter em depósito, transportar, revender. O catálogo o
+  // trazia duas vezes, cada vez nomeando um punhado diferente dos mesmos
+  // verbos. Ficou o 614, que nomeia o inciso inteiro. Decisão de 25/09/2026.
+  {de: '/tipos/616', para: '/tipos/614'},
 ];
 
 /**

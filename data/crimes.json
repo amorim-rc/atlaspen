@@ -3294,7 +3294,7 @@
     "tentativa": "Não",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "1-2 anos detenção. Se culposa + morte: dobro"
+    "obs": "1-2 anos detenção. O § 2º comina uma segunda moldura para o resultado morte, escrita por extenso (2 a 4 anos), que é o registro 1533."
   },
   {
     "id": 203,
@@ -9955,22 +9955,6 @@
     "lei": "CP",
     "artigo": "Art. 334, §1º, IV",
     "crime": "Descaminho — aquisição ou ocultação de mercadoria sem documentação",
-    "pena_min": 12,
-    "pena_max": 48,
-    "tipo_pena": "Reclusão",
-    "acao": "Pública Incondicionada",
-    "hediondo": "Não",
-    "elemento": "Doloso",
-    "tentativa": "Sim",
-    "violencia": "Não",
-    "grave_ameaca": "Não",
-    "obs": "1-4 anos reclusão"
-  },
-  {
-    "id": 616,
-    "lei": "CP",
-    "artigo": "Art. 334, §1º, III",
-    "crime": "Descaminho — adquirir/transportar/revender mercadoria estrangeira ilegal",
     "pena_min": 12,
     "pena_max": 48,
     "tipo_pena": "Reclusão",
@@ -17776,9 +17760,10 @@
     "hediondo": "Não",
     "elemento": "Doloso",
     "tentativa": "Sim",
-    "violencia": "Sim",
+    "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "Se o crime é cometido durante o repouso noturno, ou com emprêgo de violência ou de arma, ou mediante arrombamento, ou po. 6-24 meses detenção"
+    "obs": "Se o crime é cometido durante o repouso noturno, ou com emprêgo de violência ou de arma, ou mediante arrombamento, ou po. 6-24 meses detenção. A forma qualificada alcança quatro circunstâncias alternativas — repouso noturno, violência, arma, arrombamento, concurso de pessoas —, e só uma delas é violenta: o tipo se consuma sem violência nenhuma. Mesma solução do art. 150, § 1º, do CP (id 75). Decisão do mantenedor em 25/09/2026.",
+    "violencia_condicao": "Sim quando há emprego de violência (CPM, art. 226, § 1º)."
   },
   {
     "id": 1099,
@@ -24831,5 +24816,21 @@
     "violencia": "Não",
     "grave_ameaca": "Não",
     "obs": "1 a 5 anos reclusão + multa de 10 a 100 vezes o maior salário mínimo. Forma qualificada dos crimes do art. 50 cometidos com inexistência de título legítimo de propriedade do imóvel loteado ou desmembrado (ressalvado o art. 18, §§ 4º e 5º) ou com omissão fraudulenta de fato a ele relativo, se o fato não constituir crime mais grave (redação da Lei 9.785/1999). Decisão H5 (24/09/2026)."
+  },
+  {
+    "id": 1533,
+    "lei": "CP",
+    "artigo": "Art. 267, §2º (resultado morte)",
+    "crime": "Epidemia culposa com resultado morte",
+    "pena_min": 24,
+    "pena_max": 48,
+    "tipo_pena": "Detenção",
+    "acao": "Pública Incondicionada",
+    "hediondo": "Não",
+    "elemento": "Culposo",
+    "tentativa": "Não",
+    "violencia": "Não",
+    "grave_ameaca": "Não",
+    "obs": "2-4 anos detenção. Segunda moldura do § 2º: a lei a escreve por extenso ('ou, se resulta morte, de dois a quatro anos') e não por remissão ao dobro. Mesma estrutura do art. 292, § 2º, do CPM (ids 1528 e 1529). Conferido em 25/09/2026 contra o texto compilado."
   }
 ]

@@ -22,6 +22,15 @@
       "motivo": "O art. 312, § 3º, do CP NÃO COMINA PENA: a reparação do dano extingue a punibilidade do peculato culposo se vier antes da sentença irrecorrível, e reduz de metade a pena IMPOSTA se vier depois. O registro publicava moldura de 1,5 a 6 meses — que não está em lugar nenhum da lei —, elemento Doloso e um `obs` que descrevia o peculato-furto do § 1º. Mesmo caso dos ids 194, 199 e 239. A redução de metade não vira modificador: incide sobre a pena já imposta, depois da sentença, e não é fase da dosimetria que data/modificadores.json modela. O conteúdo do § 3º foi para o `obs` do id 248, o peculato culposo. Decisão H8 (24/09/2026).",
       "destino": 248,
       "redirecionamento": "/tipos/608 -> /tipos/248"
+    },
+    {
+      "data": "2026-09-25",
+      "ids": [
+        616
+      ],
+      "motivo": "Duplicata do art. 334, § 1º, III, do CP. O inciso III é UM crime escrito com muitos verbos — adquirir, receber, ocultar, ter em depósito, transportar, revender —, e o catálogo o trazia duas vezes, cada vez nomeando um punhado diferente dos mesmos verbos: o 614 pelo comércio de mercadoria introduzida clandestinamente, o 616 por adquirir/transportar/revender. Mesma moldura (reclusão de 1 a 4 anos), mesmo dispositivo. Ficou o 614, que nomeia o inciso inteiro. Apontado pela decisão H9 do pacote de 24/09/2026, que previu a colisão; decidido pelo mantenedor em 25/09/2026.",
+      "destino": 614,
+      "redirecionamento": "/tipos/616 -> /tipos/614"
     }
   ]
 }

@@ -1262,7 +1262,7 @@
           "min": 0,
           "max": 1,
           "passo": 0.01,
-          "ajuda": "40% da pena ao primário condenado por crime hediondo ou equiparado. Redação do Pacote Anticrime, aplicável a FATO ANTERIOR a 25/03/2026: a Lei 15.358/2026 levou o percentual a 70%, e por ser mais gravosa não retroage.",
+          "ajuda": "40% da pena ao primário condenado por crime hediondo ou equiparado. Redação do Pacote Anticrime, aplicável a FATO ANTERIOR a 25/03/2026: a Lei 15.358/2026 levou o percentual a 70%, e por ser mais gravosa não retroage. É o que o STJ decidiu para a Lei 11.464/2007 na **Súmula 471** (Terceira Seção, j. 23/02/2011, DJe 28/02/2011): os condenados por crime hediondo ou equiparado praticado ANTES da vigência daquela lei seguem as regras do art. 112 da LEP na redação anterior. Vale aqui por analogia — a regra se sustenta sozinha no art. 2º, parágrafo único, do CP e no art. 5º, XL, da Constituição.",
           "redacoes": [
             {
               "fonte": {
