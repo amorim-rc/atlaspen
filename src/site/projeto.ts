@@ -28,6 +28,11 @@ export const INDICE_DO_PROJETO: {grupo: string; itens: ItemProjeto[]}[] = [
         resumo: 'Quem concebeu e constrói o AtlasPen, o antecedente de 2008 e quem colabora.',
         rota: '/projeto/creditos',
       },
+      {
+        titulo: 'Manifesto pelo termo "atributo"',
+        resumo: 'Por que "atributo", e não "benefício": a palavra que serve aos dois lados do catálogo.',
+        rota: '/projeto/manifesto-atributo',
+      },
     ],
   },
   {
@@ -35,7 +40,7 @@ export const INDICE_DO_PROJETO: {grupo: string; itens: ItemProjeto[]}[] = [
     itens: [
       {
         titulo: 'Metodologia',
-        resumo: 'A unidade de análise, os campos do catálogo, o que é derivado por heurística e como os atributos são calculados.',
+        resumo: 'A unidade de análise, o que o catálogo afirma e o que deliberadamente cala, e como os atributos são calculados.',
         rota: '/projeto/metodologia',
       },
       {
@@ -46,7 +51,7 @@ export const INDICE_DO_PROJETO: {grupo: string; itens: ItemProjeto[]}[] = [
       },
       {
         titulo: 'Catálogo de tipos penais',
-        resumo: 'O que é um registro do catálogo, e como os tipos foram reunidos.',
+        resumo: 'Como o catálogo é construído: os dois arquivos, as regras que decidem o que entra e o que a CI impede de regredir.',
         rota: '/projeto/catalogo-tipos-penais',
       },
       {
@@ -55,8 +60,13 @@ export const INDICE_DO_PROJETO: {grupo: string; itens: ItemProjeto[]}[] = [
         rota: '/projeto/atributos-penais',
       },
       {
+        titulo: 'Progressão de regime',
+        resumo: 'As duas tabelas do art. 112 da LEP, o corte pela data do fato e as ADIs em curso.',
+        rota: '/projeto/progressao-de-regime',
+      },
+      {
         titulo: 'Dados abertos',
-        resumo: 'Cada campo do registro, o formato dos dados, a licença de uso e como citar.',
+        resumo: 'Cada campo do registro, de onde vem cada dado e como é revisado, a licença de uso e como citar.',
         rota: '/projeto/dados-abertos',
       },
       {
@@ -69,7 +79,7 @@ export const INDICE_DO_PROJETO: {grupo: string; itens: ItemProjeto[]}[] = [
   {
     grupo: 'Também aqui',
     itens: [
-      {titulo: 'Notas de atualizações', resumo: 'O que muda na base, a partir da 1.0.0.', rota: '/notas'},
+      {titulo: 'Notas de atualizações', resumo: 'O que mudou na lei, entrada a entrada.', rota: '/notas'},
       {
         titulo: 'O artigo de 2008',
         resumo: 'Machado & Machado, Revista Jurídica, v. 10, n. 90.',

@@ -1,6 +1,7 @@
 ---
 id: dados-abertos
 title: Dados abertos
+description: Cada campo do registro, o formato dos dados, de onde vem cada dado e como ele é revisado, a licença de uso e como citar.
 sidebar_position: 4
 ---
 
@@ -8,10 +9,19 @@ sidebar_position: 4
 
 O catálogo completo é publicado como dado aberto em formato JSON:
 
-- **Arquivo:** [`/data/crimes.json`](pathname:///atlaspen/data/crimes.json)
-- **Atributos penais:** [`/data/atributos.json`](pathname:///atlaspen/data/atributos.json)
-  (ver [Atributos penais](#atributos-penais), abaixo)
-- **Licença:** MIT com atribuição — cite como **EQUIPE ATLASPEN. AtlasPen** (ver [Como citar](#como-citar)).
+- **Tipos penais:** [`/data/crimes.json`](pathname:///atlaspen/data/crimes.json) — um objeto por tipo penal.
+- **Atributos penais:** [`/data/atributos.json`](pathname:///atlaspen/data/atributos.json) — os 22, com
+  parâmetros, fundamento e alcance (ver [Atributos penais](#atributos-penais), abaixo).
+- **Trilha de conferência:** [`/data/conferencia.json`](pathname:///atlaspen/data/conferencia.json) — contra
+  qual página, quando e com que resultado cada registro foi conferido.
+- **Relatório de qualidade:** [`/data/qualidade.json`](pathname:///atlaspen/data/qualidade.json) — contagens,
+  lacunas conhecidas e contradições, a cada geração.
+- **Licença:** MIT com atribuição — cite como **EQUIPE ATLASPEN. AtlasPen** (ver
+  [Como citar](#como-citar)).
+
+Esta página é o **dicionário**: o lugar único em que cada campo é definido. Os princípios
+que decidem o que um campo pode afirmar estão em [Metodologia](./metodologia.md); como o
+catálogo é construído e travado, em [Catálogo de tipos penais](./catalogo-tipos-penais.md).
 
 ### A base inteira em planilha
 
@@ -31,7 +41,27 @@ a aba Leia-me traz a data e o commit: planilha baixada é uma fotografia, e cita
 fotografia sem dizer quando ela foi tirada é citar o que já mudou. Editá-la não altera a
 base; o caminho de correção continua sendo uma issue ou um pull request.
 
+## Três coisas que evitam erro de leitura
+
+Antes do dicionário, o que mais custa a quem lê os dados pela primeira vez:
+
+- **`id` é a URL pública e nunca é reatribuído.** Um id que sai do catálogo vai para
+  `data/ids-aposentados.json` e não volta a ser usado. A numeração foi reiniciada duas
+  vezes, em 31/07 e 06/08/2026 (versões 1.4.0 e 2.0.0 do protótipo), por decisão
+  registrada: id anterior a essas datas se refere a outro crime.
+- **Pena em meses**, sempre, no campo canônico (`pena_min_meses`, `pena_max_meses`). O mês
+  do art. 11 do Código Penal tem 30 dias, então 0,5 são 15 dias. Os rótulos legíveis vêm à
+  parte.
+- **Campo condicional não é campo vazio.** Quando a lei não decide pelo tipo —
+  `hediondo_condicao`, `acao_condicao`, `violencia_condicao` —, o campo principal fica no
+  valor seguro e a hipótese fica escrita ao lado, em texto. Ler só o campo principal e
+  ignorar a condição é ler metade.
+
 ## Esquema de cada registro
+
+O registro de `id: 1`, tal como está publicado em `/data/crimes.json`. O primeiro bloco é a
+fonte redigida à mão; o segundo, os derivados que `scripts/transform_data.py` calcula a
+cada build; o terceiro, a trilha escrita pela rodada semanal de conferência.
 
 ```json
 {
@@ -44,106 +74,133 @@ base; o caminho de correção continua sendo uma issue ou um pull request.
   "tipo_pena": "Reclusão",
   "acao": "Pública Incondicionada",
   "hediondo": "Não",
-  "hediondo_condicao": null,
+  "hediondo_condicao": "Hediondo somente quando praticado em atividade típica de grupo de extermínio, ainda que por um só agente. Fundamento: Lei 8.072, art. 1º, I.",
+  "hediondo_nota": null,
   "elemento": "Doloso",
   "tentativa": "Sim",
   "violencia": "Sim",
   "grave_ameaca": "Não",
+  "violencia_condicao": null,
+  "pena_por_remissao": null,
+  "sancoes_nao_privativas": [],
   "obs": "Matar alguém. 6-20 anos reclusão",
 
-  "pena_privativa": "Reclusão",
-  "tem_multa": false,
-  "multa_regime": "nenhuma",
-  "derivado_auto": true,
-  "pena_min_meses": 72,
-  "pena_max_meses": 240,
+  "pena_min_meses": 72.0,
+  "pena_max_meses": 240.0,
   "pena_min_rotulo": "6 anos",
   "pena_max_rotulo": "20 anos",
   "pena_faixa_rotulo": "6 a 20 anos",
+  "pena_privativa": "Reclusão",
+  "tem_pena_privativa": true,
+  "tem_multa": false,
+  "multa_regime": "nenhuma",
   "infracao_menor_potencial": false,
   "contravencao": false,
-
-  "tem_pena_privativa": true,
-  "sancoes_nao_privativas": [],
-  "pena_por_remissao": null,
   "resultado_morte": true,
   "resultado_morte_derivado": true,
   "perdao_judicial_previsto": false,
+  "hediondo_especie": "nao",
+  "hediondo_fundamento": null,
+  "hediondo_condicional": true,
+  "acao_condicional": false,
+  "violencia_condicional": false,
+  "vigente": true,
+  "avisos": null,
   "chave_dispositivo": "cp|art. 121, caput",
+  "dispositivo_canonico": "cp|art. 121, caput",
+  "ultima_alteracao": null,
+  "alteracoes_legislativas": 0,
   "duplicata": false,
   "duplicata_divergente": false,
-  "duplicata_ids": []
+  "duplicata_ids": [],
+  "derivado_auto": true,
+
+  "fonte": "https://www.planalto.gov.br/ccivil_03/decreto-lei/del2848compilado.htm",
+  "conferido_em": "2026-09-21",
+  "conferido_resultado": "conferido"
 }
 ```
 
-Penas (`pena_min`, `pena_max`, `pena_*_meses`) estão em **meses** — o mês do art. 11 do
-Código Penal tem 30 dias, então 0,5 são 15 dias. O primeiro bloco é a fonte redigida à
-mão; os demais são calculados por `scripts/transform_data.py` a cada build.
-
 ## Para que serve cada campo
 
-Nem todo campo tem o mesmo peso: alguns definem o que o sistema responde, outros
-apenas descrevem. A tabela abaixo diz **onde cada um é usado**, para quem for reaproveitar
-os dados saber o que pode mudar sem quebrar uma conta.
+Nem todo campo tem o mesmo peso: alguns definem o que o sistema responde, outros apenas
+descrevem. As tabelas abaixo dizem **o que cada um é e onde é usado**, para quem for
+reaproveitar os dados saber o que pode mudar sem quebrar uma conta.
 
-### Fonte
+### Fonte — redigida à mão, conferida contra o compilado
 
-| Campo | Onde é usado |
-|---|---|
-| `id` | Endereço público do tipo (`/tipos/N`), citado em pareceres e trabalhos. **Nunca é reatribuído**: um id aposentado não volta a ser usado por outro crime. A numeração foi reiniciada duas vezes — v1.4.0 e v2.0.0 —, e é por isso que essas versões são MAIORES: quem tenha guardado um endereço anterior precisa refazê-lo. |
-| `lei`, `artigo` | Identificam o dispositivo. Juntos formam a `chave_dispositivo`, que detecta registro repetido, e ligam a linha ao texto oficial conferido toda semana pelo conferidor. |
-| `crime` | Nome exibido na busca. Também é dele — **e não do `obs`** — que se deduz o `resultado_morte`. |
-| `pena_min`, `pena_max` | **A moldura.** Alimentam toda a dosimetria e todos os atributos com limiar de pena (transação penal, ANPP, sursis, regime inicial, prescrição). Desde a v1.2.17 são a autoridade; antes disso a moldura era extraída do texto do `obs`, e uma frase secundária podia mudar a pena publicada. |
-| `tipo_pena` | Reclusão, detenção, prisão simples, multa, morte (só nos crimes militares de tempo de guerra), "Outras penas" ou nenhuma. Define o regime inicial e distingue o tipo sem pena privativa. |
-| `pena_por_remissao` | Opcional. O tipo **não comina moldura própria**: importa a de outro dispositivo, e este campo diz qual (`dispositivo_fonte`) e o que se faz com ela (`operador`: nenhum, aumento ou diminuicao; `fracao`). É o caso do art. 304 do CP — "a pena cominada à falsificação" — e do art. 315 do CPM. Quem o declara tem `pena_min` e `pena_max` zerados **de propósito**: a moldura depende de qual dispositivo-fonte incide no caso, e o catálogo não a inventa. O motor avalia o tipo com a moldura de cada origem, e o veredito é o comum às origens, ou "depende" quando elas divergem. `tem_pena_privativa` é `true` e o tipo entra nas estatísticas de alcance — salvo quando o catálogo já desdobra a remissão em registros "c/c" (Lei 2.889/56, arts. 2º e 3º), que contam no lugar dele. O operador segue a dosimetria: `diminuicao` com `1/3` multiplica a moldura de origem por 2/3; `aumento`, por 4/3. |
-| `acao` | Espécie de ação penal. Condiciona os institutos que dependem de representação ou de queixa. |
-| `hediondo` | Fecha indulto, graça e comutação, e endurece as frações de progressão e livramento condicional. Vem com `hediondo_especie` e `hediondo_fundamento` (derivados), que dizem se o crime é hediondo pelo rol do art. 1º da Lei 8.072/90 ou equiparado pelo art. 5º, XLIII, da CF, e por qual dispositivo. |
-| `elemento` | Doloso, culposo ou preterdoloso. Crime culposo admite substituição por pena restritiva qualquer que seja a pena, e não admite tentativa. |
-| `tentativa` | Habilita a redução do art. 14, II na terceira fase da dosimetria. |
-| `violencia`, `grave_ameaca` | Vedam substituição por restritivas de direitos, ANPP e arrependimento posterior. |
-| `vigencia_ate`, `vigencia_nota` | Opcionais. Data em que o dispositivo deixou de vigorar e o que houve — declaração de inconstitucionalidade com eficácia *ex nunc*, revogação —, com o dispositivo que passa a reger a conduta. O registro **não sai do catálogo**: fato anterior continua regido por ele, e uma consulta a 2024 precisa da lei de 2024. |
+| Campo | O que é e onde é usado |
+| --- | --- |
+| `id` | Identificador estável; endereço público do tipo (`/tipos/N`; as URLs antigas, `/pesquisa/tipos?tipo=N`, levam a ele). **Nunca é reatribuído.** |
+| `lei`, `artigo` | Identificam o dispositivo (`CP`, `Art. 121, §2º, I`). Juntos formam a `chave_dispositivo`, que detecta registro repetido, e ligam a linha ao texto oficial conferido toda semana. A grafia de `artigo` segue uma forma canônica, validada na entrada. |
+| `crime` | Nome do tipo penal, exibido na busca. É dele — **e não do `obs`** — que se deduz o `resultado_morte`. |
+| `pena_min`, `pena_max` | **A moldura**, em meses. Alimentam toda a dosimetria e todos os atributos com limiar de pena. Zerados **de propósito** quando há `pena_por_remissao`. |
+| `tipo_pena` | `Reclusão`, `Detenção`, `Prisão simples`, `Multa`, `Morte` (só nos crimes militares de tempo de guerra, CPM, art. 56), `Outras penas` (sanção cominada que não é privativa nem pecuniária) ou `—`. Define o regime inicial e distingue o tipo sem pena privativa. |
+| `acao` | Espécie de ação penal, em vocabulário fechado desde 19/09/2026: `Pública Incondicionada`, `Pública Condicionada à Representação`, `Pública Condicionada à Requisição`, `Ação Penal Privada` e `Ação Penal Privada Personalíssima` (CP, art. 236, parágrafo único). Condiciona os institutos que dependem de representação ou de queixa. |
+| `acao_condicao` | Opcional. Quando a espécie de ação depende do caso (art. 161, §3º: privada se a propriedade é particular), aqui fica a hipótese, em texto, e `acao` fica na regra. |
+| `hediondo` | `Sim` / `Não` — inclui os **equiparados** (tráfico, tortura, terrorismo). Fecha indulto, graça e comutação, e endurece as frações de progressão e livramento condicional. Vem acompanhado dos derivados `hediondo_especie` e `hediondo_fundamento`. |
+| `hediondo_condicao` | Opcional. Quando a hediondez depende do **caso** — o homicídio só é hediondo se praticado em atividade de grupo de extermínio —, aqui fica a hipótese, em texto, e `hediondo` permanece `Não`. |
+| `hediondo_nota` | Opcional. Divergência de **jurisprudência ou doutrina** sobre a hediondez — não circunstância do caso. O tipo não muda conforme o que aconteceu; muda conforme quem julga. |
+| `elemento` | `Doloso`, `Culposo` ou `Preterdoloso`. Crime culposo admite substituição por restritiva qualquer que seja a pena, e não admite tentativa. |
+| `tentativa` | O tipo admite tentativa? Habilita a redução do art. 14, II, na terceira fase da dosimetria. |
+| `violencia`, `grave_ameaca` | Elementares que vedam substituição por restritivas, ANPP e arrependimento posterior. Não têm fonte textual que as declare: são qualificações do tipo, revisadas à mão. |
+| `violencia_condicao` | Opcional. Quando a violência depende do caso (sequestro: a privação da liberdade pode ser obtida por fraude), aqui fica a hipótese; `violencia` fica em `Não`, e o motor calcula e mostra as duas hipóteses. |
+| `pena_por_remissao` | Opcional. O tipo **não comina moldura própria**: importa a de outro dispositivo. `{dispositivo_fonte, lei_fonte, artigos_fonte, operador, fracao}` — o art. 304 do CP ("a pena cominada à falsificação"), o art. 315 do CPM. Incompatível com `pena_min`/`pena_max`. O operador segue a dosimetria: `diminuicao` com `1/3` multiplica a moldura de origem por 2/3; `aumento`, por 4/3. O motor avalia o tipo com a moldura de cada origem, e o veredito é o comum às origens, ou "depende" quando divergem. |
+| `sancoes_nao_privativas` | Opcional. As sanções de um tipo que não comina prisão (art. 28 da Lei 11.343/06: advertência, prestação de serviços, medida educativa). Deriva `tem_pena_privativa: false`. |
+| `vigencia_ate`, `vigencia_nota` | Opcionais. Data (AAAA-MM-DD) em que o dispositivo deixou de vigorar e o que houve — revogação, declaração de inconstitucionalidade — com o dispositivo que passa a reger a conduta. **A nota é obrigatória quando há a data**: um registro que sai do ar sem dizer por quê é pior que um registro errado. O registro **não sai do catálogo**: fato anterior continua regido por ele. |
 | `obs` | **Descritivo.** Observação de leitura humana — origem da redação, formas do artigo, remissões. Não define a pena; o que dele ainda se extrai é a presença e o regime da multa. |
 
 ### Derivados — recalculados a cada build, não edite
 
 | Campo | Para que existe |
-|---|---|
-| `pena_min_meses`, `pena_max_meses` | Moldura canônica para cálculo. |
+| --- | --- |
+| `pena_min_meses`, `pena_max_meses` | Moldura canônica para cálculo. Cópia de `pena_min`/`pena_max`, que são a autoridade. A unidade real da pena é o **dia**: o art. 11 do CP manda **desprezar** as frações de dia — desprezar, não arredondar, porque arredondar para cima agravaria a pena sem lei. |
 | `pena_min_rotulo`, `pena_max_rotulo`, `pena_faixa_rotulo` | Exibição na unidade natural: "15 dias a 3 meses", "2 a 5 anos", "até 5 anos". |
-| `pena_privativa`, `tem_pena_privativa`, `sancoes_nao_privativas` | Separam o tipo com pena de prisão daquele cuja sanção é outra (art. 28 da Lei 11.343/06). |
-| `tem_multa`, `multa_regime` | Multa cumulativa, alternativa ou isolada, lida do `obs`. |
+| `pena_privativa` | `Reclusão`, `Detenção`, `Prisão simples` ou `Nenhuma`, mapeado de `tipo_pena` — `Multa`, `Morte` e `Outras penas` viram `Nenhuma`, porque não são pena de prisão. |
+| `tem_pena_privativa` | O tipo comina prisão, própria ou por remissão? Se não, declara `sancoes_nao_privativas`, ou é o guarda-chuva de uma remissão desdobrada em registros "c/c". Quem tem `false` fica fora das estatísticas de alcance sem sair da consulta. |
+| `tem_multa`, `multa_regime` | Multa `cumulativa`, `alternativa`, `isolada` ou `nenhuma`, lida dos conectores do `obs` (`e multa` → cumulativa; `ou multa` → alternativa). |
 | `infracao_menor_potencial` | Porta de entrada da Lei 9.099/95 (art. 61): a contravenção, qualquer que seja a pena, e o crime com pena máxima até dois anos ou só com multa. Nunca o crime militar (art. 90-A); sempre o porte para consumo do art. 28 da Lei 11.343/06 (art. 48, §1º). |
-| `contravencao` | Contravenção penal: pena de prisão simples (LICP, art. 1º), ou registro da LCP ou da Lei 7.437/85, que declaram contravenção tudo o que tipificam. |
-| `resultado_morte`, `resultado_morte_derivado` | Marcam o tipo com morte como resultado; o segundo avisa que veio de heurística sobre o **nome** do crime, sem revisão manual. |
-| `perdao_judicial_previsto` | Só é `true` nas hipóteses expressamente previstas em lei — não há perdão judicial genérico. |
-| `chave_dispositivo`, `duplicata`, `duplicata_divergente`, `duplicata_ids` | Detecção de registro repetido. `duplicata_divergente` marcaria o mesmo dispositivo com penas conflitantes; **hoje não há nenhum**. |
-| `dispositivo_canonico` | **Derivado.** A chave canônica do dispositivo (`cp\|art. 121, §2º, i`), a mesma do histórico legislativo e de `data/fontes.json`. O dispositivo é o primeiro citado no `artigo`: o "c/c" diz de onde vem a pena, não onde o tipo está. |
-| `ultima_alteracao`, `alteracoes_legislativas` | **Derivados** do histórico legislativo, pela mesma regra dos atributos. A lei que por último deu texto ao dispositivo (norma, ano, evento e o link para o artigo da lei alteradora) e **quantas leis** mexeram nele — leis, e não linhas do compilado. `alteracoes_legislativas: 0` é a redação original; `null` é "não se sabe": o compilado não anota quem deu o texto daquela unidade. |
+| `contravencao` | Pena de prisão simples (LICP, art. 1º), ou registro da LCP ou da Lei 7.437/85, que declaram contravenção tudo o que tipificam. |
+| `resultado_morte`, `resultado_morte_derivado` | Marcam o tipo com morte como resultado (art. 112, VI e VIII, LEP; art. 122, §2º). Regex sobre o **nome** do crime, nunca sobre `obs`; o segundo campo avisa que veio da heurística, sem revisão manual. |
+| `perdao_judicial_previsto` | Só `true` nas hipóteses expressamente previstas em lei (art. 107, IX, CP), de uma lista curada — não há perdão judicial genérico. |
+| `hediondo_especie`, `hediondo_fundamento` | **Não é heurística**: casamento com a tabela curada `data/hediondos.json`. `natureza` (rol do art. 1º da Lei 8.072/90, taxativo), `equiparado` (art. 5º, XLIII, da CF — o crime responde como hediondo sem o ser) ou `nao`, mais o dispositivo que produz a classificação. Hediondez afirmada sem regra na tabela reprova na CI. |
+| `hediondo_condicional`, `acao_condicional`, `violencia_condicional` | `true` quando a fonte trouxe a condição correspondente. A interface mostra a hipótese; o campo principal está no padrão seguro. |
+| `vigente` | `false` quando o registro declara `vigencia_ate`. Deriva da presença do campo, não de uma comparação com a data de hoje: um campo que virasse sozinho num dia qualquer quebraria o build sem ninguém ter tocado em nada. |
+| `avisos` | Os avisos de `data/avisos.json` que alcançam o registro — ADI em curso, tese de repercussão geral, divergência entre tribunais —, cada um com a fonte e a data em que ela foi consultada. Não mudam o cálculo: dizem que a **norma está em disputa**. `null` quando nenhum o alcança. |
+| `chave_dispositivo`, `duplicata`, `duplicata_divergente`, `duplicata_ids`, `duplicata_tipo` | Detecção de registro repetido. `duplicata_divergente` marcaria o mesmo dispositivo com penas conflitantes (`duplicata_tipo`: `pena`, `identidade` ou `hediondez`); a CI trava em zero. |
+| `dispositivo_canonico` | A chave canônica do dispositivo (`cp\|art. 121, §2º, i`), a mesma do histórico legislativo e de `data/fontes.json`. O dispositivo é o primeiro citado no `artigo`: o "c/c" diz de onde vem a pena, não onde o tipo está. |
+| `ultima_alteracao`, `alteracoes_legislativas` | Do histórico legislativo, pela mesma regra dos atributos: a lei que por último deu texto ao dispositivo (norma, ano, evento e link para o artigo da lei alteradora) e **quantas leis** mexeram nele. `0` é a redação original; `null` é "não se sabe": o compilado não anota quem deu o texto daquela unidade. |
 | `derivado_auto` | Marca o registro cujos campos passaram por preenchimento automático. |
-| `hediondo_especie`, `hediondo_fundamento` | Derivados da tabela curada `data/hediondos.json`, não do texto: `natureza`, `equiparado` ou `nao`, e o dispositivo que produz a classificação. O catálogo não aceita hediondez afirmada sem regra na tabela. |
-| `hediondo_condicional`, `acao_condicional` | A classificação depende de circunstância do CASO, não do tipo: o texto da condição está em `hediondo_condicao` e `acao_condicao`, na fonte. Nesses registros o campo fica no padrão seguro, e a interface mostra a hipótese. |
-| `vigente` | `false` quando o registro declara `vigencia_ate`. Deriva da presença do campo, não de uma comparação com a data de hoje: o arquivo derivado é publicado e conferido pela CI, e um campo que virasse sozinho num dia qualquer quebraria o build sem ninguém ter tocado em nada. |
+
+### Conferência — escrita pela rodada semanal
+
+| Campo | Para que existe |
+| --- | --- |
 | `fonte` | A página do texto compilado contra a qual este registro é conferido. |
 | `conferido_em` | Data da última conferência deste registro contra a lei (AAAA-MM-DD). |
 | `conferido_resultado` | `conferido` (a moldura bate), `sem_moldura_na_lei` (o dispositivo não traz moldura própria: pena por referência ou sanção não privativa), `divergente` (virou achado) ou `dispensado` (exceção já julgada). |
+
+Registro recém-criado, ainda não alcançado por uma rodada, tem os três campos nulos — o
+que também é uma informação. A trilha vive em
+[`/data/conferencia.json`](pathname:///atlaspen/data/conferencia.json), fora do catálogo editado à mão.
 
 ## Atributos penais
 
 Os 22 atributos penais também são dado aberto:
 
-- [`/data/atributos.json`](pathname:///atlaspen/data/atributos.json) é o **derivado**,
-  gerado por `scripts/derivar_atributos.ts`: a base dos atributos mais o que dela se calcula;
+- [`/data/atributos.json`](pathname:///atlaspen/data/atributos.json) é o **derivado**, gerado por
+  `scripts/derivar_atributos.ts`: a base dos atributos mais o que dela se calcula;
 - `data/atributos.json` e `data/historico-legislativo.json`, no repositório, são as
   **fontes**.
 
 | Campo | Para que existe |
-|---|---|
+| --- | --- |
 | `id` | Número estável e append-only, como o `id` dos tipos penais. |
 | `slug` | O identificador das URLs do site (`?atributo=transacao`). |
 | `nome`, `fundamento`, `categoria`, `natureza`, `descricao`, `requisitos`, `vedacoes` | O instituto, como a página [Atributos penais](./atributos-penais.md) o descreve. |
 | `dispositivos` | Os dispositivos em que o atributo se funda, em chave canônica (abaixo). |
 | `parametros` | Cada patamar, fração ou vedação, com o valor padrão (lei vigente) e as `redacoes`: a `fonte` (dispositivo, súmula ou decisão), a `norma` que deu a redação e o `fundamento` exibido. `valor` só aparece quando uma redação antiga dava outro número. `norma: null` quer dizer que o compilado não anota aquela unidade, e a base não a data. `sem_fonte_legal` marca o parâmetro de simulação, sem lei que o fixe. |
-| `ultima_alteracao`, `alteracoes_legislativas` | **Derivados**, no atributo e em cada parâmetro. O evento legislativo mais recente nos dispositivos citados (norma, ano, dispositivo e o link para o artigo da lei alteradora no Planalto) e quantos houve depois do texto original. `null` é "não se sabe". |
+| `ultima_alteracao`, `alteracoes_legislativas` | **Derivados**, no atributo e em cada parâmetro. O evento legislativo mais recente nos dispositivos citados e quantos houve depois do texto original. `null` é "não se sabe". |
 | `alcance` | **Derivado.** Os `id` dos tipos penais com pena privativa em que o atributo é `cabivel` e `condicional`, com os parâmetros no padrão e sob o cenário de referência declarado no próprio arquivo (pena concreta igual à mínima cominada, réu primário). Incabível é o resto. |
 
 A **chave canônica** de um dispositivo é o `id` do diploma em `data/fontes.json`, uma
@@ -158,85 +215,37 @@ são preservadas quando ele roda de novo.
 
 ## De onde vem cada registro, e como ele é revisado
 
-Um dado errado publicado é pior que um dado ausente. Esta seção explica, sem pressupor
-conhecimento técnico, como um tipo penal chega ao catálogo e o que acontece com ele depois
-— porque quem cita o dado precisa saber o que foi conferido, por quem, e o que não foi.
+Um dado errado publicado é pior que um dado ausente. Quem cita o dado precisa saber o que
+foi conferido, por quem, e o que não foi.
 
-### A fonte é o texto compilado, não a lei publicada no dia
+**A fonte é o texto compilado, não a lei publicada no dia.** Uma lei penal quase nunca
+nasce sozinha: ela altera outra. Por isso a fonte do catálogo é o **texto compilado** do
+`planalto.gov.br` — a versão que o próprio governo mantém atualizada, com a redação em
+vigor no corpo do artigo e, ao lado de cada dispositivo, a nota de quem o incluiu, alterou
+ou revogou. Ler o compilado é o que permite responder "qual é a pena **hoje**" sem
+reconstruir a história da norma emenda por emenda.
 
-Uma lei penal quase nunca nasce sozinha: ela altera outra. O Código Penal de hoje é o
-decreto-lei de 1940 mais oitenta anos de emendas. Por isso a fonte do catálogo não é o
-texto original de cada lei, e sim o **texto compilado** do `planalto.gov.br`: a versão que
-o próprio governo mantém atualizada, com a redação em vigor no corpo do artigo e, ao lado
-de cada dispositivo, uma nota dizendo quem o incluiu, alterou ou revogou — "(Redação dada
-pela Lei nº 14.994, de 2024)".
-
-Ler o compilado é o que permite responder "qual é a pena **hoje**" sem reconstruir a
-história da norma emenda por emenda.
-
-### O ciclo semanal, em quatro passos
-
-Toda segunda-feira, de madrugada, o repositório repete sozinho o mesmo procedimento:
-
-1. **Baixar.** Busca a página compilada de cada diploma de `data/fontes.json`: os que
-   têm tipo penal no catálogo e os de referência, que fundamentam a hediondez e os
-   atributos penais (a Lei dos Crimes Hediondos, a LEP, o CPP, a Lei 9.099/95 e a CF).
-   Cada diploma tem uma **sentinela**: um trecho que comprovadamente existe na versão
-   atual da página (em geral a emenda mais recente já incorporada). Se a sentinela não
-   aparecer, a rodada falha em vez de continuar — é a proteção contra comparar o catálogo
-   com uma cópia velha servida por engano.
-2. **Ler.** Cada página é decomposta em dispositivos: artigo, parágrafo, o texto da
-   conduta, a linha "Pena" e a situação (em vigor, revogado, vetado). Quando o mesmo
-   dispositivo aparece em duas redações — o compilado costuma manter a antiga logo acima
-   da nova —, vale a de nota mais recente.
-3. **Comparar.** A pena lida na lei é confrontada com a publicada no catálogo, dispositivo
-   a dispositivo. Divergiu, faltou, foi revogado: vira achado.
-4. **Reportar.** Os achados viram uma **issue** no repositório, aberta ao público. Quando
-   a divergência é de leitura direta — a moldura ou a espécie de pena de um registro que já
-   existe não corresponde ao que a lei comina —, o sistema também abre um **pull request**
-   com a correção proposta, citando o trecho da lei ao lado de cada mudança.
+**Toda segunda-feira, de madrugada, o repositório repete sozinho a conferência.** Baixa a
+página compilada de cada diploma, decompõe cada página em dispositivos, confronta a pena
+lida com a publicada no catálogo e reporta o que divergiu numa issue pública. Quando a
+divergência é de leitura direta — a moldura de um registro que já existe não corresponde
+ao que a lei comina —, abre também um pull request com a correção proposta. Na mesma
+rodada, outros programas vigiam o que a conferência de penas não alcança: o Diário Oficial,
+atrás de lei penal nova; a hediondez e a ação penal; a própria documentação. Cada um, com
+seus critérios e seus limites, está descrito em [Os robôs](./os-robos.md) — e essa é a página a
+ler antes de citar um dado, porque é lá que está escrito o que a máquina não vê.
 
 Nada disso usa inteligência artificial. É comparação de texto: as mesmas regras, aplicadas
 do mesmo jeito, toda semana — e por isso qualquer pessoa pode repetir a rodada e obter o
 mesmo resultado.
 
-### O que a máquina decide e o que fica para uma pessoa
-
-A máquina **nunca** publica sozinha. O pull request é uma proposta e depende de aprovação
+**A máquina nunca publica sozinha.** O pull request é uma proposta e depende de aprovação
 humana, e o alcance dela é deliberadamente estreito: corrigir a pena de um registro
 existente. Criar um registro novo, remover um registro ou reclassificar um dispositivo
 continua sendo decisão de gente, porque exige julgamento jurídico — o mesmo texto pode ser
 um crime autônomo, uma causa de aumento da pena de outro crime, ou nem uma coisa nem
 outra. Quando a leitura automática não é segura, o achado vira pergunta na triagem da
 semana, não dado publicado.
-
-### O segundo olho: o Diário Oficial
-
-Reler todas as semanas as leis que já conhecemos tem um ponto cego óbvio: uma **lei penal
-inteiramente nova**, que ainda não está em nenhuma página vigiada. Para cobri-lo, a mesma
-rodada semanal percorre os atos normativos da Seção 1 do Diário Oficial da União dos
-últimos oito dias — leis, leis complementares, medidas provisórias — e separa os que citam
-algum diploma do catálogo ou trazem vocabulário penal ("reclusão", "detenção", "pena de",
-"revoga").
-
-São cerca de cinco atos por semana, contra as centenas de portarias e despachos que o
-Diário publica por dia e que não podem criar crime. O resultado é uma lista para ler, não
-uma decisão: aparecer nela só significa que vale a pena abrir o texto. O filtro é
-deliberadamente largo, porque um alarme falso custa dez segundos de leitura e uma lei nova
-que passe despercebida custa meses de catálogo desatualizado.
-
-### Cada registro diz quando foi conferido
-
-Saber que existe conferência semanal não basta para quem cita um dado: é preciso saber
-**deste** registro. Por isso cada tipo penal carrega três campos de auditoria — `fonte` (a
-página oficial contra a qual ele é conferido), `conferido_em` (a data) e
-`conferido_resultado` (se a moldura bateu, se o dispositivo não tem moldura própria, ou se
-virou achado).
-
-A trilha é produzida pela rodada semanal e vive em
-[`/data/conferencia.json`](pathname:///atlaspen/data/conferencia.json), fora do catálogo
-editado à mão. Registro recém-criado, ainda não alcançado por uma rodada, tem os três
-campos nulos — o que também é uma informação.
 
 ### O que ainda não é conferido automaticamente
 
@@ -246,35 +255,29 @@ Honestidade sobre o alcance, para quem for citar:
   dispositivo;
 - **hediondez** é comparada com o rol do art. 1º da Lei 8.072/1990, e **ação penal** com as
   fórmulas escritas no próprio artigo — mas onde a lei condiciona a classificação a
-  circunstância do caso (homicídio por grupo de extermínio, organização direcionada a
-  crime hediondo), a máquina não decide nem propõe;
+  circunstância do caso, a máquina não decide nem propõe;
 - **causas de aumento** e **nome do tipo** só geram lista para leitura humana: modelar um
   aumento exige decidir sobre quais tipos ele incide, e comparar nomes é heurística;
 - **tentativa, violência e grave ameaça** não têm fonte textual que os declare — são
   qualificações do tipo, revisadas à mão;
-- o [relatório de qualidade](#relatório-de-qualidade) publica, a cada build, as
+- **decisão de tribunal superior** que altere o catálogo — uma ADI que retira dispositivo
+  do ordenamento — não passa pelo Diário Oficial e hoje nenhum robô a vê;
+- o [relatório de qualidade](pathname:///atlaspen/data/qualidade.json) publica, a cada build, as
   contradições conhecidas e os `id` envolvidos.
-
-## Relatório de qualidade
-
-Cada regeneração emite [`/data/qualidade.json`](pathname:///atlaspen/data/qualidade.json)
-com o estado do catálogo — contagens (inclusive `total_atributos`), lacunas conhecidas e
-a lista completa das contradições, com os `id` envolvidos. Use-o para saber o que é confiável antes de citar.
 
 ## Reprodutibilidade
 
 Os campos derivados são gerados por `scripts/transform_data.py` a partir de
 `data/crimes.json` (fonte), escrevendo o catálogo enriquecido em
-`static/data/crimes.json`. O processo é determinístico: a mesma fonte produz sempre o
-mesmo derivado, e a CI falha se o derivado commitado divergir da fonte. O derivado dos
-atributos sai depois, de `scripts/derivar_atributos.ts` (`npm run atributos`), com a mesma
-exigência.
+`static/data/crimes.json`. O processo é determinístico: a mesma fonte produz sempre o mesmo
+derivado, e a CI falha se o derivado commitado divergir da fonte. O derivado dos atributos
+sai depois, de `scripts/derivar_atributos.ts` (`npm run atributos`), com a mesma exigência.
 
 ## Estabilidade e versionamento
 
 O AtlasPen segue o [Semantic Versioning 2.0.0](https://semver.org/lang/pt-BR/) —
-`MAIOR.MENOR.CORREÇÃO` — com uma leitura explícita do que cada posição significa
-**neste projeto**. Sem essa convenção, "v2.1" e "v3.0" viram apenas rótulos de ordem.
+`MAIOR.MENOR.CORREÇÃO` — com uma leitura explícita do que cada posição significa **neste
+projeto**. Sem essa convenção, "v2.1" e "v3.0" viram apenas rótulos de ordem.
 
 Dois públicos dependem de estabilidade, e são eles que definem a **API pública** para
 efeito de versionamento:
@@ -284,7 +287,7 @@ efeito de versionamento:
    elas) em artigos e pareceres.
 
 | Posição | Incrementa quando | Exemplos |
-|---|---|---|
+| --- | --- | --- |
 | **MAIOR** (`X.0.0`) | **Salto na natureza do produto**: reestruturação funcional, arquitetural ou procedimental — o sistema passa a fazer algo de outra ordem, não apenas mais do mesmo. Ou quebra do contrato dos dados abertos ou das URLs. | Deixar de ser um catálogo mantido à mão e passar a ser conferido sozinho contra a fonte oficial; reiniciar a numeração dos `id`. |
 | **MENOR** (`X.Y.0`) | O que já existe, com **acréscimos, alterações e remoções** de registros e telas — a natureza do produto permanece. | Acrescentar campo ao JSON, nova tela, novo atributo; incluir ou remover tipos penais. |
 | **CORREÇÃO** (`X.Y.Z`) | Correção sem funcionalidade nova: erro de dosimetria, dado errado no catálogo, defeito de interface. | Corrigir a pena de um artigo; ajustar contraste. |
@@ -292,27 +295,32 @@ efeito de versionamento:
 Nos dados abertos, isso quer dizer: acrescentar campo é MENOR; remover ou ressignificar
 campo é MAIOR.
 
-:::note[Correção de dado é `CORREÇÃO`, não `MENOR`]
-Resolver uma das contradições do catálogo muda o resultado de uma consulta — mas
-corrige um erro, não acrescenta capacidade. Vai em `X.Y.Z`. Já **acrescentar um campo**
-que não existia (`resultado_morte`) é `MENOR`, ainda que motivado por um erro:
-consumidores do JSON ganham informação sem perder nenhuma.
+:::note[Correção de dado é CORREÇÃO, não MENOR]
+Resolver uma contradição do catálogo muda o resultado de uma consulta — mas corrige um
+erro, não acrescenta capacidade. Vai em `X.Y.Z`. Já **acrescentar um campo** que não
+existia (`resultado_morte`) é `MENOR`, ainda que motivado por um erro: consumidores do JSON
+ganham informação sem perder nenhuma.
 :::
 
 **Até o lançamento oficial, o projeto está em `0.x`** (desde 11/09/2026). Pelo próprio
 semver, a versão 0 é desenvolvimento inicial: dados e URLs podem mudar sem aviso. As
-versões de 1.0.0 a 2.0.6 que aparecem no histórico do repositório foram a numeração do
-protótipo; a v1.0.0 será o lançamento oficial, com domínio próprio, e é a partir dela que
-esta regra vale. Os próximos passos estão no
-[README](https://github.com/amorim-rc/atlaspen/blob/main/README.md#o-que-falta--e-onde-você-pode-ajudar).
+versões de 1.0.0 a 2.0.6 que aparecem no histórico do repositório — e que a documentação
+cita ao contar a história de uma regra — foram a numeração do **protótipo**; a v1.0.0 será
+o lançamento oficial, com domínio próprio, e é a partir dela que esta regra vale. Os
+próximos passos estão no
+[README](https://github.com/amorim-rc/atlaspen/blob/main/README.md#o-que-falta).
 
 ## Como citar
 
-> EQUIPE ATLASPEN. *AtlasPen — Atlas Penal Brasileiro dos Tipos, Atributos e Impacto
-> Legislativo*. 2026. Disponível em: https://github.com/amorim-rc/atlaspen. Acesso em: [data].
+A base é uma fotografia que muda: a citação diz qual.
 
-A autoria é coletiva por decisão de 24/09/2026, e é a mesma que a `LICENSE` exige e o
-`CITATION.cff` declara. Quem faz o quê está em [Autoria e créditos](/projeto/creditos).
+> EQUIPE ATLASPEN. *AtlasPen — Atlas Penal Brasileiro dos Tipos, Atributos e Impacto
+> Legislativo*. Versão [versão], dados conferidos em [data da conferência]. 2026.
+> Disponível em: <https://amorim-rc.github.io/atlaspen/>. Acesso em: [data].
+
+A versão e a data da última conferência estão no rodapé de cada página e na aba Leia-me da
+planilha. A autoria é coletiva, e é a mesma que a `LICENSE` exige e o `CITATION.cff`
+declara; quem faz o quê está em [Autoria e créditos](/projeto/creditos).
 
 A pesquisa de 2008, que é o antecedente do AtlasPen, cita-se à parte:
 

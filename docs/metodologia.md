@@ -1,83 +1,120 @@
 ---
 id: metodologia
 title: Metodologia
+description: A unidade de análise, o que o catálogo afirma e o que deliberadamente cala, de onde vem cada dado e como os atributos são calculados.
 sidebar_position: 2
 ---
 
 # Metodologia
 
+Esta página diz como o AtlasPen decide o que entra na base, o que cada registro pode
+afirmar e como os atributos são calculados a partir dele. É a página dos princípios. O
+detalhe de cada campo está em [Dados abertos](./dados-abertos.md); como o catálogo é construído
+e travado, em [Catálogo de tipos penais](./catalogo-tipos-penais.md); por que falamos em
+*atributos*, e não em *benefícios*, no [Manifesto pelo termo "atributo"](/projeto/manifesto-atributo).
+
 ## Unidade de análise: o tipo penal
 
-A unidade de análise é o
-**tipo penal**: cada conduta com cominação de pena própria — incluindo formas simples,
-qualificadas, privilegiadas, culposas, e cada inciso/alínea que gere pena autônoma.
+A unidade de análise é o **tipo penal**: cada conduta com cominação de pena própria. Isso
+inclui a forma simples e as qualificadas, as privilegiadas, as culposas e cada inciso ou
+alínea que gere pena autônoma. Um artigo do Código Penal pode render um registro ou uma
+dezena; o que conta é a moldura, não o número do artigo.
 
-O catálogo cobre o Código Penal, o Código Penal Militar, a Lei de Drogas, o Estatuto do
-Desarmamento, o CTB, o ECA, a Lei Maria da Penha, os Crimes Ambientais e dezenas de
-outros diplomas.
+Não são tipos penais, e não entram como registro: a causa de aumento abstrata ("aumenta-se
+de um terço"), que só faz sentido sobre a pena de outro crime e é modelada à parte, em
+`data/modificadores.json`; a regra de ação penal; a excludente de ilicitude; a nota de
+referência. Já esteve tudo isso no catálogo, distorcendo as estatísticas de alcance, e a
+história de como saiu está contada no [Catálogo de tipos penais](./catalogo-tipos-penais.md#tem_pena_privativa--e-por-que-o-catálogo-só-tem-tipos-penais).
 
-## Campos do catálogo
+Quantos diplomas e quantos tipos o catálogo cobre hoje, e quanto de cada um já foi
+conferido, está em [Completude](./completude.md) — número vivo não mora em prosa.
 
-Cada tipo penal registra, entre outros: `lei`, `artigo`, `crime`, `pena_min` e
-`pena_max` (em **meses**), `tipo_pena`, `acao`, `hediondo`, `elemento` (doloso, culposo, preterdoloso ou
-qualificado pelo resultado), `tentativa`,
-`violencia`, `grave_ameaca` e `obs`.
+## Três compromissos
 
-Seis campos são opcionais e existem para não afirmar o que a lei não afirma:
-`hediondo_condicao`, `acao_condicao` e `violencia_condicao` guardam, em texto, a
-hipótese de que a classificação depende — o homicídio só é hediondo se praticado em
-atividade típica de grupo de extermínio; o exercício arbitrário das próprias razões só
-é de ação privada se não houver violência; e sequestrar não pressupõe violência, porque
-a privação da liberdade pode ser obtida por fraude ou engano. Nos três, o campo
-principal fica no valor seguro — "Não" —, e a hipótese contrária fica escrita ao lado.
-No caso da violência, o motor calcula os atributos nas duas hipóteses e mostra as duas.
+**Descrever, não avaliar.** O catálogo registra o que a lei liga a cada tipo: a pena, a
+espécie de ação penal, a hediondez, o que cabe e o que não cabe em termos de substituição,
+suspensão, progressão, prescrição. Não diz se isso é bom ou ruim. A palavra que escolhemos
+para esse conjunto de consequências, *atributo*, foi escolhida por ser neutra, e o
+[Manifesto](/projeto/manifesto-atributo) explica a escolha.
 
-`hediondo_nota` é diferente, e a diferença importa: ela registra divergência de
-**jurisprudência ou de doutrina**, não circunstância do caso. O tipo não muda conforme
-o que aconteceu; muda conforme quem julga. `vigencia_ate`, com a nota obrigatória `vigencia_nota`,
-registra a data em que o dispositivo deixou de vigorar, sem tirá-lo do catálogo: fato
-anterior continua regido por ele. E `pena_por_remissao` diz de onde a moldura vem,
-quando o tipo não comina uma: o art. 304 do Código Penal pune o uso de documento falso
-com "a pena cominada à falsificação", e qual é ela depende de qual falsificação foi
-usada.
+**Dizer o que se sabe e calar o que não se sabe.** Nenhum campo é preenchido por
+plausibilidade. Quando a lei não decide pelo tipo — quando a classificação depende do que
+aconteceu no caso —, o registro não escolhe: fica no valor seguro e escreve a hipótese ao
+lado. É para isso que existem os campos condicionais, e eles são o coração do método:
 
-### Campos derivados automaticamente
+- `hediondo_condicao`: o homicídio simples só é hediondo se praticado em atividade típica
+  de grupo de extermínio. `hediondo` fica em "Não"; a hipótese fica em texto.
+- `acao_condicao`: o exercício arbitrário das próprias razões só é de ação privada se não
+  houver violência. `acao` fica na regra; a exceção fica em texto.
+- `violencia_condicao`: sequestrar não pressupõe violência, porque a privação da liberdade
+  pode ser obtida por fraude. Aqui o motor vai além: calcula os atributos nas duas hipóteses
+  e mostra as duas.
 
-Para viabilizar filtros combinados e o cálculo de atributos, alguns campos são
-**derivados por heurística** a partir do texto legal e das observações:
+Três outros campos têm a mesma função em outra dimensão. `hediondo_nota` registra
+divergência de **jurisprudência ou de doutrina**, não circunstância do caso: o tipo não
+muda conforme o que aconteceu, muda conforme quem julga. `vigencia_ate`, sempre com
+`vigencia_nota`, registra a data em que o dispositivo deixou de vigorar sem tirá-lo do
+catálogo, porque fato anterior continua regido por ele. E `pena_por_remissao` diz de onde
+a moldura vem quando o tipo não comina uma — o art. 304 do Código Penal pune o uso de
+documento falso com "a pena cominada à falsificação", e qual é ela depende de qual
+falsificação foi usada; o catálogo não a inventa.
 
-| Campo | Descrição | Como é derivado |
-|-------|-----------|-----------------|
-| `pena_privativa` | Reclusão, Detenção, Prisão simples ou Nenhuma | mapeado de `tipo_pena` — `Multa`, `Morte` e `Outras penas` viram `Nenhuma`, porque não são pena de prisão |
-| `tem_multa` | se há pena de multa (cumulativa, alternativa ou isolada) | regex sobre `obs` |
-| `multa_regime` | `cumulativa` / `alternativa` / `isolada` / `nenhuma` | conectores no texto |
-| `infracao_menor_potencial` | contravenção, ou crime com pena máxima ≤ 2 anos ou só com multa (art. 61 da Lei 9.099/95); nunca crime militar (art. 90-A) | `contravencao`, ou `pena_max ≤ 24`, ou multa isolada; fora o CPM; dentro o art. 28 da Lei 11.343/06 (art. 48, §1º) |
-| `vigente` | o dispositivo ainda vigora? | ausência de `vigencia_ate` |
-| `hediondo_especie` | `natureza`, `equiparado` ou `nao` | **não é heurística**: casamento com a tabela curada `data/hediondos.json` (`scripts/hediondez.py`), a mesma contra a qual a auditoria roda |
-| `hediondo_fundamento` | o dispositivo que torna o tipo hediondo | o `fundamento` da regra que casou |
+Ler só o campo principal e ignorar a condição é ler metade do registro. Quem consome os
+dados precisa saber disso, e [Dados abertos](./dados-abertos.md) repete o aviso.
 
-:::warning[Multa é uma dimensão independente]
-No Direito Penal brasileiro a multa é, na maioria dos casos, **cumulada** com a pena
-privativa ("reclusão de 1 a 4 anos, **e multa**"). Por isso a multa é modelada como uma
-dimensão **independente** (`tem_multa`), e não como um valor mutuamente exclusivo de
-reclusão/detenção. Consequência prática: filtrar por **"Reclusão"** retorna também os
-tipos com **reclusão + multa**. Para restringir apenas aos que têm multa, combine
-"Reclusão" com o chip "Multa".
+**A fonte é o texto compilado.** Uma lei penal quase nunca nasce sozinha: altera outra. Por
+isso a fonte do catálogo não é o texto de cada lei no dia em que foi publicada, e sim o
+**texto compilado** do `planalto.gov.br`, que traz a redação em vigor e, ao lado de cada
+dispositivo, a nota de quem o incluiu, alterou ou revogou. Cada registro diz contra qual
+página foi conferido e quando. Como isso é feito, toda semana, está em [Os robôs](./os-robos.md).
+
+## Quatro camadas de dado
+
+O que a tela mostra passa por quatro camadas, e saber em qual delas um dado nasce diz o
+que ele vale e onde se corrige.
+
+| Camada | O que é | Quem produz | Onde está descrita |
+| --- | --- | --- | --- |
+| **Fonte** | Os campos redigidos à mão, um registro por tipo penal, em `data/crimes.json` | Pessoas, conferindo contra o compilado | [Catálogo de tipos penais](./catalogo-tipos-penais.md) |
+| **Derivado** | Os campos calculados a partir da fonte — rótulos de pena, menor potencial ofensivo, contravenção, hediondez pela tabela curada, duplicatas | `scripts/transform_data.py`, a cada build | [Dados abertos](./dados-abertos.md#derivados--recalculados-a-cada-build-não-edite) |
+| **Conferência** | A trilha de auditoria de cada registro: contra qual página, quando, com que resultado | Os robôs, toda segunda-feira | [Os robôs](./os-robos.md) |
+| **Cálculo** | O veredito de cada atributo sobre cada tipo, num cenário dado | O motor de atributos, em tempo real na tela | [Atributos penais](./atributos-penais.md) |
+
+A separação entre fonte e derivado é a que mais importa para quem contribui: quem edita o
+derivado perde a edição na próxima geração. A separação entre derivado e cálculo é a que
+mais importa para quem consome: o derivado é um arquivo publicado e estável; o cálculo
+depende do cenário e muda quando o cenário muda.
+
+:::note[Multa é uma dimensão independente]
+No direito penal brasileiro a multa é, na maioria dos casos, **cumulada** com a pena
+privativa ("reclusão de 1 a 4 anos, **e multa**"). Por isso ela é modelada como dimensão
+independente (`tem_multa`, `multa_regime`), e não como alternativa a reclusão ou detenção.
+Consequência prática: filtrar por "Reclusão" retorna também os tipos com reclusão e multa;
+para ver só os que têm multa, combine os dois filtros.
 :::
-
-Todos os campos derivados carregam a marca `derivado_auto: true` e serão revisados
-individualmente. Correções manuais podem ser registradas em `CORRECOES` no
-`scripts/transform_data.py` e regeneradas com `python3 scripts/transform_data.py`.
 
 ## Cálculo dos atributos
 
-Os atributos são calculados por **funções puras** sobre um *cenário* (pena em abstrato,
-pena concreta e características do réu/caso). O cálculo é **recalculado em tempo real** à
-medida que o usuário altera qualquer parâmetro — inclusive a própria pena cominada, o que
-permite **simular alterações legislativas**.
+Cada atributo é avaliado por uma **função pura** sobre um *cenário*: a pena em abstrato, a
+pena concreta e as características do caso que a lei manda considerar — reincidência,
+violência ou grave ameaça, hediondez, resultado morte, data do fato. A função devolve, para
+cada atributo, **cabível**, **condicional** ou **incabível**, com o fundamento legal e o
+limiar que decidiu.
 
-Os patamares legais adotados (limiares de 1, 2 e 4 anos; frações de progressão do
-Art. 112 LEP; tabela de prescrição do Art. 109 CP; etc.) estão documentados em
-[Atributos penais](./atributos-penais.md). São dados, e não código: ficam em
-`data/atributos.json`, cada um com o dispositivo e a lei de cada redação, conferidos contra
-o texto compilado, e a história de cada dispositivo fica em `data/historico-legislativo.json`.
+Dois traços do cálculo decorrem do método:
+
+- **Os patamares são dados, não código.** Frações, prazos e tetos ficam em
+  `data/atributos.json`, cada um com o dispositivo, a lei que lhe deu a redação e o valor
+  anterior quando o número mudou. É isso que permite alterar um patamar na tela e ver o
+  alcance sobre o catálogo mudar — e é isso que permite a
+  [simulação legislativa](/simulacao).
+- **A data do fato escolhe a lei.** Quando um dispositivo teve duas redações em vigor no
+  mesmo ano, o motor aplica a que regia o fato, e a retroatividade da lei mais benéfica é
+  apurada por situação, não em bloco. O caso concreto é o art. 112 da LEP, tratado em
+  [Progressão de regime](./progressao-de-regime.md).
+
+Quando o direito não tem resposta única — duas leituras sustentáveis de um mesmo inciso,
+uma ADI pendente —, o motor não escolhe: devolve *condicional* e escreve as leituras. A
+implementação é para fins de pesquisa, simplifica controvérsias doutrinárias e
+jurisprudenciais, e não constitui aconselhamento jurídico. A lista dos atributos, com o
+critério de cada um, está em [Atributos penais](./atributos-penais.md).

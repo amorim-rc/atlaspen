@@ -36,7 +36,7 @@ const textos = defineCollection({
   loader: glob({pattern: '*.md', base: './docs/textos'}),
   schema: z.object({
     titulo: z.string(),
-    genero: z.enum(['história', 'manifesto', 'nota de método', 'posição', 'créditos']),
+    genero: z.enum(['história', 'ensaio', 'manifesto', 'nota de método', 'posição', 'créditos']),
     /** AAAA-MM-DD, entre aspas no front matter. */
     data: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
     revisado_em: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),

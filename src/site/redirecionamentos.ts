@@ -48,6 +48,7 @@ export const DOCUMENTOS_DO_PROJETO = [
   'completude',
   'catalogo-tipos-penais',
   'atributos-penais',
+  'progressao-de-regime',
   'os-robos',
   'dados-abertos',
 ];
