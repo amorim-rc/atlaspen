@@ -48,7 +48,7 @@ ignoradas:
   em `data/ids-aposentados.json` e `--estrito` reprova reaproveitamento — inclusive o
   caso silencioso de remover o topo da numeração e o `max + 1` devolver um número já
   usado. Reiniciar exige remapear TUDO que é indexado por id: `data/conferencia.json`,
-  as tabelas `CORRECOES_*` do `transform_data.py`, os `ids` das exceções da auditoria e
+  as tabelas `CORRECOES_*` de `scripts/catalogo/tabelas.py`, os `ids` das exceções da auditoria e
   os links `?tipo=N` das notas já publicadas.
 - **Glossário.** *Atributo penal* é o instituto (transação, progressão, prescrição…);
   *parâmetro*, o patamar, a fração ou a vedação editável de um atributo; *campo*, o

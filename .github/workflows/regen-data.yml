@@ -17,6 +17,11 @@ on:
       - 'data/atributos.json'
       - 'data/historico-legislativo.json'
       - 'scripts/transform_data.py'
+      # As regras do construtor moram no pacote desde 25/09/2026.
+      - 'scripts/catalogo/**'
+      - 'scripts/dispositivo_canonico.py'
+      - 'scripts/hediondez.py'
+      - 'scripts/pena_parser.py'
       - 'scripts/derivar_atributos.ts'
   workflow_dispatch:
 

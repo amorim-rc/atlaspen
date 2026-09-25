@@ -25,6 +25,7 @@
       "conferido_em": "2026-09-24",
       "depende_de": [
         "scripts/transform_data.py",
+        "scripts/catalogo",
         "scripts/validar-changelog.mjs",
         ".github/workflows/ci.yml",
         "src/data/changelog/create-changelog-entry.md"
@@ -37,6 +38,7 @@
       "depende_de": [
         "CONTRIBUTING.md",
         "scripts/transform_data.py",
+        "scripts/catalogo",
         ".github/workflows/ci.yml",
         "scripts/robos/auditor/excecoes-auditoria.json"
       ]
@@ -59,6 +61,7 @@
       "conferido_em": "2026-09-24",
       "depende_de": [
         "scripts/transform_data.py",
+        "scripts/catalogo",
         "src/lib/types.ts",
         "src/lib/atributos",
         "data/modificadores.json"
@@ -70,6 +73,7 @@
       "conferido_em": "2026-09-24",
       "depende_de": [
         "scripts/transform_data.py",
+        "scripts/catalogo",
         "src/lib/types.ts",
         "CONTRIBUTING.md"
       ]
@@ -86,6 +90,7 @@
         "scripts/robos/sentinela/dou_watcher.py",
         "scripts/robos/vigia/conferir.py",
         "scripts/transform_data.py",
+        "scripts/catalogo",
         "scripts/validar_atributos.py",
         "src/lib/types.ts"
       ]

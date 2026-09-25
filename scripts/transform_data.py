@@ -57,7 +57,8 @@ from catalogo.fontes import (  # noqa: E402,F401
 from catalogo.validacoes import (  # noqa: E402,F401
     _hediondez, ids_aposentados, proximo_id, validar_condicionais,
     validar_elemento_e_tentativa, validar_hediondez, validar_ids, validar_moldura,
-    validar_pena_por_remissao, validar_tipos_penais, validar_tudo, validar_vigencia,
+    validar_grafia_artigo, validar_pena_por_remissao, validar_tipos_penais, validar_tudo,
+    validar_vigencia,
     validar_vocabulario,
 )
 from catalogo.pena import (  # noqa: E402,F401

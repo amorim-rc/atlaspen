@@ -115,7 +115,7 @@ veda a saída temporária.
 
 Não existe perdão judicial genérico: ele só incide **onde a lei o prevê expressamente** e
 **não se estende por analogia**. Por isso o campo não é inferido do elemento culposo, e sim
-de uma lista de dispositivos mantida em `PERDAO_JUDICIAL`, no script de transformação. Onde
+de uma lista de dispositivos mantida em `PERDAO_JUDICIAL`, em `scripts/catalogo/tabelas.py`. Onde
 a lei restringe o perdão à modalidade culposa, a regra exige `elemento == "Culposo"` — o
 art. 121, §4º, por exemplo, tem uma 1ª parte culposa e uma 2ª parte dolosa, e só a
 primeira o admite.
@@ -187,6 +187,6 @@ Para corrigir diretamente:
 2. Abra um Pull Request descrevendo a fonte legal da correção.
 3. A CI valida; ao integrar, o `regen-data` regenera o derivado automaticamente.
 
-Correções finas que a heurística não acerta ficam em tabelas explícitas no
-`scripts/transform_data.py` (`CORRECOES`, `CORRECOES_MORTE`), com o motivo documentado —
+Correções finas que a heurística não acerta ficam em tabelas explícitas em
+`scripts/catalogo/tabelas.py` (`CORRECOES`, `CORRECOES_MORTE`), com o motivo documentado —
 assim a exceção sobrevive à próxima regeneração.

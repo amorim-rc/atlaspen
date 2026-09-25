@@ -14,6 +14,10 @@ from collections import Counter
 # A hediondez tem tabela curada (`data/hediondos.json`) e módulo próprio, que o
 # Auditor e este construtor compartilham para não divergirem em silêncio.
 import hediondez as _hediondez  # noqa: E402
+# A régua de grafia do campo `artigo` é a mesma que o histórico legislativo e o
+# Auditor usam para ler o dispositivo (`dispositivo_canonico`): quem a valida
+# na entrada é quem impede que uma grafia nova deixe de casar regra em silêncio.
+from dispositivo_canonico import problemas_de_grafia  # noqa: E402
 
 from .caminhos import APOSENTADOS
 from .tabelas import NAO_TIPIFICA, OPERADORES_REMISSAO, VOCABULARIO
@@ -317,6 +321,23 @@ def proximo_id(crimes: list) -> int:
                | ids_aposentados()) + 1
 
 
+def validar_grafia_artigo(crimes: list) -> list:
+    """Grafia canônica do dispositivo (débito técnico 4, fechado em 25/09/2026).
+
+    Em 23/09/2026, 37 registros escreviam `§ 2º` com espaço contra 375 sem, e a
+    exclusão que tirava a forma culposa do art. 273 do CP do rol de hediondos
+    nunca casou — um erro jurídico escondido por meses por uma variação de
+    grafia. A grafia foi normalizada; esta validação impede que a variação
+    volte: o que a régua não lê reprova aqui, com a mensagem do que corrigir.
+    """
+    problemas = []
+    for c in crimes:
+        for defeito in problemas_de_grafia(c.get("artigo") or ""):
+            problemas.append(
+                f"id={c.get('id')} ({c.get('lei')} {c.get('artigo')!r}): grafia do artigo — {defeito}")
+    return problemas
+
+
 def validar_tudo(crimes: list, tabela_hediondez: dict) -> list:
     """Todos os invariantes, na ordem em que o construtor sempre os rodou.
 
@@ -330,4 +351,5 @@ def validar_tudo(crimes: list, tabela_hediondez: dict) -> list:
             + validar_moldura(crimes) + validar_condicionais(crimes)
             + validar_elemento_e_tentativa(crimes)
             + validar_vigencia(crimes)
-            + validar_pena_por_remissao(crimes))
+            + validar_pena_por_remissao(crimes)
+            + validar_grafia_artigo(crimes))
