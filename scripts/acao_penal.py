@@ -116,6 +116,47 @@ _EXCETO_MARCADORES = re.compile(
 _MARCADOR_COM_INCISO = re.compile(
     r'§\s*(\d+)\s*[º°]?(?:\s*,\s*([IVXLC]+))?', re.I)
 
+# A exceção que nomeia ARTIGO E PARÁGRAFO alcança só aquele parágrafo:
+#
+#     Art. 145. Nos crimes previstos neste Capítulo somente se procede mediante
+#     queixa, SALVO QUANDO, NO CASO DO ART. 140, § 2º, da violência resulta
+#     lesão corporal.
+#
+# Lendo só o artigo, a exceção tirava os TRÊS registros do art. 140 da queixa do
+# capítulo — a injúria simples e a racial junto com a real —, e a espécie deles
+# passava a vir de outra regra. O catálogo publica queixa para o caput e
+# representação para o § 3º, e estava certo; quem errava era a leitura.
+# A ressalva que abre HIPÓTESE, e não exclusão: o que vem depois do dispositivo
+# é uma condição de fato ("quando […] resulta"), e não outra regra.
+_RESSALVA_CONDICIONADA = re.compile(r'\bquando\b|\bse\b\s|\bresulta\b', re.I)
+
+_EXCETO_DISPOSITIVO = re.compile(
+    r'art(?:igo)?s?\.?\s*(\d+(?:-[a-z])?)\s*,\s*§\s*(\d+)', re.I)
+
+# A mesma regra distribui espécies diferentes por dispositivo, e a última vem
+# depois de "bem como":
+#
+#     Parágrafo único. Procede-se mediante requisição […] no caso do inciso I do
+#     caput do art. 141 […], e mediante representação do ofendido, no caso do
+#     inciso II do mesmo artigo, BEM COMO NO CASO DO § 3º DO ART. 140.
+#
+# O § 3º do art. 140 é a injúria racial, e para ela a representação não depende
+# de circunstância nenhuma: a lei a nomeia. As duas primeiras hipóteses, sim —
+# dependem de quem é a vítima, e por isso continuam como ressalva.
+# A espécie da hipótese nomeada é a da fórmula mais próxima ANTES dela, e ali a
+# lei escreve curto — "e mediante representação do ofendido" —, sem o verbo que
+# as fórmulas do topo exigem. Esta é a régua curta, usada só para esse trecho.
+_ESPECIE_CURTA: list[tuple[str, re.Pattern]] = [
+    ('Ação Penal Privada', re.compile(r'mediante queixa', re.I)),
+    ('Pública Condicionada à Requisição',
+     re.compile(r'mediante requisicao do ministro', re.I)),
+    ('Pública Condicionada à Representação',
+     re.compile(r'mediante representacao', re.I)),
+]
+
+_BEM_COMO_DISPOSITIVO = re.compile(
+    r'bem como no caso do §\s*(\d+)\s*[º°o]?\s*do art(?:igo)?\.?\s*(\d+(?:-[a-z])?)', re.I)
+
 
 @dataclass
 class RegraAcao:
@@ -260,9 +301,25 @@ def achar_regras(dispositivos: dict, bruto: str) -> list[RegraAcao]:
                 enumerada = False
             resolvida = enumerada
             if excecao := _EXCETO.search(texto):
-                fora = _ARTIGOS_CITADOS.findall(excecao.group(0))
+                janela = texto[excecao.start():excecao.start() + 140]
+                pares = _EXCETO_DISPOSITIVO.findall(janela)
+                if pares:
+                    chaves = [f'{a}|§ {p}º' for a, p in pares]
+                    # Exceção CONDICIONADA não exclui: ressalva o dispositivo.
+                    # "salvo quando […] da violência resulta lesão corporal"
+                    # deixa a queixa de pé enquanto a lesão não houver.
+                    if _RESSALVA_CONDICIONADA.search(janela):
+                        alcance['ressalva_dispositivos'] = chaves
+                    else:
+                        alcance['exceto_dispositivos'] = chaves
+                    nomeados = {a for a, _ in pares}
+                    fora = [a for a in _ARTIGOS_CITADOS.findall(janela)
+                            if a not in nomeados]
+                else:
+                    fora = _ARTIGOS_CITADOS.findall(janela)
                 if fora:
                     alcance['exceto'] = fora
+                if fora or pares:
                     resolvida = True
             if m := _EXCETO_MARCADORES.search(texto):
                 trecho = m.group(0)
@@ -283,6 +340,31 @@ def achar_regras(dispositivos: dict, bruto: str) -> list[RegraAcao]:
                 # para "pede juízo" um registro sobre o qual não há o que julgar.
                 ressalva=bool(_RESSALVA.search(texto)) and not resolvida,
                 alcance=alcance))
+            # A mesma regra pode nomear um dispositivo e dar a ele, sozinho, uma
+            # espécie que não depende de circunstância nenhuma. Vira regra
+            # própria, mais específica que a do capítulo, e sem ressalva.
+            if bem := _BEM_COMO_DISPOSITIVO.search(texto):
+                par, art_alvo = bem.group(1), bem.group(2)
+                antes = texto[:bem.start()]
+                achadas = [(m.start(), esp) for esp, pad in _ESPECIE_CURTA
+                           if (m := pad.search(antes))]
+                especifica = max(achadas)[1] if achadas else especie
+                # O artigo citado SÓ dentro desta hipótese não é alcance da
+                # regra-mãe: no art. 145, parágrafo único, o art. 140 aparece
+                # apenas em "bem como no caso do § 3º do art. 140", e deixá-lo
+                # no alcance dava requisição à injúria simples e à real.
+                so_aqui = [a for a in alcance.get('artigos', [])
+                           if a == art_alvo and a not in _ARTIGOS_CITADOS.findall(antes)]
+                if so_aqui:
+                    alcance['artigos'] = [a for a in alcance['artigos'] if a != art_alvo]
+                regras.append(RegraAcao(
+                    especie=especifica, formula=f'{formula}-dispositivo',
+                    dispositivo=f"Art. {artigo}"
+                                + ('' if chave.endswith('caput') else f", {chave.split('|')[1]}")
+                                + f" (quanto ao art. {art_alvo}, § {par}º)",
+                    texto=(getattr(d, 'texto', '') or '')[:220],
+                    ressalva=False,
+                    alcance={'artigos': [art_alvo], 'marcadores': [f'§ {par}º']}))
             break
     return regras
 
@@ -294,6 +376,9 @@ def alcanca(regra: RegraAcao, artigo: str, lugar: dict, marcador: str = 'caput')
     if artigo.upper() in [x.upper() for x in a.get('exceto', [])]:
         return False
     if marcador.upper() in [x.upper() for x in a.get('exceto_marcadores', [])]:
+        return False
+    if f'{artigo}|{marcador}'.upper() in [
+            x.upper() for x in a.get('exceto_dispositivos', [])]:
         return False
     if a.get('artigos'):
         # Sem reduzir o sufixo: o art. 147-B (violência psicológica) NÃO é o
@@ -407,7 +492,9 @@ def classificar(registro: dict, regras: list[RegraAcao], lugar: dict) -> Classif
                                    1 if r.alcance.get('artigos') else
                                    2 if r.alcance.get('capitulo') else 3))
     r = candidatas[0]
-    return Classificacao(r.especie, f"{r.dispositivo}: {r.texto}", r.formula, r.ressalva)
+    ressalva = r.ressalva or f'{artigo}|{marcador}'.upper() in [
+        x.upper() for x in r.alcance.get('ressalva_dispositivos', [])]
+    return Classificacao(r.especie, f"{r.dispositivo}: {r.texto}", r.formula, ressalva)
 
 
 # ── Regras de FORA do diploma ───────────────────────────────────────────────

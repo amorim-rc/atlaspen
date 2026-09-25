@@ -310,3 +310,70 @@ class TestEnumeracaoComIncisoDoParagrafo:
         r, lugar = self._regra(), {"titulo": "II", "capitulo": "IV"}
         assert not ap.alcanca(r, "163", lugar, "parágrafo único, I")
         assert not ap.alcanca(r, "163", lugar, "parágrafo único, III")
+
+
+class TestArt145:
+    """O art. 145 do CP distribui quatro espécies em duas frases.
+
+        Art. 145. Nos crimes previstos neste Capítulo somente se procede
+        mediante queixa, salvo quando, no caso do art. 140, § 2º, da violência
+        resulta lesão corporal.
+        Parágrafo único. Procede-se mediante requisição do Ministro da Justiça,
+        no caso do inciso I do caput do art. 141 deste Código, e mediante
+        representação do ofendido, no caso do inciso II do mesmo artigo, bem
+        como no caso do § 3º do art. 140 deste Código.
+
+    Lendo só os artigos, a exceção do caput tirava os TRÊS registros do art. 140
+    da queixa do capítulo, e o parágrafo único dava requisição aos três — a
+    injúria simples, a real e a racial. O catálogo estava certo nos três; quem
+    errava era a leitura, e o erro ficava escondido atrás de "pede juízo".
+    """
+
+    CAPUT = ("Nos crimes previstos neste Capítulo somente se procede mediante "
+             "queixa, salvo quando, no caso do art. 140, § 2º, da violência "
+             "resulta lesão corporal.")
+    PU = ("Procede-se mediante requisição do Ministro da Justiça, no caso do "
+          "inciso I do caput do art. 141 deste Código, e mediante representação "
+          "do ofendido, no caso do inciso II do mesmo artigo, bem como no caso "
+          "do § 3º do art. 140 deste Código.")
+
+    def _regras(self):
+        disp = {"Art. 145|caput": Disp(self.CAPUT),
+                "Art. 145|parágrafo único": Disp(self.PU)}
+        bruto = (f"TÍTULO I CAPÍTULO V Art. 138. Caluniar alguém. Art. 140. Injuriar "
+                 f"alguém. Art. 141. São aumentadas. Art. 145. {self.CAPUT} {self.PU}")
+        return ap.achar_regras(disp, bruto)
+
+    def _do(self, trecho):
+        return next(r for r in self._regras() if trecho in r.dispositivo)
+
+    def test_a_excecao_condicionada_nao_exclui_o_dispositivo(self):
+        """"salvo QUANDO […] da violência resulta lesão" é hipótese, não exclusão."""
+        r = self._do("Art. 145")
+        assert "exceto_dispositivos" not in r.alcance
+        assert r.alcance.get("ressalva_dispositivos") == ["140|§ 2º"]
+
+    def test_a_excecao_nao_alcanca_o_artigo_inteiro(self):
+        """O § 2º é ressalvado; o caput e o § 3º do art. 140, não."""
+        r, lugar = self._do("Art. 145"), {"titulo": "I", "capitulo": "V"}
+        assert ap.alcanca(r, "140", lugar, "caput")
+        assert ap.alcanca(r, "140", lugar, "§ 2º")
+        assert ap.alcanca(r, "140", lugar, "§ 3º")
+
+    def test_a_hipotese_nomeada_vira_regra_propria(self):
+        """"bem como no caso do § 3º do art. 140" — a injúria racial."""
+        r = self._do("quanto ao art. 140")
+        assert r.especie == "Pública Condicionada à Representação"
+        assert r.ressalva is False
+        assert r.alcance == {"artigos": ["140"], "marcadores": ["§ 3º"]}
+
+    def test_a_regra_mae_deixa_de_alcancar_o_artigo_citado_so_ali(self):
+        """O art. 140 só aparece no parágrafo único dentro do "bem como"."""
+        assert self._do("Art. 145, parágrafo único").alcance["artigos"] == ["141"]
+
+    def test_a_injuria_real_sai_com_ressalva_e_nao_com_espécie_trocada(self):
+        regras = self._regras()
+        lugar = {"titulo": "I", "capitulo": "V"}
+        c = ap.classificar({"artigo": "Art. 140, §2º", "lei": "CP", "crime": "Injúria real",
+                            "violencia": "Sim", "grave_ameaca": "Não"}, regras, lugar)
+        assert c.especie == "Ação Penal Privada" and c.ressalva is True
