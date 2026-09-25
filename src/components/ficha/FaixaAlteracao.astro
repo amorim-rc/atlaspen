@@ -1,0 +1,167 @@
+---
+// A faixa logo abaixo do cabeçalho: a última alteração do dispositivo — ou,
+// para o tipo fora de vigência, desde quando e por quê. É HTML do build: sem JS,
+// a ficha continua dizendo de que lei é a redação que ela lê.
+import type {Crime} from '../../lib/types';
+import type {Diploma} from '../../site/diplomas-servidor';
+import type {Historico} from '../../site/historico-servidor';
+import {dataCurta} from '../../site/datas';
+
+interface Props {
+  crime: Crime;
+  vigente: boolean;
+  diploma: Diploma | undefined;
+  /** O histórico legislativo do artigo, pela chave canônica do dispositivo. */
+  hist: Historico;
+  /** O artigo do registro (`art. 121`), tirado da chave canônica. */
+  artigoDoRegistro: string;
+  /** Para onde "ver histórico" leva: a aba da ilha, quando ela existe; a âncora do bloco estático, quando não. */
+  linkHistorico: string;
+}
+const {crime, vigente, diploma, hist, artigoDoRegistro, linkHistorico} = Astro.props;
+
+// ── A faixa da última alteração ────────────────────────────────────────────
+// Lê o campo derivado do registro quando existir (frente 4), senão o histórico
+// legislativo do artigo; não havendo nenhum dos dois, diz que não há.
+type Faixa = {estado: 'normal' | 'fora' | 'nao-datado'; rotulo: string; texto: string; detalhe?: string; url?: string};
+const semParenteses = (t: string) => t.replace(/^\(|\)$/g, '');
+let faixa: Faixa;
+if (!vigente) {
+  faixa = {
+    estado: 'fora',
+    rotulo: 'Fato anterior',
+    texto: `Fora de vigência desde ${dataCurta(crime.vigencia_ate ?? '')}.`,
+    detalhe: `${crime.vigencia_nota ?? ''} O registro continua consultável: fatos anteriores a essa data seguem regidos por ele.`,
+  };
+} else if (crime.ultima_alteracao !== undefined) {
+  const u = crime.ultima_alteracao;
+  const n = crime.alteracoes_legislativas;
+  // Três respostas, e nenhuma se confunde com a outra: a lei que por último
+  // mexeu no dispositivo; a redação original, que é uma data conhecida (a do
+  // diploma); e o silêncio do compilado, que não é "original".
+  faixa = u
+    ? {
+        estado: 'normal',
+        rotulo: 'Última alteração deste dispositivo',
+        texto: `${u.evento === 'criacao' ? 'Incluído pela' : u.evento === 'revogacao' ? 'Revogado pela' : 'Redação dada pela'} ${u.norma ?? 'norma não identificada'}${u.ano ? `, de ${u.ano}` : ''}.`,
+        // O dispositivo incluído por lei não tem "texto original" de que se alterar:
+        // a lei que o incluiu é a primeira do histórico dele, e conta.
+        ...(typeof n === 'number'
+          ? {
+              detalhe:
+                u.evento === 'criacao' && n === 1
+                  ? 'sem alteração desde a inclusão'
+                  : `${n} ${n === 1 ? 'lei' : 'leis'} no histórico deste dispositivo`,
+            }
+          : {}),
+        ...(u.url ? {url: u.url} : {}),
+      }
+    : n === 0
+      ? {
+          estado: 'normal',
+          rotulo: 'Última alteração deste dispositivo',
+          texto: `Redação original${diploma ? ` — ${diploma.norma}` : ''}, sem alteração desde então.`,
+        }
+      : {
+          estado: 'nao-datado',
+          rotulo: 'Última alteração deste dispositivo',
+          texto: 'Sem data conhecida: o texto compilado não data esta redação.',
+          detalhe: 'o compilado não anota quem deu o texto desta unidade, e o histórico não adivinha',
+        };
+} else if (hist.datado && (hist.ultima || hist.original)) {
+  const u = hist.ultima;
+  faixa = {
+    estado: 'normal',
+    rotulo: 'Última alteração deste dispositivo',
+    texto: u
+      ? `${semParenteses(u.anotacao ?? `Alterado pela ${u.norma}${u.ano ? `, de ${u.ano}` : ''}`)}.`
+      : `Redação original${diploma ? ` — ${diploma.norma}` : ''}, sem alteração registrada.`,
+    detalhe: `o ${artigoDoRegistro} como um todo tem ${hist.alteracoesArtigo} ${hist.alteracoesArtigo === 1 ? 'alteração registrada' : 'alterações registradas'}`,
+    ...(u?.url ? {url: u.url} : {}),
+  };
+} else {
+  faixa = {
+    estado: 'nao-datado',
+    rotulo: 'Última alteração deste dispositivo',
+    texto: 'Ainda não datada.',
+    detalhe:
+      'o histórico legislativo dos tipos penais ainda está em coleta.',
+  };
+}
+---
+
+<section class:list={['faixa-alteracao', `faixa-${faixa.estado}`]} aria-label={faixa.rotulo}>
+  <span class="rotulo rotulo-faixa">{faixa.rotulo}</span>
+  <span class="corpo-faixa">
+    <span class="texto-faixa">
+      {faixa.url ? <a href={faixa.url} rel="noopener" target="_blank">{faixa.texto}</a> : faixa.texto}
+    </span>
+    {faixa.detalhe && <span class="detalhe-faixa">{faixa.detalhe}</span>}
+  </span>
+  {vigente && <a class="ver-historico nao-imprimir" href={linkHistorico}>ver histórico →</a>}
+</section>
+
+<style>
+  .faixa-alteracao {
+    display: grid;
+    grid-template-columns: 10rem minmax(0, 1fr) auto;
+    gap: 0.4rem 1rem;
+    align-items: center;
+    padding: 0.85rem 1.25rem;
+    border-bottom: 1px solid var(--cor-borda);
+    background: var(--cor-superficie);
+  }
+
+  .rotulo-faixa {
+    line-height: 1.4;
+  }
+
+  .corpo-faixa {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    min-width: 0;
+  }
+
+  .texto-faixa {
+    font-size: 0.9375rem;
+    line-height: 1.5;
+  }
+
+  .detalhe-faixa {
+    font-family: var(--fonte-mono);
+    font-size: var(--fs-rotulo);
+    color: var(--cor-tinta-fraca);
+  }
+
+  .ver-historico {
+    font-family: var(--fonte-mono);
+    font-size: var(--fs-meta);
+    white-space: nowrap;
+  }
+
+  .faixa-fora {
+    border-left: 3px solid var(--cor-acento);
+  }
+
+  .faixa-fora .rotulo-faixa,
+  .faixa-fora .texto-faixa {
+    color: var(--cor-acento);
+  }
+
+  .faixa-nao-datado .texto-faixa {
+    color: var(--cor-tinta-corpo);
+  }
+
+  @media (max-width: 760px) {
+    .faixa-alteracao {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .faixa-alteracao {
+      padding-inline: 1rem;
+    }
+  }
+</style>

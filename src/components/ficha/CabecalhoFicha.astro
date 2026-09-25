@@ -1,0 +1,162 @@
+---
+// O cabeçalho da ficha: à esquerda a identificação do tipo — lei e dispositivo,
+// nome, o texto do catálogo e as marcas dos campos; à direita, a caixa da pena.
+// Na tela estreita, texto e marcas recolhem atrás de "mais sobre o tipo" (o
+// script da página fecha o <details>): quem abriu a página já sabe qual tipo
+// pediu.
+import type {Crime} from '../../lib/types';
+import CaixaMoldura from './CaixaMoldura.astro';
+
+interface Props {
+  crime: Crime;
+  vigente: boolean;
+}
+const {crime, vigente} = Astro.props;
+
+// ── Marcas: os campos do tipo, em texto — nunca só em cor ──────────────────
+type Marca = {rotulo: string; tom?: 'acento' | 'simulacao'; titulo?: string};
+const acao = `Ação ${crime.acao.replace(/^Ação\s+Penal\s+/i, '').replace(/^Ação\s+/i, '').toLowerCase()}`;
+const marcas: Marca[] = [
+  ...(crime.pena_privativa !== 'Nenhuma' ? [{rotulo: crime.pena_privativa}] : []),
+  ...(crime.tem_multa ? [{rotulo: `Multa ${crime.multa_regime}`}] : []),
+  {rotulo: crime.elemento},
+  ...(crime.violencia === 'Sim' ? [{rotulo: 'Com violência', tom: 'acento' as const}] : []),
+  ...(crime.grave_ameaca === 'Sim' ? [{rotulo: 'Com grave ameaça', tom: 'acento' as const}] : []),
+  ...(crime.tentativa === 'Sim' ? [{rotulo: 'Admite tentativa'}] : []),
+  crime.acao_condicional
+    ? {rotulo: `${acao} — depende do caso`, tom: 'simulacao' as const, titulo: crime.acao_condicao}
+    : {rotulo: acao},
+  ...(crime.hediondo === 'Sim'
+    ? [
+        {
+          rotulo: crime.hediondo_especie === 'equiparado' ? 'Equiparado a hediondo' : 'Hediondo',
+          tom: 'acento' as const,
+          titulo: crime.hediondo_fundamento ?? undefined,
+        },
+      ]
+    : []),
+  ...(crime.hediondo_condicional
+    ? [{rotulo: 'Hediondez condicionada', tom: 'simulacao' as const, titulo: crime.hediondo_condicao}]
+    : []),
+  ...(crime.resultado_morte ? [{rotulo: 'Resultado morte'}] : []),
+  ...(crime.contravencao ? [{rotulo: 'Contravenção penal'}] : []),
+  ...(crime.infracao_menor_potencial ? [{rotulo: 'Menor potencial ofensivo'}] : []),
+  ...(!vigente ? [{rotulo: 'Fora de vigência', tom: 'acento' as const}] : []),
+  ...(crime.duplicata ? [{rotulo: 'Possível duplicata', tom: 'simulacao' as const}] : []),
+];
+---
+
+<header class="cabecalho-ficha">
+  <div class="identidade">
+    <p class="dispositivo sem-recuo">{crime.lei} · {crime.artigo}</p>
+    <h1>{crime.crime}</h1>
+    <details class="mais-sobre" open data-mais-sobre>
+      <summary>mais sobre o tipo</summary>
+      {crime.obs && <p class="texto-tipo">{crime.obs}</p>}
+      <ul class="marcas" aria-label="Campos do tipo">
+        {marcas.map((m) => <li class:list={['marca', m.tom && `marca-${m.tom}`]} title={m.titulo}>{m.rotulo}</li>)}
+      </ul>
+    </details>
+  </div>
+
+  <CaixaMoldura crime={crime} />
+</header>
+
+<style>
+  .cabecalho-ficha {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(15rem, 19rem);
+    gap: 1.75rem;
+    padding: 1.4rem 1.25rem 1.25rem;
+    border-bottom: 1px solid var(--cor-borda);
+  }
+
+  .identidade {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    min-width: 0;
+  }
+
+  .dispositivo {
+    font-family: var(--fonte-mono);
+    font-size: var(--fs-meta);
+    color: var(--cor-tinta-media);
+  }
+
+  h1 {
+    font-size: clamp(1.75rem, 1.4rem + 1.5vw, 2.35rem);
+    line-height: 1.12;
+  }
+
+  .mais-sobre > summary {
+    display: none;
+  }
+
+  .texto-tipo {
+    margin-top: 0.6rem;
+    font-family: var(--fonte-serifa);
+    font-size: 1.0625rem;
+    font-style: italic;
+    line-height: 1.55;
+    color: var(--cor-tinta-corpo);
+    max-width: 62ch;
+  }
+
+  .marcas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin: 0.8rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .marca {
+    padding: 0.2rem 0.55rem;
+    border: 1px solid var(--cor-borda-forte);
+    border-radius: 2px;
+    background: var(--cor-superficie);
+    color: var(--cor-tinta-corpo);
+    font-family: var(--fonte-mono);
+    font-size: var(--fs-rotulo);
+    letter-spacing: 0.03em;
+  }
+
+  .marca-acento {
+    border-color: color-mix(in srgb, var(--cor-acento) 45%, transparent);
+    color: var(--cor-acento);
+  }
+
+  .marca-simulacao {
+    border-color: color-mix(in srgb, var(--cor-simulacao) 45%, transparent);
+    color: var(--cor-simulacao);
+    cursor: help;
+  }
+
+  @media (max-width: 760px) {
+    .cabecalho-ficha {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .cabecalho-ficha {
+      padding-inline: 1rem;
+    }
+    .cabecalho-ficha {
+      gap: 1rem;
+      padding-block: 1rem;
+    }
+    /* Ficha reduzida a nome, artigo e moldura; o resto atrás de "mais sobre o tipo". */
+    .mais-sobre > summary {
+      display: inline-flex;
+      align-items: center;
+      min-height: var(--alvo-toque);
+      font-family: var(--fonte-mono);
+      font-size: var(--fs-meta);
+      color: var(--cor-acento);
+      cursor: pointer;
+    }
+  }
+</style>

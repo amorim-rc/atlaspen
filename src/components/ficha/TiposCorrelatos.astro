@@ -1,0 +1,43 @@
+---
+// Os tipos correlatos: os outros dispositivos do mesmo artigo nesta lei. O link
+// preserva a aba ativa (o script da página lê `data-preserva-modo`), e o
+// correlato de mesmo artigo sai marcado como possível duplicata.
+import type {Crime} from '../../lib/types';
+import ListaTipos from './ListaTipos.astro';
+
+interface Props {
+  correlatos: Crime[];
+  /** O artigo do tipo desta ficha. */
+  artigoAtual: string;
+}
+const {correlatos, artigoAtual} = Astro.props;
+---
+
+<section class="correlatos">
+  <h2>Tipos correlatos</h2>
+  <p class="nota-correlatos">Os outros dispositivos do mesmo artigo nesta lei.</p>
+  <ListaTipos itens={correlatos} preservaModo artigoAtual={artigoAtual} />
+</section>
+
+<style>
+  .correlatos {
+    padding: 1.1rem 1.25rem 0.6rem;
+    border-top: 1px solid var(--cor-borda-forte);
+  }
+
+  .correlatos h2 {
+    font-size: var(--fs-titulo-3);
+  }
+
+  .nota-correlatos {
+    margin-top: 0.2rem;
+    font-size: var(--fs-pequeno);
+    color: var(--cor-tinta-media);
+  }
+
+  @media (max-width: 640px) {
+    .correlatos {
+      padding-inline: 1rem;
+    }
+  }
+</style>
