@@ -55,6 +55,8 @@ determinístico, sem IA, descrito em [`scripts/robos/README.md`](scripts/robos/R
    - `transform_data.py --estrito` — convenções C1, C2, C3 e o teto de contradições (C4);
    - se o derivado commitado corresponde à fonte;
    - `npm run typecheck`;
+   - `npm run mortos` — código morto: arquivo que ninguém importa, exportação sem uso,
+     dependência não listada (as exceções, com motivo, estão em `knip.jsonc`);
    - `npm run verificar` — invariantes do motor de atributos, casos-âncora de direito penal
      contra o catálogo real e a tabela de casos-padrão (`scripts/verificar_casos.ts`: tipo
      real, premissa explícita, veredito esperado e o dispositivo que o sustenta);
@@ -356,6 +358,7 @@ aparece na unidade em que foi cominada e é calculado sem inverter mínimo e má
 npm install
 npm run dev         # dev server
 npm run typecheck
+npm run mortos      # código morto (knip)
 npm run verificar   # motor de atributos × catálogo real
 npm run build
 python3 scripts/transform_data.py   # regenera static/data/crimes.json + qualidade.json

@@ -234,6 +234,12 @@ doutrinário costuma não compartilhar vocabulário com a descrição legal —
 vantagem", e nem por isso está errado.
 :::
 
+**Lastro.** Toda resposta do Auditor sobre violência, grave ameaça ou ação penal cita o
+trecho da lei que a decidiu — e confere que o trecho existe no texto lido. Sem lastro, a
+derivação não vale: a resposta é zerada, vai para a lista do que pede juízo, e o relatório
+diz quantas foram zeradas. Uma regra que citasse o que a lei não tem passaria por leitura;
+zerá-la à vista é o que separa comparação de texto de palpite.
+
 ### Achado e limite declarado não são a mesma coisa
 
 O Auditor imprime, de propósito, aquilo que **não** garante: registro fora do seu
