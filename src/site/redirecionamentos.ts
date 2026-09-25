@@ -78,6 +78,12 @@ export const REDIRECIONAMENTOS: Redirecionamento[] = [
   // duplicata não colidiu. Decisão C13 de 23/09/2026. O id já foi URL pública,
   // então não some: aponta para o registro que ficou.
   {de: '/tipos/559', para: '/tipos/1508'},
+  // O art. 312, §3º, do CP não comina pena: a reparação do dano extingue a
+  // punibilidade do peculato culposo antes da sentença irrecorrível, e reduz de
+  // metade a pena IMPOSTA depois dela. O registro publicava uma moldura que não
+  // está em lugar nenhum da lei. Decisão H8 de 24/09/2026; o conteúdo do § foi
+  // para o `obs` do peculato culposo, que é para onde o endereço aponta.
+  {de: '/tipos/608', para: '/tipos/248'},
 ];
 
 /**

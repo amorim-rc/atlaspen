@@ -13,6 +13,15 @@
       "motivo": "Duplicata do art. 326-B do Código Eleitoral. O registro estava rotulado pela lei que criou o dispositivo (Lei 14.192/21) e não pelo diploma em que ele vive, e por isso não colidiu com o id 1508, que traz o mesmo artigo sob o rótulo do CE. É a armadilha 5 do README dos robôs. Decisão C13 da revisão fina de 23/09/2026.",
       "destino": 1508,
       "redirecionamento": "/tipos/559 -> /tipos/1508"
+    },
+    {
+      "data": "2026-09-24",
+      "ids": [
+        608
+      ],
+      "motivo": "O art. 312, § 3º, do CP NÃO COMINA PENA: a reparação do dano extingue a punibilidade do peculato culposo se vier antes da sentença irrecorrível, e reduz de metade a pena IMPOSTA se vier depois. O registro publicava moldura de 1,5 a 6 meses — que não está em lugar nenhum da lei —, elemento Doloso e um `obs` que descrevia o peculato-furto do § 1º. Mesmo caso dos ids 194, 199 e 239. A redução de metade não vira modificador: incide sobre a pena já imposta, depois da sentença, e não é fase da dosimetria que data/modificadores.json modela. O conteúdo do § 3º foi para o `obs` do id 248, o peculato culposo. Decisão H8 (24/09/2026).",
+      "destino": 248,
+      "redirecionamento": "/tipos/608 -> /tipos/248"
     }
   ]
 }

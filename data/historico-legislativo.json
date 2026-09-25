@@ -9,7 +9,7 @@
       "transferencia": "mudou de lugar"
     },
     "origem": "`compilado`: extraída do texto compilado do Planalto por scripts/robos/nucleo/historico.py, que a regenera; `manual`: escrita à mão, e preservada na regeneração.",
-    "pendente": "`publicacao` e `vigencia` estão preenchidas para as leis que a revisão fina de 23/09/2026 tocou (decisão 32), conferidas no DOU pelo Sentinela. Para as demais continua valendo o limite de origem: o compilado dá só o ano, e a data exata vem da lei alteradora.",
+    "pendente": "`publicacao` e `vigencia` estão preenchidas para as leis que a revisão fina de 23/09/2026 tocou (decisão 32), conferidas no DOU pelo Sentinela. Para as demais continua valendo o limite de origem: o compilado dá só o ano, e a data exata vem da lei alteradora. A LC 225/2026 entra na mesma conta: vigência conferida no compilado da própria lei complementar em 24/09/2026 (art. 58, II), e por isso os quatro eventos dela têm `origem: manual`.",
     "natureza_penal": "Em que direção a lei andou, no evento do histórico: `incriminadora` (a conduta era atípica), `pejus` (ficou mais grave), `mellius` (ficou mais branda) e `abolitio-parcial` (parte da conduta deixou de ser típica). A régua que separa a última da terceira: *in mellius* é a conduta que SEGUE punível com tratamento mais favorável; abolitio é a que deixa de ser típica — e a diferença decide retroatividade e extinção da punibilidade (CP, arts. 2º e 107, III). Presente só onde foi decidido; a ausência não significa neutralidade. NÃO é o campo da nota de atualização: o feed foi simplificado em 24/09/2026 e a entrada declara só o alcance (tipo ou atributo). Aqui a direção continua, porque o histórico responde a pergunta jurídica, e não a editorial."
   },
   "eventos": [
@@ -5028,10 +5028,12 @@
       "anotacao": "(Incluído pela Lei Complementar nº 225, de 2026)",
       "url": "https://www.planalto.gov.br/ccivil_03/LEIS/LCP/Lcp225.htm#art49",
       "natureza": "legislativa",
-      "origem": "compilado",
+      "origem": "manual",
       "data_da_norma": "2026-01-08",
       "publicacao": "2026-01-09",
-      "nota_de_vigencia": "vigência escalonada: conferir o artigo de vigência para os arts. 168-A e 337-A do CP"
+      "nota_de_vigencia": "LC 225/2026, art. 58, II: vigência na data da publicação (DOU de 09/01/2026). O prazo de 90 dias do art. 58, I, vale só para os Programas Confia e Sintonia e os selos de conformidade (arts. 19 a 32 e 40 a 47).",
+      "vigencia": "2026-01-09",
+      "natureza_penal": "pejus"
     },
     {
       "dispositivo": "cp|art. 168-a, §6º",
@@ -5041,10 +5043,12 @@
       "anotacao": "(Incluído pela Lei Complementar nº 225, de 2026)",
       "url": "https://www.planalto.gov.br/ccivil_03/LEIS/LCP/Lcp225.htm#art49",
       "natureza": "legislativa",
-      "origem": "compilado",
+      "origem": "manual",
       "data_da_norma": "2026-01-08",
       "publicacao": "2026-01-09",
-      "nota_de_vigencia": "vigência escalonada: conferir o artigo de vigência para os arts. 168-A e 337-A do CP"
+      "nota_de_vigencia": "LC 225/2026, art. 58, II: vigência na data da publicação (DOU de 09/01/2026). O prazo de 90 dias do art. 58, I, vale só para os Programas Confia e Sintonia e os selos de conformidade (arts. 19 a 32 e 40 a 47).",
+      "vigencia": "2026-01-09",
+      "natureza_penal": "pejus"
     },
     {
       "dispositivo": "cp|art. 169, caput",
@@ -9407,10 +9411,12 @@
       "anotacao": "(Incluído pela Lei Complementar nº 225, de 2026)",
       "url": "https://www.planalto.gov.br/ccivil_03/LEIS/LCP/Lcp225.htm#art49",
       "natureza": "legislativa",
-      "origem": "compilado",
+      "origem": "manual",
       "data_da_norma": "2026-01-08",
       "publicacao": "2026-01-09",
-      "nota_de_vigencia": "vigência escalonada: conferir o artigo de vigência para os arts. 168-A e 337-A do CP"
+      "nota_de_vigencia": "LC 225/2026, art. 58, II: vigência na data da publicação (DOU de 09/01/2026). O prazo de 90 dias do art. 58, I, vale só para os Programas Confia e Sintonia e os selos de conformidade (arts. 19 a 32 e 40 a 47).",
+      "vigencia": "2026-01-09",
+      "natureza_penal": "pejus"
     },
     {
       "dispositivo": "cp|art. 337-a, §6º",
@@ -9420,10 +9426,12 @@
       "anotacao": "(Incluído pela Lei Complementar nº 225, de 2026)",
       "url": "https://www.planalto.gov.br/ccivil_03/LEIS/LCP/Lcp225.htm#art49",
       "natureza": "legislativa",
-      "origem": "compilado",
+      "origem": "manual",
       "data_da_norma": "2026-01-08",
       "publicacao": "2026-01-09",
-      "nota_de_vigencia": "vigência escalonada: conferir o artigo de vigência para os arts. 168-A e 337-A do CP"
+      "nota_de_vigencia": "LC 225/2026, art. 58, II: vigência na data da publicação (DOU de 09/01/2026). O prazo de 90 dias do art. 58, I, vale só para os Programas Confia e Sintonia e os selos de conformidade (arts. 19 a 32 e 40 a 47).",
+      "vigencia": "2026-01-09",
+      "natureza_penal": "pejus"
     },
     {
       "dispositivo": "cp|art. 337-b, caput",
