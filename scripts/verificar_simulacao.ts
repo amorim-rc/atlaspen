@@ -12,7 +12,7 @@
  */
 
 import type {TipoDoMotor} from '../src/lib/types';
-import type {AtributoDef} from '../src/lib/atributos/types';
+import type {AtributoDef, AtributoResultado, Avaliacao} from '../src/lib/atributos/types';
 import {num} from '../src/lib/atributos/types';
 import {cenarioReversoPadrao} from '../src/lib/atributos/reverso';
 import {
@@ -26,13 +26,15 @@ import {
   pacoteValido,
   problemaDa,
   removerMudanca,
+  sinalDe,
   tipoCriadoNoPacote,
   tiposCriadosAntes,
+  valorPorFaixa,
 } from '../src/lib/simulacao/motor';
 import type {Mudanca} from '../src/lib/simulacao/tipos';
 import {cenarioFromCrime} from '../src/lib/cenario';
 import {CATALOGO} from '../src/lib/atributos';
-import {escreverPacote, lerPacote} from '../src/components/simulacao/estado';
+import {escreverFracao, escreverPacote, lerFracao, lerPacote} from '../src/components/simulacao/estado';
 import {RECORTE_PADRAO, descrever, recorte} from '../src/components/simulacao/nota';
 
 let falhas = 0;
@@ -504,6 +506,103 @@ console.log('\nO id negativo vai e volta pela URL');
   const lido = lerPacote(q, porId);
   ok(JSON.stringify(lido.pacote) === JSON.stringify(pacote), 'e volta igual, inclusive o alvo criado no pacote');
   ok(lerPacote('?m=tm;0;max=4a', porId).pacote[0]?.sentido === 'tipo' && (lerPacote('?m=tm;0;max=4a', porId).pacote[0] as {id: number | null}).id === null, 'zero não é ninguém');
+}
+
+/** `sinalDe` lê status e valor; a avaliação solta vira resultado com metadados vazios. */
+const res = (a: Avaliacao): AtributoResultado => ({...a, id: 'x', nome: '', fundamento: '', categoria: 'processual', natureza: 'abstrato'});
+
+console.log('\nAtributo novo que devolve FRAÇÃO da pena');
+{
+  // A forma da progressão: o valor é a pena-base vezes a fração. Sobre a pena
+  // máxima cominada, o furto fictício (24 meses) a 1/6 dá 4 meses.
+  const base = {nome: 'Fração fictícia', incidencia: 'cominada_maxima' as const, comparacao: 'acima' as const, limiarDias: 0, vedacoes: [], requisitos: []};
+  const umSexto = atributoNovo({...base, devolve: 'fracao', fracao: 1 / 6}, 'f1');
+  const umTerco = atributoNovo({...base, devolve: 'fracao', fracao: 1 / 3}, 'f2');
+  const r1 = umSexto.avaliar(cenarioFromCrime(T1), {});
+  ok(r1.status === 'cabivel' && r1.valor === '1/6 — 4 meses', `1/6 de 24 meses: "1/6 — 4 meses" (obtido "${r1.valor}")`);
+  const r3 = umSexto.avaliar(cenarioFromCrime(T3), {});
+  ok(r3.valor === '1/6 — 1 ano e 8 meses', `1/6 de 120 meses: "1 ano e 8 meses" (obtido "${r3.valor}")`);
+  const r2 = umTerco.avaliar(cenarioFromCrime(T1), {});
+  ok(r2.valor === '1/3 — 8 meses', `1/3 de 24 meses (obtido "${r2.valor}")`);
+  ok(sinalDe(res(r1), res(r2)) === '~', 'entre duas simulações do mesmo tipo, mudar só a fração é "muda de valor"');
+  ok(sinalDe(res(r1), res(umSexto.avaliar(cenarioFromCrime(T1), {}))) === '=', 'e a mesma fração não se move');
+  ok(umSexto.descricao.includes('Devolve 1/6 da pena máxima cominada'), `a descrição diz o que devolve (obtido "${umSexto.descricao}")`);
+  // O veredito continua decidido pelo limiar e pelas vedações; o valor é acréscimo.
+  const vedado = atributoNovo({...base, devolve: 'fracao', fracao: 1 / 6, vedacoes: ['violencia']}, 'f3').avaliar(cenarioFromCrime(T3), {});
+  ok(vedado.status === 'incabivel' && vedado.valor === undefined, 'vedado: incabível e sem valor');
+  const semFracao: Mudanca = {sentido: 'atributo', op: 'criar', def: {...base, devolve: 'fracao', fracao: 0}};
+  ok(problemaDa(semFracao, legal) !== null, 'fração zero não entra no cálculo');
+  ok(problemaDa({...semFracao, def: {...base, devolve: 'fracao', fracao: 1.5}}, legal) !== null, 'fração acima da pena inteira não entra no cálculo');
+  const {r} = simular([{sentido: 'atributo', op: 'criar', def: {...base, devolve: 'fracao', fracao: 1 / 6}}]);
+  ok(r.pares.length === 3 && r.pares.every((p) => p.sinal === '+' && p.depois?.valor?.startsWith('1/6 — ')), 'no pacote, o atributo novo entra nos três tipos com pena, cada um com o seu valor');
+}
+
+console.log('\nAtributo novo que devolve PRAZO POR FAIXA da pena');
+{
+  // A forma do art. 109 do CP: até X, vale Y; o último vale acima. Degraus fora
+  // de ordem são ordenados pelo motor.
+  const base = {nome: 'Faixas fictícias', incidencia: 'cominada_maxima' as const, comparacao: 'acima' as const, limiarDias: 0, vedacoes: [], requisitos: []};
+  const def = {
+    ...base,
+    devolve: 'faixas' as const,
+    faixas: [
+      {ateDias: 36 * 30, valorDias: 4 * 360},
+      {ateDias: 24 * 30, valorDias: 3 * 360},
+    ],
+    acimaDias: 8 * 360,
+  };
+  const a = atributoNovo(def, 'x1');
+  ok(a.avaliar(cenarioFromCrime(T1), {}).valor === '3 anos', `pena máxima 24 meses cai no degrau de 24: 3 anos (obtido "${a.avaliar(cenarioFromCrime(T1), {}).valor}")`);
+  ok(a.avaliar(cenarioFromCrime(T2), {}).valor === '4 anos', `36 meses cai no degrau de 36: 4 anos (obtido "${a.avaliar(cenarioFromCrime(T2), {}).valor}")`);
+  ok(a.avaliar(cenarioFromCrime(T3), {}).valor === '8 anos', `120 meses passa de todos: vale o de acima, 8 anos (obtido "${a.avaliar(cenarioFromCrime(T3), {}).valor}")`);
+  ok(valorPorFaixa(def, 24 * 30) === 3 * 360 && valorPorFaixa(def, 24 * 30 + 1) === 4 * 360, 'o degrau é inclusivo: até 24 meses vale 3 anos; um dia a mais, 4');
+  ok(a.descricao.includes('até 2 anos, 3 anos; até 3 anos, 4 anos; acima, 8 anos'), `a descrição lista os degraus em ordem (obtido "${a.descricao}")`);
+  const outra = atributoNovo({...def, acimaDias: 12 * 360}, 'x2');
+  ok(sinalDe(res(a.avaliar(cenarioFromCrime(T3), {})), res(outra.avaliar(cenarioFromCrime(T3), {}))) === '~', 'mudar o valor de acima muda o valor de quem está acima');
+  ok(sinalDe(res(a.avaliar(cenarioFromCrime(T1), {})), res(outra.avaliar(cenarioFromCrime(T1), {}))) === '=', 'e não move quem está nos degraus');
+  const m = (d: Partial<typeof def>): Mudanca => ({sentido: 'atributo', op: 'criar', def: {...def, ...d}});
+  ok(problemaDa(m({faixas: []}), legal) !== null, 'sem degrau não entra no cálculo');
+  ok(problemaDa(m({faixas: [{ateDias: 720, valorDias: 360}, {ateDias: 720, valorDias: 720}]}), legal) !== null, 'dois degraus no mesmo limite não entram');
+  ok(problemaDa(m({acimaDias: 0}), legal) !== null, 'sem o valor de acima não entra');
+  ok(problemaDa(m({}), legal) === null, 'a tabela completa entra');
+}
+
+console.log('\nOs dois modos vão e voltam pela URL');
+{
+  const porId = {teto, 'sem-violencia': semViolencia, prazo};
+  const pacote: Mudanca[] = [
+    {
+      sentido: 'atributo',
+      op: 'criar',
+      def: {nome: 'Fração', incidencia: 'aplicada', comparacao: 'ate', limiarDias: 2880, vedacoes: [], requisitos: [], devolve: 'fracao', fracao: 1 / 6},
+    },
+    {
+      sentido: 'atributo',
+      op: 'criar',
+      def: {
+        nome: 'Faixas',
+        incidencia: 'cominada_maxima',
+        comparacao: 'acima',
+        limiarDias: 0,
+        vedacoes: [],
+        requisitos: [],
+        devolve: 'faixas',
+        faixas: [
+          {ateDias: 360, valorDias: 3 * 360},
+          {ateDias: 720, valorDias: 4 * 360},
+        ],
+        acimaDias: 8 * 360,
+      },
+    },
+    {sentido: 'atributo', op: 'criar', def: {nome: 'Veredito', incidencia: 'aplicada', comparacao: 'ate', limiarDias: 1440, vedacoes: [], requisitos: []}},
+  ];
+  const q = escreverPacote(pacote, 0, porId);
+  ok(q.includes('dev=f;fr=1/6'), `a fração vai como a lei a escreve: ${q}`);
+  ok(q.includes('dev=x;fx=1a:3a.2a:4a;fxa=8a'), 'as faixas vão como degrau:valor');
+  ok(!q.split('&')[2].includes('dev='), 'o veredito puro não grava nada a mais, e o link antigo abre como abria');
+  const lido = lerPacote(q, porId).pacote;
+  ok(JSON.stringify(lido) === JSON.stringify(pacote), 'os três voltam iguais');
+  ok(lerFracao('7/24') === 7 / 24 && escreverFracao(7 / 24) === '7/24' && escreverFracao(0.3) === '3/10' && lerFracao('0.37') === 0.37, 'a fração aceita a/b e decimal');
 }
 
 console.log(falhas === 0 ? '\n✓ Simulação legislativa verificada.\n' : `\n✗ ${falhas} falha(s) na simulação.\n`);

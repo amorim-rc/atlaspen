@@ -293,11 +293,13 @@ export function escreverPacote(
   for (const m of pacote) q.append('m', escreverMudanca(m, porId));
   if (ativo > 0) q.set('i', String(ativo));
   escreverPremissa(q, rev);
+  // Os separadores internos são legais na query e ficam legíveis; `:` é o das faixas.
   const s = q
     .toString()
     .replace(/%3B/gi, ';')
     .replace(/%3D/gi, '=')
-    .replace(/%2F/gi, '/');
+    .replace(/%2F/gi, '/')
+    .replace(/%3A/gi, ':');
   return s ? `?${s}` : '';
 }
 
