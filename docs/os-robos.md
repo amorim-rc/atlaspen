@@ -19,7 +19,7 @@ largo demais, [abra uma issue](https://github.com/amorim-rc/atlaspen/issues) —
 o tipo de retorno que mais serve ao catálogo.
 
 :::note[Determinístico, sem IA]
-Nenhum dos quatro usa modelo de linguagem. São expressões regulares e comparação
+Nenhum dos cinco usa modelo de linguagem. São expressões regulares e comparação
 de texto, lidas contra o texto **compilado** oficial do `planalto.gov.br`. Onde
 não há certeza, o resultado é uma **pergunta para leitura humana**, nunca uma
 alteração automática do dado.
@@ -35,8 +35,8 @@ alteração automática do dado.
 | **Arquivista** | A prosa ainda descreve o sistema? | A documentação, contra os arquivos de que ela fala |
 | **Recenseador** | Existe lei penal que ninguém leu? | Todas as leis do ano, uma a uma (mensal) |
 
-Sentinela, Auditor e Arquivista correm em paralelo com o Vigia; só o Auditor espera,
-porque lê as páginas que o Vigia baixou. O Recenseador roda uma vez por mês, na
+Sentinela e Arquivista correm em paralelo com o Vigia; o Auditor espera por ele,
+porque lê as páginas que ele baixou. O Recenseador roda uma vez por mês, na
 primeira semana. Se algum tiver o que dizer, nasce **uma issue por rodada**. Se todos
 se calarem, a rodada deixa só o carimbo de que a conferência aconteceu.
 
@@ -49,7 +49,8 @@ fica aberta, e só se fecha quando a discussão tiver destino.
 Na **sexta-feira anterior**, às 23h, um ensaio baixa os mesmos compilados e joga fora. Não
 é para adiantar trabalho — a segunda baixa os dela e sempre lê o texto do dia. É para
 descobrir com o fim de semana pela frente que uma fonte saiu do ar ou mudou de forma:
-quando isso acontece, o Vigia cai e leva os outros três com ele.
+quando isso acontece, o Vigia cai e leva o Auditor com ele; Sentinela e Arquivista
+seguem, porque não dependem do que ele baixou.
 
 ---
 
@@ -309,8 +310,9 @@ inconstitucional o §3º do art. 232 do Código Penal Militar e deslocou o estup
 de vulnerável praticado por militar para o art. 217-A do Código Penal. Três
 registros afetados, **nenhum ato no DOU**. O Sentinela jamais veria. É a lacuna
 mais séria que resta, e vai exigir robô próprio — para o **STF**, o **STJ** e o
-**STM**, que é quem julga os 393 registros militares vigentes do catálogo (394 com o que a ADI 7555 tirou de vigência). Está no
-[README](https://github.com/amorim-rc/atlaspen/blob/main/README.md#o-que-falta--e-onde-você-pode-ajudar).
+**STM**, que é quem julga os registros do Código Penal Militar — hoje o segundo maior
+diploma do catálogo (ver [Completude](./completude.md)). Está no
+[README](https://github.com/amorim-rc/atlaspen/blob/main/README.md#o-que-falta).
 
 **O tipo penal antigo que nunca foi cadastrado, e o que morreu sem aviso.** O
 Recenseador varre o ano corrente; a legislação penal brasileira tem quase dois
@@ -318,7 +320,7 @@ séculos. Existe tipo em lei esparsa antiga que o catálogo nunca viu, e existe 
 que foi revogado sem que ninguém percebesse — e este segundo é pior, porque um crime
 revogado que continua publicado afirma que a conduta é punível quando ela não é. O
 **Curador** é o robô previsto para isso, e está no
-[README](https://github.com/amorim-rc/atlaspen/blob/main/README.md#o-que-falta--e-onde-você-pode-ajudar), junto com os
+[README](https://github.com/amorim-rc/atlaspen/blob/main/README.md#o-que-falta), junto com os
 tribunais.
 
 **Revogação tácita.** Lei posterior que regula inteiramente a matéria revoga a
@@ -332,6 +334,6 @@ problema perseguido.
 **Lei estadual e municipal.** Não existem em matéria penal: a competência é
 privativa da União (art. 22, I, da Constituição). Por isso a Seção 1 basta.
 
-**O juízo jurídico.** Nenhum dos quatro decide se um dispositivo é crime
+**O juízo jurídico.** Nenhum dos cinco decide se um dispositivo é crime
 autônomo, se a hediondez alcança um tipo militar por identidade, ou se um nome
 está errado. Eles apontam. Quem decide assina.

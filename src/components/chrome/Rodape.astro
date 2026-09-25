@@ -51,7 +51,7 @@ const ano = new Date().getFullYear();
   <div class="faixa">
     <div class="pagina faixa-interna">
       <span>{NOME} © {ano} — {TITULAR} · MIT com atribuição · cite como {NOME}</span>
-      <span>os dados são públicos; a leitura jurídica é de quem cita · não é aconselhamento jurídico</span>
+      <span>· os dados são públicos; a leitura jurídica é de quem cita · não é aconselhamento jurídico</span>
     </div>
   </div>
 </footer>
@@ -132,11 +132,13 @@ const ano = new Date().getFullYear();
     border-top: 1px solid var(--cor-tinta-cheia-borda);
   }
 
+  /* Uma frase corrida, com separadores: os dois trechos eram empurrados para as
+     pontas e, lidos em sequência, colavam ("cite como AtlasPenos dados são…"). */
   .faixa-interna {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 0.5rem 1.5rem;
+    justify-content: flex-start;
+    gap: 0.3rem 0.4rem;
     padding-block: 0.9rem;
     font-family: var(--fonte-mono);
     font-size: var(--fs-rotulo);
