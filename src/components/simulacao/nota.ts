@@ -8,9 +8,9 @@
 // número solto vira desinformação.
 
 import type {EstadoCatalogo} from '../../lib/simulacao/motor';
-import {ROTULO_INCIDENCIA, ROTULO_REQUISITO, ROTULO_VEDACAO, camposDoTipo} from '../../lib/simulacao/motor';
+import {ROTULO_INCIDENCIA, ROTULO_REQUISITO, ROTULO_VEDACAO, alvoDa, camposDoTipo, descreverDevolucao} from '../../lib/simulacao/motor';
 import {ROTULO_ETIQUETA_BASE} from '../../lib/simulacao/tipos';
-import type {AlcanceAtributo, Etiqueta, Mudanca, Par, Resultado, Unidades} from '../../lib/simulacao/tipos';
+import type {AlcanceAtributo, ContextoPacote, Etiqueta, Mudanca, Par, Resultado, Unidades} from '../../lib/simulacao/tipos';
 import type {AtributoResultado} from '../../lib/atributos/types';
 import {diasDeMeses, formatDias, formatFaixa} from '../../lib/pena';
 import {circunstanciasPorExtenso, type CenarioReverso} from '../../lib/atributos/reverso';
@@ -53,6 +53,11 @@ export function rotuloTipo(t: {crime: string; lei: string; artigo: string}): str
   return `${t.crime} (${t.lei}, ${t.artigo.replace(/^Art\./, 'art.')})`;
 }
 
+/** O tipo por extenso, dizendo quando ele é criação deste mesmo pacote e não da lei. */
+export function rotuloAlvo(t: {id: number; crime: string; lei: string; artigo: string}): string {
+  return t.id < 0 ? `o tipo criado nesta simulação, ${rotuloTipo(t)}` : rotuloTipo(t);
+}
+
 export function rotuloResultado(r: AtributoResultado | null): string {
   if (!r) return '—';
   const s = r.status === 'cabivel' ? 'cabe' : r.status === 'condicional' ? 'depende' : 'não cabe';
@@ -68,7 +73,11 @@ export const alcanceTexto = (u: Unidades, total: Unidades) =>
 
 // ── Cada mudança, por extenso ──────────────────────────────────────────────
 
-export function descrever(m: Mudanca, legal: EstadoCatalogo): string {
+/**
+ * Cada mudança numa frase. O `contexto` diz onde ela está no pacote, para
+ * resolver a que aponta para tipo criado por outra mudança do mesmo pacote.
+ */
+export function descrever(m: Mudanca, legal: EstadoCatalogo, contexto?: ContextoPacote): string {
   if (m.sentido === 'tipo') {
     if (m.op === 'criar') {
       const c = m.campos;
@@ -83,9 +92,13 @@ export function descrever(m: Mudanca, legal: EstadoCatalogo): string {
         marcas.length ? `, ${juntar(marcas as string[])}` : ''
       }.`;
     }
-    const t = m.id === null ? undefined : legal.tipos.find((x) => x.id === m.id);
-    if (!t) return 'Tipo penal ainda não escolhido.';
-    if (m.op === 'extinguir') return `${rotuloTipo(t)} revogado: o tipo deixa o catálogo vigente.`;
+    const t = alvoDa(m, legal, contexto);
+    if (!t) return m.id !== null && m.id < 0 ? 'Tipo criado no pacote que já não está lá.' : 'Tipo penal ainda não escolhido.';
+    if (m.op === 'extinguir') {
+      return t.id < 0
+        ? `${rotuloAlvo(t)}, retirado do pacote: não chega ao catálogo simulado.`
+        : `${rotuloTipo(t)} revogado: o tipo deixa o catálogo vigente.`;
+    }
     const a = camposDoTipo(t);
     const d = {...a, ...m.campos};
     const partes: string[] = [];
@@ -102,13 +115,15 @@ export function descrever(m: Mudanca, legal: EstadoCatalogo): string {
     if (d.elemento !== a.elemento) partes.push(`elemento de ${a.elemento.toLowerCase()} para ${d.elemento.toLowerCase()}`);
     if (d.nome !== a.nome) partes.push(`nome de "${a.nome}" para "${d.nome}"`);
     if (d.lei !== a.lei || d.artigo !== a.artigo) partes.push(`dispositivo de ${a.lei}, ${a.artigo} para ${d.lei}, ${d.artigo}`);
-    return `${rotuloTipo(t)}: ${partes.length ? juntar(partes) : 'nenhum campo alterado ainda'}.`;
+    return `${rotuloAlvo(t)}: ${partes.length ? juntar(partes) : 'nenhum campo alterado ainda'}.`;
   }
   if (m.op === 'criar') {
     const d = m.def;
+    const devolve = descreverDevolucao(d);
     const extras = [
       d.vedacoes.length ? `vedado a ${juntar(d.vedacoes.map((v) => ROTULO_VEDACAO[v]))}` : '',
       d.requisitos.length ? `dependente de ${juntar(d.requisitos.map((r) => ROTULO_REQUISITO[r]))}` : '',
+      devolve ? `devolve ${devolve}` : '',
     ].filter(Boolean);
     const faixa =
       d.comparacao === 'ate'
@@ -131,7 +146,7 @@ export function descrever(m: Mudanca, legal: EstadoCatalogo): string {
 
 export function tituloAutomatico(validas: Mudanca[], legal: EstadoCatalogo): string {
   if (!validas.length) return 'Simulação sem mudança';
-  const primeira = descrever(validas[0], legal).replace(/\.$/, '');
+  const primeira = descrever(validas[0], legal, {pacote: validas, indice: 0}).replace(/\.$/, '');
   return validas.length === 1 ? primeira : `${primeira}, e mais ${validas.length - 1} ${validas.length === 2 ? 'mudança' : 'mudanças'}`;
 }
 
@@ -188,12 +203,14 @@ export function montarNota(args: {
   const {validas, etiquetas, legal, resultado: r, titulo, versao, conferidoEm, url, hoje, id, rev} = args;
   const secoes: {titulo: string; texto: string}[] = [];
 
+  // `validas` é o pacote reduzido ao que entra no cálculo (motor.pacoteValido),
+  // com os ids dos tipos criados já remapeados: a posição aqui é o contexto.
   secoes.push({
     titulo: 'Hipótese',
     texto: validas
       .map((m, i) => {
         const et = etiquetas[i]?.length ? ` [${etiquetas[i].map((e) => ROTULO_ETIQUETA[e]).join('; ')}]` : '';
-        return `${validas.length > 1 ? `${i + 1}. ` : ''}${descrever(m, legal)}${et}`;
+        return `${validas.length > 1 ? `${i + 1}. ` : ''}${descrever(m, legal, {pacote: validas, indice: i})}${et}`;
       })
       .join('\n'),
   });

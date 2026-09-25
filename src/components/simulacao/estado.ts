@@ -3,18 +3,28 @@
 //
 //   /simulacao?m=am;anpp;limiteMinMeses=6a
 //   /simulacao?m=tm;1122;max=8a&m=tn;n=Fraude+eletrônica;min=2a;max=6a&i=1
+//   /simulacao?m=tn;n=Fraude;max=6a&m=tm;-1;max=8a
 //
 // Uma mudança por `m`, na ordem do pacote; `i` é a que está em edição. Cada
 // mudança começa pelo tipo (t|a + n|m|x: novo, modificado, extinto) e segue em
 // campos `chave=valor` separados por ponto e vírgula. Só se grava o que difere
 // do padrão. Pena em duração compacta (1a, 18m, 2a6m15d); parâmetro de atributo
-// no formato da ficha do atributo.
+// no formato da ficha do atributo. O id NEGATIVO em `tm`/`tx` aponta para o
+// tipo criado por outra mudança do mesmo pacote: `-1` é o da primeira, `-2` o
+// da segunda — a posição no pacote, que a URL preserva porque a ordem dos `m` é
+// a ordem do pacote (25/09/2026).
+//
+// O atributo novo que devolve valor (25/09/2026) grava `dev=f;fr=1/6` (fração)
+// ou `dev=x;fx=1a:3a.2a:4a;fxa=8a` (faixas: até 1 ano → 3 anos, até 2 → 4,
+// acima → 8). O veredito puro não grava nada, e o link antigo abre como abria.
 
 import type {AtributoDef} from '../../lib/atributos';
 import type {
   CamposTipo,
   Comparacao,
   DefinicaoAtributo,
+  Devolucao,
+  FaixaValor,
   Incidencia,
   Mudanca,
   Operacao,
@@ -22,7 +32,7 @@ import type {
   Sentido,
   VedacaoNova,
 } from '../../lib/simulacao/tipos';
-import {CAMPOS_TIPO_PADRAO, DEFINICAO_PADRAO} from '../../lib/simulacao/motor';
+import {CAMPOS_TIPO_PADRAO, DEFINICAO_FRACAO_PADRAO, DEFINICAO_PADRAO} from '../../lib/simulacao/motor';
 import {escreverValor, lerValor, limitar} from '../atributo/estado';
 import {escreverDuracao, lerDuracao} from '../../lib/pena';
 import {escreverPremissa, lerPremissa} from '../../lib/atributos/premissa-url';
@@ -78,6 +88,42 @@ const INCIDENCIAS: [Incidencia, string][] = [
   ['cominada_maxima', 'max'],
   ['aplicada', 'apl'],
 ];
+const DEVOLUCOES: [Devolucao, string][] = [
+  ['fracao', 'f'],
+  ['faixas', 'x'],
+];
+
+/** A fração na URL como a lei a escreve ("1/6"); decimal quando não reduz a denominador pequeno. */
+export function escreverFracao(f: number): string {
+  for (let den = 1; den <= 24; den++) {
+    const n = Math.round(f * den);
+    if (n > 0 && Math.abs(f - n / den) < 1e-9) return `${n}/${den}`;
+  }
+  return String(Math.round(f * 10000) / 10000);
+}
+
+export function lerFracao(t: string): number | null {
+  const m = /^(\d+)\/(\d+)$/.exec(t.trim());
+  if (m) return Number(m[2]) > 0 ? Number(m[1]) / Number(m[2]) : null;
+  const n = Number(t);
+  return Number.isFinite(n) && n > 0 ? n : null;
+}
+
+/** As faixas na URL: `1a:3a.2a:4a` — degrau:valor, separados por ponto. */
+function escreverFaixas(faixas: FaixaValor[]): string {
+  return faixas.map((f) => `${escreverDuracao(f.ateDias)}:${escreverDuracao(f.valorDias)}`).join('.');
+}
+
+function lerFaixas(t: string): FaixaValor[] {
+  const out: FaixaValor[] = [];
+  for (const parte of t.split('.')) {
+    const [a, v] = parte.split(':');
+    const ateDias = a !== undefined ? lerDuracao(a) : null;
+    const valorDias = v !== undefined ? lerDuracao(v) : null;
+    if (ateDias !== null && valorDias !== null) out.push({ateDias, valorDias});
+  }
+  return out;
+}
 
 function camposTipo(c: Partial<CamposTipo>, completos: boolean): string[] {
   const out: string[] = [];
@@ -116,6 +162,15 @@ export function escreverMudanca(m: Mudanca, porId: Record<string, AtributoDef>):
     if (d.comparacao === 'entre') out.push(`lim2=${escreverDuracao(d.limiarSuperiorDias ?? 0)}`);
     if (d.vedacoes.length) out.push(`ved=${VEDACOES.filter(([k]) => d.vedacoes.includes(k)).map(([, s]) => s).join('.')}`);
     if (d.requisitos.length) out.push(`req=${REQUISITOS.filter(([k]) => d.requisitos.includes(k)).map(([, s]) => s).join('.')}`);
+    const dev = DEVOLUCOES.find(([k]) => k === d.devolve);
+    if (dev) {
+      out.push(`dev=${dev[1]}`);
+      if (d.devolve === 'fracao') out.push(`fr=${escreverFracao(d.fracao ?? 0)}`);
+      else {
+        out.push(`fx=${escreverFaixas(d.faixas ?? [])}`);
+        out.push(`fxa=${escreverDuracao(d.acimaDias ?? 0)}`);
+      }
+    }
     return out.join(';');
   }
   if (m.op === 'modificar') {
@@ -157,9 +212,10 @@ function lerCamposTipo(c: Map<string, string>): Partial<CamposTipo> {
   return out;
 }
 
+// O id do catálogo é positivo; o negativo é o do tipo criado no pacote. Zero não é ninguém.
 const idDeTipo = (t: string | undefined) => {
   const n = Number(t);
-  return t && Number.isInteger(n) && n > 0 ? n : null;
+  return t && Number.isInteger(n) && n !== 0 ? n : null;
 };
 
 export function lerMudanca(texto: string, porId: Record<string, AtributoDef>): Mudanca | null {
@@ -189,6 +245,15 @@ export function lerMudanca(texto: string, porId: Record<string, AtributoDef>): M
         vedacoes: VEDACOES.filter(([, s]) => (c.get('ved') ?? '').split('.').includes(s)).map(([k]) => k),
         requisitos: REQUISITOS.filter(([, s]) => (c.get('req') ?? '').split('.').includes(s)).map(([k]) => k),
       };
+      const dev = DEVOLUCOES.find(([, s]) => s === c.get('dev'))?.[0];
+      if (dev === 'fracao') {
+        def.devolve = 'fracao';
+        def.fracao = lerFracao(c.get('fr') ?? '') ?? DEFINICAO_FRACAO_PADRAO;
+      } else if (dev === 'faixas') {
+        def.devolve = 'faixas';
+        def.faixas = c.has('fx') ? lerFaixas(c.get('fx')!) : [];
+        def.acimaDias = c.has('fxa') ? (lerDuracao(c.get('fxa')!) ?? 0) : 0;
+      }
       return {sentido: 'atributo', op: 'criar', def};
     }
     case 'am': {
@@ -228,11 +293,13 @@ export function escreverPacote(
   for (const m of pacote) q.append('m', escreverMudanca(m, porId));
   if (ativo > 0) q.set('i', String(ativo));
   escreverPremissa(q, rev);
+  // Os separadores internos são legais na query e ficam legíveis; `:` é o das faixas.
   const s = q
     .toString()
     .replace(/%3B/gi, ';')
     .replace(/%3D/gi, '=')
-    .replace(/%2F/gi, '/');
+    .replace(/%2F/gi, '/')
+    .replace(/%3A/gi, ':');
   return s ? `?${s}` : '';
 }
 
