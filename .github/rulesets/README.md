@@ -1,37 +1,53 @@
-# Proteção da `main`, em dois níveis
+# Proteção da `main` e das tags
 
 A proteção do repositório é **versionada aqui**, e não só clicada na interface web. O
 arquivo é a fonte; o GitHub é o derivado. Mexeu pela web? Traga a mudança para cá, senão a
-próxima execução do `aplicar.sh` a desfaz em silêncio.
+próxima execução do [`aplicar.sh`](aplicar.sh) a desfaz em silêncio.
 
-São dois níveis, e **só o primeiro está ativo**.
+Os dois arquivos são a **cópia fiel do que está no ar**, lida da API em 24/09/2026 —
+não uma proposta. Antes de editar qualquer um, rode `aplicar.sh --listar` e confira.
 
-| arquivo | estado | o que impõe |
+| arquivo | alvo | o que impõe |
 |---|---|---|
-| [`main-base.json`](main-base.json) | **ativo** | `deletion` e `non_fast_forward` na `main`, sem exceção para ninguém |
-| [`main-colaboracao.json`](main-colaboracao.json) | `"enforcement": "disabled"` | o mesmo, mais PR com aprovação de code owner e CI verde |
+| [`protecao-main.json`](protecao-main.json) | a branch padrão | `deletion`, `non_fast_forward`, PR com aprovação e code owner, CI verde |
+| [`tags-release.json`](tags-release.json) | `refs/tags/v*` | `creation`, `update`, `deletion` — versão publicada não se reescreve |
 
-## Por que o base é só isso
+## Por que isso não trava o mantenedor
 
-Hoje o projeto tem um mantenedor. Exigir aprovação de PR num repositório de uma pessoa só
-não protege nada — **trava o trabalho**, porque o GitHub não deixa ninguém aprovar o
-próprio PR. O que o nível base impede é o que dói de verdade e não tem desfazer:
+O `pull_request` exige **1 aprovação** e **revisão do code owner**
+([`../CODEOWNERS`](../CODEOWNERS)), e o GitHub não deixa ninguém aprovar o próprio PR. Num
+repositório de uma pessoa só, isso trancaria tudo. O que destrava são os dois
+`bypass_actors`:
 
-- **`non_fast_forward`** — reescrever a história da `main`. Um `push --force` sobre uma
-  base citável apaga o commit que fundamenta um dado publicado, e a trilha de auditoria
-  perde o sentido.
-- **`deletion`** — apagar a `main`.
+- **`RepositoryRole 5`**, o papel de administrador. É o mantenedor. Sem ele, o dono do
+  projeto precisaria pedir revisão a alguém que talvez ainda não conheça o código.
+- **`Integration 4435955`**, o app de automação. Sem ele, o `regen-data`, o `release` e o
+  carimbo semanal do conferidor param de empurrar para a `main` — e param em silêncio, com
+  um erro de permissão no log de um workflow que ninguém abre.
 
-Sem `bypass_actors`: a regra vale para o mantenedor também. É deliberado — a trava existe
-justamente contra o acidente de quem tem a permissão. Para uma exceção pontual, ponha o
-ruleset em `"evaluate"` ou `"disabled"` pela web, faça o que precisa e volte a `"active"`
-rodando o `aplicar.sh`.
+Quem **não** tem bypass é todo o resto. Na prática, hoje: qualquer pessoa que não seja o
+mantenedor só chega à `main` por pull request revisado.
 
-**O que o nível base NÃO precisa impedir:** push vindo de um fork. Um fork não escreve no
-repositório de origem — não é permissão que se negue, é coisa que o GitHub não oferece.
-Quem tem cópia do projeto, tenha ela o nome que tiver, só chega à `main` por **pull
-request**, que o mantenedor lê e mergeia. Pela mesma razão, ruleset nenhum alcança branch
-de fork: as regras daqui valem para as branches DESTE repositório.
+## O que muda quando entrar um colaborador
+
+Nada precisa ser criado — as regras já estão lá. O que muda é o **bypass**, e é uma
+decisão, não uma tarefa:
+
+- manter o bypass de admin significa que o mantenedor continua mergeando sozinho, e a
+  exigência de revisão vale só para o time;
+- retirá-lo significa que ninguém merge sem revisão de outra pessoa, o mantenedor
+  inclusive. É o passo a dar quando houver uma segunda pessoa capaz de revisar o direito
+  penal do catálogo, e não antes.
+
+Também vale ligar `dismiss_stale_reviews_on_push` (hoje `false`): com mais de uma pessoa
+mexendo, aprovação que sobrevive a um push novo aprova o que ninguém leu.
+
+## O que forks não alcançam
+
+Um fork **não escreve no repositório de origem**. Não é permissão que se negue — é coisa
+que o GitHub não oferece. Quem tem cópia do projeto só chega à `main` por pull request. Pela
+mesma razão, ruleset nenhum alcança branch de fork: as regras daqui valem para as branches
+DESTE repositório.
 
 O que um fork consegue, e por isso importa: rodar o `ci.yml`, que dispara em
 `pull_request`. Isso é seguro porque `pull_request` roda o workflow **da base**, com token
@@ -40,47 +56,27 @@ somente-leitura e sem acesso a segredo. **Nunca troque esse gatilho por
 terceiro com o token e os segredos do repositório de origem, e é o furo clássico das
 Actions.
 
-## Quando ligar o nível de colaboração
-
-**Só quando entrar um colaborador com permissão de escrita.** Até lá ele fica aqui,
-escrito e desligado, para que a decisão já esteja tomada quando a hora chegar — e para que
-se possa discutir o texto dela sem pressa.
-
-O que ele acrescenta:
-
-- **`pull_request`** — nada entra na `main` sem PR, com **1 aprovação** e **revisão do code
-  owner** ([`.github/CODEOWNERS`](../CODEOWNERS)). Aprovação obsoleta cai quando chega
-  commit novo.
-- **`required_status_checks`** — o job `Typecheck, verificação e build` do `ci.yml` tem de
-  passar, e o PR tem de estar atualizado com a `main` (`strict`).
-- **`bypass_actors`: administrador do repositório** — o mantenedor continua mergeando o
-  próprio PR sem esperar aprovação de ninguém. Sem isso o repositório se tranca: o dono
-  seria obrigado a pedir revisão a alguém que talvez ainda não conheça o código.
-
-O `actor_id: 5` é o papel **admin** do repositório. Depois de aplicar, confira na tela
-Settings ▸ Rules que o bypass aparece como "Repository admin" — o `aplicar.sh` imprime o
-que o GitHub aceitou.
-
-Convenção de nome de branch **não** virou regra de ruleset. Ela só alcançaria branches
-deste repositório, nunca as de um fork, e uma regra que vale para metade dos casos ensina
-menos que uma linha no [`CONTRIBUTING.md`](../../CONTRIBUTING.md), que é onde ela está.
-
 ## Aplicar
 
 ```bash
 ./.github/rulesets/aplicar.sh --listar                    # o que está no ar
-./.github/rulesets/aplicar.sh --ensaio main-base.json     # mostra e não envia
-./.github/rulesets/aplicar.sh main-base.json              # cria ou atualiza pelo nome
+./.github/rulesets/aplicar.sh --ensaio protecao-main.json # mostra e não envia
+./.github/rulesets/aplicar.sh protecao-main.json          # cria ou atualiza pelo nome
 ```
 
-O script é repetível: casa pelo `name`, então rodar duas vezes atualiza em vez de duplicar.
-Requer o `gh` autenticado com administração do repositório.
+O script casa pelo `name`, então é repetível: rodar duas vezes atualiza em vez de duplicar.
+O repositório sai do remoto do próprio clone, e não de uma constante — ele ainda se chama
+`sispenas` e passa a `atlaspen` no lançamento.
 
-## O que ainda não está coberto
+Para uma exceção pontual, ponha o ruleset em `"evaluate"` ou `"disabled"` pela web, faça o
+que precisa e volte a `"active"` rodando o `aplicar.sh`.
 
-- **Tags.** O `release.yml` cria a tag `vX.Y.Z` a partir da v1.0.0. Um ruleset de `target:
-  tag` com `deletion` e `update` impediria que uma versão publicada fosse reescrita. Vale
-  escrever junto com o lançamento da v1.0.0, não antes — hoje não há tag a proteger.
-- **Regra de ambiente.** O `environment: automacao` já é a trava server-side dos segredos
-  do app de automação, e a política de branch dele restringe a entrega da chave à `main`.
-  Isso vive em Settings ▸ Environments, não em ruleset.
+## Fora daqui, mas da mesma família
+
+- **`delete_branch_on_merge`**, ligado em 24/09/2026: o GitHub apaga a branch no instante do
+  merge do PR. É configuração de repositório, não ruleset.
+  `gh api --method PATCH repos/<dono>/<nome> -F delete_branch_on_merge=true`
+- **`environment: automacao`**, a trava server-side dos segredos do app: com a política de
+  branch restrita à `main`, o GitHub recusa entregar a chave a um job que rode em qualquer
+  outra branch. Vive em Settings ▸ Environments.
+- **A faxina de branches**, em [`../workflows/branches.yml`](../workflows/branches.yml).

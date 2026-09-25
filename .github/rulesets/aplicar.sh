@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 # Aplica um ruleset versionado ao repositório, criando ou atualizando pelo NOME.
 #
-#   ./.github/rulesets/aplicar.sh main-base.json
-#   ./.github/rulesets/aplicar.sh main-colaboracao.json
-#   ./.github/rulesets/aplicar.sh --listar
-#   ./.github/rulesets/aplicar.sh --ensaio main-colaboracao.json   # mostra e não envia
+#   ./.github/rulesets/aplicar.sh --listar                       # o que está no ar
+#   ./.github/rulesets/aplicar.sh --ensaio protecao-main.json    # mostra e não envia
+#   ./.github/rulesets/aplicar.sh protecao-main.json             # cria ou atualiza
+#   ./.github/rulesets/aplicar.sh tags-release.json
 #
 # O arquivo é a fonte; o GitHub é o derivado. Mexeu na proteção pela interface
 # web? Traga a mudança para cá, senão a próxima execução a desfaz em silêncio.
@@ -12,7 +12,11 @@
 # Requer o `gh` autenticado com escopo de administração do repositório.
 set -euo pipefail
 
-REPO="${REPO:-amorim-rc/atlaspen}"
+# O repositório sai do remoto do próprio clone, e não de uma constante: ele
+# ainda se chama `sispenas` e passa a `atlaspen` no lançamento. Constante aqui
+# significaria um 404 no dia da renomeação.
+REPO="${REPO:-$(gh repo view --json nameWithOwner --jq .nameWithOwner 2>/dev/null)}"
+[ -n "$REPO" ] || { echo "não descobri o repositório; passe REPO=dono/nome" >&2; exit 1; }
 AQUI="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 listar() {

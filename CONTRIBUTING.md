@@ -270,11 +270,29 @@ Regras verificadas a cada build: `pena_min <= pena_max`, e inteiro escrito como 
 (`24`, não `24.0`).
 
 **Tipo sem pena mínima.** Nem todo tipo comina os dois extremos. Vários só têm teto —
-"detenção **até** 3 meses" (art. 32 da LCP; arts. 289, 290, 300, 301 e 309 do Código
-Eleitoral). Nesses casos `pena_min` é `0` e o rótulo sai como "até 3 meses". **Zero na
-mínima não é "sem pena"**: o tipo é punível, apenas não tem piso cominado — e, por isso,
-os atributos que dependem da pena mínima (ANPP, suspensão condicional do processo)
-são-lhe os mais favoráveis possíveis. Não preencha a mínima com um chute.
+"reclusão, **até** oito anos" (Lei 6.538/78, arts. 36 a 42). Nesses casos `pena_min` é `0`
+e o rótulo sai como "até 8 anos". **Zero na mínima não é "sem pena"**: o tipo é punível,
+apenas não tem piso cominado — e, por isso, os atributos que dependem da pena mínima (ANPP,
+suspensão condicional do processo) são-lhe os mais favoráveis possíveis. Não preencha a
+mínima com um chute.
+
+**Mas antes de escrever `0`, leia a parte geral do diploma.** Vários códigos fecham essa
+lacuna por conta própria, e aí o mínimo existe — só não está no preceito:
+
+> **Código Eleitoral, art. 284.** "Sempre que este Código não indicar o grau mínimo,
+> entende-se que será ele de quinze dias para a pena de detenção e de um ano para a de
+> reclusão."
+
+O **CPM, art. 58**, diz o mesmo (um ano na reclusão, trinta dias na detenção). Por isso os
+25 registros do Código Eleitoral cuja lei diz só "reclusão até cinco anos" saem com
+`pena_min_meses` 12, e não 0 — e estão certos. Zero fica para quem **não** tem regra de
+fechamento, como a Lei 6.538/78. Quem escrever `0` num diploma que tenha art. 284 não está
+deixando de chutar: está apagando um mínimo que a lei fixa.
+
+*(Esta ressalva entrou em 24/09/2026. Até então a C7 dava como exemplo de `pena_min = 0`
+cinco artigos do Código Eleitoral — 289, 290, 300, 301 e 309 —, que são exatamente os que o
+art. 284 alcança, e o art. 32 da LCP, que não tem pena privativa nenhuma. Seguir o texto
+antigo estragaria 25 registros corretos.)*
 
 Não confunda com o **tipo sem pena privativa** (C2), que não tem prisão alguma.
 

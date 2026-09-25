@@ -173,30 +173,16 @@ Achou um erro no catálogo e não quer mexer em código?
 [Abra uma issue](https://github.com/amorim-rc/atlaspen/issues) com o dispositivo e o que o
 texto da lei diz. É contribuição das mais úteis.
 
-## O que falta — e onde você pode ajudar
+## O que falta
 
-Esta seção substituiu o `backlog.md` em 24/09/2026. A razão é deliberada: um backlog em
-arquivo separado é documento interno, e quem clona o repositório não o lê. Aqui é convite.
-Vários destes itens têm solução mais elegante do que a nossa, e quem chegar de fora pode
-enxergá-la melhor do que quem já olhou demais.
-
-Se um deles te interessar, [abra uma issue](https://github.com/amorim-rc/atlaspen/issues)
-antes de escrever código — alguns carregam decisões jurídicas que precisam ser combinadas.
-
-### Antes do lançamento (v1.0.0)
-
-A v1.0.0 é o lançamento com endereço próprio: domínio `atlaspen.org.br` no ar e o
-repositório renomeado. Até lá, tudo o que puder entrar entra, para que a primeira versão
-pública já saia madura.
-
-| | o que falta |
+| | antes da v1.0.0 |
 |---|---|
 | **Repositório em grupo** | Transferir para uma organização, com times e `CODEOWNERS` por área. O app de automação precisa ser reinstalado na organização, ou `regen-data`, `release` e o carimbo do conferidor param de empurrar. |
 | **Endereço próprio** | Comprar o domínio e trocar `SITE_URL` em `src/site/config.ts`, o `base` do `astro.config.mjs` e um `CNAME`. Hoje é uma constante, não uma varredura. |
 | **Datas de vigência** | 220 eventos do histórico já têm publicação e vigência conferidas no DOU. Falta a LC 225/2026, que tem vigência escalonada. |
 | **Amostra de validação** | O protocolo está registrado e a semente é o hash do commit da versão madura. Falta o sorteio e uma segunda pessoa para a dupla conferência (κ de Cohen). |
 
-### Depois do lançamento: módulos
+### Módulos
 
 Cada um com plano, financiamento e pessoas próprias. A ordem é de exequibilidade.
 
