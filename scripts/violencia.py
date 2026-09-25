@@ -51,6 +51,11 @@ class Classificacao:
     condicao: str | None = None
     # Remissão a outro dispositivo: o Auditor resolve e herda a classificação.
     remissao: str | None = None
+    # O trecho citado em `fundamento` existe mesmo no texto lido? `True` quando
+    # existe; `False` quando a regra citou o que o texto não tem — e aí a
+    # derivação NÃO VALE (o valor é apagado por `conferir_lastro`); `None`
+    # quando não há trecho a conferir (regra de elemento, silêncio da lei).
+    fundamento_verificado: bool | None = None
 
 
 @dataclass
@@ -369,6 +374,31 @@ def _grave_ameaca_por_familia(texto: str, origem: str) -> Classificacao | None:
     return None
 
 
+def conferir_lastro(c: Classificacao, *textos: str) -> Classificacao:
+    """Sem lastro, a derivação não vale.
+
+    Débito técnico 2 do README, fechado em 25/09/2026: a regra devolvia
+    `{regra, fundamento}` sem ninguém conferir que o trecho citado existia no
+    texto do dispositivo. É barato — o texto já está carregado — e é o mesmo
+    mecanismo que torna confiável qualquer leitura automática: a resposta que
+    cita um trecho inexistente é zerada, e o relatório mostra que foi zerada,
+    em vez de publicar um valor com fundamento fantasma.
+
+    O fundamento é comparado normalizado (sem acento, minúsculas), porque é
+    assim que as regras leem o texto e recortam o trecho.
+    """
+    if not c.fundamento:
+        c.fundamento_verificado = None
+        return c
+    alvo = normalizar(c.fundamento)
+    c.fundamento_verificado = any(alvo in normalizar(t) for t in textos if t)
+    if not c.fundamento_verificado:
+        c.alerta = ('SEM LASTRO: o trecho citado como fundamento não está no texto do '
+                    'dispositivo; a derivação foi zerada.')
+        c.valor = None
+    return c
+
+
 def classificar(registro: dict, texto_proprio: str, texto_caput: str = '') -> dict:
     """{'violencia': Classificacao, 'grave_ameaca': Classificacao}.
 
@@ -501,4 +531,6 @@ def classificar(registro: dict, texto_proprio: str, texto_caput: str = '') -> di
                 # forma do art. 100 do CP para a ação penal. Sai marcada como
                 # `silencio` justamente para que se possa revisar só ela.
                 saida[campo] = Classificacao('Não', 'silencio-da-lei', None, 'silencio', None)
+    for campo in saida:
+        conferir_lastro(saida[campo], texto_proprio, texto_caput)
     return saida

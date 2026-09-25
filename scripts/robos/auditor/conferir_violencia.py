@@ -152,10 +152,14 @@ def rodar() -> dict[str, list[dict]]:
                         "crime": registro["crime"], "campo": campo, "catalogo": registro[campo],
                         "derivado": c.valor, "regra": c.regra, "origem": c.origem,
                         "fundamento": c.fundamento, "alerta": c.alerta,
+                        "fundamento_verificado": c.fundamento_verificado,
                         "condicao": c.condicao,
                         "condicao_no_catalogo": registro.get("violencia_condicao"),
                     }
                     if c.valor is None:
+                        # Inclui a derivação zerada por falta de lastro
+                        # (`fundamento_verificado` False): sem trecho no texto,
+                        # não há o que comparar — há o que olhar.
                         listas["juizo"].append(item)
                     elif c.valor != registro[campo] and _ja_julgado(campo, registro["id"]):
                         # Divergência que o mantenedor já julgou, com motivo e
@@ -194,6 +198,28 @@ def rodar() -> dict[str, list[dict]]:
                     else:
                         listas["confere"].append(item)
     return listas
+
+
+def lastro(listas: dict[str, list[dict]]) -> list[str]:
+    """O bloco do relatório que diz quantas respostas citam trecho que existe.
+
+    Sem lastro, a derivação não vale: a resposta zerada está em "pede juízo", e
+    aqui aparece contada — um zeramento que ninguém vê é indistinguível de uma
+    regra que nunca casou.
+    """
+    todos = [i for v in listas.values() for i in v]
+    com = sum(1 for i in todos if i.get("fundamento_verificado") is True)
+    sem = [i for i in todos if i.get("fundamento_verificado") is False]
+    nada = sum(1 for i in todos if i.get("fundamento_verificado") is None)
+    L = ["", "## Lastro do fundamento", "",
+         f"**{com}** respostas citam trecho que está no texto do dispositivo; **{nada}** não "
+         f"citam trecho (regra de elemento, silêncio da lei); **{len(sem)}** citaram trecho que o "
+         "texto não tem e foram **zeradas** — estão em \"pedem juízo\"."]
+    if sem:
+        L += ["", "| id | diploma | dispositivo | regra | trecho citado |", "|---|---|---|---|---|"]
+        L += [f"| {i['id']} | {i['lei']} | {i['artigo']} | {i['regra']} | "
+              f"{(i['fundamento'] or '').replace('|', '/')[:90]} |" for i in sem]
+    return L
 
 
 def linha(i: dict) -> str:
@@ -240,6 +266,7 @@ def markdown(listas: dict[str, list[dict]]) -> str:
     contagem = collections.Counter(
         i["regra"] or "—" for v in listas.values() for i in v)
     L += [f"| {k} | {v} |" for k, v in contagem.most_common()]
+    L += lastro(listas)
     return "\n".join(L) + "\n"
 
 

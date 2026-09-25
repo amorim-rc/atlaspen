@@ -166,6 +166,11 @@ class RegraAcao:
     texto: str
     ressalva: bool
     alcance: dict              # {'artigos': [...]} | {'capitulo': 'V'} | {'titulo': 'VI'}
+    # O `texto` da regra existe mesmo no dispositivo de onde ela diz vir? É o
+    # lastro do fundamento publicado (débito técnico 2, fechado em 25/09/2026):
+    # regra que cita o que o texto não tem não vale, e o conferidor a manda para
+    # "pede juízo" em vez de comparar o catálogo com ela.
+    fundamento_verificado: bool = True
 
 
 def topografia(bruto: str) -> list[tuple[int, str, str]]:
@@ -222,8 +227,31 @@ def onde_esta(artigo: str, marcadores: list, posicoes: dict[str, int], secao: bo
     return lugar
 
 
+def conferir_lastro(regras: list[RegraAcao], dispositivos: dict) -> list[RegraAcao]:
+    """Marca cada regra com o lastro do próprio texto no dispositivo citado.
+
+    O `texto` de uma regra é recortado do dispositivo que a define (caput ou
+    inciso), então o lastro é verdadeiro por construção — e é justamente por
+    isso que a conferência é barata e tem de existir: ela é a trava que
+    transforma "por construção" em "conferido", e acusa no dia em que alguma
+    regra passar a montar texto que a lei não tem.
+    """
+    textos = [normalizar(getattr(d, 'texto', '') or '') for d in dispositivos.values()]
+    for d in dispositivos.values():
+        for inciso in getattr(d, 'incisos', None) or []:
+            textos.append(normalizar(inciso.get('texto', '')))
+    for r in regras:
+        alvo = normalizar(r.texto)
+        r.fundamento_verificado = bool(alvo) and any(alvo in t for t in textos)
+    return regras
+
+
 def achar_regras(dispositivos: dict, bruto: str) -> list[RegraAcao]:
     """As regras de ação penal do diploma, com o alcance de cada uma."""
+    return conferir_lastro(_achar_regras(dispositivos, bruto), dispositivos)
+
+
+def _achar_regras(dispositivos: dict, bruto: str) -> list[RegraAcao]:
     marcadores, posicoes = topografia(bruto), posicoes_dos_artigos(bruto)
     regras: list[RegraAcao] = []
     for chave, d in dispositivos.items():
@@ -413,6 +441,11 @@ class Classificacao:
     fundamento: str | None
     regra: str | None
     ressalva: bool = False
+    # `True`: o trecho citado está no texto do diploma. `None`: não há trecho
+    # do diploma a conferir — regra geral do art. 100 (silêncio verificado) e
+    # lei externa, cujo fundamento está em outro diploma e é conferido à mão.
+    # `False`: a regra citou o que o texto não tem, e a derivação não vale.
+    fundamento_verificado: bool | None = None
 
 
 REGRA_GERAL = Classificacao(
@@ -494,7 +527,8 @@ def classificar(registro: dict, regras: list[RegraAcao], lugar: dict) -> Classif
     r = candidatas[0]
     ressalva = r.ressalva or f'{artigo}|{marcador}'.upper() in [
         x.upper() for x in r.alcance.get('ressalva_dispositivos', [])]
-    return Classificacao(r.especie, f"{r.dispositivo}: {r.texto}", r.formula, ressalva)
+    return Classificacao(r.especie, f"{r.dispositivo}: {r.texto}", r.formula, ressalva,
+                         fundamento_verificado=r.fundamento_verificado)
 
 
 # ── Regras de FORA do diploma ───────────────────────────────────────────────

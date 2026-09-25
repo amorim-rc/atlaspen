@@ -382,3 +382,32 @@ class TestDecisoesA0B1:
         r = self._v("Privar alguém de sua liberdade, mediante sequestro ou cárcere privado:")
         assert r["violencia"].regra == "privacao-da-liberdade"
         assert r["violencia"].condicao
+
+
+# -- Lastro do fundamento (débito técnico 2, fechado em 25/09/2026) ----------
+def test_fundamento_com_lastro_e_verificado():
+    r = classificar('Subtrair coisa alheia móvel, mediante grave ameaça ou violência à pessoa:')
+    assert r['violencia'].fundamento_verificado is True
+    assert r['violencia'].valor == 'Sim'
+
+
+def test_resposta_sem_trecho_nao_tem_lastro_a_conferir():
+    """Regra de elemento e silêncio da lei não citam trecho: `None`, não `False`."""
+    assert classificar('Se a lesão é culposa:', elemento='Culposo')['violencia'].fundamento_verificado is None
+    assert classificar('Deixar de pagar tributo:')['violencia'].fundamento_verificado is None
+
+
+def test_fundamento_sem_lastro_zera_a_derivacao():
+    """Sem lastro, a derivação não vale: o valor sai, e o alerta diz por quê."""
+    c = violencia.Classificacao('Sim', 'violencia-meio', 'mediante violencia a pessoa', 'propria')
+    violencia.conferir_lastro(c, 'Subtrair coisa alheia móvel:', '')
+    assert c.fundamento_verificado is False
+    assert c.valor is None
+    assert 'SEM LASTRO' in c.alerta
+
+
+def test_lastro_ignora_acento_e_caixa():
+    """O compilado varia a grafia ('emprêgo', 'violencia'); o lastro compara normalizado."""
+    c = violencia.Classificacao('Sim', 'violencia-meio', 'mediante VIOLÊNCIA à pessoa', 'propria')
+    violencia.conferir_lastro(c, 'subtrair, mediante violencia a pessoa, coisa alheia', '')
+    assert c.fundamento_verificado is True and c.valor == 'Sim'
