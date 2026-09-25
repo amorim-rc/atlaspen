@@ -27,7 +27,6 @@ export type {
 } from './types';
 export {foiEditado, valoresPadrao} from './types';
 export {avaliarAtributo} from './nucleo';
-export {indexarCatalogo, montarCatalogo} from './carregador';
 export type {AtributoFonte, BaseAtributos, ParametroFonte} from './carregador';
 export {CATALOGO, POR_ID};
 

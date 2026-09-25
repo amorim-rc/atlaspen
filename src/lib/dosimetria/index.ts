@@ -19,7 +19,7 @@ import {
   type Moldura,
 } from './motor';
 
-export {calcularConcurso, indexarModificadores} from './motor';
+export {calcularConcurso} from './motor';
 export type {Moldura} from './motor';
 
 export const MODIFICADORES = (brutos as {modificadores: Modificador[]}).modificadores;
