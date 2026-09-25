@@ -179,3 +179,63 @@ def test_fundamento_intertemporal_aponta_para_a_condicao():
            'acao_condicao': 'Fatos até 03/05/2026: condicionada à representação...'}
     f = ap.fundamento_de(reg, ap.REGRA_GERAL)
     assert f == 'intertemporal: ver `acao_condicao`'
+
+
+class TestArt183:
+    """O art. 183, I, do CP tira do art. 182 o que é roubo, extorsão ou violento.
+
+        Art. 183. Não se aplica o disposto nos dois artigos anteriores:
+        I - se o crime é de roubo ou de extorsão, ou, em geral, quando haja
+            emprego de grave ameaça ou violência à pessoa;
+
+    Sem ele, a regra do art. 182 alcançava o roubo e a extorsão, e 37 registros
+    iam para "pede juízo" com o auditor afirmando que a ação penal do latrocínio
+    poderia depender de representação da família. É leitura de dispositivo: o
+    próprio Código diz que não se aplica.
+    """
+
+    REGRA = ap.RegraAcao(
+        especie="Pública Condicionada à Representação",
+        formula="representacao",
+        dispositivo="Art. 182",
+        texto="Somente se procede mediante representação, se o crime é cometido em "
+              "prejuízo de cônjuge desquitado, de irmão, ou de tio ou sobrinho.",
+        ressalva=True,
+        alcance={"titulo": "II"})
+
+    def _fora(self, **registro):
+        return ap._fora_pelo_art_183(self.REGRA, registro)
+
+    def test_roubo_sai_pelo_nome(self):
+        assert self._fora(crime="Roubo simples", violencia="Sim", grave_ameaca="Sim")
+
+    def test_extorsao_sai_pelo_nome(self):
+        assert self._fora(crime="Extorsão", violencia="Sim", grave_ameaca="Sim")
+
+    def test_extorsao_mediante_sequestro_sai(self):
+        """A violência é condicional, mas a espécie é extorsão — e basta."""
+        assert self._fora(crime="Extorsão mediante sequestro",
+                          violencia="Não", grave_ameaca="Sim")
+
+    def test_extorsao_indireta_sai_pelo_nomen_iuris(self):
+        """Art. 160. Nem violência nem grave ameaça no campo, e ainda assim sai:
+        o Capítulo II se chama 'Do roubo e da extorsão' (decisão C2, grau M)."""
+        assert self._fora(crime="Extorsão indireta", violencia="Não", grave_ameaca="Não")
+
+    def test_furto_continua_alcancado(self):
+        """O art. 155 é o caso central do art. 182: fica, com a condição."""
+        assert not self._fora(crime="Furto simples", violencia="Não", grave_ameaca="Não")
+
+    def test_violento_sem_ser_roubo_tambem_sai(self):
+        """'ou, em geral, quando haja emprego de grave ameaça ou violência'."""
+        assert self._fora(crime="Dano qualificado por violência à pessoa",
+                          violencia="Sim", grave_ameaca="Não")
+
+    def test_outra_regra_nao_e_tocada(self):
+        """A exclusão é do art. 182, e não de toda regra de representação."""
+        outra = ap.RegraAcao(
+            especie="Pública Condicionada à Representação", formula="representacao",
+            dispositivo="Art. 88 da Lei 9.099", texto="lesões corporais leves",
+            ressalva=False, alcance={"artigos": ["129"]})
+        assert not ap._fora_pelo_art_183(
+            outra, {"crime": "Roubo simples", "violencia": "Sim", "grave_ameaca": "Sim"})

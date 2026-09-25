@@ -286,6 +286,41 @@ REGRA_GERAL = Classificacao(
     'silencio-do-diploma')
 
 
+# O art. 182 do CP condiciona à representação os crimes patrimoniais entre
+# parentes próximos. O art. 183 diz onde essa regra NÃO se aplica, e o inciso I
+# é o que mais alcança:
+#
+#   Art. 183. Não se aplica o disposto nos dois artigos anteriores:
+#   I - se o crime é de roubo ou de extorsão, ou, em geral, quando haja emprego
+#       de grave ameaça ou violência à pessoa;
+#
+# Sem ele, a regra do art. 182 alcançava o roubo, a extorsão, a extorsão
+# mediante sequestro e o latrocínio, e o auditor mandava 22 registros para
+# "pede juízo" afirmando que a ação deles poderia depender de representação. É
+# leitura de dispositivo, não juízo: o próprio Código diz que não se aplica.
+_ART_182 = re.compile(r'art\.\s*182', re.I)
+_ROUBO_OU_EXTORSAO = re.compile(r'roubo|extors[ãa]o|latroc[íi]nio', re.I)
+
+
+def _fora_pelo_art_183(regra: RegraAcao, registro: dict) -> bool:
+    """O art. 183, I, tira este registro do alcance do art. 182?
+
+    A violência e a grave ameaça saem dos campos do próprio registro, que são
+    derivados e conferidos por `scripts/violencia.py` — e não de uma segunda
+    leitura do texto, que poderia discordar da primeira.
+
+    A extorsão INDIRETA (art. 160) entra pelo *nomen iuris*: o Capítulo II do
+    Título II se chama "Do roubo e da extorsão", e o art. 183, I, diz "se o
+    crime é de roubo ou de extorsão" — pela espécie, e não pelo meio empregado
+    no caso (decisão C2 de 23/09/2026, grau M).
+    """
+    if 'Art. 182' not in regra.dispositivo and not _ART_182.search(regra.texto or ''):
+        return False
+    if _ROUBO_OU_EXTORSAO.search(registro.get('crime') or ''):
+        return True
+    return 'Sim' in (registro.get('violencia'), registro.get('grave_ameaca'))
+
+
 def classificar(registro: dict, regras: list[RegraAcao], lugar: dict) -> Classificacao:
     """A regra que alcança o registro; se nenhuma, a regra geral do art. 100."""
     artigo = re.sub(r'^Art\.?\s*', '', (registro.get('artigo') or '').split(',')[0]).strip()
@@ -299,7 +334,8 @@ def classificar(registro: dict, regras: list[RegraAcao], lugar: dict) -> Classif
         m = re.search(r'§\s*(\d+)', resto[1])
         if m:
             marcador = f'§ {m.group(1)}º'
-    candidatas = [r for r in regras if alcanca(r, artigo, lugar, marcador)]
+    candidatas = [r for r in regras if alcanca(r, artigo, lugar, marcador)
+                  and not _fora_pelo_art_183(r, registro)]
     if not candidatas:
         return REGRA_GERAL
     # A regra do PRÓPRIO artigo vence a do capítulo, e esta vence a do título.

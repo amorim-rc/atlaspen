@@ -66,14 +66,23 @@ def rodar() -> dict[str, list[dict]]:
                 }
                 item["fundamento_publicado"] = ap.fundamento_de(registro, c)
                 atual = COMPATIVEL.get(registro["acao"], registro["acao"])
-                if registro.get("acao_condicao") and c.especie == atual:
-                    # CONFERE COM RESSALVA (item 1.3 da revisão de 23/09/2026).
-                    # A espécie bate E o registro declara a condição: os dois
-                    # dizem a mesma coisa. Mandá-lo para "pede juízo" era cobrar
-                    # do mantenedor uma decisão que ele já tinha tomado — foi o
-                    # que inflou a lista a 149 entradas.
+                if registro.get("acao_condicao"):
+                    # CONFERE COM RESSALVA (item 1.3 da revisão de 23/09/2026,
+                    # ampliado pela decisão C1 de 24/09). Condição declarada é
+                    # decisão TOMADA: o registro diz "esta é a espécie, e ela
+                    # depende de circunstância do caso". A regra que enxerga a
+                    # mesma dependência não está discordando — está confirmando.
+                    #
+                    # Antes, só entrava aqui quando a espécie derivada também
+                    # batia; quando divergia, o registro ia para "pede juízo" ao
+                    # lado dos que ninguém olhou. Mas é precisamente onde há
+                    # condição que a espécie publicada é a de UMA das hipóteses,
+                    # e comparar as duas por igualdade não diz nada.
+                    #
+                    # O que sobra para o mantenedor é o inverso, e é a lista que
+                    # importa: espécie divergente SEM condição declarada.
                     listas["ressalva"].append(item)
-                elif c.ressalva or registro.get("acao_condicao"):
+                elif c.ressalva:
                     listas["juizo"].append(item)
                 elif c.especie == atual:
                     listas["confere"].append(item)
