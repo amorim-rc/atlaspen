@@ -73,6 +73,19 @@ FORMULAS_INCISO: list[tuple[str, str, re.Pattern]] = [
 ]
 
 _SO_CAPUT = re.compile(r'no caput do art', re.I)
+
+# Regra que ENUMERA em vez de excetuar, descendo ao inciso do parágrafo único:
+#
+#     Art. 167. Nos casos do art. 163, do INCISO IV DO SEU PARÁGRAFO e do art.
+#     164, somente se procede mediante queixa.
+#
+# São três dispositivos nomeados — o caput do 163, o inciso IV do parágrafo
+# único dele e o 164 —, e os incisos I a III do mesmo parágrafo ficam de fora:
+# o dano qualificado por violência segue de ação pública. Lendo só os artigos,
+# a queixa alcançava os cinco registros do art. 163, e a ressalva ("inciso")
+# mandava todos para "pede juízo" sem haver o que julgar.
+_INCISO_DO_PARAGRAFO = re.compile(
+    r'inciso\s+([IVXLC]+)\s+do\s+(?:seu\s+)?paragrafo', re.I)
 _PARAGRAFOS_CITADOS = re.compile(r'§{1,2}\s*(\d+)', re.I)
 
 # Alcance declarado no próprio texto da regra.
@@ -90,6 +103,18 @@ _EXCETO = re.compile(
     r'(?:com excecao|excetuad[oa]s?|salvo|ressalvad[oa]s?)[^.]{0,80}?'
     r'art(?:igo)?s?\.?\s*(\d+(?:-[a-z])?(?:\s*(?:,|e)\s*\d+(?:-[a-z])?)*)', re.I)
 _CAPITULOS_CITADOS = re.compile(r'capitulos? ([ivx]+(?: e [ivx]+)?) deste titulo', re.I)
+
+# A exceção da regra às vezes não nomeia artigo: nomeia PARÁGRAFO e INCISO do
+# próprio artigo em que ela está. "Somente se procede mediante representação,
+# SALVO NOS CASOS DO § 1º, IV, E DO § 3º" (CP, art. 151, § 4º) diz, com todas as
+# letras, que dois dos seis registros do art. 151 são de ação incondicionada — e
+# é exatamente o que o catálogo publica. Sem ler o marcador, a regra parecia
+# alcançar os seis com uma ressalva que ninguém conseguia resolver, e os seis
+# iam para "pede juízo" toda semana sem haver nada a julgar.
+_EXCETO_MARCADORES = re.compile(
+    r'(?:salvo|excetuad[oa]s?|ressalvad[oa]s?|com excecao)[^.]{0,120}', re.I)
+_MARCADOR_COM_INCISO = re.compile(
+    r'§\s*(\d+)\s*[º°]?(?:\s*,\s*([IVXLC]+))?', re.I)
 
 
 @dataclass
@@ -225,15 +250,38 @@ def achar_regras(dispositivos: dict, bruto: str) -> list[RegraAcao]:
             # A exceção escrita na própria regra sai do alcance dela. É leitura
             # do texto, não juízo: o art. 172 da Lei 14.597 diz, com todas as
             # letras, que o art. 169 fica de fora.
+            if m := _INCISO_DO_PARAGRAFO.search(texto):
+                # O artigo citado sem marcador entra pelo caput; o parágrafo,
+                # só no inciso que a regra nomeia.
+                alcance['marcadores'] = ['caput',
+                                         f'parágrafo único, {m.group(1).upper()}']
+                enumerada = True
+            else:
+                enumerada = False
+            resolvida = enumerada
             if excecao := _EXCETO.search(texto):
                 fora = _ARTIGOS_CITADOS.findall(excecao.group(0))
                 if fora:
                     alcance['exceto'] = fora
+                    resolvida = True
+            if m := _EXCETO_MARCADORES.search(texto):
+                trecho = m.group(0)
+                # Só quando a exceção NÃO nomeia artigo: nomeando, ela fala de
+                # outro dispositivo, e quem a resolve é `exceto`.
+                if not _ARTIGOS_CITADOS.search(trecho):
+                    marcs = [f"§ {p}º" + (f", {i.upper()}" if i else "")
+                             for p, i in _MARCADOR_COM_INCISO.findall(trecho)]
+                    if marcs:
+                        alcance['exceto_marcadores'] = marcs
+                        resolvida = True
             regras.append(RegraAcao(
                 especie=especie, formula=formula,
                 dispositivo=f"Art. {artigo}" + ('' if chave.endswith('caput') else f", {chave.split('|')[1]}"),
                 texto=(getattr(d, 'texto', '') or '')[:220],
-                ressalva=bool(_RESSALVA.search(texto)),
+                # Ressalva RESOLVIDA não é ressalva: a regra disse onde não se
+                # aplica, e o alcance já sabe disso. Continuar marcando manda
+                # para "pede juízo" um registro sobre o qual não há o que julgar.
+                ressalva=bool(_RESSALVA.search(texto)) and not resolvida,
                 alcance=alcance))
             break
     return regras
@@ -244,6 +292,8 @@ def alcanca(regra: RegraAcao, artigo: str, lugar: dict, marcador: str = 'caput')
     # O que a própria regra exclui não é alcançado por ela, venha o alcance de
     # artigo citado ou de referência relativa.
     if artigo.upper() in [x.upper() for x in a.get('exceto', [])]:
+        return False
+    if marcador.upper() in [x.upper() for x in a.get('exceto_marcadores', [])]:
         return False
     if a.get('artigos'):
         # Sem reduzir o sufixo: o art. 147-B (violência psicológica) NÃO é o
@@ -330,10 +380,24 @@ def classificar(registro: dict, regras: list[RegraAcao], lugar: dict) -> Classif
         return externa
     marcador = 'caput'
     resto = (registro.get('artigo') or '').split(',', 1)
-    if len(resto) > 1 and '§' in resto[1]:
+    if len(resto) > 1 and re.search(r'§\s*[úu]nico|par[áa]grafo\s+[úu]nico', resto[1], re.I):
+        # O parágrafo único não tem número, e sem nomeá-lo o registro do inciso
+        # I do parágrafo passava por caput — entrando numa regra que só alcança
+        # o caput e o inciso IV.
+        marcador = 'parágrafo único'
+        inc = re.search(r'[úu]nico\s*,\s*([IVXLC]+)', resto[1], re.I)
+        if inc:
+            marcador = f'{marcador}, {inc.group(1).upper()}'
+    elif len(resto) > 1 and '§' in resto[1]:
         m = re.search(r'§\s*(\d+)', resto[1])
         if m:
             marcador = f'§ {m.group(1)}º'
+            # O INCISO entra no marcador: a exceção do § 4º do art. 151 alcança
+            # o "§ 1º, IV" e não o § 1º inteiro, e sem o inciso os quatro
+            # registros do § 1º seriam excetuados junto com ele.
+            inc = re.search(r'§\s*\d+\s*[º°]?\s*,\s*([IVXLC]+)', resto[1])
+            if inc:
+                marcador = f'{marcador}, {inc.group(1).upper()}'
     candidatas = [r for r in regras if alcanca(r, artigo, lugar, marcador)
                   and not _fora_pelo_art_183(r, registro)]
     if not candidatas:

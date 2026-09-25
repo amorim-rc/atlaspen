@@ -239,3 +239,74 @@ class TestArt183:
             ressalva=False, alcance={"artigos": ["129"]})
         assert not ap._fora_pelo_art_183(
             outra, {"crime": "Roubo simples", "violencia": "Sim", "grave_ameaca": "Sim"})
+
+
+class TestExcecaoPorMarcador:
+    """A exceção da regra às vezes nomeia PARÁGRAFO e INCISO, não artigo.
+
+        CP, art. 151, § 4º — Somente se procede mediante representação, salvo
+        nos casos do § 1º, IV, e do § 3º.
+
+    A regra diz, com todas as letras, quais dois dos seis registros do art. 151
+    são de ação incondicionada — e é o que o catálogo publica. Sem ler o
+    marcador, ela parecia alcançar os seis com uma ressalva que ninguém
+    conseguia resolver, e os seis iam para "pede juízo" toda semana.
+    """
+
+    def _regra(self, texto):
+        disp = {"Art. 151|§ 4º": Disp(texto)}
+        return ap.achar_regras(disp, f"TÍTULO I CAPÍTULO VI Art. 151. x {texto}")
+
+    def test_a_excecao_vira_marcador(self):
+        r = self._regra("Somente se procede mediante representação, "
+                        "salvo nos casos do § 1º, IV, e do § 3º")
+        assert r and r[0].alcance.get("exceto_marcadores") == ["§ 1º, IV", "§ 3º"]
+
+    def test_ressalva_resolvida_deixa_de_ser_ressalva(self):
+        r = self._regra("Somente se procede mediante representação, "
+                        "salvo nos casos do § 1º, IV, e do § 3º")
+        assert r[0].ressalva is False
+
+    def test_o_inciso_excetuado_nao_e_alcancado(self):
+        r = self._regra("Somente se procede mediante representação, "
+                        "salvo nos casos do § 1º, IV, e do § 3º")[0]
+        lugar = {"titulo": "I", "capitulo": "VI"}
+        assert not ap.alcanca(r, "151", lugar, "§ 1º, IV")
+        assert not ap.alcanca(r, "151", lugar, "§ 3º")
+
+    def test_os_demais_incisos_continuam_alcancados(self):
+        r = self._regra("Somente se procede mediante representação, "
+                        "salvo nos casos do § 1º, IV, e do § 3º")[0]
+        lugar = {"titulo": "I", "capitulo": "VI"}
+        assert ap.alcanca(r, "151", lugar, "§ 1º, I")
+        assert ap.alcanca(r, "151", lugar, "caput")
+
+
+class TestEnumeracaoComIncisoDoParagrafo:
+    """A regra que ENUMERA, em vez de excetuar.
+
+        CP, art. 167 — Nos casos do art. 163, do inciso IV do seu parágrafo e
+        do art. 164, somente se procede mediante queixa.
+
+    São três dispositivos nomeados, e os incisos I a III do mesmo parágrafo
+    ficam de fora: o dano qualificado por violência segue de ação pública.
+    """
+
+    def _regra(self):
+        texto = ("Nos casos do art. 163, do inciso IV do seu parágrafo e do "
+                 "art. 164, somente se procede mediante queixa.")
+        return ap.achar_regras({"Art. 167|caput": Disp(texto)},
+                               f"TÍTULO II CAPÍTULO IV Art. 167. {texto}")[0]
+
+    def test_enumera_caput_e_o_inciso_nomeado(self):
+        assert self._regra().alcance["marcadores"] == ["caput", "parágrafo único, IV"]
+
+    def test_alcanca_o_caput_e_o_inciso_IV(self):
+        r, lugar = self._regra(), {"titulo": "II", "capitulo": "IV"}
+        assert ap.alcanca(r, "163", lugar, "caput")
+        assert ap.alcanca(r, "163", lugar, "parágrafo único, IV")
+
+    def test_nao_alcanca_os_demais_incisos(self):
+        r, lugar = self._regra(), {"titulo": "II", "capitulo": "IV"}
+        assert not ap.alcanca(r, "163", lugar, "parágrafo único, I")
+        assert not ap.alcanca(r, "163", lugar, "parágrafo único, III")
