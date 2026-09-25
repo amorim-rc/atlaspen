@@ -21,14 +21,14 @@ const INTRO =
 <Base titulo="Tipos penais" descricao={INTRO} ativo="tipos">
   <header class="pagina cabecalho">
     <p class="rotulo">Catálogo</p>
-    <h1>Tipos penais</h1>
+    <div class="titulo-e-acao">
+      <h1>Tipos penais</h1>
+      <BaixarBase />
+    </div>
     <p class="intro">{INTRO}</p>
   </header>
   <div class="pagina">
     <ListaTipos client:load total={tipos.length} leis={leis} acoes={acoes} inicial={linhas.slice(0, POR_PAGINA)} />
-  </div>
-  <div class="pagina baixar">
-    <BaixarBase />
   </div>
 </Base>
 
@@ -42,7 +42,12 @@ const INTRO =
   .intro {
     color: var(--cor-tinta-corpo);
   }
-  .baixar {
-    margin-top: 2rem;
+  /* O título e o botão de download da base na mesma linha; na tela estreita, um sobre o outro. */
+  .titulo-e-acao {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.6rem 1.5rem;
   }
 </style>
