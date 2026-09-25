@@ -16,6 +16,15 @@ tem de existir na página (a emenda mais recente já conferida, quando há). Se
 faltar, o download é rejeitado em vez de alimentar o conferidor com texto velho
 ou truncado.
 
+**Snapshot no caminho canônico significa "conferido", por construção.** A página
+é gravada primeiro em `<data>.html.part` e só é promovida a `<data>.html` quando
+a sentinela passa. Até 25/09/2026 o arquivo era gravado direto no caminho final,
+com o `sentinela_ok` só no `meta.json` — e nenhum consumidor lia o `meta.json`:
+o Vigia, os dois auditores e o histórico varrem os `.html` por `glob`. Quem
+rodava `baixar.py --todas` à mão recebia código de saída 2, mas o snapshot ruim
+já estava no lugar do bom, e a rodada seguinte comparava o catálogo com ele. O
+`.part` fica no diretório para diagnóstico e não casa com `*.html`.
+
 Uso:
     python scripts/robos/nucleo/baixar.py --todas
     python scripts/robos/nucleo/baixar.py --fonte cp --fonte cpm
@@ -35,8 +44,6 @@ import time
 import urllib.error
 import urllib.request
 from pathlib import Path
-
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
 
 RAIZ = Path(__file__).resolve().parents[3]
 # `scripts/robos` para os pacotes dos robôs e do núcleo; `scripts` para o
@@ -125,7 +132,12 @@ def baixar_fonte(fonte: dict, destino: Path) -> dict:
     dir_fonte = destino / fonte["id"]
     dir_fonte.mkdir(parents=True, exist_ok=True)
     arquivo = dir_fonte / f"{hoje().isoformat()}.html"
-    arquivo.write_text(texto, encoding="utf-8")
+    # Grava em `.part` e só promove quando a sentinela passa: o caminho
+    # canônico nunca recebe página que não foi conferida.
+    parcial = dir_fonte / f"{arquivo.name}.part"
+    parcial.write_text(texto, encoding="utf-8")
+    if ok:
+        parcial.replace(arquivo)
 
     meta = {
         "id": fonte["id"],
@@ -136,7 +148,9 @@ def baixar_fonte(fonte: dict, destino: Path) -> dict:
         "sha256": hashlib.sha256(bruto).hexdigest(),
         "sentinela": sentinela,
         "sentinela_ok": ok,
-        "arquivo": arquivo.name,
+        # O nome do arquivo que FICOU: o `.html` promovido, ou o `.part`
+        # rejeitado, para que o meta nunca aponte para um snapshot que não existe.
+        "arquivo": arquivo.name if ok else parcial.name,
     }
     (dir_fonte / "meta.json").write_text(
         json.dumps(meta, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
@@ -144,6 +158,9 @@ def baixar_fonte(fonte: dict, destino: Path) -> dict:
 
 
 def main() -> int:
+    # Só na CLI: como efeito de importação, fechava o stdout de quem importa
+    # o módulo (o pytest, por exemplo).
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
     p = argparse.ArgumentParser(description="Baixa os compilados do Planalto.")
     p.add_argument("--fonte", action="append", default=[], metavar="ID",
                    help="id da fonte (repetível)")

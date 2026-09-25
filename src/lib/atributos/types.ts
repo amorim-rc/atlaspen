@@ -2,7 +2,7 @@
 //
 // Cada atributo é um REGISTRO de dados (nome, fundamento, requisitos, vedações e
 // PARÂMETROS editáveis), guardado em data/atributos.json e montado por
-// carregador.ts, acompanhado de uma função pura de avaliação (avaliadores.ts)
+// carregador.ts, acompanhado de uma função pura de avaliação (avaliadores/)
 // que lê esses parâmetros em vez de constantes embutidas. Isso permite:
 //
 //   1. editar qualquer parâmetro do atributo em tempo de execução (tela "Busca por

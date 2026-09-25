@@ -16,12 +16,15 @@ import {valoresPadrao} from '../atributos/types';
 import {avaliarTipo} from '../atributos/remissao';
 import {cenarioParaCrime, chaveDispositivo, type CenarioReverso} from '../atributos/reverso';
 import {diasDeMeses, formatDias, formatFaixa, mesesDeDias} from '../pena';
-import {admiteTentativa} from './tipos';
+import {admiteTentativa, idDeCriado, posicaoDeCriado} from './tipos';
 import type {
   AlcanceAtributo,
   CamposTipo,
+  ContextoPacote,
   DefinicaoAtributo,
+  Devolucao,
   Etiqueta,
+  FaixaValor,
   Incidencia,
   Mudanca,
   Par,
@@ -52,6 +55,7 @@ export const CAMPOS_TIPO_PADRAO: CamposTipo = {
   contravencao: false,
 };
 
+/** O padrão devolve só o veredito: `devolve` ausente, como todo link anterior a 25/09/2026. */
 export const DEFINICAO_PADRAO: DefinicaoAtributo = {
   nome: '',
   incidencia: 'aplicada',
@@ -59,6 +63,14 @@ export const DEFINICAO_PADRAO: DefinicaoAtributo = {
   limiarDias: 4 * 360,
   vedacoes: [],
   requisitos: [],
+};
+
+/** O que a tela propõe ao trocar para `fracao`: um sexto, a fração mais antiga da progressão. */
+export const DEFINICAO_FRACAO_PADRAO = 1 / 6;
+/** O que a tela propõe ao trocar para `faixas`: um degrau e o valor de acima, para a pessoa editar. */
+export const FAIXAS_PADRAO: {faixas: FaixaValor[]; acimaDias: number} = {
+  faixas: [{ateDias: 2 * 360, valorDias: 4 * 360}],
+  acimaDias: 8 * 360,
 };
 
 export const ROTULO_INCIDENCIA: Record<Incidencia, string> = {
@@ -81,6 +93,41 @@ export const ROTULO_REQUISITO: Record<RequisitoReu, string> = {
   confissao: 'confissão',
   reparacao: 'reparação do dano',
 };
+
+export const ROTULO_DEVOLUCAO: Record<Devolucao, string> = {
+  veredito: 'só o veredito: cabe ou não cabe',
+  fracao: 'uma fração da pena',
+  faixas: 'um prazo por faixa de pena',
+};
+
+/** O que a definição devolve; ausente vale `veredito`, o de sempre. */
+export const devolucaoDe = (d: DefinicaoAtributo): Devolucao => d.devolve ?? 'veredito';
+
+/** As faixas do atributo novo, ordenadas pelo degrau. */
+export const faixasDe = (d: DefinicaoAtributo): FaixaValor[] => [...(d.faixas ?? [])].sort((a, b) => a.ateDias - b.ateDias);
+
+/**
+ * A fração como a lei a escreve — "1/6", "2/5" — quando ela tem denominador
+ * pequeno; percentual, quando não tem. Mora aqui, e não em `format.ts`, porque
+ * a tabela de lá só conhece as frações dos institutos vigentes e arredonda o
+ * resto para inteiro ("12,5%" viraria "13%").
+ */
+export function rotuloFracaoNova(f: number): string {
+  for (let den = 1; den <= 24; den++) {
+    const n = Math.round(f * den);
+    if (n > 0 && Math.abs(f - n / den) < 1e-9) return den === 1 ? 'integral' : `${n}/${den}`;
+  }
+  return `${(Math.round(f * 10000) / 100).toLocaleString('pt-BR')}%`;
+}
+
+/**
+ * O valor que um atributo novo com `faixas` devolve para uma pena, em dias: o
+ * primeiro degrau que a pena não passa; acima do último, `acimaDias`.
+ */
+export function valorPorFaixa(d: DefinicaoAtributo, penaDias: number): number {
+  for (const f of faixasDe(d)) if (penaDias <= f.ateDias) return f.valorDias;
+  return d.acimaDias ?? 0;
+}
 
 const juntar = (l: string[]) => (l.length <= 1 ? (l[0] ?? '') : `${l.slice(0, -1).join(', ')} e ${l.at(-1)}`);
 
@@ -106,7 +153,7 @@ export function camposDoTipo(t: TipoDoMotor): CamposTipo {
  * só se reescreve o campo que mudou: o resto do registro — o valor exato do
  * elemento subjetivo, a tentativa, o perdão judicial — fica como está.
  */
-function montarTipo(id: number, c: CamposTipo, base?: TipoDoMotor): TipoDoMotor {
+export function montarTipo(id: number, c: CamposTipo, base?: TipoDoMotor): TipoDoMotor {
   const b = base ? camposDoTipo(base) : null;
   const penaMudou = !b || b.penaMinDias !== c.penaMinDias || b.penaMaxDias !== c.penaMaxDias;
   const sn = (v: boolean) => (v ? 'Sim' : 'Não') as TipoDoMotor['hediondo'];
@@ -145,6 +192,35 @@ function montarTipo(id: number, c: CamposTipo, base?: TipoDoMotor): TipoDoMotor 
 
 // ── O atributo novo, genérico ─────────────────────────────────────────────
 
+/**
+ * O que o atributo novo devolve, por extenso: "1/6 da pena aplicada", "prazo
+ * por faixa da pena máxima cominada (até 1 ano, 3 anos; acima, 8 anos)". Vazio
+ * no veredito puro. Serve à descrição do atributo e à nota.
+ */
+export function descreverDevolucao(d: DefinicaoAtributo): string {
+  const modo = devolucaoDe(d);
+  if (modo === 'veredito') return '';
+  if (modo === 'fracao') return `${rotuloFracaoNova(d.fracao ?? 0)} da ${ROTULO_INCIDENCIA[d.incidencia]}`;
+  const degraus = faixasDe(d).map((f) => `até ${formatDias(f.ateDias)}, ${formatDias(f.valorDias)}`);
+  return `prazo por faixa da ${ROTULO_INCIDENCIA[d.incidencia]} (${[...degraus, `acima, ${formatDias(d.acimaDias ?? 0)}`].join('; ')})`;
+}
+
+/**
+ * O valor calculado para uma pena-base (em MESES, como o cenário a traz), já
+ * formatado para `Avaliacao.valor`. `undefined` no veredito puro. Fração e
+ * faixa medem-se sobre a mesma pena que decide o limiar — a da `incidencia`.
+ */
+export function valorDevolvido(d: DefinicaoAtributo, penaMeses: number): string | undefined {
+  const modo = devolucaoDe(d);
+  if (modo === 'veredito') return undefined;
+  const penaDias = diasDeMeses(penaMeses);
+  if (modo === 'fracao') {
+    const f = d.fracao ?? 0;
+    return `${rotuloFracaoNova(f)} — ${formatDias(Math.round(penaDias * f))}`;
+  }
+  return formatDias(valorPorFaixa(d, penaDias));
+}
+
 export function atributoNovo(d: DefinicaoAtributo, id: string): AtributoDef {
   const limiar =
     d.comparacao === 'ate'
@@ -152,13 +228,14 @@ export function atributoNovo(d: DefinicaoAtributo, id: string): AtributoDef {
       : d.comparacao === 'acima'
         ? `acima de ${formatDias(d.limiarDias)}`
         : `acima de ${formatDias(d.limiarDias)} e até ${formatDias(d.limiarSuperiorDias ?? 0)}`;
+  const devolve = descreverDevolucao(d);
   return {
     id,
     nome: d.nome.trim() || 'Atributo novo',
     fundamento: 'proposta, sem norma',
     categoria: d.incidencia === 'aplicada' ? 'aplicacao' : 'processual',
     natureza: d.incidencia === 'aplicada' ? 'concreto' : 'abstrato',
-    descricao: `Cabe quando a ${ROTULO_INCIDENCIA[d.incidencia]} for ${limiar}.`,
+    descricao: `Cabe quando a ${ROTULO_INCIDENCIA[d.incidencia]} for ${limiar}.${devolve ? ` Devolve ${devolve}.` : ''}`,
     requisitos: d.requisitos.map((r) => ROTULO_REQUISITO[r]),
     vedacoes: d.vedacoes.map((v) => ROTULO_VEDACAO[v]),
     alcancaSemPenaPrivativa: false,
@@ -166,6 +243,9 @@ export function atributoNovo(d: DefinicaoAtributo, id: string): AtributoDef {
     avaliar: (c) => {
       const pena =
         d.incidencia === 'cominada_minima' ? c.penaMin : d.incidencia === 'cominada_maxima' ? c.penaMax : c.penaConcreta;
+      // O valor só acompanha o veredito que alcança: no incabível não há o que
+      // calcular, e `sinalDe` só compara valor entre dois resultados que cabem.
+      const valor = valorDevolvido(d, pena);
       const tem: Record<VedacaoNova, boolean> = {
         violencia: c.violencia,
         graveAmeaca: c.graveAmeaca,
@@ -195,9 +275,9 @@ export function atributoNovo(d: DefinicaoAtributo, id: string): AtributoDef {
         (r) => !((r === 'primario' && c.reincidencia === 'primario') || (r === 'confissao' && c.confessou) || (r === 'reparacao' && c.reparouDano)),
       );
       if (faltam.length) {
-        return {status: 'condicional', resumo: `Depende de ${juntar(faltam.map((r) => ROTULO_REQUISITO[r]))}.`, detalhes: []};
+        return {status: 'condicional', resumo: `Depende de ${juntar(faltam.map((r) => ROTULO_REQUISITO[r]))}.`, detalhes: [], valor};
       }
-      return {status: 'cabivel', resumo: 'Cabe.', detalhes: []};
+      return {status: 'cabivel', resumo: valor ? `Cabe: ${valor}.` : 'Cabe.', detalhes: [], valor};
     },
   };
 }
@@ -213,8 +293,68 @@ export function estadoLegal(tipos: TipoDoMotor[], catalogo: readonly AtributoDef
   return {tipos, atributos: catalogo.map((def) => ({def, params: valoresPadrao(def)}))};
 }
 
-/** O que falta para a mudança entrar no cálculo; `null` quando está completa. */
-export function problemaDa(m: Mudanca, legal: EstadoCatalogo): string | null {
+// ── O tipo criado no pacote, visto de uma posição do pacote ────────────────
+
+const criaTipo = (m: Mudanca | undefined): m is Extract<Mudanca, {sentido: 'tipo'; op: 'criar'}> =>
+  m !== undefined && m.sentido === 'tipo' && m.op === 'criar';
+
+/**
+ * O tipo criado pela mudança que o id negativo aponta, COMO ESTÁ logo antes da
+ * posição `ate` do pacote: criado por uma mudança anterior e completa, com as
+ * modificações intermediárias aplicadas, e não extinto no caminho. `null` em
+ * qualquer outro caso — o que vem depois, o que foi trocado de operação, o que
+ * já saiu. É a régua de `problemaDa`, e a lista que o seletor da tela oferece.
+ */
+export function tipoCriadoNoPacote(id: number, pacote: Mudanca[], ate: number): TipoDoMotor | null {
+  if (!Number.isInteger(id) || id >= 0) return null;
+  const k = posicaoDeCriado(id);
+  if (k >= ate) return null;
+  const criar = pacote[k];
+  if (!criaTipo(criar) || problemaDa(criar, null) !== null) return null;
+  let t = montarTipo(id, criar.campos);
+  for (let j = k + 1; j < ate; j++) {
+    const m = pacote[j];
+    if (m.sentido !== 'tipo' || m.op === 'criar' || m.id !== id) continue;
+    if (m.op === 'extinguir') return null;
+    const c = {...camposDoTipo(t), ...m.campos};
+    if (c.penaMinDias > c.penaMaxDias) continue; // a modificação incompleta não entra no cálculo
+    t = montarTipo(id, c, t);
+  }
+  return t;
+}
+
+/** Os tipos criados no pacote e ainda de pé na posição `ate`, na ordem em que foram criados. */
+export function tiposCriadosAntes(pacote: Mudanca[], ate: number): TipoDoMotor[] {
+  const out: TipoDoMotor[] = [];
+  for (let k = 0; k < Math.min(ate, pacote.length); k++) {
+    const t = criaTipo(pacote[k]) ? tipoCriadoNoPacote(idDeCriado(k), pacote, ate) : null;
+    if (t) out.push(t);
+  }
+  return out;
+}
+
+/**
+ * O tipo que uma mudança `modificar` ou `extinguir` alcança: o do catálogo, pelo
+ * id positivo; o criado neste pacote, pelo negativo — este só com o contexto.
+ * `legal` pode ser `null` quando só interessa o criado no pacote.
+ */
+export function alvoDa(
+  m: Extract<Mudanca, {sentido: 'tipo'; op: 'modificar' | 'extinguir'}>,
+  legal: EstadoCatalogo | null,
+  contexto?: ContextoPacote,
+): TipoDoMotor | null {
+  if (m.id === null) return null;
+  if (m.id < 0) return contexto ? tipoCriadoNoPacote(m.id, contexto.pacote, contexto.indice) : null;
+  return legal?.tipos.find((x) => x.id === m.id) ?? null;
+}
+
+/**
+ * O que falta para a mudança entrar no cálculo; `null` quando está completa.
+ * A mudança que aponta para tipo criado no pacote precisa do `contexto` — sem
+ * ele, ou apontando para um `criar` que vem depois, que mudou de operação ou
+ * que outra mudança já extinguiu, ela fica de fora, e a mensagem diz por quê.
+ */
+export function problemaDa(m: Mudanca, legal: EstadoCatalogo | null, contexto?: ContextoPacote): string | null {
   if (m.sentido === 'tipo') {
     if (m.op === 'criar') {
       if (!m.campos.nome.trim()) return 'Dê um nome ao tipo novo.';
@@ -222,7 +362,21 @@ export function problemaDa(m: Mudanca, legal: EstadoCatalogo): string | null {
       if (m.campos.penaMinDias > m.campos.penaMaxDias) return 'A pena mínima passa da máxima.';
       return null;
     }
-    const t = m.id === null ? undefined : legal.tipos.find((x) => x.id === m.id);
+    if (m.id !== null && m.id < 0) {
+      const k = posicaoDeCriado(m.id);
+      if (!contexto) return 'Esta mudança aponta para um tipo criado no pacote, e o pacote não veio junto.';
+      const criar = contexto.pacote[k];
+      if (k >= contexto.indice) {
+        return criaTipo(criar)
+          ? `O tipo desta mudança só é criado na mudança ${k + 1}, que vem depois: mova-a para antes ou escolha outro tipo.`
+          : 'O tipo criado que esta mudança apontava já não está no pacote: escolha outro tipo penal.';
+      }
+      if (!criaTipo(criar)) return `A mudança ${k + 1} já não cria um tipo: escolha outro tipo penal.`;
+      if (problemaDa(criar, null) !== null) return `Complete primeiro o tipo criado na mudança ${k + 1}.`;
+      if (!tipoCriadoNoPacote(m.id, contexto.pacote, contexto.indice))
+        return `O tipo criado na mudança ${k + 1} já foi extinto por outra mudança do pacote.`;
+    }
+    const t = alvoDa(m, legal, contexto);
     if (!t) return 'Escolha o tipo penal.';
     if (m.op === 'modificar') {
       if (t.pena_por_remissao) return 'Este tipo não comina moldura própria: a pena é a do dispositivo de origem. Modifique a origem.';
@@ -239,25 +393,83 @@ export function problemaDa(m: Mudanca, legal: EstadoCatalogo): string | null {
       if (teto <= 0) return 'Informe o teto da faixa.';
       if (teto <= m.def.limiarDias) return 'O teto da faixa não passa do piso.';
     }
+    const modo = devolucaoDe(m.def);
+    if (modo === 'fracao') {
+      const f = m.def.fracao ?? 0;
+      if (!(f > 0 && f <= 1)) return 'Informe a fração da pena, entre zero e a pena inteira.';
+    }
+    if (modo === 'faixas') {
+      const faixas = faixasDe(m.def);
+      if (!faixas.length) return 'Informe ao menos um degrau da tabela de faixas.';
+      if (faixas.some((f) => f.ateDias <= 0)) return 'Cada degrau da tabela precisa de um limite de pena.';
+      if (faixas.some((f, i) => i > 0 && f.ateDias === faixas[i - 1].ateDias)) return 'Dois degraus da tabela têm o mesmo limite de pena.';
+      if (faixas.some((f) => f.valorDias <= 0) || (m.def.acimaDias ?? 0) <= 0) return 'Informe o valor de cada faixa, inclusive o de acima do último degrau.';
+    }
     return null;
   }
-  if (!m.atributo || !legal.atributos.some((a) => a.def.id === m.atributo)) return 'Escolha o atributo penal.';
+  if (!legal || !m.atributo || !legal.atributos.some((a) => a.def.id === m.atributo)) return 'Escolha o atributo penal.';
   return null;
+}
+
+/**
+ * O pacote reduzido ao que entra no cálculo, com os ids negativos REMAPEADOS
+ * para as posições novas. Filtrar sem remapear quebraria a referência: o
+ * `tm;-2` que apontava para o segundo `criar` passaria a apontar para o que
+ * estivesse na segunda posição depois do filtro. Quem trabalha sobre a lista
+ * das mudanças válidas — o cálculo, a nota, o id da nota — parte daqui.
+ */
+export function pacoteValido(pacote: Mudanca[], legal: EstadoCatalogo | null): Mudanca[] {
+  const problemas = pacote.map((m, k) => problemaDa(m, legal, {pacote, indice: k}));
+  const novaPosicao = new Map<number, number>();
+  let n = 0;
+  problemas.forEach((p, k) => {
+    if (p === null) novaPosicao.set(k, n++);
+  });
+  return pacote.flatMap((m, k) => {
+    if (problemas[k] !== null) return [];
+    if (m.sentido === 'tipo' && m.op !== 'criar' && m.id !== null && m.id < 0) {
+      const nova = novaPosicao.get(posicaoDeCriado(m.id));
+      // A mudança válida que aponta para criado no pacote aponta para um criar válido: ele está no mapa.
+      return [{...m, id: nova === undefined ? null : idDeCriado(nova)} as Mudanca];
+    }
+    return [m];
+  });
+}
+
+/**
+ * O pacote sem a mudança `k`, com os ids negativos acompanhando a renumeração:
+ * o que apontava para depois de `k` recua uma posição; o que apontava para a
+ * própria `k` perde o alvo e volta a "escolha o tipo". Sem isto, remover a
+ * primeira mudança faria a referência ao segundo criar cair sobre o primeiro.
+ */
+export function removerMudanca(pacote: Mudanca[], k: number): Mudanca[] {
+  return pacote
+    .filter((_, j) => j !== k)
+    .map((m) => {
+      if (m.sentido !== 'tipo' || m.op === 'criar' || m.id === null || m.id >= 0) return m;
+      const alvo = posicaoDeCriado(m.id);
+      if (alvo === k) return {...m, id: null} as Mudanca;
+      if (alvo > k) return {...m, id: idDeCriado(alvo - 1)} as Mudanca;
+      return m;
+    });
 }
 
 /**
  * O catálogo simulado. Tipo e atributo que o pacote não toca são o MESMO objeto
  * da lei vigente: é por identidade que a avaliação reaproveita o que não mudou.
+ *
+ * O tipo criado recebe o id `-(k + 1)` da posição da sua mudança — não um
+ * contador. É o que permite à mudança seguinte modificá-lo ou extingui-lo, e à
+ * URL dizer qual é sem depender de quantos vieram antes.
  */
 export function aplicarPacote(legal: EstadoCatalogo, pacote: Mudanca[]): EstadoCatalogo {
   let tipos = legal.tipos;
   let atributos = legal.atributos;
-  let proximoId = -1;
   let novos = 0;
-  for (const m of pacote) {
-    if (problemaDa(m, legal) !== null) continue;
+  pacote.forEach((m, k) => {
+    if (problemaDa(m, legal, {pacote, indice: k}) !== null) return;
     if (m.sentido === 'tipo') {
-      if (m.op === 'criar') tipos = [...tipos, montarTipo(proximoId--, m.campos)];
+      if (m.op === 'criar') tipos = [...tipos, montarTipo(idDeCriado(k), m.campos)];
       else if (m.op === 'modificar')
         tipos = tipos.map((t) => (t.id === m.id ? montarTipo(t.id, {...camposDoTipo(t), ...m.campos}, t) : t));
       else tipos = tipos.filter((t) => t.id !== m.id);
@@ -268,7 +480,7 @@ export function aplicarPacote(legal: EstadoCatalogo, pacote: Mudanca[]): EstadoC
     } else {
       atributos = atributos.filter((a) => a.def.id !== m.atributo);
     }
-  }
+  });
   return {tipos, atributos};
 }
 
@@ -406,12 +618,21 @@ export function comparar(
  * não há etiqueta: o sentido depende do valor, e a tela não o adivinha.
  * Extinguir um dos 22 atributos é in pejus: todos favorecem o réu quando cabem.
  */
-export function etiquetasDa(m: Mudanca, legal: EstadoCatalogo, rev: CenarioReverso, avLegal: Avaliacoes): Etiqueta[] {
-  if (problemaDa(m, legal) !== null) return [];
+export function etiquetasDa(
+  m: Mudanca,
+  legal: EstadoCatalogo,
+  rev: CenarioReverso,
+  avLegal: Avaliacoes,
+  contexto?: ContextoPacote,
+): Etiqueta[] {
+  if (problemaDa(m, legal, contexto) !== null) return [];
   if (m.sentido === 'tipo') {
     if (m.op === 'criar') return ['incriminadora'];
-    if (m.op === 'extinguir') return ['abolitio'];
-    const t = legal.tipos.find((x) => x.id === m.id)!;
+    // Extinguir o tipo criado neste mesmo pacote não é abolitio criminis: nada
+    // da lei vigente deixa de ser crime. A mudança só desfaz a hipótese, e o
+    // impacto já mostra o saldo — zero. Fica sem etiqueta.
+    if (m.op === 'extinguir') return m.id !== null && m.id < 0 ? [] : ['abolitio'];
+    const t = alvoDa(m, legal, contexto)!;
     const a = camposDoTipo(t);
     const d = {...a, ...m.campos};
     const piora =

@@ -7,21 +7,27 @@
 // faixa da última alteração, correlatos, auditoria. As abas de pena são uma
 // ilha React, também renderizada no build — sem JS, a ficha mostra a moldura
 // legal, os vereditos da lei vigente e os tipos correlatos.
+//
+// Cada bloco da ficha é um componente em src/components/ficha/, com o próprio
+// estilo (débito 6 do README, fechado em 25/09/2026): esta página monta os
+// dados que mais de um bloco lê e compõe os blocos, e nada mais.
 import Base from '../../layouts/Base.astro';
+import TrilhaFicha from '../../components/ficha/TrilhaFicha.astro';
+import CabecalhoFicha from '../../components/ficha/CabecalhoFicha.astro';
+import FaixaAlteracao from '../../components/ficha/FaixaAlteracao.astro';
 import FichaTipo from '../../components/ficha/FichaTipo';
 import VereditosSemMoldura from '../../components/ficha/VereditosSemMoldura.astro';
+import FontesRemissao from '../../components/ficha/FontesRemissao.astro';
 import PainelHistorico, {type DadosHistorico, type EventoResumo} from '../../components/ficha/PainelHistorico';
+import TiposCorrelatos from '../../components/ficha/TiposCorrelatos.astro';
+import RodapeFicha from '../../components/ficha/RodapeFicha.astro';
 import {correlatosDe, fontesRemissaoDe, patamaresDe, todosOsTipos} from '../../site/catalogo-servidor';
 import {diplomaDoRotulo} from '../../site/diplomas-servidor';
 import {chaveDoArtigo, historicoDe, slugDoArtigo, type EventoHistorico} from '../../site/historico-servidor';
-import {RESULTADOS_CONFERENCIA} from '../../site/servidor';
 import {MODIFICADORES} from '../../lib/dosimetria';
 import {modificadoresAplicaveis} from '../../lib/dosimetria/aplicaveis';
 import {deslocaMoldura, paraOMotor} from '../../lib/dosimetria/moldura';
-import {diasDeMeses, formatContagemDias} from '../../lib/pena';
-import {dataCurta} from '../../site/datas';
-import {caminho} from '../../site/url';
-import {NOME, NOME_EXTENSO, SITE_URL} from '../../site/config';
+import {SITE_URL} from '../../site/config';
 import type {Crime} from '../../lib/types';
 
 export function getStaticPaths() {
@@ -36,117 +42,7 @@ const chaveCanonica = crime.dispositivo_canonico ?? crime.chave_dispositivo;
 const hist = historicoDe(chaveCanonica);
 const vigente = crime.vigente !== false;
 const calculavel = crime.tem_pena_privativa && !crime.pena_por_remissao;
-
-// ── Marcas: os campos do tipo, em texto — nunca só em cor ──────────────────
-type Marca = {rotulo: string; tom?: 'acento' | 'simulacao'; titulo?: string};
-const acao = `Ação ${crime.acao.replace(/^Ação\s+Penal\s+/i, '').replace(/^Ação\s+/i, '').toLowerCase()}`;
-const marcas: Marca[] = [
-  ...(crime.pena_privativa !== 'Nenhuma' ? [{rotulo: crime.pena_privativa}] : []),
-  ...(crime.tem_multa ? [{rotulo: `Multa ${crime.multa_regime}`}] : []),
-  {rotulo: crime.elemento},
-  ...(crime.violencia === 'Sim' ? [{rotulo: 'Com violência', tom: 'acento' as const}] : []),
-  ...(crime.grave_ameaca === 'Sim' ? [{rotulo: 'Com grave ameaça', tom: 'acento' as const}] : []),
-  ...(crime.tentativa === 'Sim' ? [{rotulo: 'Admite tentativa'}] : []),
-  crime.acao_condicional
-    ? {rotulo: `${acao} — depende do caso`, tom: 'simulacao' as const, titulo: crime.acao_condicao}
-    : {rotulo: acao},
-  ...(crime.hediondo === 'Sim'
-    ? [
-        {
-          rotulo: crime.hediondo_especie === 'equiparado' ? 'Equiparado a hediondo' : 'Hediondo',
-          tom: 'acento' as const,
-          titulo: crime.hediondo_fundamento ?? undefined,
-        },
-      ]
-    : []),
-  ...(crime.hediondo_condicional
-    ? [{rotulo: 'Hediondez condicionada', tom: 'simulacao' as const, titulo: crime.hediondo_condicao}]
-    : []),
-  ...(crime.resultado_morte ? [{rotulo: 'Resultado morte'}] : []),
-  ...(crime.contravencao ? [{rotulo: 'Contravenção penal'}] : []),
-  ...(crime.infracao_menor_potencial ? [{rotulo: 'Menor potencial ofensivo'}] : []),
-  ...(!vigente ? [{rotulo: 'Fora de vigência', tom: 'acento' as const}] : []),
-  ...(crime.duplicata ? [{rotulo: 'Possível duplicata', tom: 'simulacao' as const}] : []),
-];
-
-// ── A moldura, nas três unidades ───────────────────────────────────────────
-const dMin = diasDeMeses(crime.pena_min_meses);
-const dMax = diasDeMeses(crime.pena_max_meses);
-const meses = (m: number) => m.toLocaleString('pt-BR', {maximumFractionDigits: 2});
-const especie = [
-  crime.pena_privativa === 'Nenhuma' ? 'sem pena privativa' : crime.pena_privativa.toLowerCase(),
-  crime.tem_multa ? `e multa (${crime.multa_regime})` : 'sem multa',
-].join(' · ');
-
-// ── A faixa da última alteração ────────────────────────────────────────────
-// Lê o campo derivado do registro quando existir (frente 4), senão o histórico
-// legislativo do artigo; não havendo nenhum dos dois, diz que não há.
-type Faixa = {estado: 'normal' | 'fora' | 'nao-datado'; rotulo: string; texto: string; detalhe?: string; url?: string};
-const semParenteses = (t: string) => t.replace(/^\(|\)$/g, '');
 const artigoDoRegistro = chaveDoArtigo(chaveCanonica).split('|')[1] ?? crime.artigo;
-let faixa: Faixa;
-if (!vigente) {
-  faixa = {
-    estado: 'fora',
-    rotulo: 'Fato anterior',
-    texto: `Fora de vigência desde ${dataCurta(crime.vigencia_ate ?? '')}.`,
-    detalhe: `${crime.vigencia_nota ?? ''} O registro continua consultável: fatos anteriores a essa data seguem regidos por ele.`,
-  };
-} else if (crime.ultima_alteracao !== undefined) {
-  const u = crime.ultima_alteracao;
-  const n = crime.alteracoes_legislativas;
-  // Três respostas, e nenhuma se confunde com a outra: a lei que por último
-  // mexeu no dispositivo; a redação original, que é uma data conhecida (a do
-  // diploma); e o silêncio do compilado, que não é "original".
-  faixa = u
-    ? {
-        estado: 'normal',
-        rotulo: 'Última alteração deste dispositivo',
-        texto: `${u.evento === 'criacao' ? 'Incluído pela' : u.evento === 'revogacao' ? 'Revogado pela' : 'Redação dada pela'} ${u.norma ?? 'norma não identificada'}${u.ano ? `, de ${u.ano}` : ''}.`,
-        // O dispositivo incluído por lei não tem "texto original" de que se alterar:
-        // a lei que o incluiu é a primeira do histórico dele, e conta.
-        ...(typeof n === 'number'
-          ? {
-              detalhe:
-                u.evento === 'criacao' && n === 1
-                  ? 'sem alteração desde a inclusão'
-                  : `${n} ${n === 1 ? 'lei' : 'leis'} no histórico deste dispositivo`,
-            }
-          : {}),
-        ...(u.url ? {url: u.url} : {}),
-      }
-    : n === 0
-      ? {
-          estado: 'normal',
-          rotulo: 'Última alteração deste dispositivo',
-          texto: `Redação original${diploma ? ` — ${diploma.norma}` : ''}, sem alteração desde então.`,
-        }
-      : {
-          estado: 'nao-datado',
-          rotulo: 'Última alteração deste dispositivo',
-          texto: 'Sem data conhecida: o texto compilado não data esta redação.',
-          detalhe: 'o compilado não anota quem deu o texto desta unidade, e o histórico não adivinha',
-        };
-} else if (hist.datado && (hist.ultima || hist.original)) {
-  const u = hist.ultima;
-  faixa = {
-    estado: 'normal',
-    rotulo: 'Última alteração deste dispositivo',
-    texto: u
-      ? `${semParenteses(u.anotacao ?? `Alterado pela ${u.norma}${u.ano ? `, de ${u.ano}` : ''}`)}.`
-      : `Redação original${diploma ? ` — ${diploma.norma}` : ''}, sem alteração registrada.`,
-    detalhe: `o ${artigoDoRegistro} como um todo tem ${hist.alteracoesArtigo} ${hist.alteracoesArtigo === 1 ? 'alteração registrada' : 'alterações registradas'}`,
-    ...(u?.url ? {url: u.url} : {}),
-  };
-} else {
-  faixa = {
-    estado: 'nao-datado',
-    rotulo: 'Última alteração deste dispositivo',
-    texto: 'Ainda não datada.',
-    detalhe:
-      'o histórico legislativo dos tipos penais ainda está em coleta.',
-  };
-}
 
 // ── O histórico do artigo, para a aba (ou para o bloco estático) ───────────
 function tipoEvento(e: EventoHistorico): EventoResumo['tipo'] {
@@ -176,14 +72,6 @@ const patamares = patamaresDe(crime);
 const correlatos = correlatosDe(crime);
 const fontesRemissao = fontesRemissaoDe(crime);
 
-// ── Auditoria e citação ───────────────────────────────────────────────────
-const resultado = crime.conferido_resultado
-  ? (RESULTADOS_CONFERENCIA[crime.conferido_resultado] ?? crime.conferido_resultado)
-  : null;
-const citacao =
-  `${NOME} — ${NOME_EXTENSO}. ${crime.crime} (${crime.lei}, ${crime.artigo}). ` +
-  'Disponível em: {url}. Acesso em: {acesso}.';
-
 const titulo = `${crime.crime} — ${crime.artigo}, ${crime.lei}`;
 const descricao =
   `${crime.artigo} (${diploma?.nome ?? crime.lei}). ` +
@@ -207,77 +95,18 @@ const linkHistorico = calculavel && vigente ? '?modo=historico' : '#historico';
 
   <div class="pagina ficha-pagina">
     <article class="cartao">
-      <nav class="trilha" aria-label="Trilha">
-        <ol>
-          <li><a href={caminho('/tipos')}>Tipos penais</a></li>
-          <li class="trilha-diploma"><a href={caminho(`/tipos?lei=${encodeURIComponent(crime.lei)}`)}>{diploma?.nome ?? crime.lei}</a></li>
-          <li aria-current="page">{crime.artigo}</li>
-        </ol>
-      </nav>
+      <TrilhaFicha crime={crime} nomeDiploma={diploma?.nome ?? crime.lei} />
 
-      <header class="cabecalho-ficha">
-        <div class="identidade">
-          <p class="dispositivo sem-recuo">{crime.lei} · {crime.artigo}</p>
-          <h1>{crime.crime}</h1>
-          <details class="mais-sobre" open data-mais-sobre>
-            <summary>mais sobre o tipo</summary>
-            {crime.obs && <p class="texto-tipo">{crime.obs}</p>}
-            <ul class="marcas" aria-label="Campos do tipo">
-              {marcas.map((m) => <li class:list={['marca', m.tom && `marca-${m.tom}`]} title={m.titulo}>{m.rotulo}</li>)}
-            </ul>
-          </details>
-        </div>
+      <CabecalhoFicha crime={crime} vigente={vigente} />
 
-        {
-          crime.pena_por_remissao ? (
-            <div class="caixa-moldura">
-              <span class="rotulo">Pena por remissão</span>
-              <span class="valor-remissao">{crime.pena_por_remissao.dispositivo_fonte}</span>
-              <span class="especie">
-                {crime.pena_por_remissao.operador === 'nenhum'
-                  ? 'a pena cominada lá, sem alteração'
-                  : `com ${crime.pena_por_remissao.operador === 'aumento' ? 'aumento' : 'diminuição'} de ${crime.pena_por_remissao.fracao}`}
-              </span>
-            </div>
-          ) : !crime.tem_pena_privativa ? (
-            <div class="caixa-moldura">
-              <span class="rotulo">{(crime.sancoes_nao_privativas ?? []).length ? 'Sanções cominadas' : 'Pena cominada'}</span>
-              {(crime.sancoes_nao_privativas ?? []).length ? (
-                <ul class="sancoes">
-                  {crime.sancoes_nao_privativas.map((sn) => (
-                    <li>
-                      <span class="inciso">{sn.inciso}</span> {sn.sancao}
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <span class="valor-moldura">{crime.pena_faixa_rotulo}</span>
-              )}
-              <span class="especie">sem pena privativa de liberdade</span>
-            </div>
-          ) : (
-            <div class="caixa-moldura">
-              <span class="rotulo">Moldura da pena</span>
-              <span class="valor-moldura num">{crime.pena_faixa_rotulo}</span>
-              <span class="especie">{especie}</span>
-              <span class="unidades num">
-                {formatContagemDias(dMin).replace(/ dias?$/, '')} a {formatContagemDias(dMax)} · {meses(crime.pena_min_meses)} a {meses(crime.pena_max_meses)} meses
-              </span>
-            </div>
-          )
-        }
-      </header>
-
-      <section class:list={['faixa-alteracao', `faixa-${faixa.estado}`]} aria-label={faixa.rotulo}>
-        <span class="rotulo rotulo-faixa">{faixa.rotulo}</span>
-        <span class="corpo-faixa">
-          <span class="texto-faixa">
-            {faixa.url ? <a href={faixa.url} rel="noopener" target="_blank">{faixa.texto}</a> : faixa.texto}
-          </span>
-          {faixa.detalhe && <span class="detalhe-faixa">{faixa.detalhe}</span>}
-        </span>
-        {vigente && <a class="ver-historico nao-imprimir" href={linkHistorico}>ver histórico →</a>}
-      </section>
+      <FaixaAlteracao
+        crime={crime}
+        vigente={vigente}
+        diploma={diploma}
+        hist={hist}
+        artigoDoRegistro={artigoDoRegistro}
+        linkHistorico={linkHistorico}
+      />
 
       {
         calculavel ? (
@@ -291,121 +120,15 @@ const linkHistorico = calculavel && vigente ? '?modo=historico' : '#historico';
         ) : (
           <>
             <VereditosSemMoldura crime={crime} />
-            {fontesRemissao.length > 0 && (
-              <section class="sem-calculo">
-                <h2>Dispositivos de origem da pena</h2>
-                <ul class="lista-tipos">
-                  {fontesRemissao.map((x) => (
-                    <li>
-                      <a href={caminho(`/tipos/${x.id}`)}>
-                        <span class="artigo">{x.artigo}</span>
-                        <span class="nome">{x.crime}</span>
-                        <span class="faixa num">{x.pena_faixa_rotulo}</span>
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            )}
+            {fontesRemissao.length > 0 && <FontesRemissao fontes={fontesRemissao} />}
             {vigente && <PainelHistorico dados={dadosHistorico} comoAba={false} />}
           </>
         )
       }
 
-      {
-        correlatos.length > 0 && (
-          <section class="correlatos">
-            <h2>Tipos correlatos</h2>
-            <p class="nota-correlatos">Os outros dispositivos do mesmo artigo nesta lei.</p>
-            <ul class="lista-tipos">
-              {correlatos.map((x) => (
-                <li>
-                  <a href={caminho(`/tipos/${x.id}`)} data-preserva-modo>
-                    <span class="artigo">{x.artigo}</span>
-                    <span class="nome">
-                      {x.crime}
-                      {x.artigo === crime.artigo && <span class="dup"> · mesmo artigo: possível duplicata</span>}
-                    </span>
-                    <span class="faixa num">{x.pena_faixa_rotulo}</span>
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </section>
-        )
-      }
+      {correlatos.length > 0 && <TiposCorrelatos correlatos={correlatos} artigoAtual={crime.artigo} />}
 
-      <footer class="pe">
-        <div class="bloco-pe">
-          {
-            crime.hediondo === 'Sim' && crime.hediondo_fundamento && (
-              <>
-                <span class="rotulo">
-                  {crime.hediondo_especie === 'equiparado' ? 'Equiparado a hediondo' : 'Hediondo por natureza'}
-                </span>
-                <p>
-                  {crime.hediondo_especie === 'equiparado'
-                    ? 'A Constituição equipara tortura, tráfico e terrorismo ao hediondo quanto ao regime jurídico, sem torná-los hediondos. '
-                    : 'O rol do art. 1º da Lei 8.072/90 é taxativo. '}
-                  Fundamento: {crime.hediondo_fundamento}.
-                </p>
-              </>
-            )
-          }
-          {
-            crime.hediondo_condicional && (
-              <>
-                <span class="rotulo">Hediondez condicionada ao caso</span>
-                <p>
-                  {crime.hediondo_condicao} A classificação depende de circunstância do caso, não do tipo: a ficha
-                  mantém o padrão seguro, não hediondo, e mostra a hipótese. Marcar "hediondo neste caso" na aba de
-                  pena concreta refaz as frações de progressão e de livramento.
-                </p>
-              </>
-            )
-          }
-          {
-            crime.acao_condicional && (
-              <>
-                <span class="rotulo">Ação penal condicionada ao caso</span>
-                <p>{crime.acao_condicao}</p>
-              </>
-            )
-          }
-          <span class="rotulo">Como ler esta ficha</span>
-          <p>
-            Ferramenta de pesquisa: os vereditos aplicam a lei vigente ao que o catálogo registra do tipo, com as
-            simplificações descritas na <a href={caminho('/projeto/metodologia')}>metodologia</a>. Não é
-            aconselhamento jurídico.
-          </p>
-        </div>
-        <div class="bloco-pe">
-          <span class="rotulo">Auditoria do registro</span>
-          <dl class="auditoria">
-            <dt>id</dt>
-            <dd>{crime.id}</dd>
-            <dt>fonte</dt>
-            <dd>
-              {crime.fonte ? (
-                <a href={crime.fonte} rel="noopener" target="_blank">planalto.gov.br · texto compilado</a>
-              ) : (
-                'não conferido ainda'
-              )}
-            </dd>
-            <dt>conferido</dt>
-            <dd>{crime.conferido_em ? dataCurta(crime.conferido_em) : 'não conferido ainda'}</dd>
-            <dt>resultado</dt>
-            <dd>{resultado ?? 'não conferido ainda'}</dd>
-          </dl>
-          <div class="acoes-pe nao-imprimir">
-            <button type="button" class="botao-link" data-copiar-citacao data-citacao={citacao}>copiar citação</button>
-            <details class="json">
-              <summary>este registro em JSON</summary>
-              <pre><code>{JSON.stringify(crime, null, 2)}</code></pre>
-            </details>
-          </div>
-        </div>
-      </footer>
+      <RodapeFicha crime={crime} />
     </article>
     <p class="endereco mono">{SITE_URL}tipos/{crime.id}</p>
   </div>
@@ -474,374 +197,6 @@ const linkHistorico = calculavel && vigente ? '?modo=historico' : '#historico';
     overflow: clip;
   }
 
-  .trilha {
-    padding: 0.65rem 1.25rem;
-    border-bottom: 1px solid var(--cor-borda);
-    font-family: var(--fonte-mono);
-    font-size: var(--fs-meta);
-    color: var(--cor-tinta-fraca);
-  }
-
-  .trilha ol {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.2rem 0.5rem;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  .trilha li + li::before {
-    content: '/';
-    margin-right: 0.5rem;
-    color: var(--cor-tinta-fraca);
-  }
-
-  .trilha a {
-    color: var(--cor-tinta-fraca);
-    text-decoration: none;
-  }
-
-  .trilha a:hover {
-    color: var(--cor-acento);
-    text-decoration: underline;
-  }
-
-  .trilha [aria-current] {
-    color: var(--cor-tinta-corpo);
-  }
-
-  .cabecalho-ficha {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(15rem, 19rem);
-    gap: 1.75rem;
-    padding: 1.4rem 1.25rem 1.25rem;
-    border-bottom: 1px solid var(--cor-borda);
-  }
-
-  .identidade {
-    display: flex;
-    flex-direction: column;
-    gap: 0.35rem;
-    min-width: 0;
-  }
-
-  .dispositivo {
-    font-family: var(--fonte-mono);
-    font-size: var(--fs-meta);
-    color: var(--cor-tinta-media);
-  }
-
-  h1 {
-    font-size: clamp(1.75rem, 1.4rem + 1.5vw, 2.35rem);
-    line-height: 1.12;
-  }
-
-  .mais-sobre > summary {
-    display: none;
-  }
-
-  .texto-tipo {
-    margin-top: 0.6rem;
-    font-family: var(--fonte-serifa);
-    font-size: 1.0625rem;
-    font-style: italic;
-    line-height: 1.55;
-    color: var(--cor-tinta-corpo);
-    max-width: 62ch;
-  }
-
-  .marcas {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.35rem;
-    margin: 0.8rem 0 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  .marca {
-    padding: 0.2rem 0.55rem;
-    border: 1px solid var(--cor-borda-forte);
-    border-radius: 2px;
-    background: var(--cor-superficie);
-    color: var(--cor-tinta-corpo);
-    font-family: var(--fonte-mono);
-    font-size: var(--fs-rotulo);
-    letter-spacing: 0.03em;
-  }
-
-  .marca-acento {
-    border-color: color-mix(in srgb, var(--cor-acento) 45%, transparent);
-    color: var(--cor-acento);
-  }
-
-  .marca-simulacao {
-    border-color: color-mix(in srgb, var(--cor-simulacao) 45%, transparent);
-    color: var(--cor-simulacao);
-    cursor: help;
-  }
-
-  .caixa-moldura {
-    align-self: start;
-    display: flex;
-    flex-direction: column;
-    gap: 0.35rem;
-    padding: 1rem 1.1rem;
-    border: 1px solid var(--cor-borda-forte);
-    border-radius: var(--raio);
-    background: var(--cor-superficie);
-  }
-
-  .valor-moldura {
-    font-family: var(--fonte-serifa);
-    font-size: 2rem;
-    font-weight: 500;
-    line-height: 1.05;
-  }
-
-  .valor-remissao {
-    font-family: var(--fonte-serifa);
-    font-size: 1.25rem;
-    line-height: 1.25;
-  }
-
-  .especie {
-    font-family: var(--fonte-mono);
-    font-size: var(--fs-meta);
-    color: var(--cor-tinta-media);
-  }
-
-  .unidades {
-    margin-top: 0.15rem;
-    padding-top: 0.45rem;
-    border-top: 1px solid var(--cor-borda);
-    font-family: var(--fonte-mono);
-    font-size: var(--fs-rotulo);
-    color: var(--cor-tinta-fraca);
-  }
-
-  .sancoes {
-    margin: 0;
-    padding-left: 1rem;
-    font-size: var(--fs-pequeno);
-  }
-
-  .inciso {
-    font-family: var(--fonte-mono);
-    font-size: var(--fs-rotulo);
-    color: var(--cor-tinta-fraca);
-  }
-
-  .faixa-alteracao {
-    display: grid;
-    grid-template-columns: 10rem minmax(0, 1fr) auto;
-    gap: 0.4rem 1rem;
-    align-items: center;
-    padding: 0.85rem 1.25rem;
-    border-bottom: 1px solid var(--cor-borda);
-    background: var(--cor-superficie);
-  }
-
-  .rotulo-faixa {
-    line-height: 1.4;
-  }
-
-  .corpo-faixa {
-    display: flex;
-    flex-direction: column;
-    gap: 0.2rem;
-    min-width: 0;
-  }
-
-  .texto-faixa {
-    font-size: 0.9375rem;
-    line-height: 1.5;
-  }
-
-  .detalhe-faixa {
-    font-family: var(--fonte-mono);
-    font-size: var(--fs-rotulo);
-    color: var(--cor-tinta-fraca);
-  }
-
-  .ver-historico {
-    font-family: var(--fonte-mono);
-    font-size: var(--fs-meta);
-    white-space: nowrap;
-  }
-
-  .faixa-fora {
-    border-left: 3px solid var(--cor-acento);
-  }
-
-  .faixa-fora .rotulo-faixa,
-  .faixa-fora .texto-faixa {
-    color: var(--cor-acento);
-  }
-
-  .faixa-nao-datado .texto-faixa {
-    color: var(--cor-tinta-corpo);
-  }
-
-  .sem-calculo {
-    display: flex;
-    flex-direction: column;
-    gap: 0.7rem;
-    padding: 1.1rem 1.25rem;
-    border-bottom: 1px solid var(--cor-borda);
-    background: var(--cor-superficie);
-  }
-
-  .sem-calculo h2,
-  .correlatos h2 {
-    font-size: var(--fs-titulo-3);
-  }
-
-  .sem-calculo p {
-    max-width: 62ch;
-    font-size: 0.9375rem;
-    color: var(--cor-tinta-corpo);
-  }
-
-  .correlatos {
-    padding: 1.1rem 1.25rem 0.6rem;
-    border-top: 1px solid var(--cor-borda-forte);
-  }
-
-  .nota-correlatos {
-    margin-top: 0.2rem;
-    font-size: var(--fs-pequeno);
-    color: var(--cor-tinta-media);
-  }
-
-  .lista-tipos {
-    margin: 0.6rem 0 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  .lista-tipos a {
-    display: grid;
-    grid-template-columns: 11rem minmax(0, 1fr) auto;
-    gap: 0.25rem 1rem;
-    align-items: baseline;
-    min-height: var(--alvo-toque);
-    padding: 0.6rem 0.3rem;
-    border-bottom: 1px solid var(--cor-borda);
-    color: var(--cor-tinta);
-    text-decoration: none;
-  }
-
-  .lista-tipos a:hover {
-    background: var(--cor-papel-alt);
-  }
-
-  .lista-tipos .artigo,
-  .lista-tipos .faixa {
-    font-family: var(--fonte-mono);
-    font-size: var(--fs-meta);
-    color: var(--cor-tinta-media);
-  }
-
-  .lista-tipos .nome {
-    font-family: var(--fonte-serifa);
-    font-size: 1.0625rem;
-    line-height: 1.3;
-  }
-
-  .dup {
-    font-family: var(--fonte-mono);
-    font-size: var(--fs-rotulo);
-    color: var(--cor-simulacao);
-  }
-
-  .pe {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(15rem, 19rem);
-    gap: 1.75rem;
-    padding: 1.1rem 1.25rem 1.25rem;
-    border-top: 1px solid var(--cor-borda-forte);
-    background: var(--cor-papel-alt);
-  }
-
-  .bloco-pe {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    min-width: 0;
-  }
-
-  .bloco-pe p {
-    font-size: var(--fs-pequeno);
-    line-height: 1.65;
-    color: var(--cor-tinta-corpo);
-  }
-
-  .bloco-pe p + .rotulo {
-    margin-top: 0.5rem;
-  }
-
-  .auditoria {
-    display: grid;
-    grid-template-columns: 5.5rem minmax(0, 1fr);
-    gap: 0.3rem 0.7rem;
-    margin: 0;
-  }
-
-  .auditoria dt {
-    font-family: var(--fonte-mono);
-    font-size: var(--fs-rotulo);
-    color: var(--cor-tinta-fraca);
-  }
-
-  .auditoria dd {
-    margin: 0;
-    font-family: var(--fonte-mono);
-    font-size: var(--fs-meta);
-    color: var(--cor-tinta-corpo);
-    overflow-wrap: anywhere;
-  }
-
-  .acoes-pe {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.3rem;
-    margin-top: 0.3rem;
-  }
-
-  .botao-link,
-  .json > summary {
-    min-height: 2rem;
-    padding: 0;
-    border: 0;
-    background: none;
-    color: var(--cor-acento);
-    font-family: var(--fonte-mono);
-    font-size: var(--fs-meta);
-    text-decoration: underline;
-    text-underline-offset: 2px;
-    cursor: pointer;
-  }
-
-  .json {
-    max-width: 100%;
-  }
-
-  .json pre {
-    max-height: 22rem;
-    overflow: auto;
-    margin: 0.4rem 0 0;
-    padding: 0.7rem;
-    border: 1px solid var(--cor-borda);
-    border-radius: var(--raio);
-    background: var(--cor-superficie);
-    font-family: var(--fonte-mono);
-    font-size: 0.75rem;
-    line-height: 1.5;
-  }
-
   .endereco {
     margin-top: 0.6rem;
     color: var(--cor-tinta-fraca);
@@ -849,51 +204,9 @@ const linkHistorico = calculavel && vigente ? '?modo=historico' : '#historico';
     overflow-wrap: anywhere;
   }
 
-  @media (max-width: 760px) {
-    .cabecalho-ficha,
-    .pe {
-      grid-template-columns: minmax(0, 1fr);
-    }
-    .faixa-alteracao {
-      grid-template-columns: minmax(0, 1fr);
-    }
-    .lista-tipos a {
-      grid-template-columns: minmax(0, 1fr);
-    }
-  }
-
   @media (max-width: 640px) {
     .ficha-pagina {
       padding-inline: 0.5rem;
-    }
-    .trilha,
-    .cabecalho-ficha,
-    .faixa-alteracao,
-    .sem-calculo,
-    .correlatos,
-    .pe {
-      padding-inline: 1rem;
-    }
-    .cabecalho-ficha {
-      gap: 1rem;
-      padding-block: 1rem;
-    }
-    /* A trilha numa linha só: o diploma já está no dispositivo, logo abaixo. */
-    .trilha-diploma {
-      display: none;
-    }
-    /* Ficha reduzida a nome, artigo e moldura; o resto atrás de "mais sobre o tipo". */
-    .mais-sobre > summary {
-      display: inline-flex;
-      align-items: center;
-      min-height: var(--alvo-toque);
-      font-family: var(--fonte-mono);
-      font-size: var(--fs-meta);
-      color: var(--cor-acento);
-      cursor: pointer;
-    }
-    .valor-moldura {
-      font-size: 1.6rem;
     }
   }
 

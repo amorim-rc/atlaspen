@@ -62,6 +62,7 @@ def rodar() -> dict[str, list[dict]]:
                     "id": registro["id"], "lei": registro["lei"], "artigo": registro["artigo"],
                     "crime": registro["crime"], "catalogo": registro["acao"],
                     "derivado": c.especie, "regra": c.regra, "fundamento": c.fundamento,
+                    "fundamento_verificado": c.fundamento_verificado,
                     "condicao_no_registro": bool(registro.get("acao_condicao")),
                 }
                 item["fundamento_publicado"] = ap.fundamento_de(registro, c)
@@ -82,6 +83,13 @@ def rodar() -> dict[str, list[dict]]:
                     # O que sobra para o mantenedor é o inverso, e é a lista que
                     # importa: espécie divergente SEM condição declarada.
                     listas["ressalva"].append(item)
+                elif c.fundamento_verificado is False:
+                    # Sem lastro, a derivação não vale: a regra citou trecho que
+                    # o texto do diploma não tem. Não se compara o catálogo com
+                    # ela — olha-se para ela.
+                    item["alerta"] = ("SEM LASTRO: o trecho citado como fundamento não está "
+                                      "no texto do diploma.")
+                    listas["juizo"].append(item)
                 elif c.ressalva:
                     listas["juizo"].append(item)
                 elif c.especie == atual:
@@ -129,6 +137,16 @@ def markdown(listas: dict[str, list[dict]]) -> str:
     L += ["", "## Por regra aplicada", "", "| regra | registros |", "|---|---:|"]
     contagem = collections.Counter(i["regra"] or "—" for v in listas.values() for i in v)
     L += [f"| {k} | {v} |" for k, v in contagem.most_common()]
+    todos = [i for v in listas.values() for i in v]
+    sem = [i for i in todos if i.get("fundamento_verificado") is False]
+    L += ["", "## Lastro do fundamento", "",
+          f"**{sum(1 for i in todos if i.get('fundamento_verificado') is True)}** registros "
+          "alcançados por regra cujo texto está no diploma; "
+          f"**{sum(1 for i in todos if i.get('fundamento_verificado') is None)}** pela regra geral "
+          "do art. 100 ou por lei externa (sem trecho do diploma a conferir); "
+          f"**{len(sem)}** por regra SEM LASTRO — estão em \"pedem juízo\"."]
+    L += [f"| {i['id']} | {i['lei']} | {i['artigo']} | {i['regra']} | "
+          f"{(i['fundamento'] or '').replace('|', '/')[:90]} |" for i in sem]
     return "\n".join(L) + "\n"
 
 

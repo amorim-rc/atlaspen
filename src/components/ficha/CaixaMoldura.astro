@@ -1,0 +1,120 @@
+---
+// A caixa da pena, à direita do título. Três caixas, e nenhuma se confunde com
+// a outra: a moldura nas três unidades, quando o tipo tem pena privativa
+// própria; o dispositivo de origem, quando a pena vem por remissão; as sanções
+// cominadas (ou o rótulo da faixa), quando não há pena privativa de liberdade.
+import type {Crime} from '../../lib/types';
+import {diasDeMeses, formatContagemDias} from '../../lib/pena';
+
+interface Props {
+  crime: Crime;
+}
+const {crime} = Astro.props;
+
+// ── A moldura, nas três unidades ───────────────────────────────────────────
+const dMin = diasDeMeses(crime.pena_min_meses);
+const dMax = diasDeMeses(crime.pena_max_meses);
+const meses = (m: number) => m.toLocaleString('pt-BR', {maximumFractionDigits: 2});
+const especie = [
+  crime.pena_privativa === 'Nenhuma' ? 'sem pena privativa' : crime.pena_privativa.toLowerCase(),
+  crime.tem_multa ? `e multa (${crime.multa_regime})` : 'sem multa',
+].join(' · ');
+---
+
+{
+  crime.pena_por_remissao ? (
+    <div class="caixa-moldura">
+      <span class="rotulo">Pena por remissão</span>
+      <span class="valor-remissao">{crime.pena_por_remissao.dispositivo_fonte}</span>
+      <span class="especie">
+        {crime.pena_por_remissao.operador === 'nenhum'
+          ? 'a pena cominada lá, sem alteração'
+          : `com ${crime.pena_por_remissao.operador === 'aumento' ? 'aumento' : 'diminuição'} de ${crime.pena_por_remissao.fracao}`}
+      </span>
+    </div>
+  ) : !crime.tem_pena_privativa ? (
+    <div class="caixa-moldura">
+      <span class="rotulo">{(crime.sancoes_nao_privativas ?? []).length ? 'Sanções cominadas' : 'Pena cominada'}</span>
+      {(crime.sancoes_nao_privativas ?? []).length ? (
+        <ul class="sancoes">
+          {crime.sancoes_nao_privativas.map((sn) => (
+            <li>
+              <span class="inciso">{sn.inciso}</span> {sn.sancao}
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <span class="valor-moldura">{crime.pena_faixa_rotulo}</span>
+      )}
+      <span class="especie">sem pena privativa de liberdade</span>
+    </div>
+  ) : (
+    <div class="caixa-moldura">
+      <span class="rotulo">Moldura da pena</span>
+      <span class="valor-moldura num">{crime.pena_faixa_rotulo}</span>
+      <span class="especie">{especie}</span>
+      <span class="unidades num">
+        {formatContagemDias(dMin).replace(/ dias?$/, '')} a {formatContagemDias(dMax)} · {meses(crime.pena_min_meses)} a {meses(crime.pena_max_meses)} meses
+      </span>
+    </div>
+  )
+}
+
+<style>
+  .caixa-moldura {
+    align-self: start;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding: 1rem 1.1rem;
+    border: 1px solid var(--cor-borda-forte);
+    border-radius: var(--raio);
+    background: var(--cor-superficie);
+  }
+
+  .valor-moldura {
+    font-family: var(--fonte-serifa);
+    font-size: 2rem;
+    font-weight: 500;
+    line-height: 1.05;
+  }
+
+  .valor-remissao {
+    font-family: var(--fonte-serifa);
+    font-size: 1.25rem;
+    line-height: 1.25;
+  }
+
+  .especie {
+    font-family: var(--fonte-mono);
+    font-size: var(--fs-meta);
+    color: var(--cor-tinta-media);
+  }
+
+  .unidades {
+    margin-top: 0.15rem;
+    padding-top: 0.45rem;
+    border-top: 1px solid var(--cor-borda);
+    font-family: var(--fonte-mono);
+    font-size: var(--fs-rotulo);
+    color: var(--cor-tinta-fraca);
+  }
+
+  .sancoes {
+    margin: 0;
+    padding-left: 1rem;
+    font-size: var(--fs-pequeno);
+  }
+
+  .inciso {
+    font-family: var(--fonte-mono);
+    font-size: var(--fs-rotulo);
+    color: var(--cor-tinta-fraca);
+  }
+
+  @media (max-width: 640px) {
+    .valor-moldura {
+      font-size: 1.6rem;
+    }
+  }
+</style>

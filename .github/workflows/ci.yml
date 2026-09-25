@@ -69,6 +69,13 @@ jobs:
       - name: Typecheck
         run: npm run typecheck
 
+      # Código morto: arquivo que ninguém importa, exportação sem uso,
+      # dependência não listada. A varredura de 24/09/2026 achou seis
+      # exportações mortas e dois scripts de migração à mão — e à mão não se
+      # repete. As exceções, com motivo, estão em knip.jsonc.
+      - name: Varrer código morto
+        run: npm run mortos
+
       # A base dos modificadores da dosimetria: vocabulário, fase, fração e o
       # dispositivo de cada um.
       - name: Validar modificadores da dosimetria

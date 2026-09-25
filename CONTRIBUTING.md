@@ -55,6 +55,8 @@ determinístico, sem IA, descrito em [`scripts/robos/README.md`](scripts/robos/R
    - `transform_data.py --estrito` — convenções C1, C2, C3 e o teto de contradições (C4);
    - se o derivado commitado corresponde à fonte;
    - `npm run typecheck`;
+   - `npm run mortos` — código morto: arquivo que ninguém importa, exportação sem uso,
+     dependência não listada (as exceções, com motivo, estão em `knip.jsonc`);
    - `npm run verificar` — invariantes do motor de atributos, casos-âncora de direito penal
      contra o catálogo real e a tabela de casos-padrão (`scripts/verificar_casos.ts`: tipo
      real, premissa explícita, veredito esperado e o dispositivo que o sustenta);
@@ -63,7 +65,7 @@ determinístico, sem IA, descrito em [`scripts/robos/README.md`](scripts/robos/R
 ### Correções finas (multa e afins)
 
 Ajustes que a heurística não acerta devem ir em `CORRECOES`, dentro de
-`scripts/transform_data.py` (chaveado por `id`), e **não** no JSON gerado.
+`scripts/catalogo/tabelas.py` (chaveado por `id`), e **não** no JSON gerado.
 Exemplo presente: Art. 227 do CP (a multa só incide na hipótese do §3º).
 
 ## Versão e notas
@@ -209,8 +211,8 @@ O `id` é a **URL pública** de cada tipo (`/tipos/N`) e o site está publicado.
   na v1.4.0 (1 a 1.412), com o projeto ainda em protótipo, e na v2.0.0 (1 a 1.505), ao
   fim da revisão que fechou a conferência da base. Reiniciar quebra todo link externo e
   obriga a versão a ser MAIOR; quem o fizer precisa remapear na mesma passada **tudo** o
-  que é indexado por id — `data/conferencia.json`, as tabelas `CORRECOES_*` do
-  `transform_data.py`, os `ids` de `scripts/robos/auditor/excecoes-auditoria.json` e os links
+  que é indexado por id — `data/conferencia.json`, as tabelas `CORRECOES_*` de
+  `scripts/catalogo/tabelas.py`, os `ids` de `scripts/robos/auditor/excecoes-auditoria.json` e os links
   `?tipo=N` das notas já publicadas. Não é decisão de quem edita o catálogo.
 
 ### C4. Um registro por dispositivo
@@ -356,6 +358,7 @@ aparece na unidade em que foi cominada e é calculado sem inverter mínimo e má
 npm install
 npm run dev         # dev server
 npm run typecheck
+npm run mortos      # código morto (knip)
 npm run verificar   # motor de atributos × catálogo real
 npm run build
 python3 scripts/transform_data.py   # regenera static/data/crimes.json + qualidade.json

@@ -6,6 +6,7 @@
 // e passa a filtrar, ordenar e paginar, com o estado na URL.
 import Base from '../../layouts/Base.astro';
 import ListaTipos from '../../components/tipos/ListaTipos';
+import BaixarBase from '../../components/dados/BaixarBase.astro';
 import {FILTROS_VAZIOS, POR_PAGINA, ordenar, paraLinha} from '../../components/tipos/filtros';
 import {todosOsTipos} from '../../site/catalogo-servidor';
 
@@ -20,7 +21,10 @@ const INTRO =
 <Base titulo="Tipos penais" descricao={INTRO} ativo="tipos">
   <header class="pagina cabecalho">
     <p class="rotulo">Catálogo</p>
-    <h1>Tipos penais</h1>
+    <div class="titulo-e-acao">
+      <h1>Tipos penais</h1>
+      <BaixarBase />
+    </div>
     <p class="intro">{INTRO}</p>
   </header>
   <div class="pagina">
@@ -37,5 +41,13 @@ const INTRO =
   }
   .intro {
     color: var(--cor-tinta-corpo);
+  }
+  /* O título e o botão de download da base na mesma linha; na tela estreita, um sobre o outro. */
+  .titulo-e-acao {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.6rem 1.5rem;
   }
 </style>

@@ -11,6 +11,7 @@ import {avaliarCatalogo, cenarioReversoPadrao, contarDuasUnidades, crimesComPena
 import {todosOsTipos} from '../../site/catalogo-servidor';
 import {derivadoDe} from '../../site/atributos-servidor';
 import {caminho} from '../../site/url';
+import BaixarBase from '../../components/dados/BaixarBase.astro';
 
 const comPena = crimesComPenaPrivativa(todosOsTipos());
 const rev = cenarioReversoPadrao();
@@ -39,7 +40,10 @@ const cartoes = CATALOGO.map((def) => {
   ativo="atributos"
 >
   <header class="pagina cabecalho">
-    <h1>Atributos penais</h1>
+    <div class="titulo-e-acao">
+      <h1>Atributos penais</h1>
+      <BaixarBase />
+    </div>
     <p class="intro">
       O percurso inverso ao da busca por tipo penal: parta do instituto e veja quais tipos ele alcança. Cada atributo
       tem ficha própria, com os patamares da lei editáveis e o catálogo inteiro reavaliado a cada mudança.
@@ -119,6 +123,14 @@ const cartoes = CATALOGO.map((def) => {
     flex-direction: column;
     gap: 0.6rem;
     padding-block: 2rem 1rem;
+  }
+  /* O título e o botão de download da base na mesma linha; na tela estreita, um sobre o outro. */
+  .titulo-e-acao {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.6rem 1.5rem;
   }
   .intro {
     color: var(--cor-tinta-corpo);

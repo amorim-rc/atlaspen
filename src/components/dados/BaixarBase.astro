@@ -1,0 +1,76 @@
+---
+// A base inteira em planilha: o caminho de download que faltava.
+//
+// A planilha existe desde que o deploy.yml passou a gerá-la dentro de dist/
+// (scripts/gerar_planilha.py), mas só a prosa de Dados abertos a linkava: quem
+// chegava à lista de tipos ou de atributos e queria a base inteira não tinha por
+// onde. Um botão discreto ao lado do título das duas listas (decisão de
+// 25/09/2026), com a versão e a data da conferência embaixo — planilha baixada é
+// fotografia, e fotografia sem data é citação do que já mudou.
+//
+// O arquivo não é versionado nem existe em desenvolvimento: sai a cada
+// publicação, sempre no mesmo endereço, e a nova substitui a anterior.
+import {CONFERIDO_EM, VERSAO} from '../../site/servidor';
+import {caminho} from '../../site/url';
+import {dataCurta} from '../../site/datas';
+
+const href = caminho('/data/atlaspen-base.xlsx');
+const titulo = `Toda a base — tipos, atributos e a matriz de alcance — em planilha .xlsx, v${VERSAO}${
+  CONFERIDO_EM ? `, dados conferidos em ${dataCurta(CONFERIDO_EM)}` : ''
+}. A aba Leia-me diz como citar.`;
+---
+
+<div class="baixar">
+  <a class="botao" href={href} download title={titulo}>
+    <svg aria-hidden="true" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M8 2v8M4.5 6.5 8 10l3.5-3.5M2.5 12.5v1h11v-1" />
+    </svg>
+    Baixar a base em planilha
+  </a>
+  <span class="meta num">
+    .xlsx · v{VERSAO}
+    {CONFERIDO_EM && <> · conferida em {dataCurta(CONFERIDO_EM)}</>}
+  </span>
+</div>
+
+<style>
+  .baixar {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.3rem;
+    flex: 0 0 auto;
+  }
+  .botao {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    min-height: 2.25rem;
+    padding: 0 0.85rem;
+    border: 1px solid var(--cor-borda-controle);
+    border-radius: var(--raio);
+    background: var(--cor-superficie);
+    color: var(--cor-tinta);
+    font-size: var(--fs-pequeno);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .botao:hover {
+    border-color: var(--cor-acento);
+    color: var(--cor-acento);
+  }
+  .meta {
+    font-family: var(--fonte-mono);
+    font-size: var(--fs-rotulo);
+    color: var(--cor-tinta-fraca);
+    text-align: right;
+  }
+  @media (max-width: 640px) {
+    .baixar {
+      align-items: flex-start;
+    }
+    .meta {
+      text-align: left;
+    }
+  }
+</style>

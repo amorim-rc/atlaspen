@@ -69,5 +69,5 @@ Se você usa os dados do AtlasPen, pedimos que use *atributo* ao se referir ao q
 registram. Se discorda da escolha, ou tem uma palavra melhor, o lugar da conversa é o
 [repositório](https://github.com/amorim-rc/atlaspen): abra uma *issue*. A lista dos 22
 atributos, com os parâmetros de cada um e a lei em que se apoiam, está em
-[Atributos penais](../atributos-penais/); como cada um é calculado, em
-[Metodologia](../metodologia/).
+[Atributos penais](/projeto/atributos-penais); como cada um é calculado, em
+[Metodologia](/projeto/metodologia).

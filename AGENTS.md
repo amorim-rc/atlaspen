@@ -48,13 +48,17 @@ ignoradas:
   em `data/ids-aposentados.json` e `--estrito` reprova reaproveitamento — inclusive o
   caso silencioso de remover o topo da numeração e o `max + 1` devolver um número já
   usado. Reiniciar exige remapear TUDO que é indexado por id: `data/conferencia.json`,
-  as tabelas `CORRECOES_*` do `transform_data.py`, os `ids` das exceções da auditoria e
+  as tabelas `CORRECOES_*` de `scripts/catalogo/tabelas.py`, os `ids` das exceções da auditoria e
   os links `?tipo=N` das notas já publicadas.
 - **Glossário.** *Atributo penal* é o instituto (transação, progressão, prescrição…);
   *parâmetro*, o patamar, a fração ou a vedação editável de um atributo; *campo*, o
   campo do registro de tipo penal. "Benefício" só onde é a palavra da lei ou de
   súmula. Ver o `CONTRIBUTING.md`.
 - `resultado_morte` deriva do **nome** do tipo, nunca do `obs`.
+- O campo `artigo` tem **grafia canônica** (`Art. 121, §2º, I`; `§` colado ao número;
+  inciso em maiúsculas; alínea em minúscula), validada pelo `--estrito` com a régua de
+  `scripts/dispositivo_canonico.py`. `§ 2º` com espaço escondeu um erro jurídico por
+  meses porque a regra que o excluía do rol de hediondos nunca casou.
 - Editar `.md` com Python/`sed` no Windows introduz **CRLF** (quebra os admonitions
   `:::note[...]`); use `write_bytes` ou confira o EOL.
 - Admonitions: `:::note[Título]`, não `:::note Título` — é a sintaxe que
@@ -82,7 +86,7 @@ python scripts/validar_atributos.py
 python scripts/robos/arquivista/verificar_documentacao.py
 python -m pytest scripts/robos/tests
 node scripts/validar-changelog.mjs
-npm run atributos && npm run typecheck && npm run verificar && npm run build
+npm run atributos && npm run typecheck && npm run mortos && npm run verificar && npm run build
 ```
 
 A CI trava em `--max-contradicoes=0` e exige o derivado sincronizado com a fonte. Extraia

@@ -1,0 +1,70 @@
+---
+// A trilha da ficha: a seção, o diploma e o dispositivo. Na tela estreita o
+// diploma sai da trilha, porque já está no dispositivo, logo abaixo do título.
+import type {Crime} from '../../lib/types';
+import {caminho} from '../../site/url';
+
+interface Props {
+  crime: Crime;
+  /** O nome do diploma quando o catálogo o conhece; senão, o rótulo da lei. */
+  nomeDiploma: string;
+}
+const {crime, nomeDiploma} = Astro.props;
+---
+
+<nav class="trilha" aria-label="Trilha">
+  <ol>
+    <li><a href={caminho('/tipos')}>Tipos penais</a></li>
+    <li class="trilha-diploma"><a href={caminho(`/tipos?lei=${encodeURIComponent(crime.lei)}`)}>{nomeDiploma}</a></li>
+    <li aria-current="page">{crime.artigo}</li>
+  </ol>
+</nav>
+
+<style>
+  .trilha {
+    padding: 0.65rem 1.25rem;
+    border-bottom: 1px solid var(--cor-borda);
+    font-family: var(--fonte-mono);
+    font-size: var(--fs-meta);
+    color: var(--cor-tinta-fraca);
+  }
+
+  .trilha ol {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.2rem 0.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .trilha li + li::before {
+    content: '/';
+    margin-right: 0.5rem;
+    color: var(--cor-tinta-fraca);
+  }
+
+  .trilha a {
+    color: var(--cor-tinta-fraca);
+    text-decoration: none;
+  }
+
+  .trilha a:hover {
+    color: var(--cor-acento);
+    text-decoration: underline;
+  }
+
+  .trilha [aria-current] {
+    color: var(--cor-tinta-corpo);
+  }
+
+  @media (max-width: 640px) {
+    .trilha {
+      padding-inline: 1rem;
+    }
+    /* A trilha numa linha só: o diploma já está no dispositivo, logo abaixo. */
+    .trilha-diploma {
+      display: none;
+    }
+  }
+</style>

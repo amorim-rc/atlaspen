@@ -5,10 +5,11 @@
 ANPP, transação, substituição, progressão, livramento, prescrição e os demais —, com motor
 de cálculo e simulação de alteração legislativa.
 
-**1.529 tipos penais**, de 66 diplomas, conferidos contra o texto compilado do
-`planalto.gov.br`. Astro + React + TypeScript sobre JSON versionado. Sem servidor, sem
-banco: tudo o que a ferramenta sabe é arquivo de texto que você pode ler, conferir e
-corrigir por pull request.
+Todo tipo penal em vigor, de cada diploma que os comina — o número vivo, diploma a
+diploma, está em [Completude](https://amorim-rc.github.io/atlaspen/projeto/completude) —,
+conferido contra o texto compilado do `planalto.gov.br`. Astro + React + TypeScript sobre
+JSON versionado. Sem servidor, sem banco: tudo o que a ferramenta sabe é arquivo de texto
+que você pode ler, conferir e corrigir por pull request.
 
 > **Em pesquisa.** Os cálculos simplificam controvérsias doutrinárias e jurisprudenciais.
 > **Não constituem aconselhamento jurídico.** O que o catálogo não sabe, ele diz que não
@@ -29,7 +30,9 @@ Os dados são abertos e estáveis. Você não precisa clonar nada.
 | [`/data/atlaspen-base.xlsx`](https://amorim-rc.github.io/atlaspen/data/atlaspen-base.xlsx) | a base inteira em planilha, assinada e datada: Leia-me, Tipos penais, Atributos e a matriz de alcance |
 
 O contrato dos campos, a política de versionamento e a forma de citar estão em
-[Dados abertos](https://amorim-rc.github.io/atlaspen/projeto/dados-abertos).
+[Dados abertos](https://amorim-rc.github.io/atlaspen/projeto/dados-abertos). A planilha
+também se baixa da própria lista de [tipos penais](https://amorim-rc.github.io/atlaspen/tipos)
+e do rodapé de qualquer página.
 
 **Três coisas que evitam erro de leitura:**
 
@@ -69,6 +72,9 @@ texto compilado do Planalto          data/*.json              static/data/*.json
   fora do versionamento)              à mão e por PR            pelo site e pela API
                                            │
                                            └── scripts/transform_data.py
+                                               (a linha de comando do pacote
+                                                scripts/catalogo/: tabelas curadas,
+                                                validações, derivações, duplicatas)
 ```
 
 A separação **fonte × derivado** é a regra que mais quebra em silêncio se ignorada: quem
@@ -93,7 +99,10 @@ ninguém consome. O derivado é commitado, e a CI exige que esteja sincronizado.
 
 `src/lib/atributos/` recebe um **cenário** (pena, reincidência, violência, hediondez, data do
 fato) e devolve, para cada atributo, **cabível / condicional / incabível**, com o fundamento
-legal e o limiar que decidiu.
+legal e o limiar que decidiu. As funções de avaliação ficam em `avaliadores/`, um módulo por
+categoria — processual, aplicação da pena, execução —, e o que dois módulos precisam
+aplicar de forma idêntica (a vedação do livramento pelo art. 112 da LEP, o art. 90-A da Lei
+9.099/95) fica em `comum.ts`.
 
 O cálculo é uma função pura por atributo e **lê os parâmetros dos dados** em vez de
 constantes — é o que permite editar a fração da progressão na tela e ver o alcance mudar.
@@ -107,17 +116,21 @@ nova de uns e na antiga de outros. Os marcos ficam em `src/lib/tempo.ts`.
 ### Os robôs
 
 Programas determinísticos, **sem inteligência artificial**, que leem a lei e comparam com o
-catálogo. Nenhum deles escreve no catálogo: abrem issue, abrem PR ou imprimem relatório, e
-quem decide assina. Documentação própria em [`scripts/robos/README.md`](scripts/robos/README.md).
+catálogo. Nenhum deles escreve no catálogo: abrem issue ou imprimem relatório, e quem
+decide assina. Documentação própria em [`scripts/robos/README.md`](scripts/robos/README.md)
+e, para quem lê o site, em [Os robôs](https://amorim-rc.github.io/atlaspen/projeto/os-robos).
 
 | robô | o que faz |
 |---|---|
 | **Vigia** | confere a moldura de pena de cada registro contra o texto compilado |
-| **Auditor** | confere hediondez, ação penal, violência e grave ameaça contra as regras escritas |
+| **Auditor** | confere hediondez, ação penal, violência e grave ameaça contra as regras escritas — e só aceita derivação cujo fundamento tenha lastro no texto lido |
 | **Sentinela** | tria o Diário Oficial da semana atrás de lei que cria ou altera tipo penal |
 | **Recenseador** | varre todas as leis do ano, para que nada passe entre uma semana e outra |
-| **Proponente** | transforma o que é leitura direta em PR, com a nota de atualização |
 | **Arquivista** | acusa documento cuja dependência mudou depois da última releitura |
+
+O **Proponente** (`scripts/robos/proponente/`) não é robô: é quem transforma o que é
+leitura direta em PR, com a nota de atualização quando a mudança vem de lei recente. O PR
+é proposta, e merge é decisão de gente.
 
 ### O que impede o erro de entrar
 
@@ -125,15 +138,23 @@ A acuidade jurídica não se sustenta em cuidado: sustenta-se em trava. As que f
 
 - **`transform_data.py --estrito`** — vocabulário fechado de cada campo, `id` append-only,
   hediondez afirmada sem regra que a produza, condição declarada ao lado de afirmação
-  categórica, elemento subjetivo incompatível com a tentativa.
+  categórica, elemento subjetivo incompatível com a tentativa, e a **grafia canônica do
+  dispositivo**: `§ 2º` com espaço já escondeu um erro jurídico por meses, porque a regra
+  que excluía a forma culposa do art. 273 do CP do rol de hediondos nunca casou.
 - **`hediondez.carregar()`** — recusa regra que não diga onde termina. Uma expressão sem
   âncora de fim fez `V` casar `VI`, `VII` e `VIII`, e quatro formas do roubo afirmaram
   hediondez que o rol não dá.
-- **`npm run verificar`** — seis baterias, entre elas 47 casos-padrão em que a resposta
+- **`npm run verificar`** — seis baterias, entre elas os casos-padrão em que a resposta
   correta está escrita à mão, com o dispositivo que a fundamenta.
-- **`npm run equivalencia`** — congelamento de 22 atributos × 1.496 tipos × 4 cenários.
-  Mudança de veredito só passa se for regravada de propósito, e o commit diz por quê.
-- **`pytest scripts/robos/tests`** — 347 testes. Cada um guarda um caso que já deu errado.
+- **`npm run equivalencia`** — congelamento de 22 atributos × todos os tipos com pena
+  privativa × 4 cenários. Mudança de veredito só passa se for regravada de propósito, e o
+  commit diz por quê.
+- **`pytest scripts/robos/tests`** — centenas de testes, e cada um guarda um caso que já
+  deu errado. Entre eles: o snapshot do Planalto só ocupa o caminho canônico depois de
+  passar pela sentinela, e a derivação de violência ou ação penal cujo fundamento cite um
+  trecho que o texto não tem é zerada.
+- **`npm run mortos`** — `knip` varre arquivo que ninguém importa, exportação sem uso e
+  dependência não listada. As exceções, com motivo, estão em `knip.jsonc`.
 
 ## Rodando o projeto
 
@@ -193,87 +214,25 @@ Cada um com plano, financiamento e pessoas próprias. A ordem é de exequibilida
 | **22 atributos mapeados e não integrados** | Estão levantados e fora do catálogo. Os fáceis entram juntos; a **prescrição completa** é empreitada do porte de um mestrado — as regras não são simples e há modulação no tempo. |
 | **A cadeia completa do histórico** | Hoje cada tipo diz a *última* lei que lhe deu texto. O módulo completa: todas as redações, em ordem, para responder "o que este artigo dizia em 2014?". É o que falta para a data do fato escolher também o TEXTO, e não só o cálculo. |
 | **Acervo histórico** | O que já foi crime no Brasil: revogados, alterados e não recepcionados. A pergunta "o que deixou de ser crime, e quando?" não tem hoje ferramenta que a responda de forma estruturada. |
-| **Robô dos tribunais** | Vigiar decisão de tribunal superior que muda o catálogo — ADI que retira tipo do ordenamento, tese de repercussão geral, súmula cancelada. Ver o débito técnico abaixo: metade do caminho está andada. |
+| **Robô dos tribunais** | Vigiar decisão de tribunal superior que muda o catálogo — ADI que retira tipo do ordenamento, tese de repercussão geral, súmula cancelada. Metade do caminho já existe fora daqui: o `decidendo-ghoul`, lido em 24/09/2026, traz um cliente da API pública do CNJ (DataJud) com paginação por `search_after` e cache por página, e um leitor dos espelhos do STJ que resolve o formato hostil do campo `jurisprudenciaCitada`. Quando a frente abrir, começar dali. A ressalva, que é dele: o STF bloqueia acesso automatizado por WAF, e o DataJud não tem texto, só metadados — para ADI, o DataJud por número CNJ; para súmula e precedente, os espelhos do STJ. |
+| **Curador** | O robô para o tipo penal antigo que nunca foi cadastrado e para o que morreu sem aviso. O Recenseador varre o ano corrente; a legislação penal tem quase dois séculos, e existe tipo em lei esparsa antiga que o catálogo nunca viu — e tipo revogado que continua publicado, afirmando punível o que não é. É a lacuna que [Os robôs](https://amorim-rc.github.io/atlaspen/projeto/os-robos) declara. |
 | **Usabilidade, processo penal, plataforma de pesquisa** | Ganhos de uso, extensão ao que rege os atributos na prática, e exportação para pesquisa empírica. |
 
-### Débito técnico
+### Dívida técnica
 
-Coisas que sabemos que estão erradas ou incompletas, e ainda não consertamos. Estão aqui
-porque dívida não declarada vira surpresa.
-
-**1. O snapshot ruim ocupa o lugar do bom.** `scripts/robos/nucleo/baixar.py` valida a
-*sentinela* — a string que prova que a página baixada é a versão fresca e íntegra — e
-**grava o arquivo mesmo quando ela falha**. O `sentinela_ok` só vai para o `meta.json`, e
-nenhum consumidor o lê: `vigia/conferir.py`, os dois auditores e `nucleo/dispositivo.py`
-varrem os `.html` por `glob`. Quem roda `baixar.py --todas` recebe código de saída 2, mas o
-snapshot ruim já está no caminho canônico. Hoje só o encadeamento do `conferidor.yml`
-protege; rodando à mão, não protege.
-**A correção:** gravar em `.part` e só promover quando a sentinela passar, como faz
-`baixar_com_cache` do `decidendo-ghoul`. Snapshot no caminho canônico passaria a significar
-"conferido", por construção.
-
-**2. A derivação não confere o próprio fundamento.** `scripts/violencia.py` e
-`scripts/acao_penal.py` devolvem `{regra, fundamento}` — mas não verificam que o trecho que
-o fundamento cita existe mesmo no texto do dispositivo. É barato: o texto já está carregado
-no auditor.
-**A correção:** um campo `fundamento_verificado`, com a regra "sem lastro, a derivação não
-vale". É o mesmo mecanismo que o `decidendo-ghoul` usa para tornar confiável uma LLM de 7B:
-a nota que cita um trecho inexistente é zerada, e o relatório mostra que ela foi zerada.
-
-**3. Meio caminho do Robô dos tribunais já existe.** O `decidendo-ghoul`, lido em
-24/09/2026, traz um cliente da API pública do CNJ (DataJud) com paginação por `search_after`
-e cache por página, e um leitor dos espelhos do STJ que já resolve o formato hostil do campo
-`jurisprudenciaCitada`. Quando a frente abrir, começar dali em vez do zero.
-**A ressalva, que é dele:** o STF bloqueia acesso automatizado por WAF, e o DataJud não tem
-texto — só metadados. Para acompanhar ADI, é o DataJud por número CNJ; para súmula e
-precedente, os espelhos do STJ.
-
-**4. A grafia do dispositivo é frágil.** O campo `artigo` é texto livre, e regra que casa
-nele erra em silêncio quando a grafia varia. Em 23/09/2026 isso escondeu um erro jurídico
-por meses: 37 registros escreviam `§ 2º` com espaço contra 375 sem, e a exclusão que tirava
-a forma culposa do art. 273 do CP do rol de hediondos nunca funcionou. A grafia foi
-normalizada, mas a fragilidade continua: o campo não tem forma canônica imposta.
-**A correção:** validar a grafia de `artigo` na entrada, com a mesma régua de
-`scripts/dispositivo_canonico.py`.
-
-**5. Um tipo criado na simulação não pode ser modificado por outra mudança do mesmo
-pacote.** E a definição genérica de atributo novo só compara pena com limiar — fração,
-prazo e valor calculado (progressão, prescrição, regime) seguem fora.
-
-**6. Quatro arquivos que cresceram além da conta.** `src/components/simulacao/Simulador.tsx`
-(997 linhas), `scripts/transform_data.py` (1.124), `src/pages/tipos/[id].astro` (906) e
-`src/lib/atributos/avaliadores.ts` (815). Nenhum deles está errado — todos estão testados e
-travados —, mas o tamanho já cobra pedágio de quem chega: para mudar uma regra é preciso ler
-muito mais do que a regra.
-**A correção:** modularizar por responsabilidade, sem mudar comportamento. O congelamento
-(`npm run equivalencia`) é exatamente a rede que torna esse refactor seguro: se um veredito
-se mexer, ele reprova. É uma boa primeira contribuição de quem quer entender o motor.
-
-**7. A segunda moldura de um preceito só é lida se repetir a espécie.**
-`ler_penas` fatia o preceito pelas marcas de espécie — reclusão, detenção,
-prisão simples, multa. Quando a segunda moldura vem introduzida por uma
-condicional e não repete a espécie (CPM, art. 292, §2º: "detenção, de um a dois
-anos, **ou, se resulta morte, de dois a quatro anos**"), ela fica no mesmo
-pedaço da primeira e não é lida. O catálogo desdobra os dois casos em registros
-próprios, e está certo; quem erra é o conferidor, que compara os dois com a
-única moldura que leu e acusa divergência falsa num deles.
-**A correção:** dentro de cada fatia, reconhecer intervalo novo aberto por
-condicional e emitir moldura própria, herdando a espécie. Mexe no
-`pena_parser`, que é compartilhado com o `transform_data` — o congelamento dos
-vereditos é a rede. Enquanto não fecha, o caso está em
-`scripts/robos/vigia/excecoes.json`, com o motivo escrito.
-
-**8. Não há ferramenta de código morto na verificação.** A varredura de 24/09/2026 achou
-seis exportações que ninguém importava, dois scripts de migração de julho e um documento
-gerado que nada renderizava. Foi tudo à mão, e à mão não se repete.
-**A correção:** `knip` ou `ts-prune` no `ci.yml`, com uma lista de exceções versionada. Sem
-isso, daqui a três meses o morto volta a acumular e ninguém percebe.
+Não há dívida técnica declarada em aberto. As oito que este README carregava foram
+fechadas em 25/09/2026 (o histórico do repositório conta cada uma); a próxima que aparecer
+vira issue com o rótulo `dívida técnica`, e volta a ser listada aqui só se ficar meses sem
+dono — porque dívida não declarada vira surpresa.
 
 ## Documentação
 
-Publicada no próprio site, em [`/projeto`](https://amorim-rc.github.io/atlaspen/projeto):
-Metodologia, Catálogo de tipos penais, Atributos penais, Completude, Dados abertos e Os
-robôs.
+Publicada no próprio site, em [`/projeto`](https://amorim-rc.github.io/atlaspen/projeto).
+Os documentos: Metodologia (os princípios), Catálogo de tipos penais (construção e travas),
+Atributos penais, Progressão de regime (o art. 112 da LEP, o dispositivo mais instável do
+catálogo), Completude (gerada), Dados abertos (o dicionário de campos, o único lugar em que
+cada campo é definido) e Os robôs. Os textos: a História do projeto, Autoria e créditos e o
+Manifesto pelo termo "atributo".
 
 A árvore de `docs/` **espelha a do site**, e `docs/` é, sem exceção, o que vai ao ar:
 `docs/*.md` é o grupo *Documentação* da barra lateral, `docs/textos/` é o grupo *Textos*.

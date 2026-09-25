@@ -377,3 +377,26 @@ class TestArt145:
         c = ap.classificar({"artigo": "Art. 140, §2º", "lei": "CP", "crime": "Injúria real",
                             "violencia": "Sim", "grave_ameaca": "Não"}, regras, lugar)
         assert c.especie == "Ação Penal Privada" and c.ressalva is True
+
+
+# -- Lastro do fundamento (débito técnico 2, fechado em 25/09/2026) ----------
+def test_regra_lida_do_dispositivo_tem_lastro():
+    r = regras({'Art. 179|parágrafo único': Disp('Somente se procede mediante queixa')})
+    assert r[0].fundamento_verificado is True
+    c = ap.classificar({'lei': 'CP', 'artigo': 'Art. 179'}, r, {})
+    assert c.fundamento_verificado is True
+
+
+def test_regra_cujo_texto_nao_esta_no_diploma_nao_tem_lastro():
+    """Uma regra montada com texto que a lei não tem é zerada pelo conferidor."""
+    r = ap.RegraAcao('Ação Penal Privada', 'queixa', 'Art. 179', 'Somente se procede mediante queixa',
+                     False, {'artigos': ['179']})
+    ap.conferir_lastro([r], {'Art. 179|caput': Disp('Fraudar execução, alienando bens:')})
+    assert r.fundamento_verificado is False
+    c = ap.classificar({'lei': 'CP', 'artigo': 'Art. 179'}, [r], {})
+    assert c.fundamento_verificado is False
+
+
+def test_regra_geral_e_lei_externa_nao_tem_trecho_do_diploma_a_conferir():
+    assert ap.REGRA_GERAL.fundamento_verificado is None
+    assert ap.classificar({'lei': 'CP', 'artigo': 'Art. 129, caput'}, [], {}).fundamento_verificado is None
