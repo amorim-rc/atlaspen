@@ -73,7 +73,7 @@
         535,
         636
       ],
-      "motivo": "Falsos positivos CONFIRMADOS na revisão de 03/08/2026, item 11 — lidos um a um contra o compilado. id 474 (Estatuto da Pessoa Idosa, art. 100, I): o nome descreve fielmente o inciso, e o match com o art. 96 vem de conduta vizinha e de pena idêntica. id 539 (Lei 9.279/96, art. 184): o nome descreve o inciso I, e o match com o art. 190 vem de os dois artigos usarem os mesmos verbos — um para patente, outro para marca — e cominarem a mesma pena. id 642 (CP, art. 149-A, II): o match com o art. 149 vem da expressão comum, mas os tipos são distintos — o 149 pune a redução efetiva, o 149-A, II pune o tráfico com essa finalidade, e se consuma antes de qualquer redução. Nos três, a pena confere e a espécie confirma a origem.",
+      "motivo": "Falsos positivos CONFIRMADOS na revisão de 03/08/2026, item 11 — lidos um a um contra o compilado. id 470 (Estatuto da Pessoa Idosa, art. 100, I): o nome descreve fielmente o inciso, e o match com o art. 96 vem de conduta vizinha e de pena idêntica. id 535 (Lei 9.279/96, art. 184): o nome descreve o inciso I, e o match com o art. 190 vem de os dois artigos usarem os mesmos verbos — um para patente, outro para marca — e cominarem a mesma pena. id 636 (CP, art. 149-A, II): o match com o art. 149 vem da expressão comum, mas os tipos são distintos — o 149 pune a redução efetiva, o 149-A, II pune o tráfico com essa finalidade, e se consuma antes de qualquer redução. Nos três, a pena confere e a espécie confirma a origem. (Ids reescritos em 28/09/2026 para a numeração da v2.0.0: o texto dizia 474, 539 e 642, que eram os ids do protótipo; a lista `ids` já estava certa.)",
       "data": "2026-08-03"
     },
     {
