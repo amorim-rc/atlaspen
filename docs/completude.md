@@ -2,8 +2,8 @@
 id: completude
 title: Completude do catálogo
 sidebar_position: 2
-gerado_em: '2026-09-25'
-commit: '139122081982'
+gerado_em: '2026-09-28'
+commit: 'de5e5d8904d2'
 ---
 
 {/* GERADO AUTOMATICAMENTE por scripts/gerar_completude.py — não edite à mão. */}
@@ -13,7 +13,7 @@ commit: '139122081982'
 :::note[Página gerada]
 Este acompanhamento é derivado de `data/diplomas.json` (o denominador da
 conferência do catálogo) e de
-`data/crimes.json` (o catálogo), gerado em 2026-09-25 a partir do commit `139122081982`. Para atualizá-lo:
+`data/crimes.json` (o catálogo), gerado em 2026-09-28 a partir do commit `de5e5d8904d2`. Para atualizá-lo:
 `python scripts/gerar_completude.py`.
 :::
 
