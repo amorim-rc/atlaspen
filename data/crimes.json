@@ -24484,8 +24484,8 @@
   {
     "id": 1515,
     "lei": "CP",
-    "artigo": "Art. 155, §12 c/c §10",
-    "crime": "Furto de combustível com aumento de 2/3 (suspensão das atividades, desabastecimento, incêndio, poluição, lesão grave ou morte)",
+    "artigo": "Art. 155, §12, I a V c/c §10",
+    "crime": "Furto de combustível com aumento de 2/3 (suspensão das atividades, desabastecimento, incêndio, poluição ou lesão grave)",
     "pena_min": 80,
     "pena_max": 200,
     "tipo_pena": "Reclusão",
@@ -24498,7 +24498,7 @@
     "violencia": "Não",
     "grave_ameaca": "Não",
     "violencia_condicao": null,
-    "obs": "§ 10 aumentado de 2/3 (incisos I a VI do § 12). Incluído pela Lei 15.517/2026 (DOU 23/09/2026, vigência na publicação). Decisão 38 da revisão de 23/09/2026."
+    "obs": "§ 10 aumentado de 2/3 (incisos I a V do § 12: suspensão ou paralisação das atividades, desabastecimento, incêndio, poluição, lesão corporal grave). O inciso VI (morte) tem linha própria, id 1534, como o catálogo faz no art. 157, § 3º e no CPM, art. 242, § 2º, V e VI — desdobrado em 28/09/2026 porque `resultado_morte` deriva do nome e a linha reunia seis resultados. Incluído pela Lei 15.517/2026 (DOU 23/09/2026, vigência na publicação). Decisão 38 da revisão de 23/09/2026."
   },
   {
     "id": 1516,
@@ -24832,5 +24832,24 @@
     "violencia": "Não",
     "grave_ameaca": "Não",
     "obs": "2-4 anos detenção. Segunda moldura do § 2º: a lei a escreve por extenso ('ou, se resulta morte, de dois a quatro anos') e não por remissão ao dobro. Mesma estrutura do art. 292, § 2º, do CPM (ids 1528 e 1529). Conferido em 25/09/2026 contra o texto compilado."
+  },
+  {
+    "id": 1534,
+    "lei": "CP",
+    "artigo": "Art. 155, §12, VI c/c §10",
+    "crime": "Furto de combustível com aumento de 2/3 — resultado morte",
+    "pena_min": 80,
+    "pena_max": 200,
+    "tipo_pena": "Reclusão",
+    "acao": "Pública Incondicionada",
+    "acao_condicao": "Condicionada à representação se o crime é cometido em prejuízo de cônjuge desquitado ou judicialmente separado, de irmão, ou de tio ou sobrinho com quem o agente coabita (CP, art. 182); a regra não se aplica ao estranho que participa do crime nem quando a vítima tem 60 anos ou mais (CP, art. 183, II e III).",
+    "hediondo": "Não",
+    "hediondo_condicao": null,
+    "elemento": "Qualificado pelo resultado",
+    "tentativa": "Sim",
+    "violencia": "Não",
+    "grave_ameaca": "Não",
+    "violencia_condicao": null,
+    "obs": "§ 10 aumentado de 2/3 se do crime resulta morte (inciso VI do § 12). Linha própria para que `resultado_morte` descreva só a hipótese que o tem; os incisos I a V ficam no id 1515. Elemento e tentativa herdados do id 1515 (decisão 38): a morte dolosa é homicídio em concurso, não este aumento. Incluído pela Lei 15.517/2026 (DOU 23/09/2026, vigência na publicação). Desdobrado em 28/09/2026."
   }
 ]
