@@ -44,6 +44,7 @@ RAIZ = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(RAIZ / "scripts"))
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
+from vigia import derivadas  # noqa: E402
 from nucleo.dispositivo import (SNAPSHOTS, chave,  # noqa: E402,F401
                                 chaves_do_registro)
 from nucleo.parsear import parsear, url_absoluta  # noqa: E402
@@ -198,6 +199,7 @@ def conferir_fonte(fonte: dict, do_catalogo: dict[str, list[dict]],
     achados: list[dict] = []
     dispositivos = parsear(arquivos[-1].read_text(encoding="utf-8"))
     da_lei = {d.chave: d for d in dispositivos}
+    registros = [x for v in do_catalogo.values() for x in v]
 
     # 1) O que o catálogo tem e a lei diz estar revogado, ou cuja moldura mudou.
     for k, linhas in sorted(do_catalogo.items()):
@@ -206,6 +208,37 @@ def conferir_fonte(fonte: dict, do_catalogo: dict[str, list[dict]],
         disp = da_lei.get(k)
         if disp is None:
             continue  # dispositivo não localizado: tratado no bloco 3
+        # 1-bis) Linha de pena DERIVADA: a lei manda calcular sobre uma base, e a
+        # conta se confere. Quem declara `c/c` é derivada por construção; quem
+        # está num dispositivo sem moldura própria cujo texto manda aumentar ou
+        # diminuir, também. O que diverge vira achado com a moldura esperada
+        # estruturada, para que o Proponente a corrija como qualquer outra.
+        derivadas_aqui = [x for x in linhas if moldura_e_de_outro_dispositivo(x) == "pena_derivada"]
+        base_k = da_lei.get(k.split("|")[0] + "|caput")
+        do_caput_k = None
+        if base_k is not None and base_k is not disp:
+            primeiras_k = ler_penas(base_k.pena_texto or base_k.texto or "")
+            do_caput_k = primeiras_k[0]["tipo"] if primeiras_k else None
+        if not molduras_de(disp, do_caput_k) and not disp.citacao and disp.situacao == "vigente":
+            derivadas_aqui += [x for x in linhas if x not in derivadas_aqui
+                               and _por_referencia(disp, x) == "pena_derivada"]
+        if derivadas_aqui:
+            for ident, v in avaliar_derivadas(derivadas_aqui, registros, da_lei).items():
+                if v["status"] != "diverge" or dispensado(excecoes, fonte["id"], k, [ident]):
+                    continue
+                linha = next(x for x in derivadas_aqui if x["id"] == ident)
+                emin, emax = v["esperado"]
+                achados.append({
+                    "tipo": "DIVERGENTE-derivada", "gravidade": 2, "chave": k,
+                    "ids": [ident], "anotacao": _anotacao(disp, fonte),
+                    "detalhe": f"{v['motivo']}; texto: {v['texto'][:90]}",
+                    "multiplas": False, "teto_apenas": False,
+                    "pena_lei": {"tipo": (linha.get("tipo_pena") or "").lower(),
+                                 "min": emin, "max": emax, "teto": False},
+                })
+        linhas = [x for x in linhas if x not in derivadas_aqui]
+        if not linhas:
+            continue
         if disp.citacao:
             # A linha do catálogo aponta para artigo que só ALTERA outra lei: o
             # que está ali é a redação transcrita da lei alterada, e o crime
@@ -430,7 +463,9 @@ _VOCABULARIO_DE_PENA = re.compile(
 MOTIVOS = {
     "sancao_nao_privativa": "o registro não tem pena privativa (multa ou outra sanção)",
     "pena_importada": "a lei manda aplicar a pena de outro dispositivo — copiável",
-    "pena_derivada": "a lei manda calcular sobre uma base (aumento, diminuição) — derivável",
+    "pena_derivada": "a lei manda calcular sobre uma base (aumento, diminuição) e a conta não fecha "
+                     "sozinha: base em outro artigo que o registro não declara por c/c, ou base sem "
+                     "moldura legível na lei — as demais são recalculadas (derivadas.py)",
     "sem_preceito_proprio": "o dispositivo não comina pena: é norma explicativa ou extensiva",
     "ilegivel": "A LEI ESCREVEU A PENA E O PARSER NÃO LEU — lacuna a fechar",
 }
@@ -477,6 +512,38 @@ def _por_referencia(disp, linha: dict) -> str:
     return "ilegivel"
 
 
+def _molduras_da_lei(da_lei: dict):
+    """Resolve um rótulo de artigo ("art. 2º") nas molduras que a lei escreve nele.
+
+    É o que permite ao verificador de derivadas usar como base um dispositivo
+    que não é registro do catálogo — a Lei 7.643 pune a pesca de cetáceo "Art.
+    1º c/c Art. 2º", e o art. 2º é só o preceito da pena.
+    """
+    def resolver(rotulo: str) -> list[tuple[float, float]]:
+        k = chave(rotulo)
+        d = da_lei.get(k) if k else None
+        if d is None:
+            return []
+        base = da_lei.get(k.split("|")[0] + "|caput")
+        do_caput = None
+        if base is not None and base is not d:
+            primeiras = ler_penas(base.pena_texto or base.texto or "")
+            do_caput = primeiras[0]["tipo"] if primeiras else None
+        return [(m["min_meses"], m["max_meses"])
+                for m in molduras_de(d, do_caput) if not m["so_multa"]]
+    return resolver
+
+
+def avaliar_derivadas(linhas: list[dict], registros: list[dict], da_lei: dict) -> dict[int, dict]:
+    """Veredito do verificador de pena derivada, por id (ver `vigia/derivadas.py`).
+
+    `registros` são TODAS as linhas do diploma: a base de uma derivada é outra
+    linha do mesmo diploma, apontada pelo `c/c` ou presumida no caput.
+    """
+    resolver = _molduras_da_lei(da_lei)
+    return {x["id"]: derivadas.avaliar(x, registros, da_lei, resolver) for x in linhas}
+
+
 def cobertura(fontes: list[dict], indice: dict[str, dict[str, list[dict]]],
               excecoes: list[dict] | None = None) -> dict:
     """Quanto do catálogo é de fato CONFERIDO contra a lei — e quanto não é.
@@ -500,7 +567,9 @@ def cobertura(fontes: list[dict], indice: dict[str, dict[str, list[dict]]],
     """
     excecoes = excecoes or []
     resultado = {"conferido": [], "divergente": [], "sem_moldura_na_lei": [],
-                 "nao_localizado": [], "sem_snapshot": [], "dispensado": []}
+                 "nao_localizado": [], "sem_snapshot": [], "dispensado": [],
+                 # Chave com `_`: detalhe, não classe — não entra na soma da cobertura.
+                 "_derivadas": {"conferidas": [], "divergentes": [], "juizo": []}}
     for fonte in fontes:
         do_catalogo = indice.get(fonte["id"], {})
         if not do_catalogo:
@@ -511,6 +580,8 @@ def cobertura(fontes: list[dict], indice: dict[str, dict[str, list[dict]]],
             resultado["sem_snapshot"] += [x["id"] for v in do_catalogo.values() for x in v]
             continue
         da_lei = {d.chave: d for d in parsear(arquivos[-1].read_text(encoding="utf-8"))}
+        registros = [x for v in do_catalogo.values() for x in v]
+        inicio = len(resultado["sem_moldura_na_lei"])
 
         for k, linhas in do_catalogo.items():
             # Antes de procurar o dispositivo: quem DECLARA que a moldura é de
@@ -562,6 +633,35 @@ def cobertura(fontes: list[dict], indice: dict[str, dict[str, list[dict]]],
                               for t in pena.get("tipos") or [])
                 alvo = "conferido" if (bate_max and bate_min and especie) else "divergente"
                 resultado[alvo].append((fonte["id"], k, linha["id"]))
+
+        # As linhas de pena DERIVADA deste diploma: a lei manda calcular sobre
+        # uma base, e a conta é conferível. Até 28/09/2026 elas saíam daqui como
+        # limite declarado — 161 registros contados e nunca conferidos, debaixo
+        # dos quais o incêndio majorado publicou a pena do caput sem o aumento.
+        por_id = {x["id"]: x for x in registros}
+        pendentes = [(i, item) for i, item in enumerate(resultado["sem_moldura_na_lei"])
+                     if i >= inicio and item[3] == "pena_derivada"]
+        if pendentes:
+            vereditos = avaliar_derivadas([por_id[item[2]] for _, item in pendentes],
+                                          registros, da_lei)
+            remover = []
+            for i, (fid, k, ident, _m) in pendentes:
+                v = vereditos[ident]
+                if v["status"] == "confere":
+                    resultado["conferido"].append((fid, k, ident))
+                    resultado["_derivadas"]["conferidas"].append((fid, k, ident, v["motivo"]))
+                    remover.append(i)
+                elif v["status"] == "diverge":
+                    if dispensado(excecoes, fid, k, [ident]):
+                        resultado["dispensado"].append((fid, k, ident))
+                    else:
+                        resultado["divergente"].append((fid, k, ident))
+                        resultado["_derivadas"]["divergentes"].append((fid, k, ident, v["motivo"]))
+                    remover.append(i)
+                else:
+                    resultado["_derivadas"]["juizo"].append((fid, k, ident, v["motivo"]))
+            for i in sorted(remover, reverse=True):
+                del resultado["sem_moldura_na_lei"][i]
     return resultado
 
 
@@ -757,8 +857,9 @@ def montar_cobertura(res: dict, total_catalogo: int, resumido: bool = False) -> 
     registros que não pedem ação nenhuma empurrava para fora justamente o que
     pedia. Nada se perde — o artifact continua trazendo id por id.
     """
-    n = {k: len(v) for k, v in res.items()}
+    n = {k: len(v) for k, v in res.items() if not k.startswith("_")}
     medido = sum(n.values())
+    der = res.get("_derivadas") or {"conferidas": [], "divergentes": [], "juizo": []}
     fora = total_catalogo - medido
     pct = (100 * n["conferido"] / total_catalogo) if total_catalogo else 0
     motivos: dict[str, int] = {}
@@ -773,6 +874,13 @@ def montar_cobertura(res: dict, total_catalogo: int, resumido: bool = False) -> 
         "discriminados abaixo por motivo;",
         f"- **{n['nao_localizado']}** cujo dispositivo não foi localizado no compilado;",
     ]
+    if any(der.values()):
+        L.append(f"- dentre os conferidos, **{len(der['conferidas'])}** são linhas de pena "
+                 "DERIVADA recalculadas a partir da base e da fração que a lei escreve"
+                 + (f"; **{len(der['divergentes'])}** divergem da conta (viram achado)"
+                    if der["divergentes"] else "")
+                 + (f"; {len(der['juizo'])} pedem juízo e seguem em `pena_derivada`"
+                    if der["juizo"] else "") + ".")
     if n["dispensado"]:
         L.append(f"- {n['dispensado']} dispensados por exceção já julgada "
                  "(`scripts/robos/vigia/excecoes.json`).")
@@ -827,6 +935,12 @@ def montar_cobertura(res: dict, total_catalogo: int, resumido: bool = False) -> 
                 for fid, k, ident in itens:
                     L.append(f"- `{fid}` `{k}` — id {ident}")
                 L += ["", "</details>", ""]
+    if der["juizo"] and not resumido:
+        L += ["<details><summary><b>Pena derivada que a regra não decide</b> — "
+              f"{len(der['juizo'])}: por quê</summary>", ""]
+        for fid, k, ident, motivo in sorted(der["juizo"]):
+            L.append(f"- `{fid}` `{k}` — id {ident}: {motivo}")
+        L += ["", "</details>", ""]
     if res["nao_localizado"]:
         L += ["<details><summary><b>Dispositivos não localizados no compilado</b> — "
               f"{len(res['nao_localizado'])}</summary>", ""]

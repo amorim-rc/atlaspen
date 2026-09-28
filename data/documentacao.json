@@ -70,7 +70,7 @@
     {
       "arquivo": "docs/catalogo-tipos-penais.md",
       "sobre": "Como o catálogo é construído e travado: fonte × derivado, as três decisões de modelagem (tem_pena_privativa, resultado_morte, perdao_judicial_previsto) e o que a CI impede de regredir. O dicionário de campos saiu daqui para Dados abertos em 25/09/2026.",
-      "conferido_em": "2026-09-24",
+      "conferido_em": "2026-09-28",
       "depende_de": [
         "scripts/transform_data.py",
         "scripts/catalogo",

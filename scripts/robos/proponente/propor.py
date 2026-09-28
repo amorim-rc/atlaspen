@@ -260,63 +260,7 @@ def aplicar_sentinelas(propostas: list[dict], caminho: Path = FONTES) -> None:
     caminho.write_bytes(texto.encode("utf-8"))
 
 
-_FRACAO_VALOR = {
-    "um terço": 1 / 3, "1/3": 1 / 3, "dois terços": 2 / 3, "2/3": 2 / 3,
-    "metade": 0.5, "1/2": 0.5, "um sexto": 1 / 6, "1/6": 1 / 6,
-    "um quarto": 0.25, "1/4": 0.25, "um oitavo": 0.125, "1/8": 0.125,
-    "um quinto": 0.2, "1/5": 0.2, "dobro": 1.0, "triplo": 2.0,
-}
-_FRACAO_TEXTO = re.compile(
-    r"\b(?:um|dois)\s+(?:ter[çc]os?|sexto|quarto|oitavo|quinto)\b|\b[12]/[2-8]\b"
-    r"|\bmetade\b|\bdobro\b|\btriplo\b", re.I)
-_UM_A_DOIS_TERCOS = re.compile(r"\bde\s+um\s+a\s+dois\s+ter[çc]os\b", re.I)
-_ATE = re.compile(r"\b(?:em\s+)?at[ée]\s+(?:a\s+|o\s+)?(?:metade|dobro|triplo|um\b|dois\b|[12]/)", re.I)
-_DE_FRACAO = re.compile(r"\bde\s+(?:um|dois|[12]/|metade)", re.I)
-
-
-def _valor(token: str) -> float | None:
-    t = re.sub(r"\s+", " ", token.lower()).replace("terco", "terço")
-    if t == "um terços":
-        t = "um terço"
-    return _FRACAO_VALOR.get(t)
-
-
-def fracoes_do_texto(texto: str) -> tuple[float, float] | None:
-    """(mínima, máxima) lidas do texto; None quando não há fração legível.
-
-    "de 1/3 (um terço) a 2/3 (dois terços)" repete cada fração por extenso, e a
-    repetição é descartada. "até a metade" sem mínimo declarado parte de zero,
-    pela mesma regra de `fracoes_de_teto` do catálogo de modificadores.
-    """
-    if _UM_A_DOIS_TERCOS.search(texto):
-        return (1 / 3, 2 / 3)
-    vals: list[float] = []
-    for m in _FRACAO_TEXTO.finditer(texto):
-        v = _valor(m.group(0))
-        if v is None:
-            continue
-        if not vals or abs(vals[-1] - v) > 1e-9:
-            vals.append(v)
-    if not vals:
-        return None
-    if len(vals) == 1:
-        if _ATE.search(texto) and not _DE_FRACAO.search(texto):
-            return (0.0, vals[0])
-        return (vals[0], vals[0])
-    return (min(vals[:2]), max(vals[:2]))
-
-
-def _fracao_humana(fmin: float, fmax: float) -> str:
-    nomes = {1 / 3: "1/3", 2 / 3: "2/3", 0.5: "1/2", 1 / 6: "1/6", 0.25: "1/4",
-             0.125: "1/8", 0.2: "1/5", 1.0: "dobro", 2.0: "triplo"}
-
-    def nome(v: float) -> str:
-        return next((n for k, n in nomes.items() if abs(k - v) < 1e-9), f"{v:.3f}")
-    if abs(fmin - fmax) < 1e-9:
-        return nome(fmin)
-    if fmin == 0:
-        return f"até {nome(fmax)}"
-    return f"{nome(fmin)} a {nome(fmax)}"
+from nucleo.fracao import fracao_humana as _fracao_humana, fracoes_do_texto  # noqa: E402
 
 
 _ESCOPO_PARAGRAFO = re.compile(

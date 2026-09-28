@@ -62,7 +62,21 @@ de referência — a Lei dos Crimes Hediondos, a LEP, o CPP, a Lei 9.099/95 e a 
 têm tipo penal no catálogo: são baixados porque fundamentam a hediondez e os atributos.
 
 **O que ele acusa:** moldura ou espécie de pena divergente; dispositivo que a lei
-comina e o catálogo não tem; registro cujo dispositivo não foi localizado.
+comina e o catálogo não tem; registro cujo dispositivo não foi localizado; e, desde
+28/09/2026, linha de **pena derivada** cuja conta não fecha.
+
+**Pena derivada.** Cento e sessenta linhas do catálogo não têm moldura escrita na
+lei: são aumento, diminuição, dobro ou metade de outra moldura ("na hipótese do
+§ 10, a pena é aumentada de um terço"). Até 28/09/2026 elas saíam da conferência
+como limite declarado — contadas, nunca conferidas —, e foi debaixo desse número que
+o incêndio majorado publicou por meses a pena do caput sem o aumento, e a corrupção
+passiva majorada, a pena simples. Agora o Vigia refaz a conta: a base é o registro
+que o próprio catálogo aponta (o `c/c` do artigo, ou o caput do mesmo artigo) e a
+fração é a do texto da lei. O que a regra não decide — base em outro artigo que o
+registro não declara, texto sem fração legível, o dobro que chega ao teto do CPM
+onde a lei comina morte — sai como *pede juízo*, com o motivo escrito, e não como
+número. Na primeira rodada, 154 das 160 fecharam a conta, seis pediram juízo e
+quatro estavam erradas.
 
 **O que ele não faz:** criar nem remover registro. Criar exige decidir se o
 dispositivo é crime autônomo, causa de aumento ou nada — e essa decisão é humana.
@@ -89,7 +103,7 @@ escrita para conferir.
 
 | Motivo | O que significa |
 |---|---|
-| `pena_derivada` | A lei manda calcular sobre uma base ("aumenta-se de um terço") |
+| `pena_derivada` | A lei manda calcular sobre uma base ("aumenta-se de um terço") e a conta não fecha sozinha: base em outro artigo que o registro não declara, ou sem moldura legível. Desde 28/09/2026 as demais são recalculadas e contam como conferidas |
 | `pena_importada` | A lei manda aplicar a pena de outro dispositivo |
 | `sancao_nao_privativa` | O tipo não comina prisão (multa, ou outra sanção) |
 | `sem_preceito_proprio` | O dispositivo não comina pena: é norma explicativa |
