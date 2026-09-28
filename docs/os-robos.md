@@ -75,8 +75,10 @@ que o próprio catálogo aponta (o `c/c` do artigo, ou o caput do mesmo artigo) 
 fração é a do texto da lei. O que a regra não decide — base em outro artigo que o
 registro não declara, texto sem fração legível, o dobro que chega ao teto do CPM
 onde a lei comina morte — sai como *pede juízo*, com o motivo escrito, e não como
-número. Na primeira rodada, 154 das 160 fecharam a conta, seis pediram juízo e
-quatro estavam erradas.
+número. "Na mesma pena incorre" é seguido de um salto: ao caput, ao parágrafo citado ou ao
+artigo anterior com moldura. Na primeira rodada, 154 das 160 fecharam a conta de
+primeira, seis pediram juízo e quatro estavam erradas; decididos os casos de juízo,
+sobra um — o art. 141, III do Código Penal, que majora três artigos de uma vez.
 
 **O que ele não faz:** criar nem remover registro. Criar exige decidir se o
 dispositivo é crime autônomo, causa de aumento ou nada — e essa decisão é humana.

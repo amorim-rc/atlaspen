@@ -137,12 +137,17 @@ class TestAvaliar:
         v = derivadas.avaliar(regs[1], regs, lei)
         assert v["status"] == "confere" and v["fracao"] == (1.0, 1.0)
 
-    def test_dobro_que_chega_ao_teto_do_cpm_pede_juizo(self):
+    def test_dobro_trava_no_teto_do_cpm(self):
+        """Decisão de 28/09/2026: o dobro de 15–30 anos é 30–60, e a reclusão para
+        em 30 (art. 58) nos dois limites — moldura fixa, com a morte no grau
+        máximo que o art. 405 comina. Publicar a moldura de paz é divergência."""
         regs = [_linha(1452, "Art. 242, §3º", 180, 360, lei="CPM (DL 1.001/69)"),
-                _linha(1443, "Art. 405 c/c art. 242, §3º", 180, 360, lei="CPM (DL 1.001/69)")]
+                _linha(1443, "Art. 405 c/c art. 242, §3º", 360, 360, lei="CPM (DL 1.001/69)", tipo="Morte")]
         lei = {"Art. 405|caput": _d("Praticar roubo em zona de operações", "Pena - reclusão pelo dôbro da pena")}
-        v = derivadas.avaliar(regs[1], regs, lei)
-        assert v["status"] == "pede_juizo" and "art. 58" in v["motivo"]
+        assert derivadas.avaliar(regs[1], regs, lei)["status"] == "confere"
+        errada = dict(regs[1], pena_min=180)
+        v = derivadas.avaliar(errada, [regs[0], errada], lei)
+        assert v["status"] == "diverge" and v["esperado"] == (360, 360)
 
     def test_caput_sem_moldura_propria_nao_serve_de_base(self):
         regs = [_linha(793, "Art. 5º", 72, 270, lei="Lei 13.260/16"),
@@ -155,3 +160,34 @@ class TestAvaliar:
         regs = [_linha(1, "Art. 9, caput", 12, 36), _linha(2, "Art. 9, §1º", 12, 36)]
         lei = {"Art. 9|§ 1º": _d("Se o agente é primário, o juiz pode substituir a pena")}
         assert derivadas.avaliar(regs[1], regs, lei)["status"] == "pede_juizo"
+
+
+class TestMesmaPena:
+    """"Na mesma pena incorre" é seguido de um salto pelo resolvedor do conferidor."""
+
+    def _lei(self):
+        from nucleo.parsear import Dispositivo
+        ds = [
+            Dispositivo("187", None, "caput", texto="Ausentar-se o militar, sem licença",
+                        pena_texto="Pena - detenção, de seis meses a dois anos."),
+            Dispositivo("188", None, "caput", texto="Na mesma pena incorre o militar que:"),
+            Dispositivo("240", None, "caput", texto="Subtrair coisa alheia móvel",
+                        pena_texto="Pena - reclusão, até seis anos."),
+            Dispositivo("240", None, "§ 6º", texto="Se o furto é praticado:",
+                        pena_texto="Pena - reclusão, de três a dez anos."),
+            Dispositivo("240", None, "§ 6º-A", texto="Na mesma pena do § 6º deste artigo incorre quem subtrai arma"),
+        ]
+        return {d.chave: d for d in ds}
+
+    def test_mesma_pena_do_paragrafo_vai_ao_paragrafo(self):
+        from vigia.conferir import _molduras_da_lei
+        assert _molduras_da_lei(self._lei())("art. 240, §6º-A") == [(36, 120)]
+
+    def test_mesma_pena_incorre_vai_ao_dispositivo_anterior_com_moldura(self):
+        from vigia.conferir import _molduras_da_lei
+        assert _molduras_da_lei(self._lei())("art. 188") == [(6, 24)]
+
+    def test_um_salto_so(self):
+        from vigia.conferir import _molduras_da_lei
+        resolver = _molduras_da_lei(self._lei())
+        assert resolver("art. 188", saltar=False) == []

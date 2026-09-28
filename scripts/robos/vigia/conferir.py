@@ -512,18 +512,29 @@ def _por_referencia(disp, linha: dict) -> str:
     return "ilegivel"
 
 
+_MESMA_PENA_DO_PARAGRAFO = re.compile(r"mesmas?\s+penas?\s+d[oa]\s+§\s*(\d+º?(?:-[A-Z])?)", re.I)
+_MESMA_PENA = re.compile(r"mesmas?\s+penas?|incorre\s+n[ao]s?\s+penas?", re.I)
+
+
 def _molduras_da_lei(da_lei: dict):
     """Resolve um rótulo de artigo ("art. 2º") nas molduras que a lei escreve nele.
 
     É o que permite ao verificador de derivadas usar como base um dispositivo
     que não é registro do catálogo — a Lei 7.643 pune a pesca de cetáceo "Art.
     1º c/c Art. 2º", e o art. 2º é só o preceito da pena.
+
+    Segue "na mesma pena" de UM salto (decisão de 28/09/2026): "na mesma pena
+    do § 6º" vai ao § 6º; "na mesma pena incorre" vai ao dispositivo anterior,
+    na ordem do texto, que tenha moldura — o caput, para um parágrafo; o
+    artigo anterior, para um caput ("Art. 188. Na mesma pena incorre o militar
+    que", logo depois da deserção do art. 187). Um salto só: cadeia de remissão
+    é a família da pena importada, que tem verificação própria a nascer.
     """
-    def resolver(rotulo: str) -> list[tuple[float, float]]:
-        k = chave(rotulo)
-        d = da_lei.get(k) if k else None
-        if d is None:
-            return []
+    ordem = list(da_lei.values())
+    posicao = {id(d): i for i, d in enumerate(ordem)}
+
+    def proprias(d) -> list[tuple[float, float]]:
+        k = d.chave
         base = da_lei.get(k.split("|")[0] + "|caput")
         do_caput = None
         if base is not None and base is not d:
@@ -531,6 +542,28 @@ def _molduras_da_lei(da_lei: dict):
             do_caput = primeiras[0]["tipo"] if primeiras else None
         return [(m["min_meses"], m["max_meses"])
                 for m in molduras_de(d, do_caput) if not m["so_multa"]]
+
+    def resolver(rotulo: str, saltar: bool = True) -> list[tuple[float, float]]:
+        k = chave(rotulo)
+        d = da_lei.get(k) if k else None
+        if d is None:
+            return []
+        molduras = proprias(d)
+        if molduras or not saltar:
+            return molduras
+        texto = f"{d.texto or ''} {d.pena_texto or ''}"
+        m = _MESMA_PENA_DO_PARAGRAFO.search(texto)
+        if m:
+            alvo = da_lei.get(f"{k.split('|')[0]}|§ {m.group(1)}")
+            return proprias(alvo) if alvo is not None else []
+        if _MESMA_PENA.search(texto):
+            for anterior in reversed(ordem[:posicao[id(d)]]):
+                if anterior.citacao or anterior.situacao != "vigente":
+                    continue
+                encontradas = proprias(anterior)
+                if encontradas:
+                    return encontradas
+        return []
     return resolver
 
 

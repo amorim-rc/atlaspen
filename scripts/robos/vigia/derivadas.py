@@ -31,7 +31,7 @@ from nucleo.fracao import (aplicar, direcao, fracao_humana, fracoes_do_texto,  #
 
 TOLERANCIA_MESES = 1 / 30 + 1e-6
 # CPM, art. 58: o máximo da reclusão é trinta anos. O dobro do latrocínio
-# militar (15 a 30) não passa daí — e o catálogo publica o teto em 360.
+# militar (15 a 30) trava aí nos dois limites (ids 1443 e 1446: 360–360).
 TETO_CPM_MESES = 360.0
 
 _INCISO = re.compile(r",\s*([IVXLC]+)\s*(?:,\s*([a-z])\s*)?(?:\(|$|\s+c/c)")
@@ -229,18 +229,12 @@ def avaliar(linha: dict, registros: list[dict], da_lei: dict,
     for rotulo, bid, (bmin, bmax) in molduras_base:
         for fracao in fracoes:
             emin, emax = aplicar(bmin, bmax, natureza, fracao)
-            if teto is not None and emin >= teto:
-                # O dobro de 15 a 30 anos chega ao teto nos DOIS limites (CPM,
-                # art. 58) — e o art. 405 comina MORTE, grau máximo, justamente
-                # quando a pena de paz é de trinta anos. Não é conta: é decisão
-                # de modelagem, e não se acusa.
-                return dict(saida, status="pede_juizo", base=rotulo, base_id=bid,
-                            natureza=natureza, fracao=fracao,
-                            motivo=f"{rotulo} ({bmin:g}–{bmax:g}) {'+' if natureza == 'aumento' else '−'}"
-                                   f"{fracao_humana(*fracao)} chega ao teto de {teto:g} meses (CPM, "
-                                   f"art. 58) nos dois limites; o catálogo publica {pmin:g}–{pmax:g}. "
-                                   "Onde a lei comina morte no grau máximo (art. 405), a moldura é "
-                                   "decisão de modelagem, não aritmética")
+            # CPM, art. 58: a reclusão não passa de trinta anos. O dobro de 15 a
+            # 30 (art. 405, tempo de guerra) dá 30 a 60 e trava em 30 nos dois
+            # limites — moldura fixa no teto, com a morte no grau máximo que o
+            # art. 405 comina "se cominada pena de reclusão de trinta anos".
+            # Decisão do mantenedor em 28/09/2026: a conta vale, e o `tipo_pena`
+            # Morte é do registro, não desta verificação.
             if teto is not None:
                 emin, emax = min(emin, teto), min(emax, teto)
             bate = (abs(emin - pmin) <= TOLERANCIA_DERIVADA_MESES

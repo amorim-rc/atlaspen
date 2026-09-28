@@ -81,7 +81,7 @@
     {
       "arquivo": "docs/dados-abertos.md",
       "sobre": "O dicionário: cada campo do registro (fonte, derivados, trilha) e dos atributos, de onde vem cada dado e como é revisado, versionamento, licença e como citar. Único lugar em que um campo é definido.",
-      "conferido_em": "2026-09-25",
+      "conferido_em": "2026-09-28",
       "depende_de": [
         "data/avisos.json",
         "scripts/derivar_atributos.ts",
