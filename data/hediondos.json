@@ -17,7 +17,8 @@
       "impressao_anterior": "2730ff4423de579f",
       "o_que_mudou": "A Lei 15.487/2026 deu NOVA REDACAO ao inciso VII do paragrafo unico do art. 1o. Antes (Lei 14.811/2024) o inciso alcancava duas hipoteses do ECA — o §1o do art. 240 e o art. 241-B. Agora alcanca quatorze: o caput e os §§ 1o e 2o do art. 240; o caput e o paragrafo unico do art. 241; o caput e os §§ 1o e 3o do art. 241-A; o CAPUT do art. 241-B (os §§ 1o e 2o NAO entraram); o caput e os §§ 1o e 2o do art. 241-D; e o caput e o §1o do art. 244-A. O art. 241-C ficou de fora por inteiro. Cinco registros passaram de nao hediondo a hediondo (ids 455, 456, 457, 460 e 464) e o art. 241-C ganhou nota dizendo por que NAO e — sem ela, a proxima varredura o corrigiria por simetria com os vizinhos."
     },
-    "ancoragem": "Desde 23/09/2026 (decisão C15) toda expressão de `artigo` termina em âncora `(?=$|,| )` — fim do rótulo, vírgula de inciso, ou espaço (o parêntese de desambiguação do catálogo e o 'c/c'). Sem ela, 'V' casava 'VI', 'VII' e 'VIII', e '§2º' casava '§2º-A' a '§2º-D': foi o que produziu a C12. Regra que alcança o diploma inteiro declara `aberta: true`, e `scripts/hediondez.py` recusa carregar expressão ancorada em '^' sem âncora de fim e sem `aberta`."
+    "ancoragem": "Desde 23/09/2026 (decisão C15) toda expressão de `artigo` termina em âncora `(?=$|,| )` — fim do rótulo, vírgula de inciso, ou espaço (o parêntese de desambiguação do catálogo e o 'c/c'). Sem ela, 'V' casava 'VI', 'VII' e 'VIII', e '§2º' casava '§2º-A' a '§2º-D': foi o que produziu a C12. Regra que alcança o diploma inteiro declara `aberta: true`, e `scripts/hediondez.py` recusa carregar expressão ancorada em '^' sem âncora de fim e sem `aberta`.",
+    "fora_de_alcance": "Vazio desde 28/09/2026. Até então o CPM ficava fora da auditoria (salvo os dispositivos já julgados, listados num `exceto`), porque o inciso VI do parágrafo único exige juízo de identidade que a tabela não faz sozinha. A varredura do Livro II (decisão 29, 23/09/2026) fez esse juízo para todos os artigos, e o que ela achou virou regra: desde então o campo só reduzia a cobertura. O motivo original: O inciso VI do parágrafo único (Lei 14.688/2023) declara hediondos os crimes do CPM 'que apresentem identidade com os crimes previstos no art. 1º desta Lei'. Identidade é juízo de correspondência entre tipos, não remissão a dispositivo: a tabela não a resolve sozinha, e acusar os registros militares em bloco seria ruído. Os dispositivos já julgados saem desta lista pelo `exceto` e passam a ser auditados normalmente — hoje, os sete que o catálogo marcava como hediondos. O resto do Livro II do CPM segue de fora, até a varredura artigo a artigo — ver `pendentes`. Em 19/09/2026 entraram no `exceto` os oito registros de roubo e extorsão militares que o catálogo marcava como hediondos sem regra na tabela."
   },
   "impressao_do_texto": "b275e2f206eade89",
   "regras": [
@@ -592,7 +593,7 @@
   "pendentes": [
     {
       "fundamento": "Lei 8.072, art. 1º, § único, VI",
-      "descricao": "Os sete registros militares que o catálogo marcava foram julgados na revisão de 02/08/2026 e constam das `regras` e `excecoes` acima. O inverso — varrer o Livro II do CPM contra os doze incisos do art. 1º para achar o que DEVERIA estar marcado e não está — foi feito na revisão de 05-06/08/2026: os candidatos levantados (roubo e extorsão qualificados pelo resultado, sequestro de menor) viraram os registros do art. 242, §§ 2º e 3º, e do art. 243, §§ 1º e 2º, com a hediondez desdobrada por inciso onde ela varia dentro do parágrafo. Em 19/09/2026, ao derivar `hediondo_especie` da tabela, apareceu que os OITO registros de roubo e extorsão militares afirmavam hediondez sem regra escrita aqui. Seis ganharam regra, com o inciso do rol a que correspondem. O roubo com emprego de arma (art. 242, §2º, I) virou regra CONDICIONAL: o rol alcança a arma de fogo, e o CPM diz apenas 'arma'. A extorsão com emprego de arma (art. 243, §1º c/c art. 242, §2º, I) virou exceção: não há figura correspondente no rol, e o registro deixou de ser hediondo. FECHADO em 23/09/2026 pela decisão 29: a varredura do Livro II do CPM contra os doze incisos do art. 1º foi concluída, e o que ela achou virou regra aqui (incondicional ou condicional) e registro novo no catálogo.",
+      "descricao": "Os sete registros militares que o catálogo marcava foram julgados na revisão de 02/08/2026 e constam das `regras` e `excecoes` acima. O inverso — varrer o Livro II do CPM contra os doze incisos do art. 1º para achar o que DEVERIA estar marcado e não está — foi feito na revisão de 05-06/08/2026: os candidatos levantados (roubo e extorsão qualificados pelo resultado, sequestro de menor) viraram os registros do art. 242, §§ 2º e 3º, e do art. 243, §§ 1º e 2º, com a hediondez desdobrada por inciso onde ela varia dentro do parágrafo. Em 19/09/2026, ao derivar `hediondo_especie` da tabela, apareceu que os OITO registros de roubo e extorsão militares afirmavam hediondez sem regra escrita aqui. Seis ganharam regra, com o inciso do rol a que correspondem. O roubo com emprego de arma (art. 242, §2º, I) virou regra CONDICIONAL: o rol alcança a arma de fogo, e o CPM diz apenas 'arma'. A extorsão com emprego de arma (art. 243, §1º c/c art. 242, §2º, I) virou exceção: não há figura correspondente no rol, e o registro deixou de ser hediondo. FECHADO em 23/09/2026 pela decisão 29: a varredura do Livro II do CPM contra os doze incisos do art. 1º foi concluída, e o que ela achou virou regra aqui (incondicional ou condicional) e registro novo no catálogo. Em 28/09/2026 o CPM saiu do `fora_de_alcance`: com as regras da decisão 29, os 404 registros militares batem com a tabela (15 declaram `hediondo_condicao`; os outros 389 têm o `hediondo` que a tabela espera — 0 divergências, 0 condicionais, medidos antes de retirar a trava). A auditoria de hediondez passou a cobrir o catálogo inteiro; o `exceto` que a trava carregava deixou de ter função e saiu com ela.",
       "acao": "nenhuma — a varredura foi feita; reabrir só se o rol do art. 1º mudar (a impressão do texto vigia isso)"
     },
     {
@@ -601,22 +602,5 @@
       "acao": "nenhuma no catálogo: está anotado para que a conferência não volte a procurar um §3º inexistente. Reabrir só se lei posterior ajustar a remissão ou restaurar o parágrafo vetado."
     }
   ],
-  "fora_de_alcance": [
-    {
-      "lei": "^CPM",
-      "exceto": [
-        "^Art\\. 205, §2º",
-        "^Art\\. 232",
-        "^Art\\. 244, caput",
-        "^Art\\. 290, §5º",
-        "^Art\\. 242, §2º, I$",
-        "^Art\\. 242, §2º, VIII$",
-        "^Art\\. 242, §3º$",
-        "^Art\\. 243, §1º c/c art\\. 242, §2º",
-        "^Art\\. 243, §2º$",
-        "^Art\\. 405 c/c art\\. 24[23]"
-      ],
-      "motivo": "O inciso VI do parágrafo único (Lei 14.688/2023) declara hediondos os crimes do CPM 'que apresentem identidade com os crimes previstos no art. 1º desta Lei'. Identidade é juízo de correspondência entre tipos, não remissão a dispositivo: a tabela não a resolve sozinha, e acusar os registros militares em bloco seria ruído. Os dispositivos já julgados saem desta lista pelo `exceto` e passam a ser auditados normalmente — hoje, os sete que o catálogo marcava como hediondos. O resto do Livro II do CPM segue de fora, até a varredura artigo a artigo — ver `pendentes`. Em 19/09/2026 entraram no `exceto` os oito registros de roubo e extorsão militares que o catálogo marcava como hediondos sem regra na tabela."
-    }
-  ]
+  "fora_de_alcance": []
 }

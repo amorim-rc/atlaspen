@@ -71,12 +71,16 @@ class TestHediondez:
         assert not [a for a in achados if a["tipo"] == "HEDIONDEZ-DIVERGENTE"]
         assert [a for a in achados if a["tipo"] == "DEPENDE-DO-CASO"]
 
-    def test_cpm_fica_fora_do_alcance(self, monkeypatch):
+    def test_cpm_e_auditado_contra_a_tabela(self, monkeypatch):
+        """Até 28/09/2026 o CPM ficava fora da auditoria. A varredura do Livro II
+        (decisão 29) fechou o juízo de identidade artigo a artigo, e desde então um
+        registro militar hediondo sem regra na tabela é divergência como qualquer
+        outra — e não há mais FORA-DE-ALCANCE a imprimir."""
         achados = self._achados([
             registro(id=9, lei="CPM (DL 1.001/69)", artigo="Art. 205", hediondo="Sim"),
         ], monkeypatch)
-        assert not [a for a in achados if a["tipo"] == "HEDIONDEZ-DIVERGENTE"]
-        assert [a for a in achados if a["tipo"] == "FORA-DE-ALCANCE"]
+        assert [a for a in achados if a["tipo"] == "HEDIONDEZ-DIVERGENTE"]
+        assert not [a for a in achados if a["tipo"] == "FORA-DE-ALCANCE"]
 
     def test_mudanca_no_rol_alerta_antes_de_qualquer_achado(self, monkeypatch):
         """Se a Lei 8.072 mudar, a tabela envelheceu — e os achados dela passam a
@@ -84,6 +88,42 @@ class TestHediondez:
         achados = self._achados([registro()], monkeypatch, impressao="diferente")
         alerta = [a for a in achados if a["tipo"] == "ROL-ALTERADO"]
         assert alerta and alerta[0]["gravidade"] == 3
+
+
+class TestModificadores:
+    """O auditor de causas de aumento só LISTA, mas precisa enxergar a fórmula.
+
+    Até 28/09/2026 a regex casava "a pena é aumentada de" e deixava passar "a pena
+    aumenta-se de" (CP, art. 157, §2º) e "diminuir a pena de" (Lei 8.176, art.
+    1º-B, §1º) e "as penas poderão ser reduzidas de" (Lei 11.343, art. 33, §4º): 30
+    dispositivos vigentes nunca acusados.
+    """
+
+    def _achados(self, textos, monkeypatch):
+        class Falso:
+            def __init__(self, t):
+                self.texto, self.situacao, self.citacao = t, "vigente", False
+        chaves = {f"Art. 9{i}9|§ 1º": Falso(t) for i, t in enumerate(textos)}
+        monkeypatch.setattr(auditar, "dispositivos_de", lambda fid: chaves)
+        return auditar.auditar_modificadores({"CP": "cp"})
+
+    def test_formulas_que_passavam_em_silencio(self, monkeypatch):
+        achados = self._achados([
+            "A pena aumenta-se de 1/3 (um terço) até metade:",
+            "As penas cominadas neste artigo aumentam-se de um terço:",
+            "A pena poderá ser reduzida de um a dois terços.",
+            "poderá o juiz diminuir a pena de 1/3 (um terço) a 2/3 (dois terços)",
+            "as penas poderão ser reduzidas de um sexto a dois terços, vedada a conversão",
+        ], monkeypatch)
+        assert len(achados) == 5
+
+    def test_preceito_comum_nao_e_majorante(self, monkeypatch):
+        achados = self._achados([
+            "Pena - reclusão, de um a três anos, e multa.",
+            "Aumenta-se a pena de um terço, se o crime é cometido por funcionário público.",
+        ], monkeypatch)
+        # Só a segunda: a fórmula antiga continua casando, e o preceito comum não.
+        assert [a["dispositivo"] for a in achados] == ["Art. 919|§ 1º"]
 
 
 class TestAcaoPenal:
