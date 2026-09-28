@@ -23311,7 +23311,7 @@
     "lei": "CPM (DL 1.001/69)",
     "artigo": "Art. 405 c/c art. 242, §3º",
     "crime": "Latrocínio (tempo de guerra)",
-    "pena_min": 180,
+    "pena_min": 360,
     "pena_max": 360,
     "tipo_pena": "Morte",
     "acao": "Pública Incondicionada",
@@ -23320,7 +23320,7 @@
     "tentativa": "Sim",
     "violencia": "Sim",
     "grave_ameaca": "Sim",
-    "obs": "Registro de tempo de guerra criado em 05/08/2026. Fator: dobro (art.405). Especificacao do caput: em zona de operacoes militares ou em territorio militarmente ocupado. Espelha a divisao do tipo de paz, que passa a levar \"(tempo de paz)\" no nome. DECISAO 05/08/2026: o fator incide sobre a pena cominada no artigo base, tanto na minima quanto na maxima (o piso do art.58 integra a moldura do artigo base antes do fator)."
+    "obs": "Morte no grau máximo (fuzilamento, art. 56 do CPM), reclusão de 30 anos no grau mínimo. Em tempo de paz a pena do latrocínio é de 15 a 30 anos; em zona de operações militares ou território militarmente ocupado o art. 405 manda aplicar o dobro (30 a 60), a reclusão trava em 30 anos (art. 58) nos dois limites, e a própria lei comina morte no grau máximo 'se cominada pena de reclusão de trinta anos'. Publicava 15 a 30, a moldura de paz. Decisão do mantenedor em 28/09/2026, tomada sobre o achado do verificador de pena derivada; registro de tempo de guerra criado em 05/08/2026."
   },
   {
     "id": 1444,
@@ -23360,7 +23360,7 @@
     "lei": "CPM (DL 1.001/69)",
     "artigo": "Art. 405 c/c art. 243, §2º",
     "crime": "Extorsão qualificada pela morte (tempo de guerra)",
-    "pena_min": 180,
+    "pena_min": 360,
     "pena_max": 360,
     "tipo_pena": "Morte",
     "acao": "Pública Incondicionada",
@@ -23369,7 +23369,7 @@
     "tentativa": "Sim",
     "violencia": "Sim",
     "grave_ameaca": "Sim",
-    "obs": "Registro de tempo de guerra criado em 05/08/2026. Fator: dobro (art.405). Especificacao do caput: em zona de operacoes militares ou em territorio militarmente ocupado. Espelha a divisao do tipo de paz, que passa a levar \"(tempo de paz)\" no nome. DECISAO 05/08/2026: o fator incide sobre a pena cominada no artigo base, tanto na minima quanto na maxima (o piso do art.58 integra a moldura do artigo base antes do fator)."
+    "obs": "Morte no grau máximo (fuzilamento, art. 56 do CPM), reclusão de 30 anos no grau mínimo. Em tempo de paz a pena do extorsão qualificada pela morte é de 15 a 30 anos; em zona de operações militares ou território militarmente ocupado o art. 405 manda aplicar o dobro (30 a 60), a reclusão trava em 30 anos (art. 58) nos dois limites, e a própria lei comina morte no grau máximo 'se cominada pena de reclusão de trinta anos'. Publicava 15 a 30, a moldura de paz. Decisão do mantenedor em 28/09/2026, tomada sobre o achado do verificador de pena derivada; registro de tempo de guerra criado em 05/08/2026."
   },
   {
     "id": 1447,
