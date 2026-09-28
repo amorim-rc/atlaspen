@@ -28,7 +28,7 @@ em paralelo: só o auditor espera, porque lê as páginas que o vigia baixou. Os
 | **auditor** | Hediondez, ação penal, causas de aumento e nome do tipo | Não |
 | **arquivista** | Saúde da prosa: documento vencido ou cuja dependência mudou | Não |
 | **triagem** | Junta os relatórios e abre a issue | — |
-| **proponente** | Transforma em PR o que é leitura direta, e escreve a nota quando a lei é recente | Não: só roda se houver o que propor |
+| **proponente** | Transforma em PR o que é leitura direta — moldura, sentinela defasada e modificador de escopo declarado —, e escreve a nota quando a lei é recente | Não: só roda se houver o que propor |
 
 Na **primeira semana de cada mês**, a sentinela roda também a conferência contra a
 lista de leis sancionadas do ano. É a defesa contra o falso negativo: ela não diz se
@@ -102,6 +102,15 @@ Dois tipos, nesta ordem de prioridade:
 Moldura ou espécie de pena de registro que já existe, divergindo do texto compilado. Um
 diploma por PR. Cada mudança traz o trecho da lei ao lado. **É leitura de texto, não
 juízo**: a revisão aqui é conferir se o trecho citado sustenta o número.
+
+Desde 28/09/2026 o mesmo PR pode trazer duas coisas mais, com a mesma régua. **Sentinelas**:
+a fonte cuja página já anota lei mais nova que a sentinela ganha o número novo — confira
+que a anotação citada existe na página. **Modificador de escopo declarado**: o dispositivo
+que diz "na hipótese do § 10" ou "a pena prevista no § 2º-A" vira modificador com a fração
+lida do texto — confira o alcance, que é a única leitura por analogia de redação que a
+máquina faz. Sem nota: a nota da lei sai com as linhas. O que não declara alcance continua
+na issue, como pergunta. Se a rodada só tiver sentinelas, o PR sai como
+`chore(fontes): N sentinela(s) apontam para a lei mais recente do compilado`.
 
 **b) PR de classificação** — `fix(catalogo): N ajuste(s) de hediondez e ação penal`
 

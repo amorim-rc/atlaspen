@@ -35,8 +35,10 @@ determinístico, sem IA, descrito em [`scripts/robos/README.md`](scripts/robos/R
    os atos normativos da Seção 1 do Diário Oficial da semana.
 2. **O que diverge vira issue.** Cada achado é uma pergunta, não uma conclusão.
 3. **O que é leitura direta vira PR**, aberto pelo próprio robô (`atlaspen-automacao[bot]`):
-   moldura ou espécie de pena de um registro que já existe divergindo do que a lei comina.
-   Um diploma por rodada, um PR aberto por vez, evidência ao lado de cada mudança.
+   moldura ou espécie de pena de um registro que já existe divergindo do que a lei comina;
+   a sentinela de uma fonte, quando o compilado já anota lei mais nova; e o modificador cujo
+   dispositivo declara fração e alcance ("na hipótese do § 10") — estes dois desde
+   28/09/2026. Um diploma por rodada, um PR aberto por vez, evidência ao lado de cada mudança.
 4. **O que exige juízo continua humano:** criar registro, remover registro, decidir se um
    dispositivo é tipo autônomo, causa de aumento ou nada disso. O merge do PR também.
 

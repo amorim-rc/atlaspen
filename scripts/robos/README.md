@@ -22,6 +22,8 @@ segura, o achado vira pergunta na issue em vez de virar dado.
 | `vigencia.py` | Vacatio legis e produção de efeitos diferida: nunca propor mudança que ainda não vigora. |
 | `revogacao.py` | Revogação total de diploma (banner no topo da página). |
 | `corrigir.py` | Correção mecânica de linha existente: moldura e espécie de pena. |
+| `propor.py` (sentinelas) | Desde 28/09/2026, troca a **sentinela** de uma fonte quando o compilado já anota lei mais nova que ela ("Incluído pela Lei nº 15.517, de 2026"): o número novo está na própria página. Só sentinela que é número de lei ordinária; a de conteúdo (nomen juris, para diploma sem emenda) fica. "Vide" não conta. |
+| `propor.py` (modificadores) | Desde 28/09/2026, propõe **modificador** para o MODIFICADOR-AUSENTE cujo texto declara o alcance — "na hipótese do § 10", "a pena prevista no § 2º-A", ou "neste artigo" em artigo de linha única no catálogo. Fração e direção vêm do texto; o alvo tem de existir no catálogo; no CP, marca `ignora_embutida` quando não há linha derivada. O que não declara alcance continua pergunta na issue. Não escreve nota. |
 | `criar.py` | Linha nova. **Não roda no automático** — ver "o que o robô não faz". |
 | `propor.py` | Escolhe o diploma da rodada, aplica e monta o corpo do PR. Quando a mudança vem de lei recente (redação dada, ou dispositivo incluído, por lei deste ano ou do anterior, lido da anotação do compilado), escreve a nota — declarando o `alcance` (`tipo`, `atributo` ou os dois) e dizendo em português a direção da mudança — e sobe o patch da versão; correção de dado não vira nota. |
 | `auditar.py` | Audita os campos que a conferência de penas não alcança: hediondez (contra `data/hediondos.json`), ação penal, causas de aumento ausentes e nomes — inclusive o nome que descreve MELHOR outro artigo do mesmo diploma, ponto cego da conferência de molduras. |
@@ -57,8 +59,12 @@ O workflow também roda sob demanda: aba **Actions** → "Conferidor semanal" �
 É registro do que a máquina fez, não proposta de mudança de dado.
 
 **Faz**, sozinho, em PR: corrigir moldura ou espécie de pena de linha que já
-existe, quando o compilado diz outra coisa. Um diploma por rodada, um PR aberto
-por vez, evidência por mudança. Se alguma mudança vem de lei recente, o PR escreve a nota
+existe, quando o compilado diz outra coisa; trocar a sentinela de uma fonte pela lei
+mais nova que a página anota; e cadastrar o modificador cujo dispositivo declara
+fração e alcance ("na hipótese do § 10") — as duas últimas desde 28/09/2026, depois
+que a rodada da Lei 15.517 mostrou que eram leitura de texto e ficavam para gente.
+Um diploma por rodada (as sentinelas vão todas juntas, de qualquer fonte), um PR
+aberto por vez, evidência por mudança. Se alguma mudança vem de lei recente, o PR escreve a nota
 (uma por lei e por direção da mudança, que é como ele as agrupa) e fecha uma versão,
 em `0.0.x` até o lançamento; se tudo é correção de dado, não escreve nota nem sobe versão,
 e o corpo do PR diz por quê.
