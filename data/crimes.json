@@ -469,7 +469,7 @@
   {
     "id": 30,
     "lei": "CP",
-    "artigo": "Art. 127, 1ª parte",
+    "artigo": "Art. 127, 1ª parte c/c art. 125",
     "crime": "Aborto qualificado — resultado lesão grave na gestante",
     "pena_min": 48,
     "pena_max": 160,
@@ -480,12 +480,12 @@
     "tentativa": "Não",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "Aumento de 1/3 sobre Arts. 125/126 se resulta lesão corporal de natureza grave na gestante"
+    "obs": "Aumento de 1/3 sobre Arts. 125/126 se resulta lesão corporal de natureza grave na gestante Base declarada por c/c em 28/09/2026, para que o verificador de pena derivada a recalcule."
   },
   {
     "id": 31,
     "lei": "CP",
-    "artigo": "Art. 127, 2ª parte",
+    "artigo": "Art. 127, 2ª parte c/c art. 125",
     "crime": "Aborto qualificado — resultado morte da gestante",
     "pena_min": 72,
     "pena_max": 240,
@@ -496,7 +496,7 @@
     "tentativa": "Não",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "Dobra a pena dos Arts. 125/126 se resulta morte da gestante (crime preterdoloso)"
+    "obs": "Dobra a pena dos Arts. 125/126 se resulta morte da gestante (crime preterdoloso) Base declarada por c/c em 28/09/2026, para que o verificador de pena derivada a recalcule."
   },
   {
     "id": 32,
@@ -1024,7 +1024,7 @@
   {
     "id": 64,
     "lei": "CP",
-    "artigo": "Art. 141, §2º",
+    "artigo": "Art. 141, §2º c/c Art. 138",
     "crime": "Calúnia cometida ou divulgada em redes sociais — pena em triplo",
     "pena_min": 18,
     "pena_max": 72,
@@ -1035,7 +1035,7 @@
     "tentativa": "Sim",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "Aumento de 1/3 contra funcionário público em razão de suas funções. Muda a ação penal: pública condicionada à representação. Ação privada pelo art. 145, caput, do CP: o §2º do art. 141 triplica a pena e não altera a ação",
+    "obs": "Aumento de 1/3 contra funcionário público em razão de suas funções. Muda a ação penal: pública condicionada à representação. Ação privada pelo art. 145, caput, do CP: o §2º do art. 141 triplica a pena e não altera a ação Base declarada por c/c em 28/09/2026, para que o verificador de pena derivada a recalcule.",
     "acao_condicao": "Mediante requisição do Ministro da Justiça se o crime é cometido contra o Presidente da República ou chefe de governo estrangeiro (CP, art. 141, I, c/c art. 145, parágrafo único); mediante representação se contra funcionário público em razão de suas funções ou contra os Presidentes do Senado Federal, da Câmara dos Deputados ou do Supremo Tribunal Federal (art. 141, II, c/c art. 145, parágrafo único), com legitimidade concorrente do ofendido mediante queixa (STF, Súmula 714)."
   },
   {
@@ -10857,7 +10857,7 @@
     "lei": "Lei 12.850/13",
     "artigo": "Art. 2º, §2º",
     "crime": "Organização criminosa armada (com emprego de arma de fogo) — aumento de 1/2 a 2/3",
-    "pena_min": 42,
+    "pena_min": 36,
     "pena_max": 144,
     "tipo_pena": "Reclusão",
     "acao": "Pública Incondicionada",
@@ -10866,7 +10866,7 @@
     "tentativa": "Não",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "3-8 anos reclusão + multa. Aumento de 1/2 a 2/3",
+    "obs": "3 a 12 anos de reclusão + multa: caput (3 a 8 anos) aumentado ATÉ a metade — 'as penas aumentam-se até a metade se na atuação da organização criminosa houver emprego de arma de fogo' (§ 2º). Publicava 42 meses no mínimo, que é a fração de 1/6 do § 4º, de outra hipótese. Corrigido em 28/09/2026 pelo verificador de pena derivada (scripts/robos/vigia/derivadas.py), conferido no compilado.",
     "hediondo_condicao": "Hediondo somente quando a organização criminosa é direcionada à prática de crime hediondo ou equiparado. Fundamento: Lei 8.072, art. 1º, parágrafo único, V."
   },
   {
@@ -11213,8 +11213,8 @@
     "lei": "CPM (DL 1.001/69)",
     "artigo": "Art. 205, §1º",
     "crime": "Homicídio militar privilegiado (relevante valor social ou moral, ou violenta emoção após injusta provocação)",
-    "pena_min": 72,
-    "pena_max": 240,
+    "pena_min": 48,
+    "pena_max": 200,
     "tipo_pena": "Reclusão",
     "acao": "Pública Incondicionada",
     "hediondo": "Não",
@@ -11222,7 +11222,7 @@
     "tentativa": "Sim",
     "violencia": "Sim",
     "grave_ameaca": "Não",
-    "obs": "Minoração facultativa do art. 205, §1º: a pena do homicídio (6-20 anos) é reduzida de 1/6 a 1/3"
+    "obs": "4 a 16 anos e 8 meses de reclusão: homicídio militar (6 a 20 anos) reduzido de 1/6 a 1/3 — 'o juiz pode reduzir a pena, de um sexto a um terço' (§ 1º). Publicava a pena do caput sem a redução. Espelho do CP, art. 121, § 1º (id 2). Corrigido em 28/09/2026 pelo verificador de pena derivada (scripts/robos/vigia/derivadas.py), conferido no compilado."
   },
   {
     "id": 694,
@@ -11726,8 +11726,8 @@
     "lei": "CP",
     "artigo": "Art. 317, §1º",
     "crime": "Corrupção passiva — aumento pelo retardo, omissão ou prática de ato com infração de dever funcional",
-    "pena_min": 24,
-    "pena_max": 144,
+    "pena_min": 32,
+    "pena_max": 192,
     "tipo_pena": "Reclusão",
     "acao": "Pública Incondicionada",
     "hediondo": "Não",
@@ -11735,7 +11735,7 @@
     "tentativa": "Sim",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "2-12 anos reclusão + multa. Aumento de 1/3. Forma qualificada da corrupção passiva"
+    "obs": "2 anos e 8 meses a 16 anos de reclusão + multa: caput (2 a 12 anos) aumentado de 1/3 — 'a pena é aumentada de um terço, se, em consequência da vantagem ou promessa, o funcionário retarda ou deixa de praticar qualquer ato de ofício ou o pratica infringindo dever funcional' (§ 1º). Publicava a pena do caput sem o aumento. Corrigido em 28/09/2026 pelo verificador de pena derivada (scripts/robos/vigia/derivadas.py), conferido no compilado."
   },
   {
     "id": 726,
@@ -11790,8 +11790,8 @@
     "lei": "CP",
     "artigo": "Art. 299, §único",
     "crime": "Falsidade ideológica — agente funcionário público prevalecendo-se do cargo, ou falsificação de registro civil",
-    "pena_min": 12,
-    "pena_max": 60,
+    "pena_min": 14,
+    "pena_max": 70,
     "tipo_pena": "Reclusão",
     "acao": "Pública Incondicionada",
     "hediondo": "Não",
@@ -11799,7 +11799,7 @@
     "tentativa": "Sim",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "1-5 anos reclusão + multa. Aumento de 1/6 quando doc público ou agente é funcionário"
+    "obs": "1 ano e 2 meses a 5 anos e 10 meses de reclusão + multa: documento público (1 a 5 anos) aumentado da sexta parte — 'se o agente é funcionário público, e comete o crime prevalecendo-se do cargo, ou se a falsificação ou alteração é de assentamento de registro civil, aumenta-se a pena de sexta parte' (parágrafo único). Publicava a pena do caput sem o aumento; a linha do documento particular (id 1487) já estava certa. Corrigido em 28/09/2026 pelo verificador de pena derivada (scripts/robos/vigia/derivadas.py), conferido no compilado."
   },
   {
     "id": 730,
@@ -12820,7 +12820,7 @@
   {
     "id": 793,
     "lei": "Lei 13.260/16",
-    "artigo": "Art. 5º",
+    "artigo": "Art. 5º c/c art. 2º",
     "crime": "Atos preparatórios de terrorismo",
     "pena_min": 72,
     "pena_max": 270,
@@ -12831,7 +12831,7 @@
     "tentativa": "Sim",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "5-8 anos reclusão. HEDIONDO (equiparado)"
+    "obs": "5-8 anos reclusão. HEDIONDO (equiparado) Base declarada por c/c em 28/09/2026, para que o verificador de pena derivada a recalcule."
   },
   {
     "id": 794,
@@ -23604,7 +23604,7 @@
   {
     "id": 1461,
     "lei": "Lei 13.260/16",
-    "artigo": "Art. 5º, §2º",
+    "artigo": "Art. 5º, §2º c/c art. 2º",
     "crime": "Atos preparatórios de terrorismo sem viagem ou treinamento no exterior",
     "pena_min": 48,
     "pena_max": 180,
@@ -23615,7 +23615,7 @@
     "tentativa": "Não",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "Registro criado em 06/08/2026 pela regra do registro por moldura (grupo A das decisões abertas)."
+    "obs": "Registro criado em 06/08/2026 pela regra do registro por moldura (grupo A das decisões abertas). Base declarada por c/c em 28/09/2026, para que o verificador de pena derivada a recalcule."
   },
   {
     "id": 1462,
