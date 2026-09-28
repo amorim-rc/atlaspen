@@ -62,6 +62,7 @@ from nucleo.tempo import hoje  # noqa: E402
 from transform_data import _faixa_de_meses, proximo_id  # noqa: E402
 
 FONTES = RAIZ / "data" / "fontes.json"
+MODIFICADORES = RAIZ / "data" / "modificadores.json"
 CATALOGO_FONTE = RAIZ / "data" / "crimes.json"
 PACKAGE = RAIZ / "package.json"
 LOCK = RAIZ / "package-lock.json"
@@ -146,20 +147,240 @@ def escolher(com_novas: bool, apenas: str | None = None) -> dict | None:
     catalogo = json.loads(CATALOGO_FONTE.read_text(encoding="utf-8"))
     # Conta os ids aposentados: um endereço público nunca é reaproveitado.
     proximo = proximo_id(catalogo)
+    fontes = [f for f in carregar_fontes() if not apenas or f["id"] == apenas]
+    com_snapshot = [f for f in fontes if (SNAPSHOTS / f["id"]).exists()]
+    achados_mod = achados_de_modificadores() if com_snapshot else []
+    dia = hoje().isoformat()
 
     melhor = None
-    for f in carregar_fontes():
-        if apenas and f["id"] != apenas:
-            continue
-        if not (SNAPSHOTS / f["id"]).exists():
-            continue  # sem snapshot não há o que conferir (nem o que propor)
+    for f in com_snapshot:
         correcoes, novas, humanos = propostas_da_fonte(f["id"], proximo, com_novas)
-        if not correcoes and not novas:
+        modificadores = modificadores_propostos(f, catalogo, achados_mod, dia)
+        total = len(correcoes) + len(novas) + len(modificadores)
+        if not total:
             continue
-        if melhor is None or len(correcoes) + len(novas) > melhor["total"]:
+        if melhor is None or total > melhor["total"]:
             melhor = {"fonte": f, "correcoes": correcoes, "novas": novas,
-                      "humanos": humanos, "total": len(correcoes) + len(novas)}
+                      "humanos": humanos, "modificadores": modificadores, "total": total}
+    # Sentinela é prova de frescor, não dado do catálogo: vai em qualquer PR da
+    # rodada, de todas as fontes de uma vez. Sozinha, também justifica um PR.
+    sentinelas = sentinelas_propostas(com_snapshot)
+    if melhor is None and sentinelas:
+        f = next(x for x in com_snapshot if x["id"] == sentinelas[0]["fonte"])
+        melhor = {"fonte": f, "correcoes": [], "novas": [], "humanos": [],
+                  "modificadores": [], "total": 0}
+    if melhor is not None:
+        melhor["sentinelas"] = sentinelas
     return melhor
+
+
+# ── Sentinelas e modificadores de escopo declarado ──────────────────────────
+# Duas leituras diretas que ficavam para gente sem precisar (decisão de
+# 28/09/2026, depois da rodada da Lei 15.517):
+#
+# - A SENTINELA de uma fonte é o número da lei mais recente que o compilado
+#   anota ("Incluído pela Lei nº 15.517, de 2026"). Quando a página passa a
+#   anotar lei mais nova que a sentinela, a prova de frescor envelheceu — e o
+#   número novo está escrito na própria página. Só se troca sentinela que já É
+#   número de lei ordinária (com ponto de milhar); sentinela de CONTEÚDO — o
+#   nomen juris de um tipo, para diploma que ainda não tem emenda — fica.
+#   "Vide Lei nº …" não conta: remissão não prova que a página foi atualizada.
+# - Um MODIFICADOR só é proposto quando o próprio dispositivo diz sobre o que
+#   incide: "na hipótese do § 10", "a pena prevista no § 2º-A", ou "as penas
+#   cominadas neste artigo" num artigo que tem uma linha só no catálogo. Fração
+#   e direção vêm do texto. O que não declara alcance continua pergunta na
+#   issue — definir escopo é juízo, e o auditor que só lista continua certo.
+from auditor import auditar as auditoria  # noqa: E402
+
+_SENTINELA_NUMERICA = re.compile(r"^\d{1,3}\.\d{3}$")
+_LEI_ORDINARIA = re.compile(r"^Lei\s+n[ºo°]\s*([\d.]+)$", re.I)
+_PELA_LEI = re.compile(r"\bpel[ao]\s+Lei\b", re.I)
+
+
+def _numero(texto: str) -> int:
+    return int(re.sub(r"\D", "", texto))
+
+
+def _anotacoes(d) -> list:
+    """A anotação do dispositivo e as dos incisos (o compilado anota inciso a inciso)."""
+    saida = [getattr(d, "anotacao", None)]
+    for inc in getattr(d, "incisos", None) or []:
+        saida.append(inc.get("anotacao") if isinstance(inc, dict) else getattr(inc, "anotacao", None))
+    return [a for a in saida if a]
+
+
+def _norma_de(a) -> tuple[str | None, str, int | None]:
+    if isinstance(a, dict):
+        return a.get("norma"), a.get("texto") or "", a.get("ano")
+    return getattr(a, "norma", None), getattr(a, "texto", "") or "", getattr(a, "ano", None)
+
+
+def sentinelas_propostas(fontes: list[dict], dispositivos=None) -> list[dict]:
+    """Fontes cuja página já anota lei mais nova que a sentinela."""
+    dispositivos = dispositivos or auditoria.dispositivos_de
+    propostas = []
+    for f in fontes:
+        atual = f.get("sentinela") or ""
+        if not _SENTINELA_NUMERICA.match(atual):
+            continue
+        melhor = None
+        for d in dispositivos(f["id"]).values():
+            if getattr(d, "citacao", False):
+                continue                  # texto transcrito de OUTRA lei
+            for a in _anotacoes(d):
+                norma, texto, ano = _norma_de(a)
+                if not norma or not _PELA_LEI.search(texto):
+                    continue
+                m = _LEI_ORDINARIA.match(norma.strip())
+                if not m:
+                    continue              # lei complementar, decreto-lei, MP
+                n = _numero(m.group(1))
+                if n < 1000:
+                    continue
+                if melhor is None or n > melhor[0]:
+                    melhor = (n, texto.strip(), ano)
+        if melhor and melhor[0] > _numero(atual):
+            n, texto, ano = melhor
+            propostas.append({"fonte": f["id"], "rotulo": _rotulo(f), "de": atual,
+                              "para": f"{n // 1000}.{n % 1000:03d}", "evidencia": texto,
+                              "ano": ano})
+    return propostas
+
+
+def aplicar_sentinelas(propostas: list[dict], caminho: Path = FONTES) -> None:
+    """Troca só o valor, na entrada certa, sem reescrever o arquivo."""
+    texto = caminho.read_bytes().decode("utf-8")
+    for p in propostas:
+        padrao = re.compile(
+            r'("id":\s*"%s"(?:(?!"id":).)*?"sentinela":\s*")%s(")'
+            % (re.escape(p["fonte"]), re.escape(p["de"])), re.S)
+        texto, n = padrao.subn(lambda m: m.group(1) + p["para"] + m.group(2), texto, count=1)
+        if n != 1:
+            raise SystemExit(f"sentinela de {p['fonte']} ({p['de']!r}) não encontrada em {caminho.name}")
+    caminho.write_bytes(texto.encode("utf-8"))
+
+
+from nucleo.fracao import fracao_humana as _fracao_humana, fracoes_do_texto  # noqa: E402
+
+
+_ESCOPO_PARAGRAFO = re.compile(
+    r"(?:na\s+hip[óo]tese|no\s+caso|nos\s+casos|penas?\s+(?:previstas?|cominadas?))\s+"
+    r"(?:do|no|dos|nos)\s+§\s*(\d+\s*[ºo°]?(?:-[A-Z])?)(?!\s*(?:e|,|ou)\s*§)", re.I)
+_ESCOPO_ARTIGO = re.compile(r"\bneste\s+artigo\b", re.I)
+
+
+def _marcador_canonico(marcador: str) -> str:
+    """"§ 11º" → "§11"; "§ 2º" → "§2º"; "§ 2º-A" → "§2º-A"; "parágrafo único" fica."""
+    if "único" in marcador or "unico" in marcador:
+        return "parágrafo único"
+    m = re.match(r"§\s*(\d+)\s*[ºo°]?(-[A-Z])?", marcador)
+    if not m:
+        return marcador
+    num, sufixo = int(m.group(1)), m.group(2) or ""
+    return f"§{num}{'º' if num < 10 else ''}{sufixo}"
+
+
+def _slug(texto: str) -> str:
+    t = texto.lower()
+    t = (t.replace("§", "p").replace("ú", "u").replace("á", "a").replace("ã", "a")
+          .replace("é", "e").replace("ç", "c").replace("º", "").replace("°", ""))
+    return re.sub(r"[^a-z0-9]+", "", t)
+
+
+def _sem_ordinal(texto: str) -> str:
+    """"Art. 155, §12, VI c/c §10" e "Art. 155, § 12º" comparam sem espaço nem ordinal."""
+    return re.sub(r"[\sº°]", "", texto).lower()
+
+
+def achados_de_modificadores() -> list[dict]:
+    """Os MODIFICADOR-AUSENTE da rodada, já sem os julgados em excecoes-auditoria.json."""
+    fontes = carregar_fontes()
+    indice = {r: f["id"] for f in fontes for r in f["rotulos"]}
+    excecoes = auditoria.carregar_excecoes()
+    return [a for a in auditoria.auditar_modificadores(indice)
+            if not auditoria.dispensado(excecoes, a)]
+
+
+def modificadores_propostos(fonte: dict, catalogo: list[dict], achados: list[dict],
+                            dia: str, dispositivos=None) -> list[dict]:
+    """Modificador para o achado cujo texto declara fração, direção e alcance."""
+    dispositivos = dispositivos or auditoria.dispositivos_de
+    rotulos, lei = set(fonte["rotulos"]), _rotulo(fonte)
+    diploma = re.split(r"\s*\(", lei, maxsplit=1)[0].strip()
+    registros = [c for c in catalogo if c["lei"] in rotulos]
+    disp = None
+    propostas = []
+    for a in achados:
+        if a.get("fonte") != fonte["id"] or a.get("tipo") != "MODIFICADOR-AUSENTE":
+            continue
+        if disp is None:
+            disp = dispositivos(fonte["id"])
+        d = disp.get(a["dispositivo"])
+        if d is None:
+            continue
+        texto = re.sub(r"\s+", " ", d.texto or "").strip()
+        fracao = fracoes_do_texto(texto)
+        if not fracao:
+            continue
+        sobe = bool(re.search(r"aument|dobro|triplo", texto, re.I))
+        desce = bool(re.search(r"reduz|diminu", texto, re.I))
+        if sobe == desce:
+            continue                      # nem uma coisa nem outra, ou as duas
+        art = f"Art. {d.artigo}" + (f"-{d.sufixo}" if d.sufixo else "")
+        m = _ESCOPO_PARAGRAFO.search(texto)
+        if m:
+            par = re.sub(r"\s+", "", m.group(1)).replace("o", "º").replace("°", "º")
+            alvo, lido = f"{art}, {_marcador_canonico('§ ' + par)}", m.group(0)
+        elif _ESCOPO_ARTIGO.search(texto):
+            proprios = [c for c in registros
+                        if re.match(re.escape(art) + r"(?=$|,| )", c["artigo"])]
+            if len(proprios) != 1:
+                continue                  # mais de uma moldura: qual delas? juízo
+            alvo, lido = proprios[0]["artigo"], "neste artigo"
+        else:
+            continue
+        if not any(c["artigo"].startswith(alvo) for c in registros):
+            continue                      # o alvo não existe no catálogo
+        natureza = "aumento" if sobe else "diminuicao"
+        caput = disp.get(f"{art}|caput")
+        epigrafe = (getattr(caput, "epigrafe", None) or art).strip()
+        marcador = _marcador_canonico(d.marcador)
+        chave_propria = _sem_ordinal(f"{art}, {marcador}")
+        embutida = any(_sem_ordinal(c["artigo"]).startswith(chave_propria) for c in registros)
+        fmin, fmax = fracao
+        obs = (f"{texto.rstrip('.:;')}. Proposto pelo conferidor em {dia}: fração e alcance "
+               f"lidos do próprio dispositivo (\"{lido}\"); o texto compilado é a evidência. "
+               "Confira o alcance antes de aprovar.")
+        if d.anotacao and getattr(d.anotacao, "texto", None):
+            obs += f" {d.anotacao.texto.strip()}"
+        mod = {
+            "id": f"{natureza}-{fonte['id']}-{_slug(art)}-{_slug(marcador)}",
+            "nome": f"{epigrafe} — {marcador} ({'+' if sobe else '−'}{_fracao_humana(fmin, fmax)})",
+            "dispositivo": f"{diploma}, {art[0].lower() + art[1:]}, {marcador}",
+            "natureza": natureza, "fase": 3, "sobre": "pena_provisoria",
+            "fracao_min": fmin, "fracao_max": fmax, "piso_minimo": False,
+            "escopo": {"tipo": "tipos_por_artigo", "lei": lei, "artigos": [alvo]},
+            "obs": obs,
+        }
+        # No CP o front suprime o aumento cominado no mesmo artigo do tipo, porque
+        # as majorantes do CP viraram linhas com moldura calculada. Onde NÃO há
+        # linha derivada, o aumento ficaria invisível — daí a declaração.
+        if fonte["id"] == "cp" and not embutida:
+            mod["ignora_embutida"] = True
+        propostas.append({"modificador": mod, "achado": a, "lido": lido,
+                          "embutida": embutida, "texto": texto})
+    return propostas
+
+
+def aplicar_modificadores(propostas: list[dict], caminho: Path = MODIFICADORES) -> None:
+    dados = json.loads(caminho.read_text(encoding="utf-8"))
+    ids = {m["id"] for m in dados["modificadores"]}
+    for p in propostas:
+        if p["modificador"]["id"] not in ids:
+            dados["modificadores"].append(p["modificador"])
+            ids.add(p["modificador"]["id"])
+    caminho.write_text(json.dumps(dados, ensure_ascii=False, indent=2) + "\n",
+                       encoding="utf-8", newline="\n")
 
 
 # ── Auditoria: propostas que dependem de juízo ──────────────────────────────
@@ -274,7 +495,8 @@ def corpo_auditoria(propostas: list[dict], versao: str | None, relatorio: str,
 
 # ── Textos ──────────────────────────────────────────────────────────────────
 def _rotulo(fonte: dict) -> str:
-    return fonte["rotulos"][0]
+    """Fonte de REFERÊNCIA (o CPP, sem tipo próprio) não tem rótulo: vale o id."""
+    return fonte["rotulos"][0] if fonte.get("rotulos") else fonte["id"]
 
 
 def corpo_pr(escolha: dict, versao: str | None, legais: list[dict] | None = None,
@@ -287,6 +509,8 @@ def corpo_pr(escolha: dict, versao: str | None, legais: list[dict] | None = None
         f"Rodada automática do conferidor. Texto oficial conferido: <{f['url']}>", "",
         f"- **{len(correcoes)}** correção(ões) de moldura ou espécie de pena em linha existente;",
         f"- **{len(novas)}** linha(s) nova(s) proposta(s);",
+        f"- **{len(escolha.get('modificadores') or [])}** modificador(es) de escopo declarado;",
+        f"- **{len(escolha.get('sentinelas') or [])}** sentinela(s) apontando para lei mais recente;",
         (f"- fecha a versão **v{versao}**, com {_plural(len(legais or []), 'nota', 'notas')} "
          "de atualização." if versao
          else "- não escreve nota nem sobe versão: nenhuma mudança vem de lei recente."), "",
@@ -352,6 +576,46 @@ def corpo_pr(escolha: dict, versao: str | None, legais: list[dict] | None = None
         for a in humanos[:25]:
             L += [f"- `{a.get('chave', '?')}` — **{a['tipo']}**: {a['detalhe'][:110]}"]
         L += [""]
+
+    modificadores = escolha.get("modificadores") or []
+    if modificadores:
+        L += [
+            "## Modificadores de escopo declarado", "",
+            "Propostos só quando o próprio dispositivo diz sobre o que incide (\"na "
+            "hipótese do § 10\", \"a pena prevista no § 2º-A\", \"neste artigo\" em "
+            "artigo de linha única). Fração e direção vêm do texto. **Não geram nota**: a "
+            "nota da lei sai com as linhas; se a causa vier de lei recente e não houver "
+            "linha, a entrada se escreve à mão. Confira o alcance: é a única leitura que "
+            "a máquina faz por analogia de redação.", "",
+        ]
+        for p in modificadores:
+            m = p["modificador"]
+            L += [
+                f"### `{m['dispositivo']}` — `{m['id']}` (novo)",
+                f"*{m['nome']}*", "",
+                f"- **Na lei:** {p['texto'][:300]}",
+                f"- **Fração:** {_fracao_humana(m['fracao_min'], m['fracao_max'])} "
+                f"({m['natureza']}) · **Alcance lido:** \"{p['lido']}\" → "
+                f"`{'`, `'.join(m['escopo']['artigos'])}`",
+                ("- **Linha derivada no catálogo:** sim — o front não oferece o aumento de novo"
+                 if p["embutida"] else
+                 "- **Linha derivada no catálogo:** não"
+                 + (" — `ignora_embutida` para que o front o ofereça" if m.get("ignora_embutida") else "")),
+                "",
+            ]
+
+    sentinelas = escolha.get("sentinelas") or []
+    if sentinelas:
+        L += [
+            "## Sentinelas", "",
+            "A sentinela é a string que prova que a página compilada está fresca. O "
+            "compilado destas fontes já anota lei mais nova que a sentinela atual; o "
+            "número novo é o da própria anotação.", "",
+        ]
+        for s in sentinelas:
+            L.append(f"- `{s['fonte']}` ({s['rotulo']}): {s['de']} → **{s['para']}** — "
+                     f"\"{s['evidencia']}\"")
+        L.append("")
 
     L += [
         "---", "",
@@ -570,6 +834,10 @@ def aplicar(escolha: dict, versao: str | None, dia: str, saida: Path) -> dict:
         corrigir.aplicar(escolha["correcoes"])
     if escolha["novas"]:
         criar.aplicar(escolha["novas"])
+    if escolha.get("modificadores"):
+        aplicar_modificadores(escolha["modificadores"])
+    if escolha.get("sentinelas"):
+        aplicar_sentinelas(escolha["sentinelas"])
 
     legais, fora = mudancas_da_lei(escolha, int(dia[:4]))
     destinos: list[Path] = []
@@ -588,12 +856,16 @@ def aplicar(escolha: dict, versao: str | None, dia: str, saida: Path) -> dict:
         "rotulo": _rotulo(fonte),
         "correcoes": len(escolha["correcoes"]),
         "novas": len(escolha["novas"]),
+        "modificadores": len(escolha.get("modificadores") or []),
+        "sentinelas": len(escolha.get("sentinelas") or []),
         "humanos": len(escolha["humanos"]),
         # O workflow lê as chaves; vazias, e não ausentes, quando não há nota.
         "versao": fechada or "",
         "ramo": f"conferidor/{fonte['id']}-{dia}",
         "titulo": (f"fix(catalogo): {escolha['total']} ajuste(s) em "
-                   f"{_rotulo(fonte)} conferidos com o texto compilado"),
+                   f"{_rotulo(fonte)} conferidos com o texto compilado" if escolha["total"]
+                   else f"chore(fontes): {len(escolha.get('sentinelas') or [])} sentinela(s) "
+                        "apontam para a lei mais recente do compilado"),
         "entrada": _relativo(destinos[0]) if destinos else "",
         "entradas": [_relativo(d) for d in destinos],
     }
@@ -678,6 +950,8 @@ def main() -> int:
     f = escolha["fonte"]
     print(f"{f['id']}: {len(escolha['correcoes'])} correção(ões), "
           f"{len(escolha['novas'])} linha(s) nova(s), "
+          f"{len(escolha.get('modificadores') or [])} modificador(es), "
+          f"{len(escolha.get('sentinelas') or [])} sentinela(s), "
           f"{len(escolha['humanos'])} para decisão humana")
     for x in escolha["correcoes"]:
         a, d = x["antes"], x["depois"]
@@ -687,6 +961,12 @@ def main() -> int:
         linha = x["linha"]
         print(f"  cria    id {linha['id']:5d} {linha['artigo']:24s} "
               f"{linha['pena_min']}–{linha['pena_max']} {linha['tipo_pena']}")
+    for x in escolha.get("modificadores") or []:
+        m = x["modificador"]
+        print(f"  modif.  {m['dispositivo']:30s} {m['natureza']:10s} "
+              f"{_fracao_humana(m['fracao_min'], m['fracao_max']):10s} → {m['escopo']['artigos']}")
+    for s in escolha.get("sentinelas") or []:
+        print(f"  sentin. {s['fonte']:20s} {s['de']} → {s['para']}")
 
     versao = versao_da_rodada()
     if not args.aplicar:

@@ -2,8 +2,8 @@
 id: completude
 title: Completude do catálogo
 sidebar_position: 2
-gerado_em: '2026-09-25'
-commit: '139122081982'
+gerado_em: '2026-09-28'
+commit: 'ffd62a9b9642'
 ---
 
 {/* GERADO AUTOMATICAMENTE por scripts/gerar_completude.py — não edite à mão. */}
@@ -13,13 +13,13 @@ commit: '139122081982'
 :::note[Página gerada]
 Este acompanhamento é derivado de `data/diplomas.json` (o denominador da
 conferência do catálogo) e de
-`data/crimes.json` (o catálogo), gerado em 2026-09-25 a partir do commit `139122081982`. Para atualizá-lo:
+`data/crimes.json` (o catálogo), gerado em 2026-09-28 a partir do commit `ffd62a9b9642`. Para atualizá-lo:
 `python scripts/gerar_completude.py`.
 :::
 
 | Indicador | Valor |
 |---|---|
-| Tipos penais catalogados | **1530** |
+| Tipos penais catalogados | **1531** |
 | Diplomas com tipo penal vigente | 61 |
 | Diplomas revogados/não recepcionados | [11](/acervo) |
 
@@ -33,7 +33,7 @@ Todos os 61 diplomas com tipo penal vigente estão concluídos: a conferência d
 
 | Diploma | Tipos coletados | Situação |
 |---|---:|---|
-| Código Penal — Parte Especial | 535 | concluído ❓ |
+| Código Penal — Parte Especial | 536 | concluído ❓ |
 | Código Penal Militar — Parte Especial | 404 | concluído ❓ |
 | Código Eleitoral | 65 | concluído ❓ |
 | Crimes contra o meio ambiente | 60 | concluído ❓ |

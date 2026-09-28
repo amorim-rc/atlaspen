@@ -28,7 +28,7 @@ em paralelo: só o auditor espera, porque lê as páginas que o vigia baixou. Os
 | **auditor** | Hediondez, ação penal, causas de aumento e nome do tipo | Não |
 | **arquivista** | Saúde da prosa: documento vencido ou cuja dependência mudou | Não |
 | **triagem** | Junta os relatórios e abre a issue | — |
-| **proponente** | Transforma em PR o que é leitura direta, e escreve a nota quando a lei é recente | Não: só roda se houver o que propor |
+| **proponente** | Transforma em PR o que é leitura direta — moldura, sentinela defasada e modificador de escopo declarado —, e escreve a nota quando a lei é recente | Não: só roda se houver o que propor |
 
 Na **primeira semana de cada mês**, a sentinela roda também a conferência contra a
 lista de leis sancionadas do ano. É a defesa contra o falso negativo: ela não diz se
@@ -76,7 +76,7 @@ Os blocos, na ordem em que aparecem — o que pede ação primeiro:
 
 | Bloco | O que é | O que costuma exigir |
 |---|---|---|
-| **Achados de pena** | Moldura ou espécie de pena divergindo do compilado; dispositivo revogado; dispositivo com pena própria ausente do catálogo | Ler o artigo no Planalto. O que for mecânico já veio em PR (item 3); o resto é decisão de modelagem |
+| **Achados de pena** | Moldura ou espécie de pena divergindo do compilado; dispositivo revogado; dispositivo com pena própria ausente do catálogo; linha de pena derivada cuja conta (base × fração da lei) não fecha — `DIVERGENTE-derivada`, desde 28/09/2026 | Ler o artigo no Planalto. O que for mecânico já veio em PR (item 3); o resto é decisão de modelagem |
 | **A lei escreveu a pena e o parser não leu** | Os `ilegivel`: registros em que há moldura no compilado e o `pena_parser` não a extraiu | Ação NOSSA, e o único balde do "sem moldura" que pede alguma. Abrir o dispositivo e ver o que o parser não leu; o número tende a zero. Tem seção própria, no alto, desde 24/09/2026 — antes dividia a tela com 152 registros que estavam certos |
 | **Cobertura** | Quantos registros foram conferidos e, por motivo, quantos não têm moldura própria na lei | Nada, em regra: são limites DECLARADOS, a lei não deixou moldura ali. No corpo da issue vêm como contagem; id por id fica no artifact. Se "não localizado" subir, é sinal de rótulo errado no catálogo ou de mudança na página |
 | **Auditoria de classificação** | Hediondez, ação penal, causas de aumento ausentes e nomes — inclusive o nome que descreve MELHOR outro artigo do mesmo diploma | Juízo jurídico. Hediondez e ação penal já vêm propostas em PR; aumentos e nomes ficam só aqui. `NOME-DE-OUTRO-ARTIGO` pede reconferência da PENA junto com o nome: quando os dois artigos cominam a mesma moldura, a troca é invisível para a conferência |
@@ -102,6 +102,15 @@ Dois tipos, nesta ordem de prioridade:
 Moldura ou espécie de pena de registro que já existe, divergindo do texto compilado. Um
 diploma por PR. Cada mudança traz o trecho da lei ao lado. **É leitura de texto, não
 juízo**: a revisão aqui é conferir se o trecho citado sustenta o número.
+
+Desde 28/09/2026 o mesmo PR pode trazer duas coisas mais, com a mesma régua. **Sentinelas**:
+a fonte cuja página já anota lei mais nova que a sentinela ganha o número novo — confira
+que a anotação citada existe na página. **Modificador de escopo declarado**: o dispositivo
+que diz "na hipótese do § 10" ou "a pena prevista no § 2º-A" vira modificador com a fração
+lida do texto — confira o alcance, que é a única leitura por analogia de redação que a
+máquina faz. Sem nota: a nota da lei sai com as linhas. O que não declara alcance continua
+na issue, como pergunta. Se a rodada só tiver sentinelas, o PR sai como
+`chore(fontes): N sentinela(s) apontam para a lei mais recente do compilado`.
 
 **b) PR de classificação** — `fix(catalogo): N ajuste(s) de hediondez e ação penal`
 
@@ -131,9 +140,7 @@ Registrado aqui para não se perder entre uma semana e outra. Ao resolver, tire 
 
 | Pendência | Onde | Por que depende de você |
 |---|---|---|
-| Hediondez dos crimes do **CPM** | `data/hediondos.json`, campo `fora_de_alcance` | O inciso VI do § único da Lei 8.072 declara hediondos os crimes militares "que apresentem identidade" com os do rol. Identidade é juízo de correspondência entre tipos; a tabela não resolve, e o catálogo hoje marca 7 tipos militares como hediondos |
-| **Domínio social estruturado** (Lei 15.358/2026) | `data/hediondos.json`, campo `pendentes` | O inciso VIII remete ao "marco legal do combate ao crime organizado". Falta identificar o diploma, ver se o catálogo o registra e acrescentá-lo a `data/fontes.json` |
-| **109 causas de aumento** presentes na lei e ausentes de `modificadores.json` | `auditar.py`, em `crawler/relatorios/` | Modelar exige decidir o escopo — sobre quais tipos o aumento incide —, e isso não se lê do dispositivo isolado |
+| **Causas de aumento e diminuição** que a lei tem e `modificadores.json` não — 12 já julgadas em `excecoes-auditoria.json`, e 30 novas que a regex ampliada do auditor passou a enxergar em 28/09/2026 ("a pena aumenta-se de", "as penas aumentam-se de", "reduzir a pena de", "as penas poderão ser reduzidas de") | `auditar.py`, seção MODIFICADOR-AUSENTE da issue semanal | Modelar exige decidir o escopo — sobre quais tipos o aumento incide —, e isso não se lê do dispositivo isolado. As duas linhas que estavam acima saíram em 28/09/2026: a hediondez do CPM foi resolvida pela varredura da decisão 29 (o CPM passou a ser auditado inteiro), e o marco legal é a Lei 15.358/2026, em `data/fontes.json` desde setembro |
 | **13 nomes suspeitos** | `auditar.py`, em `crawler/relatorios/` | A heurística compara palavras; a decisão de renomear é de conteúdo. Pelo menos seis parecem erro real (o art. 338 do CP está com o nome da sonegação previdenciária, que é o art. 337-A) |
 | Auditoria de **`tentativa`** | ainda não existe | Não há fonte textual que a declare: é qualificação doutrinária do tipo, derivada do `elemento`. Precisaria de tabela curada, como a da hediondez. `violencia`, `grave_ameaca` e `acao` deixaram de estar nesta linha em 23/09/2026, quando ganharam derivadores próprios (`conferir_violencia.py` e `conferir_acao_penal.py`), que leem o texto do dispositivo e separam o que confere, o que diverge e o que pede juízo |
 

@@ -19,9 +19,12 @@ segura, o achado vira pergunta na issue em vez de virar dado.
 | `parsear.py` | HTML → dispositivos (caput, §§, pena, situação, anotação). Fatia o HTML cru: a árvore do Word malformado desloca as fronteiras de parágrafo. |
 | `../pena_parser.py` | Lê a moldura. **Compartilhado com `transform_data.py`**, para que catálogo e conferidor leiam a mesma pena do mesmo jeito. |
 | `conferir.py` | O differ. Classifica cada achado e escreve DOIS relatórios: `crawler/relatorios/AAAA-MM-DD.md`, completo, id por id, que vai no artifact; e `-resumo.md`, que vai no corpo da issue — lá os limites declarados de cobertura saem como contagem, porque o corpo tem teto de 65.536 caracteres e o despejo empurrava para fora justamente o que pede ação. Ambos abrem dizendo contra que branch e commit a rodada correu. Sai com 3 quando há achados. |
+| `derivadas.py` | Desde 28/09/2026, recalcula as linhas de **pena derivada** (aumento, diminuição, dobro, metade de outra moldura): a base é o registro que o `c/c` declara, ou o caput do mesmo artigo — e, se a base não é registro, a moldura que a lei escreve nela, seguindo "na mesma pena" de um salto; a fração é a do texto da lei (`nucleo/fracao.py`, compartilhado com o Proponente). Confere → conta como conferido; diverge → achado `DIVERGENTE-derivada`, com a moldura esperada, que o Proponente corrige como qualquer outra; o que a regra não decide sai como *pede juízo*, com o motivo, e fica no balde `pena_derivada`. Não escreve no catálogo. |
 | `vigencia.py` | Vacatio legis e produção de efeitos diferida: nunca propor mudança que ainda não vigora. |
 | `revogacao.py` | Revogação total de diploma (banner no topo da página). |
 | `corrigir.py` | Correção mecânica de linha existente: moldura e espécie de pena. |
+| `propor.py` (sentinelas) | Desde 28/09/2026, troca a **sentinela** de uma fonte quando o compilado já anota lei mais nova que ela ("Incluído pela Lei nº 15.517, de 2026"): o número novo está na própria página. Só sentinela que é número de lei ordinária; a de conteúdo (nomen juris, para diploma sem emenda) fica. "Vide" não conta. |
+| `propor.py` (modificadores) | Desde 28/09/2026, propõe **modificador** para o MODIFICADOR-AUSENTE cujo texto declara o alcance — "na hipótese do § 10", "a pena prevista no § 2º-A", ou "neste artigo" em artigo de linha única no catálogo. Fração e direção vêm do texto; o alvo tem de existir no catálogo; no CP, marca `ignora_embutida` quando não há linha derivada. O que não declara alcance continua pergunta na issue. Não escreve nota. |
 | `criar.py` | Linha nova. **Não roda no automático** — ver "o que o robô não faz". |
 | `propor.py` | Escolhe o diploma da rodada, aplica e monta o corpo do PR. Quando a mudança vem de lei recente (redação dada, ou dispositivo incluído, por lei deste ano ou do anterior, lido da anotação do compilado), escreve a nota — declarando o `alcance` (`tipo`, `atributo` ou os dois) e dizendo em português a direção da mudança — e sobe o patch da versão; correção de dado não vira nota. |
 | `auditar.py` | Audita os campos que a conferência de penas não alcança: hediondez (contra `data/hediondos.json`), ação penal, causas de aumento ausentes e nomes — inclusive o nome que descreve MELHOR outro artigo do mesmo diploma, ponto cego da conferência de molduras. |
@@ -57,8 +60,12 @@ O workflow também roda sob demanda: aba **Actions** → "Conferidor semanal" �
 É registro do que a máquina fez, não proposta de mudança de dado.
 
 **Faz**, sozinho, em PR: corrigir moldura ou espécie de pena de linha que já
-existe, quando o compilado diz outra coisa. Um diploma por rodada, um PR aberto
-por vez, evidência por mudança. Se alguma mudança vem de lei recente, o PR escreve a nota
+existe, quando o compilado diz outra coisa; trocar a sentinela de uma fonte pela lei
+mais nova que a página anota; e cadastrar o modificador cujo dispositivo declara
+fração e alcance ("na hipótese do § 10") — as duas últimas desde 28/09/2026, depois
+que a rodada da Lei 15.517 mostrou que eram leitura de texto e ficavam para gente.
+Um diploma por rodada (as sentinelas vão todas juntas, de qualquer fonte), um PR
+aberto por vez, evidência por mudança. Se alguma mudança vem de lei recente, o PR escreve a nota
 (uma por lei e por direção da mudança, que é como ele as agrupa) e fecha uma versão,
 em `0.0.x` até o lançamento; se tudo é correção de dado, não escreve nota nem sobe versão,
 e o corpo do PR diz por quê.

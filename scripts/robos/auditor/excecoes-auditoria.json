@@ -73,7 +73,7 @@
         535,
         636
       ],
-      "motivo": "Falsos positivos CONFIRMADOS na revisão de 03/08/2026, item 11 — lidos um a um contra o compilado. id 474 (Estatuto da Pessoa Idosa, art. 100, I): o nome descreve fielmente o inciso, e o match com o art. 96 vem de conduta vizinha e de pena idêntica. id 539 (Lei 9.279/96, art. 184): o nome descreve o inciso I, e o match com o art. 190 vem de os dois artigos usarem os mesmos verbos — um para patente, outro para marca — e cominarem a mesma pena. id 642 (CP, art. 149-A, II): o match com o art. 149 vem da expressão comum, mas os tipos são distintos — o 149 pune a redução efetiva, o 149-A, II pune o tráfico com essa finalidade, e se consuma antes de qualquer redução. Nos três, a pena confere e a espécie confirma a origem.",
+      "motivo": "Falsos positivos CONFIRMADOS na revisão de 03/08/2026, item 11 — lidos um a um contra o compilado. id 470 (Estatuto da Pessoa Idosa, art. 100, I): o nome descreve fielmente o inciso, e o match com o art. 96 vem de conduta vizinha e de pena idêntica. id 535 (Lei 9.279/96, art. 184): o nome descreve o inciso I, e o match com o art. 190 vem de os dois artigos usarem os mesmos verbos — um para patente, outro para marca — e cominarem a mesma pena. id 636 (CP, art. 149-A, II): o match com o art. 149 vem da expressão comum, mas os tipos são distintos — o 149 pune a redução efetiva, o 149-A, II pune o tráfico com essa finalidade, e se consuma antes de qualquer redução. Nos três, a pena confere e a espécie confirma a origem. (Ids reescritos em 28/09/2026 para a numeração da v2.0.0: o texto dizia 474, 539 e 642, que eram os ids do protótipo; a lista `ids` já estava certa.)",
       "data": "2026-08-03"
     },
     {
@@ -143,6 +143,53 @@
       ],
       "motivo": "O parágrafo único do art. 389 do CPM descreve só a circunstância — 'se ao crime não é cominada, no máximo, reclusão de trinta anos, mas é praticado com arma e em presença do inimigo' — e não repete a conduta do caput nem remete a artigo nenhum. A regra lê silêncio da lei e responde 'Não'; o catálogo publica 'Sim', pela violência que dá nome ao artigo. Examinado pelo mantenedor em 25/09/2026: não é caso a resolver. A exceção existe para que a divergência conhecida não volte toda semana, e sai no dia em que alguém quiser reabri-la.",
       "data": "2026-09-25"
+    },
+    {
+      "tipo": "MODIFICADOR-AUSENTE",
+      "fonte": "cpm",
+      "dispositivos": [
+        "Art. 30|parágrafo único",
+        "Art. 48|parágrafo único",
+        "Art. 49|parágrafo único"
+      ],
+      "motivo": "Parte geral do CPM espelhando a do CP: tentativa (CP, art. 14, II), semi-imputabilidade (art. 26, parágrafo único) e embriaguez fortuita incompleta (art. 28, § 2º), com as mesmas frações. Os três já existem como modificadores de escopo GERAL (`tentativa`, `semi-imputabilidade`, `embriaguez-fortuita-incompleta`), e escopo geral alcança os tipos militares; cadastrar a versão do CPM ofereceria dois toggles para o mesmo instituto. A única diferença de texto — no art. 30 o juiz pode aplicar a pena do consumado em caso de excepcional gravidade — está anotada no obs do modificador `tentativa`. Triagem dos 30 achados da regex ampliada.",
+      "data": "2026-09-28"
+    },
+    {
+      "tipo": "MODIFICADOR-AUSENTE",
+      "fonte": "cpm",
+      "dispositivos": [
+        "Art. 81|§ 1º"
+      ],
+      "motivo": "Unificação de penas no concurso de crimes (unidade de ação ou omissão, crime continuado): 'a pena unificada pode ser diminuída de um sexto a um quarto'. É regra do combinador de concurso (arts. 69 a 71 do CP; arts. 79 a 81 do CPM), aplicada sobre penas já definitivas, e não causa de diminuição da 3ª fase de um tipo. O modelo do concurso é a tela própria, não um modificador de tipo.",
+      "data": "2026-09-28"
+    },
+    {
+      "tipo": "MODIFICADOR-AUSENTE",
+      "fonte": "cpm",
+      "dispositivos": [
+        "Art. 242|§ 2º"
+      ],
+      "motivo": "Roubo militar majorado (aumento de 1/3 até metade): já modelado como LINHAS DERIVADAS — o agregador id 1451 e os incisos I, V, VI e VIII (ids 1457, 1522, 1523, 1458), desdobrados porque a hediondez varia dentro do parágrafo. Fora do Código Penal o front não suprime causa embutida (`jaEmbutida` é restrito ao CP), e um modificador sobre o caput duplicaria o cenário que as linhas já contam.",
+      "data": "2026-09-28"
+    },
+    {
+      "tipo": "MODIFICADOR-AUSENTE",
+      "fonte": "drogas-11343",
+      "dispositivos": [
+        "Art. 33|§ 4º"
+      ],
+      "motivo": "Tráfico privilegiado (redução de 1/6 a 2/3): já modelado como LINHA DERIVADA, id 319, com a moldura reduzida (20 a 150 meses) e a nota de que não é hediondo (STF, HC 118.533). Fora do CP o front não suprime causa embutida, e um modificador sobre o caput e o § 1º duplicaria o cenário que a linha já conta.",
+      "data": "2026-09-28"
+    },
+    {
+      "tipo": "MODIFICADOR-AUSENTE",
+      "fonte": "orgcrim-12850",
+      "dispositivos": [
+        "Art. 4|§ 5º"
+      ],
+      "motivo": "Colaboração premiada da Lei 12.850/13 (art. 4º: perdão judicial, redução em até 2/3 ou substituição por restritiva; § 5º, após a sentença: redução até a metade ou progressão sem os requisitos objetivos). Instituto premial de escopo não delimitado por tipo — vale para qualquer crime da organização, em qualquer diploma —, com efeitos alternativos e dependente de acordo homologado. Não é modificador de tipo, e um modificador geral 'até 2/3' apareceria em todos os 1.531 registros. As colaborações de escopo fechado no próprio diploma (Lei 11.343, art. 41; Lei 7.492, art. 25, § 2º; Lei 8.137, art. 16, parágrafo único; CPM, art. 244, § 4º) entraram como modificadores.",
+      "data": "2026-09-28"
     }
   ]
 }

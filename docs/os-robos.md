@@ -62,7 +62,23 @@ de referência — a Lei dos Crimes Hediondos, a LEP, o CPP, a Lei 9.099/95 e a 
 têm tipo penal no catálogo: são baixados porque fundamentam a hediondez e os atributos.
 
 **O que ele acusa:** moldura ou espécie de pena divergente; dispositivo que a lei
-comina e o catálogo não tem; registro cujo dispositivo não foi localizado.
+comina e o catálogo não tem; registro cujo dispositivo não foi localizado; e, desde
+28/09/2026, linha de **pena derivada** cuja conta não fecha.
+
+**Pena derivada.** Cento e sessenta linhas do catálogo não têm moldura escrita na
+lei: são aumento, diminuição, dobro ou metade de outra moldura ("na hipótese do
+§ 10, a pena é aumentada de um terço"). Até 28/09/2026 elas saíam da conferência
+como limite declarado — contadas, nunca conferidas —, e foi debaixo desse número que
+o incêndio majorado publicou por meses a pena do caput sem o aumento, e a corrupção
+passiva majorada, a pena simples. Agora o Vigia refaz a conta: a base é o registro
+que o próprio catálogo aponta (o `c/c` do artigo, ou o caput do mesmo artigo) e a
+fração é a do texto da lei. O que a regra não decide — base em outro artigo que o
+registro não declara, texto sem fração legível, o dobro que chega ao teto do CPM
+onde a lei comina morte — sai como *pede juízo*, com o motivo escrito, e não como
+número. "Na mesma pena incorre" é seguido de um salto: ao caput, ao parágrafo citado ou ao
+artigo anterior com moldura. Na primeira rodada, 154 das 160 fecharam a conta de
+primeira, seis pediram juízo e quatro estavam erradas; decididos os casos de juízo,
+sobra um — o art. 141, III do Código Penal, que majora três artigos de uma vez.
 
 **O que ele não faz:** criar nem remover registro. Criar exige decidir se o
 dispositivo é crime autônomo, causa de aumento ou nada — e essa decisão é humana.
@@ -89,7 +105,7 @@ escrita para conferir.
 
 | Motivo | O que significa |
 |---|---|
-| `pena_derivada` | A lei manda calcular sobre uma base ("aumenta-se de um terço") |
+| `pena_derivada` | A lei manda calcular sobre uma base ("aumenta-se de um terço") e a conta não fecha sozinha: base em outro artigo que o registro não declara, ou sem moldura legível. Desde 28/09/2026 as demais são recalculadas e contam como conferidas |
 | `pena_importada` | A lei manda aplicar a pena de outro dispositivo |
 | `sancao_nao_privativa` | O tipo não comina prisão (multa, ou outra sanção) |
 | `sem_preceito_proprio` | O dispositivo não comina pena: é norma explicativa |
@@ -217,7 +233,11 @@ mediante representação").
 
 **Causas de aumento e diminuição.** Lista o que a lei tem e o catálogo de
 modificadores não. Não propõe modelagem: definir sobre quais tipos o aumento
-incide não se lê do dispositivo isolado.
+incide não se lê do dispositivo isolado — salvo quando o próprio dispositivo o
+declara ("na hipótese do § 10"), e aí é o Proponente, abaixo, que o cadastra.
+Desde 28/09/2026 a leitura alcança também "a pena aumenta-se de", "as penas
+aumentam-se de" e "pena reduzida de": trinta dispositivos vigentes passaram
+anos sem serem acusados porque a fórmula era outra.
 
 **Nome do tipo.** Duas perguntas, em direções opostas: o rótulo conversa com o
 próprio dispositivo? E há outro artigo do mesmo diploma com quem ele converse
@@ -271,6 +291,40 @@ fazia, e o prazo do documento nem havia corrido.
 
 ---
 
+## Proponente — o que vira PR sem esperar gente
+
+O Proponente não vigia nada: transforma em **pull request** o que os robôs leram
+sem precisar de juízo, e deixa para a issue o que precisa. A régua é uma só —
+**leitura de texto, não interpretação** — e hoje ela alcança três coisas:
+
+- **Moldura ou espécie de pena** de um registro que já existe, quando o compilado
+  diz outra coisa. É o caso original, e o mais frequente. Um diploma por PR.
+- **Sentinela defasada.** A sentinela de uma fonte é a string que prova que a página
+  baixada está fresca — em geral, o número da lei mais recente que o compilado
+  anota ("Incluído pela Lei nº 15.517, de 2026"). Quando a página passa a anotar lei
+  mais nova que a sentinela, o número novo está escrito na própria página, e o
+  Proponente o copia. Só troca sentinela que já é número de lei ordinária; a de
+  conteúdo — o nome de um tipo, para diploma que ainda não tem emenda — fica. "Vide
+  Lei nº …" não conta, porque remissão não prova atualização.
+- **Modificador de escopo declarado.** Das causas de aumento e diminuição que o
+  Auditor acusa, o Proponente cadastra as que dizem no próprio texto sobre o que
+  incidem: "na hipótese do § 10", "a pena prevista no § 2º-A", ou "as penas
+  cominadas neste artigo" num artigo que tem uma moldura só no catálogo. Fração e
+  direção também vêm do texto. O que não declara alcance continua na issue, como
+  pergunta.
+
+Quando alguma dessas mudanças vem de lei recente — redação dada ou dispositivo
+incluído por lei deste ano ou do anterior, lido da anotação do compilado —, o PR
+escreve a nota de atualização e sobe a versão. Modificador não gera nota: a nota
+da lei sai com as linhas. As duas leituras novas entraram em 28/09/2026, quando a
+rodada da Lei 15.517/2026 mostrou que tanto a sentinela quanto os §§ 11 e 12 do
+art. 155 do Código Penal eram leitura direta e tinham ficado para gente.
+
+**O que ele não faz**, e por decisão: criar ou remover registro (a primeira leva
+automática de criação trouxe 29 registros que não eram tipos penais), decidir
+hediondez ou espécie de ação penal sem propor, e modelar aumento cujo alcance a
+lei não declara. O merge continua sendo de gente.
+
 ## Onde cada um mora no código
 
 Cada robô é um sistema próprio, em diretório próprio com o nome dele. O que fica no
@@ -285,7 +339,7 @@ scripts/robos/
   recenseador/   leis_do_ano
   auditor/       auditar · excecoes-auditoria
   arquivista/    verificar_documentacao
-  proponente/    propor · corrigir · criar        (não é robô: é quem abre o PR)
+  proponente/    propor · corrigir · criar        (não é robô: é quem abre o PR — ver acima)
 ```
 
 Duas peças do núcleo merecem explicação, porque a tentação de duplicá-las é grande e

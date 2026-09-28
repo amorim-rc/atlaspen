@@ -5,9 +5,13 @@ name: Conferidor semanal
 #   1. CONFERIR — baixa os textos compilados dos diplomas do catálogo, confronta
 #      com static/data/crimes.json e olha o DOU da semana em busca de lei penal
 #      nova. O que sair daí vira UMA ISSUE, para triagem humana.
-#   2. PROPOR — do que é inequívoco (moldura ou espécie de pena divergente do
-#      compilado, em linha que já existe), abre UM PR por rodada, de UM diploma,
-#      com a evidência de cada mudança. Merge continua sendo decisão de gente.
+#   2. PROPOR — do que é inequívoco, abre UM PR por rodada, de UM diploma, com a
+#      evidência de cada mudança: moldura ou espécie de pena divergente do
+#      compilado, em linha que já existe; sentinela defasada (a página já anota
+#      lei mais nova); e modificador cujo dispositivo declara fração e alcance
+#      ("na hipótese do § 10") — estes dois desde 28/09/2026. As sentinelas vão
+#      todas juntas, de qualquer fonte; sozinhas, também abrem PR. Merge continua
+#      sendo decisão de gente.
 #
 # 100% determinístico: sem IA e sem token de modelo. O custo é alguns minutos de
 # Actions por semana.
@@ -19,7 +23,7 @@ on:
   workflow_dispatch:
     inputs:
       abrir_pr:
-        description: 'Abrir o PR das correções mecânicas'
+        description: 'Abrir o PR das correções mecânicas (moldura, sentinela, modificador de escopo declarado)'
         type: boolean
         default: true
       incluir_linhas_novas:

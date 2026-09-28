@@ -296,7 +296,7 @@
         "tipo": "geral"
       },
       "condicao": "admite_tentativa",
-      "obs": "Redução de 1/3 a 2/3 conforme a proximidade da consumação (iter criminis). Só nos tipos cujo campo `tentativa` do catálogo é Sim."
+      "obs": "Redução de 1/3 a 2/3 conforme a proximidade da consumação (iter criminis). Só nos tipos cujo campo `tentativa` do catálogo é Sim. O CPM tem regra própria e idêntica na fração (art. 30, parágrafo único), com uma diferença: em caso de excepcional gravidade o juiz pode aplicar a pena do crime consumado. Este modificador, de escopo geral, é o que o front oferece aos tipos militares; a fórmula do CPM está julgada em excecoes-auditoria.json (28/09/2026)."
     },
     {
       "id": "arrependimento-posterior",
@@ -731,7 +731,7 @@
       "escopo": {
         "tipo": "geral"
       },
-      "obs": "Perturbação da saúde mental que reduz a capacidade de entendimento. Alternativa à medida de segurança."
+      "obs": "Perturbação da saúde mental que reduz a capacidade de entendimento. Alternativa à medida de segurança. O CPM repete a regra no art. 48, parágrafo único (redação da Lei 14.688/2023), com a mesma fração; este modificador, de escopo geral, é o que o front oferece aos tipos militares."
     },
     {
       "id": "embriaguez-fortuita-incompleta",
@@ -746,7 +746,7 @@
       "escopo": {
         "tipo": "geral"
       },
-      "obs": "Caso fortuito ou força maior que reduziu — sem eliminar — a capacidade de entendimento. Se completa, isenta (§1º)."
+      "obs": "Caso fortuito ou força maior que reduziu — sem eliminar — a capacidade de entendimento. Se completa, isenta (§1º). O CPM repete a regra no art. 49, parágrafo único, com a mesma fração; este modificador, de escopo geral, é o que o front oferece aos tipos militares."
     },
     {
       "id": "aumento-lesao-orgcrim-129",
@@ -3677,6 +3677,513 @@
       },
       "obs": "As penas dos arts. 324, 325 e 326 aumentam-se de 1/3 até metade se o crime é cometido contra o Presidente da República ou chefe de governo estrangeiro; contra funcionário público, em razão de suas funções; na presença de várias pessoas, ou por meio que facilite a divulgação; com menosprezo ou discriminação à condição de mulher ou à sua cor, raça ou etnia; ou pela internet, rede social ou transmissão em tempo real.",
       "ignora_embutida": true
+    },
+    {
+      "id": "aumento-furto-combustivel-155-p11",
+      "nome": "Furto de combustível — obstáculo, concurso, abuso de confiança ou agente público (+1/3)",
+      "dispositivo": "CP, art. 155, §11",
+      "natureza": "aumento",
+      "fase": 3,
+      "sobre": "pena_provisoria",
+      "fracao_min": 0.3333333333333333,
+      "fracao_max": 0.3333333333333333,
+      "piso_minimo": false,
+      "escopo": {
+        "tipo": "tipos_por_artigo",
+        "lei": "CP",
+        "artigos": [
+          "Art. 155, §10"
+        ]
+      },
+      "obs": "Na hipótese do § 10 (furto de petróleo e derivados, gás natural, etanol e demais combustíveis, e óleos lubrificantes, removidos de instalação de produção, armazenamento ou transporte), a pena é aumentada de 1/3 se o crime é praticado: I – com destruição, rompimento de obstáculo à subtração da coisa ou dano de qualquer natureza; II – mediante o concurso de duas ou mais pessoas; III – com abuso de confiança ou valendo-se de vínculo atual ou passado com o ente lesado; ou IV – por ocupante de cargo, de emprego ou de função pública. Incide só sobre o § 10, não sobre as demais formas do art. 155. O catálogo já desdobra a moldura majorada na linha do § 11 c/c § 10 (id 1514), e por isso o front não oferece este aumento de novo sobre o § 10 — a entrada aqui é o registro da causa na dosimetria. Incluído pela Lei 15.517/2026 (DOU 23/09/2026, vigência na publicação)."
+    },
+    {
+      "id": "aumento-furto-combustivel-155-p12",
+      "nome": "Furto de combustível — paralisação, desabastecimento, incêndio, poluição, lesão grave ou morte (+2/3)",
+      "dispositivo": "CP, art. 155, §12",
+      "natureza": "aumento",
+      "fase": 3,
+      "sobre": "pena_provisoria",
+      "fracao_min": 0.6666666666666666,
+      "fracao_max": 0.6666666666666666,
+      "piso_minimo": false,
+      "escopo": {
+        "tipo": "tipos_por_artigo",
+        "lei": "CP",
+        "artigos": [
+          "Art. 155, §10"
+        ]
+      },
+      "obs": "Na hipótese do § 10, a pena é aumentada de 2/3 se do crime resulta: I – suspensão ou paralisação das atividades do estabelecimento; II – desabastecimento; III – incêndio; IV – poluição efetiva ou potencial ao meio ambiente; V – lesão corporal grave; ou VI – morte. Incide só sobre o § 10. O catálogo já desdobra a moldura majorada nas linhas do § 12 c/c § 10 (ids 1515, incisos I a V, e 1534, inciso VI), e por isso o front não oferece este aumento de novo sobre o § 10 — a entrada aqui é o registro da causa na dosimetria. Incluído pela Lei 15.517/2026 (DOU 23/09/2026, vigência na publicação)."
+    },
+    {
+      "id": "diminuicao-receptacao-combustivel-primario-8176-1b-p1",
+      "nome": "Receptação de combustível presumidamente criminoso — agente primário (−1/3 a −2/3)",
+      "dispositivo": "Lei 8.176/91, art. 1º-B, §1º",
+      "natureza": "diminuicao",
+      "fase": 3,
+      "sobre": "pena_provisoria",
+      "fracao_min": 0.3333333333333333,
+      "fracao_max": 0.6666666666666666,
+      "piso_minimo": false,
+      "escopo": {
+        "tipo": "tipos_por_artigo",
+        "lei": "Lei 8.176/91",
+        "artigos": [
+          "Art. 1º-B"
+        ]
+      },
+      "obs": "Se o agente é primário, poderá o juiz, consideradas as circunstâncias e as consequências do crime, diminuir a pena de 1/3 a 2/3 ou deixar de aplicar a multa. Faculdade do juiz, não direito do réu; a dispensa da multa é alternativa à redução e não entra na dosimetria da pena privativa. Mesma fórmula do art. 180, § 5º, 1ª parte, c/c art. 155, § 2º, do CP. Só alcança o art. 1º-B; o art. 1º-A não tem forma privilegiada. Incluído pela Lei 15.517/2026 (DOU 23/09/2026, vigência na publicação)."
+    },
+    {
+      "id": "diminuicao-estado-necessidade-sacrificio-exigivel-24-p2",
+      "nome": "Estado de necessidade — sacrifício exigível (−1/3 a −2/3)",
+      "dispositivo": "CP, art. 24, §2º",
+      "natureza": "diminuicao",
+      "fase": 3,
+      "sobre": "pena_provisoria",
+      "fracao_min": 0.3333333333333333,
+      "fracao_max": 0.6666666666666666,
+      "piso_minimo": false,
+      "escopo": {
+        "tipo": "geral"
+      },
+      "obs": "Embora seja razoável exigir-se o sacrifício do direito ameaçado, a pena poderá ser reduzida de um a dois terços. Causa de diminuição da parte geral: quando o estado de necessidade não exclui a ilicitude (o bem sacrificado valia mais, ou o agente tinha o dever de enfrentar o perigo), a pena de qualquer crime pode cair. Faculdade do juiz. Cadastrado em 28/09/2026, na triagem dos 30 dispositivos que a regex ampliada do auditor passou a enxergar; texto conferido no compilado do Planalto baixado no dia."
+    },
+    {
+      "id": "aumento-abandono-incapaz-133-p3",
+      "nome": "Abandono de incapaz — lugar ermo, parentesco ou vítima idosa (+1/3)",
+      "dispositivo": "CP, art. 133, §3º",
+      "natureza": "aumento",
+      "fase": 3,
+      "sobre": "pena_provisoria",
+      "fracao_min": 0.3333333333333333,
+      "fracao_max": 0.3333333333333333,
+      "piso_minimo": false,
+      "escopo": {
+        "tipo": "tipos_por_artigo",
+        "lei": "CP",
+        "artigos": [
+          "Art. 133"
+        ]
+      },
+      "obs": "As penas cominadas neste artigo aumentam-se de um terço: I – se o abandono ocorre em lugar ermo; II – se o agente é ascendente ou descendente, cônjuge, irmão, tutor ou curador da vítima; III – se a vítima é maior de 60 anos. 'Neste artigo': alcança o caput e as formas qualificadas pelo resultado dos §§ 1º e 2º. O catálogo já desdobra as molduras majoradas (ids 50, 1479 e 1480), e por isso o front não oferece o aumento de novo. Cadastrado em 28/09/2026, na triagem dos 30 dispositivos que a regex ampliada do auditor passou a enxergar; texto conferido no compilado do Planalto baixado no dia."
+    },
+    {
+      "id": "aumento-violacao-correspondencia-dano-151-p2",
+      "nome": "Violação de correspondência — dano para outrem (+1/2)",
+      "dispositivo": "CP, art. 151, §2º",
+      "natureza": "aumento",
+      "fase": 3,
+      "sobre": "pena_provisoria",
+      "fracao_min": 0.5,
+      "fracao_max": 0.5,
+      "piso_minimo": false,
+      "escopo": {
+        "tipo": "tipos_por_artigo",
+        "lei": "CP",
+        "artigos": [
+          "Art. 151, caput",
+          "Art. 151, §1º"
+        ]
+      },
+      "obs": "As penas aumentam-se de metade, se há dano para outrem. Alcança o caput e as figuras equiparadas do § 1º; a forma do § 3º (abuso de função) tem pena própria e vem depois do aumento — a doutrina diverge sobre estendê-lo a ela, e o catálogo não estende. Sem linha derivada no catálogo: oferecido diretamente. Cadastrado em 28/09/2026, na triagem dos 30 dispositivos que a regex ampliada do auditor passou a enxergar; texto conferido no compilado do Planalto baixado no dia.",
+      "ignora_embutida": true
+    },
+    {
+      "id": "aumento-fraude-eletronica-servidor-exterior-171-p2b",
+      "nome": "Fraude eletrônica — servidor fora do país (+1/3 a +2/3)",
+      "dispositivo": "CP, art. 171, §2º-B",
+      "natureza": "aumento",
+      "fase": 3,
+      "sobre": "pena_provisoria",
+      "fracao_min": 0.3333333333333333,
+      "fracao_max": 0.6666666666666666,
+      "piso_minimo": false,
+      "escopo": {
+        "tipo": "tipos_por_artigo",
+        "lei": "CP",
+        "artigos": [
+          "Art. 171, §2º-A"
+        ]
+      },
+      "obs": "A pena prevista no § 2º-A deste artigo, considerada a relevância do resultado gravoso, aumenta-se de 1/3 a 2/3, se o crime é praticado mediante a utilização de servidor mantido fora do território nacional. Incide só sobre a fraude eletrônica do § 2º-A. Sem linha derivada no catálogo: oferecido diretamente. Incluído pela Lei 14.155/2021. Cadastrado em 28/09/2026, na triagem dos 30 dispositivos que a regex ampliada do auditor passou a enxergar; texto conferido no compilado do Planalto baixado no dia.",
+      "ignora_embutida": true
+    },
+    {
+      "id": "aumento-estelionato-entidade-publica-171-p3",
+      "nome": "Estelionato — em detrimento de entidade pública ou assistencial (+1/3)",
+      "dispositivo": "CP, art. 171, §3º",
+      "natureza": "aumento",
+      "fase": 3,
+      "sobre": "pena_provisoria",
+      "fracao_min": 0.3333333333333333,
+      "fracao_max": 0.3333333333333333,
+      "piso_minimo": false,
+      "escopo": {
+        "tipo": "tipos_por_artigo",
+        "lei": "CP",
+        "artigos": [
+          "Art. 171"
+        ]
+      },
+      "obs": "A pena aumenta-se de um terço, se o crime é cometido em detrimento de entidade de direito público ou de instituto de economia popular, assistência social ou beneficência. O catálogo já desdobra a moldura majorada (id 595, contra a Previdência Social), e por isso o front não oferece o aumento de novo sobre o art. 171. Cadastrado em 28/09/2026, na triagem dos 30 dispositivos que a regex ampliada do auditor passou a enxergar; texto conferido no compilado do Planalto baixado no dia."
+    },
+    {
+      "id": "aumento-estelionato-idoso-vulneravel-171-p4",
+      "nome": "Estelionato — contra idoso ou vulnerável (+1/3 ao dobro)",
+      "dispositivo": "CP, art. 171, §4º",
+      "natureza": "aumento",
+      "fase": 3,
+      "sobre": "pena_provisoria",
+      "fracao_min": 0.3333333333333333,
+      "fracao_max": 1.0,
+      "piso_minimo": false,
+      "escopo": {
+        "tipo": "tipos_por_artigo",
+        "lei": "CP",
+        "artigos": [
+          "Art. 171"
+        ]
+      },
+      "obs": "A pena aumenta-se de 1/3 ao dobro, se o crime é cometido contra idoso ou vulnerável, considerada a relevância do resultado gravoso. O catálogo já desdobra a moldura majorada (id 580), e por isso o front não oferece o aumento de novo sobre o art. 171. Redação da Lei 14.155/2021. Cadastrado em 28/09/2026, na triagem dos 30 dispositivos que a regex ampliada do auditor passou a enxergar; texto conferido no compilado do Planalto baixado no dia."
+    },
+    {
+      "id": "aumento-incendio-250-p1",
+      "nome": "Incêndio — intuito de lucro ou local de risco coletivo (+1/3)",
+      "dispositivo": "CP, art. 250, §1º",
+      "natureza": "aumento",
+      "fase": 3,
+      "sobre": "pena_provisoria",
+      "fracao_min": 0.3333333333333333,
+      "fracao_max": 0.3333333333333333,
+      "piso_minimo": false,
+      "escopo": {
+        "tipo": "tipos_por_artigo",
+        "lei": "CP",
+        "artigos": [
+          "Art. 250, caput"
+        ]
+      },
+      "obs": "As penas aumentam-se de um terço: I – se o crime é cometido com intuito de obter vantagem pecuniária em proveito próprio ou alheio; II – se o incêndio é em casa habitada ou destinada a habitação, edifício público ou destinado a uso público ou a obra de assistência social ou de cultura, embarcação, aeronave, comboio ou veículo de transporte coletivo, estação ferroviária ou aeródromo, estaleiro, fábrica ou oficina, depósito de explosivo, combustível ou inflamável, poço petrolífero ou galeria de mineração, ou lavoura, pastagem, mata ou floresta. Só o incêndio doloso do caput: o culposo (§ 2º) tem moldura própria e vem depois do aumento. O catálogo desdobra três das hipóteses em linha (ids 722 a 724), e por isso o front não oferece o aumento de novo. Cadastrado em 28/09/2026, na triagem dos 30 dispositivos que a regex ampliada do auditor passou a enxergar; texto conferido no compilado do Planalto baixado no dia."
+    },
+    {
+      "id": "aumento-explosao-251-p2",
+      "nome": "Explosão — hipóteses do incêndio majorado (+1/3)",
+      "dispositivo": "CP, art. 251, §2º",
+      "natureza": "aumento",
+      "fase": 3,
+      "sobre": "pena_provisoria",
+      "fracao_min": 0.3333333333333333,
+      "fracao_max": 0.3333333333333333,
+      "piso_minimo": false,
+      "escopo": {
+        "tipo": "tipos_por_artigo",
+        "lei": "CP",
+        "artigos": [
+          "Art. 251, caput",
+          "Art. 251, §1º"
+        ]
+      },
+      "obs": "As penas aumentam-se de um terço, se ocorre qualquer das hipóteses previstas no § 1º, I, do artigo anterior (intuito de vantagem pecuniária), ou é visada ou atingida qualquer das coisas enumeradas no nº II do mesmo parágrafo. 'As penas', no plural: a do caput (dinamite) e a do § 1º (outra substância). A explosão culposa (§ 3º) fica de fora. Sem linha derivada no catálogo: oferecido diretamente. Cadastrado em 28/09/2026, na triagem dos 30 dispositivos que a regex ampliada do auditor passou a enxergar; texto conferido no compilado do Planalto baixado no dia.",
+      "ignora_embutida": true
+    },
+    {
+      "id": "diminuicao-sonegacao-previdenciaria-pequeno-empregador-337a-p3",
+      "nome": "Sonegação previdenciária — pequeno empregador pessoa física (−1/3 a −1/2)",
+      "dispositivo": "CP, art. 337-A, §3º",
+      "natureza": "diminuicao",
+      "fase": 3,
+      "sobre": "pena_provisoria",
+      "fracao_min": 0.3333333333333333,
+      "fracao_max": 0.5,
+      "piso_minimo": false,
+      "escopo": {
+        "tipo": "tipos_por_artigo",
+        "lei": "CP",
+        "artigos": [
+          "Art. 337-A"
+        ]
+      },
+      "obs": "Se o empregador não é pessoa jurídica e sua folha de pagamento mensal não ultrapassa R$ 1.510,00, o juiz poderá reduzir a pena de um terço até a metade ou aplicar apenas a de multa. Faculdade do juiz; a aplicação só da multa é alternativa à redução e não entra na dosimetria da pena privativa. Sem linha derivada: oferecido diretamente. Incluído pela Lei 9.983/2000. Cadastrado em 28/09/2026, na triagem dos 30 dispositivos que a regex ampliada do auditor passou a enxergar; texto conferido no compilado do Planalto baixado no dia.",
+      "ignora_embutida": true
+    },
+    {
+      "id": "aumento-falso-testemunho-suborno-processo-penal-342-p1",
+      "nome": "Falso testemunho — suborno ou processo penal (+1/6 a +1/3)",
+      "dispositivo": "CP, art. 342, §1º",
+      "natureza": "aumento",
+      "fase": 3,
+      "sobre": "pena_provisoria",
+      "fracao_min": 0.16666666666666666,
+      "fracao_max": 0.3333333333333333,
+      "piso_minimo": false,
+      "escopo": {
+        "tipo": "tipos_por_artigo",
+        "lei": "CP",
+        "artigos": [
+          "Art. 342"
+        ]
+      },
+      "obs": "As penas aumentam-se de um sexto a um terço, se o crime é praticado mediante suborno ou se cometido com o fim de obter prova destinada a produzir efeito em processo penal, ou em processo civil em que for parte entidade da administração pública direta ou indireta. Sem linha derivada: oferecido diretamente. Redação da Lei 10.268/2001. Cadastrado em 28/09/2026, na triagem dos 30 dispositivos que a regex ampliada do auditor passou a enxergar; texto conferido no compilado do Planalto baixado no dia.",
+      "ignora_embutida": true
+    },
+    {
+      "id": "aumento-corrupcao-testemunha-processo-penal-343-pu",
+      "nome": "Corrupção ativa de testemunha ou perito — processo penal (+1/6 a +1/3)",
+      "dispositivo": "CP, art. 343, parágrafo único",
+      "natureza": "aumento",
+      "fase": 3,
+      "sobre": "pena_provisoria",
+      "fracao_min": 0.16666666666666666,
+      "fracao_max": 0.3333333333333333,
+      "piso_minimo": false,
+      "escopo": {
+        "tipo": "tipos_por_artigo",
+        "lei": "CP",
+        "artigos": [
+          "Art. 343"
+        ]
+      },
+      "obs": "As penas aumentam-se de um sexto a um terço, se o crime é cometido com o fim de obter prova destinada a produzir efeito em processo penal ou em processo civil em que for parte entidade da administração pública direta ou indireta. Sem linha derivada: oferecido diretamente. Redação da Lei 10.268/2001. Cadastrado em 28/09/2026, na triagem dos 30 dispositivos que a regex ampliada do auditor passou a enxergar; texto conferido no compilado do Planalto baixado no dia.",
+      "ignora_embutida": true
+    },
+    {
+      "id": "aumento-coacao-processo-dignidade-sexual-344-pu",
+      "nome": "Coação no curso do processo — crime contra a dignidade sexual (+1/3 a +1/2)",
+      "dispositivo": "CP, art. 344, parágrafo único",
+      "natureza": "aumento",
+      "fase": 3,
+      "sobre": "pena_provisoria",
+      "fracao_min": 0.3333333333333333,
+      "fracao_max": 0.5,
+      "piso_minimo": false,
+      "escopo": {
+        "tipo": "tipos_por_artigo",
+        "lei": "CP",
+        "artigos": [
+          "Art. 344"
+        ]
+      },
+      "obs": "A pena aumenta-se de 1/3 até a metade se o processo envolver crime contra a dignidade sexual. Sem linha derivada: oferecido diretamente. Incluído pela Lei 14.245/2021. Cadastrado em 28/09/2026, na triagem dos 30 dispositivos que a regex ampliada do auditor passou a enxergar; texto conferido no compilado do Planalto baixado no dia.",
+      "ignora_embutida": true
+    },
+    {
+      "id": "aumento-exploracao-prestigio-357-pu",
+      "nome": "Exploração de prestígio — insinuação de destino a juiz, jurado ou testemunha (+1/3)",
+      "dispositivo": "CP, art. 357, parágrafo único",
+      "natureza": "aumento",
+      "fase": 3,
+      "sobre": "pena_provisoria",
+      "fracao_min": 0.3333333333333333,
+      "fracao_max": 0.3333333333333333,
+      "piso_minimo": false,
+      "escopo": {
+        "tipo": "tipos_por_artigo",
+        "lei": "CP",
+        "artigos": [
+          "Art. 357"
+        ]
+      },
+      "obs": "As penas aumentam-se de um terço, se o agente alega ou insinua que o dinheiro ou utilidade também se destina a qualquer das pessoas referidas neste artigo (juiz, jurado, órgão do Ministério Público, funcionário de justiça, perito, tradutor, intérprete ou testemunha). Sem linha derivada: oferecido diretamente. Cadastrado em 28/09/2026, na triagem dos 30 dispositivos que a regex ampliada do auditor passou a enxergar; texto conferido no compilado do Planalto baixado no dia.",
+      "ignora_embutida": true
+    },
+    {
+      "id": "diminuicao-lesao-valor-moral-emocao-cpm-209-p4",
+      "nome": "Lesão corporal militar — relevante valor moral ou violenta emoção (−1/6 a −1/3)",
+      "dispositivo": "CPM, art. 209, §4º",
+      "natureza": "diminuicao",
+      "fase": 3,
+      "sobre": "pena_provisoria",
+      "fracao_min": 0.16666666666666666,
+      "fracao_max": 0.3333333333333333,
+      "piso_minimo": false,
+      "escopo": {
+        "tipo": "tipos_por_artigo",
+        "lei": "CPM (DL 1.001/69)",
+        "artigos": [
+          "Art. 209"
+        ]
+      },
+      "obs": "Se o agente comete o crime impelido por motivo de relevante valor moral ou social ou sob o domínio de violenta emoção, logo em seguida a injusta provocação da vítima, o juiz pode reduzir a pena, de um sexto a um terço. Alcança todas as molduras do art. 209 (leve, graves e qualificadas pelo resultado), que são molduras-base, sem linha derivada. Espelho do CP, art. 129, § 4º. O auditor não o acusou — a vírgula em 'reduzir a pena, de' escapa da regex —, mas o § 5º e o art. 403, § 4º remetem a ele. Cadastrado em 28/09/2026, na triagem dos 30 dispositivos que a regex ampliada do auditor passou a enxergar; texto conferido no compilado do Planalto baixado no dia."
+    },
+    {
+      "id": "diminuicao-lesoes-leves-reciprocas-cpm-209-p5",
+      "nome": "Lesão leve militar — lesões recíprocas ou hipóteses do § 4º (−1/3 a −2/3)",
+      "dispositivo": "CPM, art. 209, §5º",
+      "natureza": "diminuicao",
+      "fase": 3,
+      "sobre": "pena_provisoria",
+      "fracao_min": 0.3333333333333333,
+      "fracao_max": 0.6666666666666666,
+      "piso_minimo": false,
+      "escopo": {
+        "tipo": "tipos_por_artigo",
+        "lei": "CPM (DL 1.001/69)",
+        "artigos": [
+          "Art. 209, caput"
+        ]
+      },
+      "obs": "No caso de lesões leves, se estas são recíprocas, não se sabendo qual dos contendores atacou primeiro, ou quando ocorre qualquer das hipóteses do parágrafo anterior, o juiz pode diminuir a pena de um a dois terços. Só a lesão leve (caput). Faculdade do juiz. Cadastrado em 28/09/2026, na triagem dos 30 dispositivos que a regex ampliada do auditor passou a enxergar; texto conferido no compilado do Planalto baixado no dia."
+    },
+    {
+      "id": "aumento-violacao-correspondencia-dano-cpm-227-p2",
+      "nome": "Violação de correspondência militar — dano para outrem (+1/2)",
+      "dispositivo": "CPM, art. 227, §2º",
+      "natureza": "aumento",
+      "fase": 3,
+      "sobre": "pena_provisoria",
+      "fracao_min": 0.5,
+      "fracao_max": 0.5,
+      "piso_minimo": false,
+      "escopo": {
+        "tipo": "tipos_por_artigo",
+        "lei": "CPM (DL 1.001/69)",
+        "artigos": [
+          "Art. 227, caput"
+        ]
+      },
+      "obs": "A pena aumenta-se de metade, se há dano para outrem. Espelho do CP, art. 151, § 2º, com o mesmo alcance: a forma do § 3º (abuso de função) tem pena própria e fica de fora. Cadastrado em 28/09/2026, na triagem dos 30 dispositivos que a regex ampliada do auditor passou a enxergar; texto conferido no compilado do Planalto baixado no dia."
+    },
+    {
+      "id": "diminuicao-furto-privilegiado-cpm-240-p1",
+      "nome": "Furto militar privilegiado — primário e coisa de pequeno valor (−1/3 a −2/3)",
+      "dispositivo": "CPM, art. 240, §1º",
+      "natureza": "diminuicao",
+      "fase": 3,
+      "sobre": "pena_provisoria",
+      "fracao_min": 0.3333333333333333,
+      "fracao_max": 0.6666666666666666,
+      "piso_minimo": false,
+      "escopo": {
+        "tipo": "tipos_por_artigo",
+        "lei": "CPM (DL 1.001/69)",
+        "artigos": [
+          "Art. 240, caput"
+        ]
+      },
+      "obs": "Se o agente é primário e é de pequeno valor a coisa furtada, o juiz pode substituir a pena de reclusão pela de detenção, diminuí-la de um a dois terços, ou considerar a infração como disciplinar. Entende-se pequeno o valor que não exceda a um décimo do salário mínimo. Só o furto simples (caput), como o catálogo faz com o CP, art. 155, § 2º (id 88). A substituição por detenção e a desclassificação para infração disciplinar são alternativas à redução e não entram na dosimetria. Cadastrado em 28/09/2026, na triagem dos 30 dispositivos que a regex ampliada do auditor passou a enxergar; texto conferido no compilado do Planalto baixado no dia."
+    },
+    {
+      "id": "diminuicao-delacao-sequestro-cpm-244-p4",
+      "nome": "Extorsão mediante sequestro militar — concorrente que denuncia (−1/3 a −2/3)",
+      "dispositivo": "CPM, art. 244, §4º",
+      "natureza": "diminuicao",
+      "fase": 3,
+      "sobre": "pena_provisoria",
+      "fracao_min": 0.3333333333333333,
+      "fracao_max": 0.6666666666666666,
+      "piso_minimo": false,
+      "escopo": {
+        "tipo": "tipos_por_artigo",
+        "lei": "CPM (DL 1.001/69)",
+        "artigos": [
+          "Art. 244"
+        ]
+      },
+      "obs": "Se o crime é cometido em concurso, o concorrente que o denunciar à autoridade, facilitando a libertação do sequestrado, terá sua pena reduzida de 1/3 a 2/3. Alcança todas as formas do art. 244. Espelho do CP, art. 159, § 4º. Incluído pela Lei 14.688/2023. Cadastrado em 28/09/2026, na triagem dos 30 dispositivos que a regex ampliada do auditor passou a enxergar; texto conferido no compilado do Planalto baixado no dia."
+    },
+    {
+      "id": "aumento-peculato-valor-cpm-303-p1",
+      "nome": "Peculato militar — objeto acima de vinte salários mínimos (+1/3)",
+      "dispositivo": "CPM, art. 303, §1º",
+      "natureza": "aumento",
+      "fase": 3,
+      "sobre": "pena_provisoria",
+      "fracao_min": 0.3333333333333333,
+      "fracao_max": 0.3333333333333333,
+      "piso_minimo": false,
+      "escopo": {
+        "tipo": "tipos_por_artigo",
+        "lei": "CPM (DL 1.001/69)",
+        "artigos": [
+          "Art. 303, caput"
+        ]
+      },
+      "obs": "A pena aumenta-se de um terço, se o objeto da apropriação ou desvio é de valor superior a vinte vezes o salário mínimo. Só o peculato doloso (caput; o § 2º, peculato-furto, incorre na mesma pena e não tem linha própria). O culposo (§ 3º) fica de fora. Cadastrado em 28/09/2026, na triagem dos 30 dispositivos que a regex ampliada do auditor passou a enxergar; texto conferido no compilado do Planalto baixado no dia."
+    },
+    {
+      "id": "diminuicao-lesao-valor-moral-guerra-cpm-403-p4",
+      "nome": "Lesão em presença do inimigo — hipóteses do art. 209, § 4º (−1/6 a −1/3)",
+      "dispositivo": "CPM, art. 403, §4º",
+      "natureza": "diminuicao",
+      "fase": 3,
+      "sobre": "pena_provisoria",
+      "fracao_min": 0.16666666666666666,
+      "fracao_max": 0.3333333333333333,
+      "piso_minimo": false,
+      "escopo": {
+        "tipo": "tipos_por_artigo",
+        "lei": "CPM (DL 1.001/69)",
+        "artigos": [
+          "Art. 403"
+        ]
+      },
+      "obs": "No caso do § 4º do art. 209, o juiz pode reduzir a pena de um sexto a um terço. Remete às hipóteses do relevante valor moral ou social e da violenta emoção; alcança todas as molduras do art. 403, que são molduras-base. Cadastrado em 28/09/2026, na triagem dos 30 dispositivos que a regex ampliada do auditor passou a enxergar; texto conferido no compilado do Planalto baixado no dia."
+    },
+    {
+      "id": "diminuicao-colaboracao-drogas-41",
+      "nome": "Lei de Drogas — colaboração voluntária do indiciado ou acusado (−1/3 a −2/3)",
+      "dispositivo": "Lei 11.343/06, art. 41",
+      "natureza": "diminuicao",
+      "fase": 3,
+      "sobre": "pena_provisoria",
+      "fracao_min": 0.3333333333333333,
+      "fracao_max": 0.6666666666666666,
+      "piso_minimo": false,
+      "escopo": {
+        "tipo": "lei",
+        "valor": "Lei 11.343/06"
+      },
+      "obs": "O indiciado ou acusado que colaborar voluntariamente com a investigação policial e o processo criminal na identificação dos demais coautores ou partícipes do crime e na recuperação total ou parcial do produto do crime, no caso de condenação, terá pena reduzida de um terço a dois terços. Exige os dois resultados (identificação e recuperação) — jurisprudência do STJ. Alcança todos os crimes da lei. Cadastrado em 28/09/2026, na triagem dos 30 dispositivos que a regex ampliada do auditor passou a enxergar; texto conferido no compilado do Planalto baixado no dia."
+    },
+    {
+      "id": "diminuicao-semi-imputabilidade-drogas-46",
+      "nome": "Lei de Drogas — capacidade reduzida por dependência ou efeito de droga (−1/3 a −2/3)",
+      "dispositivo": "Lei 11.343/06, art. 46",
+      "natureza": "diminuicao",
+      "fase": 3,
+      "sobre": "pena_provisoria",
+      "fracao_min": 0.3333333333333333,
+      "fracao_max": 0.6666666666666666,
+      "piso_minimo": false,
+      "escopo": {
+        "tipo": "lei",
+        "valor": "Lei 11.343/06"
+      },
+      "obs": "As penas podem ser reduzidas de um terço a dois terços se, por força das circunstâncias previstas no art. 45 (dependência, ou efeito de droga proveniente de caso fortuito ou força maior), o agente não possuía, ao tempo da ação ou da omissão, a plena capacidade de entender o caráter ilícito do fato ou de determinar-se de acordo com esse entendimento. É a semi-imputabilidade da própria lei, com fração igual à do CP, art. 26, parágrafo único. Cadastrado em 28/09/2026, na triagem dos 30 dispositivos que a regex ampliada do auditor passou a enxergar; texto conferido no compilado do Planalto baixado no dia."
+    },
+    {
+      "id": "diminuicao-confissao-trama-sfn-7492-25-p2",
+      "nome": "Crimes contra o sistema financeiro — confissão que revela a trama (−1/3 a −2/3)",
+      "dispositivo": "Lei 7.492/86, art. 25, §2º",
+      "natureza": "diminuicao",
+      "fase": 3,
+      "sobre": "pena_provisoria",
+      "fracao_min": 0.3333333333333333,
+      "fracao_max": 0.6666666666666666,
+      "piso_minimo": false,
+      "escopo": {
+        "tipo": "lei",
+        "valor": "Lei 7.492/86"
+      },
+      "obs": "Nos crimes previstos nesta Lei, cometidos em quadrilha ou coautoria, o coautor ou partícipe que através de confissão espontânea revelar à autoridade policial ou judicial toda a trama delituosa terá a sua pena reduzida de um a dois terços. Alcança todos os crimes da lei, quando cometidos em concurso. Incluído pela Lei 9.080/1995. Cadastrado em 28/09/2026, na triagem dos 30 dispositivos que a regex ampliada do auditor passou a enxergar; texto conferido no compilado do Planalto baixado no dia."
+    },
+    {
+      "id": "diminuicao-confissao-trama-tributaria-8137-16-pu",
+      "nome": "Crimes contra a ordem tributária e econômica — confissão que revela a trama (−1/3 a −2/3)",
+      "dispositivo": "Lei 8.137/90, art. 16, parágrafo único",
+      "natureza": "diminuicao",
+      "fase": 3,
+      "sobre": "pena_provisoria",
+      "fracao_min": 0.3333333333333333,
+      "fracao_max": 0.6666666666666666,
+      "piso_minimo": false,
+      "escopo": {
+        "tipo": "lei",
+        "valor": "Lei 8.137/90"
+      },
+      "obs": "Nos crimes previstos nesta Lei, cometidos em quadrilha ou coautoria, o coautor ou partícipe que através de confissão espontânea revelar à autoridade policial ou judicial toda a trama delituosa terá a sua pena reduzida de um a dois terços. Alcança todos os crimes da lei, quando cometidos em concurso. Mesma fórmula da Lei 7.492/86, art. 25, § 2º; as duas vieram da Lei 9.080/1995. Cadastrado em 28/09/2026, na triagem dos 30 dispositivos que a regex ampliada do auditor passou a enxergar; texto conferido no compilado do Planalto baixado no dia."
     }
   ]
 }

@@ -17,7 +17,7 @@
         "Lei 14.811/24"
       ],
       "url": "https://www.planalto.gov.br/ccivil_03/decreto-lei/del2848compilado.htm",
-      "sentinela": "15.384",
+      "sentinela": "15.517",
       "obs": "Os rótulos 14.478 (171-A) e 14.811 (146-A) são artigos do CP rotulados pela lei criadora. O rótulo 14.133 saiu na v1.9.0: os arts. 337-E a 337-L estavam sob ele e os arts. 337-M a 337-O sob `CP`, partindo em dois o mesmo Capítulo II-B."
     },
     {
@@ -42,7 +42,7 @@
         "CTB"
       ],
       "url": "https://www.planalto.gov.br/ccivil_03/leis/l9503compilado.htm",
-      "sentinela": "14.599"
+      "sentinela": "15.503"
     },
     {
       "id": "ce",
@@ -60,7 +60,7 @@
         "ECA"
       ],
       "url": "https://www.planalto.gov.br/ccivil_03/leis/l8069compilado.htm",
-      "sentinela": "15.234"
+      "sentinela": "15.512"
     },
     {
       "id": "cdc",
@@ -68,7 +68,7 @@
         "CDC (Lei 8.078/90)"
       ],
       "url": "https://www.planalto.gov.br/ccivil_03/leis/l8078compilado.htm",
-      "sentinela": "13.425"
+      "sentinela": "14.181"
     },
     {
       "id": "racismo-7716",
@@ -108,7 +108,7 @@
         "Lei 13.146/15"
       ],
       "url": "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2015/lei/l13146.htm",
-      "sentinela": "15.163"
+      "sentinela": "15.249"
     },
     {
       "id": "ambiental-9605",
@@ -157,7 +157,7 @@
         "Lei 11.340/06"
       ],
       "url": "https://www.planalto.gov.br/ccivil_03/_ato2004-2006/2006/lei/l11340.htm",
-      "sentinela": "15.383",
+      "sentinela": "15.455",
       "obs": "Esta página vem em UTF-16 LE com BOM (F0): a detecção de charset por BOM é obrigatória no fetcher."
     },
     {
@@ -215,7 +215,7 @@
         "Lei 8.176/91"
       ],
       "url": "https://www.planalto.gov.br/ccivil_03/leis/l8176.htm",
-      "sentinela": "15.348"
+      "sentinela": "15.517"
     },
     {
       "id": "eleitoral-9504",
@@ -272,7 +272,7 @@
         "Lei 8.906/94"
       ],
       "url": "https://www.planalto.gov.br/ccivil_03/leis/l8906.htm",
-      "sentinela": "14.365"
+      "sentinela": "15.511"
     },
     {
       "id": "telecom-9472",
@@ -328,7 +328,7 @@
         "Lei 6.766/79"
       ],
       "url": "https://www.planalto.gov.br/ccivil_03/leis/l6766.htm",
-      "sentinela": "14.620"
+      "sentinela": "14.711"
     },
     {
       "id": "planejamento-familiar-9263",

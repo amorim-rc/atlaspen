@@ -469,7 +469,7 @@
   {
     "id": 30,
     "lei": "CP",
-    "artigo": "Art. 127, 1ª parte",
+    "artigo": "Art. 127, 1ª parte c/c art. 125",
     "crime": "Aborto qualificado — resultado lesão grave na gestante",
     "pena_min": 48,
     "pena_max": 160,
@@ -480,12 +480,12 @@
     "tentativa": "Não",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "Aumento de 1/3 sobre Arts. 125/126 se resulta lesão corporal de natureza grave na gestante"
+    "obs": "Aumento de 1/3 sobre Arts. 125/126 se resulta lesão corporal de natureza grave na gestante Base declarada por c/c em 28/09/2026, para que o verificador de pena derivada a recalcule."
   },
   {
     "id": 31,
     "lei": "CP",
-    "artigo": "Art. 127, 2ª parte",
+    "artigo": "Art. 127, 2ª parte c/c art. 125",
     "crime": "Aborto qualificado — resultado morte da gestante",
     "pena_min": 72,
     "pena_max": 240,
@@ -496,7 +496,7 @@
     "tentativa": "Não",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "Dobra a pena dos Arts. 125/126 se resulta morte da gestante (crime preterdoloso)"
+    "obs": "Dobra a pena dos Arts. 125/126 se resulta morte da gestante (crime preterdoloso) Base declarada por c/c em 28/09/2026, para que o verificador de pena derivada a recalcule."
   },
   {
     "id": 32,
@@ -1024,7 +1024,7 @@
   {
     "id": 64,
     "lei": "CP",
-    "artigo": "Art. 141, §2º",
+    "artigo": "Art. 141, §2º c/c Art. 138",
     "crime": "Calúnia cometida ou divulgada em redes sociais — pena em triplo",
     "pena_min": 18,
     "pena_max": 72,
@@ -1035,7 +1035,7 @@
     "tentativa": "Sim",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "Aumento de 1/3 contra funcionário público em razão de suas funções. Muda a ação penal: pública condicionada à representação. Ação privada pelo art. 145, caput, do CP: o §2º do art. 141 triplica a pena e não altera a ação",
+    "obs": "Aumento de 1/3 contra funcionário público em razão de suas funções. Muda a ação penal: pública condicionada à representação. Ação privada pelo art. 145, caput, do CP: o §2º do art. 141 triplica a pena e não altera a ação Base declarada por c/c em 28/09/2026, para que o verificador de pena derivada a recalcule.",
     "acao_condicao": "Mediante requisição do Ministro da Justiça se o crime é cometido contra o Presidente da República ou chefe de governo estrangeiro (CP, art. 141, I, c/c art. 145, parágrafo único); mediante representação se contra funcionário público em razão de suas funções ou contra os Presidentes do Senado Federal, da Câmara dos Deputados ou do Supremo Tribunal Federal (art. 141, II, c/c art. 145, parágrafo único), com legitimidade concorrente do ofendido mediante queixa (STF, Súmula 714)."
   },
   {
@@ -1227,7 +1227,7 @@
   {
     "id": 76,
     "lei": "CP",
-    "artigo": "Art. 151",
+    "artigo": "Art. 151, caput",
     "crime": "Violação de correspondência",
     "pena_min": 1,
     "pena_max": 6,
@@ -3043,7 +3043,7 @@
   {
     "id": 187,
     "lei": "CP",
-    "artigo": "Art. 251",
+    "artigo": "Art. 251, caput",
     "crime": "Explosão",
     "pena_min": 36,
     "pena_max": 72,
@@ -3054,7 +3054,7 @@
     "tentativa": "Sim",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "3-6 anos reclusão + multa. §2º: culposo: 6m-2a detenção"
+    "obs": "3-6 anos reclusão + multa. § 1º: outra substância, 1 a 4 anos (id 1349); § 2º: aumento de 1/3 (modificador); § 3º: culposo, 6 meses a 2 anos (id 737) ou 3 meses a 1 ano (id 1491)"
   },
   {
     "id": 188,
@@ -10857,7 +10857,7 @@
     "lei": "Lei 12.850/13",
     "artigo": "Art. 2º, §2º",
     "crime": "Organização criminosa armada (com emprego de arma de fogo) — aumento de 1/2 a 2/3",
-    "pena_min": 42,
+    "pena_min": 36,
     "pena_max": 144,
     "tipo_pena": "Reclusão",
     "acao": "Pública Incondicionada",
@@ -10866,7 +10866,7 @@
     "tentativa": "Não",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "3-8 anos reclusão + multa. Aumento de 1/2 a 2/3",
+    "obs": "3 a 12 anos de reclusão + multa: caput (3 a 8 anos) aumentado ATÉ a metade — 'as penas aumentam-se até a metade se na atuação da organização criminosa houver emprego de arma de fogo' (§ 2º). Publicava 42 meses no mínimo, que é a fração de 1/6 do § 4º, de outra hipótese. Corrigido em 28/09/2026 pelo verificador de pena derivada (scripts/robos/vigia/derivadas.py), conferido no compilado.",
     "hediondo_condicao": "Hediondo somente quando a organização criminosa é direcionada à prática de crime hediondo ou equiparado. Fundamento: Lei 8.072, art. 1º, parágrafo único, V."
   },
   {
@@ -11213,8 +11213,8 @@
     "lei": "CPM (DL 1.001/69)",
     "artigo": "Art. 205, §1º",
     "crime": "Homicídio militar privilegiado (relevante valor social ou moral, ou violenta emoção após injusta provocação)",
-    "pena_min": 72,
-    "pena_max": 240,
+    "pena_min": 48,
+    "pena_max": 200,
     "tipo_pena": "Reclusão",
     "acao": "Pública Incondicionada",
     "hediondo": "Não",
@@ -11222,7 +11222,7 @@
     "tentativa": "Sim",
     "violencia": "Sim",
     "grave_ameaca": "Não",
-    "obs": "Minoração facultativa do art. 205, §1º: a pena do homicídio (6-20 anos) é reduzida de 1/6 a 1/3"
+    "obs": "4 a 16 anos e 8 meses de reclusão: homicídio militar (6 a 20 anos) reduzido de 1/6 a 1/3 — 'o juiz pode reduzir a pena, de um sexto a um terço' (§ 1º). Publicava a pena do caput sem a redução. Espelho do CP, art. 121, § 1º (id 2). Corrigido em 28/09/2026 pelo verificador de pena derivada (scripts/robos/vigia/derivadas.py), conferido no compilado."
   },
   {
     "id": 694,
@@ -11678,8 +11678,8 @@
     "lei": "CP",
     "artigo": "Art. 250, §1º, I",
     "crime": "Incêndio — aumento pelo intuito de obter vantagem pecuniária",
-    "pena_min": 36,
-    "pena_max": 72,
+    "pena_min": 48,
+    "pena_max": 96,
     "tipo_pena": "Reclusão",
     "acao": "Pública Incondicionada",
     "hediondo": "Não",
@@ -11687,15 +11687,15 @@
     "tentativa": "Sim",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "3-6 anos reclusão + multa. Aumento de 1/3"
+    "obs": "4 a 8 anos de reclusão + multa: caput (3 a 6 anos) aumentado de 1/3 pelo § 1º. Publicava 3 a 6 anos, a pena do caput sem o aumento — corrigido em 28/09/2026, conferido no compilado"
   },
   {
     "id": 723,
     "lei": "CP",
     "artigo": "Art. 250, §1º, II, a",
     "crime": "Incêndio — em casa habitada ou destinada a habitação",
-    "pena_min": 36,
-    "pena_max": 72,
+    "pena_min": 48,
+    "pena_max": 96,
     "tipo_pena": "Reclusão",
     "acao": "Pública Incondicionada",
     "hediondo": "Não",
@@ -11703,15 +11703,15 @@
     "tentativa": "Sim",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "3-6 anos reclusão + multa. Aumento de 1/3"
+    "obs": "4 a 8 anos de reclusão + multa: caput (3 a 6 anos) aumentado de 1/3 pelo § 1º. Publicava 3 a 6 anos, a pena do caput sem o aumento — corrigido em 28/09/2026, conferido no compilado"
   },
   {
     "id": 724,
     "lei": "CP",
     "artigo": "Art. 250, §1º, II, b",
     "crime": "Incêndio — em edifício público ou destinado a uso público, a obra de assistência social ou de cultura",
-    "pena_min": 36,
-    "pena_max": 72,
+    "pena_min": 48,
+    "pena_max": 96,
     "tipo_pena": "Reclusão",
     "acao": "Pública Incondicionada",
     "hediondo": "Não",
@@ -11719,15 +11719,15 @@
     "tentativa": "Sim",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "3-6 anos reclusão + multa. Aumento de 1/3"
+    "obs": "4 a 8 anos de reclusão + multa: caput (3 a 6 anos) aumentado de 1/3 pelo § 1º. Publicava 3 a 6 anos, a pena do caput sem o aumento — corrigido em 28/09/2026, conferido no compilado"
   },
   {
     "id": 725,
     "lei": "CP",
     "artigo": "Art. 317, §1º",
     "crime": "Corrupção passiva — aumento pelo retardo, omissão ou prática de ato com infração de dever funcional",
-    "pena_min": 24,
-    "pena_max": 144,
+    "pena_min": 32,
+    "pena_max": 192,
     "tipo_pena": "Reclusão",
     "acao": "Pública Incondicionada",
     "hediondo": "Não",
@@ -11735,7 +11735,7 @@
     "tentativa": "Sim",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "2-12 anos reclusão + multa. Aumento de 1/3. Forma qualificada da corrupção passiva"
+    "obs": "2 anos e 8 meses a 16 anos de reclusão + multa: caput (2 a 12 anos) aumentado de 1/3 — 'a pena é aumentada de um terço, se, em consequência da vantagem ou promessa, o funcionário retarda ou deixa de praticar qualquer ato de ofício ou o pratica infringindo dever funcional' (§ 1º). Publicava a pena do caput sem o aumento. Corrigido em 28/09/2026 pelo verificador de pena derivada (scripts/robos/vigia/derivadas.py), conferido no compilado."
   },
   {
     "id": 726,
@@ -11790,8 +11790,8 @@
     "lei": "CP",
     "artigo": "Art. 299, §único",
     "crime": "Falsidade ideológica — agente funcionário público prevalecendo-se do cargo, ou falsificação de registro civil",
-    "pena_min": 12,
-    "pena_max": 60,
+    "pena_min": 14,
+    "pena_max": 70,
     "tipo_pena": "Reclusão",
     "acao": "Pública Incondicionada",
     "hediondo": "Não",
@@ -11799,7 +11799,7 @@
     "tentativa": "Sim",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "1-5 anos reclusão + multa. Aumento de 1/6 quando doc público ou agente é funcionário"
+    "obs": "1 ano e 2 meses a 5 anos e 10 meses de reclusão + multa: documento público (1 a 5 anos) aumentado da sexta parte — 'se o agente é funcionário público, e comete o crime prevalecendo-se do cargo, ou se a falsificação ou alteração é de assentamento de registro civil, aumenta-se a pena de sexta parte' (parágrafo único). Publicava a pena do caput sem o aumento; a linha do documento particular (id 1487) já estava certa. Corrigido em 28/09/2026 pelo verificador de pena derivada (scripts/robos/vigia/derivadas.py), conferido no compilado."
   },
   {
     "id": 730,
@@ -11919,8 +11919,8 @@
   {
     "id": 737,
     "lei": "CP",
-    "artigo": "Art. 251, §2º",
-    "crime": "Explosão — aumento pelas hipóteses do incêndio ou pelo bem visado",
+    "artigo": "Art. 251, §3º",
+    "crime": "Explosão culposa — dinamite ou explosivo de efeitos análogos",
     "pena_min": 6,
     "pena_max": 24,
     "tipo_pena": "Detenção",
@@ -11930,7 +11930,7 @@
     "tentativa": "Não",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "6 meses a 2 anos detenção + multa. Conferido em 19/09/2026 contra o dispositivo: Crime culposo não se pratica mediante violência: a do art. 44, I, do CP é dolosa."
+    "obs": "6 meses a 2 anos de detenção (CP, art. 251, § 3º, 1ª parte: 'No caso de culpa, se a explosão é de dinamite ou substância de efeitos análogos'). Estava rotulado como § 2º e nomeado como o aumento de pena, com a pena e o elemento da forma culposa — o § 2º é a causa de aumento de 1/3, hoje no catálogo de modificadores. Corrigido em 28/09/2026, conferido no compilado. Conferido em 19/09/2026 contra o dispositivo: crime culposo não se pratica mediante violência: a do art. 44, I, do CP é dolosa."
   },
   {
     "id": 738,
@@ -12820,7 +12820,7 @@
   {
     "id": 793,
     "lei": "Lei 13.260/16",
-    "artigo": "Art. 5º",
+    "artigo": "Art. 5º c/c art. 2º",
     "crime": "Atos preparatórios de terrorismo",
     "pena_min": 72,
     "pena_max": 270,
@@ -12831,7 +12831,7 @@
     "tentativa": "Sim",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "5-8 anos reclusão. HEDIONDO (equiparado)"
+    "obs": "5-8 anos reclusão. HEDIONDO (equiparado) Base declarada por c/c em 28/09/2026, para que o verificador de pena derivada a recalcule."
   },
   {
     "id": 794,
@@ -23311,7 +23311,7 @@
     "lei": "CPM (DL 1.001/69)",
     "artigo": "Art. 405 c/c art. 242, §3º",
     "crime": "Latrocínio (tempo de guerra)",
-    "pena_min": 180,
+    "pena_min": 360,
     "pena_max": 360,
     "tipo_pena": "Morte",
     "acao": "Pública Incondicionada",
@@ -23320,7 +23320,7 @@
     "tentativa": "Sim",
     "violencia": "Sim",
     "grave_ameaca": "Sim",
-    "obs": "Registro de tempo de guerra criado em 05/08/2026. Fator: dobro (art.405). Especificacao do caput: em zona de operacoes militares ou em territorio militarmente ocupado. Espelha a divisao do tipo de paz, que passa a levar \"(tempo de paz)\" no nome. DECISAO 05/08/2026: o fator incide sobre a pena cominada no artigo base, tanto na minima quanto na maxima (o piso do art.58 integra a moldura do artigo base antes do fator)."
+    "obs": "Morte no grau máximo (fuzilamento, art. 56 do CPM), reclusão de 30 anos no grau mínimo. Em tempo de paz a pena do latrocínio é de 15 a 30 anos; em zona de operações militares ou território militarmente ocupado o art. 405 manda aplicar o dobro (30 a 60), a reclusão trava em 30 anos (art. 58) nos dois limites, e a própria lei comina morte no grau máximo 'se cominada pena de reclusão de trinta anos'. Publicava 15 a 30, a moldura de paz. Decisão do mantenedor em 28/09/2026, tomada sobre o achado do verificador de pena derivada; registro de tempo de guerra criado em 05/08/2026."
   },
   {
     "id": 1444,
@@ -23360,7 +23360,7 @@
     "lei": "CPM (DL 1.001/69)",
     "artigo": "Art. 405 c/c art. 243, §2º",
     "crime": "Extorsão qualificada pela morte (tempo de guerra)",
-    "pena_min": 180,
+    "pena_min": 360,
     "pena_max": 360,
     "tipo_pena": "Morte",
     "acao": "Pública Incondicionada",
@@ -23369,7 +23369,7 @@
     "tentativa": "Sim",
     "violencia": "Sim",
     "grave_ameaca": "Sim",
-    "obs": "Registro de tempo de guerra criado em 05/08/2026. Fator: dobro (art.405). Especificacao do caput: em zona de operacoes militares ou em territorio militarmente ocupado. Espelha a divisao do tipo de paz, que passa a levar \"(tempo de paz)\" no nome. DECISAO 05/08/2026: o fator incide sobre a pena cominada no artigo base, tanto na minima quanto na maxima (o piso do art.58 integra a moldura do artigo base antes do fator)."
+    "obs": "Morte no grau máximo (fuzilamento, art. 56 do CPM), reclusão de 30 anos no grau mínimo. Em tempo de paz a pena do extorsão qualificada pela morte é de 15 a 30 anos; em zona de operações militares ou território militarmente ocupado o art. 405 manda aplicar o dobro (30 a 60), a reclusão trava em 30 anos (art. 58) nos dois limites, e a própria lei comina morte no grau máximo 'se cominada pena de reclusão de trinta anos'. Publicava 15 a 30, a moldura de paz. Decisão do mantenedor em 28/09/2026, tomada sobre o achado do verificador de pena derivada; registro de tempo de guerra criado em 05/08/2026."
   },
   {
     "id": 1447,
@@ -23604,7 +23604,7 @@
   {
     "id": 1461,
     "lei": "Lei 13.260/16",
-    "artigo": "Art. 5º, §2º",
+    "artigo": "Art. 5º, §2º c/c art. 2º",
     "crime": "Atos preparatórios de terrorismo sem viagem ou treinamento no exterior",
     "pena_min": 48,
     "pena_max": 180,
@@ -23615,7 +23615,7 @@
     "tentativa": "Não",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "Registro criado em 06/08/2026 pela regra do registro por moldura (grupo A das decisões abertas)."
+    "obs": "Registro criado em 06/08/2026 pela regra do registro por moldura (grupo A das decisões abertas). Base declarada por c/c em 28/09/2026, para que o verificador de pena derivada a recalcule."
   },
   {
     "id": 1462,
@@ -24090,7 +24090,7 @@
   {
     "id": 1491,
     "lei": "CP",
-    "artigo": "Art. 251, §2º (demais casos)",
+    "artigo": "Art. 251, §3º (demais casos)",
     "crime": "Explosão culposa — substância diversa de dinamite ou análoga",
     "pena_min": 3,
     "pena_max": 12,
@@ -24101,7 +24101,7 @@
     "tentativa": "Não",
     "violencia": "Não",
     "grave_ameaca": "Não",
-    "obs": "Registro criado em 06/08/2026 pela regra do registro por moldura-base."
+    "obs": "3 meses a 1 ano de detenção (CP, art. 251, § 3º, 2ª parte: 'nos demais casos'). Estava rotulado como § 2º; corrigido em 28/09/2026, conferido no compilado. Registro criado em 06/08/2026 pela regra do registro por moldura-base."
   },
   {
     "id": 1492,
@@ -24484,8 +24484,8 @@
   {
     "id": 1515,
     "lei": "CP",
-    "artigo": "Art. 155, §12 c/c §10",
-    "crime": "Furto de combustível com aumento de 2/3 (suspensão das atividades, desabastecimento, incêndio, poluição, lesão grave ou morte)",
+    "artigo": "Art. 155, §12, I a V c/c §10",
+    "crime": "Furto de combustível com aumento de 2/3 (suspensão das atividades, desabastecimento, incêndio, poluição ou lesão grave)",
     "pena_min": 80,
     "pena_max": 200,
     "tipo_pena": "Reclusão",
@@ -24498,7 +24498,7 @@
     "violencia": "Não",
     "grave_ameaca": "Não",
     "violencia_condicao": null,
-    "obs": "§ 10 aumentado de 2/3 (incisos I a VI do § 12). Incluído pela Lei 15.517/2026 (DOU 23/09/2026, vigência na publicação). Decisão 38 da revisão de 23/09/2026."
+    "obs": "§ 10 aumentado de 2/3 (incisos I a V do § 12: suspensão ou paralisação das atividades, desabastecimento, incêndio, poluição, lesão corporal grave). O inciso VI (morte) tem linha própria, id 1534, como o catálogo faz no art. 157, § 3º e no CPM, art. 242, § 2º, V e VI — desdobrado em 28/09/2026 porque `resultado_morte` deriva do nome e a linha reunia seis resultados. Incluído pela Lei 15.517/2026 (DOU 23/09/2026, vigência na publicação). Decisão 38 da revisão de 23/09/2026."
   },
   {
     "id": 1516,
@@ -24555,7 +24555,7 @@
     "violencia": "Não",
     "grave_ameaca": "Não",
     "violencia_condicao": null,
-    "obs": "3-8 anos reclusão + multa. § 3º e art. 1º-C: efeitos da condenação (modificadores). Incluído pela Lei 15.517/2026 (DOU 23/09/2026, vigência na publicação). Decisão 38 da revisão de 23/09/2026."
+    "obs": "3-8 anos reclusão + multa. § 3º (interdição do estabelecimento) e art. 1º-C (perda do cargo e inabilitação): efeitos da condenação, não pena — fora do catálogo e dos modificadores (CONTRIBUTING, C1). Incluído pela Lei 15.517/2026 (DOU 23/09/2026, vigência na publicação). Decisão 38 da revisão de 23/09/2026."
   },
   {
     "id": 1519,
@@ -24832,5 +24832,24 @@
     "violencia": "Não",
     "grave_ameaca": "Não",
     "obs": "2-4 anos detenção. Segunda moldura do § 2º: a lei a escreve por extenso ('ou, se resulta morte, de dois a quatro anos') e não por remissão ao dobro. Mesma estrutura do art. 292, § 2º, do CPM (ids 1528 e 1529). Conferido em 25/09/2026 contra o texto compilado."
+  },
+  {
+    "id": 1534,
+    "lei": "CP",
+    "artigo": "Art. 155, §12, VI c/c §10",
+    "crime": "Furto de combustível com aumento de 2/3 — resultado morte",
+    "pena_min": 80,
+    "pena_max": 200,
+    "tipo_pena": "Reclusão",
+    "acao": "Pública Incondicionada",
+    "acao_condicao": "Condicionada à representação se o crime é cometido em prejuízo de cônjuge desquitado ou judicialmente separado, de irmão, ou de tio ou sobrinho com quem o agente coabita (CP, art. 182); a regra não se aplica ao estranho que participa do crime nem quando a vítima tem 60 anos ou mais (CP, art. 183, II e III).",
+    "hediondo": "Não",
+    "hediondo_condicao": null,
+    "elemento": "Qualificado pelo resultado",
+    "tentativa": "Sim",
+    "violencia": "Não",
+    "grave_ameaca": "Não",
+    "violencia_condicao": null,
+    "obs": "§ 10 aumentado de 2/3 se do crime resulta morte (inciso VI do § 12). Linha própria para que `resultado_morte` descreva só a hipótese que o tem; os incisos I a V ficam no id 1515. Elemento e tentativa herdados do id 1515 (decisão 38): a morte dolosa é homicídio em concurso, não este aumento. Incluído pela Lei 15.517/2026 (DOU 23/09/2026, vigência na publicação). Desdobrado em 28/09/2026."
   }
 ]

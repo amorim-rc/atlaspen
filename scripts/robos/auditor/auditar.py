@@ -348,9 +348,18 @@ def auditar_acao_penal(catalogo: list[dict], indice_fontes: dict) -> list[dict]:
 
 
 # ── 3. Causas de aumento e diminuição ───────────────────────────────────────
+# Ampliada em 28/09/2026: "a pena aumenta-se de" (CP, art. 157, §2º; art. 171, §3º),
+# "as penas aumentam-se de" (art. 342, §1º), "pode ser reduzida de" (art. 24, §2º) e
+# "diminuir a pena de" (Lei 8.176, art. 1º-B, §1º) e "as penas poderão ser reduzidas
+# de" (Lei 11.343, art. 33, §4º — o tráfico privilegiado) passavam em silêncio: 30
+# dispositivos vigentes com majorante ou minorante que o auditor nunca acusou.
 _MAJORANTE = re.compile(
     r"pena\s+(?:\w+\s+){0,3}(?:é|será|serão|são)\s+aumentad|aumenta(?:m)?-se\s+a\s+pena"
+    r"|penas?\s+(?:[\w§º,-]+\s+){0,14}aumentam?-se\s+de"
     r"|pena\s+(?:\w+\s+){0,3}(?:é|será)\s+(?:reduzid|diminu[íi]d)|reduz-se\s+a\s+pena"
+    r"|pena\s+(?:\w+\s+){0,3}(?:pode|poderá)\s+ser\s+(?:reduzid|diminu[íi]d)"
+    r"|(?:diminuir|reduzir)\s+a\s+pena\s+de|diminu[íi]-la\s+de"
+    r"|penas?\s+(?:[\w,]+\s+){0,4}(?:reduzid|diminu[íi]d)as?\s+(?:de|até|em)"
     r"|pena\s+ser[áa]\s+aplicada\s+em\s+dobro|aplica-se\s+em\s+dobro", re.I)
 _FRACAO = re.compile(r"(?:de\s+)?(um|dois|tr[êe]s|1|2|3)[/\s]*(ter[çc]o|sexto|quarto|metade|meio|"
                      r"quinto|oitavo|d[ée]cimo)|dobro|triplo|metade", re.I)
@@ -653,9 +662,10 @@ LIMITES = {
                  "(grupo de extermínio, organização direcionada a crime hediondo, lesão "
                  "contra vítima qualificada) — nesses, `Não` é resposta legítima e não é "
                  "acusado. O inciso VI do parágrafo único (crimes do CPM com identidade "
-                 "com os do rol) exige juízo de correspondência artigo a artigo: os "
-                 "dispositivos já julgados constam da tabela e são auditados; o resto do "
-                 "CPM segue fora dela, pelo `fora_de_alcance`.",
+                 "com os do rol) exige juízo de correspondência artigo a artigo: a varredura "
+                 "do Livro II fechou em 23/09/2026 (decisão 29), as correspondências estão na "
+                 "tabela e, desde 28/09/2026, o CPM é auditado inteiro contra ela — "
+                 "`fora_de_alcance` ficou vazio.",
     "acao_penal": "Só enxerga a fórmula quando ela está no MESMO artigo do tipo. Regra de "
                   "ação penal em artigo de encerramento de capítulo (art. 145 do CP, por "
                   "exemplo) ou em outro diploma (Lei 9.099 para a lesão leve) não é "

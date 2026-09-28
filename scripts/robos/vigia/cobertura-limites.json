@@ -5,16 +5,16 @@
     "motivos": {
       "sancao_nao_privativa": "o registro não tem pena privativa (multa ou outra sanção)",
       "pena_importada": "a lei manda aplicar a pena de outro dispositivo — copiável",
-      "pena_derivada": "a lei manda calcular sobre uma base (aumento, diminuição) — derivável",
+      "pena_derivada": "a lei manda calcular sobre uma base (aumento, diminuição) e a conta não fecha sozinha: base em outro artigo que o registro não declara por c/c, ou base sem moldura legível na lei — as demais são recalculadas (derivadas.py)",
       "sem_preceito_proprio": "o dispositivo não comina pena: é norma explicativa ou extensiva",
       "ilegivel": "A LEI ESCREVEU A PENA E O PARSER NÃO LEU — lacuna a fechar",
       "nao_localizado": "o dispositivo do registro não foi achado no compilado"
     },
-    "gerado_em": "2026-09-25"
+    "gerado_em": "2026-09-28"
   },
   "limites": {
     "nao_localizado": 0,
-    "pena_derivada": 161,
+    "pena_derivada": 1,
     "pena_importada": 69,
     "sancao_nao_privativa": 31,
     "sem_preceito_proprio": 10
