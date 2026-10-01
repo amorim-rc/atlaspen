@@ -9,12 +9,12 @@ sidebar_position: 4
 
 O catálogo completo é publicado como dado aberto em formato JSON:
 
-- **Tipos penais:** [`/data/crimes.json`](pathname:///atlaspen/data/crimes.json) — um objeto por tipo penal.
-- **Atributos penais:** [`/data/atributos.json`](pathname:///atlaspen/data/atributos.json) — os 22, com
+- **Tipos penais:** [`/data/crimes.json`](pathname:///data/crimes.json) — um objeto por tipo penal.
+- **Atributos penais:** [`/data/atributos.json`](pathname:///data/atributos.json) — os 22, com
   parâmetros, fundamento e alcance (ver [Atributos penais](#atributos-penais), abaixo).
-- **Trilha de conferência:** [`/data/conferencia.json`](pathname:///atlaspen/data/conferencia.json) — contra
+- **Trilha de conferência:** [`/data/conferencia.json`](pathname:///data/conferencia.json) — contra
   qual página, quando e com que resultado cada registro foi conferido.
-- **Relatório de qualidade:** [`/data/qualidade.json`](pathname:///atlaspen/data/qualidade.json) — contagens,
+- **Relatório de qualidade:** [`/data/qualidade.json`](pathname:///data/qualidade.json) — contagens,
   lacunas conhecidas e contradições, a cada geração.
 - **Licença:** [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) — cite como
   **EQUIPE ATLASPEN. AtlasPen** (ver [Como citar](#como-citar)). O código que gera a base
@@ -29,7 +29,7 @@ catálogo é construído e travado, em [Catálogo de tipos penais](./catalogo-ti
 Para quem trabalha em Excel, LibreOffice ou Planilhas Google, a mesma base sai também em
 uma planilha assinada:
 
-> **[Baixar `atlaspen-base.xlsx`](pathname:///atlaspen/data/atlaspen-base.xlsx)**
+> **[Baixar `atlaspen-base.xlsx`](pathname:///data/atlaspen-base.xlsx)**
 
 Quatro abas: **Leia-me** (versão, data de geração, commit de origem, licença, como citar e
 as armadilhas de leitura), **Tipos penais** (um registro por linha, com a URL pública de
@@ -183,13 +183,13 @@ reaproveitar os dados saber o que pode mudar sem quebrar uma conta.
 
 Registro recém-criado, ainda não alcançado por uma rodada, tem os três campos nulos — o
 que também é uma informação. A trilha vive em
-[`/data/conferencia.json`](pathname:///atlaspen/data/conferencia.json), fora do catálogo editado à mão.
+[`/data/conferencia.json`](pathname:///data/conferencia.json), fora do catálogo editado à mão.
 
 ## Atributos penais
 
 Os 22 atributos penais também são dado aberto:
 
-- [`/data/atributos.json`](pathname:///atlaspen/data/atributos.json) é o **derivado**, gerado por
+- [`/data/atributos.json`](pathname:///data/atributos.json) é o **derivado**, gerado por
   `scripts/derivar_atributos.ts`: a base dos atributos mais o que dela se calcula;
 - `data/atributos.json` e `data/historico-legislativo.json`, no repositório, são as
   **fontes**.
@@ -263,7 +263,7 @@ Honestidade sobre o alcance, para quem for citar:
   qualificações do tipo, revisadas à mão;
 - **decisão de tribunal superior** que altere o catálogo — uma ADI que retira dispositivo
   do ordenamento — não passa pelo Diário Oficial e hoje nenhum robô a vê;
-- o [relatório de qualidade](pathname:///atlaspen/data/qualidade.json) publica, a cada build, as
+- o [relatório de qualidade](pathname:///data/qualidade.json) publica, a cada build, as
   contradições conhecidas e os `id` envolvidos.
 
 ## Reprodutibilidade
@@ -317,7 +317,7 @@ A base é uma fotografia que muda: a citação diz qual.
 
 > EQUIPE ATLASPEN. *AtlasPen — Atlas Penal Brasileiro dos Tipos, Atributos e Impacto
 > Legislativo*. Versão [versão], dados conferidos em [data da conferência]. 2026.
-> Disponível em: <https://luccas-amorim.github.io/atlaspen/>. Acesso em: [data].
+> Disponível em: <https://atlaspen.com.br/>. Acesso em: [data].
 
 A versão e a data da última conferência estão no rodapé de cada página e na aba Leia-me da
 planilha. A autoria é coletiva, e é a mesma que o `NOTICE` exige e o `CITATION.cff`

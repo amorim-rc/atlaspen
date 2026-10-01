@@ -33,7 +33,7 @@ patamar recalcula o catálogo inteiro de tipos penais sem tocar no código.
 A vida de cada dispositivo — criação, alterações e revogação, com a lei e o link para o
 artigo dela no Planalto — fica em `data/historico-legislativo.json`, extraída do texto
 compilado. Dela saem, no arquivo público
-[`/data/atributos.json`](pathname:///atlaspen/data/atributos.json), a **última alteração legislativa** de
+[`/data/atributos.json`](pathname:///data/atributos.json), a **última alteração legislativa** de
 cada atributo e de cada parâmetro, e o **alcance** de cada atributo sobre o catálogo de
 tipos penais (ver [Dados abertos](./dados-abertos.md#atributos-penais)).
 

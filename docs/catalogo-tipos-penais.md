@@ -128,7 +128,7 @@ de qualquer publicação.
 
 Os números vivos ficam em duas páginas geradas, para não envelhecerem aqui:
 [Completude](./completude.md) (quantos tipos, por diploma) e
-[`/data/qualidade.json`](pathname:///atlaspen/data/qualidade.json) (o relatório completo, com os `id` de
+[`/data/qualidade.json`](pathname:///data/qualidade.json) (o relatório completo, com os `id` de
 cada pendência). O que esta página fixa são as **travas** — o que a CI impede de regredir:
 
 | Trava | O que impede |
@@ -139,7 +139,7 @@ cada pendência). O que esta página fixa são as **travas** — o que a CI impe
 | Hediondez sem regra | Hediondez afirmada sem entrada na tabela curada reprova. |
 | Grafia do dispositivo | O campo `artigo` segue uma forma canônica (`Art. 121, §2º, I`): grafia que a régua não lê reprova, em vez de casar regra nenhuma em silêncio. |
 | Derivado dessincronizado | O `static/data/crimes.json` commitado tem de ser o que a fonte produz. |
-| Divergência com o compilado | Não é trava de build: é achado da rodada semanal, e vira issue. O estado de cada registro está em [`/data/conferencia.json`](pathname:///atlaspen/data/conferencia.json). |
+| Divergência com o compilado | Não é trava de build: é achado da rodada semanal, e vira issue. O estado de cada registro está em [`/data/conferencia.json`](pathname:///data/conferencia.json). |
 
 ### Contradições: zeradas e travadas
 

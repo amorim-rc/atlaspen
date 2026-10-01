@@ -14,8 +14,9 @@ import {rotaAtual, rotaDoDocumento} from '../redirecionamentos.ts';
 
 /**
  * Os bases que algum documento já embutiu em link absoluto. São dois desde a
- * renomeação de 23/09/2026: os `.md` foram reescritos para `/atlaspen/`, mas
- * `/sispenas/` continua aqui porque documento antigo — e link que alguém
+ * renomeação de 23/09/2026, e o domínio próprio de 01/10/2026 tirou o base do
+ * endereço: os `.md` foram reescritos para a raiz, mas `/atlaspen/` e
+ * `/sispenas/` continuam aqui porque documento antigo — e link que alguém
  * copiou de uma versão anterior — tem de resolver do mesmo jeito.
  */
 const BASES_EMBUTIDAS = ['/atlaspen/', '/sispenas/'];

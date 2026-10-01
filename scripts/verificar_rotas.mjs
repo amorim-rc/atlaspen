@@ -16,10 +16,11 @@ import {existsSync, readFileSync} from 'node:fs';
 import {join} from 'node:path';
 import vm from 'node:vm';
 import {RAIZ_LEGADA, REDIRECIONAMENTOS, destinoDe} from '../src/site/redirecionamentos.ts';
+import {SITE_URL} from '../src/site/config.ts';
 
 const RAIZ = process.cwd();
 const DIST = join(RAIZ, 'dist');
-const BASE = '/atlaspen/';
+const BASE = new URL(SITE_URL).pathname;
 
 let falhas = 0;
 let conferidas = 0;

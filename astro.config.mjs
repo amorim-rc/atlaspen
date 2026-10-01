@@ -2,12 +2,11 @@
 // Configuração do site em Astro. Substitui o docusaurus.config.ts ao fim da
 // migração (design_handoff_atlaspen, commit 11).
 //
-// `base` é `/atlaspen/` desde a renomeação de 23/09/2026, quando o repositório
-// passou a se chamar `atlaspen`. O endereço antigo (`/sispenas/`) NÃO
-// redireciona — o GitHub não redireciona URL de project site ao renomear — e
-// por isso a troca só cabia antes da divulgação. `site` e `base` saem de
-// `SITE_URL`, em `src/site/config.ts`: quando o domínio próprio existir, muda
-// aquela constante (o `base` vira `/` sozinho) e entra um `CNAME` em `static/`.
+// `site` e `base` saem de `SITE_URL`, em `src/site/config.ts`. Desde 01/10/2026
+// é `https://atlaspen.com.br/`, e o `base` é `/`. Antes foi `/atlaspen/` (de
+// 23/09/2026, quando o repositório passou a se chamar `atlaspen`) e, antes
+// disso, `/sispenas/`. Link de documento que ainda embuta um desses prefixos
+// continua resolvendo: ver BASES_EMBUTIDAS em src/site/markdown/links.ts.
 //
 // O que NÃO muda aqui, de propósito:
 //   - `publicDir` aponta para `static/`, e não para `public/`: é lá que o
