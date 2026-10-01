@@ -273,7 +273,7 @@ As duas permitem usar, copiar, modificar e redistribuir, inclusive comercialment
 duas pedem o mesmo: dar crédito a *AtlasPen, da Equipe AtlasPen*, indicar a fonte e
 sinalizar as mudanças que fizer. No código, o crédito está no [`NOTICE`](./NOTICE), que a
 Apache 2.0 manda manter (seção 4). Nenhuma das duas autoriza o uso do nome ou do símbolo do
-AtlasPen. O que não está sob nenhuma delas, o artigo de 2008 e os textos de lei, está
+AtlasPen, cuja marca está em processo de registro no INPI. O que não está sob nenhuma delas, o artigo de 2008 e os textos de lei, está
 listado no `NOTICE`.
 
 A forma de citar em trabalho acadêmico está em
