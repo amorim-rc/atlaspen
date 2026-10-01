@@ -16,7 +16,7 @@ chamamos isso de *atributo*, e não de *benefício*, está no
 ## Como os atributos são modelados
 
 Cada atributo é um **registro de dados**, em
-[`data/atributos.json`](https://github.com/amorim-rc/atlaspen/blob/main/data/atributos.json),
+[`data/atributos.json`](https://github.com/luccas-amorim/atlaspen/blob/main/data/atributos.json),
 e não uma regra embutida no código. O registro reúne:
 
 - **metadados** — número (estável, como o id dos tipos penais), nome, fundamento legal,

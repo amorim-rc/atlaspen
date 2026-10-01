@@ -22,19 +22,22 @@ export const NOME_EXTENSO = 'Atlas Penal Brasileiro dos Tipos, Atributos e Impac
  */
 export const TITULAR = 'Equipe AtlasPen';
 
-export const REPOSITORIO = 'https://github.com/amorim-rc/atlaspen';
+export const REPOSITORIO = 'https://github.com/luccas-amorim/atlaspen';
 
 /**
  * Endereço público. Renomeado em 23/09/2026, por decisão do mantenedor, junto
  * com o repositório: `amorim-rc.github.io/sispenas/` **deixou de responder** —
  * o GitHub redireciona tudo ao renomear um repositório, menos a URL de project
  * site. O endereço antigo nunca foi divulgado, que é por que a troca cabia aqui.
+ * O mesmo se repetiu em 01/10/2026, quando a conta `amorim-rc` passou a se
+ * chamar `luccas-amorim`: o repositório redireciona, o Pages não.
  *
  * Quando o domínio próprio existir, é esta constante que muda, e só ela: nada
- * mais no repositório escreve o endereço à mão. Junto com ela mudam o `base` do
- * `astro.config.mjs` (para `/`) e um arquivo `CNAME` em `static/`.
+ * mais no repositório escreve o endereço à mão. O `astro.config.mjs` deriva
+ * dela o `site` e o `base`, e os scripts Python a leem por
+ * `scripts/endereco_publico.py`. Junto com ela entra um `CNAME` em `static/`.
  */
-export const SITE_URL = 'https://amorim-rc.github.io/atlaspen/';
+export const SITE_URL = 'https://luccas-amorim.github.io/atlaspen/';
 
 /**
  * Endereço absoluto de uma rota do site: `urlPublica('/tipos/477')`.

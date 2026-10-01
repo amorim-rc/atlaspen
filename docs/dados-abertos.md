@@ -308,7 +308,7 @@ versões de 1.0.0 a 2.0.6 que aparecem no histórico do repositório — e que a
 cita ao contar a história de uma regra — foram a numeração do **protótipo**; a v1.0.0 será
 o lançamento oficial, com domínio próprio, e é a partir dela que esta regra vale. Os
 próximos passos estão no
-[README](https://github.com/amorim-rc/atlaspen/blob/main/README.md#o-que-falta).
+[README](https://github.com/luccas-amorim/atlaspen/blob/main/README.md#o-que-falta).
 
 ## Como citar
 
@@ -316,7 +316,7 @@ A base é uma fotografia que muda: a citação diz qual.
 
 > EQUIPE ATLASPEN. *AtlasPen — Atlas Penal Brasileiro dos Tipos, Atributos e Impacto
 > Legislativo*. Versão [versão], dados conferidos em [data da conferência]. 2026.
-> Disponível em: <https://amorim-rc.github.io/atlaspen/>. Acesso em: [data].
+> Disponível em: <https://luccas-amorim.github.io/atlaspen/>. Acesso em: [data].
 
 A versão e a data da última conferência estão no rodapé de cada página e na aba Leia-me da
 planilha. A autoria é coletiva, e é a mesma que a `LICENSE` exige e o `CITATION.cff`

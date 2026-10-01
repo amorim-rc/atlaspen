@@ -45,7 +45,7 @@ sexual, e orienta a pesquisa acadêmica que dá continuidade ao sistema.
 
 Quem contribuir com o projeto — código, conferência de um diploma, revisão de
 critérios, correção de erros — passa a constar aqui, com o que fez e desde
-quando. O caminho é o [repositório](https://github.com/amorim-rc/atlaspen).
+quando. O caminho é o [repositório](https://github.com/luccas-amorim/atlaspen).
 
 ## O antecedente: o SISPENAS (2008)
 
