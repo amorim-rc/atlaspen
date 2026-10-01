@@ -263,10 +263,19 @@ O AtlasPen é obra nova, escrita para a lei vigente. A história completa está 
 
 ## Licença
 
-**MIT com atribuição** — *AtlasPen, da Equipe AtlasPen*. Veja [`LICENSE`](./LICENSE).
+Duas licenças, uma para cada coisa:
 
-Use, copie, modifique e redistribua, inclusive comercialmente. Ao usar o **código** ou a
-**base de dados**, dê crédito ao AtlasPen, indique a fonte e sinalize as mudanças que fizer.
+- **Código:** [Apache 2.0](./LICENSE).
+- **Dados e textos:** [CC BY 4.0](./LICENSE-CC-BY-4.0). Isso abrange a base (`data/`,
+  `static/data/` e a planilha), a documentação do site (`docs/`) e as notas de atualização.
+
+As duas permitem usar, copiar, modificar e redistribuir, inclusive comercialmente, e as
+duas pedem o mesmo: dar crédito a *AtlasPen, da Equipe AtlasPen*, indicar a fonte e
+sinalizar as mudanças que fizer. No código, o crédito está no [`NOTICE`](./NOTICE), que a
+Apache 2.0 manda manter (seção 4). Nenhuma das duas autoriza o uso do nome ou do símbolo do
+AtlasPen. O que não está sob nenhuma delas, o artigo de 2008 e os textos de lei, está
+listado no `NOTICE`.
+
 A forma de citar em trabalho acadêmico está em
 [Dados abertos](https://luccas-amorim.github.io/atlaspen/projeto/dados-abertos#como-citar), e o
 `CITATION.cff` traz a mesma informação em formato que o GitHub e os gerenciadores de

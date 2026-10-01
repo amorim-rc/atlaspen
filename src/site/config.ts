@@ -13,7 +13,7 @@ export const NOME = 'AtlasPen';
 export const NOME_EXTENSO = 'Atlas Penal Brasileiro dos Tipos, Atributos e Impacto Legislativo';
 
 /**
- * Quem assina o código e a base: a LICENSE, o rodapé e "Como citar".
+ * Quem assina o código e a base: o NOTICE, o rodapé e "Como citar".
  *
  * Coletivo por decisão de 24/09/2026. A assinatura curta nomeava uma pessoa só
  * num projeto que é colaborativo, e isso soava mal ao lado das professoras que

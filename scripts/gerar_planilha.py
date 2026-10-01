@@ -239,8 +239,8 @@ def aba_leia_me(wb: Workbook, ctx: dict) -> None:
     linha("")
 
     linha("LICENÇA E ATRIBUIÇÃO")
-    linha("", "MIT com exigência de atribuição. Use, copie, modifique e redistribua, "
-              "inclusive comercialmente. Ao usar estes dados, dê crédito a "
+    linha("", "Creative Commons Atribuição 4.0 Internacional (CC BY 4.0). Use, copie, "
+              "modifique e redistribua, inclusive comercialmente. Ao usar estes dados, dê crédito a "
               "\"AtlasPen, da Equipe AtlasPen\", indique a fonte e sinalize as "
               "alterações que fizer.")
     linha("Como citar",
