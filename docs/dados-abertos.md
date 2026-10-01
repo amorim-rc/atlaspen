@@ -16,8 +16,9 @@ O catálogo completo é publicado como dado aberto em formato JSON:
   qual página, quando e com que resultado cada registro foi conferido.
 - **Relatório de qualidade:** [`/data/qualidade.json`](pathname:///atlaspen/data/qualidade.json) — contagens,
   lacunas conhecidas e contradições, a cada geração.
-- **Licença:** MIT com atribuição — cite como **EQUIPE ATLASPEN. AtlasPen** (ver
-  [Como citar](#como-citar)).
+- **Licença:** [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) — cite como
+  **EQUIPE ATLASPEN. AtlasPen** (ver [Como citar](#como-citar)). O código que gera a base
+  está sob [Apache 2.0](https://github.com/luccas-amorim/atlaspen/blob/main/LICENSE).
 
 Esta página é o **dicionário**: o lugar único em que cada campo é definido. Os princípios
 que decidem o que um campo pode afirmar estão em [Metodologia](./metodologia.md); como o
@@ -308,7 +309,7 @@ versões de 1.0.0 a 2.0.6 que aparecem no histórico do repositório — e que a
 cita ao contar a história de uma regra — foram a numeração do **protótipo**; a v1.0.0 será
 o lançamento oficial, com domínio próprio, e é a partir dela que esta regra vale. Os
 próximos passos estão no
-[README](https://github.com/amorim-rc/atlaspen/blob/main/README.md#o-que-falta).
+[README](https://github.com/luccas-amorim/atlaspen/blob/main/README.md#o-que-falta).
 
 ## Como citar
 
@@ -316,10 +317,10 @@ A base é uma fotografia que muda: a citação diz qual.
 
 > EQUIPE ATLASPEN. *AtlasPen — Atlas Penal Brasileiro dos Tipos, Atributos e Impacto
 > Legislativo*. Versão [versão], dados conferidos em [data da conferência]. 2026.
-> Disponível em: <https://amorim-rc.github.io/atlaspen/>. Acesso em: [data].
+> Disponível em: <https://luccas-amorim.github.io/atlaspen/>. Acesso em: [data].
 
 A versão e a data da última conferência estão no rodapé de cada página e na aba Leia-me da
-planilha. A autoria é coletiva, e é a mesma que a `LICENSE` exige e o `CITATION.cff`
+planilha. A autoria é coletiva, e é a mesma que o `NOTICE` exige e o `CITATION.cff`
 declara; quem faz o quê está em [Autoria e créditos](/projeto/creditos).
 
 A pesquisa de 2008, que é o antecedente do AtlasPen, cita-se à parte:

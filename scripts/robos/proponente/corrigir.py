@@ -31,6 +31,7 @@ sys.path.insert(0, str(RAIZ / "scripts"))
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from vigia.conferir import carregar_excecoes, conferir_fonte, indexar_catalogo  # noqa: E402
+from endereco_publico import SITE  # noqa: E402
 from transform_data import _faixa_de_meses  # noqa: E402
 
 FONTE = RAIZ / "data" / "crimes.json"
@@ -147,7 +148,7 @@ def resumo(fonte_id: str, propostas: list[dict], humanos: list[dict]) -> str:
             f"- **Antes:** {a['pena_min']}–{a['pena_max']} meses, {a['tipo_pena']}",
             f"- **Depois:** {d['pena_min']}–{d['pena_max']} meses, {d['tipo_pena']}",
             f"- **obs:** `{d['obs'][:150]}`",
-            f"- Conferir: <https://amorim-rc.github.io/atlaspen/pesquisa/tipos?tipo={a['id']}>",
+            f"- Conferir: <{SITE}/tipos/{a['id']}>",
             "",
         ]
     if humanos:

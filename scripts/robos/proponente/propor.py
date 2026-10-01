@@ -59,6 +59,7 @@ from proponente import corrigir  # noqa: E402
 from proponente import criar  # noqa: E402
 from nucleo.dispositivo import SNAPSHOTS  # noqa: E402
 from nucleo.tempo import hoje  # noqa: E402
+from endereco_publico import SITE  # noqa: E402
 from transform_data import _faixa_de_meses, proximo_id  # noqa: E402
 
 FONTES = RAIZ / "data" / "fontes.json"
@@ -68,7 +69,6 @@ PACKAGE = RAIZ / "package.json"
 LOCK = RAIZ / "package-lock.json"
 CITATION = RAIZ / "CITATION.cff"
 ENTRADAS = RAIZ / "src" / "data" / "changelog" / "entries"
-SITE = "https://amorim-rc.github.io/atlaspen"
 
 
 # ── Versão ──────────────────────────────────────────────────────────────────

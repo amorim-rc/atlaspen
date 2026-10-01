@@ -16,9 +16,11 @@ authors:
   - name: "Equipe AtlasPen"
 # Até a v1.0.0 não há versão publicada: cite pela data.
 date-released: "2026-09-11"
-license: MIT
-repository-code: "https://github.com/amorim-rc/atlaspen"
-url: "https://amorim-rc.github.io/atlaspen/"
+license:
+  - Apache-2.0
+  - CC-BY-4.0
+repository-code: "https://github.com/luccas-amorim/atlaspen"
+url: "https://luccas-amorim.github.io/atlaspen/"
 keywords:
   - direito penal
   - políticas públicas

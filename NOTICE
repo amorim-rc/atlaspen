@@ -1,0 +1,32 @@
+AtlasPen — Atlas Penal Brasileiro dos Tipos, Atributos e Impacto Legislativo
+Copyright 2026 Equipe AtlasPen
+https://github.com/luccas-amorim/atlaspen
+
+Crédito: "AtlasPen, da Equipe AtlasPen".
+Credit: "AtlasPen, by the AtlasPen Team".
+
+Este repositório tem duas licenças:
+
+- O código está sob a Apache License 2.0 (arquivo LICENSE).
+- Os dados e os textos estão sob a Creative Commons Atribuição 4.0
+  Internacional, CC BY 4.0 (arquivo LICENSE-CC-BY-4.0): data/, static/data/
+  e a planilha atlaspen-base.xlsx gerada a partir deles, docs/ e as notas de
+  atualização em src/data/changelog/entries/.
+
+Não estão sob nenhuma das duas:
+
+- static/artigos/: o artigo de 2008 sobre o SISPENAS, de Maíra Rocha Machado
+  e Marta Rodriguez de Assis Machado, publicado na Revista Jurídica. Não é obra
+  da Equipe AtlasPen; está aqui como referência.
+- Os textos de lei, decreto e demais atos oficiais reproduzidos na base, que
+  não são objeto de direito autoral (Lei 9.610/1998, art. 8º, IV).
+
+O nome AtlasPen e o símbolo do projeto (static/img/) identificam a origem do
+trabalho. As licenças cobrem os arquivos, não o uso da marca (Apache License
+2.0, seção 6; CC BY 4.0, seção 2(b)(2)). O pedido de registro da marca
+AtlasPen está em andamento no Instituto Nacional da Propriedade Industrial
+(INPI).
+
+Esta ferramenta destina-se a fins de pesquisa e não constitui aconselhamento
+jurídico. This tool is provided for research purposes and does not constitute
+legal advice.

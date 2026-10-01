@@ -5,9 +5,9 @@
 // `base` é `/atlaspen/` desde a renomeação de 23/09/2026, quando o repositório
 // passou a se chamar `atlaspen`. O endereço antigo (`/sispenas/`) NÃO
 // redireciona — o GitHub não redireciona URL de project site ao renomear — e
-// por isso a troca só cabia antes da divulgação. Quando o domínio próprio
-// existir, `base` vira `/`, entra um `CNAME` em `static/`, e `SITE_URL` em
-// `src/site/config.ts` acompanha; nada mais escreve o endereço à mão.
+// por isso a troca só cabia antes da divulgação. `site` e `base` saem de
+// `SITE_URL`, em `src/site/config.ts`: quando o domínio próprio existir, muda
+// aquela constante (o `base` vira `/` sozinho) e entra um `CNAME` em `static/`.
 //
 // O que NÃO muda aqui, de propósito:
 //   - `publicDir` aponta para `static/`, e não para `public/`: é lá que o
@@ -25,8 +25,10 @@ import remarkDirective from 'remark-directive';
 import {remarkAdmonicoes} from './src/site/markdown/admonicoes.ts';
 import {remarkComentarios} from './src/site/markdown/comentarios.ts';
 import {remarkLinks} from './src/site/markdown/links.ts';
+import {SITE_URL} from './src/site/config.ts';
 
-const BASE = '/atlaspen/';
+const SITE = new URL(SITE_URL).origin;
+const BASE = new URL(SITE_URL).pathname;
 
 /**
  * As FONTES de data/*.json importadas pelo código viram módulo virtual.
@@ -61,7 +63,7 @@ function fontesSemColisao() {
 }
 
 export default defineConfig({
-  site: 'https://amorim-rc.github.io',
+  site: SITE,
   base: BASE,
   publicDir: './static',
   outDir: './dist',

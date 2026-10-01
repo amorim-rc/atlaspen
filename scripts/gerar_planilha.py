@@ -46,9 +46,10 @@ from openpyxl.formatting.rule import CellIsRule
 from openpyxl.styles import Alignment, Font, PatternFill
 from openpyxl.utils import get_column_letter
 
+from endereco_publico import REPOSITORIO, SITE
+
 RAIZ = Path(__file__).resolve().parents[1]
 SAIDA_PADRAO = RAIZ / "dist" / "data" / "atlaspen-base.xlsx"
-SITE = "https://amorim-rc.github.io/atlaspen"
 
 TEXTO = "@"
 INTEIRO = "0"
@@ -196,7 +197,7 @@ def aba_leia_me(wb: Workbook, ctx: dict) -> None:
     linha("Gerada em", ctx["hoje"])
     linha("Commit de origem", ctx["commit"])
     linha("Endereço", f"{SITE}/")
-    linha("Repositório", "https://github.com/amorim-rc/atlaspen")
+    linha("Repositório", REPOSITORIO)
     linha("")
 
     linha("O QUE ESTÁ AQUI")
@@ -238,8 +239,8 @@ def aba_leia_me(wb: Workbook, ctx: dict) -> None:
     linha("")
 
     linha("LICENÇA E ATRIBUIÇÃO")
-    linha("", "MIT com exigência de atribuição. Use, copie, modifique e redistribua, "
-              "inclusive comercialmente. Ao usar estes dados, dê crédito a "
+    linha("", "Creative Commons Atribuição 4.0 Internacional (CC BY 4.0). Use, copie, "
+              "modifique e redistribua, inclusive comercialmente. Ao usar estes dados, dê crédito a "
               "\"AtlasPen, da Equipe AtlasPen\", indique a fonte e sinalize as "
               "alterações que fizer.")
     linha("Como citar",

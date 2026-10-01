@@ -177,7 +177,7 @@ entrar**. O catálogo não pode regredir.
 
 ## Como corrigir um tipo penal
 
-Achou um erro e não quer mexer em código? [Abra uma issue](https://github.com/amorim-rc/atlaspen/issues)
+Achou um erro e não quer mexer em código? [Abra uma issue](https://github.com/luccas-amorim/atlaspen/issues)
 com o dispositivo e o que o texto da lei diz. É contribuição das mais úteis, e é o caminho
 que a maior parte de quem lê direito vai preferir.
 

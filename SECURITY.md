@@ -19,4 +19,4 @@ disponível. Faremos o possível para responder em até **7 dias úteis**.
 ## Correções de dados
 
 Imprecisões no catálogo de tipos penais (pena, atributos, classificação) **não** são
-tratadas como falhas de segurança — abra uma [issue de correção de dados](https://github.com/amorim-rc/atlaspen/issues/new?template=correcao-tipo-penal.md).
+tratadas como falhas de segurança — abra uma [issue de correção de dados](https://github.com/luccas-amorim/atlaspen/issues/new?template=correcao-tipo-penal.md).

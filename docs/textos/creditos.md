@@ -45,7 +45,7 @@ sexual, e orienta a pesquisa acadêmica que dá continuidade ao sistema.
 
 Quem contribuir com o projeto — código, conferência de um diploma, revisão de
 critérios, correção de erros — passa a constar aqui, com o que fez e desde
-quando. O caminho é o [repositório](https://github.com/amorim-rc/atlaspen).
+quando. O caminho é o [repositório](https://github.com/luccas-amorim/atlaspen).
 
 ## O antecedente: o SISPENAS (2008)
 
@@ -71,3 +71,7 @@ A forma de citar o AtlasPen, e a de citar a pesquisa de 2008, estão em
 [Dados abertos](dados-abertos#como-citar). O arquivo `CITATION.cff` do
 repositório traz a mesma informação em formato que o GitHub e os gerenciadores
 de referência leem.
+
+O código está sob a licença Apache 2.0, e os dados e os textos, sob a CC BY 4.0.
+As duas pedem o mesmo crédito: *AtlasPen, da Equipe AtlasPen*. A divisão está no
+arquivo `NOTICE` do repositório.
