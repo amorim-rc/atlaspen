@@ -6,7 +6,7 @@ ANPP, transação, substituição, progressão, livramento, prescrição e os de
 de cálculo e simulação de alteração legislativa.
 
 Todo tipo penal em vigor, de cada diploma que os comina — o número vivo, diploma a
-diploma, está em [Completude](https://luccas-amorim.github.io/atlaspen/projeto/completude) —,
+diploma, está em [Completude](https://atlaspen.com.br/projeto/completude) —,
 conferido contra o texto compilado do `planalto.gov.br`. Astro + React + TypeScript sobre
 JSON versionado. Sem servidor, sem banco: tudo o que a ferramenta sabe é arquivo de texto
 que você pode ler, conferir e corrigir por pull request.
@@ -23,15 +23,15 @@ Os dados são abertos e estáveis. Você não precisa clonar nada.
 
 | endereço | o que é |
 |---|---|
-| [`/data/crimes.json`](https://luccas-amorim.github.io/atlaspen/data/crimes.json) | o catálogo completo, um objeto por tipo penal |
-| [`/data/atributos.json`](https://luccas-amorim.github.io/atlaspen/data/atributos.json) | os 22 atributos, com parâmetros, fundamento e o alcance sobre o catálogo |
-| [`/data/qualidade.json`](https://luccas-amorim.github.io/atlaspen/data/qualidade.json) | o relatório de qualidade de cada geração |
-| [`/data/changelog.json`](https://luccas-amorim.github.io/atlaspen/data/changelog.json) | o que mudou na lei, entrada a entrada |
-| [`/data/atlaspen-base.xlsx`](https://luccas-amorim.github.io/atlaspen/data/atlaspen-base.xlsx) | a base inteira em planilha, assinada e datada: Leia-me, Tipos penais, Atributos e a matriz de alcance |
+| [`/data/crimes.json`](https://atlaspen.com.br/data/crimes.json) | o catálogo completo, um objeto por tipo penal |
+| [`/data/atributos.json`](https://atlaspen.com.br/data/atributos.json) | os 22 atributos, com parâmetros, fundamento e o alcance sobre o catálogo |
+| [`/data/qualidade.json`](https://atlaspen.com.br/data/qualidade.json) | o relatório de qualidade de cada geração |
+| [`/data/changelog.json`](https://atlaspen.com.br/data/changelog.json) | o que mudou na lei, entrada a entrada |
+| [`/data/atlaspen-base.xlsx`](https://atlaspen.com.br/data/atlaspen-base.xlsx) | a base inteira em planilha, assinada e datada: Leia-me, Tipos penais, Atributos e a matriz de alcance |
 
 O contrato dos campos, a política de versionamento e a forma de citar estão em
-[Dados abertos](https://luccas-amorim.github.io/atlaspen/projeto/dados-abertos). A planilha
-também se baixa da própria lista de [tipos penais](https://luccas-amorim.github.io/atlaspen/tipos)
+[Dados abertos](https://atlaspen.com.br/projeto/dados-abertos). A planilha
+também se baixa da própria lista de [tipos penais](https://atlaspen.com.br/tipos)
 e do rodapé de qualquer página.
 
 **Três coisas que evitam erro de leitura:**
@@ -118,7 +118,7 @@ nova de uns e na antiga de outros. Os marcos ficam em `src/lib/tempo.ts`.
 Programas determinísticos, **sem inteligência artificial**, que leem a lei e comparam com o
 catálogo. Nenhum deles escreve no catálogo: abrem issue ou imprimem relatório, e quem
 decide assina. Documentação própria em [`scripts/robos/README.md`](scripts/robos/README.md)
-e, para quem lê o site, em [Os robôs](https://luccas-amorim.github.io/atlaspen/projeto/os-robos).
+e, para quem lê o site, em [Os robôs](https://atlaspen.com.br/projeto/os-robos).
 
 | robô | o que faz |
 |---|---|
@@ -199,7 +199,6 @@ texto da lei diz. É contribuição das mais úteis.
 | | antes da v1.0.0 |
 |---|---|
 | **Repositório em grupo** | Transferir para uma organização, com times e `CODEOWNERS` por área. O app de automação precisa ser reinstalado na organização, ou `regen-data`, `release` e o carimbo do conferidor param de empurrar. |
-| **Endereço próprio** | Comprar o domínio e trocar `SITE_URL` em `src/site/config.ts`, o `base` do `astro.config.mjs` e um `CNAME`. Hoje é uma constante, não uma varredura. |
 | **Datas de vigência** | 220 eventos do histórico já têm publicação e vigência conferidas no DOU. Falta a LC 225/2026, que tem vigência escalonada. |
 | **Amostra de validação** | O protocolo está registrado e a semente é o hash do commit da versão madura. Falta o sorteio e uma segunda pessoa para a dupla conferência (κ de Cohen). |
 
@@ -215,7 +214,7 @@ Cada um com plano, financiamento e pessoas próprias. A ordem é de exequibilida
 | **A cadeia completa do histórico** | Hoje cada tipo diz a *última* lei que lhe deu texto. O módulo completa: todas as redações, em ordem, para responder "o que este artigo dizia em 2014?". É o que falta para a data do fato escolher também o TEXTO, e não só o cálculo. |
 | **Acervo histórico** | O que já foi crime no Brasil: revogados, alterados e não recepcionados. A pergunta "o que deixou de ser crime, e quando?" não tem hoje ferramenta que a responda de forma estruturada. |
 | **Robô dos tribunais** | Vigiar decisão de tribunal superior que muda o catálogo — ADI que retira tipo do ordenamento, tese de repercussão geral, súmula cancelada. Metade do caminho já existe fora daqui: o `decidendo-ghoul`, lido em 24/09/2026, traz um cliente da API pública do CNJ (DataJud) com paginação por `search_after` e cache por página, e um leitor dos espelhos do STJ que resolve o formato hostil do campo `jurisprudenciaCitada`. Quando a frente abrir, começar dali. A ressalva, que é dele: o STF bloqueia acesso automatizado por WAF, e o DataJud não tem texto, só metadados — para ADI, o DataJud por número CNJ; para súmula e precedente, os espelhos do STJ. |
-| **Curador** | O robô para o tipo penal antigo que nunca foi cadastrado e para o que morreu sem aviso. O Recenseador varre o ano corrente; a legislação penal tem quase dois séculos, e existe tipo em lei esparsa antiga que o catálogo nunca viu — e tipo revogado que continua publicado, afirmando punível o que não é. É a lacuna que [Os robôs](https://luccas-amorim.github.io/atlaspen/projeto/os-robos) declara. |
+| **Curador** | O robô para o tipo penal antigo que nunca foi cadastrado e para o que morreu sem aviso. O Recenseador varre o ano corrente; a legislação penal tem quase dois séculos, e existe tipo em lei esparsa antiga que o catálogo nunca viu — e tipo revogado que continua publicado, afirmando punível o que não é. É a lacuna que [Os robôs](https://atlaspen.com.br/projeto/os-robos) declara. |
 | **Usabilidade, processo penal, plataforma de pesquisa** | Ganhos de uso, extensão ao que rege os atributos na prática, e exportação para pesquisa empírica. |
 
 ### Dívida técnica
@@ -227,7 +226,7 @@ dono — porque dívida não declarada vira surpresa.
 
 ## Documentação
 
-Publicada no próprio site, em [`/projeto`](https://luccas-amorim.github.io/atlaspen/projeto).
+Publicada no próprio site, em [`/projeto`](https://atlaspen.com.br/projeto).
 Os documentos: Metodologia (os princípios), Catálogo de tipos penais (construção e travas),
 Atributos penais, Progressão de regime (o art. 112 da LEP, o dispositivo mais instável do
 catálogo), Completude (gerada), Dados abertos (o dicionário de campos, o único lugar em que
@@ -245,7 +244,7 @@ planos e specs do desenvolvimento em `.superpowers/`, que é diretório de ferra
 
 O AtlasPen é desenvolvido pela **Equipe AtlasPen**. Quem faz o quê — desenvolvimento,
 pesquisa e colaboração acadêmica — está em
-[Autoria e créditos](https://luccas-amorim.github.io/atlaspen/projeto/creditos).
+[Autoria e créditos](https://atlaspen.com.br/projeto/creditos).
 
 O projeto tem como **antecedente de pesquisa** o SISPENAS, concebido em 2008 pelas
 professoras **Maíra Rocha Machado** e **Marta Rodriguez de Assis Machado** (Direito GV/FGV),
@@ -259,7 +258,7 @@ legislativa sobre o conjunto, vem de lá:
 > [`static/artigos/`](./static/artigos/machado-machado-2008-sispenas-rev-juridica-90.pdf).)
 
 O AtlasPen é obra nova, escrita para a lei vigente. A história completa está em
-[O projeto](https://luccas-amorim.github.io/atlaspen/projeto).
+[O projeto](https://atlaspen.com.br/projeto).
 
 ## Licença
 
@@ -277,6 +276,6 @@ AtlasPen, cuja marca está em processo de registro no INPI. O que não está sob
 listado no `NOTICE`.
 
 A forma de citar em trabalho acadêmico está em
-[Dados abertos](https://luccas-amorim.github.io/atlaspen/projeto/dados-abertos#como-citar), e o
+[Dados abertos](https://atlaspen.com.br/projeto/dados-abertos#como-citar), e o
 `CITATION.cff` traz a mesma informação em formato que o GitHub e os gerenciadores de
 referência leem.

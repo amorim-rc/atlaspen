@@ -11,7 +11,7 @@ labels: ["dados", "correção"]
 - **Artigo:**
 - **Lei/diploma:**
 - **ID no catálogo (se souber):**
-- **Link direto:** https://luccas-amorim.github.io/atlaspen/tipos/
+- **Link direto:** https://atlaspen.com.br/tipos/
 
 ## O que está errado
 

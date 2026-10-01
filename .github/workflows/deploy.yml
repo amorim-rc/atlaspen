@@ -1,7 +1,9 @@
 name: Deploy (GitHub Pages)
 
-# Publica em https://luccas-amorim.github.io/atlaspen/ (config em astro.config.mjs).
-# Requer, no repositório: Settings > Pages > Source = GitHub Actions.
+# Publica em https://atlaspen.com.br/ (endereço em SITE_URL, src/site/config.ts).
+# Requer, no repositório: Settings > Pages > Source = GitHub Actions, e o domínio
+# atlaspen.com.br em Settings > Pages > Custom domain. Deploy por Actions ignora
+# arquivo CNAME: o domínio vive só nessa configuração.
 
 on:
   push:

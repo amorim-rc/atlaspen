@@ -32,12 +32,17 @@ export const REPOSITORIO = 'https://github.com/luccas-amorim/atlaspen';
  * O mesmo se repetiu em 01/10/2026, quando a conta `amorim-rc` passou a se
  * chamar `luccas-amorim`: o repositório redireciona, o Pages não.
  *
- * Quando o domínio próprio existir, é esta constante que muda, e só ela: nada
- * mais no repositório escreve o endereço à mão. O `astro.config.mjs` deriva
- * dela o `site` e o `base`, e os scripts Python a leem por
- * `scripts/endereco_publico.py`. Junto com ela entra um `CNAME` em `static/`.
+ * Desde 01/10/2026 o site mora no domínio próprio, `atlaspen.com.br`, na raiz.
+ * Com o domínio configurado no Pages, o endereço `github.io` passa a
+ * redirecionar para ele, preservando o caminho.
+ *
+ * Endereço que muda, muda aqui, e só aqui: nada mais no repositório o escreve
+ * à mão. O `astro.config.mjs` deriva desta constante o `site` e o `base`, o
+ * `scripts/verificar_rotas.mjs` o `base`, e os scripts Python a leem por
+ * `scripts/endereco_publico.py`. O domínio em si se declara em Settings > Pages,
+ * e não num `CNAME`: o deploy por Actions ignora esse arquivo.
  */
-export const SITE_URL = 'https://luccas-amorim.github.io/atlaspen/';
+export const SITE_URL = 'https://atlaspen.com.br/';
 
 /**
  * Endereço absoluto de uma rota do site: `urlPublica('/tipos/477')`.
