@@ -1,13 +1,13 @@
 ---
-// Cabeçalho global. Em tela larga: símbolo, assinatura, os seis destinos e o
-// tema. Em tela estreita encolhe para símbolo, palavra e o botão da gaveta
+// Cabeçalho global. Em tela larga: símbolo, assinatura, os seis destinos, o
+// link do código aberto e o tema. Em tela estreita encolhe para símbolo, palavra e o botão da gaveta
 // (Atributo, bordas e chrome.dc.html, 8f) — nada de barra inferior.
 //
 // A gaveta é um <details>: abre e fecha sem JavaScript. Com JavaScript (Base.astro)
 // ganha Escape, fecha ao seguir um link e trava a rolagem do fundo.
 import Simbolo from '../marca/Simbolo.astro';
 import Assinatura from '../marca/Assinatura.astro';
-import {NAVEGACAO, type ChaveNav} from '../../site/navegacao';
+import {CODIGO_ABERTO, NAVEGACAO, type ChaveNav} from '../../site/navegacao';
 import {caminho} from '../../site/url';
 
 interface Props {
@@ -37,6 +37,12 @@ const {ativo, versao} = Astro.props;
             </li>
           ))
         }
+        <li>
+          <a href={CODIGO_ABERTO.rota}>
+            {CODIGO_ABERTO.rotulo}
+            <span class="seta-externa" aria-hidden="true">↗</span>
+          </a>
+        </li>
       </ul>
     </nav>
 
@@ -71,6 +77,12 @@ const {ativo, versao} = Astro.props;
                 </li>
               ))
             }
+            <li>
+              <a href={CODIGO_ABERTO.rota}>
+                <span class="rotulo-gaveta">{CODIGO_ABERTO.rotulo}</span>
+                <span class="rota-gaveta">{CODIGO_ABERTO.rota.replace(/^https:\/\//, '')}</span>
+              </a>
+            </li>
           </ul>
         </nav>
         <div class="painel-pe">
@@ -129,6 +141,11 @@ const {ativo, versao} = Astro.props;
 
   .nav-larga a:hover {
     color: var(--cor-acento);
+  }
+
+  .seta-externa {
+    margin-left: 0.2em;
+    font-size: 0.8em;
   }
 
   .nav-larga a[aria-current='page'] {

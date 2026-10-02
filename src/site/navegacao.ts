@@ -26,6 +26,13 @@ export const NAVEGACAO: ItemNav[] = [
   {chave: 'projeto', rotulo: 'Projeto', rotuloLongo: 'O projeto', rota: '/projeto'},
 ];
 
+/**
+ * O último link da barra e da gaveta: leva ao repositório no GitHub. Fica fora
+ * de NAVEGACAO porque não é destino do site. Não tem página ativa nem cartão na
+ * página inicial.
+ */
+export const CODIGO_ABERTO = {rotulo: 'Código aberto', rota: REPOSITORIO};
+
 export interface LinkRodape {
   rotulo: string;
   rota: string;
