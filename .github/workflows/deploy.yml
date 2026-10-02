@@ -4,6 +4,14 @@ name: Deploy (GitHub Pages)
 # Requer, no repositório: Settings > Pages > Source = GitHub Actions, e o domínio
 # atlaspen.com.br em Settings > Pages > Custom domain. Deploy por Actions ignora
 # arquivo CNAME: o domínio vive só nessa configuração.
+#
+# Enquanto SITE_PUBLICO não for 'true', o que vai ao ar é só a página "em breve"
+# de .github/em-breve/, fora dos buscadores. Decisão de 01/10/2026: os textos
+# ainda não estão prontos para leitura. O site completo continua sendo
+# construído e testado pela CI (ci.yml); publicá-lo é trocar esta linha.
+
+env:
+  SITE_PUBLICO: 'false'
 
 on:
   push:
@@ -26,7 +34,15 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
+      - name: Página "em breve"
+        if: env.SITE_PUBLICO != 'true'
+        run: |
+          mkdir -p dist
+          cp .github/em-breve/index.html .github/em-breve/robots.txt dist/
+          cp dist/index.html dist/404.html
+
       - name: Setup Node
+        if: env.SITE_PUBLICO == 'true'
         uses: actions/setup-node@v7
         with:
           # O Astro 7 exige Node >= 22.12; 24 é o que a CI já usa.
@@ -34,14 +50,17 @@ jobs:
           cache: npm
 
       - name: Setup Python
+        if: env.SITE_PUBLICO == 'true'
         uses: actions/setup-python@v7
         with:
           python-version: '3.12'
 
       - name: Instalar dependências
+        if: env.SITE_PUBLICO == 'true'
         run: npm ci
 
       - name: Build
+        if: env.SITE_PUBLICO == 'true'
         run: npm run build
 
       # A planilha da base é gerada DENTRO do dist, e nunca commitada. Um binário
@@ -50,6 +69,7 @@ jobs:
       # ela existe para não ter. O caminho é fixo: cada publicação substitui a
       # anterior, e nunca há duas no ar.
       - name: Gerar a planilha da base
+        if: env.SITE_PUBLICO == 'true'
         run: |
           python3 -m pip install --quiet openpyxl
           python3 scripts/gerar_planilha.py
