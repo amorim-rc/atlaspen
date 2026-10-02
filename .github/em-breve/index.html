@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>AtlasPen</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' fill='none' stroke='%238c2f22' stroke-width='2.4' stroke-linecap='square'%3E%3Crect x='4' y='4' width='24' height='24'/%3E%3Cpath d='M10 11v10M22 11v10M10 16h12'/%3E%3C/svg%3E">
+  <style>
+    :root {
+      --papel: #faf7f0;
+      --tinta: #211f1b;
+      --tinta-media: #5c574c;
+      --acento: #8c2f22;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --papel: #211f1b;
+        --tinta: #f2efe9;
+        --tinta-media: #c6c0b3;
+        --acento: #d98d7e;
+      }
+    }
+    html, body { height: 100%; margin: 0; }
+    body {
+      display: grid;
+      place-items: center;
+      padding: 1rem;
+      box-sizing: border-box;
+      background: var(--papel);
+      color: var(--tinta);
+      font-family: 'Newsreader', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
+      text-align: center;
+    }
+    svg { width: 56px; height: 56px; stroke: var(--acento); }
+    h1 { margin: 1rem 0 0.25rem; font-size: 2.25rem; font-weight: 500; letter-spacing: 0.01em; }
+    p { margin: 0; color: var(--tinta-media); font-size: 1.05rem; line-height: 1.5; max-width: 32rem; }
+    .em-breve {
+      margin-top: 1.5rem;
+      font-family: ui-monospace, 'Cascadia Mono', Consolas, monospace;
+      font-size: 0.85rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--acento);
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <svg viewBox="0 0 32 32" fill="none" stroke-width="2.4" stroke-linecap="square" aria-hidden="true">
+      <rect x="4" y="4" width="24" height="24"/>
+      <path d="M10 11v10M22 11v10M10 16h12"/>
+    </svg>
+    <h1>AtlasPen</h1>
+    <p>Atlas Penal Brasileiro dos Tipos, Atributos e Impacto Legislativo</p>
+    <p class="em-breve">Em breve</p>
+  </main>
+</body>
+</html>

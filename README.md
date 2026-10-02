@@ -271,9 +271,13 @@ Duas licenças, uma para cada coisa:
 As duas permitem usar, copiar, modificar e redistribuir, inclusive comercialmente, e as
 duas pedem o mesmo: dar crédito a *AtlasPen, da Equipe AtlasPen*, indicar a fonte e
 sinalizar as mudanças que fizer. No código, o crédito está no [`NOTICE`](./NOTICE), que a
-Apache 2.0 manda manter (seção 4). Nenhuma das duas autoriza o uso do nome ou do símbolo do
-AtlasPen, cuja marca está em processo de registro no INPI. O que não está sob nenhuma delas, o artigo de 2008 e os textos de lei, está
-listado no `NOTICE`.
+Apache 2.0 manda manter (seção 4).
+
+Citar o AtlasPen como fonte é livre, e é o que as duas licenças pedem. O que elas não dão é
+o direito de apresentar o nome ou o símbolo do AtlasPen como seus, nem de sugerir que o
+projeto apoia ou endossa um trabalho de terceiros. A marca está em processo de registro no
+INPI. O que não está sob nenhuma das duas licenças, o artigo de 2008 e os textos de lei,
+está listado no `NOTICE`.
 
 A forma de citar em trabalho acadêmico está em
 [Dados abertos](https://atlaspen.com.br/projeto/dados-abertos#como-citar), e o
