@@ -1,5 +1,7 @@
 # AtlasPen
 
+<sub>O nome vem de Atlas, o Titã que sustenta o céu. [Por quê?](MITO.md)</sub>
+
 **Atlas Penal Brasileiro dos Tipos, Atributos e Impacto Legislativo.** Uma base aberta com
 **todos os tipos penais brasileiros em vigor** e os institutos que a lei liga a cada um —
 ANPP, transação, substituição, progressão, livramento, prescrição e os demais —, com motor
