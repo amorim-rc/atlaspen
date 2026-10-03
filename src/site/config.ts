@@ -25,16 +25,9 @@ export const TITULAR = 'Equipe AtlasPen';
 export const REPOSITORIO = 'https://github.com/luccas-amorim/atlaspen';
 
 /**
- * Endereço público. Renomeado em 23/09/2026, por decisão do mantenedor, junto
- * com o repositório: `amorim-rc.github.io/sispenas/` **deixou de responder** —
- * o GitHub redireciona tudo ao renomear um repositório, menos a URL de project
- * site. O endereço antigo nunca foi divulgado, que é por que a troca cabia aqui.
- * O mesmo se repetiu em 01/10/2026, quando a conta `amorim-rc` passou a se
- * chamar `luccas-amorim`: o repositório redireciona, o Pages não.
- *
- * Desde 01/10/2026 o site mora no domínio próprio, `atlaspen.com.br`, na raiz.
- * Com o domínio configurado no Pages, o endereço `github.io` passa a
- * redirecionar para ele, preservando o caminho.
+ * Endereço público: o domínio próprio, `atlaspen.com.br`, na raiz. Com o
+ * domínio configurado no Pages, o endereço `github.io` redireciona para ele,
+ * preservando o caminho.
  *
  * Endereço que muda, muda aqui, e só aqui: nada mais no repositório o escreve
  * à mão. O `astro.config.mjs` deriva desta constante o `site` e o `base`, o
@@ -48,9 +41,8 @@ export const SITE_URL = 'https://atlaspen.com.br/';
  * Endereço absoluto de uma rota do site: `urlPublica('/tipos/477')`.
  *
  * Existe para que nota do changelog e mensagem de robô não escrevam o endereço
- * à mão. Era a dívida apontada no desenho do revamp (sub-projeto B): trinta e
- * poucas URLs literais nas notas já publicadas fariam de toda troca de endereço
- * uma reescrita de texto publicado. Agora é uma constante.
+ * à mão: com URLs literais nas notas já publicadas, toda troca de endereço
+ * viraria uma reescrita de texto publicado.
  */
 export function urlPublica(rota: string): string {
   return SITE_URL.replace(/\/$/, '') + '/' + rota.replace(/^\/+/, '');

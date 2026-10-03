@@ -12,8 +12,8 @@
 //   - `publicDir` aponta para `static/`, e não para `public/`: é lá que o
 //     pipeline de dados grava o derivado (scripts/transform_data.py,
 //     scripts/derivar_atributos.ts) e é esse caminho que a CI, o regen-data e o
-//     conferidor conferem. Mover a pasta seria mexer no pipeline de dados, que
-//     este revamp não toca. O endereço público continua /data/crimes.json.
+//     conferidor conferem. Mover a pasta seria mexer no pipeline de dados. O
+//     endereço público continua /data/crimes.json.
 
 import {readFileSync} from 'node:fs';
 import {resolve} from 'node:path';

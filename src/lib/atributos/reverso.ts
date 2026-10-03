@@ -76,7 +76,7 @@ export interface CenarioReverso {
 /**
  * As circunstâncias do réu ligadas, por extenso, na ordem em que as telas as
  * citam. Um só vocabulário para a ficha do atributo e para a nota da simulação.
- * Bons antecedentes não entra: o motor não o lê (decisão do revamp, backlog.md).
+ * Bons antecedentes não entra: o motor não o lê.
  */
 export function circunstanciasPorExtenso(rev: CenarioReverso): string[] {
   const partes: string[] = [];

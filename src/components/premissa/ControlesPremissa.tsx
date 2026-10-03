@@ -1,9 +1,8 @@
 // Os controles da premissa da varredura, partilhados pela ficha do atributo e
 // pela simulação legislativa.
 //
-// Extraídos de FichaAtributo em 17/09/2026: as duas telas varrem o catálogo sob
-// a mesma presunção, e uma oferecer controles que a outra não oferece era a
-// pendência do revamp ("Premissa fixa", backlog.md).
+// As duas telas varrem o catálogo sob a mesma presunção; por isso oferecem os
+// mesmos controles.
 
 import {BASE_AJUDA, BASE_LABEL, type BasePenaConcreta, type CenarioReverso} from '../../lib/atributos/reverso';
 import {diasDeMeses} from '../../lib/pena';
