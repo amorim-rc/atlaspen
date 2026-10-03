@@ -3,8 +3,8 @@
 **Estado:** aprovado pelo mantenedor em 19/09/2026. O commit que o traz é o **registro prévio
 do método**.
 **Quando se sorteia:** só na versão amadurecida — depois de fechado e mergeado na `main` o
-trabalho em curso (revamp, A2, critérios de hediondez e de ação penal, testes do motor, a
-troca das heurísticas por regra). Conferir antes seria medir erros que já estão sendo
+trabalho em curso (critérios de hediondez e de ação penal, testes do motor, a troca das
+heurísticas por regra). Conferir antes seria medir erros que já estão sendo
 corrigidos. A semente do sorteio é o hash do **commit de merge** que o mantenedor declarar como
 a versão a auditar; os tamanhos das tabelas abaixo são da data de redação e o script os
 recalcula nesse commit. Nada deste texto muda depois do sorteio sem entrar na seção 10
